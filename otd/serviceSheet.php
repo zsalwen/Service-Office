@@ -270,6 +270,7 @@ function serviceSheet($packet){
 	<?
 	$delivery='';
 	$delivery=deliveryExplode($packet,$i);
+	echo "<script>alert('deliveryExplode: packet [$packet] defendant [$i]')<script>";
 	if ($delivery != ''){
 		$dt=$delivery[0];
 		$server=$delivery[1];
