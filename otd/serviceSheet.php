@@ -270,7 +270,8 @@ function serviceSheet($packet){
 	<?
 	$delivery='';
 	$delivery=deliveryExplode($packet,$i);
-	echo "<script>alert('deliveryExplode: packet [$packet] defendant [$i]')<script>";
+	//echo "<script>alert('deliveryExplode: packet [$packet] defendant [$i]')<script>";
+	error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." deliveryExplode: packet [$packet] defendant [$i] \n",3,"/logs/debug.log");      
 	if ($delivery != ''){
 		$dt=$delivery[0];
 		$server=$delivery[1];
