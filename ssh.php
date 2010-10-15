@@ -41,7 +41,7 @@ function my_ssh($server,$command){
 
 $user=valueData('sshUser');	
 $pass=valueData('sshPassword');
-                if(!ssh2_auth_password($con, "", "")) {
+                if(!ssh2_auth_password($con, $user, $pass)) {
 			echo "fail: unable to authenticate\n";
 		} else {
 			// allright, we're in!
