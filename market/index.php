@@ -30,7 +30,7 @@ while ($d2=mysql_fetch_array($r2,MYSQL_ASSOC)){
 	}
 }
 while ($d3=mysql_fetch_array($r3,MYSQL_ASSOC)){
-	$h3 .= "<li><a href='details.php?id=$d2[marketID]'>$d2[name]</a></li>";
+	$h3 .= "<li><a href='details.php?id=$d3[marketID]'>$d3[name]</a></li>";
 	$phClass=explode(' ',$d3[phase]);
 	$phClass=$phClass[0];
 	if ($d3[phase] == 'CALL BACK'){
