@@ -46,22 +46,22 @@ if(!$d[uspsVerify]){
 
 ?>
 <? if($d[address1]){ ?>
-<iframe src="http://mdwestserve.com/ps/usps.php?address=<?=$d[address1]?>&city=<?=$d[city1]?>&state=<?=$d[state1]?>" width="300" height="100"></iframe>
+<iframe src="http://service.mdwestserve.com/usps.php?address=<?=$d[address1]?>&city=<?=$d[city1]?>&state=<?=$d[state1]?>" width="300" height="100"></iframe>
 <? }?>
 <? if($d[address1a]){ ?>
-<iframe src="http://mdwestserve.com/ps/usps.php?address=<?=$d[address1a]?>&city=<?=$d[city1a]?>&state=<?=$d[state1a]?>" width="300" height="100"></iframe>
+<iframe src="http://service.mdwestserve.com/usps.php?address=<?=$d[address1a]?>&city=<?=$d[city1a]?>&state=<?=$d[state1a]?>" width="300" height="100"></iframe>
 <? }?>
 <? if($d[address1b]){ @mysql_query("update ps_packets set alertMax='3' where packet_id = '$_GET[packet]'"); ?>
-<iframe src="http://mdwestserve.com/ps/usps.php?address=<?=$d[address1b]?>&city=<?=$d[city1b]?>&state=<?=$d[state1b]?>" width="300" height="100"></iframe>
+<iframe src="http://service.mdwestserve.com/usps.php?address=<?=$d[address1b]?>&city=<?=$d[city1b]?>&state=<?=$d[state1b]?>" width="300" height="100"></iframe>
 <? }?>
 <? if($d[address1c]){ @mysql_query("update ps_packets set alertMax='4' where packet_id = '$_GET[packet]'"); ?>
-<iframe src="http://mdwestserve.com/ps/usps.php?address=<?=$d[address1c]?>&city=<?=$d[city1c]?>&state=<?=$d[state1c]?>" width="300" height="100"></iframe>
+<iframe src="http://service.mdwestserve.com/usps.php?address=<?=$d[address1c]?>&city=<?=$d[city1c]?>&state=<?=$d[state1c]?>" width="300" height="100"></iframe>
 <? }?>
 <? if($d[address1d]){ @mysql_query("update ps_packets set alertMax='5' where packet_id = '$_GET[packet]'"); ?>
-<iframe src="http://mdwestserve.com/ps/usps.php?address=<?=$d[address1d]?>&city=<?=$d[city1d]?>&state=<?=$d[state1d]?>" width="300" height="100"></iframe>
+<iframe src="http://service.mdwestserve.com/usps.php?address=<?=$d[address1d]?>&city=<?=$d[city1d]?>&state=<?=$d[state1d]?>" width="300" height="100"></iframe>
 <? }?>
 <? if($d[address1e]){ @mysql_query("update ps_packets set alertMax='6' where packet_id = '$_GET[packet]'"); ?>
-<iframe src="http://mdwestserve.com/ps/usps.php?address=<?=$d[address1e]?>&city=<?=$d[city1e]?>&state=<?=$d[state1e]?>" width="300" height="100"></iframe>
+<iframe src="http://service.mdwestserve.com/usps.php?address=<?=$d[address1e]?>&city=<?=$d[city1e]?>&state=<?=$d[state1e]?>" width="300" height="100"></iframe>
 <? }
 
 echo "<fieldset><legend>GEOCODING $d[packet_id]</legend><table border='1'>";
