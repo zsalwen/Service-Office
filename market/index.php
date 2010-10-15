@@ -38,6 +38,7 @@ while ($d3=mysql_fetch_array($r3,MYSQL_ASSOC)){
 	}else{
 		$h3a .= "<li class='$phClass'>$d3[phase]</li>";
 	}
+	$h3b .= "<li class='$phClass'>$d3[coldCall]</li>";
 }
 $today=date('m/d/Y');
 if ($_GET[msg]){
@@ -66,9 +67,9 @@ if ($_GET[msg]){
 		<td valign="top" colspan='2'><?=$h2;?></td><td valign='top'><?=$h2a?></td>
 	</tr>
 	<tr>
-		<td colspan='2'>Attorneys Requiring Other Action</td><td>Next Action</td>
+		<td>Attorneys Requiring Other Action</td><td>Next Action</td><td>Last Called</td>
 	</tr>
 	<tr>
-		<td valign="top" colspan='2'><?=$h3;?></td><td valign='top'><?=$h3a?></td>
+		<td valign="top"><?=$h3;?></td><td valign='top'><?=$h3a?></td><td valign='top'><?=$h3b?></td>
 	</tr>
 </table>
