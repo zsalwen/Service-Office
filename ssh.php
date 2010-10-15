@@ -2,9 +2,16 @@
 if ($_COOKIE[psdata][level] == 'Operations'){
 mysql_connect();
 mysql_select_db('core');
+function valueData($key){
+  $r=@mysql_query("select valueData from config where keyData = '$key'");
+  $d=mysql_fetch_array($r,MYSQL_ASSOC);
+  return $d[valueData];
+}
 function talk($to,$message){
 	include_once '/thirdParty/xmpphp/XMPPHP/XMPP.php';
-	$conn = new XMPPHP_XMPP('talk.google.com', 5222, 'talkabout.files@gmail.com', '', 'xmpphp', 'gmail.com', $printlog=false, $loglevel=XMPPHP_Log::LEVEL_INFO);
+        $user = 'talkabout.files@gmail.com';
+        $password = valueData($user);
+	$conn = new XMPPHP_XMPP('talk.google.com', 5222, $user, $password, 'xmpphp', 'gmail.com', $printlog=false, $loglevel=XMPPHP_Log::LEVEL_INFO);
 	try {
 		$conn->useEncryption(true);
 		$conn->connect();
@@ -31,7 +38,10 @@ function my_ssh($server,$command){
 		echo "fail: unable to establish connection\n";
 	} else {
 		// try to authenticate with username , password secretpassword
-		if(!ssh2_auth_password($con, "", "")) {
+
+$user=valueData('sshUser');	
+$pass=valueData('sshPassword');
+                if(!ssh2_auth_password($con, "", "")) {
 			echo "fail: unable to authenticate\n";
 		} else {
 			// allright, we're in!
