@@ -1,0 +1,61 @@
+<? session_start(); ?>
+<!-- Designed for 22" widescreen -->
+<link rel="stylesheet" type="text/css" href="fire.css" />
+<style>
+tr	{ background-color:transparent;	}
+table { padding: 0px; }
+</style>
+<table border="0" width="100%" height="95%" cellspacing="0" cellpadding="0">
+	<tr>
+		<td><iframe id="frame1" name="frame1" frameborder="0" height="100%" width="100%"></iframe></td>
+		<td><iframe id="frame2" name="frame2" frameborder="0" height="100%" width="100%"></iframe></td>
+		<td><iframe id="frame3" name="frame3" frameborder="0" height="100%" width="100%"></iframe></td>
+	</tr>	
+	<tr>
+		<td><iframe id="frame4" name="frame4" frameborder="0" height="100%" width="100%"></iframe></td>
+		<td><iframe id="frame5" name="frame5" frameborder="0" height="100%" width="100%"></iframe></td>
+		<td style="background-color:#FFFFFF;"><iframe id="test" name="test" frameborder="0" height="100%" width="100%" src='http://mdwestserve.com/affidavits/test.php?id=<?=$_GET[packet]?>'></iframe></td>
+	</tr>		
+</table>
+<div style="background-color:#FFFFFF; font-size:20px;">
+<? if(strpos($_GET[packet],"EV")!== false){ $packetType='eviction';
+$eviction=str_replace("EV","",$_GET[packet]);
+?>
+Mark Eviction Packet <a href="http://staff.mdwestserve.com/ev/order.php?packet=<?=$eviction?>" target="_blank"><?=$_GET[packet]?></a> Filed By Staff on <?=$_SESSION[fileDate];?>
+<? }else{  $packetType='presale';?>
+Mark Presale Packet <a href="http://staff.mdwestserve.com/otd/order.php?packet=<?=$_GET[packet]?>" target="_blank">OTD<?=$_GET[packet]?></a> Filed By Staff on <?=$_SESSION[fileDate];?>
+<? } ?>
+|| 
+<?
+mysql_connect();
+mysql_select_db('core');
+$i=0;
+$q5="SELECT * FROM ps_affidavits WHERE packetID = '$_GET[packet]' order by defendantID";
+$r5=@mysql_query($q5) or die ("Query: $q5<br>".mysql_error());
+while ($d5=mysql_fetch_array($r5, MYSQL_ASSOC)){
+	$i++;	
+	$defname = $d["name".$d5[defendantID]];
+	echo "<a target='frame".$i."' href='".str_replace('ps/','',$d5[affidavit])."'><strong>".$defname."</strong>: $d5[method]</a>, ";
+	echo "<script>window.frames['frame".$i."'].location='".str_replace('ps/','',$d5[affidavit])."';</script>";
+}
+echo "</div>";
+// We need an alert for a few exceptions
+if ($packetType == 'presale'){
+$r=@mysql_query("select * from ps_packets where packet_id = '$_GET[packet]'");
+}else{
+$packet=str_replace('EV','',$_GET[packet]);
+$r=@mysql_query("select * from evictionPackets where eviction_id = '$packet'");
+}
+$d=mysql_fetch_array($r,MYSQL_ASSOC);
+if (strtoupper($d[state1a]) != 'MD' && $d[state1a] != ''){ echo "<script>alert('First possible place of abode is out of state.');</script>"; }
+if (strtoupper($d[state1b]) != 'MD' && $d[state1b] != ''){ echo "<script>alert('Second possible place of abode is out of state.');</script>"; }
+if (strtoupper($d[state1c]) != 'MD' && $d[state1c] != ''){ echo "<script>alert('Third possible place of abode is out of state.');</script>"; }
+if (strtoupper($d[state1d]) != 'MD' && $d[state1d] != ''){ echo "<script>alert('Fourth possible place of abode is out of state.');</script>"; }
+if (strtoupper($d[state1e]) != 'MD' && $d[state1e] != ''){ echo "<script>alert('Fifth possible place of abode is out of state.');</script>"; }
+if ($d[name1] && !$d[onAffidavit1]){ echo "<script>alert('First person to serve is not a defendant on affidavit header.');</script>"; }
+if ($d[name2] && !$d[onAffidavit2]){ echo "<script>alert('Second person to serve is not a defendant on affidavit header.');</script>"; }
+if ($d[name3] && !$d[onAffidavit3]){ echo "<script>alert('Third person to serve is not a defendant on affidavit header.');</script>"; }
+if ($d[name4] && !$d[onAffidavit4]){ echo "<script>alert('Fourth person to serve is not a defendant on affidavit header.');</script>"; }
+if ($d[name5] && !$d[onAffidavit5]){ echo "<script>alert('Fifth person to serve is not a defendant on affidavit header.');</script>"; }
+if ($d[name6] && !$d[onAffidavit6]){ echo "<script>alert('Sixth person to serve is not a defendant on affidavit header.');</script>"; }
+?>

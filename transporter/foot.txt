@@ -1,0 +1,11 @@
+</table>
+<p>&nbsp;</p>
+
+<p style="text-align:center;">Sample  PHP Upload handler provided by
+ <a href="http://www.radinks.com/?dn">Rad Inks</a></p>
+ <p>&nbsp;</p>
+<p style="text-align:center;">have you seen our <a href="http://www.radinks.com/sftp/?dn">Secure FTP Applet</a> or &nbsp;
+our <a href="http://www.radinks.com/mms/?dn">Multimedia Messaging Solution</a>?</p>
+
+</body>
+</html>

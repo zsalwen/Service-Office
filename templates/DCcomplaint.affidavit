@@ -1,0 +1,87 @@
+<div align="left"><br>FORM 3</div>
+
+<div align="center">SUPERIOR COURT OF THE DISTRICT OF COLUMBIA<br>
+CIVIL DIVISION, LANDLORD AND TENANT BRANCH<br>
+BLDG. B, 510 4th Street N.W., Room 110<br>
+Washington, D.C. 20001 Telephone (202) 879-1152</div>
+
+<div align="right"><b>Case No. LTB [caseNumber]</b></div>
+
+<table width="100%">
+	<tr>
+		<td width="50%"><div style="border-bottom:solid 1px;">[altPlaintiff]<br>c/o Atlantic Law Group</div>
+						<div>Plaintiff, Landlord</div>
+						<div style="border-bottom:solid 1px;">803 Sycolin Rd Ste 301, Leesburg, VA 20175</div>
+						<div>Address</div></td>
+		<td width="1%">vs.</td>
+		<td width="49%"><div style="border-bottom:solid 1px;">[who]</div>
+						<div>Defendant/Tenant</div>
+						<div style="border-bottom:solid 1px;">[where2]</div>
+						<div>Address</div></td>
+	</tr>
+</table>
+
+<div><br><b><u>AFFIDAVIT OF SERVICE</u></b></div>
+<br>
+<div align="left">I, [serverName] of [serverCompany], age [serverAge], residing at [serverAddress], [serverCity] [serverZip] [serverState] and not a party to this case, depose
+and say that on [when2], I served a copy of the complaint and summons as follows:</div>
+
+<table align="left" width="100%" cellpadding="5">
+	<tr>
+		<td valign="top"><input type="checkbox" [cb1]></td>
+		<td>On the Defendant/Tenant: [who1] personally.</td>
+	</tr>
+	<tr>
+		<td valign="top"><input type="checkbox" [cb2]></td>
+		<td>By leaving said copy with [who2], a person of suitable discretion above the age of sixteen (16) years,
+residing who resides on or at Defendant/Tenant's address given above, the Defendant/Tenant having left the District of Columbia or
+not to be found.</td>
+	</tr>
+	<tr>
+		<td valign="top"><input type="checkbox" [cb3]></td>
+		<td>Having at least twice attempted with due diligence and failed to effect service upon the Defendant/Tenant personally or upon a person
+ of suitable discretion above the age of sixteen (16) years residing on or at the Defendant/Tenant's address given above by
+posting said copy on the door of the premises where it could be conveniently read. The date and time of all attempts at personal service
+were as follows:<br><br>
+	<div style="padding-left:30px;">First attempt:[attempt1]<br>Second attempt:[attempt2]<br>Other attempts(if applicable):[attempt3]</div><br>
+</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>In addition to the service noted above, I mailed a copy of the Complaint and Summons to the Defendant/Tenant at the following address:
+[ifMail]</td>
+	</tr>
+	<tr>
+		<td valign="top"><input type="checkbox" [cb4]></td>
+		<td>(For a corporation or limited liability company) I served [who4], an officer, managing agent or general agent,
+or [who4a], a registered agent.</td>
+	</tr>
+	<tr>
+		<td valign="top"><input type="checkbox" [cb5]></td>
+		<td>You must set forth specific facts from which the Court can determine that process was served as indicated above and in compliance
+with D.C. Code Section 16-1502 and SCR L&T 4, including a physical description of any person on whom service was made and, if
+service was by posting at the Defendant/Tenant's address, a description of the door, including its location, color and any distinguishing
+marks: [how]</td>
+	</tr>
+</table>
+<br><br><br>
+<table align="left" width="100%">
+	<tr>
+		<td width="70%"></td>
+		<td width="30%">___________________________________<br>Special Process Server</td>
+	</tr>
+	<tr>
+		<td width="70%">Subscribe and sworn to before me this, _______ day of _________, 20___.</td>
+		<td width="30%"></td>
+	</tr>
+	<tr>
+		<td width="70%"><br>___________________________________<br>Notary Public</td>
+		<td width="30%">___________________________________<br>My commission expires</td>
+	</tr>
+</table>	
+<div><b>NOTE: A separate Affidavit is required for service on each named Defendant/Tenant.</b></div>
+<br><br><br>
+<style>
+div{ font-size:14px;}
+td{ font-size:14px;}
+</style>

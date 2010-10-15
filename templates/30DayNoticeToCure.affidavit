@@ -1,0 +1,44 @@
+<div align="center" style="font-weight:bold;">30 DAY NOTICE TO CURE</div>
+<div align="center">[altPlaintiff]</div>
+<div align="center"><em>vs.</em></div>
+<div align="center">[names]</div>
+<div align="center"><u>PROOF OF SERVICE/RETURN OF PRIVATE PROCESS SERVER</u></div>
+<div align="left">The undersigned hereby certifies as follows:</div>
+<div align="left">1. That I am a competent private person over 18 years of age and not a party to the above action.</div>
+<div align="left">2. That I served this process upon [name1] on [when] at [where] by [how] the 30 Day Notice to Cure in English and Spanish.</div>
+<div align="center">Attempts to serve this process were made as follows:</div>
+<div align="center">[attempt1]</div>
+<div align="center">[attempt2]</div>
+<div align="center">[attempt3]</div>
+<div align="left">[ifMail]</div>
+<div align="left">I do solemnly declare and affirm under the penalties of perjury that the matters and facts set forth herein are true to the best of my knowledge, information, and belief.</div>
+<br><br><br>
+<table width="100%">
+	<tr>
+		<td align="left" width="50%">
+			<div>
+				NOTARY PUBLIC<br>
+				Subscribed and sworn to before me this<br>
+				________ day of ___________ 2010<br>
+				<br><br><br>
+				<hr>
+				State:_______/County:_________________<br>
+				My Commission Expires:____________________ 
+			</div>
+		</td>
+		<td align="right" width="50%">
+			<div align="center">
+				<hr>
+				[serverName]<br>
+				[serverCompany]<br>
+				[serverAddress]<br>
+				[serverCity], [serverState], [serverZip]<br>
+				[serverPhone]
+			</div>
+		</td>
+	</tr>
+</table>
+<style>
+div { padding:10px; }
+body { font-variant:small-caps;}
+</style>

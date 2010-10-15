@@ -1,0 +1,174 @@
+<? include '/sandbox/staff/lock.php'; ?>
+<meta http-equiv="refresh" content="60" />
+<?
+function courierDate($id){
+$r=@mysql_query("select date_format(estFileDate, '%W, %M %D %Y') as estFileDate	from ps_packets where packet_id = '$id'");
+$d=mysql_fetch_array($r,MYSQL_ASSOC);
+return $d[estFileDate];
+}
+function courierDate2($id){
+$r=@mysql_query("select date_format(estFileDate, '%W, %M %D %Y') as estFileDate	from evictionPackets where eviction_id = '$id'");
+$d=mysql_fetch_array($r,MYSQL_ASSOC);
+return $d[estFileDate];
+}
+// ok this will use alot of data report
+$today=date('Y-m-d');
+mysql_connect();
+mysql_select_db('core');
+echo "
+<style>
+.title1 { font-size:16px; background-color:FFcccc; } 
+.title2 { font-size:16px; background-color:FFFFcc; } 
+.title3 { font-size:16px; background-color:ccccFF; } 
+.title4 { font-size:16px; background-color:9CFF88; } 
+ol { padding:0px; margin:0px; padding-left:30px; } 
+li { font-size:12px;}
+td { font-size:12px;}
+b { font-size:18px; }
+a { text-decoration:none; } </style>
+";
+echo "<table width='100%'><tr><td valign='top'><div class='title4'><b>Open Std. Services</b><ol>
+";
+
+// data entry
+$r=@mysql_query("SELECT client_file, case_no, packet_id, date_received, affidavit_status, process_status FROM standard_packets WHERE process_status = 'IN PROGRESS' order by packet_id");
+while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+	$optest = 1;
+	echo "<li><a target='_Blank' href='/standard/order.php?packet=$d[packet_id]'>S$d[packet_id] $d[process_status]<br>($d[affidavit_status])</a></li>";
+}
+
+echo "</ol></div></td><td valign='top'><div class='title4'><b>Data Entry</b><ol>
+";
+// data entry
+$r=@mysql_query("SELECT client_file, case_no, packet_id, date_received FROM ps_packets WHERE status = 'NEW' and process_status <> 'CANCELLED' AND process_status <> 'DUPLICATE' AND  process_status <> 'DAMAGED PDF'");
+while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+	$optest = 1;
+	echo "<li><a target='_Blank' href='/otd/order.php?packet=$d[packet_id]'>O$d[packet_id]</a></li>";
+}
+$r=@mysql_query("SELECT client_file, case_no, eviction_id, date_received FROM evictionPackets WHERE status = 'NEW' and process_status <> 'CANCELLED' AND process_status <> 'DUPLICATE' AND  process_status <> 'DAMAGED PDF'");
+while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+	$optest = 1;
+	echo "<li><a target='_Blank' href='/ev/order.php?packet=$d[eviction_id]'>E$d[eviction_id]</a></li>";
+}
+
+echo "</ol></div></td>";
+echo "<td valign='top'><div class='title4'><b>Dispatch</b><ol>";
+$counter8a = 0;
+$counter8b = 0;
+
+// dispatch
+$r=@mysql_query("select packet_id, package_id, circuit_court, uspsVerify, qualityControl from ps_packets where process_status = 'READY' and package_id = '' order by circuit_court");
+while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+	$optest = 1;
+	if(($d[uspsVerify] == '') || ($d[qualityControl] == '')){ $color='#FF0000'; $counter8a++;}else{ $color='#00FF00';$counter8b++;}
+	echo "<li style='white-space: pre; background-color:$color'><a target='_Blank' href='/otd/order.php?packet=$d[packet_id]'>$d[circuit_court]</a></li>";
+}
+$r=@mysql_query("select eviction_id, package_id, circuit_court, uspsVerify, qualityControl from evictionPackets where process_status = 'READY' and package_id = '' order by circuit_court");
+while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+	$optest = 1;
+	if(($d[uspsVerify] == '') || ($d[qualityControl] == '')){ $color='#FF0000'; $counter8a++;}else{ $color='#00FF00'; $counter8b++; }
+	echo "<li style='white-space: pre; background-color:$color'><a target='_Blank' href='/ev/order.php?packet=$d[eviction_id]'>$d[circuit_court]</a></li>";
+}
+$total8 = $counter8a + $counter8b;
+if($counter8b > '0' && $total8 > '0'){
+$complete = str_replace('1.00','100',str_replace('0.','',number_format($counter8b / $total8,2)));
+}
+echo "<li style='white-space: pre;'><b>$complete% confirmed</b></li>";
+
+ echo "</ol></div></td>";
+echo "<td valign='top'><div class='title4'><b>Quality Control</b><ol>";
+
+
+$r=@mysql_query("SELECT packet_id FROM ps_packets WHERE process_status = 'ASSIGNED' AND (request_close = 'YES' OR request_closea = 'YES' OR request_closeb = 'YES' OR request_closec = 'YES' OR request_closed = 'YES' OR request_closee = 'YES')");
+while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+	$optest = 1;
+	echo "<li><a target='_Blank' href='/otd/order.php?packet=$d[packet_id]'>O$d[packet_id]</a></li>";
+}
+$r=@mysql_query("SELECT eviction_id FROM evictionPackets WHERE process_status = 'ASSIGNED' AND (request_close = 'YES' OR request_closea = 'YES' OR request_closeb = 'YES' OR request_closec = 'YES' OR request_closed = 'YES' OR request_closee = 'YES')");
+while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+	$optest = 1;
+	echo "<li><a target='_Blank' href='/ev/order.php?packet=$d[eviction_id]'>E$d[eviction_id]</a></li>";
+}
+ echo "</ol></div></td>";
+echo "<td valign='top'><div class='title4'><b>Mail Room</b><ol>";
+
+
+$r=@mysql_query("select packet_id, mail_status from ps_packets where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') order by mail_status, packet_id");
+while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+	$optest = 1;
+	echo "<li><a target='_Blank' href='/otd/order.php?packet=$d[packet_id]'>O$d[packet_id]-$d[mail_status]</a></li>";
+}
+$r=@mysql_query("select eviction_id, mail_status from evictionPackets where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') order by mail_status, eviction_id");
+while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+	$optest = 1;
+	echo "<li><a target='_Blank' href='/ev/order.php?packet=$d[eviction_id]'>E$d[eviction_id]-$d[mail_status]</a></li>";
+}
+if (!$optest){ echo "<li>All Good =)</li>"; }
+echo "</ol></div></td>";
+echo "<td valign='top'><div class='title1'><b>Deadline Watch</b><table>
+";
+
+
+
+$r=@mysql_query("select * from ps_packets where process_status <> 'CANCELLED' and fileDate = '0000-00-00' AND estFileDate < '$today' AND estFileDate <> '0000-00-00' order by estFileDate, circuit_court");
+while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+	$test11 = 1;
+	echo "<tr><td><a target='_Blank' href='/otd/order.php?packet=$d[packet_id]'>O$d[packet_id]</a></td><td>$d[estFileDate]</td><td>$d[circuit_court]</td><td>$d[filing_status]</td><td>#$d[server_id]</td><td>#$d[server_ida]</td><td>#$d[server_idb]</td></tr>";
+}
+
+
+
+
+$r=@mysql_query("select * from evictionPackets where process_status <> 'CANCELLED' and fileDate = '0000-00-00' AND estFileDate < '$today' AND estFileDate <> '0000-00-00' order by estFileDate, circuit_court");
+while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+	$test11 = 1;
+	echo "<tr><td><a target='_Blank' href='/ev/order.php?packet=$d[eviction_id]'>E$d[eviction_id]</a></td><td>$d[estFileDate]</td><td>$d[circuit_court]</td><td>$d[filing_status]</td><td>#$d[server_id]</td><td>#$d[server_ida]</td><td>#$d[server_idb]</td></tr>";
+}
+
+
+
+
+
+
+
+
+if (!$test11){ echo "<li>All Good =)</li>"; }
+echo "</table></div></td>";
+echo "<td valign='top'><div class='title2'><b>Courier Schedule</b><ol>";
+// couriers
+$r=@mysql_query("select packet_id, circuit_court from ps_packets where process_status <> 'CANCELLED' and courierID = '' and estFileDate > '$today' and fileDate = '0000-00-00' order by circuit_court");
+while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+	echo "<li><a target='_Blank' href='/otd/order.php?packet=$d[packet_id]'>$d[circuit_court], ".courierDate($d[packet_id])."</a></li>";
+}
+$r=@mysql_query("select eviction_id, circuit_court from evictionPackets where process_status <> 'CANCELLED' and courierID = '' and estFileDate > '$today' and fileDate = '0000-00-00' order by circuit_court");
+$count=mysql_num_rows($r);
+while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+	echo "<li><a target='_Blank' href='/ev/order.php?packet=$d[eviction_id]'>$d[circuit_court], ".courierDate2($d[eviction_id])."</a></li>";
+}
+echo "</ol></div></td>";
+echo "<td valign='top'><div class='title2'><b>Benchmark</b><ol>";
+
+// close date
+
+$r=@mysql_query("select * from ps_packets where process_status <> 'CANCELLED' and filing_status <> '' and filing_status <> 'PREP TO FILE' and filing_status <> 'AWAITING CASE NUMBER' and filing_status <> 'REOPENED' and filing_status <> 'DO NOT FILE' and fileDate = '0000-00-00' AND process_status <> 'Assigned' order by date_received DESC");
+while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+	echo "<li><a target='_Blank' href='/otd/order.php?packet=$d[packet_id]'>OTD$d[packet_id], close date set.</a></li>";
+}
+$r=@mysql_query("select * from evictionPackets where process_status <> 'CANCELLED' and filing_status <> '' and filing_status <> 'PREP TO FILE' and filing_status <> 'DO NOT FILE' and fileDate = '0000-00-00' AND process_status <> 'Assigned' order by date_received DESC");
+while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+	echo "<li><a target='_Blank' href='/ev/order.php?packet=$d[eviction_id]'>EV$d[eviction_id], close date set.</a></li>";
+}
+echo "</ol></div></td>";
+echo "<td valign='top'><div class='title3'><b>Export</b><ol>
+
+";
+$r=@mysql_query("select * from exportRequests where exportDate = '0000-00-00 00:00:00'");
+while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+	echo "<li>$d[packetID], export review.</li>";
+}
+$r=@mysql_query("select * from rescanRequests where rescanDate = '0000-00-00 00:00:00'");
+while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+	echo "<li>$d[packetID], documents rescanned.</li>";
+}
+echo "<ol></div></td></tr></table>";
+?>

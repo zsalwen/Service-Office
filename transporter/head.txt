@@ -1,0 +1,10 @@
+<html>
+<head><title>Rad Upload</title></head>
+
+
+<body  bgcolor="FFFFCC">
+<table border="1" cellpadding="5" width="100%" align="center">
+<tr><td colspan="2" bgcolor="#0066cc"><font color="#FFFFCC" size="+1" align="center">Files Uploaded</font></td></tr>
+<tr  bgcolor="#ffff00"><td><nobr>File Name</nobr></td>
+	<td align="right"><nobr>File size</nobr></td></tr>
+	

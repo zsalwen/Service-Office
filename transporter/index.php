@@ -1,0 +1,57 @@
+<script type="text/javascript" src="script.js"></script>
+<div style="border: 1px solid #336699; padding:0px;width:325px;height:450px;">
+
+<?      
+    $useApplet=0;
+    $user_agent =$_SERVER['HTTP_USER_AGENT'];
+    
+    if(stristr($user_agent,"konqueror") || stristr($user_agent,"macintosh") || stristr($user_agent,"opera"))
+    {
+        $useApplet=1;
+        echo '<applet name="Rad Upload Plus"
+                        archive="dndplus.jar"
+                        code="com.radinks.dnd.DNDAppletPlus"
+                        width="325" MAYSCRIPT="yes" id="rup"
+                        height="450">';
+    }
+    else
+	{
+        if(strstr($user_agent,"MSIE")) {
+                echo '<script language="javascript" src="embed.js" type="text/javascript"></script>';
+                echo '<script>IELoader()</script>';
+        } else {
+            echo '<object type="application/x-java-applet;version=1.4.1"
+                    width= "325" height= "450"  id="rup" name="rup">';
+            echo '  <param name="archive" value="dndplus.jar">
+                    <param name="code" value="com.radinks.dnd.DNDAppletPlus">
+                    <param name="name" value="Rad Upload Plus">';
+        }
+	}
+?>
+    <!-- BEGIN APPLET CONFIGURATION PARAMETERS -->
+    <param name="max_upload" value="2000000">
+    <!-- Total file size in kilobytes  -->
+
+     <param name = "message" value="<?=$_COOKIE[psdata][name];?>, Drag and Drop your PDF's here.<br>System Time <?=date('r')?>">
+    <param name='url' value='ftp://webuploads:javaphp@mdwestserve.com'>
+    
+<?
+        echo '<param name="MAYSCRIPT" value="true">';
+        echo '<param name="scriptable" value="true">';
+        
+		if(isset($_SERVER['PHP_AUTH_USER']))
+		{
+			printf('<param name="chap" value="%s">',
+				base64_encode($_SERVER['PHP_AUTH_USER'].":".$_SERVER['PHP_AUTH_PW']));
+		}
+		if($useApplet == 1)
+		{
+			echo '</applet>';
+		}
+		else
+		{
+            echo '</object>';
+		}
+?>
+		</div>
+		

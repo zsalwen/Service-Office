@@ -1,0 +1,42 @@
+<style>
+td { font-variant:small-caps; }
+
+
+p {border-style:solid; border-width:thick; border-collapse:collapse;}
+</style>
+		<table width="80%" align="center" bgcolor="#FFFFFF" >
+			<tr><td colspan='2' align='center' style='font-size:24px; font-variant:small-caps;'>[courtState]<br><br></td></tr>
+		<tr><td colspan='2' align='center' style='font-size:20px;'>[courtType]<br><br></td></tr>
+		<tr></tr>
+		<tr><td class='a' style='width:600px;'>[altPlaintiff]<br><small>_____________________<br /><em>Plaintiff</em></small><br /><br />v.<br /><br />[defendant]<br><small>_____________________<br /><em>Defendant</em></small></td>
+
+				<td align='right' valign='top' style='width:200px' nowrap='nowrap'><div style='font-size:24px; border:solid 1px #666666; text-align:center;'>Case Number<br />[caseNumber]&nbsp;</div><center>File Number: [clientFile]</center></td></tr>		<tr>
+			<td colspan="2" align="center" style="font-weight:bold; text-decoration:underline" height="30px" valign="top"><font size='+2'>Affidavit of Service</font></td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center" style="font-weight:bold; font-size:20px;" height="30px" valign="top"></td>
+
+		</tr>
+		<tr>
+			<td colspan="2" align="left">I, [serverName], did serve the [papers], in the above-captioned case by [how]:<br></td>
+		</tr>
+		<tr>
+			<td colspan="2" style="font-weight:bold; padding-left:20px;"><div style='font-weight:300'><u>Describe with particularity the good faith efforts to serve [name1]:</u></div>
+				<br><br>[attempt1] <br><br><br>
+				[attempt2]<br><br><br>
+				[attempt3] <br><br></td>
+
+		</tr>
+		<tr>
+			<td colspan="2">I solemnly affirm under the penalties of perjury that the contents of this affidavit are true and correct, to the best of my knowledge, information and belief.<br></td>
+		</tr>
+		<tr>
+			<td colspan="2">I, [serverName], certify that I am over eighteen years old and not a party to this action.<br /></td>
+		</tr>
+		<tr>
+
+			<td valign="top" style="font-size:14px" width="50%"></td>
+			<td valign="top" style="font-size:14px" width="50%">________________________<u>DATE:</u>________<br />[serverName]<br />[serverAddress]<br />[serverCity], [serverState] [serverZip]<br />[serverPhone]</td> 
+		</tr>
+	</table>
+		<br><br>	

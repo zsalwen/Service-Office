@@ -1,0 +1,4 @@
+UserAgent: *
+Disallow: /ps/
+Disallow: /CORE/
+Disallow: /AC/

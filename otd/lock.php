@@ -1,0 +1,1 @@
+<? include '/sandbox/staff/lock.php'; ?>
