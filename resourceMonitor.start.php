@@ -11,7 +11,7 @@ function valueData($key){
 }
 function resourceMonitortalk($to,$message){
  include_once '/thirdParty/xmpphp/XMPPHP/XMPP.php';
-        $user = 'talkabout.files@gmail.com';
+        $user = 'mdwestserve@gmail.com';
         $password = valueData($user);
 $conn = new XMPPHP_XMPP('talk.google.com', 5222, $user, $password, 'xmpphp', 'gmail.com', $printlog=false, $loglevel=XMPPHP_Log::LEVEL_INFO);
 try {
