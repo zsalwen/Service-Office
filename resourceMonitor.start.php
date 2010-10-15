@@ -4,7 +4,7 @@ $mtimeResourceMonitorStart = microtime();
 $mtimeResourceMonitorStart = explode (" ", $mtimeResourceMonitorStart);
 $mtimeResourceMonitorStart = $mtimeResourceMonitorStart[1] + $mtimeResourceMonitorStart[0];
 $tstartResourceMonitorStart = $mtimeResourceMonitorStart; 
-function valueData($key){
+function resourceMonitorvalueData($key){
   $r=@mysql_query("select valueData from config where keyData = '$key'");
   $d=mysql_fetch_array($r,MYSQL_ASSOC);
   return $d[valueData];
@@ -12,7 +12,7 @@ function valueData($key){
 function resourceMonitortalk($to,$message){
  include_once '/thirdParty/xmpphp/XMPPHP/XMPP.php';
         $user = 'mdwestserve@gmail.com';
-        $password = valueData($user);
+        $password = resourceMonitorvalueData($user);
 $conn = new XMPPHP_XMPP('talk.google.com', 5222, $user, $password, 'xmpphp', 'gmail.com', $printlog=false, $loglevel=XMPPHP_Log::LEVEL_INFO);
 try {
 		$conn->useEncryption(true);
