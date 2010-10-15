@@ -1,4 +1,4 @@
-<?
+<?php
 include 'common.php';
 
 
@@ -244,7 +244,7 @@ if ($newClose != 1){
 		priority='$_POST[priority]',
 		request_close='$_POST[request_close]',
 		client_file='".strtoupper($_POST[client_file])."',
-		case_no='".str_replace('Ø',0,$case_no)."',
+		case_no='".str_replace('ï¿½',0,$case_no)."',
 		altPlaintiff='".dbCleaner($_POST[altPlaintiff])."',
 		circuit_court='".strtoupper($_POST[circuit_court])."'
 		WHERE eviction_id='$_POST[eviction_id]'") or die(mysql_error());
@@ -277,7 +277,7 @@ if ($newClose != 1){
 		priority='$_POST[priority]',
 		request_close='$_POST[request_close]',
 		client_file='".strtoupper($_POST[client_file])."',
-		case_no='".str_replace('Ø',0,$case_no)."',
+		case_no='".str_replace('ï¿½',0,$case_no)."',
 		altPlaintiff='".dbCleaner($_POST[altPlaintiff])."',
 		circuit_court='".strtoupper($_POST[circuit_court])."'
 		WHERE eviction_id='$_POST[eviction_id]'") or die(mysql_error());
@@ -312,7 +312,7 @@ $case_no=trim($_POST[case_no]);
 	mail_status='$_POST[mail_status]',
 	affidavitType='$_POST[affidavitType]',
 	client_file='".strtoupper($_POST[client_file])."',
-	case_no='".str_replace('Ø',0,$case_no)."',
+	case_no='".str_replace('ï¿½',0,$case_no)."',
 	process_status='READY',
 	status='RECIEVED',
 	circuit_court='".strtoupper($_POST[circuit_court])."',
