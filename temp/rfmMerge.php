@@ -72,7 +72,7 @@ mysql_connect();
 mysql_select_db('core');
 $packet=$_GET[packet];
 echo "Packet: ".$packet."<br>";
-$current="/sandbox/staff/temp";
+$current="/gitbox/Service-Office/temp";
 hardLog('Downloading Full PDF Package','user');
 
 $r1=@mysql_query("select otd, client_file, prevOTD from ps_packets where packet_id = '$packet'");
