@@ -59,9 +59,9 @@ $myFile = "$id.html";
 $fh = fopen($myFile, 'w') or die("can't open file");
 fwrite($fh, $d[LiveAffidavit]);
 fclose($fh);
-passthru('/usr/local/bin/html2ps '.$id.'.html > '.$id.'.ps');
-$file = $id.'.ps';
-$remote_file = $id.'.ps';
+passthru('/usr/local/bin/html2ps '.$id.'.html > '.$id.'.pcl');
+$file = $id.'.pcl';
+$remote_file = $id.'.pcl';
 
 
 
@@ -95,7 +95,7 @@ if (ftp_chdir($conn_id, "PORT1")) {
 }
 if (ftp_put($conn_id, $remote_file, $file, FTP_BINARY)) {
 	//echo "successfully uploaded $file\n";
-	$last_line = system('rm -f '.$id.'.ps', $retval);
+	$last_line = system('rm -f '.$id.'.pcl', $retval);
 	$last_line = system('rm -f '.$id.'.rtf', $retval);
 	$last_line = system('rm -f '.$id.'.html', $retval);
 	error_log(date('r')." $ip NOTICE: Burson edited ad $id printed successfully. \n", 3, '/logs/printer.log');
