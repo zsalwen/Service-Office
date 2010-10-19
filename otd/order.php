@@ -1,4 +1,4 @@
-<?
+<?php
 include 'common.php';
 ?>
 <script>
@@ -519,7 +519,7 @@ if ($_POST[submit]){
 			addressTyped='$_POST[addressTyped]',
 			addressTypee='$_POST[addressTypee]',
 			client_file='".strtoupper($_POST[client_file])."',
-			case_no='".str_replace('Ø',0,$case_no)."',
+			case_no='".str_replace('ï¿½',0,$case_no)."',
 			reopenNotes='".addslashes(strtoupper($_POST[reopenNotes]))."',
 			auctionNote='".strtoupper($_POST[auctionNote])."',
 			circuit_court='".strtoupper($_POST[circuit_court])."'
@@ -580,7 +580,7 @@ if ($_POST[submit]){
 			addressTyped='$_POST[addressTyped]',
 			addressTypee='$_POST[addressTypee]',
 			client_file='".strtoupper($_POST[client_file])."',
-			case_no='".str_replace('Ø',0,$case_no)."',
+			case_no='".str_replace('ï¿½',0,$case_no)."',
 			reopenNotes='".addslashes(strtoupper($_POST[reopenNotes]))."',
 			auctionNote='".strtoupper($_POST[auctionNote])."',
 			circuit_court='".strtoupper($_POST[circuit_court])."'
@@ -645,7 +645,7 @@ if ($_POST[submit]){
 		mail_status='$_POST[mail_status]',
 		affidavitType='$_POST[affidavitType]',
 		client_file='".strtoupper($_POST[client_file])."',
-		case_no='".str_replace('Ø',0,$case_no)."',
+		case_no='".str_replace('ï¿½',0,$case_no)."',
 		process_status='READY',
 		status='RECIEVED',
 		circuit_court='".strtoupper($_POST[circuit_court])."'
@@ -850,6 +850,7 @@ if ($_POST[submit]){
 		address5='$_POST[address]',
 		city5='$_POST[city]',
 		state5='$_POST[state]',
+
 		zip5='$_POST[zip]',
 		address5a='$_POST[addressa]',
 		city5a='$_POST[citya]',
@@ -2101,6 +2102,7 @@ while ($d12=mysql_fetch_array($r12, MYSQL_ASSOC)) {
 	$src=str_replace('portal//var/www/dataFiles/service/orders/','PS_PACKETS/',$d[otd]);
 	$src=str_replace('data/service/orders/','PS_PACKETS/',$src);
 	$src=str_replace('portal/','',$src);
+
 ?>
 <iframe height="285px" width="740px" name="QCOTD" src="<?=$src?>"></iframe>
 <? } ?>
@@ -2139,7 +2141,7 @@ while ($d12=mysql_fetch_array($r12, MYSQL_ASSOC)) {
 	}elseif(!$d[caseVerify]){
 		$src="validateCase.php?case=$d[case_no]&packet=$d[packet_id]&county=$d[circuit_court]";
 	}elseif($d[process_status] == "CANCELLED" || $d[filing_status]=="FILED WITH COURT" || $d[filing_status]=="FILED WITH COURT - FBS"){
-		$src="http://mdwestserve.com/AC/minips_pay.php?id=$d[packet_id]";
+		$src="http://staff.mdwestserve.com/otd/minips_pay.php?id=$d[packet_id]";
 	}else{
 		$src="serviceReview.php?packet=$d[packet_id]"; 
 	}
