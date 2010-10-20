@@ -1070,6 +1070,7 @@ while ($d3=mysql_fetch_array($r3, MYSQL_ASSOC)){
 ?>
 <option><?=$d3[affidavit_status2]?></option>
 <? } ?>
+<option>AWAITING MAILING</option>
 <option value=""></option>
 </select></td>
 </td></tr></table>
