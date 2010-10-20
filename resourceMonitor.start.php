@@ -91,14 +91,11 @@ function resourceMonitorStartServerResponse($page,$time,$query,$log,$debug){
 	if (trim($page) != 'report.php'){ // don't log the toolbar
 		$str = "[".date('m/d/Y h:i A')."] [$load] [".resourceMonitorStartGetMemory()."] [".$swap['1']."b] [".resourceMonitorLeading_zeros((number_format($speed,2)),3)."MB/s] [".$loadTime."s] [".trim($page)."] [".$user."]";
 	if($loadTime > 10){
-		resourceMonitortalk('insidenothing@gmail.com','Level 1 PHP Performance Alert: '.$page.' in '.$loadTime.'s');
-		resourceMonitortalk('ron.mdwestserve@gmail.com','Level 1 PHP Performance Alert: '.$page.' in '.$loadTime.'s');
 		resourceMonitortalk('zachsalwen@gmail.com','Level 1 PHP Performance Alert: '.$page.' in '.$loadTime.'s');
 	}elseif($loadTime > 7){
-		resourceMonitortalk('insidenothing@gmail.com','Level 2 PHP Performance Alert: '.$page.' in '.$loadTime.'s');
 		resourceMonitortalk('zachsalwen@gmail.com','Level 2 PHP Performance Alert: '.$page.' in '.$loadTime.'s');
 	}elseif($loadTime > 5){
-		resourceMonitortalk('insidenothing@gmail.com','Level 3 PHP Performance Alert: '.$page.' in '.$loadTime.'s');
+		resourceMonitortalk('zachsalwen@gmail.com','Level 3 PHP Performance Alert: '.$page.' in '.$loadTime.'s');
 	}
 
 		if ($debug && $_COOKIE[psdata][level] == 'Operations'){
@@ -117,8 +114,8 @@ function resourceMonitorStartServerResponse($page,$time,$query,$log,$debug){
 			echo "</pre></div>";
 		}
 		error_log($str."\n", 3, $log);
-		error_log($str."\n", 3, '/logs/code/'.str_replace('/','-',trim($page)).'.log');
-		error_log($str."\n", 3, '/logs/user/'.$user.'.log');
+		//error_log($str."\n", 3, '/logs/code/'.str_replace('/','-',trim($page)).'.log');
+		//error_log($str."\n", 3, '/logs/user/'.$user.'.log');
 	$test1 = resourceMonitorSearch($page,'staff'); // 1 = staff page
 	if ($test1 == 1 && !$_COOKIE['psdata']['name']){
 	error_log($str."\n", 3, '/logs/fail.log');
