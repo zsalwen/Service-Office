@@ -12,7 +12,7 @@ function resourceMonitorvalueData($key){
 }
 function resourceMonitortalk($to,$message){
   $username = 'mdwestserve@gmail.com';
-  $password = valueData($username);
+  $password = resourceMonitorvalueData($username);
   @mysql_query("insert into talkQueue (fromAccount,fromPassword,toAddress,message,sendRequested,sendStatus) values ('$username','$password','$to','$message',NOW(),'ready to send')");
 }
 function resourceMonitorSearch($string,$search){
