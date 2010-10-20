@@ -10,6 +10,8 @@ function resourceMonitorvalueData($key){
   return $d[valueData];
 }
 function resourceMonitortalk($to,$message){
+ mysql_connect();
+ mysql_db_select('core');
   $username = 'mdwestserve@gmail.com';
   $password = valueData($username);
   @mysql_query("insert into talkQueue (fromAccount,fromPassword,toAddress,message,sendRequested,sendStatus) values ('$username','$password','$to','$message',NOW(),'ready to send')");
