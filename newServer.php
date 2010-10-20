@@ -173,7 +173,7 @@ echo "<div>$msg</div>";
 				</tr>
                 <tr>
                 	<td>City, State, Zip</td>
-                	<td><input name="city" size="20" /><select name="state"><?=stateList()?></select></td><input name="zip" size="10" /></td>
+                	<td><input name="city" size="20" /><select name="state"><?=stateList()?></select><input name="zip" size="10" /></td>
 		</tr>
                 <tr>
                 	<td>Mailing Address</td>
