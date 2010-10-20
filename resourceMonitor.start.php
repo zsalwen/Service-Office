@@ -10,20 +10,9 @@ function resourceMonitorvalueData($key){
   return $d[valueData];
 }
 function resourceMonitortalk($to,$message){
- include_once '/thirdParty/xmpphp/XMPPHP/XMPP.php';
-        $user = 'mdwestserve@gmail.com';
-        $password = resourceMonitorvalueData($user);
-$conn = new XMPPHP_XMPP('talk.google.com', 5222, $user, $password, 'xmpphp', 'gmail.com', $printlog=false, $loglevel=XMPPHP_Log::LEVEL_INFO);
-try {
-		$conn->useEncryption(true);
-		$conn->connect();
-		$conn->processUntil('session_start');
-		//$conn->presence("Ya, I'm online","available","talk.google.com");
-		$conn->message($to, $message);
-		$conn->disconnect();
-	} catch(XMPPHP_Exception $e) {
-		die($e->getMessage());
-	}
+  $username = 'mdwestserve@gmail.com';
+  $password = valueData($username);
+  @mysql_query("insert into talkQueue (fromAccount,fromPassword,toAddress,message,sendRequested,sendStatus) values ('$username','$password','$to','$message',NOW(),'ready to send')");
 }
 function resourceMonitorSearch($string,$search){
 	$pos = strpos($string, $search);
