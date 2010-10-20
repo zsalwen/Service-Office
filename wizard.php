@@ -89,7 +89,7 @@ $template = str_replace('[courtState]',ucPrep($packet[courtState]),$template);
 $template = str_replace('[courtCounty]',ucPrep($packet[circuit_court]),$template);
 $template = str_replace('[courtType]',ucPrep($packet[courtType]),$template);
 $template = str_replace('[clientFile]',ucPrep($packet[client_file]),$template);
-$template = str_replace('[caseNumber]',ucPrep($packet[case_no]),$template);
+$template = str_replace('[caseNumber]',strtoupper($packet[case_no]),$template);
 // affidavit information
 $template = str_replace('[who]',ucPrep($affidavit[whoX]),$template);
 $template = str_replace('[when]',ucPrep($affidavit[whenX]),$template);
