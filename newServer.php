@@ -28,6 +28,10 @@ $q1 = "INSERT INTO ps_users (
 							city,
 							state,
 							zip,
+							address2,
+							city2,
+							state2,
+							zip2,
 							phone,
 							email_status,
 							signup,
@@ -43,6 +47,10 @@ $q1 = "INSERT INTO ps_users (
 							'".$_POST['city']."',
 							'".$_POST['state']."',
 							'".$_POST['zip']."',
+							'".addslashes($_POST['address2'])."',
+							'".$_POST['city2']."',
+							'".$_POST['state2']."',
+							'".$_POST['zip2']."',
 							'".addslashes($_POST['phone'])."',
 							'VERIFIED',
 							NOW(),
@@ -69,6 +77,10 @@ Address : ".$_POST['address']." <br>
 City : ".$_POST['city']." <br>
 State : ".$_POST['state']." <br>
 Zip : ".$_POST['zip']." <br>
+Mailing Address : ".$_POST['address2']." <br>
+Mailing City : ".$_POST['city2']." <br>
+Mailing State : ".$_POST['state2']." <br>
+Mailing Zip : ".$_POST['zip2']." <br>
 Phone : ".$_POST['phone']." <br>";
 //mail($to,$subject,$msg,$headers);
 //logAction($_COOKIE[psdata][user_id], $_SERVER['PHP_SELF'], 'Account Created');
@@ -102,7 +114,7 @@ echo "<div>$msg</div>";
                     <td><input name="phone" size="50" /></td>
                 </tr>
                 <tr>
-                	<td>Address</td>
+                	<td>Physical Address</td>
                 	<td><input name="address" size="50" /></td>
 				</tr>
                 <tr>
@@ -116,10 +128,26 @@ echo "<div>$msg</div>";
                 <tr>
                 	<td>ZIP Code</td>
                 	<td><input name="zip" size="10" /></td>
+		</tr>
+                <tr>
+                	<td>Mailing Address</td>
+                	<td><input name="address2" size="50" /></td>
 				</tr>
                 <tr>
+                	<td>City</td>
+                	<td><input name="city2" size="20" /></td>
+				</tr>
+                <tr>
+                	<td>State</td>
+                	<td><input name="state2" size="2" maxlength="2"></td>
+				</tr>
+                <tr>
+                	<td>ZIP Code</td>
+                	<td><input name="zip2" size="10" /></td>
+		</tr>
+                <tr>
                 	<td>Email Address</td>
-                    <td><input name="email" size="50" /></td>
+                    <td><input name="email2" size="50" /></td>
                 </tr>
                 <tr>
                 	<td>Password</td>
