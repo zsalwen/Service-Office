@@ -1,5 +1,6 @@
 <?
-//ob_start("ob_gzhandler");
+mysql_connect();
+mysql_select_db('core');
 $mtimeResourceMonitorStart = microtime();
 $mtimeResourceMonitorStart = explode (" ", $mtimeResourceMonitorStart);
 $mtimeResourceMonitorStart = $mtimeResourceMonitorStart[1] + $mtimeResourceMonitorStart[0];
@@ -10,8 +11,6 @@ function resourceMonitorvalueData($key){
   return $d[valueData];
 }
 function resourceMonitortalk($to,$message){
- mysql_connect();
- mysql_select_db('core');
   $username = 'mdwestserve@gmail.com';
   $password = valueData($username);
   @mysql_query("insert into talkQueue (fromAccount,fromPassword,toAddress,message,sendRequested,sendStatus) values ('$username','$password','$to','$message',NOW(),'ready to send')");
