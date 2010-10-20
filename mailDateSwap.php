@@ -71,10 +71,11 @@ if ($_GET[packet]){
 				$headers .= "Cc: ".$_COOKIE[psdata][email]."\n";
 				$headers .= "Cc: MDWestServe Archive <mdwestserve@gmail.com> \n";
 				mail($to,$subject,$body,$headers);
-				psActivity("serviceREConfirmed");
-				timeline($packet,$_COOKIE[psdata][name]." REConfirmed Service");
 			}
 		}
+		psActivity("serviceREConfirmed");
+		timeline($_GET[packet],$_COOKIE[psdata][name]." RESET Mailing Date To $dt");
+		error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." RESET Mailing Date for OTD$_GET[packet] to $dt \n",3,"/logs/user.log");
 		echo "<script>window.location='http://service.mdwestserve.com/obAffidavit.php?mail=1&autoPrint=1&packet=$_GET[packet]';</script>";
 	}else{
 		$q1="SELECT * FROM ps_history WHERE packet_id='".$_GET[packet]."' AND wizard='MAILING DETAILS'";
@@ -141,10 +142,10 @@ if ($_GET[packet]){
 				$headers .= "Cc: ".$_COOKIE[psdata][email]."\n";
 				$headers .= "Cc: MDWestServe Archive <mdwestserve@gmail.com> \n";
 				mail($to,$subject,$body,$headers);
-				psActivity("serviceREConfirmed");
-				timeline($packet,$_COOKIE[psdata][name]." REConfirmed Service");
 			}
 		}
+		ev_timeline($_GET[eviction],$_COOKIE[psdata][name]." RESET Mailing Date To $dt");
+		error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." RESET Mailing Date for EV$_GET[eviction] to $dt \n",3,"/logs/user.log");
 		echo "<script>window.location='http://service.mdwestserve.com/evictionAff.php?mail=1&autoPrint=1&id=$_GET[eviction]';</script>";
 	}else{
 		$q1="SELECT * FROM evictionHistory WHERE eviction_id='".$_GET[eviction]."' AND wizard='MAILING DETAILS'";
@@ -232,10 +233,10 @@ if ($_GET[packet]){
 						$headers .= "Cc: ".$_COOKIE[psdata][email]."\n";
 						$headers .= "Cc: MDWestServe Archive <mdwestserve@gmail.com> \n";
 						mail($to,$subject,$body,$headers);
-						psActivity("serviceREConfirmed");
-						timeline($packet,$_COOKIE[psdata][name]." REConfirmed Service");
 					}
 				}
+				timeline($OTDs["$i"],$_COOKIE[psdata][name]." RESET Mailing Date To $dt");
+				error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." RESET Mailing Date for OTD".$OTDs["$i"]." to $dt \n",3,"/logs/user.log");
 			}
 		}
 		$i=0;
@@ -275,10 +276,10 @@ if ($_GET[packet]){
 						$headers .= "Cc: ".$_COOKIE[psdata][email]."\n";
 						$headers .= "Cc: MDWestServe Archive <mdwestserve@gmail.com> \n";
 						mail($to,$subject,$body,$headers);
-						psActivity("serviceREConfirmed");
-						timeline($packet,$_COOKIE[psdata][name]." REConfirmed Service");
 					}
 				}
+				ev_timeline($EVs["$i"],$_COOKIE[psdata][name]." RESET Mailing Date To $dt");
+				error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." RESET Mailing Date for EV".$EVs["$i"]." to $dt \n",3,"/logs/user.log");
 			}
 		}
 	}
