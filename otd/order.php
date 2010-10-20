@@ -1691,12 +1691,13 @@ while ($d3=mysql_fetch_array($r3, MYSQL_ASSOC)){
 </td><td>
 <td align="center" colspan='3'>Affidavit Status 2<br><select name="affidavit_status2"><option><?=$d[affidavit_status2]?></option>
 <?
-$q3="SELECT DISTINCT affidavit_status2 from ps_packets WHERE affidavit_status2 <> '' AND affidavit_status2 <> 'REOPENED' AND affidavit_status2 <> 'AWAITING OUT OF STATE AFFIDAVITS' AND affidavit_status2 <> 'AWAITING OUT OF STATE SERVICE'";
+$q3="SELECT DISTINCT affidavit_status2 from ps_packets WHERE affidavit_status2 <> '' AND affidavit_status2 <> 'REOPENED' AND affidavit_status2 <> 'AWAITING OUT OF STATE AFFIDAVITS' AND affidavit_status2 <> 'AWAITING OUT OF STATE SERVICE' AND affidavit_status2 <> 'AWAITING MAILING'";
 $r3=@mysql_query($q3) or die("Query: $q3<br>".mysql_error());
 while ($d3=mysql_fetch_array($r3, MYSQL_ASSOC)){
 ?>
 <option><?=$d3[affidavit_status2]?></option>
 <? } ?>
+<option>AWAITING MAILING</option>
 <option>AWAITING OUT OF STATE AFFIDAVITS</option>
 <option>AWAITING OUT OF STATE SERVICE</option>
 <option>REOPENED</option>
