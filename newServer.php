@@ -1,7 +1,61 @@
 <?
 $step1 = @mysql_connect ();
 $step2 = mysql_select_db ('core');
-include '/sandbox/portal/common/functions.php';
+include 'functions.php';
+function stateList(){
+$list .= "<option>AL</option>";
+$list .= "<option>AK</option>";
+$list .= "<option>AR</option>";
+$list .= "<option>AS</option>";
+$list .= "<option>AZ</option>";
+$list .= "<option>CA</option>";
+$list .= "<option>CO</option>";
+$list .= "<option>CT</option>";
+$list .= "<option>DC</option>";
+$list .= "<option>DE</option>";
+$list .= "<option>FL</option>";
+$list .= "<option>GA</option>";
+$list .= "<option>HI</option>";
+$list .= "<option>IA</option>";
+$list .= "<option>ID</option>";
+$list .= "<option>IL</option>";
+$list .= "<option>KS</option>";
+$list .= "<option>KY</option>";
+$list .= "<option>LA</option>";
+$list .= "<option>MA</option>";
+$list .= "<option>MD</option>";
+$list .= "<option>ME</option>";
+$list .= "<option>MI</option>";
+$list .= "<option>MN</option>";
+$list .= "<option>MO</option>";
+$list .= "<option>MS</option>";
+$list .= "<option>MT</option>";
+$list .= "<option>NC</option>";
+$list .= "<option>ND</option>";
+$list .= "<option>NE</option>";
+$list .= "<option>NH</option>";
+$list .= "<option>NJ</option>";
+$list .= "<option>NM</option>";
+$list .= "<option>NV</option>";
+$list .= "<option>NY</option>";
+$list .= "<option>OH</option>";
+$list .= "<option>OK</option>";
+$list .= "<option>OR</option>";
+$list .= "<option>PA</option>";
+$list .= "<option>RI</option>";
+$list .= "<option>SC</option>";
+$list .= "<option>SD</option>";
+$list .= "<option>TN</option>";
+$list .= "<option>TX</option>";
+$list .= "<option>UT</option>";
+$list .= "<option>VA</option>";
+$list .= "<option>VT</option>";
+$list .= "<option>WA</option>";
+$list .= "<option>WI</option>";
+$list .= "<option>WV</option>";
+$list .= "<option>WY</option>";
+return $list;
+}
 if (isset($_POST['name']) && ($_POST['name'] != '') && isset($_POST['email']) && ($_POST['email'] != '') && isset($_POST['password']) && ($_POST['password'] != '')){
 // check and prevent duplicate email addresses
 $q2="SELECT email FROM ps_users where email = '".$_POST['email']."'";
@@ -99,64 +153,48 @@ echo "<div>$msg</div>";
                 
 				<tr>
                 	<td>First Name</td>
-                    <td><input name="name" size="50" /></td>
+                    <td colspan='3'><input name="name" size="50" /></td>
                 </tr>
 				<tr>
                 	<td>Last Name</td>
-                    <td><input name="name2" size="50" /></td>
+                    <td colspan='3'><input name="name2" size="50" /></td>
                 </tr>
 				<tr>
                 	<td>Company</td>
-                    <td><input name="company" size="50" /></td>
+                    <td colspan='3'><input name="company" size="50" /></td>
                 </tr>
 				<tr>
                 	<td>Phone</td>
-                    <td><input name="phone" size="50" /></td>
+                    <td colspan='3'><input name="phone" size="50" /></td>
                 </tr>
                 <tr>
                 	<td>Physical Address</td>
-                	<td><input name="address" size="50" /></td>
+                	<td colspan='3'><input name="address" size="50" /></td>
 				</tr>
                 <tr>
-                	<td>City</td>
-                	<td><input name="city" size="20" /></td>
-				</tr>
-                <tr>
-                	<td>State</td>
-                	<td><input name="state" size="2" maxlength="2"></td>
-				</tr>
-                <tr>
-                	<td>ZIP Code</td>
-                	<td><input name="zip" size="10" /></td>
+                	<td>City, State, Zip</td>
+                	<td><input name="city" size="20" /><select name="state"><?=stateList()?></select></td><input name="zip" size="10" /></td>
 		</tr>
                 <tr>
                 	<td>Mailing Address</td>
-                	<td><input name="address2" size="50" /></td>
+                	<td colspan='3'><input name="address2" size="50" /></td>
 				</tr>
                 <tr>
-                	<td>City</td>
-                	<td><input name="city2" size="20" /></td>
-				</tr>
-                <tr>
-                	<td>State</td>
-                	<td><input name="state2" size="2" maxlength="2"></td>
-				</tr>
-                <tr>
-                	<td>ZIP Code</td>
-                	<td><input name="zip2" size="10" /></td>
+                	<td>City, State, Zip</td>
+                	<td><input name="city2" size="20" /><select name="state2"><?=stateList()?></select><input name="zip2" size="10" /></td>
 		</tr>
                 <tr>
                 	<td>Email Address</td>
-                    <td><input name="email2" size="50" /></td>
+                    <td colspan='3'><input name="email2" size="50" /></td>
                 </tr>
                 <tr>
                 	<td>Password</td>
-                    <td><input type="password" name="password" size="50" /></td>
+                    <td colspan='3'><input type="password" name="password" size="50" /></td>
                 </tr>
       
         <tr>
         
-                	<td colspan="2" align="right" style="font-size:24px"  bgcolor="#FFFF99"><input  style="font-size:24px" type="submit" name="submit" value="Register" /></td>
+                	<td colspan="4" align="right" style="font-size:24px"  bgcolor="#FFFF99"><input  style="font-size:24px" type="submit" name="submit" value="Register" /></td>
                 </tr>
 </form>
 </table>
