@@ -86,6 +86,10 @@ if ($_POST[submit]){
 								city='$_POST[city]',
 								state='$_POST[state]',
 								zip='$_POST[zip]',
+								address2='$_POST[address2]',
+								city2='$_POST[city2]',
+								state2='$_POST[state2]',
+								zip2='$_POST[zip2]',
 								phone='$_POST[phone]'
 							WHERE id = '$id'";
 
@@ -123,6 +127,14 @@ $d=mysql_fetch_array($r, MYSQL_ASSOC);
                 <tr>
                 	<td>City, State ZIP </td>
                 	<td colspan="3"><input name="city" size="40" value="<?=$d[city]?>" /><select name="state"><option><?=$d[state]?></option><?=stateList()?></select><input name="zip" size="5" value="<?=$d[zip]?>" /></td>
+				</tr>
+				 <tr>
+                	<td>Mailing Address</td>
+                	<td colspan="3"><input name="address2" size="60" value="<?=$d[address2]?>" /></td>
+				</tr>
+                <tr>
+                	<td>City, State ZIP </td>
+                	<td colspan="3"><input name="city2" size="40" value="<?=$d[city2]?>" /><select name="state2"><option><?=$d[state2]?></option><?=stateList()?></select><input name="zip2" size="5" value="<?=$d[zip2]?>" /></td>
 				</tr>
                 <tr>
                 	<td>Phone</td>                
