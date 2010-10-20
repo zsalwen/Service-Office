@@ -116,8 +116,8 @@ $q1 = "INSERT INTO ps_users (
 		
 		$headers  = "MIME-Version: 1.0 \n";
 		$headers .= "Content-type: text/html; charset=iso-8859-1 \n";
-		$headers .= "From: Service <service@hwestauctions.com> \n";
-		$headers .= "Cc: System Operations <sysop@hwestauctions.com> \n";
+		$headers .= "From: Service <service@mdwestserve.com> \n";
+		$headers .= "Cc: System Operations <service@mdwestserve.com> \n";
 
 $to  = $_POST['email'];
 $subject = "New Process Server: ".$_POST['name'];
@@ -185,7 +185,7 @@ echo "<div>$msg</div>";
 		</tr>
                 <tr>
                 	<td>Email Address</td>
-                    <td colspan='3'><input name="email2" size="50" /></td>
+                    <td colspan='3'><input name="email" size="50" /></td>
                 </tr>
                 <tr>
                 	<td>Password</td>
