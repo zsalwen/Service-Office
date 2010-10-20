@@ -94,6 +94,9 @@ function serverActiveList($id,$packet){ $_SESSION[active]++;
 			if ($d[avoidDOT] != ''){
 				$case .= "-<span style='background-color:#000000; color:FF0000; border: 3px solid red; font-weight:bold;'>AvoidDOT</span>";
 			}
+			$estFileDate=explode('-',$d[estFileDate]);
+			$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
+			$case .= "&nbsp;<span style='background-color:white; border: 1px solid black; color: #000000 !important;'>FILE: $estFileDate</span>";
 			$withCouriet=withCourier($d[packet_id]);
 			if($withCourier != ''){
 				$case.=$withCourier;
@@ -103,9 +106,6 @@ function serverActiveList($id,$packet){ $_SESSION[active]++;
 					$case .= $prepExplode;
 				}
 			}
-			$estFileDate=explode('-',$d[estFileDate]);
-			$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-			$case .= "&nbsp;<span style='background-color:white; border: 1px solid black; color: #000000 !important;'>FILE: $estFileDate</span>";
 			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],'').";'><a href='http://staff.mdwestserve.com/otd/order.php?packet=$d[packet_id]' target='_Blank'>$d[packet_id]</a>: <strong>".$hours."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em>".$case."</li>";
 		}
 	}
@@ -142,6 +142,9 @@ function serverActiveLista($id,$packet){
 			if ($d[avoidDOT] != ''){
 				$case .= "-<span style='background-color:#000000; color:FF0000; border: 3px solid red; font-weight:bold;'>AvoidDOT</span>";
 			}
+			$estFileDate=explode('-',$d[estFileDate]);
+			$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
+			$case .= "&nbsp;<span style='background-color:white; border: 1px solid black; color: #000000 !important;'>FILE: $estFileDate</span>";
 			$withCouriet=withCourier($d[packet_id]);
 			if($withCourier != ''){
 				$case.=$withCourier;
@@ -151,9 +154,6 @@ function serverActiveLista($id,$packet){
 					$case .= $prepExplode;
 				}
 			}
-			$estFileDate=explode('-',$d[estFileDate]);
-			$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-			$case .= "&nbsp;<span style='background-color:white; border: 1px solid black; color: #000000 !important;'>FILE: $estFileDate</span>";
 			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],'a').";'><a href='http://staff.mdwestserve.com/otd/order.php?packet=$d[packet_id]' target='_Blank'>$d[packet_id]</a>: <strong>".$hours."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em>".$case."</li>";
 		}
 	}
@@ -190,6 +190,9 @@ function serverActiveListb($id,$packet){
 			if ($d[avoidDOT] != ''){
 				$case .= "-<span style='background-color:#000000; color:FF0000; border: 3px solid red; font-weight:bold;'>AvoidDOT</span>";
 			}
+			$estFileDate=explode('-',$d[estFileDate]);
+			$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
+			$case .= "&nbsp;<span style='background-color:white; border: 1px solid black; color: #000000 !important;'>FILE: $estFileDate</span>";
 			$withCouriet=withCourier($d[packet_id]);
 			if($withCourier != ''){
 				$case.=$withCourier;
@@ -199,9 +202,6 @@ function serverActiveListb($id,$packet){
 					$case .= $prepExplode;
 				}
 			}
-			$estFileDate=explode('-',$d[estFileDate]);
-			$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-			$case .= "&nbsp;<span style='background-color:white; border: 1px solid black; color: #000000 !important;'>FILE: $estFileDate</span>";
 			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],'b').";'><a href='http://staff.mdwestserve.com/otd/order.php?packet=$d[packet_id]' target='_Blank'>$d[packet_id]</a>: <strong>".$hours."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em>".$case."</li>";
 		}
 	}
@@ -238,6 +238,9 @@ function serverActiveListc($id,$packet){
 			if ($d[avoidDOT] != ''){
 				$case .= "-<span style='background-color:#000000; color:FF0000; border: 3px solid red; font-weight:bold;'>AvoidDOT</span>";
 			}
+			$estFileDate=explode('-',$d[estFileDate]);
+			$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
+			$case .= "&nbsp;<span style='background-color:white; border: 1px solid black; color: #000000 !important;'>FILE: $estFileDate</span>";
 			$withCouriet=withCourier($d[packet_id]);
 			if($withCourier != ''){
 				$case.=$withCourier;
@@ -247,9 +250,6 @@ function serverActiveListc($id,$packet){
 					$case .= $prepExplode;
 				}
 			}
-			$estFileDate=explode('-',$d[estFileDate]);
-			$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-			$case .= "&nbsp;<span style='background-color:white; border: 1px solid black; color: #000000 !important;'>FILE: $estFileDate</span>";
 			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],'c').";'><a href='http://staff.mdwestserve.com/otd/order.php?packet=$d[packet_id]' target='_Blank'>$d[packet_id]</a>: <strong>".$hours."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em>".$case."</li>";
 		}
 	}
@@ -285,6 +285,9 @@ function serverActiveListd($id,$packet){
 			if ($d[avoidDOT] != ''){
 				$case .= "-<span style='background-color:#000000; color:FF0000; border: 3px solid red; font-weight:bold;'>AvoidDOT</span>";
 			}
+			$estFileDate=explode('-',$d[estFileDate]);
+			$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
+			$case .= "&nbsp;<span style='background-color:white; border: 1px solid black; color: #000000 !important;'>FILE: $estFileDate</span>";
 			$withCouriet=withCourier($d[packet_id]);
 			if($withCourier != ''){
 				$case.=$withCourier;
@@ -294,9 +297,6 @@ function serverActiveListd($id,$packet){
 					$case .= $prepExplode;
 				}
 			}
-			$estFileDate=explode('-',$d[estFileDate]);
-			$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-			$case .= "&nbsp;<span style='background-color:white; border: 1px solid black; color: #000000 !important;'>FILE: $estFileDate</span>";
 			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],'d').";'><a href='http://staff.mdwestserve.com/otd/order.php?packet=$d[packet_id]' target='_Blank'>$d[packet_id]</a>: <strong>".$hours."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em>".$case."</li>";
 		}
 	}
@@ -333,6 +333,9 @@ function serverActiveListe($id,$packet){
 			if ($d[avoidDOT] != ''){
 				$case .= "-<span style='background-color:#000000; color:FF0000; border: 3px solid red; font-weight:bold;'>AvoidDOT</span>";
 			}
+			$estFileDate=explode('-',$d[estFileDate]);
+			$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
+			$case .= "&nbsp;<span style='background-color:white; border: 1px solid black; color: #000000 !important;'>FILE: $estFileDate</span>";
 			$withCouriet=withCourier($d[packet_id]);
 			if($withCourier != ''){
 				$case.=$withCourier;
@@ -342,9 +345,6 @@ function serverActiveListe($id,$packet){
 					$case .= $prepExplode;
 				}
 			}
-			$estFileDate=explode('-',$d[estFileDate]);
-			$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-			$case .= "&nbsp;<span style='background-color:white; border: 1px solid black; color: #000000 !important;'>FILE: $estFileDate</span>";
 			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],'e').";'><a href='http://staff.mdwestserve.com/otd/order.php?packet=$d[packet_id]' target='_Blank'>$d[packet_id]</a>: <strong>".$hours."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em>".$case."</li>";
 		}
 	}
@@ -400,6 +400,9 @@ function evictionActiveList($id,$packet){ $_SESSION[active]++;
 		if ($d[affidavit_status2] == 'REOPENED'){
 			$case .= " - <span style='background-color:#FFFFFF'><small>REOPENED</small></span>";
 		}
+		$estFileDate=explode('-',$d[estFileDate]);
+		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
+		$case .= "&nbsp;<span style='background-color:white; border: 1px solid black; color: #000000 !important;'>FILE: $estFileDate</span>";
 		$evWithCouriet=evWithCourier($d[eviction_id]);
 		if($evWithCourier != ''){
 			$case.=$evWithCourier;
@@ -409,9 +412,6 @@ function evictionActiveList($id,$packet){ $_SESSION[active]++;
 				$case .= $evPrepExplode;
 			}
 		}
-		$estFileDate=explode('-',$d[estFileDate]);
-		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-		$case .= "&nbsp;<span style='background-color:white; border: 1px solid black; color: #000000 !important;'>FILE: $estFileDate</span>";
 		$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'><a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em>".$case."</li>";
 	}
 	}
@@ -435,6 +435,9 @@ function evictionActiveLista($id,$packet){
 		if ($d[affidavit_status2] == 'REOPENED'){
 			$case .= " - <span style='background-color:#FFFFFF'><small>REOPENED</small></span>";
 		}
+		$estFileDate=explode('-',$d[estFileDate]);
+		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
+		$case .= "&nbsp;<span style='background-color:white; border: 1px solid black; color: #000000 !important;'>FILE: $estFileDate</span>";
 		$evWithCouriet=evWithCourier($d[eviction_id]);
 		if($evWithCourier != ''){
 			$case.=$evWithCourier;
@@ -444,9 +447,6 @@ function evictionActiveLista($id,$packet){
 				$case .= $evPrepExplode;
 			}
 		}
-		$estFileDate=explode('-',$d[estFileDate]);
-		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-		$case .= "&nbsp;<span style='background-color:white; border: 1px solid black; color: #000000 !important;'>FILE: $estFileDate</span>";
 		$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'><a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em>".$case."</li>";
 	}}
 	$data.='</ol>';
@@ -469,6 +469,9 @@ function evictionActiveListb($id,$packet){
 		if ($d[affidavit_status2] == 'REOPENED'){
 			$case .= " - <span style='background-color:#FFFFFF'><small>REOPENED</small></span>";
 		}
+		$estFileDate=explode('-',$d[estFileDate]);
+		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
+		$case .= "&nbsp;<span style='background-color:white; border: 1px solid black; color: #000000 !important;'>FILE: $estFileDate</span>";
 		$evWithCouriet=evWithCourier($d[eviction_id]);
 		if($evWithCourier != ''){
 			$case.=$evWithCourier;
@@ -478,9 +481,6 @@ function evictionActiveListb($id,$packet){
 				$case .= $evPrepExplode;
 			}
 		}
-		$estFileDate=explode('-',$d[estFileDate]);
-		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-		$case .= "&nbsp;<span style='background-color:white; border: 1px solid black; color: #000000 !important;'>FILE: $estFileDate</span>";
 		$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'><a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em>".$case."</li>";
 	}}
 	$data.='</ol>';
@@ -503,6 +503,9 @@ function evictionActiveListc($id,$packet){
 		if ($d[affidavit_status2] == 'REOPENED'){
 			$case .= " - <span style='background-color:#FFFFFF'><small>REOPENED</small></span>";
 		}
+		$estFileDate=explode('-',$d[estFileDate]);
+		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
+		$case .= "&nbsp;<span style='background-color:white; border: 1px solid black; color: #000000 !important;'>FILE: $estFileDate</span>";
 		$evWithCouriet=evWithCourier($d[eviction_id]);
 		if($evWithCourier != ''){
 			$case.=$evWithCourier;
@@ -512,9 +515,6 @@ function evictionActiveListc($id,$packet){
 				$case .= $evPrepExplode;
 			}
 		}
-		$estFileDate=explode('-',$d[estFileDate]);
-		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-		$case .= "&nbsp;<span style='background-color:white; border: 1px solid black; color: #000000 !important;'>FILE: $estFileDate</span>";
 		$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'><a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em>".$case."</li>";
 	}}
 	$data.='<li><a href="desktop.php">Procede to desktop &gt; &gt; &gt;</a></li></ol>';
@@ -536,6 +536,9 @@ function evictionActiveListd($id,$packet){
 		if ($d[affidavit_status2] == 'REOPENED'){
 			$case .= " - <span style='background-color:#FFFFFF'><small>REOPENED</small></span>";
 		}
+		$estFileDate=explode('-',$d[estFileDate]);
+		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
+		$case .= "&nbsp;<span style='background-color:white; border: 1px solid black; color: #000000 !important;'>FILE: $estFileDate</span>";
 		$evWithCouriet=evWithCourier($d[eviction_id]);
 		if($evWithCourier != ''){
 			$case.=$evWithCourier;
@@ -545,9 +548,6 @@ function evictionActiveListd($id,$packet){
 				$case .= $evPrepExplode;
 			}
 		}
-		$estFileDate=explode('-',$d[estFileDate]);
-		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-		$case .= "&nbsp;<span style='background-color:white; border: 1px solid black; color: #000000 !important;'>FILE: $estFileDate</span>";
 		$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'><a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em>".$case."</li>";
 	}}
 	$data.='</ol>';
@@ -570,6 +570,9 @@ function evictionActiveListe($id,$packet){
 		if ($d[affidavit_status2] == 'REOPENED'){
 			$case .= " - <span style='background-color:#FFFFFF'><small>REOPENED</small></span>";
 		}
+		$estFileDate=explode('-',$d[estFileDate]);
+		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
+		$case .= "&nbsp;<span style='background-color:white; border: 1px solid black; color: #000000 !important;'>FILE: $estFileDate</span>";
 		$evWithCouriet=evWithCourier($d[eviction_id]);
 		if($evWithCourier != ''){
 			$case.=$evWithCourier;
@@ -579,9 +582,6 @@ function evictionActiveListe($id,$packet){
 				$case .= $evPrepExplode;
 			}
 		}
-		$estFileDate=explode('-',$d[estFileDate]);
-		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-		$case .= "&nbsp;<span style='background-color:white; border: 1px solid black; color: #000000 !important;'>FILE: $estFileDate</span>";
 		$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'><a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em>".$case."</li>";
 	}}
 	$data.='</ol>';
