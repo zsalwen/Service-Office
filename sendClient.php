@@ -68,7 +68,7 @@ $bgwTotal=0;
 		</tr>
 <?	}
 	if ($bgwTotal > 0){
-		echo "<tr><td colspan='8' align='center' class='noprint' style='font-size:20px;'><a href='http://staff.mdwestserve.com/emailBGW.php?sendDate=$_GET[sendDate]' target='_blank'>SEND CONFIRMATION EMAILS TO BGW</a></td></tr></table>";
+		echo "<tr><td colspan='8' align='center' class='noprint' style='font-size:20px;'>CONFIRMATION EMAILS WILL BE SENT TO BGW AT 5:04 PM EST</td></tr></table>";
 	}
  }
 ?>
