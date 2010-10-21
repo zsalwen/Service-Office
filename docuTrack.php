@@ -177,6 +177,7 @@ function toCount(entrance,exit,text,characters) {
 		<option>OUT WITH SERVER-FBS</option>
 		<option>SIGNED AFFIDAVIT</option>
 		<option>FILED AFFIDAVIT</option>
+		<option>NOTARIZED AFFIDAVIT</option>
 		</select></td>
 	</tr>
  
