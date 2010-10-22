@@ -170,7 +170,7 @@ function toCount(entrance,exit,text,characters) {
  <tr>
  
 	<td><select name='document' onChange="form1.text1.focus()">
-		<? if ($_SESSION[document] == 'OUT WITH COURIER' || $_SESSION[document] == 'OUT WITH SERVER-FBS' || $_SESSION[document] == 'SIGNED AFFIDAVIT' || $_SESSION[document] == 'FILED AFFIDAVIT'){ ?>
+		<? if ($_SESSION[document] == 'OUT WITH COURIER' || $_SESSION[document] == 'OUT WITH SERVER-FBS' || $_SESSION[document] == 'SIGNED AFFIDAVIT' || $_SESSION[document] == 'FILED AFFIDAVIT'  || $_SESSION[document] == 'NOTARIZED AFFIDAVIT'){ ?>
 		<option><?=$_SESSION[document]?></option>
 		<? } ?>
 		<option>OUT WITH COURIER</option>
