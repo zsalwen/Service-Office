@@ -46,7 +46,7 @@ $skip=$_GET[skip];
 $stop=$skip-1;
 $start=$skip+1;
 
-$current="/gitbox/Service-Office/temp";
+$current=$_SERVER['DOCUMENT_ROOT']."/temp";
 if ($_GET[type] == 'EV'){
 	$r1=@mysql_query("select otd from evictionPackets where eviction_id = '$packet'");
 }else{
