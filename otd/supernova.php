@@ -80,11 +80,12 @@ if ($_GET[matrix]){
 }else{
 	$matrix="";
 }
+echo "<table border='1'>";
 if ($d["address1"]){
 	$makeLnL = wash($d["address1"]).', '.wash($d["city1"]).', '.wash($d["state1"]).' '.wash($d["zip1"]);
 	echo "<tr><td>$makeLnL</td>";
 	if ($d[uspsVerify] == ''){
-		echo "<td><input name='uspsVerify' type='submit' value='I, $_COOKIE[psdata][name], Confirm Valid USPS Address$matrix'  /></td></tr>";
+		echo "<td><input name='uspsVerify' type='submit' value='I, ".$_COOKIE[psdata][name].", Confirm Valid USPS Address$matrix'  /></td></tr>";
 	}else{
 		echo "<td>Address Confirmed by $d[uspsVerify]</tr></tr>";
 	}
@@ -93,14 +94,14 @@ if ($d["address1"]){
 			$makeLnL = wash($d["address1$letter"]).', '.wash($d["city1$letter"]).', '.wash($d["state1$letter"]).' '.wash($d["zip1$letter"]);
 			echo "<tr><td>$makeLnL</td>";
 			if ($d["uspsVerify$letter"] == ''){
-				"<td><input name='uspsVerify$letter' type='submit' value='I, $_COOKIE[psdata][name], Confirm Valid USPS Address$matrix'  /></td></tr>";
+				"<td><input name='uspsVerify$letter' type='submit' value='I, ".$_COOKIE[psdata][name].", Confirm Valid USPS Address$matrix'  /></td></tr>";
 			}else{
 				echo "<td>Address Confirmed by ".$d["uspsVerify$letter"]."</tr></tr>";
 			}
 		}
 	}
 }
-echo "</table></fieldset>";
+echo "</table>";
 ?>
 </form><a href="?packet=<?=$_GET[packet]?>">Reload Supernova for Packet <?=$_GET[packet]?></a>
 <? }?>
