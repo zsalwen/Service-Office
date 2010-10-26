@@ -22,34 +22,24 @@ function isVerified($packet){
 	}
 }
 $packet = $_GET[packet];
-if ($_POST[uspsVerify] || $_POST[uspsVerifya] || $_POST[uspsVerifyb] || $_POST[uspsVerifyc] || $_POST[uspsVerifyd] || $_POST[uspsVerifye]){
-	$query='';
-	if ($_POST[uspsVerify]){
-		$query .= "uspsVerify = '".$_COOKIE[psdata][name]."'";
-		timeline($_GET[packet],$_COOKIE[psdata][name]." verified address1 via USPS");
-		hardLog('verified address1 via USPS for packet '.$_GET[packet],'user');
+$query='';
+if ($_POST[uspsVerify]){
+	@mysql_query("UPDATE ps_packets set uspsVerify = '".$_COOKIE[psdata][name]."' where packet_id = '$_GET[packet]'")
+	timeline($_GET[packet],$_COOKIE[psdata][name]." verified address1 via USPS");
+	hardLog('verified address1 via USPS for packet '.$_GET[packet],'user');
+}
+foreach(range('a','e') as $letter){
+	if ($_POST["uspsVerify$letter"]){
+		@mysql_query("UPDATE ps_packets set uspsVerify$letter = '".$_COOKIE[psdata][name]."' where packet_id = '$_GET[packet]'")
+		timeline($_GET[packet],$_COOKIE[psdata][name]." verified address1$letter via USPS");
+		hardLog("verified address1$letter via USPS for packet $_GET[packet]",'user');
 	}
-	foreach(range('a','e') as $letter){
-		if ($_POST["uspsVerify$letter"]){
-			if ($query == ''){
-				$query .= "uspsVerify$letter = '".$_COOKIE[psdata][name]."'";
-			}else{
-				$query .= ", uspsVerify$letter = '".$_COOKIE[psdata][name]."'";
-			}
-			timeline($_GET[packet],$_COOKIE[psdata][name]." verified address1$letter via USPS");
-			hardLog("verified address1$letter via USPS for packet $_GET[packet]",'user');
-		}
-	}
-	if ($query != ''){
-		@mysql_query("UPDATE ps_packets set $query where packet_id = '$_GET[packet]'");
-	}
-	
-	$isVerified=isVerified($packet);
-	if ($_GET[close] && $isVerified == true){
-		echo "<script>self.close()</script>";
-	}elseif($isVerified == true){
-		echo "<script>window.parent.location.href='order.php?packet=$_GET[packet]';</script>";
-	}
+}
+$isVerified=isVerified($packet);
+if ($_GET[close] && $isVerified == true){
+	echo "<script>self.close()</script>";
+}elseif($isVerified == true){
+	echo "<script>window.parent.location.href='order.php?packet=$_GET[packet]';</script>";
 }
 $isVerified=isVerified($packet);
 if($isVerified != true){
