@@ -84,12 +84,22 @@ $i=0;
 while ($i < 6){$i++;
 	if ($d["address$i"]){
 		$makeLnL = wash($d["address$i"]).', '.wash($d["city$i"]).', '.wash($d["state$i"]).' '.wash($d["zip$i"]);
-		echo "<tr><td>$makeLnL</td><td><input name='uspsVerify' type='submit' value='I, $_COOKIE[psdata][name], Confirm Valid USPS Address$matrix'  /></td></tr>";
+		echo "<tr><td>$makeLnL</td>";
+		if ($d[uspsVerify] == ''){
+			echo "<td><input name='uspsVerify' type='submit' value='I, $_COOKIE[psdata][name], Confirm Valid USPS Address$matrix'  /></td></tr>";
+		}else{
+			echo "<td>Address Confirmed by $d[uspsVerify]</tr></tr>";
+		}
 		foreach(range('a','e') as $letter){
 			if ($d["address$i$letter"]){
 				$var=$i.$letter;
 				$makeLnL = wash($d["address$i$letter"]).', '.wash($d["city$i$letter"]).', '.wash($d["state$i$letter"]).' '.wash($d["zip$i$letter"]);
-				echo "<tr><td>$makeLnL</td><td><input name='uspsVerify$letter' type='submit' value='I, $_COOKIE[psdata][name], Confirm Valid USPS Address$matrix'  /></td></tr>";
+				echo "<tr><td>$makeLnL</td>";
+				if ($d["uspsVerify$letter"] == ''){
+					"<td><input name='uspsVerify$letter' type='submit' value='I, $_COOKIE[psdata][name], Confirm Valid USPS Address$matrix'  /></td></tr>";
+				}else{
+					echo "<td>Address Confirmed by $d[uspsVerify$letter]</tr></tr>";
+				}
 			}
 		}
 	}
