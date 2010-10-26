@@ -24,7 +24,7 @@ function isVerified($packet){
 $packet = $_GET[packet];
 $query='';
 if ($_POST[uspsVerify]){
-	@mysql_query("UPDATE ps_packets set uspsVerify = '".$_COOKIE[psdata][name]."' where packet_id = '$_GET[packet]'")
+	@mysql_query("UPDATE ps_packets set uspsVerify = '".$_COOKIE[psdata][name]."' where packet_id = '$packet'")
 	timeline($_GET[packet],$_COOKIE[psdata][name]." verified address1 via USPS");
 	hardLog('verified address1 via USPS for packet '.$_GET[packet],'user');
 }
