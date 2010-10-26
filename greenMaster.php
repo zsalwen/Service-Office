@@ -133,7 +133,7 @@ if ($_GET[OTD] && $_GET[start] && $_GET[stop]){
 }elseif($_GET[EV]){
 	printSetEV($_GET[EV],1);
 }else{
-	$qd="select ps_packets.packet_id, evictionPackets.eviction_id from ps_packets, evictionPackets where ps_packets.process_status = 'READY TO MAIL' AND ps_packets.mail_status <> 'Printed Awaiting Postage' AND (ps_packets.uspsVerify='' OR ps_packets.qualityControl='' ) AND evictionPackets.process_status = 'READY TO MAIL' AND evictionPackets.mail_status <> 'Printed Awaiting Postage' AND (evictionPackets.uspsVerify='' OR evictionPackets.qualityControl='' ) order by ps_packets.packet_id, evictionPackets.eviction_id ASC";
+	$qd="select ps_packets.packet_id, evictionPackets.eviction_id from ps_packets, evictionPackets where ps_packets.process_status = 'READY TO MAIL' AND ps_packets.mail_status <> 'Printed Awaiting Postage' AND ((ps_packets.uspsVerify='' AND ps_packets.address1 <> '') OR (ps_packets.uspsVerifya='' AND ps_packets.address1a <> '') OR (ps_packets.uspsVerifyb='' AND ps_packets.address1b <> '') OR (ps_packets.uspsVerifyc='' AND ps_packets.address1c <> '') OR (ps_packets.uspsVerifyd='' AND ps_packets.address1d <> '') OR (ps_packets.uspsVerifye='' AND ps_packets.address1e <> '') OR ps_packets.qualityControl='' ) AND evictionPackets.process_status = 'READY TO MAIL' AND evictionPackets.mail_status <> 'Printed Awaiting Postage' AND (evictionPackets.uspsVerify='' OR evictionPackets.qualityControl='' ) order by ps_packets.packet_id, evictionPackets.eviction_id ASC";
 	$rd=@mysql_query($qd) or die ("Query: $qd<br>".mysql_error());
 	$dd=mysql_num_rows($rd);
 	if ($dd > 0){
