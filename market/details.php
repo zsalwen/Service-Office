@@ -41,7 +41,7 @@ function phaseList($phase,$date){
 	if ($phase == 'GOOD LEAD'){
 		$list .= "<option value='$phase'>GOOD LEAD-RECEIVED BUSINESS</option>";
 	}elseif ($phase == 'CALL BACK'){
-		$lsit .= "<option> value='$phase'>CALL BACK ON $date</option>";
+		$list .= "<option> value='$phase'>CALL BACK ON $date</option>";
 	}else{
 		$list .= "<option value='$phase'>$phase</option>";
 	}
