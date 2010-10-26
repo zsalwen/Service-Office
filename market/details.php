@@ -111,12 +111,12 @@ input,textarea,.select{background-color:CCFFFF;}
 	</tr>
 	<? } ?>
 	<tr>
-		<td>Name</td>
-		<td><input name='clientName' value='<?=$d[name]?>' size="50"></td>
-	</tr>
-	<tr>
 		<td>Contact</td>
 		<td><? if($_POST[select] != 'CALL BACK'){?><form method="post" style='display:inline;'><? } ?><input type='hidden' name='phase' value='<?=$_POST[select]?>'><input name="contact" value="<?=$d[contact]?>" size="50"> <input type='checkbox' name='doNotCall' value='checked' <? if ($d[doNotCall] == 'checked'){ echo 'checked';}?>> Do Not Call (remove from list)</td>
+	</tr>
+	<tr>
+		<td>Name</td>
+		<td><input name='clientName' value='<?=$d[name]?>' size="50"></td>
 	</tr>
 	<tr>
 		<td>Phone</td>
