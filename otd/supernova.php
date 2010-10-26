@@ -30,7 +30,7 @@ if ($_POST[uspsVerify]){
 }
 foreach(range('a','e') as $letter){
 	if ($_POST["uspsVerify$letter"]){
-		@mysql_query("UPDATE ps_packets set uspsVerify$letter = '".$_COOKIE[psdata][name]."' where packet_id = '$_GET[packet]'")
+		@mysql_query("UPDATE ps_packets set uspsVerify$letter = '".$_COOKIE[psdata][name]."' where packet_id = '$_GET[packet]'");
 		timeline($_GET[packet],$_COOKIE[psdata][name]." verified address1$letter via USPS");
 		hardLog("verified address1$letter via USPS for packet $_GET[packet]",'user');
 	}
