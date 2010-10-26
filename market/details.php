@@ -75,9 +75,9 @@ if ($_POST[confirm]){
 }
 if ($_POST[submit]){
 	if ($_POST[phase] == 'CALL BACK'){
-		$q="UPDATE market SET contact='$_POST[contact]', phone='$_POST[phone]', address='$_POST[address]', phase='$_POST[phase]', coldCall=NOW(), doNotCall='$_POST[doNotCall]', callBack='$_POST[callBack]', sendInfo='$_POST[sendDate]' WHERE marketID='$id'";
+		$q="UPDATE market SET contact='$_POST[contact]', name='$_POST[name]', phone='$_POST[phone]', address='$_POST[address]', phase='$_POST[phase]', coldCall=NOW(), doNotCall='$_POST[doNotCall]', callBack='$_POST[callBack]', sendInfo='$_POST[sendDate]' WHERE marketID='$id'";
 	}else{
-		$q="UPDATE market SET contact='$_POST[contact]', phone='$_POST[phone]', address='$_POST[address]', phase='$_POST[phase]', coldCall=NOW(), doNotCall='$_POST[doNotCall]' WHERE marketID='$id'";
+		$q="UPDATE market SET contact='$_POST[contact]', name='$_POST[name]', phone='$_POST[phone]', address='$_POST[address]', phase='$_POST[phase]', coldCall=NOW(), doNotCall='$_POST[doNotCall]' WHERE marketID='$id'";
 	}
 	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 	echo "<center><h1>Entry Updated.</h1></center>";
@@ -93,7 +93,7 @@ input,textarea,.select{background-color:CCFFFF;}
 </style>
 <table border="1" align="center">
 	<tr>
-		<td colspan="2" align="center" class="y"><input name='name' value='<?=$d[name]?>'></td>
+		<td colspan="2" align="center" class="y"><?=$d[name]?>-ID [<?=$id?>]</td>
 	</tr>
 	<tr>
 		<td>Type</td>
@@ -110,6 +110,10 @@ input,textarea,.select{background-color:CCFFFF;}
 		</td>
 	</tr>
 	<? } ?>
+	<tr>
+		<td>Name</td>
+		<td><input name='name' value='<?=$d[name]?>' size="50"></td>
+	</tr>
 	<tr>
 		<td>Contact</td>
 		<td><? if($_POST[select] != 'CALL BACK'){?><form method="post" style='display:inline;'><? } ?><input type='hidden' name='phase' value='<?=$_POST[select]?>'><input name="contact" value="<?=$d[contact]?>" size="50"> <input type='checkbox' name='doNotCall' value='checked' <? if ($d[doNotCall] == 'checked'){ echo 'checked';}?>> Do Not Call (remove from list)</td>
