@@ -1245,7 +1245,7 @@ $hours=number_format((time()-$received)/3600,0);
  </td><td align="center">
 <? if(!$d[caseVerify]){ ?> <a href="validateCase.php?case=<?=$d[case_no]?>&packet=<?=$d[packet_id]?>&county=<?=$d[circuit_court]?>" target="preview">!!!Verify Case Number!!!</a><? }else{ ?><img src="http://www.courts.state.md.us/newlogosm.gif"><br>Verified by <? echo $d[caseVerify]; }?>
 </td><td align="center">
-<? if(!$d[qualityControl]){ ?> <a href="entryVerify.php?packet=<?=$d[packet_id]?><? if ($d[service_status] == 'MAIL ONLY'){ echo '&matrix=1';} ?>$d[&frame=no" target="preview">!!!Verify Data Entry!!!</a><? }else{ ?><img src="http://staff.mdwestserve.com/small.logo.gif" height="41" width="41"><br>Verified by <? echo $d[qualityControl]; }?>
+<? if(!$d[qualityControl]){ ?> <a href="entryVerify.php?packet=<?=$d[packet_id]?><? if ($d[service_status] == 'MAIL ONLY'){ echo '&matrix=1';} ?>&frame=no" target="preview">!!!Verify Data Entry!!!</a><? }else{ ?><img src="http://staff.mdwestserve.com/small.logo.gif" height="41" width="41"><br>Verified by <? echo $d[qualityControl]; }?>
 </td><td align="center"><div style="font-size:15pt" ><?=$hours?> Hours || <?=$days?> Days<br>Deadline: <?=$deadline?><div></td></tr></table>
 </div>
 <? if ($d[possibleDuplicate]){?>
