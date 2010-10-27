@@ -21,10 +21,10 @@ function isVerified($packet){
 	$i=0;
 	//if address is not verified, increment counter
 	$add=strtoupper($d[address1].', '.$d[city1].', '.$d[state1].' '.$d[zip1]);
-	if (($d[address1] != '') && (checkVerify($add) !== false)){$i++;}
+	if (($d[address1] != '') && (checkVerify($add) !== true)){$i++;}
 	foreach(range('a','e') as $letter){
 		$add=strtoupper($d["address1$letter"].', '.$d["city1$letter"].', '.$d["state1$letter"].' '.$d["zip1$letter"]);
-		if (($d["address1$letter"] != '') && (checkVerify($add) !== false)){$i++;}
+		if (($d["address1$letter"] != '') && (checkVerify($add) !== true)){$i++;}
 	}
 	return $i;
 }
