@@ -45,16 +45,17 @@ foreach(range('a','e') as $letter){
 	}
 }
 $isVerified=isVerified($packet);
+echo "<script>arlet('$isVerified')</script>";
 $r=@mysql_query("SELECT * FROM ps_packets where packet_id = '$packet' ");
 $d=mysql_fetch_array($r, MYSQL_ASSOC);
 if ($_GET[close] && ($isVerified == 0)){
 	if ($d[uspsVerify] == ''){
-		@mysql_query("UPDATE ps_packets set uspsVerify = '".$_COOKIE[psdata][name]."' where packet_id = '$_GET[packet]'");
+		//@mysql_query("UPDATE ps_packets set uspsVerify = '".$_COOKIE[psdata][name]."' where packet_id = '$_GET[packet]'");
 	}
 	echo "<script>self.close()</script>";
 }elseif($isVerified == 0){
 	if ($d[uspsVerify] == ''){
-		@mysql_query("UPDATE ps_packets set uspsVerify = '".$_COOKIE[psdata][name]."' where packet_id = '$_GET[packet]'");
+		//@mysql_query("UPDATE ps_packets set uspsVerify = '".$_COOKIE[psdata][name]."' where packet_id = '$_GET[packet]'");
 	}
 	echo "<script>window.parent.location.href='order.php?packet=$_GET[packet]';</script>";
 }
