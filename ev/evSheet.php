@@ -171,7 +171,7 @@ function evSheet($eviction){
 			}
 			?>
 			<fieldset>
-			<legend accesskey="C"><?=$d[name1]?></legend>
+			<legend accesskey="C"><?=$d["name$i"]?></legend>
 			<table align="center">
 				<tr>
 					<td><input type="checkbox"> <?=$d[address1]?>, <?=$d[city1]?>, <?=$d[state1]?> <?=$d[zip1]?></td>
