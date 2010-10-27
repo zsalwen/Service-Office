@@ -16,7 +16,7 @@ while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	$add=strtoupper($d[address1].', '.$d[city1].', '.$d[state1].' '.$d[zip1]);
 	if (checkVerify($add) !== true){
 		$q1="INSERT into addressVerify (address, by) VALUES ('".addslashes($add)."', '$d[uspsVerify]')";
-		@mysql_query($q1);
+		@mysql_query($q1) or die (mysql_error());
 		echo "<li>$q1</li>";
 	}
 }
@@ -27,7 +27,7 @@ foreach(range('a','e') as $letter){
 		$add=strtoupper($d["address1$letter"].', '.$d["city1$letter"].', '.$d["state1$letter"].' '.$d["zip1$letter"]);
 		if (checkVerify($add) !== true){
 			$q1="INSERT into addressVerify (address, by) VALUES ('".addslashes($add)."', '".$d["uspsVerify$letter"]."')";
-			@mysql_query($q1);
+			@mysql_query($q1) or die (mysql_error());
 			echo "<li>$q1</li>";
 		}
 	}
