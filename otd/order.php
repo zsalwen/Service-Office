@@ -411,9 +411,9 @@ function getVerify($address){
 	$r=@mysql_query("SELECT * FROM addressVerify where address like '%".addslashes($address)."%' LIMIT 0,1 ");
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 	if ($d[user] != ''){
-		return "<img src='staff.mdwestserve.com/otd/greenCheck.png' style='display:inline;'	title='Verified By $d[user]'>";
+		return "<img src='http://staff.mdwestserve.com/otd/greenCheck.png' style='display:inline;'	title='Verified By $d[user]'>";
 	}else{
-		return "<img src='staff.mdwestserve.com/otd/redX.png' style='display:inline;' title='Unverified Address'>";
+		return "<img src='http://staff.mdwestserve.com/otd/redX.png' style='display:inline;' title='Unverified Address'>";
 	}
 }
 function isVerified($packet){
