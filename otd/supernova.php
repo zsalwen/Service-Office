@@ -7,13 +7,18 @@ function wash($str){
 	return $str;
 }
 function checkVerify($address){
-	$r=@mysql_query("SELECT * FROM addressVerify where address like '%".addslashes($address)."%' LIMIT 0,1 ");
+	$r=@mysql_query("SELECT user FROM addressVerify where address like '%".addslashes($address)."%' LIMIT 0,1 ");
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 	if ($d[user] != ''){
 		return true;
 	}else{
 		return false;
 	}
+}
+function getUser($address){
+	$r=@mysql_query("SELECT user FROM addressVerify where address like '%".addslashes($address)."%' LIMIT 0,1 ");
+	$d=mysql_fetch_array($r, MYSQL_ASSOC);
+	return $d[user];
 }
 function isVerified($packet){
 	$r=@mysql_query("SELECT address1, address1a, address1b, address1c, address1d, address1e, city1, city1a, city1b, city1c, city1d, city1e, state1, state1a, state1b, state1c, state1d, state1e, zip1, zip1a, zip1b, zip1c, zip1d, zip1e FROM ps_packets where packet_id = '$packet' LIMIT 0,1 ");
@@ -91,7 +96,7 @@ if ($d["address1"]){
 	if (checkVerify($makeLnL) !== true){
 		echo "<td><input type='hidden' name='add' value='$makeLnL'><input name='uspsVerify' type='submit' value='I, ".$_COOKIE[psdata][name].", Confirm Valid USPS Address$matrix'  /></td></tr>";
 	}else{
-		echo "<td>Address Confirmed user $d[uspsVerify]</tr></tr>";
+		echo "<td>Address Confirmed by ".getUser($makeLnL)."</tr></tr>";
 	}
 	foreach(range('a','e') as $letter){
 		if ($d["address1$letter"]){
@@ -100,7 +105,7 @@ if ($d["address1"]){
 			if (checkVerify($makeLnL) !== true){
 				echo "<td><input type='hidden' name='add$letter' value='$makeLnL'><input name='uspsVerify$letter' type='submit' value='I, ".$_COOKIE[psdata][name].", Confirm Valid USPS Address$matrix'  /></td></tr>";
 			}else{
-				echo "<td>Address Confirmed user ".$d["uspsVerify$letter"]."</tr></tr>";
+				echo "<td>Address Confirmed by ".getUser($makeLnL)."</tr></tr>";
 			}
 		}
 	}
