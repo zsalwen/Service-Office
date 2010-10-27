@@ -31,21 +31,20 @@ function isVerified($packet){
 $packet = $_GET[packet];
 $query='';
 if ($_POST[uspsVerify]){
-	@mysql_query("INSERT into addressVerify (address, by, insertDate) VALUES ('".addslashes($_POST[add])."', '".$_COOKIE[psdata][name]."', NOW())");
+	@mysql_query("INSERT into addressVerify (address, by, insertDate) VALUES ('".addslashes($_POST[add])."', '".$_COOKIE[psdata][name]."', NOW())") or die (mysql_error());
 	//@mysql_query("UPDATE ps_packets set uspsVerify = '".$_COOKIE[psdata][name]."' where packet_id = '$_GET[packet]'")
 	timeline($_GET[packet],$_COOKIE[psdata][name]." verified address1 via USPS");
 	hardLog('verified address1 via USPS for packet '.$_GET[packet],'user');
 }
 foreach(range('a','e') as $letter){
 	if ($_POST["uspsVerify$letter"]){
-		@mysql_query("INSERT into addressVerify (address, by, insertDate) VALUES ('".addslashes($_POST["add$letter"])."', '".$_COOKIE[psdata][name]."', NOW())");
+		@mysql_query("INSERT into addressVerify (address, by, insertDate) VALUES ('".addslashes($_POST["add$letter"])."', '".$_COOKIE[psdata][name]."', NOW())") or die (mysql_error());
 		//@mysql_query("UPDATE ps_packets set uspsVerify$letter = '".$_COOKIE[psdata][name]."' where packet_id = '$_GET[packet]'")
 		timeline($_GET[packet],$_COOKIE[psdata][name]." verified address1$letter via USPS");
 		hardLog("verified address1$letter via USPS for packet $_GET[packet]",'user');
 	}
 }
 $isVerified=isVerified($packet);
-echo "<script>alert('$isVerified')</script>";
 $r=@mysql_query("SELECT * FROM ps_packets where packet_id = '$packet' ");
 $d=mysql_fetch_array($r, MYSQL_ASSOC);
 if ($_GET[close] && ($isVerified == 0)){
