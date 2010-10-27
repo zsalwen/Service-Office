@@ -468,11 +468,9 @@ function evSheet($eviction){
 	} ?>
 	</td></tr></table>
 	<table width="100%" align="center" cellspacing="0" cellpadding="0"><tr><td>
-	<? $i=0;
-	while ($i < 6){$i++;
-	if ($d["name$i"]){ ?>
+	<? if ($d["name1"]){ ?>
 	<fieldset>
-	<legend accesskey="C"><u>Process Service on <?=$d[name1]?></u>:</legend>
+	<legend accesskey="C"><u>Process Service on Occupant</u>:</legend>
 	<table cellspacing="0" align="center">
 	<?
 	$delivery='';
@@ -551,8 +549,7 @@ function evSheet($eviction){
 		</tr>
 	</table>
 	</fieldset>
-	<? }
-	} ?>
+	<? } ?>
 	</td></tr></table>
 	<table width="80%" align="center" cellspacing="0">
 		<tr>
