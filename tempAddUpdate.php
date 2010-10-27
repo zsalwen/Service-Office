@@ -10,7 +10,7 @@ function checkVerify($address){
 		return false;
 	}
 }
-$q="SELECT address1, city1, state1, zip1, uspsVerify FROM ps_packets WHERE uspsVerify <> '' ORDER user packet_id ASC";
+$q="SELECT address1, city1, state1, zip1, uspsVerify FROM ps_packets WHERE uspsVerify <> '' ORDER by packet_id ASC";
 $r=@mysql_query($q) or die (mysql_error());
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	$add=strtoupper($d[address1].', '.$d[city1].', '.$d[state1].' '.$d[zip1]);
@@ -21,7 +21,7 @@ while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	}
 }
 foreach(range('a','e') as $letter){
-	$q="SELECT address1$letter, city1$letter, state1$letter, zip1$letter, uspsVerify$letter FROM ps_packets WHERE uspsVerify$letter <> '' ORDER user packet_id ASC";
+	$q="SELECT address1$letter, city1$letter, state1$letter, zip1$letter, uspsVerify$letter FROM ps_packets WHERE uspsVerify$letter <> '' ORDER by packet_id ASC";
 	$r=@mysql_query($q) or die (mysql_error());
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 		$add=strtoupper($d["address1$letter"].', '.$d["city1$letter"].', '.$d["state1$letter"].' '.$d["zip1$letter"]);
