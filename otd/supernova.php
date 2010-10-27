@@ -45,7 +45,7 @@ foreach(range('a','e') as $letter){
 	}
 }
 $isVerified=isVerified($packet);
-echo "<script>arlet('$isVerified')</script>";
+echo "<script>alert('$isVerified')</script>";
 $r=@mysql_query("SELECT * FROM ps_packets where packet_id = '$packet' ");
 $d=mysql_fetch_array($r, MYSQL_ASSOC);
 if ($_GET[close] && ($isVerified == 0)){
