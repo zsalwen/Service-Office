@@ -26,11 +26,7 @@ function isVerified($packet){
 		$add=strtoupper($d["address1$letter"].', '.$d["city1$letter"].', '.$d["state1$letter"].' '.$d["zip1$letter"]);
 		if (($d["address1$letter"] != '') && (checkVerify($add) !== false)){$i++;}
 	}
-	if ($i > 0){
-		return false;
-	}else{
-		return true;
-	}
+	return $i;
 }
 $packet = $_GET[packet];
 $query='';
@@ -51,18 +47,18 @@ foreach(range('a','e') as $letter){
 $isVerified=isVerified($packet);
 $r=@mysql_query("SELECT * FROM ps_packets where packet_id = '$packet' ");
 $d=mysql_fetch_array($r, MYSQL_ASSOC);
-if ($_GET[close] && $isVerified !== false){
+if ($_GET[close] && ($isVerified == 0)){
 	if ($d[uspsVerify] == ''){
 		@mysql_query("UPDATE ps_packets set uspsVerify = '".$_COOKIE[psdata][name]."' where packet_id = '$_GET[packet]'");
 	}
 	echo "<script>self.close()</script>";
-}elseif($isVerified !== false){
+}elseif($isVerified == 0){
 	if ($d[uspsVerify] == ''){
 		@mysql_query("UPDATE ps_packets set uspsVerify = '".$_COOKIE[psdata][name]."' where packet_id = '$_GET[packet]'");
 	}
 	echo "<script>window.parent.location.href='order.php?packet=$_GET[packet]';</script>";
 }
-if($isVerified != true && $d[uspsVerify] == ''){
+if(($isVerified == 0) && ($d[uspsVerify] == '')){
 ?>
 <form method="post">
 <? if($d[address1]){ ?>
