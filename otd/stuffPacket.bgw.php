@@ -167,7 +167,7 @@ if ($_GET[packet]){$display++;
 	$d=mysql_fetch_array($r,MYSQL_ASSOC); 
 	error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Printing BGW Envelopes For [$d[to1]] \n",3,"/logs/user.log");
 }elseif($_GET[mail]){
-	$qd="select packet_id from ps_packets where process_status = 'READY TO MAIL' AND mail_status <> 'Printed Awaiting Postage' AND attorneys_id='70' AND lossMit <> '' AND lossMit <> 'N/A - OLD L' AND ((uspsVerify='' AND address1 <> '') OR (uspsVerifya='' AND address1a <> '') OR (uspsVerifyb='' AND address1b <> '') OR (uspsVerifyc='' AND address1c <> '') OR (uspsVerifyd='' AND address1d <> '') OR (uspsVerifye='' AND address1e <> '') OR qualityControl='' ) order by packet_id ASC";
+	$qd="select packet_id from ps_packets where process_status = 'READY TO MAIL' AND mail_status <> 'Printed Awaiting Postage' AND attorneys_id='70' AND lossMit <> '' AND lossMit <> 'N/A - OLD L' AND (uspsVerify='' OR qualityControl='') order by packet_id ASC";
 	$rd=@mysql_query($qd) or die ("Query: $qd<br>".mysql_error());
 	$dd=mysql_num_rows($rd);
 	if ($dd > 0){

@@ -6,14 +6,25 @@ function wash($str){
 	$str=str_replace('#','NO.',$str);
 	return $str;
 }
+function checkVerify($address){
+	$r=@mysql_query("SELECT * FROM addressVerify where address like '%".addslashes($address)."%' LIMIT 0,1 ");
+	$d=mysql_fetch_array($r, MYSQL_ASSOC);
+	if ($d[by] != ''){
+		return true;
+	}else{
+		return false;
+	}
+}
 function isVerified($packet){
-	$r=@mysql_query("SELECT address1, address1a, address1b, address1c, address1d, address1e, uspsVerify, uspsVerifya, uspsVerifyb, uspsVerifyc, uspsVerifyd, uspsVerifye FROM ps_packets where packet_id = '$packet' LIMIT 0,1 ");
+	$r=@mysql_query("SELECT address1, address1a, address1b, address1c, address1d, address1e, city1, city1a, city1b, city1c, city1d, city1e, state1, state1a, state1b, state1c, state1d, state1e, zip1, zip1a, zip1b, zip1c, zip1d, zip1e FROM ps_packets where packet_id = '$packet' LIMIT 0,1 ");
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 	$i=0;
 	//if address is not verified, increment counter
-	if ($d[address1] != '' && $d[uspsVerify] == ''){$i++;}
+	$add=strtoupper($d[address1].', '.$d[city1].', '.$d[state1].' '.$d[zip1]);
+	if ($d[address1] != '' && checkVerify($add) !== false){$i++;}
 	foreach(range('a','e') as $letter){
-		if ($d["address1$letter"] != '' && $d["uspsVerify$letter"] == ''){$i++;}
+		$add=strtoupper($d["address1$letter"].', '.$d["city1$letter"].', '.$d["state1$letter"].' '.$d["zip1$letter"]);
+		if ($d["address1$letter"] != '' && checkVerify($add) !== false){$i++;}
 	}
 	if ($i > 0){
 		return false;
@@ -24,27 +35,34 @@ function isVerified($packet){
 $packet = $_GET[packet];
 $query='';
 if ($_POST[uspsVerify]){
-	@mysql_query("UPDATE ps_packets set uspsVerify = '".$_COOKIE[psdata][name]."' where packet_id = '$packet'");
+	@mysql_query("INSERT into addressVerify (address, by, insertDate) VALUES ('".addslashes($_POST[add])."', '".$_COOKIE[psdata][name]."', NOW())");
+	//@mysql_query("UPDATE ps_packets set uspsVerify = '".$_COOKIE[psdata][name]."' where packet_id = '$_GET[packet]'")
 	timeline($_GET[packet],$_COOKIE[psdata][name]." verified address1 via USPS");
 	hardLog('verified address1 via USPS for packet '.$_GET[packet],'user');
 }
 foreach(range('a','e') as $letter){
 	if ($_POST["uspsVerify$letter"]){
-		@mysql_query("UPDATE ps_packets set uspsVerify$letter = '".$_COOKIE[psdata][name]."' where packet_id = '$_GET[packet]'");
+		@mysql_query("INSERT into addressVerify (address, by, insertDate) VALUES ('".addslashes($_POST["add$letter"])."', '".$_COOKIE[psdata][name]."', NOW())");
+		//@mysql_query("UPDATE ps_packets set uspsVerify$letter = '".$_COOKIE[psdata][name]."' where packet_id = '$_GET[packet]'")
 		timeline($_GET[packet],$_COOKIE[psdata][name]." verified address1$letter via USPS");
 		hardLog("verified address1$letter via USPS for packet $_GET[packet]",'user');
 	}
 }
 $isVerified=isVerified($packet);
-if ($_GET[close] && $isVerified == true){
-	echo "<script>self.close()</script>";
-}elseif($isVerified == true){
-	echo "<script>window.parent.location.href='order.php?packet=$_GET[packet]';</script>";
-}
-$isVerified=isVerified($packet);
-if($isVerified != true){
 $r=@mysql_query("SELECT * FROM ps_packets where packet_id = '$packet' ");
 $d=mysql_fetch_array($r, MYSQL_ASSOC);
+if ($_GET[close] && $isVerified == true){
+	if ($d[uspsVerify] == ''){
+		@mysql_query("UPDATE ps_packets set uspsVerify = '".$_COOKIE[psdata][name]."' where packet_id = '$_GET[packet]'")
+	}
+	echo "<script>self.close()</script>";
+}elseif($isVerified == true){
+	if ($d[uspsVerify] == ''){
+		@mysql_query("UPDATE ps_packets set uspsVerify = '".$_COOKIE[psdata][name]."' where packet_id = '$_GET[packet]'")
+	}
+	echo "<script>window.parent.location.href='order.php?packet=$_GET[packet]';</script>";
+}
+if($isVerified != true && $d[uspsVerify] == ''){
 ?>
 <form method="post">
 <? if($d[address1]){ ?>
@@ -72,19 +90,19 @@ if ($_GET[matrix]){
 }
 echo "<table border='1'>";
 if ($d["address1"]){
-	$makeLnL = wash($d["address1"]).', '.wash($d["city1"]).', '.wash($d["state1"]).' '.wash($d["zip1"]);
+	$makeLnL = strtoupper($d[address1].', '.$d[city1].', '.$d[state1].' '.$d[zip1]);
 	echo "<tr><td>$makeLnL</td>";
-	if ($d[uspsVerify] == ''){
-		echo "<td><input name='uspsVerify' type='submit' value='I, ".$_COOKIE[psdata][name].", Confirm Valid USPS Address$matrix'  /></td></tr>";
+	if (checkVerify($makeLnL) !== true){
+		echo "<td><input type='hidden' name='add' value='$makeLnL'><input name='uspsVerify' type='submit' value='I, ".$_COOKIE[psdata][name].", Confirm Valid USPS Address$matrix'  /></td></tr>";
 	}else{
 		echo "<td>Address Confirmed by $d[uspsVerify]</tr></tr>";
 	}
 	foreach(range('a','e') as $letter){
 		if ($d["address1$letter"]){
-			$makeLnL = wash($d["address1$letter"]).', '.wash($d["city1$letter"]).', '.wash($d["state1$letter"]).' '.wash($d["zip1$letter"]);
+			$makeLnL = strtoupper($d["address1$letter"].', '.$d["city1$letter"].', '.$d["state1$letter"].' '.$d["zip1$letter"]);
 			echo "<tr><td>$makeLnL</td>";
-			if ($d["uspsVerify$letter"] == ''){
-				echo "<td><input name='uspsVerify$letter' type='submit' value='I, ".$_COOKIE[psdata][name].", Confirm Valid USPS Address$matrix'  /></td></tr>";
+			if (checkVerify($makeLnL) !== true){
+				echo "<td><input type='hidden' name='add$letter' value='$makeLnL'><input name='uspsVerify$letter' type='submit' value='I, ".$_COOKIE[psdata][name].", Confirm Valid USPS Address$matrix'  /></td></tr>";
 			}else{
 				echo "<td>Address Confirmed by ".$d["uspsVerify$letter"]."</tr></tr>";
 			}
