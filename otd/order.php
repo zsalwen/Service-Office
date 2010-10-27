@@ -747,7 +747,7 @@ if ($_POST[submit]){
 					$headers3 .= $headers2;
 					mail($to,$subject2,$body,$headers2);
 				}
-				if ($timeline != ''){
+				if (trim($timeline) != ''){
 					$timeline .= ", Set $id2name as Server ".strtoupper($letter);
 				}else{
 					$timeline = $_COOKIE[psdata][name]." Updated Order, Set $id2name as Server ".strtoupper($letter);
@@ -758,7 +758,7 @@ if ($_POST[submit]){
 	if ($noEntry != 1){
 		if ($_GET[packet] && $timeline == ''){
 			timeline($_GET[packet],$_COOKIE[psdata][name]." Updated Order");
-		}else{
+		}elseif (trim($timeline) != ''){
 			timeline($_POST[packet_id],$timeline);
 		}
 	}
