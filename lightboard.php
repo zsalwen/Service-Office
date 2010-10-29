@@ -8,16 +8,7 @@ table { padding: 0px; }
 <div style='height:95%;overflow:auto;'>
 <table border="0" width="100%" height="95%" cellspacing="0" cellpadding="0">
 	<tr>
-		<td><iframe id="frame1" name="frame1" frameborder="0" height="100%" width="100%"></iframe></td>
-		<td><iframe id="frame2" name="frame2" frameborder="0" height="100%" width="100%"></iframe></td>
-		<td><iframe id="frame3" name="frame3" frameborder="0" height="100%" width="100%"></iframe></td>
-	</tr>	
-	<tr>
-		<td><iframe id="frame4" name="frame4" frameborder="0" height="100%" width="100%"></iframe></td>
-		<td><iframe id="frame5" name="frame5" frameborder="0" height="100%" width="100%"></iframe></td>
-		<td style="background-color:#FFFFFF;"><iframe id="test" name="test" frameborder="0" height="100%" width="100%" src='http://mdwestserve.com/affidavits/test.php?id=<?=$_GET[packet]?>'></iframe></td>
-	</tr>		
-</table>
+		<td style="background-color:#FFFFFF;"><iframe id="test" name="test" frameborder="0" height="100%" src='http://mdwestserve.com/affidavits/test.php?id=<?=$_GET[packet]?>'></iframe></td>
 
 <? if(strpos($_GET[packet],"EV")!== false){
 	$packetType='eviction';
@@ -27,7 +18,7 @@ table { padding: 0px; }
 	$packetType='presale';
 	$mark="Mark Presale Packet <a href='http://staff.mdwestserve.com/otd/order.php?packet=$_GET[packet]' target='_blank'>OTD$_GET[packet]</a> Filed By Staff on $_SESSION[fileDate];";
 } 
-echo "<div style='background-color:#FFFFFF; font-size:20px;'>$mark||";
+echo "";
 mysql_connect();
 mysql_select_db('core');
 $i=0;
@@ -36,16 +27,27 @@ $r5=@mysql_query($q5) or die ("Query: $q5<br>".mysql_error());
 while ($d5=mysql_fetch_array($r5, MYSQL_ASSOC)){
 	$i++;	
 	$defname = $d["name".$d5[defendantID]];
-	echo "<a target='frame".$i."' href='".str_replace('ps/','',$d5[affidavit])."'><strong>".$defname."</strong>: $d5[method]</a>, ";
-	//echo "<script>window.frames['frame".$i."'].location='".str_replace('ps/','',$d5[affidavit])."';</script>";
+	$list .= "<a target='frame".$i."' href='".str_replace('ps/','',$d5[affidavit])."'><strong>".$defname."</strong>: $d5[method]</a>, ";
+	$list .= "<script>window.frames['frame".$i."'].location='".str_replace('ps/','',$d5[affidavit])."';</script>";
+	$table["$i"] = "<td><iframe id='frame$i' name='frame$i' frameborder='0' height='100%' width='100%'></td>";
 }
-echo "</div>";
+$break=floor($i/2);
+$i=0;
+$count=count($table);
+//construct table, inserting new row halfway through
+while ($i < $count){$i++;
+	$tableList .= $table["$i"];
+	if ($i == $break){
+		$tableList .= "</tr><tr>";
+	}
+}
+echo "$tableList</tr></table></div><div style='background-color:#FFFFFF; font-size:20px;'>$mark||$list</div>";
 // We need an alert for a few exceptions
 if ($packetType == 'presale'){
-$r=@mysql_query("select * from ps_packets where packet_id = '$_GET[packet]'");
+	$r=@mysql_query("select * from ps_packets where packet_id = '$_GET[packet]'");
 }else{
-$packet=str_replace('EV','',$_GET[packet]);
-$r=@mysql_query("select * from evictionPackets where eviction_id = '$packet'");
+	$packet=str_replace('EV','',$_GET[packet]);
+	$r=@mysql_query("select * from evictionPackets where eviction_id = '$packet'");
 }
 $d=mysql_fetch_array($r,MYSQL_ASSOC);
 if (strtoupper($d[state1a]) != 'MD' && $d[state1a] != ''){ echo "<script>alert('First possible place of abode is out of state.');</script>"; }
