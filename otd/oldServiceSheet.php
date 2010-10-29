@@ -1,5 +1,7 @@
-<?
+<?php
+
 include 'common.php';
+
 function monthConvert($month){
 	if ($month == '01'){ return 'January'; }
 	if ($month == '02'){ return 'February'; }
@@ -707,7 +709,7 @@ if ($attempt != ''){
 //defendant 2 attempts
  if ($d[name2]){ 
 $delivery='';
-$delivery=deliveryExplode($packet,1);
+$delivery=deliveryExplode($packet,2);
 if ($delivery != ''){
 	$dt=$delivery[0];
 	$server=$delivery[1];
@@ -973,7 +975,7 @@ if ($attempt != ''){
 //defendant 3 attempts
  if ($d[name3]){ 
 $delivery='';
-$delivery=deliveryExplode($packet,1);
+$delivery=deliveryExplode($packet,3);
 if ($delivery != ''){
 	$dt=$delivery[0];
 	$server=$delivery[1];
@@ -1238,7 +1240,7 @@ if ($attempt != ''){
 <? if ($d[name4]){
 //defendant 4 attempts
 $delivery='';
-$delivery=deliveryExplode($packet,1);
+$delivery=deliveryExplode($packet,4);
 if ($delivery != ''){
 	$dt=$delivery[0];
 	$server=$delivery[1];
@@ -1507,7 +1509,7 @@ if ($attempt != ''){
 //defendant 5 attempts
  if ($d[name5]){
 $delivery='';
-$delivery=deliveryExplode($packet,1);
+$delivery=deliveryExplode($packet,5);
 if ($delivery != ''){
 	$dt=$delivery[0];
 	$server=$delivery[1];
@@ -1772,7 +1774,7 @@ if ($attempt != ''){
 <? if ($d[name6]){
 //defendant 6 attempts
 $delivery='';
-$delivery=deliveryExplode($packet,1);
+$delivery=deliveryExplode($packet,6);
 if ($delivery != ''){
 	$dt=$delivery[0];
 	$server=$delivery[1];
