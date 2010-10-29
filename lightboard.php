@@ -29,7 +29,7 @@ while ($d5=mysql_fetch_array($r5, MYSQL_ASSOC)){
 	$defname = $d["name".$d5[defendantID]];
 	$list .= "<a target='frame".$i."' href='".str_replace('ps/','',$d5[affidavit])."'><strong>".$defname."</strong>: $d5[method]</a>, ";
 	$list .= "<script>window.frames['frame".$i."'].location='".str_replace('ps/','',$d5[affidavit])."';</script>";
-	$table["$i"] = "<td><iframe id='frame$i' name='frame$i' frameborder='0' height='100%' width='100%'></td>";
+	$table["$i"] = "<td><iframe id='frame$i' name='frame$i' frameborder='0' height='100%' width='100%'></iframe></td>";
 }
 $break=floor($i/2);
 $i=0;
