@@ -1,12 +1,42 @@
 <? session_start(); ?>
 <!-- Designed for 22" widescreen -->
 <link rel="stylesheet" type="text/css" href="fire.css" />
+<script>
+function getWidth() {
+  var myWidth = 0;
+  if( typeof( window.innerWidth ) == 'number' ) {
+    //Non-IE
+    myWidth = window.innerWidth;
+  } else if( document.documentElement && ( document.documentElement.clientWidth ) ) {
+    //IE 6+ in 'standards compliant mode'
+    myWidth = document.documentElement.clientWidth;
+  } else if( document.body && ( document.body.clientWidth ) ) {
+    //IE 4 compatible
+    myWidth = document.body.clientWidth;
+  }
+  return myWidth/3;
+}
+function getHeight() {
+  var myHeight = 0;
+  if( typeof( window.innerWidth ) == 'number' ) {
+    //Non-IE
+    myHeight = window.innerHeight;
+  } else if( document.documentElement && ( document.documentElement.clientHeight ) ) {
+    //IE 6+ in 'standards compliant mode'
+    myHeight = document.documentElement.clientHeight;
+  } else if( document.body && ( document.body.clientHeight ) ) {
+    //IE 4 compatible
+    myHeight = document.body.clientHeight;
+  }
+  return myHeight/2;
+}
+</script>
 <style>
 tr	{ background-color:transparent;	}
 table { padding: 0px; }
 </style>
 <div style='height:95%;overflow:auto;'>
-<table border="0" width="100%" height="95%" cellspacing="0" cellpadding="0">
+<table border="0" width="100%" height="100%" cellspacing="0" cellpadding="0">
 	<tr>
 		<td style="background-color:#FFFFFF;"><iframe id="test" name="test" frameborder="0" height="100%" src='http://mdwestserve.com/affidavits/test.php?id=<?=$_GET[packet]?>'></iframe></td>
 
@@ -34,9 +64,11 @@ while ($d5=mysql_fetch_array($r5, MYSQL_ASSOC)){
 $break=floor($i/2);
 $i=0;
 $count=count($table);
-//construct table, inserting new row halfway through
+$jsList = "<script>test.height='myHeight()'; test.width='myWidth()';</script>";
+//construct table, inserting new row halfway through, also js to resize based off browser window
 while ($i < $count){$i++;
 	$tableList .= $table["$i"];
+	$jsList .= "<script>frame$i.height='myHeight()'; frame$i.width='myWidth()';</script>";
 	if ($i == $break){
 		$tableList .= "</tr><tr>";
 	}
