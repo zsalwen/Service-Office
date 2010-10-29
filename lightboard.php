@@ -5,6 +5,7 @@
 tr	{ background-color:transparent;	}
 table { padding: 0px; }
 </style>
+<div style='height:95%;overflow:auto;'>
 <table border="0" width="100%" height="95%" cellspacing="0" cellpadding="0">
 	<tr>
 		<td><iframe id="frame1" name="frame1" frameborder="0" height="100%" width="100%"></iframe></td>
@@ -17,16 +18,16 @@ table { padding: 0px; }
 		<td style="background-color:#FFFFFF;"><iframe id="test" name="test" frameborder="0" height="100%" width="100%" src='http://mdwestserve.com/affidavits/test.php?id=<?=$_GET[packet]?>'></iframe></td>
 	</tr>		
 </table>
-<div style="background-color:#FFFFFF; font-size:20px;">
-<? if(strpos($_GET[packet],"EV")!== false){ $packetType='eviction';
-$eviction=str_replace("EV","",$_GET[packet]);
-?>
-Mark Eviction Packet <a href="http://staff.mdwestserve.com/ev/order.php?packet=<?=$eviction?>" target="_blank"><?=$_GET[packet]?></a> Filed By Staff on <?=$_SESSION[fileDate];?>
-<? }else{  $packetType='presale';?>
-Mark Presale Packet <a href="http://staff.mdwestserve.com/otd/order.php?packet=<?=$_GET[packet]?>" target="_blank">OTD<?=$_GET[packet]?></a> Filed By Staff on <?=$_SESSION[fileDate];?>
-<? } ?>
-|| 
-<?
+
+<? if(strpos($_GET[packet],"EV")!== false){
+	$packetType='eviction';
+	$eviction=str_replace("EV","",$_GET[packet]);
+	$mark="Mark Eviction Packet <a href='http://staff.mdwestserve.com/ev/order.php?packet=$eviction' target='_blank'>$_GET[packet]</a> Filed By Staff on $_SESSION[fileDate]";
+}else{
+	$packetType='presale';
+	$mark="Mark Presale Packet <a href='http://staff.mdwestserve.com/otd/order.php?packet=$_GET[packet]' target='_blank'>OTD$_GET[packet]</a> Filed By Staff on $_SESSION[fileDate];";
+} 
+echo "<div style='background-color:#FFFFFF; font-size:20px;'>$mark||";
 mysql_connect();
 mysql_select_db('core');
 $i=0;
@@ -36,7 +37,7 @@ while ($d5=mysql_fetch_array($r5, MYSQL_ASSOC)){
 	$i++;	
 	$defname = $d["name".$d5[defendantID]];
 	echo "<a target='frame".$i."' href='".str_replace('ps/','',$d5[affidavit])."'><strong>".$defname."</strong>: $d5[method]</a>, ";
-	echo "<script>window.frames['frame".$i."'].location='".str_replace('ps/','',$d5[affidavit])."';</script>";
+	//echo "<script>window.frames['frame".$i."'].location='".str_replace('ps/','',$d5[affidavit])."';</script>";
 }
 echo "</div>";
 // We need an alert for a few exceptions
