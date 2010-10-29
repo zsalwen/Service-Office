@@ -73,7 +73,7 @@ while ($i < $count){$i++;
 		$tableList .= "</tr><tr>";
 	}
 }
-echo "$tableList</tr></table></div><div style='background-color:#FFFFFF; font-size:20px;'>$mark||$list</div>";
+echo "$tableList</tr></table>$jsList</div><div style='background-color:#FFFFFF; font-size:20px;'>$mark||$list</div>";
 // We need an alert for a few exceptions
 if ($packetType == 'presale'){
 	$r=@mysql_query("select * from ps_packets where packet_id = '$_GET[packet]'");
