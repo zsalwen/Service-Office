@@ -64,7 +64,7 @@ while ($d5=mysql_fetch_array($r5, MYSQL_ASSOC)){
 $break=floor($i/2);
 $i=0;
 $count=count($table);
-$jsList = "<script>test.height='myHeight()'; test.width='myWidth()';</script>";
+$jsList = "<script>test.height='500px'; test.width='1000px';</script>";
 //construct table, inserting new row halfway through, also js to resize based off browser window
 while ($i < $count){$i++;
 	$tableList .= $table["$i"];
