@@ -1406,7 +1406,7 @@ $otdStr=str_replace('portal/','',$otdStr);
 if (!strpos($otdStr,'mdwestserve.com')){
 	$otdStr="http://mdwestserve.com/".$otdStr;
 }
-if ($d[packet_id] > 3620){
+if ($d[packet_id] > 3620 && $d[reopenDate] != ''){
 	$checkLink="serviceSheet.php?packet=$d[packet_id]&autoPrint=1";
 }else{
 	$checkLink="oldServiceSheet.php?packet=$d[packet_id]&autoPrint=1";
