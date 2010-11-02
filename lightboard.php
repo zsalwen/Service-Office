@@ -50,11 +50,11 @@ while ($d5=mysql_fetch_array($r5, MYSQL_ASSOC)){
 $break=floor($i/2);
 $i=0;
 $count=count($table);
-$jsList = "<script>document.getElementById('test').width='1000px';</script>";
+$jsList = "<script>document.getElementById('test').width=getWidth();</script>";
 //construct table, inserting new row halfway through, also js to resize based off browser window
 while ($i < $count){$i++;
 	$tableList .= $table["$i"];
-	$jsList .= "<script>frame$i.width='getWidth()';</script>";
+	$jsList .= "<script>document.getElementById('frame$i').width=getWidth();</script>";
 	if ($i == $break){
 		$tableList .= "</tr><tr>";
 	}
