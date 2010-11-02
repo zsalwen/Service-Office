@@ -16,20 +16,6 @@ function getWidth() {
   }
   return myWidth/3;
 }
-function getHeight() {
-  var myHeight = 0;
-  if( typeof( window.innerWidth ) == 'number' ) {
-    //Non-IE
-    myHeight = window.innerHeight;
-  } else if( document.documentElement && ( document.documentElement.clientHeight ) ) {
-    //IE 6+ in 'standards compliant mode'
-    myHeight = document.documentElement.clientHeight;
-  } else if( document.body && ( document.body.clientHeight ) ) {
-    //IE 4 compatible
-    myHeight = document.body.clientHeight;
-  }
-  return myHeight/2;
-}
 </script>
 <style>
 tr	{ background-color:transparent;	}
@@ -64,11 +50,11 @@ while ($d5=mysql_fetch_array($r5, MYSQL_ASSOC)){
 $break=floor($i/2);
 $i=0;
 $count=count($table);
-$jsList = "<script>test.height='500px'; test.width='1000px';</script>";
+$jsList = "<script>document.getElementById('test').width='1000px';</script>";
 //construct table, inserting new row halfway through, also js to resize based off browser window
 while ($i < $count){$i++;
 	$tableList .= $table["$i"];
-	$jsList .= "<script>frame$i.height='myHeight()'; frame$i.width='myWidth()';</script>";
+	$jsList .= "<script>frame$i.width='getWidth()';</script>";
 	if ($i == $break){
 		$tableList .= "</tr><tr>";
 	}
