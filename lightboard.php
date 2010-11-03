@@ -2,7 +2,7 @@
 <!-- Designed for 22" widescreen -->
 <link rel="stylesheet" type="text/css" href="fire.css" />
 <script>
-function getWidth() {
+function getWidth(items) {
   var myWidth = 0;
   if( typeof( window.innerWidth ) == 'number' ) {
     //Non-IE
@@ -14,7 +14,7 @@ function getWidth() {
     //IE 4 compatible
     myWidth = document.body.clientWidth;
   }
-  return myWidth/3;
+  return myWidth/items;
 }
 </script>
 <style>
@@ -42,19 +42,22 @@ $q5="SELECT * FROM ps_affidavits WHERE packetID = '$_GET[packet]' order by defen
 $r5=@mysql_query($q5) or die ("Query: $q5<br>".mysql_error());
 while ($d5=mysql_fetch_array($r5, MYSQL_ASSOC)){
 	$i++;	
-	$defname = $d["name".$d5[defendantID]];
-	$list .= "<a target='frame".$i."' href='".str_replace('ps/','',$d5[affidavit])."'><strong>".$defname."</strong>: $d5[method]</a>, ";
+	$list .= "<a target='frame".$i."' href='".str_replace('ps/','',$d5[affidavit])."'><strong>".$d5[defendantID]."</strong>: $d5[method]</a>, ";
 	$list .= "<script>window.frames['frame".$i."'].location='".str_replace('ps/','',$d5[affidavit])."';</script>";
 	$table["$i"] = "<td><iframe id='frame$i' name='frame$i' frameborder='0' height='100%' width='100%'></iframe></td>";
 }
+$items=$i+1;
 $break=floor($i/2);
+if ($break >= 1){
+	$items=floor($items/2);
+}
 $i=0;
 $count=count($table);
 $jsList = "<script>document.getElementById('test').width=getWidth();</script>";
 //construct table, inserting new row halfway through, also js to resize based off browser window
 while ($i < $count){$i++;
 	$tableList .= $table["$i"];
-	$jsList .= "<script>document.getElementById('frame$i').width=getWidth();</script>";
+	$jsList .= "<script>document.getElementById('frame$i').width=getWidth($items);</script>";
 	if ($i == $break){
 		$tableList .= "</tr><tr>";
 	}
