@@ -53,7 +53,7 @@ if ($break >= 1){
 }
 $i=0;
 $count=count($table);
-$jsList = "<script>document.getElementById('test').width=getWidth();</script>";
+$jsList = "<script>document.getElementById('test').width=getWidth($items);</script>";
 //construct table, inserting new row halfway through, also js to resize based off browser window
 while ($i < $count){$i++;
 	$tableList .= $table["$i"];
