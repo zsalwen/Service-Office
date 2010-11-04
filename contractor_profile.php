@@ -150,7 +150,7 @@ $d=mysql_fetch_array($r, MYSQL_ASSOC);
     </tr>
          <tr>
                 	<td colspan="4" align="center"><input  type="submit" name="submit" value="Update <?=$d[level]?>" /><? if ($_COOKIE[psdata][level] == "Operations"){?>
-  <a href="?delete=<?=$id;?>">Flag account for deletion.</a>
+  <a href="?delete=<?=$id;?>">Flag account for deletion.</a> <form action="http://service.mdwestserve.com/liveAffidavit.php" target="_blank" style='display:inline;'><input type="hidden" name="start" value="0"><input type="hidden" name="stop" value="200000"><input type="hidden" name="server" value="<?=$id?>"><input type="hidden" name="ev" value="YES"><input type="submit" name="submit" value="Print Presale & Eviction Affidavits"></form>
 <? } ?></td>
                 </tr>      
             </form>
