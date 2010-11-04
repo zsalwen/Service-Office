@@ -1412,7 +1412,7 @@ if ($d[packet_id] > 3620 && $d[reopenDate] != ''){
 	$checkLink="oldServiceSheet.php?packet=$d[packet_id]&autoPrint=1";
 }
 $q5="SELECT DISTINCT serverID from ps_history WHERE packet_id='$d[packet_id]'";
-$r5=@mysql_query($q5) or die(mysql_error());reop
+$r5=@mysql_query($q5) or die(mysql_error());
 $i=0;
 $data5=mysql_num_rows($r5);
 if ($data5 > 0){
