@@ -440,7 +440,7 @@ if ($_POST[reopen]){
 	$note="file originally closed out on ".$d13[fileDate];
 	$newNote = "<li>From ".$_COOKIE[psdata][name]." on ".date('m/d/y g:ia').": \"".$note."\"</li>".$oldNote;
 	$today=date('Y-m-d');
-	$deadline=time()+604800;
+	$deadline=time()+432000;
 	$deadline=date('Y-m-d',$deadline);
 	$q="UPDATE ps_packets SET processor_notes='".dbIN($newNote)."', filing_status='REOPENED', affidavit_status='IN PROGRESS', affidavit_status2='REOPENED', process_status='ASSIGNED', reopenDate='$today', fileDate='0000-00-00', estFileDate='$deadline', request_close='', request_closea='', request_closeb='', request_closec='', request_closed='', request_closee='' WHERE packet_id='".$_GET[packet]."'";
 	@mysql_query($q) or die ("Query: $q<br>".mysql_error());
@@ -1412,7 +1412,7 @@ if ($d[packet_id] > 3620 && $d[reopenDate] != ''){
 	$checkLink="oldServiceSheet.php?packet=$d[packet_id]&autoPrint=1";
 }
 $q5="SELECT DISTINCT serverID from ps_history WHERE packet_id='$d[packet_id]'";
-$r5=@mysql_query($q5) or die(mysql_error());
+$r5=@mysql_query($q5) or die(mysql_error());reop
 $i=0;
 $data5=mysql_num_rows($r5);
 if ($data5 > 0){
