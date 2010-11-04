@@ -149,11 +149,11 @@ $d=mysql_fetch_array($r, MYSQL_ASSOC);
         <td colspan="3" valign="top"><textarea name="manager_review" cols="45" rows="5"><?=stripslashes($d[manager_reviews])?></textarea></td>
     </tr>
          <tr>
-                	<td colspan="4" align="center"><input  type="submit" name="submit" value="Update <?=$d[level]?>" /><? if ($_COOKIE[psdata][level] == "Operations"){?>
+                	<td colspan="4" align="center"><input  type="submit" name="submit" value="Update <?=$d[level]?>" /></form><? if ($_COOKIE[psdata][level] == "Operations"){?>
   <a href="?delete=<?=$id;?>">Flag account for deletion.</a> <form action="http://service.mdwestserve.com/liveAffidavit.php" target="_blank" style='display:inline;'><input type="hidden" name="start" value="0"><input type="hidden" name="stop" value="200000"><input type="hidden" name="server" value="<?=$id?>"><input type="hidden" name="user_id" value="<?=$id?>"><input type="hidden" name="level" value="GOLD"><input type="hidden" name="ev" value="YES"><input type="submit" name="submit" value="Print Presale & Eviction Affidavits"></form>
 <? } ?></td>
                 </tr>      
-            </form>
+            
 			<tr><td bgcolor="#FFCC33" colspan="4"><?=$d[whois]?></td></tr></table>
 </td><td valign="top" bgcolor="#CCFFFF" colspan="2"><table width="100%">
 	<tr>
