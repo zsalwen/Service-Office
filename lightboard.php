@@ -49,7 +49,7 @@ while ($d5=mysql_fetch_array($r5, MYSQL_ASSOC)){
 $items=$i+1;
 $break=floor($i/2);
 if ($break >= 1){
-	$items=floor($items/2);
+	$items=ceil($items/2);
 }
 $i=0;
 $count=count($table);
