@@ -41,7 +41,7 @@ while ($d3=mysql_fetch_array($r3,MYSQL_ASSOC)){
 	}
 	$h3b .= "<li class='$phClass'>$d3[coldCall]</li>";
 }
-while ($d4=mysql_fetch_array($r3,MYSQL_ASSOC)){
+while ($d4=mysql_fetch_array($r4,MYSQL_ASSOC)){
 	$h4 .= "<li><a href='details.php?id=$d3[marketID]'>$d3[name]</a></li>";
 	$phClass=explode(' ',$d4[phase]);
 	$phClass=$phClass[0];
