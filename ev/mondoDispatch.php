@@ -201,7 +201,7 @@ $r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
 $i=0;
 while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {$i++;
 ?>
-    <tr bgcolor="<? if($d[alertMax] && $d[attorneys_id] == '1'){  echo row_color(1,'#ff0000','#990000');}elseif (outOfState($d[eviction_id]) > 0){ echo row_color(2,'#009999','#00FFFF');}else{ echo row_color($i,'#FFFFFF','#cccccc'); }?>">
+    <tr bgcolor="<? if (outOfState($d[eviction_id]) > 0){ echo row_color(2,'#009999','#00FFFF');}else{ echo row_color($i,'#FFFFFF','#cccccc'); }?>">
 		<td nowrap="nowrap">
 		<? if(($d[uspsVerify] != '') && ($d[qualityControl] != '') && ($d[caseVerify] != '')){ ?><input type="checkbox" name="package[id][<?=$d[eviction_id]?>]" value="<?=$d[eviction_id]?>" /><? } ?>&nbsp;<a href="order.php?packet=<?=$d[eviction_id]?>" target="_blank" style="text-decoration:none"><?=$d[eviction_id]?>)</a></td>
         <td><?=id2attorney($d[attorneys_id])?></td>
