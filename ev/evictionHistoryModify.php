@@ -102,7 +102,7 @@ if ($_POST[confirm]){
 }
 //only display table if not attempting to delete items
 if ($i2 < 1){
-	$q="SELECT eviction_id, address1, address1a, server_id, server_ida from evictionPackets where eviction_id = '$packet'";
+	$q="SELECT eviction_id, address1 server_id from evictionPackets where eviction_id = '$packet'";
 	$r=@mysql_query($q) or die(mysql_error());
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 	if ($_GET[def]){
