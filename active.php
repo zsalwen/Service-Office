@@ -237,7 +237,7 @@ function serverActiveListe($id){ $_SESSION[active]++;
 //begin evictionPackets functions:******************************************************
 function evictionActiveList($id){ $_SESSION[active]++;
 $data='<ol>';
-$r=@mysql_query("select eviction_id, date_received, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, TIMEDIFF( NOW(), date_received) as hours from evictionPackets where server_id='$id' and (process_status = 'Assigned' OR process_status = 'ASSIGNED') order by  eviction_id");
+$r=@mysql_query("select eviction_id, date_received, request_close affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, TIMEDIFF( NOW(), date_received) as hours from evictionPackets where server_id='$id' and (process_status = 'Assigned' OR process_status = 'ASSIGNED') order by  eviction_id");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
 $_SESSION[active3]++;
 if (stripHours($d[hours]) > $_SESSION[cap]){
@@ -256,7 +256,7 @@ return $data;
 }
 function evictionActiveLista($id){ $_SESSION[active]++;
 $data='<ol>';
-$r=@mysql_query("select eviction_id, date_received, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, TIMEDIFF( NOW(), date_received) as hours  from evictionPackets where server_ida='$id' and process_status = 'Assigned' order by  eviction_id");
+$r=@mysql_query("select eviction_id, date_received, request_close, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, TIMEDIFF( NOW(), date_received) as hours  from evictionPackets where server_ida='$id' and process_status = 'Assigned' order by  eviction_id");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
 if (stripHours($d[hours]) > $_SESSION[cap]){
 	if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
@@ -273,7 +273,7 @@ return $data;
 }
 function evictionActiveListb($id){ $_SESSION[active]++;
 $data='<ol>';
-$r=@mysql_query("select eviction_id, date_received, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, TIMEDIFF( NOW(), date_received) as hours  from evictionPackets where server_idb='$id' and process_status = 'Assigned' order by  eviction_id");
+$r=@mysql_query("select eviction_id, date_received, request_close, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, TIMEDIFF( NOW(), date_received) as hours  from evictionPackets where server_idb='$id' and process_status = 'Assigned' order by  eviction_id");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
 if (stripHours($d[hours]) > $_SESSION[cap]){
 	if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
@@ -290,7 +290,7 @@ return $data;
 }
 function evictionActiveListc($id){ $_SESSION[active]++;
 $data='<ol>';
-$r=@mysql_query("select eviction_id, date_received, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, TIMEDIFF( NOW(), date_received) as hours  from evictionPackets where server_idc='$id' and process_status = 'Assigned' order by  eviction_id");
+$r=@mysql_query("select eviction_id, date_received, request_close, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, TIMEDIFF( NOW(), date_received) as hours  from evictionPackets where server_idc='$id' and process_status = 'Assigned' order by  eviction_id");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
 if (stripHours($d[hours]) > $_SESSION[cap]){
 	if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
@@ -307,7 +307,7 @@ return $data;
 }
 function evictionActiveListd($id){ $_SESSION[active]++;
 $data='<ol>';
-$r=@mysql_query("select eviction_id, date_received, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, TIMEDIFF( NOW(), date_received) as hours  from evictionPackets where server_idd='$id' and process_status = 'Assigned' order by  eviction_id");
+$r=@mysql_query("select eviction_id, date_received, request_close, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, TIMEDIFF( NOW(), date_received) as hours  from evictionPackets where server_idd='$id' and process_status = 'Assigned' order by  eviction_id");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
 if (stripHours($d[hours]) > $_SESSION[cap]){
 	if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
@@ -324,7 +324,7 @@ return $data;
 }
 function evictionActiveListe($id){ $_SESSION[active]++;
 $data='<ol>';
-$r=@mysql_query("select eviction_id, date_received, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, TIMEDIFF( NOW(), date_received) as hours  from evictionPackets where server_ide='$id' and process_status = 'Assigned' order by  eviction_id");
+$r=@mysql_query("select eviction_id, date_received, request_close, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, TIMEDIFF( NOW(), date_received) as hours  from evictionPackets where server_ide='$id' and process_status = 'Assigned' order by  eviction_id");
 if (stripHours($d[hours]) > $_SESSION[cap]){
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
 	if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
