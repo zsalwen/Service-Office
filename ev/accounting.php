@@ -102,18 +102,6 @@ hardLog('updated payment information for '.$_GET[id],'user');
 									contractor_ratea='$_POST[contractor_ratea]', 
 									contractor_paida='$_POST[contractor_paida]',
 									contractor_checka='$_POST[contractor_checka]', 
-									contractor_rateb='$_POST[contractor_rateb]', 
-									contractor_paidb='$_POST[contractor_paidb]',
-									contractor_checkb='$_POST[contractor_checkb]', 
-									contractor_ratec='$_POST[contractor_ratec]', 
-									contractor_paidc='$_POST[contractor_paidc]',
-									contractor_checkc='$_POST[contractor_checkc]', 
-									contractor_rated='$_POST[contractor_rated]', 
-									contractor_paidd='$_POST[contractor_paidd]',
-									contractor_checkd='$_POST[contractor_checkd]', 
-									contractor_ratee='$_POST[contractor_ratee]', 
-									contractor_paide='$_POST[contractor_paide]',
-									contractor_checke='$_POST[contractor_checke]', 
 									client_rate='$_POST[client_rate]', 
 									client_ratea='$_POST[client_ratea]', 
 									client_rateb='$_POST[client_rateb]', 
@@ -123,15 +111,6 @@ hardLog('updated payment information for '.$_GET[id],'user');
 									client_check='$_POST[client_check]',
 									client_checka='$_POST[client_checka]',
 									client_checkb='$_POST[client_checkb]',
-									client_ratec='$_POST[client_ratec]', 
-									client_rated='$_POST[client_rated]', 
-									client_ratee='$_POST[client_ratee]', 
-									client_paidc='$_POST[client_paidc]',
-									client_paidd='$_POST[client_paidd]',
-									client_paide='$_POST[client_paide]',
-									client_checkc='$_POST[client_checkc]',
-									client_checkd='$_POST[client_checkd]',
-									client_checke='$_POST[client_checke]',
 									accountingNotes='".addslashes($_POST[accountingNotes])."'
 										WHERE eviction_id='$_POST[id]'";		
 	$r1 = @mysql_query ($q1) or die(mysql_error());
@@ -186,47 +165,32 @@ td { font-variant:small-caps }
 	<tr>
     	<td></td>
         <td style="font-size:12px;"><?=id2name($data[server_id])?></td>
-    	<td style="font-size:12px;"><?=id2name($data[server_ida])?></td>
-    	<td style="font-size:12px;"><?=id2name($data[server_idb])?></td>
-    	<td style="font-size:12px;"><?=id2name($data[server_idc])?></td>
-    	<td style="font-size:12px;"><?=id2name($data[server_idd])?></td>
-    	<td style="font-size:12px;"><?=id2name($data[server_ide])?></td>
+    	<td style="font-size:12px;"></td>
+    	<td style="font-size:12px;"></td>
     </tr>
     <tr>
     	<td>Check</td>
     	<td><input name="contractor_check" size="2" maxlength="30" value="<?=$data[contractor_check]?>" /></td>
     	<td><input name="contractor_checka" size="2" maxlength="30" value="<?=$data[contractor_checka]?>" /></td>
-    	<td><input name="contractor_checkb" size="2" maxlength="30" value="<?=$data[contractor_checkb]?>" /></td>
-    	<td><input name="contractor_checkc" size="2" maxlength="30" value="<?=$data[contractor_checkc]?>" /></td>
-    	<td><input name="contractor_checkd" size="2" maxlength="30" value="<?=$data[contractor_checkd]?>" /></td>
-    	<td><input name="contractor_checke" size="2" maxlength="30" value="<?=$data[contractor_checke]?>" /></td>
+    	<td></td>
 	</tr>
     <tr>
     	<td>Paid</td>
     	<td><input name="contractor_paid" size="2" maxlength="7" value="<?=$data[contractor_paid]?>" /></td>
     	<td><input name="contractor_paida" size="2" maxlength="7" value="<?=$data[contractor_paida]?>" /></td>
-    	<td><input name="contractor_paidb" size="2" maxlength="7" value="<?=$data[contractor_paidb]?>" /></td>
-    	<td><input name="contractor_paidc" size="2" maxlength="7" value="<?=$data[contractor_paidc]?>" /></td>
-    	<td><input name="contractor_paidd" size="2" maxlength="7" value="<?=$data[contractor_paidd]?>" /></td>
-    	<td><input name="contractor_paide" size="2" maxlength="7" value="<?=$data[contractor_paide]?>" /></td>
+    	<td></td>
 	</tr>
 	<tr>
     	<td>Quote</td>
     	<td><input name="contractor_rate" size="2" maxlength="7" value="<?=$data[contractor_rate]?>" /></td>
     	<td><input name="contractor_ratea" size="2" maxlength="7" value="<?=$data[contractor_ratea]?>" /></td>
-    	<td><input name="contractor_rateb" size="2" maxlength="7" value="<?=$data[contractor_rateb]?>" /></td>
-    	<td><input name="contractor_ratec" size="2" maxlength="7" value="<?=$data[contractor_ratec]?>" /></td>
-    	<td><input name="contractor_rated" size="2" maxlength="7" value="<?=$data[contractor_rated]?>" /></td>
-    	<td><input name="contractor_ratee" size="2" maxlength="7" value="<?=$data[contractor_ratee]?>" /></td>
+    	<td></td>
     </tr>
     <tr>
     	<td>Client</td>
     	<td><input name="client_rate" size="2" maxlength="7" value="<?=$data[client_rate]?>" /></td>
     	<td><input name="client_ratea" size="2" maxlength="7" value="<?=$data[client_ratea]?>" /></td>
     	<td><input name="client_rateb" size="2" maxlength="7" value="<?=$data[client_rateb]?>" /></td>
-    	<td><input name="client_ratec" size="2" maxlength="7" value="<?=$data[client_ratec]?>" /></td>
-    	<td><input name="client_rated" size="2" maxlength="7" value="<?=$data[client_rated]?>" /></td>
-    	<td><input name="client_ratee" size="2" maxlength="7" value="<?=$data[client_ratee]?>" /></td>
 	</tr>
 </table>
 </fieldset>    
