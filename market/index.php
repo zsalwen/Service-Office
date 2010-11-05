@@ -6,7 +6,8 @@ mysql_select_db('core');
 $today=date('Y-m-d');
 $r1 = @mysql_query("select * from market where type = 'attorney' AND coldCall <> '$today' AND phase='COLD CALL' AND doNotCall <> 'checked' ORDER BY name ASC");
 $r2 = @mysql_query("select * from market where type = 'attorney' AND coldCall = '$today' AND phase='COLD CALL' AND doNotCall <> 'checked' ORDER BY name ASC");
-$r3 = @mysql_query("select * from market where type = 'attorney' AND phase <> 'COLD CALL' AND doNotCall <> 'checked' ORDER BY name ASC");
+$r3 = @mysql_query("select * from market where type = 'attorney' AND phase <> 'COLD CALL' AND phase <> 'CALL BACK' AND doNotCall <> 'checked' ORDER BY callBack ASC");
+$r4 = @mysql_query("select * from market where type = 'attorney' AND phase='CALL BACK' ORDER BY name ASC");
 // build html list
 while ($d1=mysql_fetch_array($r1,MYSQL_ASSOC)){
 	$h1 .= "<li><a href='details.php?id=$d1[marketID]'>$d1[name]</a></li>";
@@ -40,6 +41,13 @@ while ($d3=mysql_fetch_array($r3,MYSQL_ASSOC)){
 	}
 	$h3b .= "<li class='$phClass'>$d3[coldCall]</li>";
 }
+while ($d4=mysql_fetch_array($r3,MYSQL_ASSOC)){
+	$h4 .= "<li><a href='details.php?id=$d3[marketID]'>$d3[name]</a></li>";
+	$phClass=explode(' ',$d4[phase]);
+	$phClass=$phClass[0];
+	$h3a .= "<li class='$phClass'>$d3[phase]-$d3[callBack]</li>";
+	$h3b .= "<li class='$phClass'>$d3[coldCall]</li>";
+}
 $today=date('m/d/Y');
 if ($_GET[msg]){
 	echo "<table align='center'><tr><td align='center'>$msg</td></tr></table>";
@@ -59,6 +67,12 @@ if ($_GET[msg]){
 	</tr>
 	<tr>
 		<td valign="top"><?=$h1;?></td><td valign="top"><?=$h1a;?></td><td valign='top'><?=$h1b?></td>
+	</tr>
+	<tr>
+		<td>Attorneys Requiring Call Back</td><td>Next Action</td><td>Last Called</td>
+	</tr>
+	<tr>
+		<td valign="top"><?=$h4;?></td><td valign='top'><?=$h4a?></td><td valign='top'><?=$h4b?></td>
 	</tr>
 	<tr>
 		<td colspan='2'>Attorneys Cold Called Today, <?=$today?></td><td>Next Action</td>
