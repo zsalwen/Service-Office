@@ -32,7 +32,7 @@ a { color:#000000; text-decoration:none;}
 </tr>
 
 <?
-$q= "select gcStatus, article1, article1a, article1b, article1c, article1d, article1e, article2, article2a, article2b, article2c, article2d, article2e, article3, article3a, article3b, article3c, article3d, article3e, article4, article4a, article4b, article4c, article4d, article4e, article5, article5a, article5b, article5c, article5d, article5e, article6, article6a, article6b, article6c, article6d, article6e filing_status, eviction_id from evictionPackets where service_status = 'MAILING AND POSTING' OR service_status = 'CANCELLED' ORDER BY eviction_id DESC";
+$q= "select gcStatus, article1, article2, article3, article4, article5, article6, filing_status, eviction_id from evictionPackets where service_status = 'MAILING AND POSTING' OR service_status = 'CANCELLED' ORDER BY eviction_id DESC";
 $r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
 $i=0;
 while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {$i++;
@@ -42,32 +42,12 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {$i++;
     <?
 	$ii=0;
 	while ($ii < 6){$ii++;
-		$vera=$ii.'a';
-		$verb=$ii.'b';
-		$verc=$ii.'c';
-		$verd=$ii.'d';
-		$vere=$ii.'e';
 		if ($d["article".$ii]){
 			if ($ii > 1){
 				echo "<br><a target='_Blank' href=../'usps.php?track=".$d["article".$ii]."'>Art $ii: ".$d["article".$ii]."</a>";
 			}else{
 				echo "<a target='_Blank' href=../'usps.php?track=".$d["article".$ii]."'>Art $ii: ".$d["article".$ii]."</a>";
 			}
-		}
-		if ($d["article".$vera]){
-			echo "<br><a target='_Blank' href=../'usps.php?track=".$d["article".$vera]."'>Art $vera: ".$d["article".$vera]."</a>";
-		}
-		if ($d["article".$verb]){
-			echo "<br><a target='_Blank' href=../'usps.php?track=".$d["article".$verb]."'>Art $verb: ".$d["article".$verb]."</a>";
-		}
-		if ($d["article".$verc]){
-			echo "<br><a target='_Blank' href=../'usps.php?track=".$d["article".$verc]."'>Art $verc: ".$d["article".$verc]."</a>";
-		}
-		if ($d["article".$verd]){
-			echo "<br><a target='_Blank' href=../'usps.php?track=".$d["article".$verd]."'>Art $verd: ".$d["article".$verd]."</a>";
-		}
-		if ($d["article".$vere]){
-			echo "<br><a target='_Blank' href=../'usps.php?track=".$d["article".$vere]."'>Art $vere: ".$d["article".$vere]."</a>";
 		}
 	}
 	?>
