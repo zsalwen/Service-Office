@@ -403,7 +403,7 @@ function evictionActiveList($id,$packet){ $_SESSION[active]++;
 		$estFileDate=explode('-',$d[estFileDate]);
 		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
 		$case .= "&nbsp;<span style='background-color:white; border: 1px solid black; color: #000000 !important;'>FILE: $estFileDate</span>";
-		$evWithCouriet=evWithCourier($d[eviction_id]);
+		$evWithCourier=evWithCourier($d[eviction_id]);
 		if($evWithCourier != ''){
 			$case.=$evWithCourier;
 		}else{
