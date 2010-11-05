@@ -159,7 +159,6 @@ td { font-variant:small-caps }
     	<td></td>
         <td style="font-size:12px;"><?=id2name($data[server_id])?></td>
     	<td style="font-size:12px;"></td>
-    	<td style="font-size:12px;"></td>
     </tr>
     <tr>
     	<td>Check</td>
@@ -193,7 +192,6 @@ td { font-variant:small-caps }
 		<td>Bill</td>
         <td>First</td>
     	<td>Second</td>
-    	<td>Third</td>
     </tr>
     <tr>
     	<td>Client Check</td>
