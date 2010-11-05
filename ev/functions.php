@@ -160,19 +160,6 @@ function note($file_id, $note){
 	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 }
 
-function hwaLog($id, $note){
-	$q="SELECT hwa_log FROM ps_packets";
-	$r=@mysql_query($q);
-	$d=mysql_fetch_array($r, MYSQL_ASSOC);
-	if ($d[hwa_log]){
-	$new_note = $d[hwa_log]."<br>".date('m/d/Y g:ia').":".addslashes($note);
-	}else{
-	$new_note = "<br>".addslashes($note);
-	}
-	$q="UPDATE ps_packets set hwa_log = '$new_note' where eviction_id = '$id'";
-	$r=@mysql_query($q);
-}
-
 function cleanup($string){
 $string = addslashes($string);
 $string = strtoupper($string);
