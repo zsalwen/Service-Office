@@ -46,10 +46,6 @@ function packageFile($package_id, $file_id, $contractor_rate, $contractor_ratea,
 									package_id='$package_id',
 									contractor_rate='$contractor_rate',
 									contractor_ratea='$contractor_ratea',
-									contractor_rateb='$contractor_rateb',
-									contractor_ratec='$contractor_ratec',
-									contractor_rated='$contractor_rated',
-									contractor_ratee='$contractor_ratee',
 									estFileDate='$_SESSION[estFileDate]'
 										WHERE eviction_id = '$file_id'";
 	$r=@mysql_query($q);
@@ -75,61 +71,20 @@ function makePackage($array1,$array2,$array3,$array4,$array5,$array6,$array7,$pa
 
 	//monitor('Your package "' .$_POST[name]. '" has been created.');
 		foreach ($_POST[package]['id'] as $value){
-		$q="SELECT address1a, address1b, address1c, address1d, address1e from evictionPackets WHERE eviction_id='$value'";
-		$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
-		$fileCount=0;
-		while ($d=mysql_fetch_array($r, MYSQL_ASSOC)){$fileCount++;
-			$q="UPDATE evictionPackets SET server_id = '$_POST[server_id]', ";
-			if ($d[address1a] && $_POST[server_ida]){
-				$q .= "server_ida = '$_POST[server_ida]', ";
-			}elseif($d[address1a]){
-				$q .= "server_ida = '$_POST[server_id]', ";
+			$q="SELECT address1a, address1b, address1c, address1d, address1e from evictionPackets WHERE eviction_id='$value'";
+			$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
+			$fileCount=0;
+			while ($d=mysql_fetch_array($r, MYSQL_ASSOC)){$fileCount++;
+				$q="UPDATE evictionPackets SET server_id = '$_POST[server_id]', process_status='ASSIGNED' WHERE eviction_id ='$value'";
+				@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 			}
-			if ($d[address1b] && $_POST[server_idb]){
-				$q .= "server_idb = '$_POST[server_idb]', ";
-			}elseif($d[address1b]){
-				$q .= "server_idb = '$_POST[server_id]', ";
-			}
-			if ($d[address1c] && $_POST[server_idc]){
-				$q .= "server_idc = '$_POST[server_idc]', ";
-			}elseif($d[address1c]){
-				$q .= "server_idc = '$_POST[server_id]', ";
-			}
-			if ($d[address1d] && $_POST[server_idd]){
-				$q .= "server_idd = '$_POST[server_idd]', ";
-			}elseif($d[address1d]){
-				$q .= "server_idd = '$_POST[server_id]', ";
-			}
-			if ($d[address1e] && $_POST[server_ide]){
-				$q .= "server_ide = '$_POST[server_ide]', ";
-			}elseif($d[address1e]){
-				$q .= "server_ide = '$_POST[server_id]', ";
-			}
-			$q.="process_status='ASSIGNED' WHERE eviction_id ='$value'";
-			@mysql_query($q) or die ("Query: $q<br>".mysql_error());
+			$packageName=$fileCount.initals(id2name($_POST[server_id]));
+			$packageName = $packageName.date('mdY-H:i:s');
+			$q3 = "UPDATE evictionPackages SET name='$packageName' where id = '$packageID'";
+			@mysql_query($q3) or die ("Query: $q3<br>".mysql_error());
+			hardLog('Dispatched file '.$value,'user');
+			timeline($value,$_COOKIE[psdata][name]." Dispatched Order");
 		}
-		$packageName=$fileCount.initals(id2name($_POST[server_id]));
-		if ($_POST[server_ida]){
-			$packageName .= initals(id2name($_POST[server_ida]));
-		}
-		if ($_POST[server_idb]){
-			$packageName .= initals(id2name($_POST[server_idb]));
-		}
-		if ($_POST[server_idc]){
-			$packageName .= initals(id2name($_POST[server_idc]));
-		}
-		if ($_POST[server_idd]){
-			$packageName .= initals(id2name($_POST[server_idd]));
-		}
-		if ($_POST[server_ide]){
-			$packageName .= initals(id2name($_POST[server_ide]));
-		}
-		$packageName = $packageName.date('mdY-H:i:s');
-		$q3 = "UPDATE evictionPackages SET name='$packageName' where id = '$packageID'";
-		@mysql_query($q3) or die ("Query: $q3<br>".mysql_error());
-		hardLog('Dispatched file '.$value,'user');
-		timeline($value,$_COOKIE[psdata][name]." Dispatched Order");
-	}
 	}
 }
 
@@ -165,19 +120,7 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {$i++;
 		<td><?=$d[case_no] ?></td>
         <td><?=str_replace(' ','&nbsp;',$d[circuit_court]) ?></td>
         <td align="center"><?=defTotal($d[eviction_id]);?></td>
-        <td nowrap="nowrap"><? if ($d[address1e]){
-				echo "<a target='_Blank' href='http://mdwestserve.com/ps/dispatcher.php?aptsut=&address=$d[address1e]&city=$d[city1e]&state=$d[state1e]&miles=20' title='$d[address1e], $d[city1e], $d[state1e] $d[zip1e]'>Service: $d[address1e], $d[city1e], $d[state1e] $d[zip1e]</a><br><a target='_Blank'  href='http://mdwestserve.com/ps/dispatcher.php?aptsut=&address=$d[address1d]&city=$d[city1d]&state=$d[state1d]&miles=20' title='$d[address1d], $d[city1d], $d[state1d] $d[zip1d]'>Alt. Service: $d[address1d], $d[city1d], $d[state1d] $d[zip1d]</a><br><a target='_Blank'  href='http://mdwestserve.com/ps/dispatcher.php?aptsut=&address=$d[address1c]&city=$d[city1c]&state=$d[state1c]&miles=20' title='$d[address1c], $d[city1c], $d[state1c] $d[zip1c]'>Alt. Service: $d[address1c], $d[city1c], $d[state1c] $d[zip1c]</a><br><a target='_Blank'  href='http://mdwestserve.com/ps/dispatcher.php?aptsut=&address=$d[address1b]&city=$d[city1b]&state=$d[state1b]&miles=20' title='$d[address1b], $d[city1b], $d[state1b] $d[zip1b]'>Alt. Service: $d[address1b], $d[city1b], $d[state1b] $d[zip1b]</a><br><a   href='http://mdwestserve.com/ps/dispatcher.php?aptsut=&address=$d[address1a]&city=$d[city1a]&state=$d[state1a]&miles=20' title='$d[address1a], $d[city1a], $d[state1a] $d[zip1a]'>Alt. Service: $d[address1a], $d[city1a], $d[state1a] $d[zip1a]</a><br><a   href='http://mdwestserve.com/ps/dispatcher.php?aptsut=&address=$d[address1]&city=$d[city1]&state=$d[state1]&miles=20' title='$d[address1], $d[city1], $d[state1] $d[zip1]'>Posting: $d[address1], $d[city1], $d[state1] $d[zip1]</a>";	
-			}elseif ($d[address1d]){
-				echo "<a target='_Blank' href='http://mdwestserve.com/ps/dispatcher.php?aptsut=&address=$d[address1d]&city=$d[city1d]&state=$d[state1d]&miles=20' title='$d[address1d], $d[city1d], $d[state1d] $d[zip1d]'>Service: $d[address1d], $d[city1d], $d[state1d] $d[zip1d]</a><br><a target='_Blank'  href='http://mdwestserve.com/ps/dispatcher.php?aptsut=&address=$d[address1c]&city=$d[city1c]&state=$d[state1c]&miles=20' title='$d[address1c], $d[city1c], $d[state1c] $d[zip1c]'>Alt. Service: $d[address1c], $d[city1c], $d[state1c] $d[zip1c]</a><br><a target='_Blank'  href='http://mdwestserve.com/ps/dispatcher.php?aptsut=&address=$d[address1b]&city=$d[city1b]&state=$d[state1b]&miles=20' title='$d[address1b], $d[city1b], $d[state1b] $d[zip1b]'>Alt. Service: $d[address1b], $d[city1b], $d[state1b] $d[zip1b]</a><br><a target='_Blank'  href='http://mdwestserve.com/ps/dispatcher.php?aptsut=&address=$d[address1a]&city=$d[city1a]&state=$d[state1a]&miles=20' title='$d[address1a], $d[city1a], $d[state1a] $d[zip1a]'>Alt. Service: $d[address1a], $d[city1a], $d[state1a] $d[zip1a]</a><br><a target='_Blank'  href='http://mdwestserve.com/ps/dispatcher.php?aptsut=&address=$d[address1]&city=$d[city1]&state=$d[state1]&miles=20' title='$d[address1], $d[city1], $d[state1] $d[zip1]'>Posting: $d[address1], $d[city1], $d[state1] $d[zip1]</a>";	
-			}elseif ($d[address1c]){
-				echo "<a target='_Blank' href='http://mdwestserve.com/ps/dispatcher.php?aptsut=&address=$d[address1c]&city=$d[city1c]&state=$d[state1c]&miles=20' title='$d[address1c], $d[city1c], $d[state1c] $d[zip1c]'>Service: $d[address1c], $d[city1c], $d[state1c] $d[zip1c]</a><br><a target='_Blank'  href='http://mdwestserve.com/ps/dispatcher.php?aptsut=&address=$d[address1b]&city=$d[city1b]&state=$d[state1b]&miles=20' title='$d[address1b], $d[city1b], $d[state1b] $d[zip1b]'>Alt. Service: $d[address1b], $d[city1b], $d[state1b] $d[zip1b]</a><br><a target='_Blank'  href='http://mdwestserve.com/ps/dispatcher.php?aptsut=&address=$d[address1a]&city=$d[city1a]&state=$d[state1a]&miles=20' title='$d[address1a], $d[city1a], $d[state1a] $d[zip1a]'>Alt. Service: $d[address1a], $d[city1a], $d[state1a] $d[zip1a]</a><br><a title='$d[address1], $d[city1], $d[state1] $d[zip1]'>Posting: $d[address1], $d[city1], $d[state1] $d[zip1]</a>";		
-			}elseif ($d[address1b]){
-				echo "<a target='_Blank' href='http://mdwestserve.com/ps/dispatcher.php?aptsut=&address=$d[address1b]&city=$d[city1b]&state=$d[state1b]&miles=20' title='$d[address1b], $d[city1b], $d[state1b] $d[zip1b]'>Service: $d[address1b], $d[city1b], $d[state1b] $d[zip1b]</a><br><a target='_Blank' href='http://mdwestserve.com/ps/dispatcher.php?aptsut=&address=$d[address1a]&city=$d[city1a]&state=$d[state1a]&miles=20'  title='$d[address1a], $d[city1a], $d[state1a] $d[zip1a]'>Alt. Service: $d[address1a], $d[city1a], $d[state1a] $d[zip1a]</a><br><a target='_Blank'  href='http://mdwestserve.com/ps/dispatcher.php?aptsut=&address=$d[address1]&city=$d[city1]&state=$d[state1]&miles=20' title='$d[address1], $d[city1], $d[state1] $d[zip1]'>Posting: $d[address1], $d[city1], $d[state1] $d[zip1]</a>";		
-			}elseif ($d[address1a]){
-				echo "<a target='_Blank' href='http://mdwestserve.com/ps/dispatcher.php?aptsut=&address=$d[address1a]&city=$d[city1a]&state=$d[state1a]&miles=20' title='$d[address1a], $d[city1a], $d[state1a] $d[zip1a]'>Service: $d[address1a], $d[city1a], $d[state1a] $d[zip1a]</a><br><a target='_Blank'  href='http://mdwestserve.com/ps/dispatcher.php?aptsut=&address=$d[address1]&city=$d[city1]&state=$d[state1]&miles=20' title='$d[address1], $d[city1], $d[state1] $d[zip1]'>Posting: $d[address1], $d[city1], $d[state1] $d[zip1]</a>";
-			}else{
-				echo "<a target='_Blank' href='http://mdwestserve.com/ps/dispatcher.php?aptsut=&address=$d[address1]&city=$d[city1]&state=$d[state1]&miles=20' title='$d[address1], $d[city1], $d[state1], $d[zip1]'>Serve &amp; Post: $d[address1], $d[city1], $d[state1] $d[zip1]</a>";
-			}?></td>
+        <td nowrap="nowrap"><? echo "<a target='_Blank' href='http://mdwestserve.com/ps/dispatcher.php?aptsut=&address=$d[address1]&city=$d[city1]&state=$d[state1]&miles=20' title='$d[address1], $d[city1], $d[state1], $d[zip1]'>Serve &amp; Post: $d[address1], $d[city1], $d[state1] $d[zip1]</a>"; ?></td>
             <td><?=strtoupper($d[processor_notes])?></td>
 	</tr>
 <?  
@@ -192,56 +135,6 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {$i++;
 	<tr bgcolor="<?=row_color($i,'#99cccc','#ccccff')?>">
         <td class="ppd" align="left">Service Rate: <input size="3" name="package[contractor][<?=$d[eviction_id]?>]"/><br>
 		Server: <select name="server_id"><option value=''>Select Server</option>
-<?
-$q2= "select * from ps_users where contract = 'YES'";
-$r2=@mysql_query($q2) or die("Query: $q2<br>".mysql_error());
-while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)) {
-?>
-<option value="<?=$d2[id]?>"><? if ($d2[company]){echo $d2[company].', '.$d2[name] ;}else{echo $d2[name] ;}?></option>
-<?        } ?>
-        </select></td>
-        <td class="ppd" align="left">Service Rate "a": <input size="3" name="package[contractora][<?=$d[eviction_id]?>]"/><br>
-		Server "a": <select name="server_ida"><option value=''>Select Server 'A'</option>
-<?
-$q2= "select * from ps_users where contract = 'YES'";
-$r2=@mysql_query($q2) or die("Query: $q2<br>".mysql_error());
-while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)) {
-?>
-<option value="<?=$d2[id]?>"><? if ($d2[company]){echo $d2[company].', '.$d2[name] ;}else{echo $d2[name] ;}?></option>
-<?        } ?>
-        </select></td>
-    	<td class="ppd">Service Rate "b": <input size="3" name="package[contractorb][<?=$d[eviction_id]?>]" /><br>
-		Server "b": <select name="server_idb"><option value=''>Select Server 'B'</option>
-<?
-$q2= "select * from ps_users where contract = 'YES'";
-$r2=@mysql_query($q2) or die("Query: $q2<br>".mysql_error());
-while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)) {
-?>
-<option value="<?=$d2[id]?>"><? if ($d2[company]){echo $d2[company].', '.$d2[name] ;}else{echo $d2[name] ;}?></option>
-<?        } ?>
-        </select></td><td></td></tr><tr bgcolor="<?=row_color($i,'#99cccc','#ccccff')?>">
-		<td class="ppd">Service Rate "c": <input size="3" name="package[contractorc][<?=$d[eviction_id]?>]" /><br>
-		Server "c": <select name="server_idc"><option value=''>Select Server 'C'</option>
-<?
-$q2= "select * from ps_users where contract = 'YES'";
-$r2=@mysql_query($q2) or die("Query: $q2<br>".mysql_error());
-while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)) {
-?>
-<option value="<?=$d2[id]?>"><? if ($d2[company]){echo $d2[company].', '.$d2[name] ;}else{echo $d2[name] ;}?></option>
-<?        } ?>
-        </select></td>
-		<td class="ppd">Service Rate "d": <input size="3" name="package[contractord][<?=$d[eviction_id]?>]" /><br>
-		Server "d": <select name="server_idd"><option value=''>Select Server 'D'</option>
-<?
-$q2= "select * from ps_users where contract = 'YES'";
-$r2=@mysql_query($q2) or die("Query: $q2<br>".mysql_error());
-while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)) {
-?>
-<option value="<?=$d2[id]?>"><? if ($d2[company]){echo $d2[company].', '.$d2[name] ;}else{echo $d2[name] ;}?></option>
-<?        } ?>
-        </select></td>
-		<td class="ppd">Service Rate "e": <input size="3" name="package[contractore][<?=$d[eviction_id]?>]" /><br>
-		Server "e": <select name="server_ide"><option value=''>Select Server 'E'</option>
 <?
 $q2= "select * from ps_users where contract = 'YES'";
 $r2=@mysql_query($q2) or die("Query: $q2<br>".mysql_error());
