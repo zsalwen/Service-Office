@@ -86,16 +86,12 @@ hardLog('updated payment information for '.$_GET[id],'user');
 									bill440='$_POST[bill440]',
 									code410='$_POST[code410]',
 									code410a='$_POST[code410a]',
-									code410b='$_POST[code410b]',
 									code420='$_POST[code420]',
 									code420a='$_POST[code420a]',
-									code420b='$_POST[code420b]',
 									code430='$_POST[code430]',
 									code430a='$_POST[code430a]',
-									code430b='$_POST[code430b]',
 									code440='$_POST[code440]',
 									code440a='$_POST[code440a]',
-									code440b='$_POST[code440b]',
 									contractor_rate='$_POST[contractor_rate]', 
 									contractor_paid='$_POST[contractor_paid]',
 									contractor_check='$_POST[contractor_check]', 
@@ -104,13 +100,10 @@ hardLog('updated payment information for '.$_GET[id],'user');
 									contractor_checka='$_POST[contractor_checka]', 
 									client_rate='$_POST[client_rate]', 
 									client_ratea='$_POST[client_ratea]', 
-									client_rateb='$_POST[client_rateb]', 
 									client_paid='$_POST[client_paid]',
 									client_paida='$_POST[client_paida]',
-									client_paidb='$_POST[client_paidb]',
 									client_check='$_POST[client_check]',
 									client_checka='$_POST[client_checka]',
-									client_checkb='$_POST[client_checkb]',
 									accountingNotes='".addslashes($_POST[accountingNotes])."'
 										WHERE eviction_id='$_POST[id]'";		
 	$r1 = @mysql_query ($q1) or die(mysql_error());
@@ -172,13 +165,11 @@ td { font-variant:small-caps }
     	<td>Check</td>
     	<td><input name="contractor_check" size="2" maxlength="30" value="<?=$data[contractor_check]?>" /></td>
     	<td><input name="contractor_checka" size="2" maxlength="30" value="<?=$data[contractor_checka]?>" /></td>
-    	<td></td>
 	</tr>
     <tr>
     	<td>Paid</td>
     	<td><input name="contractor_paid" size="2" maxlength="7" value="<?=$data[contractor_paid]?>" /></td>
     	<td><input name="contractor_paida" size="2" maxlength="7" value="<?=$data[contractor_paida]?>" /></td>
-    	<td></td>
 	</tr>
 	<tr>
     	<td>Quote</td>
@@ -190,7 +181,6 @@ td { font-variant:small-caps }
     	<td>Client</td>
     	<td><input name="client_rate" size="2" maxlength="7" value="<?=$data[client_rate]?>" /></td>
     	<td><input name="client_ratea" size="2" maxlength="7" value="<?=$data[client_ratea]?>" /></td>
-    	<td><input name="client_rateb" size="2" maxlength="7" value="<?=$data[client_rateb]?>" /></td>
 	</tr>
 </table>
 </fieldset>    
@@ -210,42 +200,36 @@ td { font-variant:small-caps }
 		<td></td>
     	<td><input tabindex="4" name="client_check" size="4" maxlength="30" value="<?=$data[client_check]?>" /></td>
     	<td><input name="client_checka" size="4" maxlength="30" value="<?=$data[client_checka]?>" /></td>
-    	<td><input name="client_checkb" size="4" maxlength="30" value="<?=$data[client_checkb]?>" /></td>
 	</tr>
     <tr>
 		<td>Process Service: <?=$data[service_status]?></td>
 		<td><input name="bill410" tabindex="1" size="2" maxlength="7" value="<?=$data[bill410]?>" /></td>
 		<td><input tabindex="5" name="code410" size="2" maxlength="7" value="<?=$data[code410]?>" /></td>
     	<td><input tabindex="6" name="code410a" size="2" maxlength="7" value="<?=$data[code410a]?>" /></td>
-    	<td><input name="code410b" size="2" maxlength="7" value="<?=$data[code410b]?>" /></td>
 	</tr>        
     <tr>
     	<td>Mailing Services: <?=$data[mailing_status]?></td>
 		<td><input name="bill420" tabindex="2" size="2" maxlength="7" value="<?=$data[bill420]?>" /></td>
     	<td><input name="code420" size="2" maxlength="7" value="<?=$data[code420]?>" /></td>
     	<td><input name="code420a" size="2" maxlength="7" value="<?=$data[code420a]?>" /></td>
-    	<td><input name="code420b" size="2" maxlength="7" value="<?=$data[code420b]?>" /></td>
 	</tr>        
     <tr>
     	<td>Filing Services: <?=$data[filing_status]?></td>
 		<td><input tabindex="3" name="bill430" size="2" maxlength="7" value="<?=$data[bill430]?>" /></td>
     	<td><input name="code430" size="2" maxlength="30" value="<?=$data[code430]?>" /></td>
     	<td><input name="code430a" size="2" maxlength="30" value="<?=$data[code430a]?>" /></td>
-    	<td><input name="code430b" size="2" maxlength="30" value="<?=$data[code430b]?>" /></td>
 	</tr>        
     <tr>
     	<td>Code: Skip Trace Services</td>
 		<td><input name="bill440" size="2" maxlength="7" value="<?=$data[bill440]?>" /></td>
     	<td><input name="code440" size="2" maxlength="30" value="<?=$data[code440]?>" /></td>
     	<td><input name="code440a" size="2" maxlength="30" value="<?=$data[code440a]?>" /></td>
-    	<td><input name="code440b" size="2" maxlength="30" value="<?=$data[code440b]?>" /></td>
 	</tr>        
     <tr>
     	<td style="border-top:solid 1px;">Total Payment</td>
 		<td>$<?=$data[bill410]+$data[bill420]+$data[bill430]+$data[bill440];?></td>
     	<td style="border-top:solid 1px;"><input tabindex="7" name="client_paid" size="2" maxlength="7" value="<?=$data[client_paid]?>" /></td>
     	<td style="border-top:solid 1px;"><input name="client_paida" size="2" maxlength="7" value="<?=$data[client_paida]?>" /></td>
-    	<td style="border-top:solid 1px;"><input name="client_paidb" size="2" maxlength="7" value="<?=$data[client_paidb]?>" /></td>
 	</tr>
 </table>
 
