@@ -71,7 +71,7 @@ function makePackage($array1,$array2,$array3,$array4,$array5,$array6,$array7,$pa
 
 	//monitor('Your package "' .$_POST[name]. '" has been created.');
 		foreach ($_POST[package]['id'] as $value){
-			$q="SELECT address1a, address1b, address1c, address1d, address1e from evictionPackets WHERE eviction_id='$value'";
+			$q="SELECT address1 from evictionPackets WHERE eviction_id='$value'";
 			$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 			$fileCount=0;
 			while ($d=mysql_fetch_array($r, MYSQL_ASSOC)){$fileCount++;
