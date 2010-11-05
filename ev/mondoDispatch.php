@@ -18,49 +18,6 @@ mysql_select_db ('core');
 	return $i;
 }
 
-function outOfState($eviction_id){
-	$q="SELECT state1, state1a, state1b, state1c, state1d, state1e, state2, state2a, state2b, state2c, state2d, state2e, state3, state3a, state3b, state3c, state3d, state3e, state4, state4a, state4b, state4c, state4d, state4e, state5, state5a, state5b, state5c, state5d, state5e, state6, state6a, state6b, state6c, state6d, state6e from evictionPackets WHERE eviction_id = '$eviction_id'";
-	$r=@mysql_query($q) or die("Query: outOfState: $q<br>".mysql_error());
-	$d=mysql_fetch_array($r, MYSQL_ASSOC);
-	$i=0;
-	if (strtoupper($d[state1e]) != 'MD' && $d[state1e] != ''){ $i++; }
-	if (strtoupper($d[state1d]) != 'MD' && $d[state1d] != ''){ $i++; }
-	if (strtoupper($d[state1c]) != 'MD' && $d[state1c] != ''){ $i++; }
-	if (strtoupper($d[state1b]) != 'MD' && $d[state1b] != ''){ $i++; }
-	if (strtoupper($d[state1a]) != 'MD' && $d[state1a] != ''){ $i++; }
-	if (strtoupper($d[state1]) != 'MD' && $d[state1] != ''){ $i++; }
-	if (strtoupper($d[state2e]) != 'MD' && $d[state2e] != ''){ $i++; }
-	if (strtoupper($d[state2d]) != 'MD' && $d[state2d] != ''){ $i++; }
-	if (strtoupper($d[state2c]) != 'MD' && $d[state2c] != ''){ $i++; }
-	if (strtoupper($d[state2b]) != 'MD' && $d[state2b] != ''){ $i++; }
-	if (strtoupper($d[state2a]) != 'MD' && $d[state2a] != ''){ $i++; }
-	if (strtoupper($d[state2]) != 'MD' && $d[state2] != ''){ $i++; }
-	if (strtoupper($d[state3e]) != 'MD' && $d[state3e] != ''){ $i++; }
-	if (strtoupper($d[state3d]) != 'MD' && $d[state3d] != ''){ $i++; }
-	if (strtoupper($d[state3c]) != 'MD' && $d[state3c] != ''){ $i++; }
-	if (strtoupper($d[state3b]) != 'MD' && $d[state3b] != ''){ $i++; }
-	if (strtoupper($d[state3a]) != 'MD' && $d[state3a] != ''){ $i++; }
-	if (strtoupper($d[state3]) != 'MD' && $d[state3] != ''){ $i++; }
-	if (strtoupper($d[state4e]) != 'MD' && $d[state4e] != ''){ $i++; }
-	if (strtoupper($d[state4d]) != 'MD' && $d[state4d] != ''){ $i++; }
-	if (strtoupper($d[state4c]) != 'MD' && $d[state4c] != ''){ $i++; }
-	if (strtoupper($d[state4b]) != 'MD' && $d[state4b] != ''){ $i++; }
-	if (strtoupper($d[state4a]) != 'MD' && $d[state4a] != ''){ $i++; }
-	if (strtoupper($d[state4]) != 'MD' && $d[state4] != ''){ $i++; }
-	if (strtoupper($d[state5e]) != 'MD' && $d[state5e] != ''){ $i++; }
-	if (strtoupper($d[state5d]) != 'MD' && $d[state5d] != ''){ $i++; }
-	if (strtoupper($d[state5c]) != 'MD' && $d[state5c] != ''){ $i++; }
-	if (strtoupper($d[state5b]) != 'MD' && $d[state5b] != ''){ $i++; }
-	if (strtoupper($d[state5a]) != 'MD' && $d[state5a] != ''){ $i++; }
-	if (strtoupper($d[state5]) != 'MD' && $d[state5] != ''){ $i++; }
-	if (strtoupper($d[state6e]) != 'MD' && $d[state6e] != ''){ $i++; }
-	if (strtoupper($d[state6d]) != 'MD' && $d[state6d] != ''){ $i++; }
-	if (strtoupper($d[state6c]) != 'MD' && $d[state6c] != ''){ $i++; }
-	if (strtoupper($d[state6b]) != 'MD' && $d[state6b] != ''){ $i++; }
-	if (strtoupper($d[state6a]) != 'MD' && $d[state6a] != ''){ $i++; }
-	if (strtoupper($d[state6]) != 'MD' && $d[state6] != ''){ $i++; }
-	return ($i * 20);
-}
 
 if ($_COOKIE[psdata][level] != "Operations"){
 			$event = 'packages.php';
@@ -84,7 +41,6 @@ function dispatchTimeline($pkg){
 	}
 }
 function packageFile($package_id, $file_id, $contractor_rate, $contractor_ratea, $contractor_rateb, $contractor_ratec, $contractor_rated, $contractor_ratee){
-	$oosc=outOfState($file_id);
 	timeline($file_id,$_COOKIE[psdata][name]." Packaged Order");
 	$q = "UPDATE evictionPackets SET 
 									package_id='$package_id',
@@ -94,7 +50,6 @@ function packageFile($package_id, $file_id, $contractor_rate, $contractor_ratea,
 									contractor_ratec='$contractor_ratec',
 									contractor_rated='$contractor_rated',
 									contractor_ratee='$contractor_ratee',
-									outofstate_cost='$oosc',
 									estFileDate='$_SESSION[estFileDate]'
 										WHERE eviction_id = '$file_id'";
 	$r=@mysql_query($q);
@@ -184,7 +139,7 @@ function makePackage($array1,$array2,$array3,$array4,$array5,$array6,$array7,$pa
 <div style="background-color:#FF0000; font-size:18px;">Estimated Close Date: <input name="estFileDate" value="<?=$_SESSION[estFileDate]?>"></div>
 <table width="100%"><tr><td valign="top">
 <table border="1" style="border-collapse:collapse" align="center" width="100%">
-    <tr bgcolor="<? if (outOfState($d[eviction_id]) > 0){ echo '#ffff00';}else{ echo row_color(2,'#ccccff','#99cccc'); }?>">
+    <tr bgcolor="<?  echo row_color(2,'#ccccff','#99cccc'); ?>">
 		<td>Links</td>
         <td>Client</td>
         <td>Date Received</td>
@@ -201,7 +156,7 @@ $r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
 $i=0;
 while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {$i++;
 ?>
-    <tr bgcolor="<? if (outOfState($d[eviction_id]) > 0){ echo row_color(2,'#009999','#00FFFF');}else{ echo row_color($i,'#FFFFFF','#cccccc'); }?>">
+    <tr bgcolor="<? echo row_color($i,'#FFFFFF','#cccccc'); ?>">
 		<td nowrap="nowrap">
 		<? if(($d[uspsVerify] != '') && ($d[qualityControl] != '') && ($d[caseVerify] != '')){ ?><input type="checkbox" name="package[id][<?=$d[eviction_id]?>]" value="<?=$d[eviction_id]?>" /><? } ?>&nbsp;<a href="order.php?packet=<?=$d[eviction_id]?>" target="_blank" style="text-decoration:none"><?=$d[eviction_id]?>)</a></td>
         <td><?=id2attorney($d[attorneys_id])?></td>
