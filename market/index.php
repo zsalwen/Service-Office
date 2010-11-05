@@ -45,8 +45,8 @@ while ($d4=mysql_fetch_array($r4,MYSQL_ASSOC)){
 	$h4 .= "<li><a href='details.php?id=$d4[marketID]'>$d4[name]</a></li>";
 	$phClass=explode(' ',$d4[phase]);
 	$phClass=$phClass[0];
-	$h4a .= "<li class='$phClass'>$d3[phase]-$d3[callBack]</li>";
-	$h4b .= "<li class='$phClass'>$d3[coldCall]</li>";
+	$h4a .= "<li class='$phClass'>$d4[phase]-$d4[callBack]</li>";
+	$h4b .= "<li class='$phClass'>$d4[coldCall]</li>";
 }
 $today=date('m/d/Y');
 if ($_GET[msg]){
