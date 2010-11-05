@@ -73,7 +73,7 @@ while ($dc=mysql_fetch_array($rc, MYSQL_ASSOC)){ $i++;?>
 </tr>
 <? } 
 //pull evictions
-$qc="SELECT DISTINCT eviction_id, attorneys_id, service_status, affidavit_status, filing_status, server_id, server_ida, server_idb, server_idc, server_idd, server_ide, processor_notes, extended_notes, date_received, client_file, rush, priority, bill410 FROM evictionPackets WHERE process_status = 'ASSIGNED' AND (request_close = 'YES' OR request_closea = 'YES' OR request_closeb = 'YES' OR request_closec = 'YES' OR request_closed = 'YES' OR request_closee = 'YES') order by date_received";
+$qc="SELECT DISTINCT eviction_id, attorneys_id, service_status, affidavit_status, filing_status, server_id, processor_notes, extended_notes, date_received, client_file, rush, priority, bill410 FROM evictionPackets WHERE process_status = 'ASSIGNED' AND (request_close = 'YES' OR request_closea = 'YES' OR request_closeb = 'YES' OR request_closec = 'YES' OR request_closed = 'YES' OR request_closee = 'YES') order by date_received";
 $rc=@mysql_query($qc) or die(mysql_error());
 
 while ($dc=mysql_fetch_array($rc, MYSQL_ASSOC)){ $i++;?>
