@@ -171,7 +171,7 @@ $missingList='';
 	<legend onClick="hideshow(document.getElementById('OTD<?=str_replace(' ','',$d[circuit_court])?><?=str_replace('-','',$today);?>'));" ><?=$d[circuit_court]?></legend>
 	<div id="OTD<?=str_replace(' ','',$d[circuit_court])?><?=str_replace('-','',$today);?>" name="OTD<?=str_replace(' ','',$d[circuit_court])?><?=str_replace('-','',$today);?>" >
 <?	
-$x=@mysql_query("select packet_id, date_received, case_no, fileDate, service_status, process_status, filing_status, attorneys_id, server_id from ps_packets where estFileDate = '$today' AND circuit_court = '$d[circuit_court]' and status <> 'CANCELLED' and fileDate = '0000-00-00' and service_status <> 'MAIL ONLY'");
+$x=@mysql_query("select packet_id, date_received, case_no, fileDate, service_status, process_status, filing_status, attorneys_id, server_id, rush from ps_packets where estFileDate = '$today' AND circuit_court = '$d[circuit_court]' and status <> 'CANCELLED' and fileDate = '0000-00-00' and service_status <> 'MAIL ONLY'");
 while ($dx=mysql_fetch_array($x,MYSQL_ASSOC)){
 if ($dx[case_no] == ''){
 	$missingCases++;
@@ -230,6 +230,7 @@ if (getCourier($dx[packet_id]) == ' !!!MISSING!!! '){
 ?>
 ><input type="checkbox" name="otd[<?=$dx[packet_id]?>]">
 	<a href="/otd/order.php?packet=<?=$dx[packet_id]?>" target="_Blank"><?=$dx[packet_id]?></a>
+	<? if ($d[rush] != ""){ echo "<b style='background-color:#FFBB00; color:000000; font-weight:bold;'>RUSH</b>";} ?>
 	<b style='color:#990000;'><?=strtoupper($dx[case_no]);?></b> <b style='color:#003377;'><?=getServer($dx[packet_id]);?></b>
 	<b style='color:#330077;'><?=getCourier($dx[packet_id]);?></b> <?=isActive($dx[service_status])?> 
 	<?=isActive($dx[process_status])?> 
