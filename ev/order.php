@@ -18,15 +18,11 @@ function prompter(packetID,newDate,oldDate){
 </script>
 <?
 if ($_GET[packet]){
-opLog($_COOKIE[psdata][name]." Loaded Order #$_GET[packet]");
+	opLog($_COOKIE[psdata][name]." Loaded Order #$_GET[packet]");
 }else{
-opLog($_COOKIE[psdata][name]." Loaded Data Entry");
+	opLog($_COOKIE[psdata][name]." Loaded Data Entry");
 }
 
-
-$totalr=@mysql_query("SELECT eviction_id FROM evictionPackets order by eviction_id DESC");
-$totald=mysql_fetch_array($totalr, MYSQL_ASSOC);
-$lastID = $totald[eviction_id];
 function webservice($clientFile){
 	$select_query = "Select create_id From defendants  Where filenumber = '$clientFile'";
 	$result = mysql_query($select_query);
@@ -35,53 +31,52 @@ function webservice($clientFile){
 		return true;
 	}
 }
+
 function dupCheck($string){
-$r=@mysql_query("select * from evictionPackets where client_file LIKE '%$string%'");
-$c=mysql_num_rows($r);
-if ($c == 1){
-$return="class='single'";
-//$return[1]=$c;
-}else{
-$return="class='duplicate'";
-//$return[1]=$c;
+	$r=@mysql_query("select * from evictionPackets where client_file LIKE '%$string%'");
+	$c=mysql_num_rows($r);
+	if ($c == 1){
+		$return="class='single'";
+		//$return[1]=$c;
+	}else{
+		$return="class='duplicate'";
+		//$return[1]=$c;
+	}
+	return $return;
 }
-return $return;
-}
+
 function stripHours($date){
-$hours = explode(':',$date);
-return $hours[0];
+	$hours = explode(':',$date);
+	return $hours[0];
 }
 
 function colorCode($hours,$status){
-if ($status == "CANCELLED" || $status == "FILED WITH COURT" || $status == "FILED WITH COURT - FBS"){
-return "00FF00";
-}else{
-if ($hours <= 250){ return "00FF00"; }
-if ($hours > 250 && $hours <= 300){ return "ffFF00"; }
-if ($hours > 300){ return "ff0000"; }
-}
-return "FFFFFF";
+	if ($status == "CANCELLED" || $status == "FILED WITH COURT" || $status == "FILED WITH COURT - FBS"){
+		return "00FF00";
+	}else{
+		if ($hours <= 250){ return "00FF00"; }
+		if ($hours > 250 && $hours <= 300){ return "ffFF00"; }
+		if ($hours > 300){ return "ff0000"; }
+	}
+	return "FFFFFF";
 }
 
 function dbCleaner($str){
-$str = trim($str);
-$str = addslashes($str);
-$str = strtoupper($str);
-//$str = ucwords($str);
-return $str;
+	$str = trim($str);
+	$str = addslashes($str);
+	$str = strtoupper($str);
+	//$str = ucwords($str);
+	return $str;
 }
 
-
-
-$id=$_COOKIE[psdata][user_id];
 function mkCC($str){
-$q="SELECT * FROM county";
-$r=@mysql_query($q);
-$option = '<option>'.$str.'</option>';
-while($d=mysql_fetch_array($r, MYSQL_ASSOC)){;
-$option .= '<option>'.$d[name].'</option>';
-}
-return $option;
+	$q="SELECT * FROM county";
+	$r=@mysql_query($q);
+	$option = '<option>'.$str.'</option>';
+	while($d=mysql_fetch_array($r, MYSQL_ASSOC)){;
+		$option .= '<option>'.$d[name].'</option>';
+	}
+	return $option;
 }
 
 function photoCount($packet){
@@ -100,11 +95,13 @@ function photoCount($packet){
 	}
 	return $count;
 }
+
 function id2email($id){
 	$q=@mysql_query("SELECT email from ps_users where id='$id'") or die(mysql_error());
 	$d=mysql_fetch_array($q, MYSQL_ASSOC);
 	return $d[email];
 }
+
 function attorneyCustomLang($att,$str){
 	$r=@mysql_query("SELECT * FROM ps_str_replace where attorneys_id = '$att'");
 	while ($d=mysql_fetch_array($r, MYSQL_ASSOC)){
@@ -131,58 +128,69 @@ function historyList($id,$attorneys_id){
 		}
 		return $list;
 }
+
 function attachmentList($packet,$type){
-$list = "<fieldset><legend>Electronic File Storage</legend>";
-mysql_select_db('core');
-if ($type == 'EV'){
-	$packet='EV'.$packet;
+	$list = "<fieldset><legend>Electronic File Storage</legend>";
+	mysql_select_db('core');
+	if ($type == 'EV'){
+		$packet='EV'.$packet;
+	}
+	$r=@mysql_query("select * from ps_affidavits where packetID = '$packet' order by defendantID");
+	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+		$affidavit=$d[affidavit];
+		$affidavit=str_replace('http://mdwestserve.com/ps/affidavits/','http://mdwestserve.com/affidavits/',$affidavit);
+		$list .= "<li><a href='$affidavit'>$d[method]</a></li>";
+	}
+	$list .= "</fieldset>";
+	return $list;
 }
-$r=@mysql_query("select * from ps_affidavits where packetID = '$packet' order by defendantID");
-while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-	$affidavit=$d[affidavit];
-	$affidavit=str_replace('http://mdwestserve.com/ps/affidavits/','http://mdwestserve.com/affidavits/',$affidavit);
-$list .= "<li><a href='$affidavit'>$d[method]</a></li>";
-}
-$list .= "</fieldset>";
-return $list;
-}
-
-// export commands
-
-
 
 function exportStatus($a,$b,$p){
-if ($a && $b){ return 'REQUEST BY '.id2name($a).' APPROVED BY '.id2name($b); }
-if ($a && !$b){ 
-	$r=@mysql_query("SELECT * FROM evictionHistory WHERE eviction_id='$p'");
-	$d=mysql_num_rows($r);
-	if ($d){ echo "<script>alert('!! Export Warning !! This eviction has $d history items.');</script>"; }
-	return 'EXPORT APPROVAL REQUESTED BY '.id2name($a); }
-if (!$a){ return 'ACTIVE DATABASE'; }
-}
-$rTest=@mysql_query("select * from EVexportRequests where evictionID = '$_GET[packet]'");
-$dTest=mysql_fetch_array($rTest,MYSQL_ASSOC);
-if ($_GET[export]){
-	if(!$dTest[byID]){
-		hardLog('requested export EV'.$_GET[packet],'user');
-		//mail('patrick@mdwestserve.com',$_COOKIE[psdata][name].' requested export '.$_GET[packet],$_COOKIE[psdata][name].' requested export of packet '.$_GET[packet]);
-		@mysql_query("INSERT INTO EVexportRequests (evictionID,byID) values ('$_GET[packet]','".$_COOKIE[psdata][user_id]."') ");
-		echo "<script>automation();</script>";
-	}elseif($dTest[byID] != $_COOKIE[psdata][user_id]){
-		hardLog('approved export EV'.$_GET[packet],'user');
-		//mail('patrick@mdwestserve.com',$_COOKIE[psdata][name].' approved '.$_GET[packet],$_COOKIE[psdata][name].' approved export of packet '.$_GET[packet]);
-		@mysql_query("UPDATE EVexportRequests set confirmID = '".$_COOKIE[psdata][user_id]."' where evictionID = '$_GET[packet]'");
-		echo "<script>automation();</script>";
-	}else{	
-		echo "<script>alert('You cannot approve exports you requested silly goose!');</script>";
+	if ($a && $b){ return 'REQUEST BY '.id2name($a).' APPROVED BY '.id2name($b); }
+	if ($a && !$b){
+		$r=@mysql_query("SELECT * FROM evictionHistory WHERE eviction_id='$p'");
+		$d=mysql_num_rows($r);
+		if ($d){ echo "<script>alert('!! Export Warning !! This eviction has $d history items.');</script>"; }
+		return 'EXPORT APPROVAL REQUESTED BY '.id2name($a);
 	}
+	if (!$a){ return 'ACTIVE DATABASE'; }
 }
-$rTest=@mysql_query("select * from EVexportRequests where evictionID = '$_GET[packet]'");
-$dTest=mysql_fetch_array($rTest,MYSQL_ASSOC);
-$exportStatus = exportStatus($dTest[byID],$dTest[confirmID],$_GET[packet]);
 
+function search($search,$string){
+	$pos = strpos($string, $search);
+	if ($pos === false) {
+		$pass = "";
+	} else {
+		$pass = $string;
+	}
+	return $pass;
+}
 
-// end export commands
+function getClose($packet){
+	$r=@mysql_query("select estFileDate from evictionPackets where eviction_id = '$packet'");
+	$d=mysql_fetch_array($r,MYSQL_ASSOC);
+	return $d[estFileDate];
+}
+
+function getTime($packet,$event){
+	$r=@mysql_query("select timeline from evictionPackets where eviction_id = '$packet'");
+	$d=mysql_fetch_array($r,MYSQL_ASSOC);
+	$explode = explode('<br>',$d[timeline]);
+	foreach ($explode as $key => $value) {
+		if (search($event,$value)){
+			$search = search($event,$value);
+		}
+	}
+	$array = array();
+	if ($search){
+		$array[css] = "done";
+	}else{
+		$array[css] = "pending";
+	}
+	$array[event] = $event;
+	$array[eDate] = substr($search,0,17);
+	return $array;
+}
 
 
 if ($_POST[sendToClient]){
@@ -215,73 +223,40 @@ if ($_POST[estFileDate] != $d[estFileDate]){
 $case_no=trim($_POST[case_no]);
 // un dbCleaner on all items
 if ($newClose != 1){
+	$estQ="estFileDate='$_POST[estFileDate]',";
+}
 	@mysql_query("UPDATE evictionPackets SET process_status='$_POST[process_status]',
-		filing_status='$_POST[filing_status]',
-		service_status='$_POST[service_status]',
-		fileDate='$_POST[fileDate]',
-		estFileDate='$_POST[estFileDate]',
-		movant='".addslashes($_POST[movant])."',
-		altDocs='$_POST[altDocs]',
-		courierID='$_POST[courierID]',
-		reopenDate='$_POST[reopenDate]',
-		status='$_POST[status]',
-		affidavit_status='$_POST[affidavit_status]',
-		affidavit_status2='$_POST[affidavit_status2]',
-		photoStatus='$_POST[photoStatus]',
-		mail_status='$_POST[mail_status]',
-		affidavitType='$_POST[affidavitType]',
-		onAffidavit1='$_POST[onAffidavit1]',
-		onAffidavit2='$_POST[onAffidavit2]',
-		onAffidavit3='$_POST[onAffidavit3]',
-		onAffidavit4='$_POST[onAffidavit4]',
-		onAffidavit5='$_POST[onAffidavit5]',
-		onAffidavit6='$_POST[onAffidavit6]',
-		refile='$_POST[refile]',
-		amendedAff='$_POST[amendedAff]',
-		mailWeight='$_POST[mailWeight]',
-		pages='$_POST[pages]',
-		rush='$_POST[rush]',
-		priority='$_POST[priority]',
-		request_close='$_POST[request_close]',
-		client_file='".strtoupper($_POST[client_file])."',
-		case_no='".str_replace('�',0,$case_no)."',
-		altPlaintiff='".dbCleaner($_POST[altPlaintiff])."',
-		circuit_court='".strtoupper($_POST[circuit_court])."'
-		WHERE eviction_id='$_POST[eviction_id]'") or die(mysql_error());
-	}else{
-		@mysql_query("UPDATE evictionPackets SET process_status='$_POST[process_status]',
-		filing_status='$_POST[filing_status]',
-		service_status='$_POST[service_status]',
-		fileDate='$_POST[fileDate]',
-		movant='".addslashes($_POST[movant])."',
-		altDocs='$_POST[altDocs]',
-		courierID='$_POST[courierID]',
-		reopenDate='$_POST[reopenDate]',
-		status='$_POST[status]',
-		affidavit_status='$_POST[affidavit_status]',
-		affidavit_status2='$_POST[affidavit_status2]',
-		photoStatus='$_POST[photoStatus]',
-		mail_status='$_POST[mail_status]',
-		affidavitType='$_POST[affidavitType]',
-		onAffidavit1='$_POST[onAffidavit1]',
-		onAffidavit2='$_POST[onAffidavit2]',
-		onAffidavit3='$_POST[onAffidavit3]',
-		onAffidavit4='$_POST[onAffidavit4]',
-		onAffidavit5='$_POST[onAffidavit5]',
-		onAffidavit6='$_POST[onAffidavit6]',
-		refile='$_POST[refile]',
-		amendedAff='$_POST[amendedAff]',
-		mailWeight='$_POST[mailWeight]',
-		pages='$_POST[pages]',
-		rush='$_POST[rush]',
-		priority='$_POST[priority]',
-		request_close='$_POST[request_close]',
-		client_file='".strtoupper($_POST[client_file])."',
-		case_no='".str_replace('�',0,$case_no)."',
-		altPlaintiff='".dbCleaner($_POST[altPlaintiff])."',
-		circuit_court='".strtoupper($_POST[circuit_court])."'
-		WHERE eviction_id='$_POST[eviction_id]'") or die(mysql_error());
-	}
+	filing_status='$_POST[filing_status]',
+	service_status='$_POST[service_status]',
+	fileDate='$_POST[fileDate]', ".$estQ."
+	movant='".addslashes($_POST[movant])."',
+	altDocs='$_POST[altDocs]',
+	courierID='$_POST[courierID]',
+	reopenDate='$_POST[reopenDate]',
+	status='$_POST[status]',
+	affidavit_status='$_POST[affidavit_status]',
+	affidavit_status2='$_POST[affidavit_status2]',
+	photoStatus='$_POST[photoStatus]',
+	mail_status='$_POST[mail_status]',
+	affidavitType='$_POST[affidavitType]',
+	onAffidavit1='$_POST[onAffidavit1]',
+	onAffidavit2='$_POST[onAffidavit2]',
+	onAffidavit3='$_POST[onAffidavit3]',
+	onAffidavit4='$_POST[onAffidavit4]',
+	onAffidavit5='$_POST[onAffidavit5]',
+	onAffidavit6='$_POST[onAffidavit6]',
+	refile='$_POST[refile]',
+	amendedAff='$_POST[amendedAff]',
+	mailWeight='$_POST[mailWeight]',
+	pages='$_POST[pages]',
+	rush='$_POST[rush]',
+	priority='$_POST[priority]',
+	request_close='$_POST[request_close]',
+	client_file='".strtoupper($_POST[client_file])."',
+	case_no='".str_replace('�',0,$case_no)."',
+	altPlaintiff='".dbCleaner($_POST[altPlaintiff])."',
+	circuit_court='".strtoupper($_POST[circuit_court])."'
+	WHERE eviction_id='$_POST[eviction_id]'") or die(mysql_error());
 }else{
 $case_no=trim($_POST[case_no]);
 @mysql_query("UPDATE evictionPackets SET process_status='$_POST[process_status]',
@@ -328,77 +303,30 @@ if (isset($_POST[server1])){
 }
 $r=mysql_query("SELECT name1, name2, name3, name4, name5, name6, address1, city1, state1, zip1 from evictionPackets WHERE eviction_id='$_POST[eviction_id]'");
 $d=mysql_fetch_array($r, MYSQL_ASSOC) or die(mysql_error());
-if ($_POST[name1] || ($_POST[name1] != $d[name1])){
-	if ($updateQ == ''){
-		$updateQ .= "name1='".addslashes($_POST[name1])."'";
-	}else{
-		$updateQ .= ", name1='".addslashes($_POST[name1])."'";
-	}
-}
-if ($_POST[name2] || ($_POST[name2] != $d[name2])){
-	if ($updateQ == ''){
-		$updateQ .= "name2='".addslashes($_POST[name2])."'";
-	}else{
-		$updateQ .= ", name2='".addslashes($_POST[name2])."'";
-	}
-}
-if ($_POST[name3] || ($_POST[name3] != $d[name3])){
-	if ($updateQ == ''){
-		$updateQ .= "name3='".addslashes($_POST[name3])."'";
-	}else{
-		$updateQ .= ", name3='".addslashes($_POST[name3])."'";
-	}
-}
-if ($_POST[name4] || ($_POST[name4] != $d[name4])){
-	if ($updateQ == ''){
-		$updateQ .= "name4='".addslashes($_POST[name4])."'";
-	}else{
-		$updateQ .= ", name4='".addslashes($_POST[name4])."'";
-	}
-}
-if ($_POST[name5] || ($_POST[name5] != $d[name5])){
-	if ($updateQ == ''){
-		$updateQ .= "name5='".addslashes($_POST[name5])."'";
-	}else{
-		$updateQ .= ", name5='".addslashes($_POST[name5])."'";
-	}
-}
-if ($_POST[name6] || ($_POST[name6] != $d[name6])){
-	if ($updateQ == ''){
-		$updateQ .= "name6='".addslashes($_POST[name6])."'";
-	}else{
-		$updateQ .= ", name6='".addslashes($_POST[name6])."'";
+$nC=0;
+while ($nC < 6){$nC++;
+	if ($_POST["name$nC"] || ($_POST["name$nC"] != $d["name$nC"])){
+		$updateQ .= "name$nC='".addslashes($_POST["name$nC"])."'|";
 	}
 }
 if ($_POST[address] || ($_POST[address] != $d[address1])){
-	if ($updateQ == ''){
-		$updateQ .= "address1='".addslashes($_POST[address])."'";
-	}else{
-		$updateQ .= ", address1='".addslashes($_POST[address])."'";
-	}
+	$updateQ .= "address1='".addslashes($_POST[address])."'|";
 }
 if ($_POST[city] || ($_POST[city] != $d[city1])){
-	if ($updateQ == ''){
-		$updateQ .= "city1='".addslashes($_POST[city])."'";
-	}else{
-		$updateQ .= ", city1='".addslashes($_POST[city])."'";
-	}
+	$updateQ .= "city1='".addslashes($_POST[city])."'|";
 }
 if ($_POST[state] || ($_POST[state] != $d[state1])){
-	if ($updateQ == ''){
-		$updateQ .= "state1='".addslashes($_POST[state])."'";
-	}else{
-		$updateQ .= ", state1='".addslashes($_POST[state])."'";
-	}
+	$updateQ .= "state1='".addslashes($_POST[state])."'|";
 }
 if ($_POST[zip] || ($_POST[zip] != $d[zip1])){
-	if ($updateQ == ''){
-		$updateQ .= "zip1='".addslashes($_POST[zip])."'";
-	}else{
-		$updateQ .= ", zip1='".addslashes($_POST[zip])."'";
-	}
+	$updateQ .= "zip1='".addslashes($_POST[zip])."'|";
 }
 if ($updateQ != ''){
+	//remove last "|"
+	$updateQ=substr($updateQ,-1,1);
+	//replace other "|"s with commas
+	$updateQ=str_replace("|",", ",$updateQ);
+	//submit query
 	@mysql_query("UPDATE evictionPackets SET ".$updateQ." WHERE eviction_id='$_POST[eviction_id]'") or die(mysql_error());
 }
 if ($_GET[packet] && $newClose == 1){
@@ -408,7 +336,7 @@ if ($_GET[packet] && $newClose == 1){
 }elseif ($_GET[packet]){
 	header ('Location: order.php?packet='.$_GET[packet]);
 }else{
-if ($_GET[start]){
+	if ($_GET[start]){
 		header ('Location: order.php?start='.$_GET[start]);
 	}else{
 		?><script>window.location.href='order.php';</script><? }
@@ -418,20 +346,20 @@ if ($_GET[start]){
 
 
 if ($_GET[packet]){
-$r=@mysql_query("SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours FROM evictionPackets where eviction_id='$_GET[packet]'");
-hardLog('loaded order for '.$_GET[packet],'user');
+	$r=@mysql_query("SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours FROM evictionPackets where eviction_id='$_GET[packet]'");
+	hardLog('loaded order for '.$_GET[packet],'user');
 }else{
-if($_GET[start]){
-$r=@mysql_query("SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours FROM evictionPackets where status='NEW' and process_status <> 'CANCELLED' AND process_status <> 'DUPLICATE' AND process_status <> 'DAMAGED PDF' and process_status <> 'DUPLICATE/DIFF-PDF' and eviction_id >= '$_GET[start]' order by eviction_id ");
-}else{
-$r=@mysql_query("SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours FROM evictionPackets where status='NEW' and process_status <> 'CANCELLED' and process_status <> 'DUPLICATE' AND process_status <> 'DAMAGED PDF' and process_status <> 'DUPLICATE/DIFF-PDF' order by RAND() ");
-$test55 = 1;
-}
+	if($_GET[start]){
+		$r=@mysql_query("SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours FROM evictionPackets where status='NEW' and process_status <> 'CANCELLED' AND process_status <> 'DUPLICATE' AND process_status <> 'DAMAGED PDF' and process_status <> 'DUPLICATE/DIFF-PDF' and eviction_id >= '$_GET[start]' order by eviction_id ");
+	}else{
+		$r=@mysql_query("SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours FROM evictionPackets where status='NEW' and process_status <> 'CANCELLED' and process_status <> 'DUPLICATE' AND process_status <> 'DAMAGED PDF' and process_status <> 'DUPLICATE/DIFF-PDF' order by RAND() ");
+		$test55 = 1;
+	}
 }
 $d=mysql_fetch_array($r, MYSQL_ASSOC);
 
 if ($test55){
-hardLog('loaded NEW order for '.$d[eviction_id],'user');
+	hardLog('loaded NEW order for '.$d[eviction_id],'user');
 }
 if ($_GET[cancel] == 1){
 	if ($d[process_status] == 'ASSIGNED'){
@@ -492,66 +420,10 @@ if ($_GET[cancel] == 1){
 }
 ?>
 <center style="padding:0px;">
-
-
 <?
 $packet=$d[eviction_id];
-
-function id2name3($id){
-	$q="SELECT name FROM ps_users WHERE id = '$id'";
-	$r=@mysql_query($q);
-	$d=mysql_fetch_array($r, MYSQL_ASSOC);
-return $d[name];
-}
-
-function search($search,$string){
-			$pos = strpos($string, $search);
-			if ($pos === false) {
-				$pass = "";
-			} else {
-				$pass = $string;
-			}
-	return $pass;
-}
-
-function getClose($packet){
-	$r=@mysql_query("select estFileDate from evictionPackets where eviction_id = '$packet'");
-	$d=mysql_fetch_array($r,MYSQL_ASSOC);
-	return $d[estFileDate];
-}
-
-function getTime($packet,$event){
-$r=@mysql_query("select timeline from evictionPackets where eviction_id = '$packet'");
-$d=mysql_fetch_array($r,MYSQL_ASSOC);
-$explode = explode('<br>',$d[timeline]);
-
-	foreach ($explode as $key => $value) {
-		
-		if (search($event,$value)){
-		$search = search($event,$value);
-		}
-	}
-
-$array = array();
-if ($search){
-$array[css] = "done";
-}else{
-$array[css] = "pending";
-}
-$array[event] = $event;
-$array[eDate] = substr($search,0,17);
-return $array;
-}
-
-function exportStatus2($a,$b,$p){
-if ($a && $b){ return 'REQUEST BY '.id2name3($a).' APPROVED BY '.id2name3($b); }
-if ($a && !$b){ 
-	$r=@mysql_query("SELECT * FROM evictionHistory WHERE eviction_id='$p'");
-	$d=mysql_num_rows($r);
-	if ($d){ echo "<script>alert('!! Export Warning !! This eviction has $d history items.');</script>"; }
-	return 'EXPORT APPROVAL REQUESTED BY '.id2name3($a); }
-if (!$a){ return 'ACTIVE DATABASE'; }
-}
+$id=$_COOKIE[psdata][user_id];
+//begin export commands
 $rTest=@mysql_query("select * from EVexportRequests where evictionID = '$packet'") or die (mysql_error());
 $dTest=mysql_fetch_array($rTest,MYSQL_ASSOC);
 if ($_GET[export]){
@@ -569,7 +441,8 @@ if ($_GET[export]){
 }
 $rTest=@mysql_query("select * from EVexportRequests where evictionID = '$packet'") or die (mysql_error());
 $dTest=mysql_fetch_array($rTest,MYSQL_ASSOC);
-$exportStatus2 = exportStatus2($dTest[byID],$dTest[confirmID],$packet);
+$exportStatus = exportStatus($dTest[byID],$dTest[confirmID],$packet);
+//end export commands
 ?>
 <style>
 .done {
@@ -604,6 +477,16 @@ $exportStatus2 = exportStatus2($dTest[byID],$dTest[confirmID],$packet);
 	background-color:cccccc;
 	border:ridge 3px #FF0000;
 		}
+a { text-decoration:none}
+table { padding:0px; margin:0px; font-size:14px;}
+body { margin:0px; padding:0px;}
+input, select { margin:0px; background-color:#CCFFFF; font-variant:small-caps; }
+td { margin:0px; padding:0px; font-variant:small-caps;}
+legend {margin:0px; border:solid 1px #FF0000; background-color:#cccccc; padding:0px;}
+legend.a {margin:0px; border:solid 1px #FF0000; background-color:#cccccc; padding:0px; font-size:14px}
+fieldset {margin:0px; padding:0px; background-color:#FFFFFF; }
+.single{background-color:#00FF00}
+.duplicate{background-color:#FF0000}
 </style>
 <table align="center"><tr>
 <? $test1 = getTime($packet,'Data Entry');?>
@@ -630,13 +513,16 @@ $exportStatus2 = exportStatus2($dTest[byID],$dTest[confirmID],$packet);
 <? }else{ ?>
 <td><div class="alert">Estimated Close<br><?=getClose($packet);?></div></td>
 <? }?>
-<td><div class="alert"style="font-size:10px;"><a href="?packet=<?=$_GET[packet]?>&export='<?=time();?>'">EXPORT</a><hr><?=$exportStatus2;?></div></td>
+<td><div class="alert"style="font-size:10px;"><a href="?packet=<?=$_GET[packet]?>&export='<?=time();?>'">EXPORT</a><hr><?=$exportStatus;?></div></td>
 </tr></table>
-
-
-
 </center>
-<script>
+
+
+<? if (!$d[eviction_id]){ ?>
+<form>No new files to update, enter Eviction ID to view order <input name="packet"></form>
+<? }else{ ?>
+<body>
+<script type="text/javascript">
 function confirmation(email) {
 	if (email != ''){
 		var answer = confirm("Are you sure that you want to cancel service per "+email+"? Emails will be sent to the client and server, should service be active.  Make sure that you have entered a valid client email address for reference.");
@@ -653,26 +539,6 @@ function confirmation(email) {
 		self.close();
 	}
 }
-</script>
-<style>
-a { text-decoration:none}
-table { padding:0px; margin:0px; font-size:14px;}
-body { margin:0px; padding:0px;}
-input, select { margin:0px; background-color:#CCFFFF; font-variant:small-caps; }
-td { margin:0px; padding:0px; font-variant:small-caps;}
-legend {margin:0px; border:solid 1px #FF0000; background-color:#cccccc; padding:0px;}
-legend.a {margin:0px; border:solid 1px #FF0000; background-color:#cccccc; padding:0px; font-size:14px}
-fieldset {margin:0px; padding:0px; background-color:#FFFFFF; }
-.single{background-color:#00FF00}
-.duplicate{background-color:#FF0000}
-</style>
-
-
-<? if (!$d[eviction_id]){ ?>
-<form>No new files to update, enter Eviction ID to view order <input name="packet"></form>
-<? }else{ ?>
-<body>
-<script type="text/javascript">
 function hideshow(which){
 if (!document.getElementById)
 return
@@ -830,34 +696,22 @@ $r5=@mysql_query($q5) or die(mysql_error());
 $i=0;
 $data5=mysql_num_rows($r5);
 if ($data5 > 0){
-while ($d5=mysql_fetch_array($r5, MYSQL_ASSOC)){$i++;
-$q6="SELECT * FROM evictionHistory WHERE serverID='$d5[serverID]' and eviction_id='$d[eviction_id]'";
-$r6=@mysql_query($q6) or die(mysql_error());
-$d6=mysql_num_rows($r6);
-if ($i == '1'){
-if ($d6 > 1){
-$server = $d6." ".initals(id2name($d5[serverID]));
+	while ($d5=mysql_fetch_array($r5, MYSQL_ASSOC)){$i++;
+		$q6="SELECT * FROM evictionHistory WHERE serverID='$d5[serverID]' and eviction_id='$d[eviction_id]'";
+		$r6=@mysql_query($q6) or die(mysql_error());
+		$d6=mysql_num_rows($r6);
+		if ($i == '1'){
+			$server = $d6." ".initals(id2name($d5[serverID]));
+		}else{
+			$server .= ", ".$d6." ".initals(id2name($d5[serverID]));
+		}
+	}
 }else{
-$server = $d6." ".initals(id2name($d5[serverID]));
-}
-}else{
-if ($d6 > 1){
-$server .= ", ".$d6." ".initals(id2name($d5[serverID]));
-}else{
-$server .= ", ".$d6." ".initals(id2name($d5[serverID]));
-}
-}
-}
-}else{
-$server="none";
+	$server="none";
 }
 $otdStr=str_replace('portal//var/www/dataFiles/service/orders/','PS_PACKETS/',$d[otd]);
 $otdStr=str_replace('data/service/orders/','PS_PACKETS/',$otdStr);
 $otdStr=str_replace('portal/','',$otdStr);
-//$otdStr=str_replace('mdwestserve.com','alpha.mdwestserve.com',$otdStr);
-/*if (!$otdStr){
-	$otdStr=$d[otd];
-}*/
 if (!strpos($otdStr,'mdwestserve.com')){
 	$otdStr="http://mdwestserve.com/".$otdStr;
 }
@@ -970,17 +824,6 @@ $d2=mysql_fetch_array($r2, MYSQL_ASSOC);
 </tr>
 <tr>
 <td><?=$d2[address]?><br><?=$d2[city]?> <?=$d2[state]?> <?=$d2[zip]?></td>
-</tr>
-<tr>
-<td>
-<?   
-if ($d["attorneys_id"] == 1 || $d["attorneys_id"] == 44){
-$filename = $d["client_file"].'-'.$d["date_received"]."-"."SERVER.PDF";
-}else{
-$filename = $d["case_no"]."-"."SERVER.PDF";
-}
-?>
-</td>
 </tr>
 </table>    
 </FIELDSET>
