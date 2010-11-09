@@ -38,7 +38,7 @@ function withCourier($packet){
 	$q="SELECT * from docuTrack WHERE packet='$packet' and document='OUT WITH COURIER'";
 	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
-	if ($d){
+	if ($d[packet]){
 		$document="<div class='note' style='background-color:#ffFF00;'><small>".$d[binder]." OUT WITH COURIER by ".$d[location]."</small></div>";
 	}
 	return $document;
@@ -97,7 +97,7 @@ function serverActiveList($id,$packet){ $_SESSION[active]++;
 			$estFileDate=explode('-',$d[estFileDate]);
 			$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
 			$case .= "&nbsp;<span style='background-color:white; border: 1px solid black; color: #000000 !important;'>FILE: $estFileDate</span>";
-			$withCouriet=withCourier($d[packet_id]);
+			$withCourier=withCourier($d[packet_id]);
 			if($withCourier != ''){
 				$case.=$withCourier;
 			}else{
@@ -145,7 +145,7 @@ function serverActiveLista($id,$packet){
 			$estFileDate=explode('-',$d[estFileDate]);
 			$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
 			$case .= "&nbsp;<span style='background-color:white; border: 1px solid black; color: #000000 !important;'>FILE: $estFileDate</span>";
-			$withCouriet=withCourier($d[packet_id]);
+			$ withCourier=withCourier($d[packet_id]);
 			if($withCourier != ''){
 				$case.=$withCourier;
 			}else{
@@ -193,7 +193,7 @@ function serverActiveListb($id,$packet){
 			$estFileDate=explode('-',$d[estFileDate]);
 			$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
 			$case .= "&nbsp;<span style='background-color:white; border: 1px solid black; color: #000000 !important;'>FILE: $estFileDate</span>";
-			$withCouriet=withCourier($d[packet_id]);
+			$ withCourier=withCourier($d[packet_id]);
 			if($withCourier != ''){
 				$case.=$withCourier;
 			}else{
@@ -241,7 +241,7 @@ function serverActiveListc($id,$packet){
 			$estFileDate=explode('-',$d[estFileDate]);
 			$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
 			$case .= "&nbsp;<span style='background-color:white; border: 1px solid black; color: #000000 !important;'>FILE: $estFileDate</span>";
-			$withCouriet=withCourier($d[packet_id]);
+			$ withCourier=withCourier($d[packet_id]);
 			if($withCourier != ''){
 				$case.=$withCourier;
 			}else{
@@ -288,7 +288,7 @@ function serverActiveListd($id,$packet){
 			$estFileDate=explode('-',$d[estFileDate]);
 			$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
 			$case .= "&nbsp;<span style='background-color:white; border: 1px solid black; color: #000000 !important;'>FILE: $estFileDate</span>";
-			$withCouriet=withCourier($d[packet_id]);
+			$ withCourier=withCourier($d[packet_id]);
 			if($withCourier != ''){
 				$case.=$withCourier;
 			}else{
@@ -336,7 +336,7 @@ function serverActiveListe($id,$packet){
 			$estFileDate=explode('-',$d[estFileDate]);
 			$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
 			$case .= "&nbsp;<span style='background-color:white; border: 1px solid black; color: #000000 !important;'>FILE: $estFileDate</span>";
-			$withCouriet=withCourier($d[packet_id]);
+			$ withCourier=withCourier($d[packet_id]);
 			if($withCourier != ''){
 				$case.=$withCourier;
 			}else{
