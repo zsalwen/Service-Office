@@ -51,11 +51,6 @@ while ($d4=mysql_fetch_array($r4,MYSQL_ASSOC)){
 }
 while ($d5=mysql_fetch_array($r5,MYSQL_ASSOC)){
 	$h5 .= "<li><a href='details.php?id=$d5[marketID]'>$d5[name]</a></li>";
-	if ($d5[phase] == 'CALL BACK'){
-		$h5a .= "<li class='BAD'>$d5[phase]-$d5[callBack]</li>";
-	}else{
-		$h5a .= "<li class='BAD'>$d5[phase]</li>";
-	}
 }
 $today=date('m/d/Y');
 if ($_GET[msg]){
@@ -97,9 +92,9 @@ if ($_GET[msg]){
 		<td valign="top"><?=$h3;?></td><td valign='top'><?=$h3a?></td><td valign='top'><?=$h3b?></td>
 	</tr>
 	<tr style='background-color:red;'>
-		<td colspan='2'>DO NOT CALL</td><td>(Next Action/Last Called)</td>
+		<td colspan='3' align='center'>DO NOT CALL</td>
 	</tr>
 	<tr>
-		<td valign="top" colspan='2'><?=$h5;?></td><td valign='top'><?=$h5a?></td>
+		<td valign="top" colspan='3' align='center'><?=$h5;?></td>
 	</tr>
 </table>
