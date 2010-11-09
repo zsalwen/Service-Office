@@ -8,6 +8,7 @@ $r1 = @mysql_query("select * from market where type = 'attorney' AND coldCall <>
 $r2 = @mysql_query("select * from market where type = 'attorney' AND coldCall = '$today' AND phase='COLD CALL' AND doNotCall <> 'checked' ORDER BY name ASC");
 $r3 = @mysql_query("select * from market where type = 'attorney' AND phase <> 'COLD CALL' AND phase <> 'CALL BACK' AND doNotCall <> 'checked' ORDER BY callBack ASC");
 $r4 = @mysql_query("select * from market where type = 'attorney' AND phase='CALL BACK' ORDER BY name ASC");
+$r5 = @mysql_query("select * from market where type = 'attorney' AND doNotCall='checked' ORDER BY name ASC");
 // build html list
 while ($d1=mysql_fetch_array($r1,MYSQL_ASSOC)){
 	$h1 .= "<li><a href='details.php?id=$d1[marketID]'>$d1[name]</a></li>";
@@ -48,6 +49,14 @@ while ($d4=mysql_fetch_array($r4,MYSQL_ASSOC)){
 	$h4a .= "<li class='$phClass'>$d4[phase]-$d4[callBack]</li>";
 	$h4b .= "<li class='$phClass'>$d4[coldCall]</li>";
 }
+while ($d5=mysql_fetch_array($r5,MYSQL_ASSOC)){
+	$h5 .= "<li><a href='details.php?id=$d5[marketID]'>$d5[name]</a></li>";
+	if ($d5[phase] == 'CALL BACK'){
+		$h5a .= "<li class='BAD'>$d5[phase]-$d5[callBack]</li>";
+	}else{
+		$h5a .= "<li class='BAD'>$d5[phase]</li>";
+	}
+}
 $today=date('m/d/Y');
 if ($_GET[msg]){
 	echo "<table align='center'><tr><td align='center'>$msg</td></tr></table>";
@@ -58,6 +67,7 @@ if ($_GET[msg]){
 .SEND {background-color:FFFFBB;}
 .CALL {background-color:FF8800}
 .GOOD {background-color:blue; color;FFFFFF;}
+.BAD {background-color:red;}
 </style>
 
 
@@ -85,5 +95,11 @@ if ($_GET[msg]){
 	</tr>
 	<tr>
 		<td valign="top"><?=$h3;?></td><td valign='top'><?=$h3a?></td><td valign='top'><?=$h3b?></td>
+	</tr>
+	<tr style='background-color:red;'>
+		<td colspan='2'>DO NOT CALL</td><td>(Next Action/Last Called)</td>
+	</tr>
+	<tr>
+		<td valign="top" colspan='2'><?=$h5;?></td><td valign='top'><?=$h5a?></td>
 	</tr>
 </table>
