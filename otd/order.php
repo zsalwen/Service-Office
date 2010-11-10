@@ -1740,7 +1740,7 @@ $r7=@mysql_query($q7) or die("Query: $q7<br>".mysql_error());
 while ($d7=mysql_fetch_array($r7, MYSQL_ASSOC)) {
 	$sList .= "<option value='$d7[id]'>";
 	if ($d7[company]){ $sList .= "$d7[company], $d7[name]" ;}else{ $sList .= "$d7[name]" ;}
-	$sList .= "</option>"
+	$sList .= "</option>";
 } ?>
 <select name="server1"><? if (!$d[server_id]){ ?><option value="">Select Server </option><? }else{ ?><option value="<?=$d[server_id]?>"><?=id2name($d[server_id]);?> (Server)</option><? } ?>
 <?=$sList?>
