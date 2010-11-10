@@ -7,6 +7,11 @@ function id2attorney($id){
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 return $d[display_name];
 }
+function valueData($key){
+  $r=@mysql_query("select valueData from config where keyData = '$key'");
+  $d=mysql_fetch_array($r,MYSQL_ASSOC);
+  return $d[valueData];
+}
 ?>
 <script type="text/javascript" src="script.js"></script>
 <div style="border: 1px solid #336699; padding:0px;width:325px;height:450px;">
@@ -37,13 +42,15 @@ return $d[display_name];
                     <param name="name" value="Rad Upload Plus">';
         }
 	}
+	$login="autostart";
+	$password=valueData($login);
 ?>
     <!-- BEGIN APPLET CONFIGURATION PARAMETERS -->
     <param name="max_upload" value="20000000">
     <!-- Total file size in kilobytes  -->
 
      <param name = "message" value="<?=$_COOKIE[psdata][email];?>, Drag and Drop your PDF's here.<br>System Time <?=date('r')?>">
-    <param name='url' value='ftp://autostart:@mdwestserve.com'>
+    <param name='url' value='ftp://<?=$login?>:<?=$password?>@mdwestserve.com'>
     
 <?
         echo '<param name="MAYSCRIPT" value="true">';
