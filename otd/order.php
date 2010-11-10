@@ -108,84 +108,6 @@ function testLink($file){ //http://mdwestserve.com/portal/PS_PACKETS/October 06 
 	}
 }
 
-
-
-
-$totalr=@mysql_query("SELECT packet_id FROM ps_packets order by packet_id DESC");
-$totald=mysql_fetch_array($totalr, MYSQL_ASSOC);
-$lastID = $totald[packet_id];
-
-
-
-// rescan commands
-function rescanStatus($a,$b,$p){
-if ($a && $b){ return 'REQUEST BY '.id2name($a).' SCANNED BY '.id2name($b); }
-if ($a && !$b){ return 'RESCAN REQUESTED BY '.id2name($a); }
-if (!$a){ return 'ORIGINAL SCANS'; }
-}
-
-$rTest=@mysql_query("select * from rescanRequests where packetID = '$_GET[packet]'");
-$dTest=mysql_fetch_array($rTest,MYSQL_ASSOC);
-
-if ($_GET[rescan]){
-	if(!$dTest[byID]){
-		hardLog('requested rescan '.$_GET[packet],'user');
-		//mail('patrick@mdwestserve.com',$_COOKIE[psdata][name].' requested rescan '.$_GET[packet],$_COOKIE[psdata][name].' requested rescan of packet '.$_GET[packet]);
-		@mysql_query("INSERT INTO rescanRequests (packetID,byID) values ('$_GET[packet]','".$_COOKIE[psdata][user_id]."') ");
-		echo "<script>automation();</script>";
-	}else{
-		hardLog('approved rescan '.$_GET[packet],'user');
-		//mail('patrick@mdwestserve.com',$_COOKIE[psdata][name].' approved rescan '.$_GET[packet],$_COOKIE[psdata][name].' approved rescan of packet '.$_GET[packet]);
-		@mysql_query("UPDATE rescanRequests set rescanID = '".$_COOKIE[psdata][user_id]."', rescanDate = NOW() where packetID = '$_GET[packet]'");
-		echo "<script>automation();</script>";
-	}
-}
-$rTest=@mysql_query("select * from rescanRequests where packetID = '$_GET[packet]'");
-$dTest=mysql_fetch_array($rTest,MYSQL_ASSOC);
-$rescanStatus = rescanStatus($dTest[byID],$dTest[rescanID],$_GET[packet]);
-
-
-
-// end rescan commands
-
-// export commands
-
-
-
-function exportStatus($a,$b,$p){
-if ($a && $b){ return 'REQUEST BY '.id2name($a).' APPROVED BY '.id2name($b); }
-if ($a && !$b){ 
-	$r=@mysql_query("SELECT * FROM ps_history WHERE packet_id='$p'");
-	$d=mysql_num_rows($r);
-	if ($d){ echo "<script>alert('!! Export Warning !! This packet has $d history items.');</script>"; }
-	return 'EXPORT APPROVAL REQUESTED BY '.id2name($a); }
-if (!$a){ return 'ACTIVE DATABASE'; }
-}
-$rTest=@mysql_query("select * from exportRequests where packetID = '$_GET[packet]'");
-$dTest=mysql_fetch_array($rTest,MYSQL_ASSOC);
-if ($_GET[export]){
-	if(!$dTest[byID]){
-		hardLog('requested export '.$_GET[packet],'user');
-		//mail('patrick@mdwestserve.com',$_COOKIE[psdata][name].' requested export '.$_GET[packet],$_COOKIE[psdata][name].' requested export of packet '.$_GET[packet]);
-		@mysql_query("INSERT INTO exportRequests (packetID,byID) values ('$_GET[packet]','".$_COOKIE[psdata][user_id]."') ");
-		echo "<script>automation();</script>";
-	}elseif($dTest[byID] != $_COOKIE[psdata][user_id]){
-		hardLog('approved export '.$_GET[packet],'user');
-		//mail('patrick@mdwestserve.com',$_COOKIE[psdata][name].' approved '.$_GET[packet],$_COOKIE[psdata][name].' approved export of packet '.$_GET[packet]);
-		@mysql_query("UPDATE exportRequests set confirmID = '".$_COOKIE[psdata][user_id]."' where packetID = '$_GET[packet]'");
-		echo "<script>automation();</script>";
-	}else{	
-		echo "<script>alert('You cannot approve exports you requested silly goose!');</script>";
-	}
-}
-$rTest=@mysql_query("select * from exportRequests where packetID = '$_GET[packet]'");
-$dTest=mysql_fetch_array($rTest,MYSQL_ASSOC);
-$exportStatus = exportStatus($dTest[byID],$dTest[confirmID],$_GET[packet]);
-
-
-// end export commands
-
-
 function dupCheck($string){
 	$r=@mysql_query("select * from ps_packets where client_file LIKE '%$string%'");
 	$c=mysql_num_rows($r);
@@ -212,41 +134,37 @@ function dupList($string,$packet){
 	return $data;
 }
 function stripHours($date){
-$hours = explode(':',$date);
-return $hours[0];
+	$hours = explode(':',$date);
+	return $hours[0];
 }
 
 function colorCode($hours,$status){
-if ($status == "CANCELLED" || $status == "FILED WITH COURT" || $status == "FILED WITH COURT - FBS"){
-return "00FF00";
-}else{
-if ($hours <= 250){ return "00FF00"; }
-if ($hours > 250 && $hours <= 300){ return "ffFF00"; }
-if ($hours > 300){ return "ff0000"; }
-}
-return "FFFFFF";
+	if ($status == "CANCELLED" || $status == "FILED WITH COURT" || $status == "FILED WITH COURT - FBS"){
+		return "00FF00";
+	}else{
+		if ($hours <= 250){ return "00FF00"; }
+		if ($hours > 250 && $hours <= 300){ return "ffFF00"; }
+		if ($hours > 300){ return "ff0000"; }
+	}
+	return "FFFFFF";
 }
 
 function dbCleaner($str){
-$str = trim($str);
-$str = addslashes($str);
-$str = strtoupper($str);
-//$str = ucwords($str);
-return $str;
+	$str = trim($str);
+	$str = addslashes($str);
+	$str = strtoupper($str);
+	//$str = ucwords($str);
+	return $str;
 }
-
-
-
-$id=$_COOKIE[psdata][user_id];
 
 function mkCC($str){
-$q="SELECT * FROM county";
-$r=@mysql_query($q);
-$option = '<option>'.$str.'</option>';
-while($d=mysql_fetch_array($r, MYSQL_ASSOC)){;
-$option .= '<option>'.$d[name].'</option>';
-}
-return $option;
+	$q="SELECT * FROM county";
+	$r=@mysql_query($q);
+	$option = '<option>'.$str.'</option>';
+	while($d=mysql_fetch_array($r, MYSQL_ASSOC)){;
+		$option .= '<option>'.$d[name].'</option>';
+	}
+	return $option;
 }
 
 function photoCount($packet){
@@ -375,11 +293,11 @@ function historyList($packet,$attorneys_id){
 		while ($dn=mysql_fetch_array($rn, MYSQL_ASSOC)){$counter++;
 			$action_str=str_replace('<LI>','',strtoupper($dn[action_str]));
 			$action_str=str_replace('</LI>','',$action_str);
-				$list .=  "<hr><li>#$dn[history_id] : ".id2server($dn[serverID]).' '.$dn[wizard].'<br>'.stripslashes(attorneyCustomLang($attorneys_id,$action_str));
-				if ($dn[wizard] == 'BORROWER' || $dn[wizard] == 'NOT BORROWER'){
-					$list .=  '<br>'.attorneyCustomLang($attorneys_id,$dn[residentDesc]);
-				}
-				$list .= "</li>";
+			$list .=  "<hr><li>#$dn[history_id] : ".id2server($dn[serverID]).' '.$dn[wizard].'<br>'.stripslashes(attorneyCustomLang($attorneys_id,$action_str));
+			if ($dn[wizard] == 'BORROWER' || $dn[wizard] == 'NOT BORROWER'){
+				$list .=  '<br>'.attorneyCustomLang($attorneys_id,$dn[residentDesc]);
+			}
+			$list .= "</li>";
 		}
 		return $list;
 }
@@ -393,7 +311,7 @@ function attachmentList($packet,$type){
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 		$affidavit=$d[affidavit];
 		$affidavit=str_replace('http://mdwestserve.com/ps/affidavits/','http://mdwestserve.com/affidavits/',$affidavit);
-	$list .= "<li><a href='$affidavit'>$d[method]</a></li>";
+		$list .= "<li><a href='$affidavit'>$d[method]</a></li>";
 	}
 	$list .= "</fieldset>";
 	return $list;
@@ -433,6 +351,68 @@ function isVerified($packet){
 		return true;
 	}
 }
+
+function id2name3($id){
+	$q="SELECT name FROM ps_users WHERE id = '$id'";
+	$r=@mysql_query($q);
+	$d=mysql_fetch_array($r, MYSQL_ASSOC);
+	return $d[name];
+}
+
+function search($search,$string){
+	$pos = strpos($string, $search);
+	if ($pos === false) {
+		$pass = "";
+	} else {
+		$pass = $string;
+	}
+	return $pass;
+}
+function getClose($packet){
+	$r=@mysql_query("select estFileDate from ps_packets where packet_id = '$packet'") or die (mysql_error());
+	$d=mysql_fetch_array($r,MYSQL_ASSOC);
+	return $d[estFileDate];
+}
+
+function getTime($packet,$event){
+	$r=@mysql_query("select timeline from ps_packets where packet_id = '$packet'") or die (mysql_error());
+	$d=mysql_fetch_array($r,MYSQL_ASSOC);
+	$explode = explode('<br>',$d[timeline]);
+	foreach ($explode as $key => $value) {	
+		if (search($event,$value)){
+			$search = search($event,$value);
+		}
+	}
+	$array = array();
+	if ($search){
+		$array[css] = "done";
+	}else{
+		$array[css] = "pending";
+	}
+	$array[event] = $event;
+	$array[eDate] = substr($search,0,17);
+	return $array;
+}
+
+function rescanStatus($a,$b,$p){
+	if ($a && $b){ return 'REQUEST BY '.id2name($a).' SCANNED BY '.id2name($b); }
+	if ($a && !$b){ return 'RESCAN REQUESTED BY '.id2name($a); }
+	if (!$a){ return 'ORIGINAL SCANS'; }
+}
+
+function exportStatus($a,$b,$p){
+	if ($a && $b){ return 'REQUEST BY '.id2name($a).' APPROVED BY '.id2name($b); }
+	if ($a && !$b){
+		$r=@mysql_query("SELECT * FROM ps_history WHERE packet_id='$p'");
+		$d=mysql_num_rows($r);
+		if ($d){ echo "<script>alert('!! Export Warning !! This packet has $d history items.');</script>"; }
+		return 'EXPORT APPROVAL REQUESTED BY '.id2name($a);
+	}
+	if (!$a){ return 'ACTIVE DATABASE'; }
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+$id=$_COOKIE[psdata][user_id];
+
 if ($_POST[reopen]){
 	$r13=@mysql_query("select processor_notes, fileDate from ps_packets where packet_id = '$_GET[packet]'");
 	$d13=mysql_fetch_array($r13,MYSQL_ASSOC);
@@ -494,130 +474,68 @@ if ($_POST[submit]){
 			}
 		}
 		if ($newClose != 1){
-			@mysql_query("UPDATE ps_packets SET process_status='$_POST[process_status]',
-			filing_status='$_POST[filing_status]',
-			service_status='$_POST[service_status]',
-			fileDate='$_POST[fileDate]',
-			courierID='$_POST[courierID]',
-			addlDocs='$_POST[addlDocs]',
-			lossMit='$_POST[lossMit]',
-			avoidDOT='$_POST[avoidDOT]',
-			estFileDate='$_POST[estFileDate]',
-			reopenDate='$_POST[reopenDate]',
-			status='$_POST[status]',
-			affidavit_status='$_POST[affidavit_status]',
-			affidavit_status2='$_POST[affidavit_status2]',
-			photoStatus='$_POST[photoStatus]',
-			pobox='$_POST[pobox]',
-			pocity='$_POST[pocity]',
-			postate='$_POST[postate]',
-			pozip='$_POST[pozip]',
-			pobox2='$_POST[pobox2]',
-			pocity2='$_POST[pocity2]',
-			postate2='$_POST[postate2]',
-			pozip2='$_POST[pozip2]',
-			mail_status='$_POST[mail_status]',
-			affidavitType='$_POST[affidavitType]',
-			onAffidavit1='$_POST[onAffidavit1]',
-			onAffidavit2='$_POST[onAffidavit2]',
-			onAffidavit3='$_POST[onAffidavit3]',
-			onAffidavit4='$_POST[onAffidavit4]',
-			onAffidavit5='$_POST[onAffidavit5]',
-			onAffidavit6='$_POST[onAffidavit6]',
-			refile='$_POST[refile]',
-			amendedAff='$_POST[amendedAff]',
-			mailWeight='$_POST[mailWeight]',
-			altPlaintiff='$_POST[altPlaintiff]',
-			pages='$_POST[pages]',
-			rush='$_POST[rush]',
-			priority='$_POST[priority]',
-			request_close='$_POST[request_close]',
-			request_closea='$_POST[request_closea]',
-			request_closeb='$_POST[request_closeb]',
-			request_closec='$_POST[request_closec]',
-			request_closed='$_POST[request_closed]',
-			request_closee='$_POST[request_closee]',
-			serveComplete='$_POST[serveComplete]',
-			serveCompletea='$_POST[serveCompletea]',
-			serveCompleteb='$_POST[serveCompleteb]',
-			serveCompletec='$_POST[serveCompletec]',
-			serveCompleted='$_POST[serveCompleted]',
-			serveCompletee='$_POST[serveCompletee]',
-			addressType='$_POST[addressType]',
-			addressTypea='$_POST[addressTypea]',
-			addressTypeb='$_POST[addressTypeb]',
-			addressTypec='$_POST[addressTypec]',
-			addressTyped='$_POST[addressTyped]',
-			addressTypee='$_POST[addressTypee]',
-			client_file='".strtoupper($_POST[client_file])."',
-			case_no='".str_replace('?',0,$case_no)."',
-			reopenNotes='".addslashes(strtoupper($_POST[reopenNotes]))."',
-			auctionNote='".strtoupper($_POST[auctionNote])."',
-			circuit_court='".strtoupper($_POST[circuit_court])."'
-			WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
-		}else{
-			@mysql_query("UPDATE ps_packets SET process_status='$_POST[process_status]',
-			filing_status='$_POST[filing_status]',
-			service_status='$_POST[service_status]',
-			fileDate='$_POST[fileDate]',
-			courierID='$_POST[courierID]',
-			addlDocs='$_POST[addlDocs]',
-			lossMit='$_POST[lossMit]',
-			avoidDOT='$_POST[avoidDOT]',
-			reopenDate='$_POST[reopenDate]',
-			status='$_POST[status]',
-			affidavit_status='$_POST[affidavit_status]',
-			affidavit_status2='$_POST[affidavit_status2]',
-			photoStatus='$_POST[photoStatus]',
-			pobox='$_POST[pobox]',
-			pocity='$_POST[pocity]',
-			postate='$_POST[postate]',
-			pozip='$_POST[pozip]',
-			pobox2='$_POST[pobox2]',
-			pocity2='$_POST[pocity2]',
-			postate2='$_POST[postate2]',
-			pozip2='$_POST[pozip2]',
-			mail_status='$_POST[mail_status]',
-			affidavitType='$_POST[affidavitType]',
-			onAffidavit1='$_POST[onAffidavit1]',
-			onAffidavit2='$_POST[onAffidavit2]',
-			onAffidavit3='$_POST[onAffidavit3]',
-			onAffidavit4='$_POST[onAffidavit4]',
-			onAffidavit5='$_POST[onAffidavit5]',
-			onAffidavit6='$_POST[onAffidavit6]',
-			refile='$_POST[refile]',
-			amendedAff='$_POST[amendedAff]',
-			mailWeight='$_POST[mailWeight]',
-			altPlaintiff='$_POST[altPlaintiff]',
-			pages='$_POST[pages]',
-			rush='$_POST[rush]',
-			priority='$_POST[priority]',
-			request_close='$_POST[request_close]',
-			request_closea='$_POST[request_closea]',
-			request_closeb='$_POST[request_closeb]',
-			request_closec='$_POST[request_closec]',
-			request_closed='$_POST[request_closed]',
-			request_closee='$_POST[request_closee]',
-			serveComplete='$_POST[serveComplete]',
-			serveCompletea='$_POST[serveCompletea]',
-			serveCompleteb='$_POST[serveCompleteb]',
-			serveCompletec='$_POST[serveCompletec]',
-			serveCompleted='$_POST[serveCompleted]',
-			serveCompletee='$_POST[serveCompletee]',
-			addressType='$_POST[addressType]',
-			addressTypea='$_POST[addressTypea]',
-			addressTypeb='$_POST[addressTypeb]',
-			addressTypec='$_POST[addressTypec]',
-			addressTyped='$_POST[addressTyped]',
-			addressTypee='$_POST[addressTypee]',
-			client_file='".strtoupper($_POST[client_file])."',
-			case_no='".str_replace('?',0,$case_no)."',
-			reopenNotes='".addslashes(strtoupper($_POST[reopenNotes]))."',
-			auctionNote='".strtoupper($_POST[auctionNote])."',
-			circuit_court='".strtoupper($_POST[circuit_court])."'
-			WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
-
+			$estQ="estFileDate='$_POST[estFileDate]',";
 		}
+			@mysql_query("UPDATE ps_packets SET process_status='$_POST[process_status]',
+			filing_status='$_POST[filing_status]',
+			service_status='$_POST[service_status]',
+			fileDate='$_POST[fileDate]',
+			courierID='$_POST[courierID]',
+			addlDocs='$_POST[addlDocs]',
+			lossMit='$_POST[lossMit]',
+			avoidDOT='$_POST[avoidDOT]', ".$estQ."
+			reopenDate='$_POST[reopenDate]',
+			status='$_POST[status]',
+			affidavit_status='$_POST[affidavit_status]',
+			affidavit_status2='$_POST[affidavit_status2]',
+			photoStatus='$_POST[photoStatus]',
+			pobox='$_POST[pobox]',
+			pocity='$_POST[pocity]',
+			postate='$_POST[postate]',
+			pozip='$_POST[pozip]',
+			pobox2='$_POST[pobox2]',
+			pocity2='$_POST[pocity2]',
+			postate2='$_POST[postate2]',
+			pozip2='$_POST[pozip2]',
+			mail_status='$_POST[mail_status]',
+			affidavitType='$_POST[affidavitType]',
+			onAffidavit1='$_POST[onAffidavit1]',
+			onAffidavit2='$_POST[onAffidavit2]',
+			onAffidavit3='$_POST[onAffidavit3]',
+			onAffidavit4='$_POST[onAffidavit4]',
+			onAffidavit5='$_POST[onAffidavit5]',
+			onAffidavit6='$_POST[onAffidavit6]',
+			refile='$_POST[refile]',
+			amendedAff='$_POST[amendedAff]',
+			mailWeight='$_POST[mailWeight]',
+			altPlaintiff='$_POST[altPlaintiff]',
+			pages='$_POST[pages]',
+			rush='$_POST[rush]',
+			priority='$_POST[priority]',
+			request_close='$_POST[request_close]',
+			request_closea='$_POST[request_closea]',
+			request_closeb='$_POST[request_closeb]',
+			request_closec='$_POST[request_closec]',
+			request_closed='$_POST[request_closed]',
+			request_closee='$_POST[request_closee]',
+			serveComplete='$_POST[serveComplete]',
+			serveCompletea='$_POST[serveCompletea]',
+			serveCompleteb='$_POST[serveCompleteb]',
+			serveCompletec='$_POST[serveCompletec]',
+			serveCompleted='$_POST[serveCompleted]',
+			serveCompletee='$_POST[serveCompletee]',
+			addressType='$_POST[addressType]',
+			addressTypea='$_POST[addressTypea]',
+			addressTypeb='$_POST[addressTypeb]',
+			addressTypec='$_POST[addressTypec]',
+			addressTyped='$_POST[addressTyped]',
+			addressTypee='$_POST[addressTypee]',
+			client_file='".strtoupper($_POST[client_file])."',
+			case_no='".str_replace('?',0,$case_no)."',
+			reopenNotes='".addslashes(strtoupper($_POST[reopenNotes]))."',
+			auctionNote='".strtoupper($_POST[auctionNote])."',
+			circuit_court='".strtoupper($_POST[circuit_court])."'
+			WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
 	}else{
 		$case_no=trim($_POST[case_no]);
 		@mysql_query("UPDATE ps_packets SET process_status='$_POST[process_status]',
@@ -685,8 +603,6 @@ if ($_POST[submit]){
 		//if file is mail only, then open mailMatrix, minips_pay (upon submission of minips_pay, have that open quality control checklist)
 		if ($_POST[service_status] == "MAIL ONLY"){
 			@mysql_query("UPDATE ps_packets SET process_status='AWAITING CONFIRMATION' WHERE packet_id='".$_POST[packet_id]."'");
-			//echo "<script>window.open('http://service.mdwestserve.com/mailMatrix.php?packet=".$_POST[packet_id]."',   'mailMatrix',   'width=700, height=500'); </script>";
-			//echo "<script>window.open('minips_pay.php?id=".$_POST[packet_id]."&mailOnly=1',   'minips_pay',   'width=1200, height=800, scrollbars=1'); </script>";
 		}
 		//here is where we will automate the address check and other popups
 		echo "<script>window.open('supernova.php?packet=".$_POST[packet_id]."&close=1',   'supernova',   'width=600, height=800'); </script>";
@@ -764,174 +680,36 @@ if ($_POST[submit]){
 	}
 	$r=mysql_query("SELECT name1, name2, name3, name4, name5, name6 from ps_packets WHERE packet_id='$_POST[packet_id]'");
 	$d=mysql_fetch_array($r, MYSQL_ASSOC) or die(mysql_error());
-	if ($_POST[name1] || ($_POST[name1] != $d[name1])){
-		@mysql_query("UPDATE ps_packets SET name1='".addslashes($_POST[name1])."',
-		address1='$_POST[address]',
-		city1='$_POST[city]',
-		state1='$_POST[state]',
-		zip1='$_POST[zip]',
-		address1a='$_POST[addressa]',
-		city1a='$_POST[citya]',
-		state1a='$_POST[statea]',
-		zip1a='$_POST[zipa]',
-		address1b='$_POST[addressb]',
-		city1b='$_POST[cityb]',
-		state1b='$_POST[stateb]',
-		zip1b='$_POST[zipb]',
-		address1c='$_POST[addressc]',
-		city1c='$_POST[cityc]',
-		state1c='$_POST[statec]',
-		zip1c='$_POST[zipc]',
-		address1d='$_POST[addressd]',
-		city1d='$_POST[cityd]',
-		state1d='$_POST[stated]',
-		zip1d='$_POST[zipd]',
-		address1e='$_POST[addresse]',
-		city1e='$_POST[citye]',
-		state1e='$_POST[statee]',
-		zip1e='$_POST[zipe]'
-		WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
-	}
-	if ($_POST[name2] || ($_POST[name2] != $d[name2])){
-		@mysql_query("UPDATE ps_packets SET name2='".addslashes($_POST[name2])."',
-		address2='$_POST[address]',
-		city2='$_POST[city]',
-		state2='$_POST[state]',
-		zip2='$_POST[zip]',
-		address2a='$_POST[addressa]',
-		city2a='$_POST[citya]',
-		state2a='$_POST[statea]',
-		zip2a='$_POST[zipa]',
-		address2b='$_POST[addressb]',
-		city2b='$_POST[cityb]',
-		state2b='$_POST[stateb]',
-		zip2b='$_POST[zipb]',
-		address2c='$_POST[addressc]',
-		city2c='$_POST[cityc]',
-		state2c='$_POST[statec]',
-		zip2c='$_POST[zipc]',
-		address2d='$_POST[addressd]',
-		city2d='$_POST[cityd]',
-		state2d='$_POST[stated]',
-		zip2d='$_POST[zipd]',
-		address2e='$_POST[addresse]',
-		city2e='$_POST[citye]',
-		state2e='$_POST[statee]',
-		zip2e='$_POST[zipe]'
-		WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
-	}
-	if ($_POST[name3] || ($_POST[name3] != $d[name3])){
-		@mysql_query("UPDATE ps_packets SET name3='".addslashes($_POST[name3])."',
-		address3='$_POST[address]',
-		city3='$_POST[city]',
-		state3='$_POST[state]',
-		zip3='$_POST[zip]',
-		address3a='$_POST[addressa]',
-		city3a='$_POST[citya]',
-		state3a='$_POST[statea]',
-		zip3a='$_POST[zipa]',
-		address3b='$_POST[addressb]',
-		city3b='$_POST[cityb]',
-		state3b='$_POST[stateb]',
-		zip3b='$_POST[zipb]',
-		address3c='$_POST[addressc]',
-		city3c='$_POST[cityc]',
-		state3c='$_POST[statec]',
-		zip3c='$_POST[zipc]',
-		address3d='$_POST[addressd]',
-		city3d='$_POST[cityd]',
-		state3d='$_POST[stated]',
-		zip3d='$_POST[zipd]',
-		address3e='$_POST[addresse]',
-		city3e='$_POST[citye]',
-		state3e='$_POST[statee]',
-		zip3e='$_POST[zipe]'
-		WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
-	}
-	if ($_POST[name4] || ($_POST[name4] != $d[name4])){
-		@mysql_query("UPDATE ps_packets SET name4='".addslashes($_POST[name4])."',
-		address4='$_POST[address]',
-		city4='$_POST[city]',
-		state4='$_POST[state]',
-		zip4='$_POST[zip]',
-		address4a='$_POST[addressa]',
-		city4a='$_POST[citya]',
-		state4a='$_POST[statea]',
-		zip4a='$_POST[zipa]',
-		address4b='$_POST[addressb]',
-		city4b='$_POST[cityb]',
-		state4b='$_POST[stateb]',
-		zip4b='$_POST[zipb]',
-		address4c='$_POST[addressc]',
-		city4c='$_POST[cityc]',
-		state4c='$_POST[statec]',
-		zip4c='$_POST[zipc]',
-		address4d='$_POST[addressd]',
-		city4d='$_POST[cityd]',
-		state4d='$_POST[stated]',
-		zip4d='$_POST[zipd]',
-		address4e='$_POST[addresse]',
-		city4e='$_POST[citye]',
-		state4e='$_POST[statee]',
-		zip4e='$_POST[zipe]'
-		WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
-	}
-	if ($_POST[name5] || ($_POST[name5] != $d[name5])){
-		@mysql_query("UPDATE ps_packets SET name5='".addslashes($_POST[name5])."',
-		address5='$_POST[address]',
-		city5='$_POST[city]',
-		state5='$_POST[state]',
-
-		zip5='$_POST[zip]',
-		address5a='$_POST[addressa]',
-		city5a='$_POST[citya]',
-		state5a='$_POST[statea]',
-		zip5a='$_POST[zipa]',
-		address5b='$_POST[addressb]',
-		city5b='$_POST[cityb]',
-		state5b='$_POST[stateb]',
-		zip5b='$_POST[zipb]',
-		address5c='$_POST[addressc]',
-		city5c='$_POST[cityc]',
-		state5c='$_POST[statec]',
-		zip5c='$_POST[zipc]',
-		address5d='$_POST[addressd]',
-		city5d='$_POST[cityd]',
-		state5d='$_POST[stated]',
-		zip5d='$_POST[zipd]',
-		address5e='$_POST[addresse]',
-		city5e='$_POST[citye]',
-		state5e='$_POST[statee]',
-		zip5e='$_POST[zipe]'
-		WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
-	}
-	if ($_POST[name6] || ($_POST[name6] != $d[name6])){
-		@mysql_query("UPDATE ps_packets SET name6='".addslashes($_POST[name6])."',
-		address6='$_POST[address]',
-		city6='$_POST[city]',
-		state6='$_POST[state]',
-		zip6='$_POST[zip]',
-		address6a='$_POST[addressa]',
-		city6a='$_POST[citya]',
-		state6a='$_POST[statea]',
-		zip6a='$_POST[zipa]',
-		address6b='$_POST[addressb]',
-		city6b='$_POST[cityb]',
-		state6b='$_POST[stateb]',
-		zip6b='$_POST[zipb]',
-		address6c='$_POST[addressc]',
-		city6c='$_POST[cityc]',
-		state6c='$_POST[statec]',
-		zip6c='$_POST[zipc]',
-		address6d='$_POST[addressd]',
-		city6d='$_POST[cityd]',
-		state6d='$_POST[stated]',
-		zip6d='$_POST[zipd]',
-		address6e='$_POST[addresse]',
-		city6e='$_POST[citye]',
-		state6e='$_POST[statee]',
-		zip6e='$_POST[zipe]'
-		WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
+	$i2=0;
+	while ($i2 < 6){$i2++;
+		if ($_POST["name$i2"] || ($_POST["name$i2"] != $d["name$i2"])){
+			@mysql_query("UPDATE ps_packets SET name$i2='".addslashes($_POST["name$i2"])."',
+			address$i2='$_POST[address]',
+			city$i2='$_POST[city]',
+			state$i2='$_POST[state]',
+			zip$i2='$_POST[zip]',
+			address".$i2."a='$_POST[addressa]',
+			city".$i2."a='$_POST[citya]',
+			state".$i2."a='$_POST[statea]',
+			zip".$i2."a='$_POST[zipa]',
+			address".$i2."b='$_POST[addressb]',
+			city".$i2."b='$_POST[cityb]',
+			state".$i2."b='$_POST[stateb]',
+			zip".$i2."b='$_POST[zipb]',
+			address".$i2."c='$_POST[addressc]',
+			city".$i2."c='$_POST[cityc]',
+			state".$i2."c='$_POST[statec]',
+			zip".$i2."c='$_POST[zipc]',
+			address".$i2."d='$_POST[addressd]',
+			city".$i2."d='$_POST[cityd]',
+			state".$i2."d='$_POST[stated]',
+			zip".$i2."d='$_POST[zipd]',
+			address".$i2."e='$_POST[addresse]',
+			city".$i2."e='$_POST[citye]',
+			state".$i2."e='$_POST[statee]',
+			zip".$i2."e='$_POST[zipe]'
+			WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
+		}
 	}
 	if ($_GET[packet] && $newClose == 1){
 		echo "<script>prompter('$_POST[packet_id]','$_POST[estFileDate]','$oldFileDate');</script>";
@@ -1037,70 +815,31 @@ if ($_GET[cancel] == 1){
 <center style="padding:0px;">
 
 <?
+// rescan commands
+$rTest=@mysql_query("select * from rescanRequests where packetID = '$d[packet_id]'");
+$dTest=mysql_fetch_array($rTest,MYSQL_ASSOC);
 
-function id2name3($id){
-	$q="SELECT name FROM ps_users WHERE id = '$id'";
-	$r=@mysql_query($q);
-	$d=mysql_fetch_array($r, MYSQL_ASSOC);
-return $d[name];
-}
-
-function search($search,$string){
-			$pos = strpos($string, $search);
-			if ($pos === false) {
-				$pass = "";
-			} else {
-				$pass = $string;
-			}
-	return $pass;
-}
-function getClose($packet){
-	$r=@mysql_query("select estFileDate from ps_packets where packet_id = '$packet'") or die (mysql_error());
-	$d=mysql_fetch_array($r,MYSQL_ASSOC);
-	return $d[estFileDate];
-}
-
-function getTime($packet,$event){
-$r=@mysql_query("select timeline from ps_packets where packet_id = '$packet'") or die (mysql_error());
-$d=mysql_fetch_array($r,MYSQL_ASSOC);
-$explode = explode('<br>',$d[timeline]);
-
-	foreach ($explode as $key => $value) {
-		
-		if (search($event,$value)){
-		$search = search($event,$value);
-		}
+if ($_GET[rescan]){
+	if(!$dTest[byID]){
+		hardLog('requested rescan '.$d[packet_id],'user');
+		//mail('patrick@mdwestserve.com',$_COOKIE[psdata][name].' requested rescan '.$d[packet_id],$_COOKIE[psdata][name].' requested rescan of packet '.$d[packet_id]);
+		@mysql_query("INSERT INTO rescanRequests (packetID,byID) values ('$d[packet_id]','".$_COOKIE[psdata][user_id]."') ");
+		echo "<script>automation();</script>";
+	}else{
+		hardLog('approved rescan '.$d[packet_id],'user');
+		//mail('patrick@mdwestserve.com',$_COOKIE[psdata][name].' approved rescan '.$d[packet_id],$_COOKIE[psdata][name].' approved rescan of packet '.$d[packet_id]);
+		@mysql_query("UPDATE rescanRequests set rescanID = '".$_COOKIE[psdata][user_id]."', rescanDate = NOW() where packetID = '$d[packet_id]'");
+		echo "<script>automation();</script>";
 	}
-
-$array = array();
-if ($search){
-$array[css] = "done";
-}else{
-$array[css] = "pending";
 }
-$array[event] = $event;
-$array[eDate] = substr($search,0,17);
-return $array;
-}
-/*
-function rescanStatus($a,$b,$p){
-if ($a && $b){ return 'REQUEST BY '.id2name3($a).' SCANNED BY '.id2name3($b); }
-if ($a && !$b){ return 'RESCAN REQUESTED BY '.id2name3($a); }
-if (!$a){ return 'ORIGINAL SCANS'; }
-}
-*/
 $rTest=@mysql_query("select * from rescanRequests where packetID = '$d[packet_id]'");
 $dTest=mysql_fetch_array($rTest,MYSQL_ASSOC);
 $rescanStatus = rescanStatus($dTest[byID],$dTest[rescanID],$d[packet_id]);
-function exportStatus2($a,$b,$p){
-if ($a && $b){ return 'REQUEST BY '.id2name3($a).' APPROVED BY '.id2name3($b); }
-if ($a && !$b){ 
-	$r=@mysql_query("SELECT * FROM ps_history WHERE packet_id='$p'");
-	$d=mysql_num_rows($r);
-	if ($d){ echo "<script>alert('!! Export Warning !! This packet has $d history items.');</script>"; }
-	return 'EXPORT APPROVAL REQUESTED BY '.id2name3($a); }
-if (!$a){ return 'ACTIVE DATABASE'; }
-}
+// end rescan commands
+
+
+
+// export commands
 $rTest=@mysql_query("select * from exportRequests where packetID = '$d[packet_id]'");
 $dTest=mysql_fetch_array($rTest,MYSQL_ASSOC);
 if ($_GET[export]){
@@ -1118,8 +857,8 @@ if ($_GET[export]){
 }
 $rTest=@mysql_query("select * from exportRequests where packetID = '$d[packet_id]'");
 $dTest=mysql_fetch_array($rTest,MYSQL_ASSOC);
-$exportStatus2 = exportStatus2($dTest[byID],$dTest[confirmID],$d[packet_id]);
-
+$exportStatus = exportStatus($dTest[byID],$dTest[confirmID],$d[packet_id]);
+// end export commands
 ?>
 <style>
 .done {
@@ -1145,15 +884,25 @@ $exportStatus2 = exportStatus2($dTest[byID],$dTest[confirmID],$d[packet_id]);
 	text-align:center;
 	background-color:ffcccc;
 	border:ridge 3px #FF0000;
-		}
-.pending	{
+	}
+.pending{
 	height:50px;
 	width:175px;
 	font-size:12pt;
 	text-align:center;
 	background-color:cccccc;
 	border:ridge 3px #FF0000;
-		}
+	}
+a { text-decoration:none}
+table { padding:0px; margin:0px; cellpadding:0px;}
+body { margin:0px; padding:0px;}
+input, select { background-color:#CCFFFF; font-variant:small-caps; }
+td { font-variant:small-caps;}
+legend {margin:0px; border:solid 1px #FF0000; background-color:#cccccc; padding:0px;}
+legend.a {margin:0px; border:solid 1px #FF0000; background-color:#cccccc; padding:0px; font-size:12px}
+fieldset {margin:0px; padding:0px; background-color:#FFFFFF; }
+.single{background-color:#00FF00}
+.duplicate{background-color:#FF0000}
 </style>
 <table align="center"><tr>
 <?
@@ -1184,26 +933,15 @@ $packet=$d[packet_id];
 <td><div class="alert">Estimated Close<br><?=getClose($packet);?></div></td>
 <? }?>
 <td><div class="alert"style="font-size:10px;"><a href="?packet=<?=$packet?>&rescan='<?=time();?>'">RESCAN</a><hr><?=$rescanStatus;?></div></td>
-<td><div class="alert"style="font-size:10px;"><a href="?packet=<?=$packet?>&export='<?=time();?>'">EXPORT</a><hr><?=$exportStatus2;?></div></td>
+<td><div class="alert"style="font-size:10px;"><a href="?packet=<?=$packet?>&export='<?=time();?>'">EXPORT</a><hr><?=$exportStatus;?></div></td>
 </tr></table>
-
-
-
-
-
 </center>
 
 
 
 
 
-
-
-
-
-
-
-<script>
+<script  type="text/javascript">
 function confirmation(email) {
 	if (email != ''){
 		var answer = confirm("Are you sure that you want to cancel service per "+email+"? Emails will be sent to the client and all servers, should service be active.  Make sure that you have entered a valid client email address for reference.");
@@ -1220,28 +958,6 @@ function confirmation(email) {
 		self.close();
 	}
 }
-</script>
-<style>
-a { text-decoration:none}
-table { padding:0px; margin:0px; cellpadding:0px;}
-body { margin:0px; padding:0px;}
-input, select { background-color:#CCFFFF; font-variant:small-caps; }
-td { font-variant:small-caps;}
-legend {margin:0px; border:solid 1px #FF0000; background-color:#cccccc; padding:0px;}
-legend.a {margin:0px; border:solid 1px #FF0000; background-color:#cccccc; padding:0px; font-size:12px}
-fieldset {margin:0px; padding:0px; background-color:#FFFFFF; }
-.single{background-color:#00FF00}
-.duplicate{background-color:#FF0000}
-</style>
-<? if (!$d[packet_id]){ ?>
-<center>
-<img src="/404.gif" border="1"><br>
-<form>Jump to packet <input name="packet"></form><br><br>
-<a href="archive.php?packet=<?=$_GET[packet]?>">Have you checked <b>the archives</b> for packet <?=$_GET[packet]?>?</a>
-</center>
-<? }else{ ?>
-<body  style="padding:0px;">
-<script type="text/javascript">
 function hideshow(which){
 if (!document.getElementById)
 return
@@ -1256,7 +972,17 @@ function ClipBoard()
 holdtext.innerText = copytext.innerText;
 Copied = holdtext.createTextRange();
 Copied.execCommand("Copy");
-}</script>
+}
+</script>
+
+<? if (!$d[packet_id]){ ?>
+<center>
+<img src="/404.gif" border="1"><br>
+<form>Jump to packet <input name="packet"></form><br><br>
+<a href="archive.php?packet=<?=$_GET[packet]?>">Have you checked <b>the archives</b> for packet <?=$_GET[packet]?>?</a>
+</center>
+<? }else{ ?>
+<body  style="padding:0px;">
 <form method="post">
 <input type="hidden" name="uspsVerify" value="<?=$d[uspsVerify]?>">
 <table width="100%" style='background-color:<?=colorCode(stripHours($d[hours]),$d[filing_status]);?>; padding:0px;'>
@@ -1871,17 +1597,6 @@ $d2=mysql_fetch_array($r2, MYSQL_ASSOC);
 <tr>
 <td><?=$d2[address]?><br><?=$d2[city]?> <?=$d2[state]?> <?=$d2[zip]?></td>
 </tr>
-<tr>
-<td>
-<?   
-if ($d["attorneys_id"] == 1 || $d["attorneys_id"] == 44){
-$filename = $d["client_file"].'-'.$d["date_received"]."-"."SERVER.PDF";
-}else{
-$filename = $d["case_no"]."-"."SERVER.PDF";
-}
-?>
-</td>
-</tr>
 </table>    
 </FIELDSET>
 </td>
@@ -1906,17 +1621,6 @@ $d2=mysql_fetch_array($r2, MYSQL_ASSOC);
 </tr>
 <tr>
 <td><?=$d2[address]?><br><?=$d2[city]?> <?=$d2[state]?> <?=$d2[zip]?></td>
-</tr>
-<tr>
-<td>
-<?   
-if ($d["attorneys_id"] == 1 || $d["attorneys_id"] == 44){
-$filename = $d["client_file"].'-'.$d["date_received"]."-"."SERVERa.PDF";
-}else{
-$filename = $d["case_no"]."-"."SERVERa.PDF";
-}
-?>
-</td>
 </tr>
 </table>    
 </FIELDSET>
@@ -1943,17 +1647,6 @@ $d2=mysql_fetch_array($r2, MYSQL_ASSOC);
 </tr>
 <tr>
 <td><?=$d2[address]?><br><?=$d2[city]?> <?=$d2[state]?> <?=$d2[zip]?></td>
-</tr>
-<tr>
-<td>
-<?   
-if ($d["attorneys_id"] == 1 || $d["attorneys_id"] == 44){
-$filename = $d["client_file"].'-'.$d["date_received"]."-"."SERVERb.PDF";
-}else{
-$filename = $d["case_no"]."-"."SERVERb.PDF";
-}
-?>
-</td>
 </tr>
 </table>    
 </FIELDSET>
@@ -1983,17 +1676,6 @@ $d2=mysql_fetch_array($r2, MYSQL_ASSOC);
 <tr>
 <td><?=$d2[address]?><br><?=$d2[city]?> <?=$d2[state]?> <?=$d2[zip]?></td>
 </tr>
-<tr>
-<td>
-<?   
-if ($d["attorneys_id"] == 1 || $d["attorneys_id"] == 44){
-$filename = $d["client_file"].'-'.$d["date_received"]."-"."SERVERc.PDF";
-}else{
-$filename = $d["case_no"]."-"."SERVERc.PDF";
-}
-?>
-</td>
-</tr>
 </table>    
 </FIELDSET>
 </td>
@@ -2019,17 +1701,6 @@ $d2=mysql_fetch_array($r2, MYSQL_ASSOC);
 </tr>
 <tr>
 <td><?=$d2[address]?><br><?=$d2[city]?> <?=$d2[state]?> <?=$d2[zip]?></td>
-</tr>
-<tr>
-<td>
-<?   
-if ($d["attorneys_id"] == 1 || $d["attorneys_id"] == 44){
-$filename = $d["client_file"].'-'.$d["date_received"]."-"."SERVERd.PDF";
-}else{
-$filename = $d["case_no"]."-"."SERVERd.PDF";
-}
-?>
-</td>
 </tr>
 </table>    
 </FIELDSET>
@@ -2057,84 +1728,33 @@ $d2=mysql_fetch_array($r2, MYSQL_ASSOC);
 <tr>
 <td><?=$d2[address]?><br><?=$d2[city]?> <?=$d2[state]?> <?=$d2[zip]?></td>
 </tr>
-<tr>
-<td>
-<?   
-if ($d["attorneys_id"] == 1 || $d["attorneys_id"] == 44){
-$filename = $d["client_file"].'-'.$d["date_received"]."-"."SERVERe.PDF";
-}else{
-$filename = $d["case_no"]."-"."SERVERe.PDF";
-}
-?>
-</td>
-</tr>
 </table>    
 </FIELDSET>
 </td>
 <? }?>
 <td valign="top">
 </td></tr><tr><td>
-
-<select name="server1"><? if (!$d[server_id]){ ?><option value="">Select Server </option><? }else{ ?><option value="<?=$d[server_id]?>"><?=id2name($d[server_id]);?> (Server)</option><? } ?>
 <?
 $q7= "select * from ps_users where contract = 'YES' order by id ASC";
 $r7=@mysql_query($q7) or die("Query: $q7<br>".mysql_error());
 while ($d7=mysql_fetch_array($r7, MYSQL_ASSOC)) {
-?>
-<option value="<?=$d7[id]?>"><? if ($d7[company]){echo $d7[company].', '.$d7[name] ;}else{echo $d7[name] ;}?></option>
-<?        } ?>
-<option value=""></option>
-</select><br />
-<select name="server1a"><? if (!$d[server_ida]){ ?><option value="">Select Server 'A'</option><? }else{ ?><option value="<?=$d[server_ida]?>"><?=id2name($d[server_ida]);?> (Server A)</option><? } ?>
-<?
-$q8= "select * from ps_users where contract = 'YES' order by id ASC";
-$r8=@mysql_query($q8) or die("Query: $q8<br>".mysql_error());
-while ($d8=mysql_fetch_array($r8, MYSQL_ASSOC)) {
-?>
-<option value="<?=$d8[id]?>"><? if ($d8[company]){echo $d8[company].', '.$d8[name] ;}else{echo $d8[name] ;}?></option>
-<?        } ?>
-<option value=""></option>
-</select><br />
-<select name="server1b"><? if (!$d[server_idb]){ ?><option value="">Select Server 'B'</option><? }else{ ?><option value="<?=$d[server_idb]?>"><?=id2name($d[server_idb]);?> (Server B)</option><? } ?>
-<?
-$q9= "select * from ps_users where contract = 'YES' order by id ASC";
-$r9=@mysql_query($q9) or die("Query: $q9<br>".mysql_error());
-while ($d9=mysql_fetch_array($r9, MYSQL_ASSOC)) {
-?>
-<option value="<?=$d9[id]?>"><? if ($d9[company]){echo $d9[company].', '.$d9[name] ;}else{echo $d9[name] ;}?></option>
-<?        } ?>
+	$sList .= "<option value='$d7[id]'>";
+	if ($d7[company]){ $sList .= "$d7[company], $d7[name]" ;}else{ $sList .= "$d7[name]" ;}
+	$sList .= "</option>"
+} ?>
+<select name="server1"><? if (!$d[server_id]){ ?><option value="">Select Server </option><? }else{ ?><option value="<?=$d[server_id]?>"><?=id2name($d[server_id]);?> (Server)</option><? } ?>
+<?=$sList?>
 <option value=""></option>
 </select>
-<select name="server1c"><? if (!$d[server_idc]){ ?><option value="">Select Server 'C'</option><? }else{ ?><option value="<?=$d[server_idc]?>"><?=id2name($d[server_idc]);?> (Server C)</option><? } ?>
 <?
-$q10= "select * from ps_users where contract = 'YES' order by id ASC";
-$r10=@mysql_query($q10) or die("Query: $q10<br>".mysql_error());
-while ($d10=mysql_fetch_array($r10, MYSQL_ASSOC)) {
+foreach(range('a','e') as $letter){
 ?>
-<option value="<?=$d10[id]?>"><? if ($d10[company]){echo $d10[company].', '.$d10[name] ;}else{echo $d10[name] ;}?></option>
-<?        } ?>
+<br />
+<select name="server1<?=$letter?>"><? if (!$d["server_id$letter"]){ ?><option value="">Select Server '<?=strtoupper($letter)?>'</option><? }else{ ?><option value="<?=$d["server_id$letter"]?>"><?=id2name($d["server_id$letter"]);?> (Server <?=strtoupper($letter)?>)</option><? } ?>
+<?=$sList?>
 <option value=""></option>
 </select>
-<select name="server1d"><? if (!$d[server_idd]){ ?><option value="">Select Server 'D'</option><? }else{ ?><option value="<?=$d[server_idd]?>"><?=id2name($d[server_idd]);?> (Server D)</option><? } ?>
-<?
-$q11= "select * from ps_users where contract = 'YES' order by id ASC";
-$r11=@mysql_query($q11) or die("Query: $q11<br>".mysql_error());
-while ($d11=mysql_fetch_array($r11, MYSQL_ASSOC)) {
-?>
-<option value="<?=$d11[id]?>"><? if ($d11[company]){echo $d11[company].', '.$d11[name] ;}else{echo $d11[name] ;}?></option>
-<?        } ?>
-<option value=""></option>
-</select>
-<select name="server1e"><? if (!$d[server_ide]){ ?><option value="">Select Server 'E'</option><? }else{ ?><option value="<?=$d[server_ide]?>"><?=id2name($d[server_ide]);?> (Server E)</option><? } ?>
-<?
-$q12= "select * from ps_users where contract = 'YES' order by id ASC";
-$r12=@mysql_query($q12) or die("Query: $q12<br>".mysql_error());
-while ($d12=mysql_fetch_array($r12, MYSQL_ASSOC)) {
-?>
-<option value="<?=$d12[id]?>"><? if ($d12[company]){echo $d12[company].', '.$d12[name] ;}else{echo $d12[name] ;}?></option>
-<?        } ?>
-<option value=""></option>
-</select>
+<? } ?>
 </td>
 </tr></table>
 </FIELDSET>
@@ -2210,7 +1830,7 @@ while ($d12=mysql_fetch_array($r12, MYSQL_ASSOC)) {
 <iframe height="622px" width="900px" name="preview" id="preview" src="<?=$src?>" ></iframe>
 </td></tr></table>
 <? }?>
-<script>document.title='<?=$_GET[packet]?>|<?=$d[status]?>|<?=$d[service_status]?>|<?=$d[process_status]?>|<?=$d[affidavit_status]?>|<?=$d[filing_status]?>'</script>
+<script>document.title='<?=$_GET[packet]?>|<?=$d[status]?>|<?=$d[service_status]?>|<?=$d[process_status]?>|<?=$d[affidavit_status]?>|<?=$d[filing_status]?>|<?=$d[affidavit_status2]?>'</script>
 <? 
 if ($_GET[type]){
 	echo $_GET[type];
