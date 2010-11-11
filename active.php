@@ -35,9 +35,9 @@ function colorCode($hours,$packet,$letter){
 }
 
 function colorCode2($hours){
-	if ($hours <= 0){ return "000000; color:FFFFFF !important;"; }
-	if ($hours > 0 && $hours <= 24){ return "FF0000; color:000000 !important;"; }
-	if ($hours > 24 && $hours <= 48){ return "FFFF00; color:000000 !important;"; }
+	if ($hours <= -24){ return "000000; color:FFFFFF !important;"; }
+	if ($hours > -24 && $hours <= 0){ return "FF0000; color:000000 !important;"; }
+	if ($hours > 0 && $hours <= 24){ return "FFFF00; color:000000 !important;"; }
 	if ($hours > 48){ return "00FF00; color:000000 !important;"; }
 }
 
@@ -45,7 +45,8 @@ function serverActiveList($id){ $_SESSION[active]++;
 	$data='<ol>';
 	$r=@mysql_query("select packet_id, avoidDOT, reopenDate, date_received, filing_status, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where server_id='$id' and (process_status = 'Assigned' OR process_status = 'ASSIGNED') order by  packet_id");
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
-	$_SESSION[active3]++;
+		$_SESSION[active3]++;
+		$estHours=($d[estHours]*24)-date('G');
 		if ($d[filing_status] == 'REOPENED'){
 			$hours=$d[reopenHours]*24;
 			$reopenDate=explode('-',$d[reopenDate]);
@@ -63,7 +64,7 @@ function serverActiveList($id){ $_SESSION[active]++;
 		}
 		$estFileDate=explode('-',$d[estFileDate]);
 		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-		$reopen .= "&nbsp;<span style='background-color:".colorCode2($d[estHours]*24)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span>";
+		$reopen .= "&nbsp;<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span>";
 		if ($hours > $_SESSION[cap]){
 			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],'').";'>";
 			if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
@@ -79,6 +80,7 @@ function serverActiveLista($id){ $_SESSION[active]++;
 	$data='<ol>';
 	$r=@mysql_query("select packet_id, avoidDOT, reopenDate, date_received, filing_status, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where server_ida='$id' and process_status = 'Assigned' order by  packet_id");
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
+		$estHours=($d[estHours]*24)-date('G');
 		if ($d[filing_status] == 'REOPENED'){
 			$hours=$d[reopenHours]*24;
 			$reopenDate=explode('-',$d[reopenDate]);
@@ -96,7 +98,7 @@ function serverActiveLista($id){ $_SESSION[active]++;
 		}
 		$estFileDate=explode('-',$d[estFileDate]);
 		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-		$reopen .= "&nbsp;<span style='background-color:".colorCode2($d[estHours]*24)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span>";
+		$reopen .= "&nbsp;<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span>";
 		if ($hours > $_SESSION[cap]){
 			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],'a').";'>";
 			if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
@@ -112,6 +114,7 @@ function serverActiveListb($id){ $_SESSION[active]++;
 	$data='<ol>';
 	$r=@mysql_query("select packet_id, avoidDOT, reopenDate, date_received, filing_status, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where server_idb='$id' and process_status = 'Assigned' order by  packet_id");
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
+		$estHours=($d[estHours]*24)-date('G');
 		if ($d[filing_status] == 'REOPENED'){
 			$hours=$d[reopenHours]*24;
 			$reopenDate=explode('-',$d[reopenDate]);
@@ -129,7 +132,7 @@ function serverActiveListb($id){ $_SESSION[active]++;
 		}
 		$estFileDate=explode('-',$d[estFileDate]);
 		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-		$reopen .= "&nbsp;<span style='background-color:".colorCode2($d[estHours]*24)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span>";
+		$reopen .= "&nbsp;<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span>";
 		if ($hours > $_SESSION[cap]){
 			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],'b').";'>";
 			if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
@@ -145,6 +148,7 @@ function serverActiveListc($id){ $_SESSION[active]++;
 	$data='<ol>';
 	$r=@mysql_query("select packet_id, avoidDOT, reopenDate, date_received, filing_status, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where server_idc='$id' and process_status = 'Assigned' order by  packet_id");
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
+		$estHours=($d[estHours]*24)-date('G');
 		if ($d[filing_status] == 'REOPENED'){
 			$hours=$d[reopenHours]*24;
 			$reopenDate=explode('-',$d[reopenDate]);
@@ -162,7 +166,7 @@ function serverActiveListc($id){ $_SESSION[active]++;
 		}
 		$estFileDate=explode('-',$d[estFileDate]);
 		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-		$reopen .= "&nbsp;<span style='background-color:".colorCode2($d[estHours]*24)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span>";
+		$reopen .= "&nbsp;<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span>";
 		if ($hours > $_SESSION[cap]){
 			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],'c').";'>";
 			if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
@@ -178,6 +182,7 @@ function serverActiveListd($id){ $_SESSION[active]++;
 	$data='<ol>';
 	$r=@mysql_query("select packet_id, avoidDOT, reopenDate, date_received, filing_status, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where server_idd='$id' and process_status = 'Assigned' order by  packet_id");
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
+		$estHours=($d[estHours]*24)-date('G');
 		if ($d[filing_status] == 'REOPENED'){
 			$hours=$d[reopenHours]*24;
 			$reopenDate=explode('-',$d[reopenDate]);
@@ -195,7 +200,7 @@ function serverActiveListd($id){ $_SESSION[active]++;
 		}
 		$estFileDate=explode('-',$d[estFileDate]);
 		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-		$reopen .= "&nbsp;<span style='background-color:".colorCode2($d[estHours]*24)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span>";
+		$reopen .= "&nbsp;<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span>";
 		if ($hours > $_SESSION[cap]){
 			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],'d').";'>";
 			if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
@@ -211,6 +216,7 @@ function serverActiveListe($id){ $_SESSION[active]++;
 	$data='<ol>';
 	$r=@mysql_query("select packet_id, avoidDOT, reopenDate, date_received, filing_status, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where server_ide='$id' and process_status = 'Assigned' order by  packet_id");
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
+		$estHours=($d[estHours]*24)-date('G');
 		if ($d[filing_status] == 'REOPENED'){
 			$hours=$d[reopenHours]*24;
 			$reopenDate=explode('-',$d[reopenDate]);
@@ -228,7 +234,7 @@ function serverActiveListe($id){ $_SESSION[active]++;
 		}
 		$estFileDate=explode('-',$d[estFileDate]);
 		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-		$reopen .= "&nbsp;<span style='background-color:".colorCode2($d[estHours]*24)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span>";
+		$reopen .= "&nbsp;<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span>";
 		if ($hours > $_SESSION[cap]){
 			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],'e').";'>";
 			if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
@@ -246,6 +252,7 @@ function evictionActiveList($id){ $_SESSION[active]++;
 $data='<ol>';
 $r=@mysql_query("select eviction_id, date_received, request_close affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, TIMEDIFF( NOW(), date_received) as hours from evictionPackets where server_id='$id' and (process_status = 'Assigned' OR process_status = 'ASSIGNED') order by  eviction_id");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
+$estHours=($d[estHours]*24)-date('G');
 $_SESSION[active3]++;
 if (stripHours($d[hours]) > $_SESSION[cap]){
 	if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
@@ -255,7 +262,7 @@ if (stripHours($d[hours]) > $_SESSION[cap]){
 	}
 	$estFileDate=explode('-',$d[estFileDate]);
 	$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-	$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'>".$mod."<a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em> <span style='background-color:".colorCode2($d[estHours]*24)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span></li>";
+	$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'>".$mod."<a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em> <span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span></li>";
 }
 }
 $data.='</ol>';
@@ -265,6 +272,7 @@ function evictionActiveLista($id){ $_SESSION[active]++;
 $data='<ol>';
 $r=@mysql_query("select eviction_id, date_received, request_close, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, TIMEDIFF( NOW(), date_received) as hours  from evictionPackets where server_ida='$id' and process_status = 'Assigned' order by  eviction_id");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
+$estHours=($d[estHours]*24)-date('G');
 if (stripHours($d[hours]) > $_SESSION[cap]){
 	if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
 		$mod="<a href='http://staff.mdwestserve.com/ev_wizard.php?jump=".$d[eviction_id]."-1' target='_blank' style='background-color:#00FFFF;'><b>QC</b></a> ";
@@ -273,7 +281,7 @@ if (stripHours($d[hours]) > $_SESSION[cap]){
 	}
 	$estFileDate=explode('-',$d[estFileDate]);
 	$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-	$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'>".$mod."<a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em> <span style='background-color:".colorCode2($d[estHours]*24)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span></li>";
+	$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'>".$mod."<a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em> <span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span></li>";
 }}
 $data.='</ol>';
 return $data;
@@ -282,6 +290,7 @@ function evictionActiveListb($id){ $_SESSION[active]++;
 $data='<ol>';
 $r=@mysql_query("select eviction_id, date_received, request_close, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, TIMEDIFF( NOW(), date_received) as hours  from evictionPackets where server_idb='$id' and process_status = 'Assigned' order by  eviction_id");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
+$estHours=($d[estHours]*24)-date('G');
 if (stripHours($d[hours]) > $_SESSION[cap]){
 	if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
 		$mod="<a href='http://staff.mdwestserve.com/ev_wizard.php?jump=".$d[eviction_id]."-1' target='_blank' style='background-color:#00FFFF;'><b>QC</b></a> ";
@@ -290,7 +299,7 @@ if (stripHours($d[hours]) > $_SESSION[cap]){
 	}
 	$estFileDate=explode('-',$d[estFileDate]);
 	$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-	$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'>".$mod."<a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em> <span style='background-color:".colorCode2($d[estHours]*24)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span></li>";
+	$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'>".$mod."<a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em> <span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span></li>";
 }}
 $data.='</ol>';
 return $data;
@@ -299,6 +308,7 @@ function evictionActiveListc($id){ $_SESSION[active]++;
 $data='<ol>';
 $r=@mysql_query("select eviction_id, date_received, request_close, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, TIMEDIFF( NOW(), date_received) as hours  from evictionPackets where server_idc='$id' and process_status = 'Assigned' order by  eviction_id");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
+$estHours=($d[estHours]*24)-date('G');
 if (stripHours($d[hours]) > $_SESSION[cap]){
 	if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
 		$mod="<a href='http://staff.mdwestserve.com/ev_wizard.php?jump=".$d[eviction_id]."-1' target='_blank' style='background-color:#00FFFF;'><b>QC</b></a> ";
@@ -307,44 +317,48 @@ if (stripHours($d[hours]) > $_SESSION[cap]){
 	}
 	$estFileDate=explode('-',$d[estFileDate]);
 	$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-	$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'>".$mod."<a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em> <span style='background-color:".colorCode2($d[estHours]*24)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span></li>";
+	$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'>".$mod."<a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em> <span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span></li>";
 }}
 $data.='<li><a href="desktop.php">Procede to desktop &gt; &gt; &gt;</a></li></ol>';
 return $data;
 }
 function evictionActiveListd($id){ $_SESSION[active]++;
-$data='<ol>';
-$r=@mysql_query("select eviction_id, date_received, request_close, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, TIMEDIFF( NOW(), date_received) as hours  from evictionPackets where server_idd='$id' and process_status = 'Assigned' order by  eviction_id");
-while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
-if (stripHours($d[hours]) > $_SESSION[cap]){
-	if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
-		$mod="<a href='http://staff.mdwestserve.com/ev_wizard.php?jump=".$d[eviction_id]."-1' target='_blank' style='background-color:#00FFFF;'><b>QC</b></a> ";
-	}else{
-		$mod="";
+	$data='<ol>';
+	$r=@mysql_query("select eviction_id, date_received, request_close, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, TIMEDIFF( NOW(), date_received) as hours  from evictionPackets where server_idd='$id' and process_status = 'Assigned' order by  eviction_id");
+	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
+		$estHours=($d[estHours]*24)-date('G');
+		if (stripHours($d[hours]) > $_SESSION[cap]){
+			if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
+				$mod="<a href='http://staff.mdwestserve.com/ev_wizard.php?jump=".$d[eviction_id]."-1' target='_blank' style='background-color:#00FFFF;'><b>QC</b></a> ";
+			}else{
+				$mod="";
+			}
+			$estFileDate=explode('-',$d[estFileDate]);
+			$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
+			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'>".$mod."<a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em> <span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span></li>";
+		}
 	}
-	$estFileDate=explode('-',$d[estFileDate]);
-	$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-	$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'>".$mod."<a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em> <span style='background-color:".colorCode2($d[estHours]*24)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span></li>";
-}}
-$data.='</ol>';
-return $data;
+	$data.='</ol>';
+	return $data;
 }
 function evictionActiveListe($id){ $_SESSION[active]++;
-$data='<ol>';
-$r=@mysql_query("select eviction_id, date_received, request_close, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, TIMEDIFF( NOW(), date_received) as hours  from evictionPackets where server_ide='$id' and process_status = 'Assigned' order by  eviction_id");
-if (stripHours($d[hours]) > $_SESSION[cap]){
-while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
-	if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
-		$mod="<a href='http://staff.mdwestserve.com/ev_wizard.php?jump=".$d[eviction_id]."-1' target='_blank' style='background-color:#00FFFF;'><b>QC</b></a> ";
-	}else{
-		$mod="";
+	$data='<ol>';
+	$r=@mysql_query("select eviction_id, date_received, request_close, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, TIMEDIFF( NOW(), date_received) as hours  from evictionPackets where server_ide='$id' and process_status = 'Assigned' order by  eviction_id");
+	if (stripHours($d[hours]) > $_SESSION[cap]){
+	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
+	$estHours=($d[estHours]*24)-date('G');
+		if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
+			$mod="<a href='http://staff.mdwestserve.com/ev_wizard.php?jump=".$d[eviction_id]."-1' target='_blank' style='background-color:#00FFFF;'><b>QC</b></a> ";
+		}else{
+			$mod="";
+		}
+		$estFileDate=explode('-',$d[estFileDate]);
+		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
+		$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'>".$mod."<a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em> <span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span></li>";
 	}
-	$estFileDate=explode('-',$d[estFileDate]);
-	$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-	$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'>".$mod."<a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em> <span style='background-color:".colorCode2($d[estHours]*24)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span></li>";
-}}
-$data.='</ol>';
-return $data;
+	}
+	$data.='</ol>';
+	return $data;
 }
 ?>
 <table>
