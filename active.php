@@ -64,7 +64,7 @@ function serverActiveList($id){ $_SESSION[active]++;
 		}
 		$estFileDate=explode('-',$d[estFileDate]);
 		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-		$reopen .= "&nbsp;<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span>";
+		$reopen .= "&nbsp;<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span>";
 		if ($hours > $_SESSION[cap]){
 			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],'').";'>";
 			if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
@@ -98,7 +98,7 @@ function serverActiveLista($id){ $_SESSION[active]++;
 		}
 		$estFileDate=explode('-',$d[estFileDate]);
 		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-		$reopen .= "&nbsp;<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span>";
+		$reopen .= "&nbsp;<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span>";
 		if ($hours > $_SESSION[cap]){
 			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],'a').";'>";
 			if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
@@ -132,7 +132,7 @@ function serverActiveListb($id){ $_SESSION[active]++;
 		}
 		$estFileDate=explode('-',$d[estFileDate]);
 		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-		$reopen .= "&nbsp;<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span>";
+		$reopen .= "&nbsp;<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span>";
 		if ($hours > $_SESSION[cap]){
 			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],'b').";'>";
 			if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
@@ -166,7 +166,7 @@ function serverActiveListc($id){ $_SESSION[active]++;
 		}
 		$estFileDate=explode('-',$d[estFileDate]);
 		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-		$reopen .= "&nbsp;<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span>";
+		$reopen .= "&nbsp;<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span>";
 		if ($hours > $_SESSION[cap]){
 			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],'c').";'>";
 			if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
@@ -200,7 +200,7 @@ function serverActiveListd($id){ $_SESSION[active]++;
 		}
 		$estFileDate=explode('-',$d[estFileDate]);
 		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-		$reopen .= "&nbsp;<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span>";
+		$reopen .= "&nbsp;<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span>";
 		if ($hours > $_SESSION[cap]){
 			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],'d').";'>";
 			if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
@@ -234,7 +234,7 @@ function serverActiveListe($id){ $_SESSION[active]++;
 		}
 		$estFileDate=explode('-',$d[estFileDate]);
 		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-		$reopen .= "&nbsp;<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span>";
+		$reopen .= "&nbsp;<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span>";
 		if ($hours > $_SESSION[cap]){
 			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],'e').";'>";
 			if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
@@ -262,7 +262,7 @@ if (stripHours($d[hours]) > $_SESSION[cap]){
 	}
 	$estFileDate=explode('-',$d[estFileDate]);
 	$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-	$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'>".$mod."<a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em> <span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span></li>";
+	$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'>".$mod."<a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em> <span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span></li>";
 }
 }
 $data.='</ol>';
