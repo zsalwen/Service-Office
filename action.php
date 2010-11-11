@@ -84,7 +84,7 @@ while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	$optest = 1;
 	echo "<li><a target='_Blank' href='/otd/order.php?packet=$d[packet_id]'>O$d[packet_id]</a></li>";
 }
-$r=@mysql_query("SELECT eviction_id FROM evictionPackets WHERE process_status = 'ASSIGNED' AND (request_close = 'YES' OR request_closea = 'YES' OR request_closeb = 'YES' OR request_closec = 'YES' OR request_closed = 'YES' OR request_closee = 'YES')");
+$r=@mysql_query("SELECT eviction_id FROM evictionPackets WHERE process_status = 'ASSIGNED' AND request_close = 'YES'");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	$optest = 1;
 	echo "<li><a target='_Blank' href='/ev/order.php?packet=$d[eviction_id]'>E$d[eviction_id]</a></li>";
