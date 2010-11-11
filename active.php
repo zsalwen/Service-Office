@@ -250,7 +250,7 @@ function serverActiveListe($id){ $_SESSION[active]++;
 //begin evictionPackets functions:******************************************************
 function evictionActiveList($id){ $_SESSION[active]++;
 $data='<ol>';
-$r=@mysql_query("select eviction_id, date_received, request_close affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, TIMEDIFF( NOW(), date_received) as hours from evictionPackets where server_id='$id' and (process_status = 'Assigned' OR process_status = 'ASSIGNED') order by  eviction_id");
+$r=@mysql_query("select eviction_id, date_received, request_close affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF(estFileDate, CURDATE()) as estHours from evictionPackets where server_id='$id' and (process_status = 'Assigned' OR process_status = 'ASSIGNED') order by  eviction_id");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
 $estHours=($d[estHours]*24)-date('G');
 $_SESSION[active3]++;
@@ -267,98 +267,6 @@ if (stripHours($d[hours]) > $_SESSION[cap]){
 }
 $data.='</ol>';
 return $data;
-}
-function evictionActiveLista($id){ $_SESSION[active]++;
-$data='<ol>';
-$r=@mysql_query("select eviction_id, date_received, request_close, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, TIMEDIFF( NOW(), date_received) as hours  from evictionPackets where server_ida='$id' and process_status = 'Assigned' order by  eviction_id");
-while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
-$estHours=($d[estHours]*24)-date('G');
-if (stripHours($d[hours]) > $_SESSION[cap]){
-	if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
-		$mod="<a href='http://staff.mdwestserve.com/ev_wizard.php?jump=".$d[eviction_id]."-1' target='_blank' style='background-color:#00FFFF;'><b>QC</b></a> ";
-	}else{
-		$mod="";
-	}
-	$estFileDate=explode('-',$d[estFileDate]);
-	$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-	$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'>".$mod."<a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em> <span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span></li>";
-}}
-$data.='</ol>';
-return $data;
-}
-function evictionActiveListb($id){ $_SESSION[active]++;
-$data='<ol>';
-$r=@mysql_query("select eviction_id, date_received, request_close, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, TIMEDIFF( NOW(), date_received) as hours  from evictionPackets where server_idb='$id' and process_status = 'Assigned' order by  eviction_id");
-while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
-$estHours=($d[estHours]*24)-date('G');
-if (stripHours($d[hours]) > $_SESSION[cap]){
-	if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
-		$mod="<a href='http://staff.mdwestserve.com/ev_wizard.php?jump=".$d[eviction_id]."-1' target='_blank' style='background-color:#00FFFF;'><b>QC</b></a> ";
-	}else{
-		$mod="";
-	}
-	$estFileDate=explode('-',$d[estFileDate]);
-	$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-	$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'>".$mod."<a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em> <span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span></li>";
-}}
-$data.='</ol>';
-return $data;
-}
-function evictionActiveListc($id){ $_SESSION[active]++;
-$data='<ol>';
-$r=@mysql_query("select eviction_id, date_received, request_close, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, TIMEDIFF( NOW(), date_received) as hours  from evictionPackets where server_idc='$id' and process_status = 'Assigned' order by  eviction_id");
-while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
-$estHours=($d[estHours]*24)-date('G');
-if (stripHours($d[hours]) > $_SESSION[cap]){
-	if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
-		$mod="<a href='http://staff.mdwestserve.com/ev_wizard.php?jump=".$d[eviction_id]."-1' target='_blank' style='background-color:#00FFFF;'><b>QC</b></a> ";
-	}else{
-		$mod="";
-	}
-	$estFileDate=explode('-',$d[estFileDate]);
-	$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-	$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'>".$mod."<a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em> <span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span></li>";
-}}
-$data.='<li><a href="desktop.php">Procede to desktop &gt; &gt; &gt;</a></li></ol>';
-return $data;
-}
-function evictionActiveListd($id){ $_SESSION[active]++;
-	$data='<ol>';
-	$r=@mysql_query("select eviction_id, date_received, request_close, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, TIMEDIFF( NOW(), date_received) as hours  from evictionPackets where server_idd='$id' and process_status = 'Assigned' order by  eviction_id");
-	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
-		$estHours=($d[estHours]*24)-date('G');
-		if (stripHours($d[hours]) > $_SESSION[cap]){
-			if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
-				$mod="<a href='http://staff.mdwestserve.com/ev_wizard.php?jump=".$d[eviction_id]."-1' target='_blank' style='background-color:#00FFFF;'><b>QC</b></a> ";
-			}else{
-				$mod="";
-			}
-			$estFileDate=explode('-',$d[estFileDate]);
-			$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'>".$mod."<a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em> <span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span></li>";
-		}
-	}
-	$data.='</ol>';
-	return $data;
-}
-function evictionActiveListe($id){ $_SESSION[active]++;
-	$data='<ol>';
-	$r=@mysql_query("select eviction_id, date_received, request_close, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, TIMEDIFF( NOW(), date_received) as hours  from evictionPackets where server_ide='$id' and process_status = 'Assigned' order by  eviction_id");
-	if (stripHours($d[hours]) > $_SESSION[cap]){
-	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
-	$estHours=($d[estHours]*24)-date('G');
-		if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
-			$mod="<a href='http://staff.mdwestserve.com/ev_wizard.php?jump=".$d[eviction_id]."-1' target='_blank' style='background-color:#00FFFF;'><b>QC</b></a> ";
-		}else{
-			$mod="";
-		}
-		$estFileDate=explode('-',$d[estFileDate]);
-		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-		$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'>".$mod."<a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em> <span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black; padding-left:3px; padding-right:3px;'>FILE: $estFileDate</span></li>";
-	}
-	}
-	$data.='</ol>';
-	return $data;
 }
 ?>
 <table>
@@ -412,36 +320,6 @@ $r=@mysql_query($q);
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 echo "<fieldset><legend>Slot 1: ".id2name($d[server_id])." #$d[server_id]</legend>".evictionActiveList($d[server_id])."</fieldset>";
 }
-?></td><td valign='top'><?
-$q="SELECT DISTINCT server_ida from evictionPackets where process_status = 'ASSIGNED' and server_ida <> ''";
-$r=@mysql_query($q);
-while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-echo "<fieldset><legend>Slot 2: ".id2name($d[server_ida])." #$d[server_ida]</legend>".evictionActiveLista($d[server_ida])."</fieldset>";
-}
-?></td><td valign='top'><?
-$q="SELECT DISTINCT server_idb from evictionPackets where process_status = 'ASSIGNED' and server_idb <> ''";
-$r=@mysql_query($q);
-while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-echo "<fieldset><legend>Slot 3: ".id2name($d[server_idb])." #$d[server_idb]</legend>".evictionActiveListb($d[server_idb])."</fieldset>";
-}
-?></td><td valign='top'><?
-$q="SELECT DISTINCT server_idc from evictionPackets where process_status = 'ASSIGNED' and server_idc <> ''";
-$r=@mysql_query($q);
-while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-echo "<fieldset><legend>Slot 4: ".id2name($d[server_idc])." #$d[server_idc]</legend>".evictionActiveListc($d[server_idc])."</fieldset>";
-}
-?></td><td valign='top'><?
-$q="SELECT DISTINCT server_idd from evictionPackets where process_status = 'ASSIGNED' and server_idd <> ''";
-$r=@mysql_query($q);
-while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-echo "<fieldset><legend>Slot 5: ".id2name($d[server_idd])." #$d[server_idd]</legend>".evictionActiveListd($d[server_idd])."</fieldset>";
-}
-?></td><td valign='top'><?
-$q="SELECT DISTINCT server_ide from evictionPackets where process_status = 'ASSIGNED' and server_ide <> ''";
-$r=@mysql_query($q);
-while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-echo "<fieldset><legend>Slot 6: ".id2name($d[server_ide])." #$d[server_ide]</legend>".evictionActiveListe($d[server_ide])."</fieldset>";
-}
 ?></td></tr></table>
 <style>
 body { padding:0px; margin:0px; margin-left:10px;}
@@ -483,16 +361,11 @@ if ($list != ''){
 
 $list='';
 
-$r67=@mysql_query("select eviction_id, server_id, server_ida, server_idb, server_idc, server_idd, server_ide, affidavit_status2, TIMEDIFF( NOW(), date_received) as hours from evictionPackets where affidavit_status2 <> '' order by eviction_id");
+$r67=@mysql_query("select eviction_id, server_id, affidavit_status2, TIMEDIFF( NOW(), date_received) as hours from evictionPackets where affidavit_status2 <> '' order by eviction_id");
 while ($d67=mysql_fetch_array($r67,MYSQL_ASSOC)){
 	$hours=stripHours($d67[hours]);
 	$list .= "<li><a style='background-color:".colorCode($hours,$d67[packet_id],'')."; font-weight:normal !important;' href='http://staff.mdwestserve.com/ev/order.php?packet=$d67[eviction_id]' target='_Blank'>$d67[eviction_id]: $d67[affidavit_status2]";
 	if ($d67[server_id]){ $list .= '('.id2server($d67[server_id]).')';}
-	if ($d67[server_ida]){ $list .= '('.id2server($d67[server_ida]).')';}
-	if ($d67[server_idb]){ $list .= '('.id2server($d67[server_idb]).')';}
-	if ($d67[server_idc]){ $list .= '('.id2server($d67[server_idc]).')';}
-	if ($d67[server_idd]){ $list .= '('.id2server($d67[server_idd]).')';}
-	if ($d67[server_ide]){ $list .= '('.id2server($d67[server_ide]).')';}
 	$list .="</a></li>";
 }
 
