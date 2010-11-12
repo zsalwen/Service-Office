@@ -97,7 +97,7 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)){
 	}
 }
 echo "<hr>SEARCHING EVs<br>";
-$q="SELECT article1, article2, article3, article4, article5, article6 FROM evictionPackets ORDER BY packet_id ASC";
+$q="SELECT article1, article2, article3, article4, article5, article6 FROM evictionPackets ORDER BY eviction_id ASC";
 $r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 while ($d=mysql_fetch_array($r, MYSQL_ASSOC)){
 	$i=0;
