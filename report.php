@@ -2,6 +2,7 @@
 session_start();
 
 $_SESSION[items]=0;
+$_SESSION[items2]=0;
 $_SESSION[total]=0;
 $_SESSION[dTotal]=0;
 $_SESSION[miss]=0;
@@ -51,6 +52,7 @@ if ($b != "0000-00-00" ){
 $received=strtotime($a);
 $deadline=strtotime($b.' 12:00:00');
 $days=number_format(($deadline-$received)/86400,0);
+$_SESSION[items2]=$_SESSION[items2] + 1;
 $_SESSION[dTotal]=$_SESSION[dTotal] + $days;
 return "$days";
 }else{
@@ -338,7 +340,7 @@ body { margin:0px; padding:0px;}
 
 <div class="noprint" style="position:absolute; top:0px; right:0px; border:solid 5px #ffcc99; background-color:#FFF; font-size:16px;">
 Service Closed in <? $live = number_format($_SESSION[total]/$_SESSION[items],2); echo $live;?> days<br>
-Dispatched in <? $live2 = number_format($_SESSION[dTotal]/$_SESSION[items],2); echo $live2;?> days<br>
+Dispatched in <? $live2 = number_format($_SESSION[dTotal]/$_SESSION[items2],2); echo $live2;?> days<br>
 <?=$_SESSION[miss];?> unreported cases<br>
 Reported days: <?=$_SESSION[total];?><br>
 Reported cases: <?=$_SESSION[items];?>
