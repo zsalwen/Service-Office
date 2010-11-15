@@ -46,7 +46,8 @@ function packageFile($package_id, $file_id, $contractor_rate, $contractor_ratea,
 									package_id='$package_id',
 									contractor_rate='$contractor_rate',
 									contractor_ratea='$contractor_ratea',
-									estFileDate='$_SESSION[estFileDate]'
+									estFileDate='$_SESSION[estFileDate]',
+									dispatchDate=NOW()
 										WHERE eviction_id = '$file_id'";
 	$r=@mysql_query($q);
 }
