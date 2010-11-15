@@ -49,7 +49,7 @@ $_SESSION[miss]=$_SESSION[miss] + 1;
 function benchmark2($a,$b){
 if ($b != "0000-00-00" ){
 $received=strtotime($a);
-$deadline=strtotime($b.' 12:00:00');
+$deadline=strtotime($b);
 $days=number_format(($deadline-$received)/86400,0);
 $_SESSION[dTotal]=$_SESSION[dTotal] + $days;
 return "$days";
