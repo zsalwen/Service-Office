@@ -48,7 +48,7 @@ if ($_GET[logic]){
 	if ($eviction == 1){
 		$q="SELECT attorneys_id, filing_status, process_status, case_no, prepAlert, caseVerify, circuit_court, rush from evictionPackets WHERE eviction_id = '$packet'";
 	}else{
-		$q="SELECT attorneys_id, filing_status, process_status, case_no, prepAlert, caseVerify, circuit_court, rush, avoidDOT from ps_packets WHERE packet_id = '$packet'";
+		$q="SELECT attorneys_id, filing_status, process_status, case_no, prepAlert, caseVerify, circuit_court, rush, avoidDOT, lossMit from ps_packets WHERE packet_id = '$packet'";
 		if (serverCount($packet) > 1){
 			echo "<script>alert('File Contains Multiple Servers')</script>";
 		}
@@ -62,6 +62,16 @@ if ($_GET[logic]){
 		echo "<script>alert('NO SERVICE ATTEMPTS SHOULD BE MADE AT DOT ADDRESS')</script>";
 	}
 	if ($eviction != 1){
+		if ($d[circuit_court] == 'BALTIMORE CITY'){
+			if ($d[lossMit] != 'N/A - OLD L' && $d[lossMit] != ''){
+				echo "<script>alert('BALTIMORE CITY FILE DO NOT FORGET TO INCLUDE ADDITIONAL HB472 ENVELOPE AFFIDAVIT')</script>";
+				if ($d[lossMit] == 'FINAL'){
+					echo "<script>window.open('http://staff.mdwestserve.com/otd/baltFinalAffidavit.pdf','Affidavit of Inclusion of Envelope')</script>";
+				}else{
+					echo "<script>window.open('http://staff.mdwestserve.com/otd/baltPrelimAffidavit.pdf','Affidavit of Inclusion of Envelope')</script>";
+				}
+			}
+		}
 		if($d[attorneys_id] == 3){
 			$q2="SELECT * FROM occNotices WHERE packet_id='$packet'";
 			$r2=@mysql_query($q2) or die("Query: occNotices: $q2<br>".mysql_error());
