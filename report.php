@@ -185,7 +185,7 @@ if ($d[attorneys_id] == '3' || $d[attorneys_id] == '68' || $d[attorneys_id] == '
 		<td><? if($d[service_status] == 'MAIL ONLY' ){echo "MAIL ONLY"; $i4++; }else{?><?=$d[lossMit]; }?></td>
 		<td><a href="courier.php?date=<?=$d[estFileDate]?>" target="_Blank"><?=$d[estFileDate]?></a></td>
 		<? if ($d[fileDate] != "0000-00-00"){ $end = $d[fileDate]; } else { $end =$d[estFileDate] ;} ?>
-		<? if ($d[reopenDate] != "0000-00-00"){ $start = $d[reopenDate].' 12:00:00'; } else { $start =$d[date_received] ;} ?>
+		<? if ($d[reopenDate] != "0000-00-00"){ $start = $d[reopenDate].' 12:00:00'; } else { $start =$d[dispatchDate] ;} ?>
 		<td><?=benchmark($start,$end);?></td>
 	</tr>
 <? } $count= $i;  $count4= $i4; ?>
