@@ -3,6 +3,7 @@ session_start();
 
 $_SESSION[items]=0;
 $_SESSION[total]=0;
+$_SESSION[dTotal]=0;
 $_SESSION[miss]=0;
 include 'functions.php';
 /*
@@ -39,6 +40,18 @@ $deadline=strtotime($b.' 12:00:00');
 $days=number_format(($deadline-$received)/86400,0);
 $_SESSION[items]=$_SESSION[items] + 1;
 $_SESSION[total]=$_SESSION[total] + $days;
+return "$days";
+}else{
+$_SESSION[miss]=$_SESSION[miss] + 1;
+}
+}
+
+function benchmark2($a,$b){
+if ($b != "0000-00-00" ){
+$received=strtotime($a);
+$deadline=strtotime($b.' 12:00:00');
+$days=number_format(($deadline-$received)/86400,0);
+$_SESSION[dTotal]=$_SESSION[dTotal] + $days;
 return "$days";
 }else{
 $_SESSION[miss]=$_SESSION[miss] + 1;
@@ -185,7 +198,11 @@ if ($d[attorneys_id] == '3' || $d[attorneys_id] == '68' || $d[attorneys_id] == '
 		<td><? if($d[service_status] == 'MAIL ONLY' ){echo "MAIL ONLY"; $i4++; }else{?><?=$d[lossMit]; }?></td>
 		<td><a href="courier.php?date=<?=$d[estFileDate]?>" target="_Blank"><?=$d[estFileDate]?></a></td>
 		<? if ($d[fileDate] != "0000-00-00"){ $end = $d[fileDate]; } else { $end =$d[estFileDate] ;} ?>
-		<? if ($d[reopenDate] != "0000-00-00"){ $start = $d[reopenDate].' 12:00:00'; } elseif ($d[dispatchDate] != '0000-00-00 00:00:00') { $start =$d[dispatchDate] ;}else{ $start =$d[date_received] ; } ?>
+		<? if ($d[reopenDate] != "0000-00-00"){ $start = $d[reopenDate].' 12:00:00'; } elseif ($d[dispatchDate] != '0000-00-00 00:00:00') { $start =$d[dispatchDate] ;}else{ $start =$d[date_received] ; } 
+		if ($start != $d[date_received]){
+			benchMark2($d[date_received],$start);
+		}
+		?>
 		<td><?=benchmark($start,$end);?></td>
 	</tr>
 <? } $count= $i;  $count4= $i4; ?>
@@ -214,7 +231,11 @@ $notice='';
 		<td> </td>
 		<td><a href="courier.php?date=<?=$d2[estFileDate]?>" target="_Blank"><?=$d2[estFileDate]?></a></td>
 		<? if ($d2[fileDate] != "0000-00-00"){ $end = $d2[fileDate]; } else { $end =$d2[estFileDate] ;} ?>
-		<? if ($d2[reopenDate] != "0000-00-00"){ $start = $d2[reopenDate].' 12:00:00'; }  elseif ($d2[dispatchDate] != '0000-00-00 00:00:00') { $start =$d2[dispatchDate] ;}else{ $start =$d2[date_received] ; } ?>
+		<? if ($d2[reopenDate] != "0000-00-00"){ $start = $d2[reopenDate].' 12:00:00'; }  elseif ($d2[dispatchDate] != '0000-00-00 00:00:00') { $start =$d2[dispatchDate] ;}else{ $start =$d2[date_received] ; } 
+		if ($start != $d2[date_received]){
+			benchMark2($d2[date_received],$start);
+		}
+		?>
 		<td><?=benchmark($start,$end);?></td>
 	</tr>
 <? } $count2= $i2; ?>
@@ -243,7 +264,11 @@ $notice='';
 		<td><?=$d3[affidavit_status]?></td>
 		<td><a href="courier.php?date=<?=$d3[estFileDate]?>" target="_Blank"><?=$d3[estFileDate]?></a></td>
 		<? if ($d3[fileDate] != "0000-00-00"){ $end = $d3[fileDate]; } else { $end =$d3[estFileDate] ;} ?>
-		<? if ($d3[reopenDate] != "0000-00-00"){ $start = $d3[reopenDate].' 12:00:00'; }  elseif ($d3[dispatchDate] != '0000-00-00 00:00:00') { $start =$d3[dispatchDate] ;}else{ $start =$d3[date_received] ; } ?>
+		<? if ($d3[reopenDate] != "0000-00-00"){ $start = $d3[reopenDate].' 12:00:00'; }  elseif ($d3[dispatchDate] != '0000-00-00 00:00:00') { $start =$d3[dispatchDate] ;}else{ $start =$d3[date_received] ; }
+		if ($start != $d3[date_received]){
+			benchMark2($d3[date_received],$start);
+		}
+		?>
 		<td><?=benchmark($start,$end);?></td>
 	</tr>
 <? } $count3= $i3; ?>
@@ -313,6 +338,7 @@ body { margin:0px; padding:0px;}
 
 <div class="noprint" style="position:absolute; top:0px; right:0px; border:solid 5px #ffcc99; background-color:#FFF; font-size:16px;">
 Service Closed in <? $live = number_format($_SESSION[total]/$_SESSION[items],2); echo $live;?> days<br>
+Dispatched in <? $live2 = number_format($_SESSION[dTotal]/$_SESSION[items],2); echo $live2;?> days<br>
 <?=$_SESSION[miss];?> unreported cases<br>
 Reported days: <?=$_SESSION[total];?><br>
 Reported cases: <?=$_SESSION[items];?>
