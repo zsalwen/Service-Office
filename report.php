@@ -338,6 +338,9 @@ Reported cases: <?=$_SESSION[items];?>
 if ($_GET[type] != "CLOSED" && $_GET[svc] != 'Eviction' && (!$_GET[attid] || $_GET[attid] == "ALL") ){
 @mysql_query("update systemStatus set updated=NOW(), activeBenchmark = '$live' "); 
 }
+if ($_GET[type] != "CLOSED" && $_GET[svc] != 'Eviction' && (!$_GET[attid] || $_GET[attid] == "ALL") ){
+@mysql_query("update systemStatus set updated=NOW(), dispatchBenchmark = '$live2' "); 
+}
 if ($_GET[type] == "CLOSED" && $_GET[svc] != 'Eviction' && (!$_GET[attid] || $_GET[attid] == "ALL") ){
 @mysql_query("update systemStatus set updated=NOW(), closeBenchmark = '$live' "); 
 }
