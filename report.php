@@ -200,7 +200,7 @@ if ($d[attorneys_id] == '3' || $d[attorneys_id] == '68' || $d[attorneys_id] == '
 		<td><a href="courier.php?date=<?=$d[estFileDate]?>" target="_Blank"><?=$d[estFileDate]?></a></td>
 		<? if ($d[fileDate] != "0000-00-00"){ $end = $d[fileDate]; } else { $end =$d[estFileDate] ;} ?>
 		<? if ($d[reopenDate] != "0000-00-00"){ $start = $d[reopenDate].' 12:00:00'; } elseif ($d[dispatchDate] != '0000-00-00 00:00:00') { $start =$d[dispatchDate] ;}else{ $start =$d[date_received] ; } ?>
-		<td><?=benchMark2($d[date_received],$start);?>-<?=$d[date_received].",".$start;?></td>
+		<td><?=benchMark2($d[date_received],$start);?></td>
 		<td><?=benchmark($start,$end);?></td>
 	</tr>
 <? } $count= $i;  $count4= $i4; ?>
@@ -230,7 +230,7 @@ $notice='';
 		<td><a href="courier.php?date=<?=$d2[estFileDate]?>" target="_Blank"><?=$d2[estFileDate]?></a></td>
 		<? if ($d2[fileDate] != "0000-00-00"){ $end = $d2[fileDate]; } else { $end =$d2[estFileDate] ;} ?>
 		<? if ($d2[reopenDate] != "0000-00-00"){ $start = $d2[reopenDate].' 12:00:00'; }  elseif ($d2[dispatchDate] != '0000-00-00 00:00:00') { $start =$d2[dispatchDate] ;}else{ $start =$d2[date_received] ; } ?>
-		<td><?=benchMark2($d2[date_received],$start);?>-<?=$d2[date_received].",".$start;?></td>
+		<td><?=benchMark2($d2[date_received],$start);?></td>
 		<td><?=benchmark($start,$end);?></td>
 	</tr>
 <? } $count2= $i2; ?>
@@ -260,7 +260,7 @@ $notice='';
 		<td><a href="courier.php?date=<?=$d3[estFileDate]?>" target="_Blank"><?=$d3[estFileDate]?></a></td>
 		<? if ($d3[fileDate] != "0000-00-00"){ $end = $d3[fileDate]; } else { $end =$d3[estFileDate] ;} ?>
 		<? if ($d3[reopenDate] != "0000-00-00"){ $start = $d3[reopenDate].' 12:00:00'; }  elseif ($d3[dispatchDate] != '0000-00-00 00:00:00') { $start =$d3[dispatchDate] ;}else{ $start =$d3[date_received] ; } ?>
-		<td><?=benchMark2($d3[date_received],$start);?>-<?=$d3[date_received].",".$start;?></td>
+		<td><?=benchMark2($d3[date_received],$start);?></td>
 		<td><?=benchmark($start,$end);?></td>
 	</tr>
 <? } $count3= $i3; ?>
