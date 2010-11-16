@@ -54,10 +54,10 @@ table {page-break-after:always;}
 <table align="center" width="100%" border="0">
 <tr><?=$header?><IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=<?=$cord?>&width=350&height=40'><center>File Number: <?=$d[client_file]?><br>Set 1</center></td></tr>
 <tr><td colspan='2' class='b' align='center' style='line-height:40px;'><?=$title?></td></tr>
-<tr><td colspan='2' style='text-indent:20px; line-height:15px; font-size:14px;'><?=$text?></td></tr>
+<tr><td colspan='2' style='text-indent:20px; line-height:15px; font-size:14px; padding-bottom:10px;'><?=$text?></td></tr>
 <tr><td colspan='2' style="font-weight:bold; padding-left:25px;"><?=$mailing?></td></tr>
 <tr><td></td width='50%'><td align='left'><div style='width:250px; height:30px; border-bottom:1px solid black;'>&nbsp;</div>
-<div style='padding-left:10px; padding-top:10px;'><?=id2name($mailerID);?><br>
+<div style='padding-top:5px;'><?=id2name($mailerID);?><br>
 300 East Joppa Road<br>
 Suite 1102<br>
 Baltimore, MD 21286</div></td></tr></table></div></center>
