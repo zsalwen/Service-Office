@@ -54,7 +54,7 @@ table {page-break-after:always;}
 <tr><td colspan='2' class='b'><?=$title?></td></tr>
 <tr><td colspan='2; text-indent:40px;'><?=$text?></td></tr>
 <tr><td colspan='2' style="font-weight:bold; padding-left:20px;"><?=$mailing?></td></tr>
-<tr><td></td width='50%'><td align='left'><span style='text-decoration:underline; width:250px;'></span><br><?=id2name($mailerID);?><br>
+<tr><td></td width='50%'><td align='left'><span style='border-bottom: 1px solid black; width:250px;'></span><br><?=id2name($mailerID);?><br>
 300 East Joppa Road<br>
 Suite 1102<br>
 Baltimore, MD 21286</td></tr></table></div></center>
