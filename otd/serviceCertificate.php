@@ -40,7 +40,7 @@ $header="<td colspan='2' align='center' style='font-size:20px;'>CIRCUIT COURT OF
 			$header .=strtoupper($d['city1']).', '.strtoupper($d['state1']).' '.$d['zip1'].'<br>';
 			$header .= "<small>_________________________<br /><em>Defendant</em></small></td>
 				<td align='right' valign='top' style='width:100px;' nowrap='nowrap'><div style='font-size:24px; border:solid 1px #666666; text-align:center;'>Case Number<br />".str_replace(0,'&Oslash;',$d[case_no])."</div>";
-$cord=$d[packet_id]."-CERT-".$d2[mailerID]."%";
+$cord=$d[packet_id]."-CERT-".$mailerID."%";
 ?>
 <style>
 td { font-variant:small-caps; font-size:12px;}
@@ -54,7 +54,7 @@ table {page-break-after:always;}
 <tr><td colspan='2' class='b'><?=$title?></td></tr>
 <tr><td colspan='2; text-indent:40px;'><?=$text?></td></tr>
 <tr><td colspan='2' style="font-weight:bold; padding-left:20px;"><?=$mailing?></td></tr>
-<tr><td></td width='50%'><td align='left'><span style='border-bottom: 1px solid black; width:250px;'></span><br><?=id2name($mailerID);?><br>
+<tr><td></td width='50%'><td align='left'><div style='border-top:2px solid black; width:250px;'></div><br><?=id2name($mailerID);?><br>
 300 East Joppa Road<br>
 Suite 1102<br>
 Baltimore, MD 21286</td></tr></table></div></center>
