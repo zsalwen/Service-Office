@@ -1170,6 +1170,8 @@ if ($di[packetID]){
 }else{
 	$customBG="style='background-color:red;'";
 }
+$rc=@mysql_query("SELECT * FROM ps_history WHERE packet_id='$d[packet_id]' AND wizard='CERT MAILING' LIMIT 0,1");
+$dc=mysql_fetch_array($rc,MYSQL_ASSOC);
 ?>
 <FIELDSET style="background-color:#FFFF00; padding:0px;">
 <LEGEND ACCESSKEY=C>Service Links</LEGEND>
@@ -1212,6 +1214,9 @@ if (file_exists($rfm)){
 if (file_exists($trioAff)){
 	echo "<tr><td><a href='http://mdwestserve.com/PS_PACKETS/$folder/TrioAffidavitService.pdf' target='preview'>Trio Aff</a></td></tr>";
 }
+if ($dc[packet_id]){
+	echo "<tr><td><a href='http://staff.mdwestserve.com/otd/serviceCertificate.php?packet=$d[packet_id]' target='preview'>Certificate of Service</a></td></tr>";
+}
 	?>
 	
 </table>
@@ -1235,6 +1240,8 @@ $r92=@mysql_query("select * from docuTrack where packet = '$d[packet_id]' order 
 while($d92=mysql_fetch_array($r92,MYSQL_ASSOC)){
 if ($d92[defendant] == 'OCC'){
 	$defname = "OCCUPANT";
+}elseif ($d92[defendant] == 'CERT'){
+	$defname = "CERTIFICATE";
 }else{
 	$defname = $d["name".$d92[defendant]];
 }
