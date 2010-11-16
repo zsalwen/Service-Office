@@ -18,7 +18,7 @@ while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){
 	$crr=$d2[action_type];
 	$mailerID = $d2[serverID];
 }
-$date1=date('j');
+$date1=date('jS');
 $date2=date('F, Y');
 $title="CERTIFICATE OF SERVICE";
 $text="I hereby certify that a copy of the foregoing document was mailed, first-class, postage prepaid, this $date1 day of $date2, to:<br>";
@@ -53,9 +53,9 @@ table {page-break-after:always;}
 <table align="center" width="100%" border="0">
 <tr><?=$header?><IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=<?=$cord?>&width=350&height=40'><center>File Number: <?=$d[client_file]?><br>Set 1</center></td></tr>
 <tr><td colspan='2' class='b' align='center' style='line-height:20px;'><?=$title?></td></tr>
-<tr><td colspan='2' style='text-indent:40px; line-height:6px;'><?=$text?></td></tr>
-<tr><td colspan='2' style="font-weight:bold; padding-left:20px;"><?=$mailing?></td></tr>
-<tr><td></td width='50%'><td align='left'><div style='width:250px; border:1px solid black;'></div><br><?=id2name($mailerID);?><br>
+<tr><td colspan='2' style='text-indent:20px; line-height:15px;'><?=$text?></td></tr>
+<tr><td colspan='2' style="font-weight:bold; padding-left:25px;"><?=$mailing?></td></tr>
+<tr><td></td width='50%'><td align='left'><div style='width:250px; border-bottom:1px solid black;'>&nbsp;</div><br><?=id2name($mailerID);?><br>
 300 East Joppa Road<br>
 Suite 1102<br>
 Baltimore, MD 21286</td></tr></table></div></center>
