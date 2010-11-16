@@ -28,7 +28,7 @@ if ($d[altPlaintiff] != ''){
 }else{
 	$plaintiff=str_replace("-","<br>",$d1[ps_plaintiff]);
 }
-$header="<td colspan='2' align='center' style='font-size:20px; line-height:20px;'>CIRCUIT COURT OF $court, MARYLAND</td></tr>
+$header="<td colspan='2' align='center' style='font-size:20px; padding-bottom:10px;'>CIRCUIT COURT OF $court, MARYLAND</td></tr>
 		<tr></tr>
 		<tr><td class='a' width='550px'><span style='border-bottom:1px solid black;'>$plaintiff</span><small><br /><em>Plaintiff</em></small><br /><br />v.<br /><br />";
 			$header .= strtoupper($d['name1']).'<br>';
