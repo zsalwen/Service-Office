@@ -30,7 +30,7 @@ if ($d[altPlaintiff] != ''){
 }
 $header="<td colspan='2' align='center' style='font-size:20px; line-height:15px;'>CIRCUIT COURT OF $court, MARYLAND</td></tr>
 		<tr></tr>
-		<tr><td class='a' width='550px'>$plaintiff<br><small>_________________________<br /><em>Plaintiff</em></small><br /><br />v.<br /><br />";
+		<tr><td class='a' width='550px'><span style='border-bottom:1px solid black;'>$plaintiff</span><small><br /><em>Plaintiff</em></small><br /><br />v.<br /><br />";
 			$header .= strtoupper($d['name1']).'<br>';
 			if ($d['name2']){$header .= strtoupper($d['name2']).'<br>';}
 			if ($d['name3']){$header .= strtoupper($d['name3']).'<br>';}
@@ -38,8 +38,8 @@ $header="<td colspan='2' align='center' style='font-size:20px; line-height:15px;
 			if ($d['name5']){$header .= strtoupper($d['name5']).'<br>';}
 			if ($d['name6']){$header .= strtoupper($d['name6']).'<br>';}
 			$header .=strtoupper($d['address1']).'<br>';
-			$header .=strtoupper($d['city1']).', '.strtoupper($d['state1']).' '.$d['zip1'].'<br>';
-			$header .= "<small>_________________________<br /><em>Defendant</em></small></td>
+			$header .="<span style='border-bottom:1px solid black;'>".strtoupper($d['city1']).', '.strtoupper($d['state1']).' '.$d['zip1'].'</span><br>';
+			$header .= "<small><em>Defendant</em></small></td>
 				<td align='right' valign='top' style='width:100px;' nowrap='nowrap'><div style='font-size:24px; border:solid 1px #666666; text-align:center;'>Case Number<br />".str_replace(0,'&Oslash;',$d[case_no])."</div>";
 $cord=$d[packet_id]."-CERT-".$mailerID."%";
 ?>
@@ -56,8 +56,8 @@ table {page-break-after:always;}
 <tr><td colspan='2' class='b' align='center' style='line-height:30px;'><?=$title?></td></tr>
 <tr><td colspan='2' style='text-indent:20px; line-height:15px; font-size:14px;'><?=$text?></td></tr>
 <tr><td colspan='2' style="font-weight:bold; padding-left:25px;"><?=$mailing?></td></tr>
-<tr><td></td width='50%'><td align='left'><div style='width:250px; height:30px; border-bottom:1px solid black;'>&nbsp;</div><br>
-<div style='padding-left:30px;'><?=id2name($mailerID);?><br>
+<tr><td></td width='50%'><td align='left'><div style='width:250px; height:30px; border-bottom:1px solid black;'>&nbsp;</div>
+<div style='padding-left:10px; padding-top:10px;'><?=id2name($mailerID);?><br>
 300 East Joppa Road<br>
 Suite 1102<br>
 Baltimore, MD 21286</div></td></tr></table></div></center>
