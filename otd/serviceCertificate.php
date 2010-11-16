@@ -12,7 +12,6 @@ $d=mysql_fetch_array($r,MYSQL_ASSOC);
 $r1=@mysql_query("select ps_plaintiff, full_name from attorneys where attorneys_id = '$d[attorneys_id]'");
 $d1=mysql_fetch_array($r1,MYSQL_ASSOC);
 $r2=@mysql_query("SELECT * FROM ps_history WHERE packet_id='$_GET[packet]' AND wizard='CERT MAILING' ORDER BY defendant_id ASC");
-$d2=mysql_fetch_array($r2,MYSQL_ASSOC);
 while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){
 	$mailing .= $d2[action_str];
 	$crr=$d2[action_type];
