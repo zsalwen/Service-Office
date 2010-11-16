@@ -44,17 +44,17 @@ $cord=$d[packet_id]."-CERT-".$mailerID."%";
 ?>
 <style>
 td { font-variant:small-caps; font-size:12px;}
-td.a {font-size:12px;}
+td.a {font-size:14px;}
 td.b {font-size:24px; text-decoration:underline;}
 table {page-break-after:always;}
 </style>
-<center><div style="width: 600px;">
+<center><div style="width: 700px;">
 <table align="center" width="100%" border="0">
 <tr><?=$header?><IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=<?=$cord?>&width=350&height=40'><center>File Number: <?=$d[client_file]?><br>Set 1</center></td></tr>
-<tr><td colspan='2' class='b'><?=$title?></td></tr>
-<tr><td colspan='2; text-indent:40px;'><?=$text?></td></tr>
+<tr><td colspan='2' class='b' align='center' style='line-height:5px;'><?=$title?></td></tr>
+<tr><td colspan='2' style='text-indent:40px; line-height:6px;'><?=$text?></td></tr>
 <tr><td colspan='2' style="font-weight:bold; padding-left:20px;"><?=$mailing?></td></tr>
-<tr><td></td width='50%'><td align='left'><div style='border-top:2px solid black; width:250px;'></div><br><?=id2name($mailerID);?><br>
+<tr><td></td width='50%'><td align='left'><div style='width:250px;'><hr></div><br><?=id2name($mailerID);?><br>
 300 East Joppa Road<br>
 Suite 1102<br>
 Baltimore, MD 21286</td></tr></table></div></center>
