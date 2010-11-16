@@ -1,10 +1,23 @@
 <?
 mysql_connect();
 mysql_select_db('core');
+function id2name($id){
+	$q="SELECT name FROM ps_users WHERE id = '$id'";
+	$r=@mysql_query($q);
+	$d=mysql_fetch_array($r, MYSQL_ASSOC);
+	return $d[name];
+}
 $r=@mysql_query("select * from ps_packets where packet_id = '$_GET[packet]'");
 $d=mysql_fetch_array($r,MYSQL_ASSOC);
 $r1=@mysql_query("select ps_plaintiff, full_name from attorneys where attorneys_id = '$d[attorneys_id]'");
 $d1=mysql_fetch_array($r1,MYSQL_ASSOC);
+$r2=@mysql_query("SELECT * FROM ps_history WHERE packet_id='$_GET[packet]' AND wizard='CERT MAILING' ORDER BY defendant_id ASC");
+$d2=mysql_fetch_array($r2,MYSQL_ASSOC);
+while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){
+	$mailing .= $d2[action_str];
+	$crr=$d2[action_type];
+	$mailerID = $d2[serverID];
+}
 $date=date('j day of F, Y');
 $title="CERTIFICATE OF SERVICE";
 $text="I hereby certify that a copy of the foregoing document was mailed, first-class, postage prepaid, this $date, to:<br>";
@@ -39,4 +52,14 @@ table {page-break-after:always;}
 <table align="center" width="100%" border="0">
 <tr><?=$header?><IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=<?=$cord?>&width=350&height=40'><center>File Number: <?=$d[client_file]?><br>Set 1</center></td></tr>
 <tr><td colspan='2' class='b'><?=$title?></td></tr>
-<tr><tr colspan='2'><?=$text?></td></tr>
+<tr><td colspan='2; text-indent:40px;'><?=$text?></td></tr>
+<tr><td colspan='2' style="font-weight:bold; padding-left:20px;"><?=$mailing?></td></tr>
+<tr><td></td width='50%'><td align='left'><span style='text-decoration:underline; width:250px;'></span><br><?=id2name($mailerID);?><br>
+300 East Joppa Road<br>
+Suite 1102<br>
+Baltimore, MD 21286</td></tr></table></div></center>
+<?
+$buffer = ob_get_clean();
+echo $buffer;
+echo str_replace('Set 1','Set 2',$buffer);
+?>
