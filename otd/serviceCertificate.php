@@ -49,16 +49,18 @@ td.a {font-size:14px;}
 td.b {font-size:24px; text-decoration:underline;}
 table {page-break-after:always;}
 </style>
+<div style="height:50px"></div>
 <center><div style="width: 700px;">
 <table align="center" width="100%" border="0">
 <tr><?=$header?><IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=<?=$cord?>&width=350&height=40'><center>File Number: <?=$d[client_file]?><br>Set 1</center></td></tr>
 <tr><td colspan='2' class='b' align='center' style='line-height:20px;'><?=$title?></td></tr>
-<tr><td colspan='2' style='text-indent:20px; line-height:15px;'><?=$text?></td></tr>
+<tr><td colspan='2' style='text-indent:20px; line-height:15px; font-size:12px;'><?=$text?></td></tr>
 <tr><td colspan='2' style="font-weight:bold; padding-left:25px;"><?=$mailing?></td></tr>
-<tr><td></td width='50%'><td align='left'><div style='width:250px; border-bottom:1px solid black;'>&nbsp;</div><br><?=id2name($mailerID);?><br>
+<tr><td></td width='50%'><td align='left'><div style='width:250px; height:40px; border-bottom:1px solid black;'>&nbsp;</div>
+<div style='text-indent:20px;'><?=id2name($mailerID);?><br>
 300 East Joppa Road<br>
 Suite 1102<br>
-Baltimore, MD 21286</td></tr></table></div></center>
+Baltimore, MD 21286</div></td></tr></table></div></center>
 <?
 $buffer = ob_get_clean();
 echo $buffer;
