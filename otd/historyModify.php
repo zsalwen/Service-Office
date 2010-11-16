@@ -176,7 +176,7 @@ if ($i2 < 1){
 	.legend{border:solid 1px #FF0000; background-color:#FFFFFF; font-size:13px; width:100% !important; height:30px !important;}
 	.span{position:relative; top:7;}
 	.div2{background-color:orange;}
-	.div3={background-image:none;}
+	.div3{background-image:none;}
 	form {display: inline;}
 	i {display: inline;}
 	.plus {background-color:#0099FF; border:ridge 2px #33CCFF; text-align:center; width:20px !important; font-weight:bold; font-size:16px; position:relative; left:93%;top:-12;}
