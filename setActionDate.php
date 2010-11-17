@@ -147,6 +147,7 @@ function EVmailExplode($histID){
 	return $return;
 }
 function EVattemptExplode($histID){
+	$dt='';
 	$qh="SELECT action_str FROM evictionHistory WHERE history_id-'$histID'";
 	$rh=@mysql_query($qh) or die (mysql_error());
 	$dh=mysql_fetch_array($rh,MYSQL_ASSOC);
@@ -162,6 +163,7 @@ function EVattemptExplode($histID){
 	return $return;
 }
 function EVdeliveryExplode($histID){
+	$dt='';
 	$qh="SELECT action_str FROM evictionHistory WHERE history_id='$histID'";
 	$rh=@mysql_query($qh) or die (mysql_error());
 	$dh=mysql_fetch_array($rh,MYSQL_ASSOC);
