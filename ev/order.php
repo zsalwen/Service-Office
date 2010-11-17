@@ -325,7 +325,7 @@ if ($_POST[zip] || ($_POST[zip] != $d[zip1])){
 }
 if (trim($updateQ) != ''){
 	//remove last "|"
-	$updateQ2=substr($updateQ,0,1);
+	$updateQ2=substr($updateQ,0,-1);
 	//replace other "|"s with commas
 	$updateQ2=str_replace("|",", ",$updateQ2);
 	//submit query
