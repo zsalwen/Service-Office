@@ -130,14 +130,6 @@ function updateCO($co,$packet){
 		}
 	}
 }
-function checkDT($dt){
-	$value = trim($value); 
-	if (preg_match("/^\d{4}-\d{2}-\d{2} [0-2][0-3]:[0-5][0-9]:[0-5][0-9]$/", $value)) { 
-		return 1;
-	}else{
-		return 0;
-	}
-}
 
 
 $packet=3678;
@@ -147,7 +139,7 @@ while ($d10a=mysql_fetch_array($r10a, MYSQL_ASSOC)){
 	$dt='';
 	if ($d10a[wizard] == 'BORROWER' || $d10a[wizard] == 'NOT BORROWER'){
 		$dt = deliveryExplode($d10a[history_id]);
-		if (checkDT($dt) != 0){
+		if ($dt != ''){
 			//@mysql_query(UPDATE ps_history SET actionDate='$dt' WHERE history_id='$d10a[history_id]') or die (mysql_error());
 			echo "<div>$d10a[history_id] :: OTD$d10a[packet_id] :: $dt</div>";
 		}else{
@@ -155,7 +147,7 @@ while ($d10a=mysql_fetch_array($r10a, MYSQL_ASSOC)){
 		}	
 	}elseif($d10a[action_type] == 'Attempted Service' || $d10a[wizard] == 'POSTING DETAILS'){
 		$dt = attemptExplode($d10a[history_id]);
-		if (checkDT($dt) != 0){
+		if ($dt != ''){
 			//@mysql_query(UPDATE ps_history SET actionDate='$dt' WHERE history_id='$d10a[history_id]') or die (mysql_error());
 			echo "<div>$d10a[history_id] :: OTD$d10a[packet_id] :: $dt</div>";
 		}else{
@@ -163,7 +155,7 @@ while ($d10a=mysql_fetch_array($r10a, MYSQL_ASSOC)){
 		}
 	}elseif($d10a[wizard] == 'MAILING DETAILS'){
 		$dt = mailExplode($d10a[history_id]);
-		if (checkDT($dt) != 0){
+		if ($dt != ''){
 			//@mysql_query(UPDATE ps_history SET actionDate='$dt' WHERE history_id='$d10a[history_id]') or die (mysql_error());
 			echo "<div>$d10a[history_id] :: OTD$d10a[packet_id] :: $dt</div>";
 		}else{
@@ -179,7 +171,7 @@ while ($d10b=mysql_fetch_array($r10b, MYSQL_ASSOC)){
 	$dt='';
 	if ($d10b[wizard] == 'BORROWER' || $d10b[wizard] == 'NOT BORROWER'){
 		$dt = deliveryExplode($d10b[history_id]);
-		if (checkDT($dt) != 0){
+		if ($dt != ''){
 			//@mysql_query(UPDATE evictionHistory SET actionDate='$dt' WHERE history_id='$d10b[history_id]') or die (mysql_error());
 			echo "<div>$d10b[history_id] :: EV$d10b[eviction_id] :: $dt</div>";
 		}else{
@@ -187,7 +179,7 @@ while ($d10b=mysql_fetch_array($r10b, MYSQL_ASSOC)){
 		}
 	}elseif($d10b[action_type] == 'Attempted Service' || $d10b[wizard] == 'POSTING DETAILS'){
 		$dt = attemptExplode($d10b[history_id]);
-		if (checkDT($dt) != 0){
+		if ($dt != ''){
 			//@mysql_query(UPDATE evictionHistory SET actionDate='$dt' WHERE history_id='$d10b[history_id]') or die (mysql_error());
 			echo "<div>$d10b[history_id] :: EV$d10b[eviction_id] :: $dt</div>";
 		}else{
@@ -195,7 +187,7 @@ while ($d10b=mysql_fetch_array($r10b, MYSQL_ASSOC)){
 		}
 	}elseif($d10b[wizard] == 'MAILING DETAILS'){
 		$dt = mailExplode($d10b[history_id]);
-		if (checkDT($dt) != 0){
+		if ($dt != ''){
 			//@mysql_query(UPDATE evictionHistory SET actionDate='$dt' WHERE history_id='$d10b[history_id]') or die (mysql_error());
 			echo "<div>$d10b[history_id] :: EV$d10b[eviction_id] :: $dt</div>";
 		}else{
