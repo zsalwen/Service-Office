@@ -301,7 +301,7 @@ $case_no=trim($_POST[case_no]);
 }
 $updateQ='';
 if (isset($_POST[server1])){
-	$updateQ .= "server_id='$_POST[server1]'";
+	$updateQ .= "server_id='$_POST[server1]'|";
 }
 $r=mysql_query("SELECT name1, name2, name3, name4, name5, name6, address1, city1, state1, zip1 from evictionPackets WHERE eviction_id='$_POST[eviction_id]'");
 $d=mysql_fetch_array($r, MYSQL_ASSOC) or die(mysql_error());
@@ -323,7 +323,8 @@ if ($_POST[state] || ($_POST[state] != $d[state1])){
 if ($_POST[zip] || ($_POST[zip] != $d[zip1])){
 	$updateQ .= "zip1='".addslashes($_POST[zip])."'|";
 }
-if (trim($updateQ) != '|'){
+if (trim($updateQ) != ''){
+	echo "<script>alert('[$updateQ]')</script>";
 	//remove last "|"
 	$updateQ=substr($updateQ,-1,1);
 	//replace other "|"s with commas
