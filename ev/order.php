@@ -223,9 +223,10 @@ if ($_POST[estFileDate] != $d[estFileDate]){
 $case_no=trim($_POST[case_no]);
 // un dbCleaner on all items
 if ($newClose != 1){
-	$estQ="estFileDate='$_POST[estFileDate]',";
+	$estQ="estFileDate='$_POST[estFileDate]',
+	";
 }
-	@mysql_query("UPDATE evictionPackets SET process_status='$_POST[process_status]',
+	$query="UPDATE evictionPackets SET process_status='$_POST[process_status]',
 	filing_status='$_POST[filing_status]',
 	service_status='$_POST[service_status]',
 	fileDate='$_POST[fileDate]', ".$estQ."
@@ -256,7 +257,8 @@ if ($newClose != 1){
 	case_no='".str_replace('�',0,$case_no)."',
 	altPlaintiff='".dbCleaner($_POST[altPlaintiff])."',
 	circuit_court='".strtoupper($_POST[circuit_court])."'
-	WHERE eviction_id='$_POST[eviction_id]'") or die(mysql_error());
+	WHERE eviction_id='$_POST[eviction_id]'";
+	@mysql_query($query) or die("Query: $query<br>".mysql_error());
 }else{
 $case_no=trim($_POST[case_no]);
 @mysql_query("UPDATE evictionPackets SET process_status='$_POST[process_status]',
