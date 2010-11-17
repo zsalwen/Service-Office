@@ -101,7 +101,6 @@ function mailExplode($histID){
 	return $return;
 }
 function attemptExplode($histID){
-	$dt='';
 	$qh="SELECT action_str, wizard FROM ps_history WHERE history_id='$histID'";
 	$rh=@mysql_query($qh) or die (mysql_error());
 	$dh=mysql_fetch_array($rh,MYSQL_ASSOC);
@@ -120,7 +119,6 @@ function attemptExplode($histID){
 	return $return;
 }
 function deliveryExplode($histID){
-	$dt='';
 	$qh="SELECT action_str FROM ps_history WHERE history_id='$histID'";
 	$rh=@mysql_query($qh) or die (mysql_error());
 	$dh=mysql_fetch_array($rh,MYSQL_ASSOC);
@@ -134,7 +132,6 @@ function deliveryExplode($histID){
 
 
 function EVmailExplode($histID){
-	$dt='';
 	$qh="SELECT action_str FROM evictionHistory WHERE history_id='$histID'";
 	$rh=@mysql_query($qh) or die (mysql_error());
 	$dh=mysql_fetch_array($rh,MYSQL_ASSOC);
@@ -142,12 +139,11 @@ function EVmailExplode($histID){
 		$action=explode('.</LI>',strtoupper($dh[action_str]));
 		$dt=explode('ON ',$action[0]);
 		$count=count($dt)-1;
-		$return=postDateImplode(trim($dt["$count"]));
+		$return=postDateImplode(trim($dt["$count"])." 00:00");
 	}
 	return $return;
 }
 function EVattemptExplode($histID){
-	$dt='';
 	$qh="SELECT action_str FROM evictionHistory WHERE history_id-'$histID'";
 	$rh=@mysql_query($qh) or die (mysql_error());
 	$dh=mysql_fetch_array($rh,MYSQL_ASSOC);
@@ -163,7 +159,6 @@ function EVattemptExplode($histID){
 	return $return;
 }
 function EVdeliveryExplode($histID){
-	$dt='';
 	$qh="SELECT action_str FROM evictionHistory WHERE history_id='$histID'";
 	$rh=@mysql_query($qh) or die (mysql_error());
 	$dh=mysql_fetch_array($rh,MYSQL_ASSOC);
@@ -249,7 +244,7 @@ while ($d10b=mysql_fetch_array($r10b, MYSQL_ASSOC)){
 		}else{
 			echo "<div style='background-color:red;'>$d10b[history_id] :: EV$d10b[eviction_id] :: $d10b[wizard] :: $dt</div>";
 		}
-	}elseif($d10b[wizard] == 'MAILING DETAILS'){
+	}elseif($d10b[wizard] == 'MAILING DETAILS' || $d10b[wizard] == 'INVALID'){
 		$dt = EVmailExplode($d10b[history_id]);
 		if ($dt != ''){
 			//@mysql_query(UPDATE evictionHistory SET actionDate='$dt' WHERE history_id='$d10b[history_id]') or die (mysql_error());
