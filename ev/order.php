@@ -323,8 +323,8 @@ if ($_POST[state] || ($_POST[state] != $d[state1])){
 if ($_POST[zip] || ($_POST[zip] != $d[zip1])){
 	$updateQ .= "zip1='".addslashes($_POST[zip])."'|";
 }
+echo "<script>alert('["trim($updateQ)"]')</script>";
 if (trim($updateQ) != ''){
-	echo "<script>alert('[$updateQ]')</script>";
 	//remove last "|"
 	$updateQ=substr($updateQ,-1,1);
 	//replace other "|"s with commas
