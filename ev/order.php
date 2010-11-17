@@ -330,6 +330,7 @@ if (trim($updateQ) != ','){
 	$updateQ=str_replace("|",", ",$updateQ);
 	//submit query
 	$query2="UPDATE evictionPackets SET ".$updateQ." WHERE eviction_id='$_POST[eviction_id]'";
+	echo "<script>alert('[$query2]')</script>";
 	@mysql_query($query2) or die("Query: $query2<br>".mysql_error());
 }
 if ($_GET[packet] && $newClose == 1){
