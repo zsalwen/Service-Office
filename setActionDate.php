@@ -143,7 +143,7 @@ while ($d10a=mysql_fetch_array($r10a, MYSQL_ASSOC)){
 			//@mysql_query(UPDATE ps_history SET actionDate='$dt' WHERE history_id='$d10a[history_id]') or die (mysql_error());
 			echo "<div>$d10a[history_id] :: OTD$d10a[packet_id] :: $dt</div>";
 		}else{
-			echo "<div style='background-color:red;'>$d10a[history_id] :: OTD$d10a[packet_id] :: $d10a[wizard]</div>";
+			echo "<div style='background-color:red;'>$d10a[history_id] :: OTD$d10a[packet_id] :: $d10a[wizard] :: $dt</div>";
 		}	
 	}elseif($d10a[action_type] == 'Attempted Service' || $d10a[wizard] == 'POSTING DETAILS'){
 		$dt = attemptExplode($d10a[history_id]);
@@ -151,7 +151,7 @@ while ($d10a=mysql_fetch_array($r10a, MYSQL_ASSOC)){
 			//@mysql_query(UPDATE ps_history SET actionDate='$dt' WHERE history_id='$d10a[history_id]') or die (mysql_error());
 			echo "<div>$d10a[history_id] :: OTD$d10a[packet_id] :: $dt</div>";
 		}else{
-			echo "<div style='background-color:red;'>$d10a[history_id] :: OTD$d10a[packet_id] :: $d10a[wizard]</div>";
+			echo "<div style='background-color:red;'>$d10a[history_id] :: OTD$d10a[packet_id] :: $d10a[wizard] :: $dt</div>";
 		}
 	}elseif($d10a[wizard] == 'MAILING DETAILS'){
 		$dt = mailExplode($d10a[history_id]);
@@ -159,7 +159,7 @@ while ($d10a=mysql_fetch_array($r10a, MYSQL_ASSOC)){
 			//@mysql_query(UPDATE ps_history SET actionDate='$dt' WHERE history_id='$d10a[history_id]') or die (mysql_error());
 			echo "<div>$d10a[history_id] :: OTD$d10a[packet_id] :: $dt</div>";
 		}else{
-			echo "<div style='background-color:red;'>$d10a[history_id] :: OTD$d10a[packet_id] :: $d10a[wizard]</div>";
+			echo "<div style='background-color:red;'>$d10a[history_id] :: OTD$d10a[packet_id] :: $d10a[wizard] :: $dt</div>";
 		}
 	}else{
 		echo "<div style='background-color:red;'>$d10a[history_id] :: OTD$d10a[packet_id] :: $d10a[wizard]</div>";
@@ -175,7 +175,7 @@ while ($d10b=mysql_fetch_array($r10b, MYSQL_ASSOC)){
 			//@mysql_query(UPDATE evictionHistory SET actionDate='$dt' WHERE history_id='$d10b[history_id]') or die (mysql_error());
 			echo "<div>$d10b[history_id] :: EV$d10b[eviction_id] :: $dt</div>";
 		}else{
-			echo "<div style='background-color:red;'>$d10b[history_id] :: EV$d10b[eviction_id] :: $d10b[wizard]</div>";
+			echo "<div style='background-color:red;'>$d10b[history_id] :: EV$d10b[eviction_id] :: $d10b[wizard] :: $dt</div>";
 		}
 	}elseif($d10b[action_type] == 'Attempted Service' || $d10b[wizard] == 'POSTING DETAILS'){
 		$dt = attemptExplode($d10b[history_id]);
@@ -183,7 +183,7 @@ while ($d10b=mysql_fetch_array($r10b, MYSQL_ASSOC)){
 			//@mysql_query(UPDATE evictionHistory SET actionDate='$dt' WHERE history_id='$d10b[history_id]') or die (mysql_error());
 			echo "<div>$d10b[history_id] :: EV$d10b[eviction_id] :: $dt</div>";
 		}else{
-			echo "<div style='background-color:red;'>$d10b[history_id] :: EV$d10b[eviction_id] :: $d10b[wizard]</div>";
+			echo "<div style='background-color:red;'>$d10b[history_id] :: EV$d10b[eviction_id] :: $d10b[wizard] :: $dt</div>";
 		}
 	}elseif($d10b[wizard] == 'MAILING DETAILS'){
 		$dt = mailExplode($d10b[history_id]);
@@ -191,7 +191,7 @@ while ($d10b=mysql_fetch_array($r10b, MYSQL_ASSOC)){
 			//@mysql_query(UPDATE evictionHistory SET actionDate='$dt' WHERE history_id='$d10b[history_id]') or die (mysql_error());
 			echo "<div>$d10b[history_id] :: EV$d10b[eviction_id] :: $dt</div>";
 		}else{
-			echo "<div style='background-color:red;'>$d10b[history_id] :: EV$d10b[eviction_id] :: $d10b[wizard]</div>";
+			echo "<div style='background-color:red;'>$d10b[history_id] :: EV$d10b[eviction_id] :: $d10b[wizard] :: $dt</div>";
 		}
 	}else{
 		echo "<div style='background-color:red;'>$d10b[history_id] :: EV$d10b[eviction_id] :: $d10b[wizard]</div>";
