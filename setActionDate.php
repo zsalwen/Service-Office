@@ -130,23 +130,45 @@ function updateCO($co,$packet){
 		}
 	}
 }
+function checkDT($dt){
+	$value = trim($value); 
+	if (preg_match("/^\d{4}-\d{2}-\d{2} [0-2][0-3]:[0-5][0-9]:[0-5][0-9]$/", $value)) { 
+		return 1;
+	}else{
+		return 0;
+	}
+}
+
+
 $packet=3678;
 $q10a="SELECT * from ps_history WHERE packet_id > '$packet' AND actionDate='0000-00-00 00:00:00' ORDER BY history_id ASC";
 $r10a=@mysql_query($q10a) or die(mysql_error());
 while ($d10a=mysql_fetch_array($r10a, MYSQL_ASSOC)){
-	$closeOut='';
+	$dt='';
 	if ($d10a[wizard] == 'BORROWER' || $d10a[wizard] == 'NOT BORROWER'){
 		$dt = deliveryExplode($d10a[history_id]);
-		//@mysql_query(UPDATE ps_history SET actionDate='$dt' WHERE history_id='$d10a[history_id]') or die (mysql_error());
-		echo "<div>$d10a[history_id] :: OTD$d10a[packet_id] :: $dt</div>";
+		if (checkDT($dt) != 0){
+			//@mysql_query(UPDATE ps_history SET actionDate='$dt' WHERE history_id='$d10a[history_id]') or die (mysql_error());
+			echo "<div>$d10a[history_id] :: OTD$d10a[packet_id] :: $dt</div>";
+		}else{
+			echo "<div style='background-color:red;'>$d10a[history_id] :: OTD$d10a[packet_id] :: $d10a[wizard]</div>";
+		}	
 	}elseif($d10a[action_type] == 'Attempted Service' || $d10a[wizard] == 'POSTING DETAILS'){
-		$closeOut = attemptExplode($d10a[history_id]);
-		//@mysql_query(UPDATE ps_history SET actionDate='$dt' WHERE history_id='$d10a[history_id]') or die (mysql_error());
-		echo "<div>$d10a[history_id] :: OTD$d10a[packet_id] :: $dt</div>";
+		$dt = attemptExplode($d10a[history_id]);
+		if (checkDT($dt) != 0){
+			//@mysql_query(UPDATE ps_history SET actionDate='$dt' WHERE history_id='$d10a[history_id]') or die (mysql_error());
+			echo "<div>$d10a[history_id] :: OTD$d10a[packet_id] :: $dt</div>";
+		}else{
+			echo "<div style='background-color:red;'>$d10a[history_id] :: OTD$d10a[packet_id] :: $d10a[wizard]</div>";
+		}
 	}elseif($d10a[wizard] == 'MAILING DETAILS'){
-		$closeOut = mailExplode($d10a[history_id]);
-		//@mysql_query(UPDATE ps_history SET actionDate='$dt' WHERE history_id='$d10a[history_id]') or die (mysql_error());
-		echo "<div>$d10a[history_id] :: OTD$d10a[packet_id] :: $dt</div>";
+		$dt = mailExplode($d10a[history_id]);
+		if (checkDT($dt) != 0){
+			//@mysql_query(UPDATE ps_history SET actionDate='$dt' WHERE history_id='$d10a[history_id]') or die (mysql_error());
+			echo "<div>$d10a[history_id] :: OTD$d10a[packet_id] :: $dt</div>";
+		}else{
+			echo "<div style='background-color:red;'>$d10a[history_id] :: OTD$d10a[packet_id] :: $d10a[wizard]</div>";
+		}
 	}else{
 		echo "<div style='background-color:red;'>$d10a[history_id] :: OTD$d10a[packet_id] :: $d10a[wizard]</div>";
 	}
@@ -154,19 +176,31 @@ while ($d10a=mysql_fetch_array($r10a, MYSQL_ASSOC)){
 $q10b="SELECT * from evictionHistory WHERE actionDate='0000-00-00 00:00:00' ORDER BY history_id ASC";
 $r10b=@mysql_query($q10b) or die(mysql_error());
 while ($d10b=mysql_fetch_array($r10b, MYSQL_ASSOC)){
-	$closeOut='';
+	$dt='';
 	if ($d10b[wizard] == 'BORROWER' || $d10b[wizard] == 'NOT BORROWER'){
 		$dt = deliveryExplode($d10b[history_id]);
-		//@mysql_query(UPDATE evictionHistory SET actionDate='$dt' WHERE history_id='$d10b[history_id]') or die (mysql_error());
-		echo "<div>$d10b[history_id] :: EV$d10b[eviction_id] :: $dt</div>";
+		if (checkDT($dt) != 0){
+			//@mysql_query(UPDATE evictionHistory SET actionDate='$dt' WHERE history_id='$d10b[history_id]') or die (mysql_error());
+			echo "<div>$d10b[history_id] :: EV$d10b[eviction_id] :: $dt</div>";
+		}else{
+			echo "<div style='background-color:red;'>$d10b[history_id] :: EV$d10b[eviction_id] :: $d10b[wizard]</div>";
+		}
 	}elseif($d10b[action_type] == 'Attempted Service' || $d10b[wizard] == 'POSTING DETAILS'){
-		$closeOut = attemptExplode($d10b[history_id]);
-		//@mysql_query(UPDATE evictionHistory SET actionDate='$dt' WHERE history_id='$d10b[history_id]') or die (mysql_error());
-		echo "<div>$d10b[history_id] :: EV$d10b[eviction_id] :: $dt</div>";
+		$dt = attemptExplode($d10b[history_id]);
+		if (checkDT($dt) != 0){
+			//@mysql_query(UPDATE evictionHistory SET actionDate='$dt' WHERE history_id='$d10b[history_id]') or die (mysql_error());
+			echo "<div>$d10b[history_id] :: EV$d10b[eviction_id] :: $dt</div>";
+		}else{
+			echo "<div style='background-color:red;'>$d10b[history_id] :: EV$d10b[eviction_id] :: $d10b[wizard]</div>";
+		}
 	}elseif($d10b[wizard] == 'MAILING DETAILS'){
-		$closeOut = mailExplode($d10b[history_id]);
-		//@mysql_query(UPDATE evictionHistory SET actionDate='$dt' WHERE history_id='$d10b[history_id]') or die (mysql_error());
-		echo "<div>$d10b[history_id] :: EV$d10b[eviction_id] :: $dt</div>";
+		$dt = mailExplode($d10b[history_id]);
+		if (checkDT($dt) != 0){
+			//@mysql_query(UPDATE evictionHistory SET actionDate='$dt' WHERE history_id='$d10b[history_id]') or die (mysql_error());
+			echo "<div>$d10b[history_id] :: EV$d10b[eviction_id] :: $dt</div>";
+		}else{
+			echo "<div style='background-color:red;'>$d10b[history_id] :: EV$d10b[eviction_id] :: $d10b[wizard]</div>";
+		}
 	}else{
 		echo "<div style='background-color:red;'>$d10b[history_id] :: EV$d10b[eviction_id] :: $d10b[wizard]</div>";
 	}
