@@ -64,12 +64,12 @@ function makePM($time){
 function dateImplode($date){
 	$str=explode(' AT ',$date);
 	$time=$str[1];
-	/*$time=explode(' ',$time);
+	$time=explode(' ',$time);
 	if ($time[1] == 'PM'){
 		$time=makePM($time[0].":00");
 	}else{
 		$time=$time[0].":00";
-	}*/
+	}
 	$date2=explode(' ',$str[0]);
 	$month=month2num(trim($date2[0]));
 	$day=str_replace(',','',$date2[1]);
@@ -96,7 +96,7 @@ function mailExplode($histID){
 		$action=explode('.</LI>',strtoupper($dh[action_str]));
 		$dt=explode('ON ',$action[0]);
 		$count=count($dt)-1;
-		$return=postDateImplode(trim($dt["$count"]));
+		$return=postDateImplode(trim($dt["$count"])." 00:00");
 	}
 	return $return;
 }
