@@ -107,6 +107,9 @@ function attemptExplode($histID){
 	if ($dh != ''){
 		$action=explode('</LI>',strtoupper($dh[action_str]));
 		$dt=explode('<BR>',$action[1]);
+		if ($histID == 15093){
+			echo "<script>alert('15093 :: ".$dt[0]."')</script>";
+		}
 		if ($dh[wizard] == 'POSTING DETAILS'){
 			$return=postDateImplode($dt[0]);
 		}else{
