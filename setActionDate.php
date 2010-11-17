@@ -102,7 +102,7 @@ function mailExplode($histID){
 }
 function attemptExplode($histID){
 	$dt='';
-	$qh="SELECT action_str, wizard FROM ps_history WHERE history_id-'$histID'";
+	$qh="SELECT action_str, wizard FROM ps_history WHERE history_id='$histID'";
 	$rh=@mysql_query($qh) or die (mysql_error());
 	$dh=mysql_fetch_array($rh,MYSQL_ASSOC);
 	if ($dh != ''){
