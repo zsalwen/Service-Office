@@ -329,7 +329,8 @@ if ($updateQ != ''){
 	//replace other "|"s with commas
 	$updateQ=str_replace("|",", ",$updateQ);
 	//submit query
-	@mysql_query("UPDATE evictionPackets SET ".$updateQ." WHERE eviction_id='$_POST[eviction_id]'") or die(mysql_error());
+	$query2="UPDATE evictionPackets SET ".$updateQ." WHERE eviction_id='$_POST[eviction_id]'";
+	@mysql_query($query2) or die("Query: $query2<br>".mysql_error());
 }
 if ($_GET[packet] && $newClose == 1){
 	echo "<script>prompter('$_POST[eviction_id]','$_POST[estFileDate]','$oldFileDate');</script>";
