@@ -107,9 +107,6 @@ function attemptExplode($histID){
 	if ($dh != ''){
 		$action=explode('</LI>',strtoupper($dh[action_str]));
 		$dt=explode('<BR>',$action[1]);
-		if ($histID == 15093){
-			echo "<div style='background-color:green;'>ID 15093 :: ".$dt[0]."</div>";
-		}
 		if ($dh[wizard] == 'POSTING DETAILS'){
 			$return=postDateImplode($dt[0]);
 		}else{
@@ -212,7 +209,7 @@ while ($d10a=mysql_fetch_array($r10a, MYSQL_ASSOC)){
 		}else{
 			echo "<div style='background-color:red;'>$d10a[history_id] :: OTD$d10a[packet_id] :: $d10a[wizard] :: $dt</div>";
 		}
-	}elseif($d10a[wizard] == 'MAILING DETAILS'){
+	}elseif($d10a[wizard] == 'MAILING DETAILS' || $d10a[wizard] == 'INVALID'){
 		$dt = mailExplode($d10a[history_id]);
 		if ($dt != ''){
 			//@mysql_query(UPDATE ps_history SET actionDate='$dt' WHERE history_id='$d10a[history_id]') or die (mysql_error());
