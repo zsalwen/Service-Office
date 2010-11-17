@@ -55,22 +55,37 @@ function addZero($num){
 		return $num;
 	}
 }
+function makePM($time){
+	$time=explode(':',$time);
+	$time[0]=$time[0]+12;
+	$time=implode(':',$time);
+	return $time;
+}
 function dateImplode($date){
 	$str=explode(' AT ',$date);
-	$time=str_replace(' ','',$str[1]);
+	$time=explode(' ',$str[1]);
+	if ($time[1] == 'PM'){
+		$time=makePM($time[0].":00");
+	}else{
+		$time=$time[0].":00";
+	}
 	$date2=explode(' ',$str[0]);
 	$month=month2num(trim($date2[0]));
 	$day=str_replace(',','',$date2[1]);
 	$year=$date2[2];
-	return $year.'-'.addZero($month).'-'.addZero($day);
+	return $year.'-'.addZero($month).'-'.addZero($day)." $time";
 }
 function postDateImplode($date){
 	$str=explode(' ',$date);
-	$time=$str[3].$str[4];
+	if ($str[4] == 'PM'){
+		$time=makePM($str[3].":00");
+	}else{
+		$time=$str[3].":00";
+	}
 	$month=month2num(trim($str[0]));
 	$day=str_replace(',','',$str[1]);
 	$year=$str[2];
-	return $year.'-'.addZero($month).'-'.addZero($day);
+	return $year.'-'.addZero($month).'-'.addZero($day)." $time";
 }
 function mailExplode($histID){
 	$qh="SELECT action_str FROM ps_history WHERE history_id='$histID'";
@@ -84,19 +99,17 @@ function mailExplode($histID){
 	}
 	return $return;
 }
-function attemptExplode($packet,$defendant,$address,$type){
-	$qh="SELECT action_str, serverID FROM ps_history WHERE packet_id='$packet' AND defendant_id='$defendant' AND action_str LIKE '%$address%' AND WIZARD='$type' AND onAffidavit='checked'";
+function attemptExplode($histID){
+	$qh="SELECT action_str, serverID FROM ps_history WHERE history_id-'$histID'";
 	$rh=@mysql_query($qh) or die (mysql_error());
-	while ($dh=mysql_fetch_array($rh,MYSQL_ASSOC)){
-		if (isAddress(strtoupper($dh[action_str]),$address) != false){
-			$action=explode('</LI>',strtoupper($dh[action_str]));
-			$dt=explode('<BR>',$action[1]);
-			if ($type == 'POSTING DETAILS'){
-				$return[0]=postDateImplode($dt[0]);
-			}else{
-				$return[0]=dateImplode($dt[0]);
-			}
-			$return[1]=id2name($dh[serverID]);
+	$dh=mysql_fetch_array($rh,MYSQL_ASSOC);
+	if ($dh != ''){
+		$action=explode('</LI>',strtoupper($dh[action_str]));
+		$dt=explode('<BR>',$action[1]);
+		if ($dh[wizard] == 'POSTING DETAILS'){
+			$return=postDateImplode($dt[0]);
+		}else{
+			$return=dateImplode($dt[0]);
 		}
 	}
 	return $return;
