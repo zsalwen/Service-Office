@@ -101,7 +101,7 @@ function mailExplode($histID){
 	return $return;
 }
 function attemptExplode($histID){
-	$qh="SELECT action_str, serverID FROM ps_history WHERE history_id-'$histID'";
+	$qh="SELECT action_str, wizard FROM ps_history WHERE history_id-'$histID'";
 	$rh=@mysql_query($qh) or die (mysql_error());
 	$dh=mysql_fetch_array($rh,MYSQL_ASSOC);
 	if ($dh != ''){
@@ -126,6 +126,48 @@ function deliveryExplode($histID){
 	}
 	return $return;
 }
+
+
+function EVmailExplode($histID){
+	$qh="SELECT action_str FROM evictionHistory WHERE history_id='$histID'";
+	$rh=@mysql_query($qh) or die (mysql_error());
+	$dh=mysql_fetch_array($rh,MYSQL_ASSOC);
+	if ($dh != ''){
+		$action=explode('.</LI>',strtoupper($dh[action_str]));
+		$dt=explode('ON ',$action[0]);
+		$count=count($dt)-1;
+		$return=postDateImplode(trim($dt["$count"]));
+	}
+	return $return;
+}
+function EVattemptExplode($histID){
+	$qh="SELECT action_str FROM evictionHistory WHERE history_id-'$histID'";
+	$rh=@mysql_query($qh) or die (mysql_error());
+	$dh=mysql_fetch_array($rh,MYSQL_ASSOC);
+	if ($dh != ''){
+		$action=explode('</LI>',strtoupper($dh[action_str]));
+		$dt=explode('<BR>',$action[1]);
+		if ($dh[wizard] == 'POSTING DETAILS'){
+			$return=postDateImplode($dt[0]);
+		}else{
+			$return=dateImplode($dt[0]);
+		}
+	}
+	return $return;
+}
+function EVdeliveryExplode($histID){
+	$qh="SELECT action_str FROM evictionHistory WHERE history_id='$histID'";
+	$rh=@mysql_query($qh) or die (mysql_error());
+	$dh=mysql_fetch_array($rh,MYSQL_ASSOC);
+	if ($dh != ''){
+		$action=explode('DATE OF SERVICE: ',strtoupper($dh[action_str]));
+		$dt=explode('<BR>',$action[1]);
+		$return=dateImplode($dt[0]);
+	}
+	return $return;
+}
+
+
 function updateCO($co,$packet){
 	$q="SELECT closeOut, service_status FROM ps_packets WHERE packet_id='$packet'";
 	$r=@mysql_query($q) or die (mysql_error());
@@ -184,7 +226,7 @@ $r10b=@mysql_query($q10b) or die(mysql_error());
 while ($d10b=mysql_fetch_array($r10b, MYSQL_ASSOC)){
 	$dt='';
 	if ($d10b[wizard] == 'BORROWER' || $d10b[wizard] == 'NOT BORROWER'){
-		$dt = deliveryExplode($d10b[history_id]);
+		$dt = EVdeliveryExplode($d10b[history_id]);
 		if ($dt != ''){
 			//@mysql_query(UPDATE evictionHistory SET actionDate='$dt' WHERE history_id='$d10b[history_id]') or die (mysql_error());
 			echo "<div>$d10b[history_id] :: EV$d10b[eviction_id] :: $dt</div>";
@@ -192,7 +234,7 @@ while ($d10b=mysql_fetch_array($r10b, MYSQL_ASSOC)){
 			echo "<div style='background-color:red;'>$d10b[history_id] :: EV$d10b[eviction_id] :: $d10b[wizard] :: $dt</div>";
 		}
 	}elseif($d10b[action_type] == 'Attempted Service' || $d10b[wizard] == 'POSTING DETAILS'){
-		$dt = attemptExplode($d10b[history_id]);
+		$dt = EVattemptExplode($d10b[history_id]);
 		if ($dt != ''){
 			//@mysql_query(UPDATE evictionHistory SET actionDate='$dt' WHERE history_id='$d10b[history_id]') or die (mysql_error());
 			echo "<div>$d10b[history_id] :: EV$d10b[eviction_id] :: $dt</div>";
@@ -200,7 +242,7 @@ while ($d10b=mysql_fetch_array($r10b, MYSQL_ASSOC)){
 			echo "<div style='background-color:red;'>$d10b[history_id] :: EV$d10b[eviction_id] :: $d10b[wizard] :: $dt</div>";
 		}
 	}elseif($d10b[wizard] == 'MAILING DETAILS'){
-		$dt = mailExplode($d10b[history_id]);
+		$dt = EVmailExplode($d10b[history_id]);
 		if ($dt != ''){
 			//@mysql_query(UPDATE evictionHistory SET actionDate='$dt' WHERE history_id='$d10b[history_id]') or die (mysql_error());
 			echo "<div>$d10b[history_id] :: EV$d10b[eviction_id] :: $dt</div>";
