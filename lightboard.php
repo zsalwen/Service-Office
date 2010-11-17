@@ -32,7 +32,7 @@ table { padding: 0px; }
 	$mark="Mark Eviction Packet <a href='http://staff.mdwestserve.com/ev/order.php?packet=$eviction' target='_blank'>$_GET[packet]</a> Filed By Staff on $_SESSION[fileDate]";
 }else{
 	$packetType='presale';
-	$mark="Mark Presale Packet <a href='http://staff.mdwestserve.com/otd/order.php?packet=$_GET[packet]' target='_blank'>OTD$_GET[packet]</a> Filed By Staff on $_SESSION[fileDate];";
+	$mark="Mark Presale Packet <a href='http://staff.mdwestserve.com/otd/order.php?packet=$_GET[packet]' target='_blank'>OTD$_GET[packet]</a> Filed By Staff on $_SESSION[fileDate]";
 } 
 echo "";
 mysql_connect();
@@ -65,7 +65,7 @@ while ($i < $count){$i++;
 		$tableList .= "</tr><tr>";
 	}
 }
-echo "$tableList</tr></table>$jsList</div><div style='background-color:#FFFFFF; font-size:20px; height:5%; overflow:auto'>$mark||$list</div>";
+echo "$tableList</tr></table>$jsList</div><div style='background-color:#FFFFFF; font-size:16px; height:5%; overflow:auto'>$mark||$list</div>";
 // We need an alert for a few exceptions
 if ($packetType == 'presale'){
 	$r=@mysql_query("select * from ps_packets where packet_id = '$_GET[packet]'");
