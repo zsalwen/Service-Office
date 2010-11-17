@@ -63,12 +63,13 @@ function makePM($time){
 }
 function dateImplode($date){
 	$str=explode(' AT ',$date);
-	$time=explode(' ',$str[1]);
+	$time=$str[1];
+	/*$time=explode(' ',$time);
 	if ($time[1] == 'PM'){
 		$time=makePM($time[0].":00");
 	}else{
 		$time=$time[0].":00";
-	}
+	}*/
 	$date2=explode(' ',$str[0]);
 	$month=month2num(trim($date2[0]));
 	$day=str_replace(',','',$date2[1]);
