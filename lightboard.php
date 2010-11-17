@@ -51,6 +51,9 @@ $break=floor($i/2);
 if ($break >= 1){
 	$items=ceil($items/2);
 }
+if ($items > 3){
+	$items=3;
+}
 $i=0;
 $count=count($table);
 $jsList = "<script>document.getElementById('test').width=getWidth($items);</script>";
