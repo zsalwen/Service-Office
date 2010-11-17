@@ -101,6 +101,7 @@ function mailExplode($histID){
 	return $return;
 }
 function attemptExplode($histID){
+	$dt='';
 	$qh="SELECT action_str, wizard FROM ps_history WHERE history_id-'$histID'";
 	$rh=@mysql_query($qh) or die (mysql_error());
 	$dh=mysql_fetch_array($rh,MYSQL_ASSOC);
@@ -119,6 +120,7 @@ function attemptExplode($histID){
 	return $return;
 }
 function deliveryExplode($histID){
+	$dt='';
 	$qh="SELECT action_str FROM ps_history WHERE history_id='$histID'";
 	$rh=@mysql_query($qh) or die (mysql_error());
 	$dh=mysql_fetch_array($rh,MYSQL_ASSOC);
@@ -132,6 +134,7 @@ function deliveryExplode($histID){
 
 
 function EVmailExplode($histID){
+	$dt='';
 	$qh="SELECT action_str FROM evictionHistory WHERE history_id='$histID'";
 	$rh=@mysql_query($qh) or die (mysql_error());
 	$dh=mysql_fetch_array($rh,MYSQL_ASSOC);
