@@ -323,13 +323,13 @@ if ($_POST[state] || ($_POST[state] != $d[state1])){
 if ($_POST[zip] || ($_POST[zip] != $d[zip1])){
 	$updateQ .= "zip1='".addslashes($_POST[zip])."'|";
 }
-if (trim($updateQ) != '||'){
+if (trim($updateQ) != '|'){
 	//remove last "|"
-	$updateQ=substr($updateQ,-1,1);
+	$updateQ2=substr($updateQ,-1,1);
 	//replace other "|"s with commas
-	$updateQ=str_replace("|",", ",$updateQ);
+	$updateQ2=str_replace("|",", ",$updateQ2);
 	//submit query
-	$query2="UPDATE evictionPackets SET ".$updateQ." WHERE eviction_id='$_POST[eviction_id]'";
+	$query2="UPDATE evictionPackets SET ".$updateQ2." WHERE eviction_id='$_POST[eviction_id]'";
 	@mysql_query($query2) or die("Query: $query2<br>[".trim($updateQ)."]<br>".mysql_error());
 }
 if ($_GET[packet] && $newClose == 1){
