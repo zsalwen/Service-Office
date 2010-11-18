@@ -62,7 +62,7 @@ if ($_GET[logic]){
 		echo "<script>alert('NO SERVICE ATTEMPTS SHOULD BE MADE AT DOT ADDRESS')</script>";
 	}
 	if ($eviction != 1){
-		if ($d[circuit_court] == 'BALTIMORE CITY'){
+		if ($d[circuit_court] == 'BALTIMORE CITY' && $d[attorneys_id] == 1){
 			if ($d[lossMit] != 'N/A - OLD L' && $d[lossMit] != ''){
 				echo "<script>alert('BALTIMORE CITY FILE DO NOT FORGET TO INCLUDE ADDITIONAL HB472 ENVELOPE AFFIDAVIT')</script>";
 				if ($d[lossMit] == 'FINAL'){
