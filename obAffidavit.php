@@ -366,7 +366,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	$cord=$d1[packet_id]."-".$def."-".$serverID."%";
 	?>
 		<table width="80%" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){ echo $dim;}?>>
-		<tr><?=$header?><IMG SRC='barcode.php?barcode=<?=$cord?>&width=300&height=40'><center>File Number: <?=$d1[client_file]?><br>[PAGE]</center></td></tr>
+		<tr><?=$header?><IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=<?=$cord?>&width=300&height=40'><center>File Number: <?=$d1[client_file]?><br>[PAGE]</center></td></tr>
 		<tr>
 			<td colspan="2" align="center" height="30px" valign="top"><u><b><?=$amended?>Affidavit of Attempted Delivery<? if ($iID && !$iIDa && !$iIDb && !$iIDc && !$iIDd && !$iIDe){ echo " and Posting";}?></b></u></td>
 		</tr>
@@ -423,7 +423,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	}
 	$cord=$d1[packet_id]."-".$def."-".$serverID."%";
 	?>        
-		<? echo "<tr>".$header."<IMG SRC='barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
+		<? echo "<tr>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
 		<tr>
 			<td colspan="2" align="center" height="30px" valign="top"><u><b><?=$amended?>Affidavit of Attempted Delivery</b></u></td>
 		</tr>
@@ -480,7 +480,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	}
 	$cord=$d1[packet_id]."-".$def."-".$serverID."%";
 	?>
-		<? echo "<tr>".$header."<IMG SRC='barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
+		<? echo "<tr>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
 		<tr>
 			<td colspan="2" align="center" height="30px" valign="top"><b><u><?=$amended?>Affidavit of Attempted Delivery</u></b></td>
 		</tr>
@@ -538,7 +538,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	}
 	$cord=$d1[packet_id]."-".$def."-".$serverID."%";
 	?>   
-		<? echo "<tr>".$header."<IMG SRC='barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
+		<? echo "<tr>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
 		<tr>
 			<td colspan="2" align="center" height="30px" valign="top"><b><u><?=$amended?>Affidavit of Attempted Delivery</u></b></td>
 		</tr>
@@ -596,7 +596,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	}
 	$cord=$d1[packet_id]."-".$def."-".$serverID."%";
 	?>  
-		<? echo "<tr>".$header."<IMG SRC='barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
+		<? echo "<tr>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
 		<tr>
 			<td colspan="2" align="center" height="30px" valign="top"><b><u><?=$amended?>Affidavit of Attempted Delivery</u></b></td>
 		</tr>
@@ -651,7 +651,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	$serverPhone=$d3[phone];
 	}
 	$cord=$d1[packet_id]."-".$def."-".$serverID."%";
-	 echo "<tr>".$header."<IMG SRC='barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
+	 echo "<tr>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
 		<tr>
 			<td colspan="2" align="center" height="30px" valign="top"><b><u><?=$amended?>Affidavit of Attempted Delivery<? if ($iID==$iiID){ echo " and Posting";} ?></u></b></td>
 		</tr>
@@ -712,7 +712,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	}
 	$cord=$d1[packet_id]."-".$def."-".$serverID."%";
 	?> 
-		<? echo "<tr>".$header."<IMG SRC='barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
+		<? echo "<tr>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
 		<tr>
 			<td colspan="2" align="center" height="30px" valign="top"><b><u><?=$amended?>Affidavit of Posting</u></b></td>
 		</tr>
@@ -765,7 +765,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	$serverPhone=$d3[phone];
 	}
 	$cord=$d1[packet_id]."-".$def."-".$serverID."%";
-	 echo "<tr>".$header."<IMG SRC='barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
+	 echo "<tr>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
 		<tr>
 			<td colspan="2" align="center" height="30px" valign="top"><b><u><?=$amended?>Affidavit of Mailing</u></b></td>
 		</tr>
@@ -828,7 +828,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	}
 	$cord=$d1[packet_id]."-".$def."-".$serverID."%";
 	?> 
-	<? echo "<tr>".$header."<IMG SRC='barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
+	<? echo "<tr>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
 		<tr>
 			<td colspan="2" align="center" height="30px" valign="top"><b><u><?=$amended?>Affidavit of Personal Delivery</u></b></td>
 		</tr>
