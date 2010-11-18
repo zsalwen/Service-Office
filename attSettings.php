@@ -23,6 +23,7 @@ $q = "UPDATE attorneys SET
 						ps_to_alt='$_POST[ps_to_alt]',
 						ps_alt2='$_POST[ps_alt2]',
 						ps_plaintiff='$_POST[ps_plaintiff]',
+						authSeller='$_POST[authSeller]',
 						payInstructions='".addslashes($_POST[payInstructions])."',
 						upcoming_report_to='$_POST[upcoming_report_to]' 
 							WHERE attorneys_id = '$att_id'";
@@ -55,6 +56,10 @@ $d = mysql_fetch_array($r, MYSQL_ASSOC);
     	<td>Address</td>
         <td><input name="address" size="100" value="<?=$d[address]?>"> Line Break with Hyphen <em>(3 Line Max)</em></td>
     </tr>
+	<tr>
+		<td>Person Authorized to Sell Property</td>
+		<td><input name="authSeller" size="100" value="<?=$d[authSeller]?>"></td>
+	</tr>
 	<tr>
     	<td colspan="2" align="center"><strong style='font-size: 16px;'>E-Mail Contacts</strong></td>
     </tr>
