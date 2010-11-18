@@ -11,7 +11,7 @@ if($_GET['id']){
 $r=@mysql_query("select * from affidavits where id = '$_GET[id]'");
 $affidavit = mysql_fetch_array($r,MYSQL_ASSOC) or die(mysql_error());
 
-$filename = "/sandbox/staff/templates/".$affidavit[affidavit];
+$filename = "/gitbox/Service-Office/templates/".$affidavit[affidavit];
 $handle = fopen($filename, "rb");
 $template .= fread($handle, filesize($filename));
 
@@ -126,6 +126,7 @@ $template = str_replace('[today]',date('F jS, Y'),$template);
 //attorney
 $template = str_replace('[ps_plaintiff]',str_replace('-','<br>',strtoupper($attorney[ps_plaintiff])),$template);
 $template = str_replace('[attName]',strtoupper($attorney[full_name]),$template);
+$template = str_replace('[authSeller]',strtoupper($attorney[authSeller]),$template);
 $template = str_replace('[attAddress]',str_replace(' -',',',$attorney[justAddress]),$template);
 $template = str_replace('[attPhone]',$attorney[phone],$template);
 
