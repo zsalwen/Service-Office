@@ -443,8 +443,8 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 			<td colspan="2">I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.<br /></td>
 		</tr>
 		<tr>
-			<td valign="top"><font size='4'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-			<td valign="top"><font size='4'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></font></td> 
+			<td valign="top">____________________________________<br />Notary Public<br /><br /><br />SEAL</td>
+			<td valign="top">________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></td> 
 		</tr>
 	</table>
 	<? } 
@@ -500,8 +500,8 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 			<td colspan="2">I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.<br /></td>
 		</tr>
 		<tr>
-			<td valign="top"><font size='4'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-			<td valign="top"><font size='4'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></font></td> 
+			<td valign="top">____________________________________<br />Notary Public<br /><br /><br />SEAL</td>
+			<td valign="top">________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></td> 
 		</tr>
 	</table>
 	<? 
@@ -558,8 +558,8 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 			<td colspan="2">I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.<br /></td>
 		</tr>
 		<tr>
-			<td valign="top"><font size='4'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-			<td valign="top"><font size='4'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></font></td> 
+			<td valign="top">____________________________________<br />Notary Public<br /><br /><br />SEAL</td>
+			<td valign="top">________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></td> 
 		</tr>
 	</table>
 	<? 
@@ -616,8 +616,8 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 			<td colspan="2">I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.<br /></td>
 		</tr>
 		<tr>
-			<td valign="top"><font size='4'>____________________________________<br />+Notary Public+<br /><br /><br />SEAL</font></td>
-			<td valign="top"><font size='4'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></font></td> 
+			<td valign="top">____________________________________<br />Notary Public<br /><br /><br />SEAL</td>
+			<td valign="top">________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></td> 
 		</tr>
 	</table>
 	<? 
@@ -675,8 +675,8 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 			<td colspan="2">I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.<br /></td>
 		</tr>
 		<tr>
-			<td valign="top"><font size='4'>____________________________________<br />+Notary Public+<br /><br /><br />SEAL</font></td>
-			<td valign="top"><font size='4'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></font></td> 
+			<td valign="top">____________________________________<br />Notary Public<br /><br /><br />SEAL</td>
+			<td valign="top">________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></td> 
 		</tr>
 	</table>
 	<? }
@@ -733,8 +733,8 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 			<td colspan="2">I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action.<br /></td>
 		</tr>
 		<tr>
-			<td valign="top"><font size='4'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-			<td valign="top"><font size='4'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></font></td> 
+			<td valign="top">____________________________________<br />Notary Public<br /><br /><br />SEAL</td>
+			<td valign="top">________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></td> 
 		</tr>
 	</table>
 	<? } 
@@ -785,8 +785,8 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 			<td colspan="2">I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action.<br /></td>
 		</tr>
 		<tr <? if($noMail == 1 && !$_GET[mail]){ echo 'class="dim"';}?>>
-			<td valign="top"><font size='4'>____________________________________<br />+Notary Public+<br /><br /><br />SEAL</font></td>
-			<td valign="top"><font size='4'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></font></td> 
+			<td valign="top">____________________________________<br />Notary Public<br /><br /><br />SEAL</td>
+			<td valign="top">________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></td> 
 		</tr>
 		<tr>
 			<td colspan="2" style="padding-left:20px"><?=stripslashes($history4)?></td>
@@ -851,8 +851,8 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 			<td colspan="2">I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action.<br /></td>
 		</tr>
 		<tr>
-			<td valign="top"><font size='4'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-			<td valign="top"><font size='4'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></font></td> 
+			<td valign="top">____________________________________<br />Notary Public<br /><br /><br />SEAL</td>
+			<td valign="top">________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></td> 
 		</tr>
 	</table>
 	<? 
