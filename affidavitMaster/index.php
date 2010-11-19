@@ -40,7 +40,8 @@ $error = system($command,$result);
 echo "<div>".$command."</div>";
 echo "<div>".$error."</div>";
 echo "<div>".$result."</div>";
-header('Location: '.$id.'.pdf');
+echo "<script>window.open($id.".".$pdf,'PDF')</script>";
+//header('Location: '.$id.'.pdf');
 }
 
 /*
