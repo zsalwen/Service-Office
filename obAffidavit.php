@@ -1,5 +1,5 @@
 <?
-//include '/sandbox/service/functions.php';
+include 'functions.php';
 @mysql_connect ();
 mysql_select_db ('core');
 // start output buffering
@@ -15,17 +15,6 @@ function defCount($packet_id){
 	if ($d[name5]){$c++;}
 	if ($d[name6]){$c++;}
 	return $c;
-}
-function attorneyCustomLang($att,$str){
-	$r=@mysql_query("SELECT * FROM ps_str_replace where attorneys_id = '$att'");
-	while ($d=mysql_fetch_array($r, MYSQL_ASSOC)){
-		if ($d['str_search'] && $d['str_replace'] && $str && $att){
-			$str = str_replace($d['str_search'], strtoupper($d['str_replace']), $str);
-			$str = str_replace(strtoupper($d['str_search']), strtoupper($d['str_replace']), $str);
-			//echo "<script>alert('Replacing ".strtoupper($d['str_search'])." with ".strtoupper($d['str_replace']).".');< /script>";
-		}
-	}
-	return $str;
 }
 ?>
 <style>
@@ -66,11 +55,7 @@ if ($_GET[server]){
 	$packet = $_GET[packet];
 	$def = 0;
 }*/
-error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[packet])."] [start ob]  \n", 3, '/logs/fail.log');
-
 function makeAffidavit($p,$defendant,$level,$user_id){
-error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[packet])."] [makeAffidavit($p,$defendant,$level,$user_id]  \n", 3, '/logs/fail.log');
-
 	$packet = $p;
 	$def = 0;
 	if (strpos($defendant,"!")){
@@ -168,6 +153,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 		if ($d4[serverID] == $d1[server_id]){
 			$attempts .= $d4[action_str];
 			$iID = $d4[serverID];
+			$iID2["$def"] = $d4[serverID];
 		}elseif($d1[server_ida] && $d4[serverID] == $d1[server_ida]){
 			$attemptsa .= $d4[action_str];
 			$iIDa = $d4[serverID];
@@ -192,6 +178,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 		if ($d4[serverID]==$d1[server_id]){
 			$attempts .= $d4[action_str];
 			$iID = $d4[serverID];
+			$iID2["$def"] = $d4[serverID];
 		}elseif($d1[server_ida] && $d4[serverID]==$d1[server_ida]){
 			$attemptsa .= $d4[action_str];
 			$iIDa = $d4[serverID];
@@ -215,6 +202,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	$d4=mysql_fetch_array($r4, MYSQL_ASSOC);
 	$posting = $d4[action_str];
 	$iiID = $d4[serverID];
+	$iiID2["$def"] = $d4[serverID];
 
 	$q4="SELECT * from ps_history where packet_id = '$packet' AND defendant_id = '$def' and action_type = 'First Class C.R.R. Mailing' and onAffidavit='checked'";
 	$r4=@mysql_query($q4) or die(mysql_error());
@@ -259,10 +247,10 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 		$type = 'non';
 	}
 	// hard code
-	$header="<td colspan='2' align='center' style='font-variant:small-caps;'><font size='5'>State of Maryland</font></td></tr>
-		<tr><td colspan='2' align='center'><font size='4'>Circuit Court for ".$court."</font></td></tr>
+	$header="<td colspan='2' align='center' style='font-size:24px; font-variant:small-caps;'>State of Maryland</td></tr>
+		<tr><td colspan='2' align='center' style='font-size:20px;'>Circuit Court for ".$court."</td></tr>
 		<tr></tr>
-		<tr><td class='a'><font size='2'>".$plaintiff."<br><small>_____________________<br /><em>Plaintiff</em></small><br /><br />v.<br /><br />";
+		<tr><td class='a'>".$plaintiff."<br><small>_____________________<br /><em>Plaintiff</em></small><br /><br />v.<br /><br />";
 			if ($d1[onAffidavit1]=='checked'){$header .= strtoupper($d1['name1']).'<br>';}
 			if ($d1['name2'] && $d1[onAffidavit2]=='checked'){$header .= strtoupper($d1['name2']).'<br>';}
 			if ($d1['name3'] && $d1[onAffidavit3]=='checked'){$header .= strtoupper($d1['name3']).'<br>';}
@@ -271,35 +259,35 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 			if ($d1['name6'] && $d1[onAffidavit6]=='checked'){$header .= strtoupper($d1['name6']).'<br>';}
 			$header .=strtoupper($d1['address1']).'<br>';
 			$header .=strtoupper($d1['city1']).', '.strtoupper($d1['state1']).' '.$d1['zip1'].'<br>';
-			$header .= "<small>_____________________<br /><em>Defendant</em></small></font></td>
-				<td align='right' valign='top' style='padding-left:200px; width:200px' nowrap='nowrap'><div style='border:solid 1px #666666;'><center><font size='5'>Case Number<br />&nbsp;".str_replace(0,'&Oslash;',$d1[case_no])."</font></center></div>";
+			$header .= "<small>_____________________<br /><em>Defendant</em></small></td>
+				<td align='right' valign='top' style='padding-left:200px; width:200px' nowrap='nowrap'><div style='font-size:24px; border:solid 1px #666666; text-align:center;'>Case Number<br />&nbsp;".str_replace(0,'&Oslash;',$d1[case_no])."</div>";
 
 	if ($type == "non"){
 		$article = "14-209(b)";
 		$result = "MAILING AND POSTING";
 		if ($attempts != ''){
-				$history = "<div style='font-weight:300'><u><font size='2'>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:</font></u></div>
+				$history = "<div style='font-weight:300'><u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:</u></div>
 				".$attempts;
 			}elseif($attemptsa != ''){
-				$history = "<div style='font-weight:300'><u><font size='2'>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:</font></u></div>
+				$history = "<div style='font-weight:300'><u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:</u></div>
 				".$attemptsa;
 				$iID=$iIDa;
 			}
-			$history2 = "<div style='font-weight:300'><u><font-size='2'>Include the date of the posting and a description of the location of the posting on the property:</font></u></div>".$posting;
+			$history2 = "<div style='font-weight:300'><u>Include the date of the posting and a description of the location of the posting on the property:</u></div>".$posting;
 		if ($mailing == ''){
-			$history3 = "<div class='dim' style='font-weight:300'><u><font size='2'>State the date on which the required papers were mailed by first-class and certified mail, return receipt requested, and the name and address of the addressee:</font></u>
+			$history3 = "<div class='dim' style='font-weight:300'><u>State the date on which the required papers were mailed by first-class and certified mail, return receipt requested, and the name and address of the addressee:</u>
 				<center><font size='36 px'>AWAITING MAILING<br>DO NOT FILE</font></center></div>";
 			$noMail = 1;
 		}else{
 			if ($crr != ''){
-				$history3 = "<div style='font-weight:300'><u><font-size='2'>State the date on which the required papers were mailed by first-class and certified mail, return receipt requested, and the name and address of the addressee:</font></u></div>
+				$history3 = "<div style='font-weight:300'><u>State the date on which the required papers were mailed by first-class and certified mail, return receipt requested, and the name and address of the addressee:</u></div>
 				".$mailing;
 			}elseif(($iiID == $d1[server_id]) || ($first != '' && $crr == '')){
-				$history3 = "<div style='font-weight:300'><u><font-size='2'>State the date on which the required papers were mailed by first-class and the name and address of the addressee:</font></u></div>
+				$history3 = "<div style='font-weight:300'><u>State the date on which the required papers were mailed by first-class and the name and address of the addressee:</u></div>
 				".$mailing;
 			}
 		}
-			$history4 = "<font-size='2'><u>If available, the original certified mail return receipt shall be attached to the affidavit.</u><div style='height:50px; width:550px; border:double 4px; color:#666'>Affix original certified mail return receipt here.</div></font>";
+			$history4 = "<u>If available, the original certified mail return receipt shall be attached to the affidavit.</u><div style='height:50px; width:550px; border:double 4px; color:#666'>Affix original certified mail return receipt here.</div>";
 	}
 	if ($type == "pd"){
 		$article = "14-209(a)";
@@ -365,29 +353,29 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	}
 	$cord=$d1[packet_id]."-".$def."-".$serverID."%";
 	?>
-		<table width="100%" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){ echo $dim;}?>>
+		<table width="80%" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){ echo $dim;}?>>
 		<tr><?=$header?><IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=<?=$cord?>&width=300&height=40'><center>File Number: <?=$d1[client_file]?><br>[PAGE]</center></td></tr>
 		<tr>
-			<td colspan="2" align="center" valign="top"><u><b><?=$amended?>Affidavit of Attempted Delivery<? if ($iID && !$iIDa && !$iIDb && !$iIDc && !$iIDd && !$iIDe){ echo " and Posting";}?></b></u></td>
+			<td colspan="2" align="center" style="font-weight:bold; text-decoration:underline" height="30px" valign="top"><?=$amended?>Affidavit of Attempted Delivery<? if ($iID && !$iIDa && !$iIDb && !$iIDc && !$iIDd && !$iIDe){ echo " and Posting";}?></td>
 		</tr>
 		<tr>
-			<td colspan="2" align="center" valign="top"><font size='4'><b><?=$result?></font></b></td>
+			<td colspan="2" align="center" style="font-weight:bold; font-size:20px;" height="30px" valign="top"><?=$result?></td>
 		</tr>
 		<tr>
-			<td colspan="2" align="left"><font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:</font></td>
+			<td colspan="2" align="left">Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:<br></td>
 		</tr>
 		<tr>
-			<td colspan="2" style="padding-left:20px;"><b><?=stripslashes($historye)?></b></td>
+			<td colspan="2" style="font-weight:bold; padding-left:20px;"><?=stripslashes($historye)?></td>
 		</tr>   
 		<tr>
-			<td colspan="2"><font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct, to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.</font></td>
+			<td colspan="2">I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct, to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.<br></td>
 		</tr>
 		<tr>
-			<td colspan="2"><font size='2'>I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</font></td>
+			<td colspan="2">I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.<br /></td>
 		</tr>
 		<tr>
-			<td valign="top"><font size='2'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-			<td valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></font></td> 
+			<td valign="top">____________________________________<br />Notary Public<br /><br /><br />SEAL</td>
+			<td valign="top">________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?><br><?=$_SERVER[REMOTE_ADDR]?></td> 
 		</tr>
 	</table>
 	<? }
@@ -425,26 +413,26 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	?>        
 		<? echo "<tr>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
 		<tr>
-			<td colspan="2" align="center" valign="top"><u><b><?=$amended?>Affidavit of Attempted Delivery</b></u></td>
+			<td colspan="2" align="center" style="font-weight:bold; text-decoration:underline" height="30px" valign="top"><?=$amended?>Affidavit of Attempted Delivery</td>
 		</tr>
 		<tr>
-			<td colspan="2" align="center" valign="top"><font size='4'><b><?=$result?></b></font></td>
+			<td colspan="2" align="center" style="font-weight:bold; font-size:20px;" height="30px" valign="top"><?=$result?></td>
 		</tr>
 		<tr>
-			<td colspan="2" align="left"><font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:</font></td>
+			<td colspan="2" align="left">Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:<br></td>
 		</tr>
 		<tr>
-			<td colspan="2" style="padding-left:20px;"><b><?=stripslashes($historyd)?></b></td>
+			<td colspan="2" style="font-weight:bold; padding-left:20px;"><?=stripslashes($historyd)?></td>
 		</tr>
 		<tr>
-			<td colspan="2"><font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct, to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.</font></td>
+			<td colspan="2">I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct, to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.<br></td>
 		</tr>
 		<tr>
-			<td colspan="2"><font size='2'>I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</font></td>
+			<td colspan="2">I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.<br /></td>
 		</tr>
 		<tr>
-			<td valign="top"><font size='2'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-			<td valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></font></td> 
+			<td valign="top" style="font-size:14px">____________________________________<br />Notary Public<br /><br /><br />SEAL</td>
+			<td valign="top" style="font-size:14px">________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></td> 
 		</tr>
 	</table>
 	<? } 
@@ -482,26 +470,26 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	?>
 		<? echo "<tr>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
 		<tr>
-			<td colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Attempted Delivery</u></b></td>
+			<td colspan="2" align="center" style="font-weight:bold; text-decoration:underline" height="30px" valign="top"><?=$amended?>Affidavit of Attempted Delivery</td>
 		</tr>
 		<tr>
-			<td colspan="2" align="center" valign="top"><font size='4'><b><?=$result?></b></font></td>
+			<td colspan="2" align="center" style="font-weight:bold; font-size:20px;" height="30px" valign="top"><?=$result?></td>
 		</tr>
 		<tr>
-			<td colspan="2" align="left"><font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:</font></td>
+			<td colspan="2" align="left">Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:<br></td>
 		</tr>
 		<tr>
-			<td colspan="2" style="padding-left:20px;"><b><?=stripslashes($historyc)?></b></td>
+			<td colspan="2" style="font-weight:bold; padding-left:20px;"><?=stripslashes($historyc)?></td>
 		</tr>
 		<tr>
-			<td colspan="2"><font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct, to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.</font></td>
+			<td colspan="2">I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct, to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.<br></td>
 		</tr>
 		<tr>
-			<td colspan="2"><font size='2'>I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</td></td>
+			<td colspan="2">I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.<br /></td>
 		</tr>
 		<tr>
-			<td valign="top"><font size='2'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-			<td valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></font></td> 
+			<td valign="top" style="font-size:14px">____________________________________<br />Notary Public<br /><br /><br />SEAL</td>
+			<td valign="top" style="font-size:14px">________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></td> 
 		</tr>
 	</table>
 	<? 
@@ -540,26 +528,26 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	?>   
 		<? echo "<tr>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
 		<tr>
-			<td colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Attempted Delivery</u></b></td>
+			<td colspan="2" align="center" style="font-weight:bold; text-decoration:underline" height="30px" valign="top"><?=$amended?>Affidavit of Attempted Delivery</td>
 		</tr>
 		<tr>
-			<td colspan="2" align="center" valign="top"><font size='4'><b><?=$result?></b></font></td>
+			<td colspan="2" align="center" style="font-weight:bold; font-size:20px;" height="30px" valign="top"><?=$result?></td>
 		</tr>
 		<tr>
-			<td colspan="2" align="left"><font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:</font></td>
+			<td colspan="2" align="left">Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:<br></td>
 		</tr>
 		<tr>
-			<td colspan="2" style="padding-left:20px;"><b><?=stripslashes($historyb)?></b></td>
+			<td colspan="2" style="font-weight:bold; padding-left:20px;"><?=stripslashes($historyb)?></td>
 		</tr>     
 		<tr>
-			<td colspan="2"><font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct, to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.</font></td>
+			<td colspan="2">I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct, to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.<br></td>
 		</tr>
 		<tr>
-			<td colspan="2"><font size='2'>I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</font></td>
+			<td colspan="2">I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.<br /></td>
 		</tr>
 		<tr>
-			<td valign="top"><font size='2'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-			<td valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></font></td> 
+			<td valign="top" style="font-size:14px">____________________________________<br />Notary Public<br /><br /><br />SEAL</td>
+			<td valign="top" style="font-size:14px">________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></td> 
 		</tr>
 	</table>
 	<? 
@@ -598,26 +586,26 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	?>  
 		<? echo "<tr>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
 		<tr>
-			<td colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Attempted Delivery</u></b></td>
+			<td colspan="2" align="center" style="font-weight:bold; text-decoration:underline" height="30px" valign="top"><?=$amended?>Affidavit of Attempted Delivery</td>
 		</tr>
 		<tr>
-			<td colspan="2" align="center" valign="top"><font size='4'><b><?=$result?></b></font></td>
+			<td colspan="2" align="center" style="font-weight:bold; font-size:20px;" height="30px" valign="top"><?=$result?></td>
 		</tr>
 		<tr>
-			<td colspan="2" align="left"><font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:</font></td>
+			<td colspan="2" align="left">Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:<br></td>
 		</tr>
 		<tr>
-			<td colspan="2" style="padding-left:20px;"><b><?=stripslashes($historya)?></b></td>
+			<td colspan="2" style="font-weight:bold; padding-left:20px;"><?=stripslashes($historya)?></td>
 		</tr>      
 		<tr>
-			<td colspan="2"><font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct, to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.</font></td>
+			<td colspan="2">I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct, to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.<br></td>
 		</tr>
 		<tr>
-			<td colspan="2"><font size='2'>I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</font></td>
+			<td colspan="2">I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.<br /></td>
 		</tr>
 		<tr>
-			<td valign="top"><font size='2'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-			<td valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></font></td> 
+			<td valign="top" style="font-size:14px">____________________________________<br />+Notary Public+<br /><br /><br />SEAL</td>
+			<td valign="top" style="font-size:14px">________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></td> 
 		</tr>
 	</table>
 	<? 
@@ -653,30 +641,30 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	$cord=$d1[packet_id]."-".$def."-".$serverID."%";
 	 echo "<tr>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
 		<tr>
-			<td colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Attempted Delivery<? if ($iID==$iiID){ echo " and Posting";} ?></u></b></td>
+			<td colspan="2" align="center" style="font-weight:bold; text-decoration:underline" height="30px" valign="top"><?=$amended?>Affidavit of Attempted Delivery<? if ($iID==$iiID){ echo " and Posting";} ?></td>
 		</tr>
 		<tr>
-			<td colspan="2" align="center" valign="top"><font size='4'><b><?=$result?></b></font></td>
+			<td colspan="2" align="center" style="font-weight:bold; font-size:20px;" height="30px" valign="top"><?=$result?></td>
 		</tr>
 		<tr>
-			<td colspan="2" align="left"><font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:</font></td>
+			<td colspan="2" align="left">Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:<br></td>
 		</tr>
 		<tr>
-			<td colspan="2" style="padding-left:20px;"><b><?=stripslashes($history)?></b></td>
+			<td colspan="2" style="font-weight:bold; padding-left:20px;"><?=stripslashes($history)?></td>
 		</tr>
 	<?
 	if ($iID == $iiID){
 	}else{
 	?>        
 		<tr>
-			<td colspan="2"><font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.</font></td>
+			<td colspan="2">I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.<br></td>
 		</tr>
 		<tr>
-			<td colspan="2"><font size='2'>I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</font></td>
+			<td colspan="2">I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.<br /></td>
 		</tr>
 		<tr>
-			<td valign="top"><font size='2'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-			<td valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></font></td> 
+			<td valign="top" style="font-size:14px">____________________________________<br />+Notary Public+<br /><br /><br />SEAL</td>
+			<td valign="top" style="font-size:14px">________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></td> 
 		</tr>
 	</table>
 	<? }
@@ -714,27 +702,27 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	?> 
 		<? echo "<tr>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
 		<tr>
-			<td colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Posting</u></b></td>
+			<td colspan="2" align="center" style="font-weight:bold; text-decoration:underline" height="30px" valign="top"><?=$amended?>Affidavit of Posting</td>
 		</tr>
 		<tr>
-			<td colspan="2" align="center" valign="top"><font size='4'><b><?=$result?></b></font></td>
+			<td colspan="2" align="center" style="font-weight:bold; font-size:20px;" height="30px" valign="top"><?=$result?></td>
 		</tr>
 		<tr>
-			<td colspan="2" align="left"><font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:</font></td>
+			<td colspan="2" align="left">Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:<br></td>
 		</tr>
 		<? } ?>
 		<tr>
-			<td colspan="2" style="padding-left:20px"><b><?=stripslashes($history2)?></b></td>
+			<td colspan="2" style="font-weight:bold; padding-left:20px"><?=stripslashes($history2)?></td>
 		</tr>       
 		<tr>
-			<td colspan="2"><font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct to the best of my knowledge, information and belief.</font></td>
+			<td colspan="2">I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct to the best of my knowledge, information and belief.<br></td>
 		</tr>
 		<tr>
-			<td colspan="2"><font size='2'>I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action.</font></td>
+			<td colspan="2">I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action.<br /></td>
 		</tr>
 		<tr>
-			<td valign="top"><font size='2'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-			<td valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></font></td> 
+			<td valign="top" style="font-size:14px">____________________________________<br />Notary Public<br /><br /><br />SEAL</td>
+			<td valign="top" style="font-size:14px">________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></td> 
 		</tr>
 	</table>
 	<? } 
@@ -767,26 +755,26 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	$cord=$d1[packet_id]."-".$def."-".$serverID."%";
 	 echo "<tr>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
 		<tr>
-			<td colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Mailing</u></b></td>
+			<td colspan="2" align="center" style="font-weight:bold; text-decoration:underline" height="30px" valign="top"><?=$amended?>Affidavit of Mailing</td>
 		</tr>
 		<tr>
-			<td colspan="2" align="center" valign="top"><font size='4'><b><?=$result?></b></font></td>
+			<td colspan="2" align="center" style="font-weight:bold; font-size:20px;" height="30px" valign="top"><?=$result?></td>
 		</tr>
 		<tr>
-			<td colspan="2" align="left"><font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:</font></td>
+			<td colspan="2" align="left">Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:<br></td>
 		</tr>
 		<tr>
-			<td colspan="2" style="padding-left:20px"><b><?=stripslashes($history3)?></b></td>
+			<td colspan="2" style="font-weight:bold; padding-left:20px"><?=stripslashes($history3)?></td>
 		</tr>      
 		<tr <? if($noMail == 1 && !$_GET[mail]){ echo 'class="dim"';}?>>
-			<td colspan="2"><font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct to the best of my knowledge, information and belief.  And that I mailed the above papers under section 14-209(b) to <?=strtoupper($d1["name$def"])?>.</font></td>
+			<td colspan="2">I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct to the best of my knowledge, information and belief.  And that I mailed the above papers under section 14-209(b) to <?=strtoupper($d1["name$def"])?>.<br></td>
 		</tr>
 		<tr <? if($noMail == 1 && !$_GET[mail]){ echo 'class="dim"';}?>>
-			<td colspan="2"><font size='2'>I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action.</font></td>
+			<td colspan="2">I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action.<br /></td>
 		</tr>
 		<tr <? if($noMail == 1 && !$_GET[mail]){ echo 'class="dim"';}?>>
-			<td valign="top"><font size='2'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-			<td valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></font></td> 
+			<td valign="top" style="font-size:14px">____________________________________<br />+Notary Public+<br /><br /><br />SEAL</td>
+			<td valign="top" style="font-size:14px">________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></td> 
 		</tr>
 		<tr>
 			<td colspan="2" style="padding-left:20px"><?=stripslashes($history4)?></td>
@@ -830,29 +818,29 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	?> 
 	<? echo "<tr>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
 		<tr>
-			<td colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Personal Delivery</u></b></td>
+			<td colspan="2" align="center" style="font-weight:bold; text-decoration:underline" height="30px" valign="top"><?=$amended?>Affidavit of Personal Delivery</td>
 		</tr>
 		<tr>
-			<td colspan="2" align="center" valign="top"><font size='4'><b><?=$result?></b></font></td>
+			<td colspan="2" align="center" style="font-weight:bold; font-size:20px;" height="30px" valign="top"><?=$result?></td>
 		</tr>
 		<tr>
-			<td colspan="2" align="left"><font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:</font></td>
+			<td colspan="2" align="left">Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:<br></td>
 		</tr>
 	<? if ($residentDesc){
 		$desc=strtoupper(str_replace('CO-A BORROWER IN THE ABOVE-REFERENCED CASE', 'A BORROWER IN THE ABOVE-REFERENCED CASE', str_replace('BORROWER','A BORROWER IN THE ABOVE-REFERENCED CASE', attorneyCustomLang($d1[attorneys_id],strtoupper($residentDesc)))));
 	}?>
 		<tr>
-			<td colspan="2" style="padding-left:20px; padding-top:20px; padding-bottom:20px; line-height:2;"><font size='4'><b><?=stripslashes($delivery)?></b></font></td>
+			<td colspan="2" style="font-weight:bold; font-size:14px; padding-left:20px; padding-top:20px; padding-bottom:20px; line-height:2;"><?=stripslashes($delivery)?></td>
 		</tr>       
 		<tr>
-			<td colspan="2"><font size='2'>I solemnly affirm under the penalties of perjury that the contents of <? if ($type == 'non'){ ?>section (i) of <? }?>this <?=strtolower($amended)?>affidavit are true and correct to the best of my knowledge, information and belief<? if (($type == 'pd' && $nondef == '1') || ($type == 'pd' && $d1[packet_id] >= "10000")){?>, and that I served<? if (($type == 'pd' && $nondef == '1') && (strpos($delivery,"USUAL PLACE OF ABODE") || strpos($delivery,"RESIDENTIAL PROPERTY"))){ ?> at the usual place of abode<? } ?> the <?=$addlDocs?> and other papers to <? if ($resident){ echo strtoupper($resident);}else{ echo '[PERSON SERVED]';}?>, <? if ($residentDesc){echo $desc;}else{ echo '[RELATION TO DEFENDANT]';}?><? if ($serveAddress){ echo ', at '.$serveAddress;}?><? }elseif($type == 'pd' && $nondef != '1'){?>, and that I served the <?=$addlDocs?> and other papers to <?=strtoupper($d1["name$def"])?><? if ($serveAddress){ echo ', at '.strtoupper($serveAddress);}?><? } ?>.</font></td>
+			<td colspan="2">I solemnly affirm under the penalties of perjury that the contents of <? if ($type == 'non'){ ?>section (i) of <? }?>this <?=strtolower($amended)?>affidavit are true and correct to the best of my knowledge, information and belief<? if (($type == 'pd' && $nondef == '1') || ($type == 'pd' && $d1[packet_id] >= "10000")){?>, and that I served<? if (($type == 'pd' && $nondef == '1') && (strpos($delivery,"USUAL PLACE OF ABODE") || strpos($delivery,"RESIDENTIAL PROPERTY"))){ ?> at the usual place of abode<? } ?> the <?=$addlDocs?> and other papers to <? if ($resident){ echo strtoupper($resident);}else{ echo '[PERSON SERVED]';}?>, <? if ($residentDesc){echo $desc;}else{ echo '[RELATION TO DEFENDANT]';}?><? if ($serveAddress){ echo ', at '.$serveAddress;}?><? }elseif($type == 'pd' && $nondef != '1'){?>, and that I served the <?=$addlDocs?> and other papers to <?=strtoupper($d1["name$def"])?><? if ($serveAddress){ echo ', at '.strtoupper($serveAddress);}?><? } ?>.<br><br /></td>
 		</tr>
 		<tr>
-			<td colspan="2"><font size='2'>I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action.</font></td>
+			<td colspan="2">I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action.<br /></td>
 		</tr>
 		<tr>
-			<td valign="top"><font size='2'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-			<td valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></font></td> 
+			<td valign="top" style="font-size:14px">____________________________________<br />Notary Public<br /><br /><br />SEAL</td>
+			<td valign="top" style="font-size:14px">________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></td> 
 		</tr>
 	</table>
 	<? 
@@ -905,66 +893,126 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	$count2=0;
 	$currentCounter=0;
 	while($count2 < $defs){$count2++;
-		if ($pagee["$count2"] != ''){
-			$currentCounter++;
-			if (($count2==$defendant || $defendant=="ALL" || $defendant=="SERVER") && ($level=='Operations' || $iIDe==$user_id) && ($defendant != "MAIL")){
-				echo str_replace("[PAGE]","Set 1 (Affidavit $currentCounter of $totalPages)",$pagee["$count2"]);
+        if ($pagee["$count2"] != ''){
+            $currentCounter++;
+            if (($count2==$defendant || $defendant=="ALL" || $defendant=="SERVER") && ($level=='Operations' || $iIDe==$user_id) && ($defendant != "MAIL")){
+                echo str_replace("[PAGE]","Set 1 (Affidavit $currentCounter of $totalPages)",$pagee["$count2"]);
+                error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Affidavits for OTD$packet, DEF: $count2, Page E ID [$iIDe] \n",3,"/logs/debug.log");
+            }else{
+error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Affidavits for OTD$packet, DEF: $count2, Page E ID [$iIDe]-NO DISPLAY: defendant $defendant | level $level | user_id $user_id \n",3,"/logs/debug.log");
+}
+        }else{
+error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Affidavits for OTD$packet, DEF: $count2, Page E EMPTY \n",3,"/logs/debug.log");
+}
+        if ($paged["$count2"] != ''){
+            $currentCounter++;
+            if (($count2==$defendant || $defendant=="ALL" || $defendant=="SERVER") && ($level=='Operations' || $iIDd==$user_id) && ($defendant != "MAIL")){
+                echo str_replace("[PAGE]","Set 1 (Affidavit $currentCounter of $totalPages)",$paged["$count2"]);
+                error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Affidavits for OTD$packet, DEF: $count2, Page D ID [$iIDd] \n",3,"/logs/debug.log");
+            }else{
+error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Affidavits for OTD$packet, DEF: $count2, Page D ID [$iIDd]-NO DISPLAY: defendant $defendant | level $level | user_id $user_id \n",3,"/logs/debug.log");
+}
+        }else{
+error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Affidavits for OTD$packet, DEF: $count2, Page D EMPTY \n",3,"/logs/debug.log");
+}
+        if ($pagec["$count2"] != ''){
+            $currentCounter++;
+            if (($count2==$defendant || $defendant=="ALL" || $defendant=="SERVER") && ($level=='Operations' || $iIDc==$user_id) && ($defendant != "MAIL")){
+                echo str_replace("[PAGE]","Set 1 (Affidavit $currentCounter of $totalPages)",$pagec["$count2"]);
+                error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Affidavits for OTD$packet, DEF: $count2, Page C ID [$iIDc] \n",3,"/logs/debug.log");
+            }else{
+error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Affidavits for OTD$packet, DEF: $count2, Page C ID [$iIDc]-NO DISPLAY: defendant $defendant | level $level | user_id $user_id \n",3,"/logs/debug.log");
+}
+        }else{
+error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Affidavits for OTD$packet, DEF: $count2, Page C EMPTY \n",3,"/logs/debug.log");
+}
+        if ($pageb["$count2"] != ''){
+            $currentCounter++;
+            if (($count2==$defendant || $defendant=="ALL" || $defendant=="SERVER") && ($level=='Operations' || $iIDb==$user_id) && ($defendant != "MAIL")){
+                echo str_replace("[PAGE]","Set 1 (Affidavit $currentCounter of $totalPages)",$pageb["$count2"]);
+                error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Affidavits for OTD$packet, DEF: $count2, Page B ID [$iIDb] \n",3,"/logs/debug.log");
+            }else{
+error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Affidavits for OTD$packet, DEF: $count2, Page B ID [$iIDb]-NO DISPLAY: defendant $defendant | level $level | user_id $user_id \n",3,"/logs/debug.log");
+}
+        }else{
+error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Affidavits for OTD$packet, DEF: $count2, Page B EMPTY \n",3,"/logs/debug.log");
+}
+        if ($pagea["$count2"] != ''){
+            $currentCounter++;
+            if (($count2==$defendant || $defendant=="ALL" || $defendant=="SERVER") && ($level=='Operations' || $iIDa==$user_id) && ($defendant != "MAIL")){
+                echo str_replace("[PAGE]","Set 1 (Affidavit $currentCounter of $totalPages)",$pagea["$count2"]);
+                error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Affidavits for OTD$packet, DEF: $count2, Page A ID [$iIDa] \n",3,"/logs/debug.log");
+            }else{
+error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Affidavits for OTD$packet, DEF: $count2, Page A ID [$iIDa]-NO DISPLAY: defendant $defendant | level $level | user_id $user_id \n",3,"/logs/debug.log");
+}
+        }else{
+error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Affidavits for OTD$packet, DEF: $count2, Page A EMPTY \n",3,"/logs/debug.log");
+}
+        if ($pageI["$count2"] != ''){
+            $currentCounter++;
+            if (($count2==$defendant || $defendant=="ALL" || $defendant=="SERVER") && ($level=='Operations' || $iID==$user_id) && ($defendant != "MAIL")){
+                echo str_replace("[PAGE]","Set 1 (Affidavit $currentCounter of $totalPages)",$pageI["$count2"]);
+                error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Affidavits for OTD$packet, DEF: $count2, Page I ID [$iID] \n",3,"/logs/debug.log");
+			}elseif($iID == ''){
+				error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Affidavits for OTD$packet, DEF: $count2, iID EMPTY \n",3,"/logs/debug.log");
+				$iID=$iID2["$count2"];
+				if($iID == ''){
+					$iID=$d1[server_id];
+				}
+				if (($count2==$defendant || $defendant=="ALL" || $defendant=="SERVER") && ($level=='Operations' || $iID==$user_id) && ($defendant != "MAIL")){
+					echo str_replace("[PAGE]","Set 1 (Affidavit $currentCounter of $totalPages)",$pageI["$count2"]);
+					error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Affidavits for OTD$packet, DEF: $count2, Page I ID [$iID] \n",3,"/logs/debug.log");
+				}else{
+					error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Affidavits for OTD$packet, DEF: $count2, Page I ID [$iID]-NO DISPLAY: defendant $defendant | level $level | user_id $user_id \n",3,"/logs/debug.log");
+				}
+            }else{
+error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Affidavits for OTD$packet, DEF: $count2, Page I ID [$iID]-NO DISPLAY: defendant $defendant | level $level | user_id $user_id \n",3,"/logs/debug.log");
 			}
+		}else{
+			error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Affidavits for OTD$packet, DEF: $count2, Page I EMPTY \n",3,"/logs/debug.log");
 		}
-		if ($paged["$count2"] != ''){
-			$currentCounter++;
-			if (($count2==$defendant || $defendant=="ALL" || $defendant=="SERVER") && ($level=='Operations' || $iIDd==$user_id) && ($defendant != "MAIL")){
-				echo str_replace("[PAGE]","Set 1 (Affidavit $currentCounter of $totalPages)",$paged["$count2"]);
-			}
-		}
-		if ($pagec["$count2"] != ''){
-			$currentCounter++;
-			if (($count2==$defendant || $defendant=="ALL" || $defendant=="SERVER") && ($level=='Operations' || $iIDc==$user_id) && ($defendant != "MAIL")){
-				echo str_replace("[PAGE]","Set 1 (Affidavit $currentCounter of $totalPages)",$pagec["$count2"]);
-			}
-		}
-		if ($pageb["$count2"] != ''){
-			$currentCounter++;
-			if (($count2==$defendant || $defendant=="ALL" || $defendant=="SERVER") && ($level=='Operations' || $iIDb==$user_id) && ($defendant != "MAIL")){
-				echo str_replace("[PAGE]","Set 1 (Affidavit $currentCounter of $totalPages)",$pageb["$count2"]);
-			}
-		}
-		if ($pagea["$count2"] != ''){
-			$currentCounter++;
-			if (($count2==$defendant || $defendant=="ALL" || $defendant=="SERVER") && ($level=='Operations' || $iIDa==$user_id) && ($defendant != "MAIL")){
-				echo str_replace("[PAGE]","Set 1 (Affidavit $currentCounter of $totalPages)",$pagea["$count2"]);
-			}
-		}
-		if ($pageI["$count2"] != ''){
-			$currentCounter++;
-			if (($count2==$defendant || $defendant=="ALL" || $defendant=="SERVER") && ($level=='Operations' || $iID==$user_id) && ($defendant != "MAIL")){
-				echo str_replace("[PAGE]","Set 1 (Affidavit $currentCounter of $totalPages)",$pageI["$count2"]);
-			}
-		}
-		if ($pageII["$count2"] != ''){
-			//if posting server also made attempt(s), do nothing
-			if ($iID==$iiID){
-			}else{
-			//otherwise increase counter
-				$currentCounter++;
-			}
-			if (($count2==$defendant || $defendant=="ALL" || $defendant=="SERVER") && ($level=='Operations' || $iiID==$user_id) && ($defendant != "MAIL")){
-				echo str_replace("[PAGE]","Set 1 (Affidavit $currentCounter of $totalPages)",$pageII["$count2"]);
-			}
-		}
-		if ($pageIII["$count2"] != ''){
-			$currentCounter++;
-			if (($count2==$defendant || $defendant=="ALL" || $defendant=="MAIL") && ($level=='Operations') && ($defendant != "SERVER")){
-				echo str_replace("[PAGE]","Set 1 (Affidavit $currentCounter of $totalPages)",$pageIII["$count2"]);
-			}
-		}
-		if ($pagePD["$count2"] != ''){
-			$currentCounter++;
-			if (($count2==$defendant || $defendant=="ALL" || $defendant=="SERVER") && ($level=='Operations' || $PDID["$count2"]==$user_id) && ($defendant != "MAIL")){
-				echo str_replace("[PAGE]","Set 1 (Affidavit $currentCounter of $totalPages)",$pagePD["$count2"]);
-			}
-		}
-	}
+        if ($pageII["$count2"] != ''){
+            //if posting server also made attempt(s), do nothing
+            if ($iID==$iiID){
+            }else{
+            //otherwise increase counter
+                $currentCounter++;
+				if ($iiID=='' && $iID != ''){
+					$iiID=$iiID2["$count2"];
+				}
+            }
+            if (($count2==$defendant || $defendant=="ALL" || $defendant=="SERVER") && ($level=='Operations' || $iiID==$user_id) && ($defendant != "MAIL")){
+                echo str_replace("[PAGE]","Set 1 (Affidavit $currentCounter of $totalPages)",$pageII["$count2"]);
+                error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Affidavits for OTD$packet, DEF: $count2, Page II ID [$iiID] \n",3,"/logs/debug.log");
+            }else{
+error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Affidavits for OTD$packet, DEF: $count2, Page II ID [$iiID]-NO DISPLAY: defendant $defendant | level $level | user_id $user_id \n",3,"/logs/debug.log");
+}
+        }else{
+error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Affidavits for OTD$packet, DEF: $count2, Page II EMPTY \n",3,"/logs/debug.log");
+}
+        if ($pageIII["$count2"] != ''){
+            $currentCounter++;
+            if (($count2==$defendant || $defendant=="ALL" || $defendant=="MAIL") && ($level=='Operations') && ($defendant != "SERVER")){
+                echo str_replace("[PAGE]","Set 1 (Affidavit $currentCounter of $totalPages)",$pageIII["$count2"]);
+                error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Affidavits for OTD$packet, DEF: $count2, Page III ID [$iiiID] \n",3,"/logs/debug.log");
+            }else{
+error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Affidavits for OTD$packet, DEF: $count2, Page III ID [$iiiID]-NO DISPLAY: defendant $defendant | level $level | user_id $user_id \n",3,"/logs/debug.log");
+}
+        }else{
+error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Affidavits for OTD$packet, DEF: $count2, Page III EMPTY \n",3,"/logs/debug.log");
+}
+        if ($pagePD["$count2"] != ''){
+            $currentCounter++;
+            if (($count2==$defendant || $defendant=="ALL" || $defendant=="SERVER") && ($level=='Operations' || $PDID["$count2"]==$user_id) && ($defendant != "MAIL")){
+                echo str_replace("[PAGE]","Set 1 (Affidavit $currentCounter of $totalPages)",$pagePD["$count2"]);
+                error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Affidavits for OTD$packet, DEF: $count2, Page PD ID [".$PDID["$count2"]."] \n",3,"/logs/debug.log");
+            }else{
+error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Affidavits for OTD$packet, DEF: $count2, Page PD ID [".$PDID["$count2"]."]-NO DISPLAY: defendant $defendant | level $level | user_id $user_id \n",3,"/logs/debug.log");
+}
+        }else{
+error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Affidavits for OTD$packet, DEF: $count2, Page PD EMPTY \n",3,"/logs/debug.log");
+}
+    }
 	$count2=0;
 	$currentCounter=0;
 	while($count2 < $defs){$count2++;
@@ -1030,8 +1078,16 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	}
 }
 //execute affidavit code depending on inputs
-$level='Operations';
-$user_id='1';
+if ($_GET[level]){
+	$level=$_GET[level];
+}else{
+	$level=$_COOKIE[psdata][level];
+}
+if ($_GET[user_id]){
+	$user_id=$_GET[user_id];
+}else{
+	$user_id=$_COOKIE[psdata][user_id];
+}
 //if $_GET[server], determine file range
 if ($_GET[server]){
 	$serveID=$_GET[server];
@@ -1042,15 +1098,15 @@ if ($_GET[server]){
 			if ($stop < $start){
 				echo "<br><br><br><center><h1 style='color:#FF0000; font-size:48px;'>THAT RANGE OF AFFIDAVITS CANNOT BE DISPLAYED.</h1></center>";
 			}
-			$q10="SELECT packet_id FROM ps_packets where (server_id='$serveID' OR server_ida='$serveID' OR server_idb='$serveID' OR server_idc='$serveID' OR server_idd='$serveID' OR server_ide='$serveID') AND packet_id >= '$start' AND packet_id <= '$stop' AND process_status <> 'CANCELLED' AND affidavit_status='SERVICE CONFIRMED' AND filing_status <> 'PREP TO FILE' AND filing_status <> 'AWAITING CASE NUMBER' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'SEND TO CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS'";
+			$q10="SELECT packet_id FROM ps_packets where (server_id='$serveID' OR server_ida='$serveID' OR server_idb='$serveID' OR server_idc='$serveID' OR server_idd='$serveID' OR server_ide='$serveID') AND packet_id >= '$start' AND packet_id <= '$stop' AND process_status <> 'CANCELLED' AND affidavit_status='SERVICE CONFIRMED' AND filing_status <> 'PREP TO FILE' AND filing_status <> 'AWAITING CASE NUMBER' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'SEND TO CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND affidavit_status2 <> 'AWAITING MAILING'";
 		}else{
-			$q10="SELECT packet_id FROM ps_packets where (server_id='$serveID' OR server_ida='$serveID' OR server_idb='$serveID' OR server_idc='$serveID' OR server_idd='$serveID' OR server_ide='$serveID') AND packet_id >= '$start' AND process_status <> 'CANCELLED' AND affidavit_status='SERVICE CONFIRMED' AND filing_status <> 'PREP TO FILE' AND filing_status <> 'AWAITING CASE NUMBER' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'SEND TO CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS'";
+			$q10="SELECT packet_id FROM ps_packets where (server_id='$serveID' OR server_ida='$serveID' OR server_idb='$serveID' OR server_idc='$serveID' OR server_idd='$serveID' OR server_ide='$serveID') AND packet_id >= '$start' AND process_status <> 'CANCELLED' AND affidavit_status='SERVICE CONFIRMED' AND filing_status <> 'PREP TO FILE' AND filing_status <> 'AWAITING CASE NUMBER' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'SEND TO CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND affidavit_status2 <> 'AWAITING MAILING'";
 		}
 	}else{
 		if ($_GET[packet]){
 			$q10="SELECT packet_id FROM ps_packets where packet_id='$_GET[packet]'";
 		}else{
-			$q10="SELECT packet_id FROM ps_packets where (server_id='$serveID' OR server_ida='$serveID' OR server_idb='$serveID' OR server_idc='$serveID' OR server_idd='$serveID' OR server_ide='$serveID') AND process_status <> 'CANCELLED' AND affidavit_status='SERVICE CONFIRMED' AND filing_status <> 'PREP TO FILE' AND filing_status <> 'AWAITING CASE NUMBER' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'SEND TO CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS'";
+			$q10="SELECT packet_id FROM ps_packets where (server_id='$serveID' OR server_ida='$serveID' OR server_idb='$serveID' OR server_idc='$serveID' OR server_idd='$serveID' OR server_ide='$serveID') AND process_status <> 'CANCELLED' AND affidavit_status='SERVICE CONFIRMED' AND filing_status <> 'PREP TO FILE' AND filing_status <> 'AWAITING CASE NUMBER' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'SEND TO CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND affidavit_status2 <> 'AWAITING MAILING'";
 		}
 	}
 	$r10=@mysql_query($q10) or die ("Query: $q10<br>".mysql_error());
@@ -1079,5 +1135,10 @@ if ($_GET[server]){
 	//else display all
 	makeAffidavit($_GET[packet],"ALL",$level,$user_id);
 }
-error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[packet])."] [end ob]  \n", 3, '/logs/fail.log');
+if ($_GET['autoPrint'] == 1){
+echo "<script>
+if (window.self) window.print();
+self.close();
+</script>";
+}
 ?>
