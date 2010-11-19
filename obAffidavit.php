@@ -262,7 +262,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	$header="<td colspan='2' align='center' style='font-variant:small-caps;'><font size='5'>State of Maryland</font></td></tr>
 		<tr><td colspan='2' align='center'><font size='4'>Circuit Court for ".$court."</font></td></tr>
 		<tr></tr>
-		<tr><td class='a'><font size='2'".$plaintiff."<br><small>_____________________<br /><em>Plaintiff</em></small><br /><br />v.<br /><br />";
+		<tr><td class='a'><font size='2'>".$plaintiff."<br><small>_____________________<br /><em>Plaintiff</em></small><br /><br />v.<br /><br />";
 			if ($d1[onAffidavit1]=='checked'){$header .= strtoupper($d1['name1']).'<br>';}
 			if ($d1['name2'] && $d1[onAffidavit2]=='checked'){$header .= strtoupper($d1['name2']).'<br>';}
 			if ($d1['name3'] && $d1[onAffidavit3]=='checked'){$header .= strtoupper($d1['name3']).'<br>';}
