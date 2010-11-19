@@ -259,10 +259,10 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 		$type = 'non';
 	}
 	// hard code
-	$header="<td colspan='2' align='center' style='font-variant:small-caps;'><font size='6'>State of Maryland</font></td></tr>
-		<tr><td colspan='2' align='center'><font size='5'>Circuit Court for ".$court."</font></td></tr>
+	$header="<td colspan='2' align='center' style='font-variant:small-caps;'><font size='5'>State of Maryland</font></td></tr>
+		<tr><td colspan='2' align='center'><font size='4'>Circuit Court for ".$court."</font></td></tr>
 		<tr></tr>
-		<tr><td class='a'>".$plaintiff."<br><small>_____________________<br /><em>Plaintiff</em></small><br /><br />v.<br /><br />";
+		<tr><td class='a'><font size='2'".$plaintiff."<br><small>_____________________<br /><em>Plaintiff</em></small><br /><br />v.<br /><br />";
 			if ($d1[onAffidavit1]=='checked'){$header .= strtoupper($d1['name1']).'<br>';}
 			if ($d1['name2'] && $d1[onAffidavit2]=='checked'){$header .= strtoupper($d1['name2']).'<br>';}
 			if ($d1['name3'] && $d1[onAffidavit3]=='checked'){$header .= strtoupper($d1['name3']).'<br>';}
@@ -271,17 +271,17 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 			if ($d1['name6'] && $d1[onAffidavit6]=='checked'){$header .= strtoupper($d1['name6']).'<br>';}
 			$header .=strtoupper($d1['address1']).'<br>';
 			$header .=strtoupper($d1['city1']).', '.strtoupper($d1['state1']).' '.$d1['zip1'].'<br>';
-			$header .= "<small>_____________________<br /><em>Defendant</em></small></td>
-				<td align='right' valign='top' style='padding-left:200px; width:200px' nowrap='nowrap'><div style='border:solid 1px #666666;'><center><font size='6'>Case Number<br />&nbsp;".str_replace(0,'&Oslash;',$d1[case_no])."</font></center></div>";
+			$header .= "<small>_____________________<br /><em>Defendant</em></small></font></td>
+				<td align='right' valign='top' style='padding-left:200px; width:200px' nowrap='nowrap'><div style='border:solid 1px #666666;'><center><font size='5'>Case Number<br />&nbsp;".str_replace(0,'&Oslash;',$d1[case_no])."</font></center></div>";
 
 	if ($type == "non"){
 		$article = "14-209(b)";
 		$result = "MAILING AND POSTING";
 		if ($attempts != ''){
-				$history = "<div style='font-weight:300'><u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:</u></div>
+				$history = "<div style='font-weight:300'><u><font size='2'>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:</font></u></div>
 				".$attempts;
 			}elseif($attemptsa != ''){
-				$history = "<div style='font-weight:300'><u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:</u></div>
+				$history = "<div style='font-weight:300'><u><font size='2'>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:</font></u></div>
 				".$attemptsa;
 				$iID=$iIDa;
 			}
@@ -368,10 +368,10 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 		<table width="80%" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){ echo $dim;}?>>
 		<tr><?=$header?><IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=<?=$cord?>&width=300&height=40'><center>File Number: <?=$d1[client_file]?><br>[PAGE]</center></td></tr>
 		<tr>
-			<td colspan="2" align="center" height="30px" valign="top"><u><b><?=$amended?>Affidavit of Attempted Delivery<? if ($iID && !$iIDa && !$iIDb && !$iIDc && !$iIDd && !$iIDe){ echo " and Posting";}?></b></u></td>
+			<td colspan="2" align="center" valign="top"><u><b><?=$amended?>Affidavit of Attempted Delivery<? if ($iID && !$iIDa && !$iIDb && !$iIDc && !$iIDd && !$iIDe){ echo " and Posting";}?></b></u></td>
 		</tr>
 		<tr>
-			<td colspan="2" align="center" height="30px" valign="top"><font size='5'><b><?=$result?></font></b></td>
+			<td colspan="2" align="center" valign="top"><font size='4'><b><?=$result?></font></b></td>
 		</tr>
 		<tr>
 			<td colspan="2" align="left"><font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:</font></td>
@@ -425,10 +425,10 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	?>        
 		<? echo "<tr>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
 		<tr>
-			<td colspan="2" align="center" height="30px" valign="top"><u><b><?=$amended?>Affidavit of Attempted Delivery</b></u></td>
+			<td colspan="2" align="center" valign="top"><u><b><?=$amended?>Affidavit of Attempted Delivery</b></u></td>
 		</tr>
 		<tr>
-			<td colspan="2" align="center" height="30px" valign="top"><font size='5'><b><?=$result?></b></font></td>
+			<td colspan="2" align="center" valign="top"><font size='4'><b><?=$result?></b></font></td>
 		</tr>
 		<tr>
 			<td colspan="2" align="left"><font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:</font></td>
@@ -482,10 +482,10 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	?>
 		<? echo "<tr>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
 		<tr>
-			<td colspan="2" align="center" height="30px" valign="top"><b><u><?=$amended?>Affidavit of Attempted Delivery</u></b></td>
+			<td colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Attempted Delivery</u></b></td>
 		</tr>
 		<tr>
-			<td colspan="2" align="center" height="30px" valign="top"><font size='5'><b><?=$result?></b></font></td>
+			<td colspan="2" align="center" valign="top"><font size='4'><b><?=$result?></b></font></td>
 		</tr>
 		<tr>
 			<td colspan="2" align="left"><font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:</font></td>
@@ -540,10 +540,10 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	?>   
 		<? echo "<tr>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
 		<tr>
-			<td colspan="2" align="center" height="30px" valign="top"><b><u><?=$amended?>Affidavit of Attempted Delivery</u></b></td>
+			<td colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Attempted Delivery</u></b></td>
 		</tr>
 		<tr>
-			<td colspan="2" align="center" height="30px" valign="top"><font size='5'><b><?=$result?></b></font></td>
+			<td colspan="2" align="center" valign="top"><font size='4'><b><?=$result?></b></font></td>
 		</tr>
 		<tr>
 			<td colspan="2" align="left"><font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:</font></td>
@@ -598,10 +598,10 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	?>  
 		<? echo "<tr>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
 		<tr>
-			<td colspan="2" align="center" height="30px" valign="top"><b><u><?=$amended?>Affidavit of Attempted Delivery</u></b></td>
+			<td colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Attempted Delivery</u></b></td>
 		</tr>
 		<tr>
-			<td colspan="2" align="center" height="30px" valign="top"><font size='5'><b><?=$result?></b></font></td>
+			<td colspan="2" align="center" valign="top"><font size='4'><b><?=$result?></b></font></td>
 		</tr>
 		<tr>
 			<td colspan="2" align="left"><font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:</font></td>
@@ -653,10 +653,10 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	$cord=$d1[packet_id]."-".$def."-".$serverID."%";
 	 echo "<tr>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
 		<tr>
-			<td colspan="2" align="center" height="30px" valign="top"><b><u><?=$amended?>Affidavit of Attempted Delivery<? if ($iID==$iiID){ echo " and Posting";} ?></u></b></td>
+			<td colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Attempted Delivery<? if ($iID==$iiID){ echo " and Posting";} ?></u></b></td>
 		</tr>
 		<tr>
-			<td colspan="2" align="center" height="30px" valign="top"><font size='5'><b><?=$result?></b></font></td>
+			<td colspan="2" align="center" valign="top"><font size='4'><b><?=$result?></b></font></td>
 		</tr>
 		<tr>
 			<td colspan="2" align="left"><font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:</font></td>
@@ -714,10 +714,10 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	?> 
 		<? echo "<tr>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
 		<tr>
-			<td colspan="2" align="center" height="30px" valign="top"><b><u><?=$amended?>Affidavit of Posting</u></b></td>
+			<td colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Posting</u></b></td>
 		</tr>
 		<tr>
-			<td colspan="2" align="center" height="30px" valign="top"><font size='5'><b><?=$result?></b></font></td>
+			<td colspan="2" align="center" valign="top"><font size='4'><b><?=$result?></b></font></td>
 		</tr>
 		<tr>
 			<td colspan="2" align="left"><font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:</font></td>
@@ -767,10 +767,10 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	$cord=$d1[packet_id]."-".$def."-".$serverID."%";
 	 echo "<tr>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
 		<tr>
-			<td colspan="2" align="center" height="30px" valign="top"><b><u><?=$amended?>Affidavit of Mailing</u></b></td>
+			<td colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Mailing</u></b></td>
 		</tr>
 		<tr>
-			<td colspan="2" align="center" height="30px" valign="top"><font size='5'><b><?=$result?></b></font></td>
+			<td colspan="2" align="center" valign="top"><font size='4'><b><?=$result?></b></font></td>
 		</tr>
 		<tr>
 			<td colspan="2" align="left"><font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:</font></td>
@@ -830,10 +830,10 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	?> 
 	<? echo "<tr>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
 		<tr>
-			<td colspan="2" align="center" height="30px" valign="top"><b><u><?=$amended?>Affidavit of Personal Delivery</u></b></td>
+			<td colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Personal Delivery</u></b></td>
 		</tr>
 		<tr>
-			<td colspan="2" align="center" height="30px" valign="top"><font size='5'><b><?=$result?></b></font></td>
+			<td colspan="2" align="center" valign="top"><font size='4'><b><?=$result?></b></font></td>
 		</tr>
 		<tr>
 			<td colspan="2" align="left"><font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:</font></td>
