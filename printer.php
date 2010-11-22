@@ -55,10 +55,7 @@ buildPage('mobile');
 buildPage('contractor');
 buildPage('client');
 if (file_exists('/logs/debug.log')) { buildPage('debug'); }
-if (file_exists('/logs/debug.log')) { talkLog('/logs/debug.log'); }
-
 if (file_exists('/logs/source.log')) { buildPage('source'); }
-if (file_exists('/logs/source.log')) { talkLog('/logs/source.log'); }
 buildPage('download');
 buildPage('response');
 buildPage('cache');
