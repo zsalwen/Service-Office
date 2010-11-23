@@ -92,7 +92,7 @@ function postDateImplode($date){
 	return $year.'-'.addZero($month).'-'.addZero($day)." $time";
 }
 function mailExplode($histID){
-	$qh="SELECT action_str FROM ps_history WHERE history_id='$histID'";
+	$qh="SELECT * FROM ps_history WHERE history_id='$histID'";
 	$rh=@mysql_query($qh) or die (mysql_error());
 	$dh=mysql_fetch_array($rh,MYSQL_ASSOC);
 	if ($dh != ''){
@@ -104,7 +104,7 @@ function mailExplode($histID){
 	return $return;
 }
 function attemptExplode($histID){
-	$qh="SELECT action_str, wizard FROM ps_history WHERE history_id='$histID'";
+	$qh="SELECT * FROM ps_history WHERE history_id='$histID'";
 	$rh=@mysql_query($qh) or die (mysql_error());
 	$dh=mysql_fetch_array($rh,MYSQL_ASSOC);
 	if ($dh != ''){
@@ -119,7 +119,7 @@ function attemptExplode($histID){
 	return $return;
 }
 function deliveryExplode($histID){
-	$qh="SELECT action_str FROM ps_history WHERE history_id='$histID'";
+	$qh="SELECT * FROM ps_history WHERE history_id='$histID'";
 	$rh=@mysql_query($qh) or die (mysql_error());
 	$dh=mysql_fetch_array($rh,MYSQL_ASSOC);
 	if ($dh != ''){
@@ -132,7 +132,7 @@ function deliveryExplode($histID){
 
 
 function EVmailExplode($histID){
-	$qh="SELECT action_str FROM evictionHistory WHERE history_id='$histID'";
+	$qh="SELECT * FROM evictionHistory WHERE history_id='$histID'";
 	$rh=@mysql_query($qh) or die (mysql_error());
 	$dh=mysql_fetch_array($rh,MYSQL_ASSOC);
 	if ($dh != ''){
@@ -144,7 +144,7 @@ function EVmailExplode($histID){
 	return $return;
 }
 function EVattemptExplode($histID){
-	$qh="SELECT wizard, action_str FROM evictionHistory WHERE history_id-'$histID'";
+	$qh="SELECT * FROM evictionHistory WHERE history_id-'$histID'";
 	$rh=@mysql_query($qh) or die (mysql_error());
 	$dh=mysql_fetch_array($rh,MYSQL_ASSOC);
 	if ($dh != ''){
@@ -157,12 +157,12 @@ function EVattemptExplode($histID){
 		}
 	}
 	if ($histID == 4824){
-		echo $dt[0];
+		echo $dh[action_str];
 	}
 	return $return;
 }
 function EVdeliveryExplode($histID){
-	$qh="SELECT action_str FROM evictionHistory WHERE history_id='$histID'";
+	$qh="SELECT * FROM evictionHistory WHERE history_id='$histID'";
 	$rh=@mysql_query($qh) or die (mysql_error());
 	$dh=mysql_fetch_array($rh,MYSQL_ASSOC);
 	if ($dh != ''){
