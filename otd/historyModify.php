@@ -96,9 +96,23 @@ function dateExplode($date){
 	$date=monthConvert($date[1])." ".$date[2].", ".$date[0];
 	return $date;
 }
-
-function getActionDate($histID){
-	$dt=trim(stripTime($histID));
+function getActionDate($histID,$str){
+	$q="SELECT wizard from ps_history WHERE history_id='$histID'";
+	$r=@mysql_query($q) or die(mysql_error());
+	$d=mysql_fetch_array($r,MYSQL_ASSOC);
+	if ($d[wizard] == 'MAILING DETAILS'){
+		$dateTime=explode(".</LI>",$str);
+		$dateTime=explode("BY FIRST CLASS MAIL ON ",$dateTime[0]);
+		$dateTime=$dateTime[1];
+	}elseif($d[wizard] == 'BORROWER' || $d[wizard] == 'NOT BORROWER'){
+		$dateTime=explode("DATE OF SERVICE: ",$str);
+		$dateTime=$dateTime[1];
+	}else{
+		$dateTime=explode("</LI>",$str);
+		$dateTime=explode("<BR>",$dateTime[1]);
+		$dateTime=$dateTime[0];
+	}
+	$dt=trim($dateTime;);
 	if (strpos($dt,"AT") !== false){
 		//dt with "AT" in middle, explode by " AT "
 		return dateImplode($dt);
@@ -135,7 +149,7 @@ if ($_POST[submit]){
 	$i2=0;
 	while ($i <= $_POST[count]){$i++;
 		if ($_POST["update$i"] == 1 && $_POST["delete$i"] != 'checked'){
-			$dt=getActionDate($_POST["history_id$i"]);
+			$dt=getActionDate($_POST["history_id$i"],$_POST["action_str$i"]);
 			echo "<script>alert('History ID: ".$_POST["history_id$i"]." | NEW actionDate: $dt | OLD actionDate: ".$_POST["actionDate$i"]."')</script>";
 			$q="UPDATE ps_history SET action_str='".addslashes($_POST["action_str$i"])."', serverID='".$_POST["serverID$i"]."', address='".$_POST["address$i"]."', resident='".$_POST["resident$i"]."', residentDesc='".addslashes($_POST["residentDesc$i"])."', onAffidavit='".$_POST["onAffidavit$i"]."' WHERE history_id='".$_POST["history_id$i"]."'";
 			$r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
