@@ -33,7 +33,7 @@ $r=@mysql_query("select LiveAffidavit from ps_packets where packet_id = '$id'");
 $d=mysql_fetch_array($r,MYSQL_ASSOC);
 $myFile = "$id.html";
 $fh = fopen($myFile, 'w') or die("can't open file");
-$LiveAffidavit=str_replace('&Oslash;','&#216;',$d[LiveAffidavit]);
+$LiveAffidavit=str_replace('&Oslash;','0',$d[LiveAffidavit]);
 fwrite($fh, $LiveAffidavit);
 fclose($fh);
 $command = 'python DocumentConverter.py /sandbox/staff/affidavitMaster/'.$id.'.html /sandbox/staff/affidavitMaster/'.$id.'.pdf';
