@@ -156,6 +156,9 @@ function EVattemptExplode($histID){
 			$return=dateImplode($dt[0]);
 		}
 	}
+	if ($histID == 4824){
+		echo $dt[0];
+	}
 	return $return;
 }
 function EVdeliveryExplode($histID){
@@ -192,7 +195,7 @@ function updateCO($co,$packet){
 
 
 $packet=3678;
-$q10a="SELECT * from ps_history WHERE packet_id > '$packet' ORDER BY history_id ASC";
+$q10a="SELECT * from ps_history WHERE packet_id > '$packet' AND actionDate='0000-00-00 00:00:00' ORDER BY history_id ASC";
 $r10a=@mysql_query($q10a) or die(mysql_error());
 while ($d10a=mysql_fetch_array($r10a, MYSQL_ASSOC)){
 	$dt='';
