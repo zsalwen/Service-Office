@@ -406,7 +406,7 @@ $EVdupCheck=EVdupCheck($d[client_file]);
 $otdStr=str_replace('data/service/orders/','PS_PACKETS/',$d[otd]);
 
 ?>
-	<div><?=$d[date_received]?><br> +<a href="/ev/order.php?packet=<?=$d[eviction_id]?>" target="_Blank"><?=$d[eviction_id]?></a> : <?=$d[client_file]?> : <?=$d[case_no]?><? if ($EVdupCheck == "class='duplicate'"){ echo EVdupList($d[client_file],$d[eviction_id]);} ?> <a href="<?=$otdStr?>" target="_Blank">PAPERS</a></div>
+	<div><?=$d[date_received]?><br> +<a href="/ev/order.php?packet=<?=$d[eviction_id]?>" target="_Blank"><?=$d[eviction_id]?></a> : <?=$d[client_file]?><?=webservice($d[client_file])?> : <?=$d[case_no]?><? if ($EVdupCheck == "class='duplicate'"){ echo EVdupList($d[client_file],$d[eviction_id]);} ?> <a href="<?=$otdStr?>" target="_Blank">PAPERS</a></div>
 <?
 }
 ?>
