@@ -136,14 +136,7 @@ function getActionDate($histID,$str){
 		return postDateImplode($dt." 00:00");
 	}
 }
-function isDT($value){
-	$value = trim($value); 
-	if (preg_match("/^\d{4}-\d{2}-\d{2} [0-2][0-3]:[0-5][0-9]:[0-5][0-9]$/", $value)) { 
-		return true; 
-	}else{
-		return false;
-	}
-}
+
 if ($_POST[id]){
 	$packet=$_POST[id];
 }else{
@@ -170,9 +163,9 @@ if ($_POST[submit]){
 		if ($_POST["update$i"] == 1 && $_POST["delete$i"] != 'checked'){
 			$dt=getActionDate($_POST["history_id$i"],$_POST["action_str$i"]);
 			$dtQ='';
-			if (isDT($dt) && ($dt != $_POST["actionDate$i"])){
-				echo "<script>alert('History ID: ".$_POST["history_id$i"]." | NEW actionDate: $dt | OLD actionDate: ".$_POST["actionDate$i"]."')</script>";
-				//$dtQ=", actionDate='$dt'";
+			if ($dt != $_POST["actionDate$i"]){
+				//echo "<script>alert('History ID: ".$_POST["history_id$i"]." | NEW actionDate: $dt | OLD actionDate: ".$_POST["actionDate$i"]."')</script>";
+				$dtQ=", actionDate='$dt'";
 			}else{
 				echo "<script>alert('$dt is not a valid datetime for History ID ".$_POST["history_id$i"].".')</script>";
 			}
