@@ -20,6 +20,82 @@ function stripTime($history){
 	}
 	return $dateTime;
 }
+function month2num($month){
+	if (strtoupper($month) == 'JANUARY' || $month == 1){
+		return '1';
+	}elseif (strtoupper($month) == 'FEBRUARY' || $month == 2){
+		return '2';
+	}elseif (strtoupper($month) == 'MARCH' || $month == 3){
+		return '3';
+	}elseif (strtoupper($month) == 'APRIL' || $month == 4){
+		return '4';
+	}elseif (strtoupper($month) == 'MAY' || $month == 5){
+		return '5'; 
+	}elseif (strtoupper($month) == 'JUNE' || $month == 6){
+		return '6';
+	}elseif (strtoupper($month) == 'JULY' || $month == 7){
+		return '7';
+	}elseif (strtoupper($month) == 'AUGUST' || $month == 8){
+		return '8';
+	}elseif (strtoupper($month) == 'SEPTEMBER' || $month == 9){
+		return '9';
+	}elseif (strtoupper($month) == 'OCTOBER' || $month == 10){
+		return '10';
+	}elseif (strtoupper($month) == 'NOVEMBER' || $month == 11){
+		return '11';
+	}elseif (strtoupper($month) == 'DECEMBER' || $month == 12){
+		return '12'; 
+	}else{
+		return $month;
+	}
+}
+function dateImplode($date){
+	$str=explode(' AT ',$date);
+	$time=$str[1];
+	$time=explode(' ',$time);
+	if ($time[1] == 'PM'){
+		$time=makePM($time[0].":00");
+	}else{
+		$time=$time[0].":00";
+	}
+	$date2=explode(' ',$str[0]);
+	$month=month2num(trim($date2[0]));
+	$day=str_replace(',','',$date2[1]);
+	$year=$date2[2];
+	return $year.'-'.addZero($month).'-'.addZero($day)." $time";
+}
+function postDateImplode($date){
+	$str=explode(' ',$date);
+	if ($str[4] == 'PM'){
+		$time=makePM($str[3].":00");
+	}else{
+		$time=$str[3].":00";
+	}
+	$month=month2num(trim($str[0]));
+	$day=str_replace(',','',$str[1]);
+	$year=$str[2];
+	return $year.'-'.addZero($month).'-'.addZero($day)." $time";
+}
+
+function dateExplode($date){
+	$date=explode('-',$date);
+	$date=monthConvert($date[1])." ".$date[2].", ".$date[0];
+	return $date;
+}
+
+function getActionDate($histID){
+	$dt=trim(stripTime($histID));
+	if (strpos($dt,"AT") !== false){
+		//dt with "AT" in middle, explode by " AT "
+		return dateImplode($dt);
+	}elseif(strpos($dt,":") !== false){
+		//dt with " " in middle, explode by " "
+		return postDateImplode($dt);
+	}else{
+		//just date
+		return dateExplode($dt);
+	}
+}
 if ($_POST[packet]){
 	$packet=$_POST[packet];
 }else{
@@ -45,6 +121,8 @@ if ($_POST[submit]){
 	$i2=0;
 	while ($i <= $_POST[count]){$i++;
 		if ($_POST["update$i"] == 1 && $_POST["delete$i"] != 'checked'){
+			$dt=getActionDate($_POST["history_id$i"]);
+			echo "<script>alert('History ID: ".$_POST["history_id$i"]." | NEW actionDate: $dt | OLD actionDate: ".$_POST["actionDate$i"]."')</script>";
 			$q="UPDATE ps_history SET action_str='".addslashes($_POST["action_str$i"])."', serverID='".$_POST["serverID$i"]."', address='".$_POST["address$i"]."', resident='".$_POST["resident$i"]."', residentDesc='".addslashes($_POST["residentDesc$i"])."', onAffidavit='".$_POST["onAffidavit$i"]."' WHERE history_id='".$_POST["history_id$i"]."'";
 			$r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
 			echo "<center style='background-color:#FFFFFF; font-size:20px;'>Entry ".$_POST["history_id$i"]." Modified</center>";
@@ -281,6 +359,7 @@ if ($i2 < 1){
 		<tr>
 			<td>
 			<input type="hidden" name="history_id<?=$i?>" value="<?=$d1[history_id]?>">
+			<input type="hidden" name="actionDate<?=$i?>" value="<?=$d1[actionDate]?>">
 			<input type="hidden" name="update<?=$i?>" value="0">
 			<textarea name="action_str<?=$i?>" rows="5" cols="63" onKeyDown="this.form.update<?=$i?>.value=1;"><?=stripslashes($d1[action_str]);?></textarea><br>
 			<? if($d1[wizard] === 'BORROWER' || $d1[wizard] === 'NOT BORROWER'){ ?>
