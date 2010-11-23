@@ -156,7 +156,7 @@ function EVattemptExplode($histID){
 			$return=dateImplode($dt[0]);
 		}
 	}
-	if ($histID == 4824){
+	if ($histID == 4824 || $histID == 826){
 		echo $dh[action_str];
 		echo "<br>".$dh[history_id];
 	}
