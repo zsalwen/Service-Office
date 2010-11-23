@@ -63,6 +63,19 @@ function month2num($month){
 		return $month;
 	}
 }
+function addZero($num){
+	if (strlen($num) == 1){
+		return "0".$num;
+	}else{
+		return $num;
+	}
+}
+function makePM($time){
+	$time=explode(':',$time);
+	$time[0]=$time[0]+12;
+	$time=implode(':',$time);
+	return $time;
+}
 function dateImplode($date){
 	$str=explode(' AT ',$date);
 	$time=$str[1];
