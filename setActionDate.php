@@ -144,7 +144,7 @@ function EVmailExplode($histID){
 	return $return;
 }
 function EVattemptExplode($histID){
-	$qh="SELECT * FROM evictionHistory WHERE history_id-'$histID'";
+	$qh="SELECT * FROM evictionHistory WHERE history_id='$histID'";
 	$rh=@mysql_query($qh) or die (mysql_error());
 	$dh=mysql_fetch_array($rh,MYSQL_ASSOC);
 	if ($dh[history_id] == $histID){
