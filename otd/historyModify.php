@@ -90,7 +90,6 @@ function postDateImplode($date){
 	$year=$str[2];
 	return $year.'-'.addZero($month).'-'.addZero($day)." $time";
 }
-
 function dateExplode($date){
 	$date=explode('-',$date);
 	$date=monthConvert($date[1])." ".$date[2].", ".$date[0];
@@ -121,7 +120,7 @@ function getActionDate($histID,$str){
 		return postDateImplode($dt);
 	}else{
 		//just date
-		return dateExplode($dt);
+		return postDateImplode($dt." 00:00");
 	}
 }
 if ($_POST[packet]){
