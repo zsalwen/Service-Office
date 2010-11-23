@@ -59,7 +59,7 @@ function makePM($time){
 	$time=explode(':',$time);
 	$time[0]=$time[0]+12;
 	if ($time[0] == 24){
-		$time[0]="00";
+		$time[0]=12;
 	}
 	$time=implode(':',$time);
 	return $time;
