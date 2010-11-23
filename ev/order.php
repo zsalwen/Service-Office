@@ -747,7 +747,7 @@ if (!strpos($otdStr,'mdwestserve.com')){
 		<td><a href="photoDisplay.php?packet=<?=$d[eviction_id]?>" target="preview"><?$photoCount=photoCount($d[eviction_id]); echo $photoCount;?> Photo<? if($photoCount != 1){echo "s";}?></a></td>
 	</tr>
 	<tr>
-		<td><a href="mailings.php?EV=<?=$d[eviction_id]?>" target="preview">Mailings</a><? 	if (webservice($d[client_file]) && ($d[attorneys_id] == 1)){ ?> | <a href="http://staff.mdwestserve.com/otd/webservice.php?fileNumber=<?=$d[client_file];?>" target="preview">Webservice Data</a><? }?></td>
+		<td><a href="mailings.php?EV=<?=$d[eviction_id]?>" target="preview">Mailings</a><? 	if (webservice($d[client_file]) && ($d[attorneys_id] == 1)){ ?> | <a href="http://staff.mdwestserve.com/ev/webservice.php?fileNumber=<?=$d[client_file];?>" target="preview">Webservice Data</a><? }?></td>
 	</tr>
 	<?
 $FC = trim(getPage("http://data.mdwestserve.com/findFC.php?clientFile=$d[client_file]", "MDWS File Copy for Eviction $d[eviction_id]", '5', ''));
@@ -1031,7 +1031,7 @@ Request Close<br>
 </table>
 <? if (webservice($d[client_file]) && ($d[attorneys_id] == 1)){
 		echo "<table align='center'><tr><td>";
-		include "http://staff.mdwestserve.com/otd/webservice.php?fileNumber=$d[client_file]";
+		include "http://staff.mdwestserve.com/ev/webservice.php?fileNumber=$d[client_file]";
 		echo "</td></tr></table>";
 	}
 ?>
