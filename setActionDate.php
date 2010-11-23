@@ -224,7 +224,7 @@ while ($d10a=mysql_fetch_array($r10a, MYSQL_ASSOC)){
 		echo "<div style='background-color:red;'>$d10a[history_id] :: OTD$d10a[packet_id] :: $d10a[wizard]</div>";
 	}
 }
-$q10b="SELECT * from evictionHistory WHERE ORDER BY history_id ASC";
+$q10b="SELECT * from evictionHistory ORDER BY history_id ASC";
 $r10b=@mysql_query($q10b) or die(mysql_error());
 while ($d10b=mysql_fetch_array($r10b, MYSQL_ASSOC)){
 	$dt='';
