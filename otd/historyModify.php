@@ -136,6 +136,14 @@ function getActionDate($histID,$str){
 		return postDateImplode($dt." 00:00");
 	}
 }
+function isDT($value){
+	$value = trim($value); 
+	if (preg_match("/^\d{4}-\d{2}-\d{2} [0-2][0-3]:[0-5][0-9]:[0-5][0-9]$/", $value)) { 
+		return true; 
+	}else{
+		return false;
+	}
+}
 if ($_POST[packet]){
 	$packet=$_POST[packet];
 }else{
@@ -162,7 +170,11 @@ if ($_POST[submit]){
 	while ($i <= $_POST[count]){$i++;
 		if ($_POST["update$i"] == 1 && $_POST["delete$i"] != 'checked'){
 			$dt=getActionDate($_POST["history_id$i"],$_POST["action_str$i"]);
-			echo "<script>alert('History ID: ".$_POST["history_id$i"]." | NEW actionDate: $dt | OLD actionDate: ".$_POST["actionDate$i"]."')</script>";
+			if (isDT($dt)){
+				echo "<script>alert('History ID: ".$_POST["history_id$i"]." | NEW actionDate: $dt | OLD actionDate: ".$_POST["actionDate$i"]."')</script>";
+			}else{
+				echo "<script>alert('$dt is not a valid datetime.')</script>";
+			}
 			$q="UPDATE ps_history SET action_str='".addslashes($_POST["action_str$i"])."', serverID='".$_POST["serverID$i"]."', address='".$_POST["address$i"]."', resident='".$_POST["resident$i"]."', residentDesc='".addslashes($_POST["residentDesc$i"])."', onAffidavit='".$_POST["onAffidavit$i"]."' WHERE history_id='".$_POST["history_id$i"]."'";
 			$r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
 			echo "<center style='background-color:#FFFFFF; font-size:20px;'>Entry ".$_POST["history_id$i"]." Modified</center>";
