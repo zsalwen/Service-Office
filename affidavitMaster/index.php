@@ -38,9 +38,10 @@ fwrite($fh, $LiveAffidavit);
 fclose($fh);
 $command = 'python DocumentConverter.py /sandbox/staff/affidavitMaster/'.$id.'.html /sandbox/staff/affidavitMaster/'.$id.'.pdf';
 $error = system($command,$result);
-//echo "<div>".$command."</div>";
-//echo "<div>".$error."</div>";
-//echo "<div>".$result."</div>";
+echo "<div>".$command."</div>";
+echo "<div>".$error."</div>";
+echo "<div>".$result."</div>";
+echo "<script>alert('!')</script>";
 header('Location: '.$id.'.pdf');
 }
 
