@@ -135,7 +135,7 @@ function EVmailExplode($histID){
 	$qh="SELECT * FROM evictionHistory WHERE history_id='$histID'";
 	$rh=@mysql_query($qh) or die (mysql_error());
 	$dh=mysql_fetch_array($rh,MYSQL_ASSOC);
-	if ($dh[eviction_id] != ''){
+	if ($dh[history_id] == $histID){
 		$action=explode('.</LI>',strtoupper($dh[action_str]));
 		$dt=explode('ON ',$action[0]);
 		$count=count($dt)-1;
@@ -147,7 +147,7 @@ function EVattemptExplode($histID){
 	$qh="SELECT * FROM evictionHistory WHERE history_id-'$histID'";
 	$rh=@mysql_query($qh) or die (mysql_error());
 	$dh=mysql_fetch_array($rh,MYSQL_ASSOC);
-	if ($dh[eviction_id] != ''){
+	if ($dh[history_id] == $histID){
 		$action=explode('</LI>',strtoupper($dh[action_str]));
 		$dt=explode('<BR>',$action[1]);
 		if ($dh[wizard] == 'POSTING DETAILS'){
@@ -166,7 +166,7 @@ function EVdeliveryExplode($histID){
 	$qh="SELECT * FROM evictionHistory WHERE history_id='$histID'";
 	$rh=@mysql_query($qh) or die (mysql_error());
 	$dh=mysql_fetch_array($rh,MYSQL_ASSOC);
-	if ($dh[eviction_id] != ''){
+	if ($dh[history_id] == $histID){
 		$action=explode('DATE OF SERVICE: ',strtoupper($dh[action_str]));
 		$dt=explode('<BR>',$action[1]);
 		$return=dateImplode($dt[0]);
