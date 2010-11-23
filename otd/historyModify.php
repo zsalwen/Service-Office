@@ -112,7 +112,7 @@ function getActionDate($histID,$str){
 		$dateTime=explode("<BR>",$dateTime[1]);
 		$dateTime=$dateTime[0];
 	}
-	$dt=trim($dateTime;);
+	$dt=trim($dateTime);
 	if (strpos($dt,"AT") !== false){
 		//dt with "AT" in middle, explode by " AT "
 		return dateImplode($dt);
