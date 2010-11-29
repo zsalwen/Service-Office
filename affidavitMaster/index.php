@@ -47,7 +47,8 @@ function pdfAD2($id){
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
 	$myFile = "$id.html";
 	$fh = fopen($myFile, 'w') or die("can't open file");
-	fwrite($fh, $d[LiveAffidavit]);
+	$LiveAffidavit=str_replace('&Oslash;','0',$d[LiveAffidavit]);
+	fwrite($fh, $LiveAffidavit);
 	fclose($fh);
 	passthru('/usr/local/bin/html2ps '.$id.'.html > '.$id.'.pcl');
 	$file = $id.'.pcl';
