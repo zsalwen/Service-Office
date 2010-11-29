@@ -51,6 +51,7 @@ function attorneyCustomLang($att,$str){
    in recent Gecko browsers */
    opacity: .25;
 }
+body, table {padding:0px;}
 td { font-variant:small-caps; font-size:12px;}
 td.a {font-size:14px;}
 td.b {font-size:24px;}
