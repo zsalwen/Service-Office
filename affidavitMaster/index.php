@@ -24,7 +24,7 @@ $myFile = "$id.html";
 $fh = fopen($myFile, 'w') or die("can't open file");
 fwrite($fh, $d[LiveAdHTML]);
 fclose($fh);
-$error = system('python DocumentConverter.py /sandbox/CORE/'.$id.'.html /sandbox/CORE/'.$id.'.doc',$result);
+$error = system('python DocumentConverter.py /gitbox/Service-Office/'.$id.'.html /gitbox/Service-Office/'.$id.'.doc',$result);
 header('Location: '.$id.'.doc');
 }
 */
@@ -35,7 +35,7 @@ $myFile = "$id.html";
 $fh = fopen($myFile, 'w') or die("can't open file");
 fwrite($fh, $d[LiveAffidavit]);
 fclose($fh);
-$command = 'python DocumentConverter.py /sandbox/staff/affidavitMaster/'.$id.'.html /sandbox/staff/affidavitMaster/'.$id.'.pdf';
+$command = 'python DocumentConverter.py /gitbox/Service-Office/affidavitMaster/'.$id.'.html /gitbox/Service-Office/affidavitMaster/'.$id.'.pdf';
 $error = system($command,$result);
 //echo "<div>".$command."</div>";
 //echo "<div>".$error."</div>";
