@@ -115,7 +115,7 @@ function card($user_id,$pay_start,$pay_end,$name){
 		<tr>
 			<td></td>
 			<td></td>
-			<td  style="text-align:right; border-top:solid; border-top-width:1px;font-variant:small-caps;" colspan='2' width="30%">TOTAL (EXCLUDING LUNCH HOURS): <?=$totalHours.' hours, '.$totalMins.' minutes';?></td>
+			<td  style="text-align:right; border-top:solid; border-top-width:1px;font-variant:small-caps;" colspan='2' width="30%">TOTAL: <?=$totalHours.' hours, '.$totalMins.' minutes';?></td>
 		</tr>
 	</table>
 <? }
