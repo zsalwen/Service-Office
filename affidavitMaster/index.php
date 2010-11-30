@@ -58,7 +58,7 @@ echo "<div>COMMAND: [".$command."]</div>";
 echo "<div>ERROR: [".$error."]</div>";
 echo "<div>RESULT: [".$result."]</div>";
 echo "<script>window.open('$id.pdf', '$_GET[id] PDF')</script>";
-header('Location: '.$id.'.pdf');
+//header('Location: '.$id.'.pdf');
 }
 /*
 if($_GET['doc']){
