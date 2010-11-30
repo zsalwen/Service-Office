@@ -55,10 +55,11 @@ function pdfAD2($id){
 	passthru('/usr/local/bin/html2ps '.$id.'.pcl > '.$id.'.html');
 	$command = 'python DocumentConverter.py /gitbox/Service-Office/affidavitMaster/'.$id.'.html /gitbox/Service-Office/affidavitMaster/'.$id.'.pdf';
 	$error = system($command,$result);
-	//echo "<div>".$command."</div>";
-	//echo "<div>".$error."</div>";
-	//echo "<div>".$result."</div>";
-	header('Location: '.$id.'.pdf');
+	echo "<div>".$command."</div>";
+	echo "<div>".$error."</div>";
+	echo "<div>".$result."</div>";
+	echo "<script>window.open('$id.pdf', '$_GET[id] PDF')<script>";
+	//header('Location: '.$id.'.pdf');
 }
 /*
 if($_GET['doc']){
@@ -175,7 +176,7 @@ a { text-decoration:none; color:#000; }
 <td <?=$mouseover2;?> valign="center" align="center"><a href="?id=<?=$_GET[id];?>&doc=1" target="_Blank">Open .doc</a></td>
 -->
 <td <?=$mouseover2;?> valign="center" align="center"><a href="?id=<?=$_GET[id];?>&pdf=1" target="_Blank">Open .pdf</a></td>
-<td <?=$mouseover2;?> valign="center" align="center"><a href="?id=<?=$_GET[id];?>&pdf2=1" target="_Blank">Open PCL->.pdf</a></td>
+<td <?=$mouseover2;?> valign="center" align="center"><a href="?id=<?=$_GET[id];?>&pdf2=1">Open PCL->.pdf</a></td>
 <!--
 <td <?=$mouseover3;?> valign="center" align="center"><a href="bursonSendToPublisher.php?auction=<?=$_GET[id];?>" target="_Blank">Send To Paper</a></td>
 <td <?=$mouseover3;?> valign="center" align="center"><a href="SendToClient.php?auction=<?=$_GET[id];?>" target="_Blank">Send To Client</a></td>
