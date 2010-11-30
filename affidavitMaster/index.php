@@ -43,22 +43,22 @@ $error = system($command,$result);
 header('Location: '.$id.'.pdf');
 }
 function pdfAD2($id){
-	$r=@mysql_query("select LiveAffidavit from ps_packets where packet_id = '$id'");
-	$d=mysql_fetch_array($r,MYSQL_ASSOC);
-	$myFile = "$id.html";
-	$fh = fopen($myFile, 'w') or die("can't open file");
-	fwrite($fh, $d[LiveAffidavit]);
-	fclose($fh);
-	passthru('/usr/local/bin/html2ps '.$id.'.html > '.$id.'.pcl');
-	$file = $id.'.pcl';
-	passthru('/usr/local/bin/html2ps '.$id.'.pcl > '.$id.'.html');
-	$command = 'python DocumentConverter.py /gitbox/Service-Office/affidavitMaster/'.$id.'.html /gitbox/Service-Office/affidavitMaster/'.$id.'.pdf';
-	$error = system($command,$result);
-	echo "<div>".$command."</div>";
-	echo "<div>".$error."</div>";
-	echo "<div>".$result."</div>";
-	echo "<script>window.open('$id.pdf', '$_GET[id] PDF')</script>";
-	//header('Location: '.$id.'.pdf');
+$r=@mysql_query("select LiveAffidavit from ps_packets where packet_id = '$id'");
+$d=mysql_fetch_array($r,MYSQL_ASSOC);
+$myFile = "$id.html";
+$fh = fopen($myFile, 'w') or die("can't open file");
+fwrite($fh, $d[LiveAffidavit]);
+fclose($fh);
+passthru('/usr/local/bin/html2ps '.$id.'.html > '.$id.'.pcl');
+$file = $id.'.pcl';
+passthru('/usr/local/bin/html2ps '.$id.'.pcl > '.$id.'.html');
+$command = 'python DocumentConverter.py /sandbox/staff/affidavitMaster/'.$id.'.html /sandbox/staff/affidavitMaster/'.$id.'.pdf';
+$error = system($command,$result);
+echo "<div>COMMAND: [".$command."]</div>";
+echo "<div>ERROR: [".$error."]</div>";
+echo "<div>RESULT: [".$result."]</div>";
+echo "<script>window.open('$id.pdf', '$_GET[id] PDF')</script>";
+header('Location: '.$id.'.pdf');
 }
 /*
 if($_GET['doc']){
