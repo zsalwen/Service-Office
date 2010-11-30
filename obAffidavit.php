@@ -55,7 +55,7 @@ body, table {padding:0px;}
 td { font-variant:small-caps; font-size:12px;}
 td.a {font-size:14px;}
 td.b {font-size:24px;}
-p {border-style:solid; border-width:thick; border-collapse:collapse;}
+p {padding:0px;}
 </style>
 <?
 /*
@@ -124,11 +124,11 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	$r2=@mysql_query($q2) or die(mysql_error());
 	$d2=mysql_fetch_array($r2, MYSQL_ASSOC);
 	if ($d1[altPlaintiff] != '' && $d1[attorneys_id] != '1'){
-		$plaintiff = str_replace('-','<br>',$d1[altPlaintiff]);
+		$plaintiff = str_replace('-','<br />',$d1[altPlaintiff]);
 	}elseif($d1[altPlaintiff] != ''){
-		$plaintiff = str_replace('-','<br>',$d1[altPlaintiff]);
+		$plaintiff = str_replace('-','<br />',$d1[altPlaintiff]);
 	}else{
-		$plaintiff = str_replace('-','<br>',$d2[ps_plaintiff]);
+		$plaintiff = str_replace('-','<br />',$d2[ps_plaintiff]);
 	}
 	if ($d1[addlDocs] != ''){
 		$addlDocs=$d1[addlDocs].",";
@@ -262,15 +262,15 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	$header="<td cellpadding='0' cellspacing='0' colspan='2' align='center' style='font-variant:small-caps; padding-top:0px; padding-bottom:0px;'><font size='5'>State of Maryland</font></td></tr>
 		<tr cellpadding='0' cellspacing='0'><td cellpadding='0' cellspacing='0' colspan='2' align='center' style=' padding-top:0px; padding-bottom:0px;'><font size='4'>Circuit Court for ".$court."</font></td></tr>
 		<tr cellpadding='0' cellspacing='0'></tr>
-		<tr cellpadding='0' cellspacing='0'><td cellpadding='0' cellspacing='0' class='a' style=' padding-top:0px; padding-bottom:0px;'><font size='2'>".$plaintiff."<br><small>_____________________<br /><em>Plaintiff</em></small><br /><br />v.<br /><br />";
-			if ($d1[onAffidavit1]=='checked'){$header .= strtoupper($d1['name1']).'<br>';}
-			if ($d1['name2'] && $d1[onAffidavit2]=='checked'){$header .= strtoupper($d1['name2']).'<br>';}
-			if ($d1['name3'] && $d1[onAffidavit3]=='checked'){$header .= strtoupper($d1['name3']).'<br>';}
-			if ($d1['name4'] && $d1[onAffidavit4]=='checked'){$header .= strtoupper($d1['name4']).'<br>';}
-			if ($d1['name5'] && $d1[onAffidavit5]=='checked'){$header .= strtoupper($d1['name5']).'<br>';}
-			if ($d1['name6'] && $d1[onAffidavit6]=='checked'){$header .= strtoupper($d1['name6']).'<br>';}
-			$header .=strtoupper($d1['address1']).'<br>';
-			$header .=strtoupper($d1['city1']).', '.strtoupper($d1['state1']).' '.$d1['zip1'].'<br>';
+		<tr cellpadding='0' cellspacing='0'><td cellpadding='0' cellspacing='0' class='a' style=' padding-top:0px; padding-bottom:0px;'><font size='2'>".$plaintiff."<br /><small>_____________________<br /><em>Plaintiff</em></small><br /><br />v.<br /><br />";
+			if ($d1[onAffidavit1]=='checked'){$header .= strtoupper($d1['name1']).'<br />';}
+			if ($d1['name2'] && $d1[onAffidavit2]=='checked'){$header .= strtoupper($d1['name2']).'<br />';}
+			if ($d1['name3'] && $d1[onAffidavit3]=='checked'){$header .= strtoupper($d1['name3']).'<br />';}
+			if ($d1['name4'] && $d1[onAffidavit4]=='checked'){$header .= strtoupper($d1['name4']).'<br />';}
+			if ($d1['name5'] && $d1[onAffidavit5]=='checked'){$header .= strtoupper($d1['name5']).'<br />';}
+			if ($d1['name6'] && $d1[onAffidavit6]=='checked'){$header .= strtoupper($d1['name6']).'<br />';}
+			$header .=strtoupper($d1['address1']).'<br />';
+			$header .=strtoupper($d1['city1']).', '.strtoupper($d1['state1']).' '.$d1['zip1'].'<br />';
 			$header .= "<small>_____________________<br /><em>Defendant</em></small></font></td>
 				<td cellpadding='0' cellspacing='0' align='right' valign='top' style='padding-left:200px; width:200px;  padding-top:0px; padding-bottom:0px;' nowrap='nowrap'><div style='border:solid 1px #666666;'><center><font size='5'>Case Number<br />&nbsp;".str_replace(0,'&Oslash;',$d1[case_no])."</font></center></div>";
 
@@ -288,7 +288,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 			$history2 = "<div style='font-weight:300'><u><font-size='2'>Include the date of the posting and a description of the location of the posting on the property:</font></u></div>".$posting;
 		if ($mailing == ''){
 			$history3 = "<div class='dim' style='font-weight:300'><u><font size='2'>State the date on which the required papers were mailed by first-class and certified mail, return receipt requested, and the name and address of the addressee:</font></u>
-				<center><font size='36 px'>AWAITING MAILING<br>DO NOT FILE</font></center></div>";
+				<center><font size='36 px'>AWAITING MAILING<br />DO NOT FILE</font></center></div>";
 			$noMail = 1;
 		}else{
 			if ($crr != ''){
@@ -366,7 +366,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	$cord=$d1[packet_id]."-".$def."-".$serverID."%";
 	?>
 		<table style='page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="100%" height="600px" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){ echo $dim;}?>>
-		<tr cellpadding='0' cellspacing='0'><?=$header?><IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=<?=$cord?>&width=300&height=40'><center>File Number: <?=$d1[client_file]?><br>[PAGE]</center></td></tr>
+		<tr cellpadding='0' cellspacing='0'><?=$header?><IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=<?=$cord?>&width=300&height=40'><center>File Number: <?=$d1[client_file]?><br />[PAGE]</center></td></tr>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><u><b><?=$amended?>Affidavit of Attempted Delivery<? if ($iID && !$iIDa && !$iIDb && !$iIDc && !$iIDd && !$iIDe){ echo " and Posting";}?></b></u></td>
 		</tr>
@@ -387,7 +387,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 		</tr>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></font></td> 
+			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br /><?=$_SERVER[REMOTE_ADDR]?></font></td> 
 		</tr>
 	</table>
 	<? }
@@ -423,7 +423,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	}
 	$cord=$d1[packet_id]."-".$def."-".$serverID."%";
 	?>        
-		<? echo "<tr cellpadding='0' cellspacing='0'>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
+		<? echo "<tr cellpadding='0' cellspacing='0'>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br />[PAGE]</center></td></tr>"; ?>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><u><b><?=$amended?>Affidavit of Attempted Delivery</b></u></td>
 		</tr>
@@ -444,7 +444,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 		</tr>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></font></td> 
+			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br /><?=$_SERVER[REMOTE_ADDR]?></font></td> 
 		</tr>
 	</table>
 	<? } 
@@ -480,7 +480,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	}
 	$cord=$d1[packet_id]."-".$def."-".$serverID."%";
 	?>
-		<? echo "<tr cellpadding='0' cellspacing='0'>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
+		<? echo "<tr cellpadding='0' cellspacing='0'>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br />[PAGE]</center></td></tr>"; ?>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Attempted Delivery</u></b></td>
 		</tr>
@@ -501,7 +501,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 		</tr>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></font></td> 
+			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br /><?=$_SERVER[REMOTE_ADDR]?></font></td> 
 		</tr>
 	</table>
 	<? 
@@ -538,7 +538,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	}
 	$cord=$d1[packet_id]."-".$def."-".$serverID."%";
 	?>   
-		<? echo "<tr cellpadding='0' cellspacing='0'>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
+		<? echo "<tr cellpadding='0' cellspacing='0'>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br />[PAGE]</center></td></tr>"; ?>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Attempted Delivery</u></b></td>
 		</tr>
@@ -559,7 +559,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 		</tr>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></font></td> 
+			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br /><?=$_SERVER[REMOTE_ADDR]?></font></td> 
 		</tr>
 	</table>
 	<? 
@@ -596,7 +596,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	}
 	$cord=$d1[packet_id]."-".$def."-".$serverID."%";
 	?>  
-		<? echo "<tr cellpadding='0' cellspacing='0'>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
+		<? echo "<tr cellpadding='0' cellspacing='0'>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br />[PAGE]</center></td></tr>"; ?>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Attempted Delivery</u></b></td>
 		</tr>
@@ -617,7 +617,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 		</tr>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></font></td> 
+			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br /><?=$_SERVER[REMOTE_ADDR]?></font></td> 
 		</tr>
 	</table>
 	<? 
@@ -651,7 +651,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	$serverPhone=$d3[phone];
 	}
 	$cord=$d1[packet_id]."-".$def."-".$serverID."%";
-	 echo "<tr cellpadding='0' cellspacing='0'>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
+	 echo "<tr cellpadding='0' cellspacing='0'>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br />[PAGE]</center></td></tr>"; ?>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Attempted Delivery<? if ($iID==$iiID){ echo " and Posting";} ?></u></b></td>
 		</tr>
@@ -676,7 +676,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 		</tr>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></font></td> 
+			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br /><?=$_SERVER[REMOTE_ADDR]?></font></td> 
 		</tr>
 	</table>
 	<? }
@@ -712,7 +712,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	}
 	$cord=$d1[packet_id]."-".$def."-".$serverID."%";
 	?> 
-		<? echo "<tr cellpadding='0' cellspacing='0'>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
+		<? echo "<tr cellpadding='0' cellspacing='0'>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br />[PAGE]</center></td></tr>"; ?>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Posting</u></b></td>
 		</tr>
@@ -734,7 +734,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 		</tr>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></font></td> 
+			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br /><?=$_SERVER[REMOTE_ADDR]?></font></td> 
 		</tr>
 	</table>
 	<? } 
@@ -765,7 +765,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	$serverPhone=$d3[phone];
 	}
 	$cord=$d1[packet_id]."-".$def."-".$serverID."%";
-	 echo "<tr cellpadding='0' cellspacing='0'>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
+	 echo "<tr cellpadding='0' cellspacing='0'>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br />[PAGE]</center></td></tr>"; ?>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Mailing</u></b></td>
 		</tr>
@@ -786,7 +786,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 		</tr>
 		<tr cellpadding='0' cellspacing='0' <? if($noMail == 1 && !$_GET[mail]){ echo 'class="dim"';}?>>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></font></td> 
+			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br /><?=$_SERVER[REMOTE_ADDR]?></font></td> 
 		</tr>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;padding-left:20px" colspan="2" ><?=stripslashes($history4)?></td>
@@ -828,7 +828,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	}
 	$cord=$d1[packet_id]."-".$def."-".$serverID."%";
 	?> 
-	<? echo "<tr cellpadding='0' cellspacing='0'>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br>[PAGE]</center></td></tr>"; ?>
+	<? echo "<tr cellpadding='0' cellspacing='0'>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br />[PAGE]</center></td></tr>"; ?>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Personal Delivery</u></b></td>
 		</tr>
@@ -852,7 +852,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 		</tr>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></font></td> 
+			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br /><?=$_SERVER[REMOTE_ADDR]?></font></td> 
 		</tr>
 	</table>
 	<? 
@@ -1040,7 +1040,7 @@ if ($_GET[server]){
 		if ($_GET[stop]){
 			$stop=$_GET[stop];
 			if ($stop < $start){
-				echo "<br><br><br><center><h1 style='color:#FF0000; font-size:48px;'>THAT RANGE OF AFFIDAVITS CANNOT BE DISPLAYED.</h1></center>";
+				echo "<br /><br /><br /><center><h1 style='color:#FF0000; font-size:48px;'>THAT RANGE OF AFFIDAVITS CANNOT BE DISPLAYED.</h1></center>";
 			}
 			$q10="SELECT packet_id FROM ps_packets where (server_id='$serveID' OR server_ida='$serveID' OR server_idb='$serveID' OR server_idc='$serveID' OR server_idd='$serveID' OR server_ide='$serveID') AND packet_id >= '$start' AND packet_id <= '$stop' AND process_status <> 'CANCELLED' AND affidavit_status='SERVICE CONFIRMED' AND filing_status <> 'PREP TO FILE' AND filing_status <> 'AWAITING CASE NUMBER' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'SEND TO CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS'";
 		}else{
@@ -1053,9 +1053,9 @@ if ($_GET[server]){
 			$q10="SELECT packet_id FROM ps_packets where (server_id='$serveID' OR server_ida='$serveID' OR server_idb='$serveID' OR server_idc='$serveID' OR server_idd='$serveID' OR server_ide='$serveID') AND process_status <> 'CANCELLED' AND affidavit_status='SERVICE CONFIRMED' AND filing_status <> 'PREP TO FILE' AND filing_status <> 'AWAITING CASE NUMBER' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'SEND TO CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS'";
 		}
 	}
-	$r10=@mysql_query($q10) or die ("Query: $q10<br>".mysql_error());
+	$r10=@mysql_query($q10) or die ("Query: $q10<br />".mysql_error());
 	while ($d10=mysql_fetch_array($r10, MYSQL_ASSOC)){
-	//echo $d10[packet_id].'<br>';
+	//echo $d10[packet_id].'<br />';
 	$packet=$d10[packet_id];
 	makeAffidavit($packet,"ALL",$level,$user_id);
 	}
