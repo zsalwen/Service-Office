@@ -64,12 +64,8 @@ if ($_GET[logic]){
 	if ($eviction != 1){
 		if ($d[circuit_court] == 'BALTIMORE CITY' && $d[attorneys_id] == 1){
 			if ($d[lossMit] != 'N/A - OLD L' && $d[lossMit] != ''){
-				echo "<script>alert('BALTIMORE CITY FILE DO NOT FORGET TO INCLUDE ADDITIONAL HB472 ENVELOPE AFFIDAVIT')</script>";
-				if ($d[lossMit] == 'FINAL'){
-					echo "<script>window.open('http://staff.mdwestserve.com/otd/baltFinalAffidavit.pdf','Affidavit of Inclusion of Envelope')</script>";
-				}else{
-					echo "<script>window.open('http://staff.mdwestserve.com/otd/baltPrelimAffidavit.pdf','Affidavit of Inclusion of Envelope')</script>";
-				}
+				echo "<script>alert('BALTIMORE CITY BURSON FILE DO NOT FORGET TO INCLUDE ADDITIONAL HB472 ENVELOPE!')</script>";
+				echo "<script>window.open('http://service.mdwestserve.com/stuffPacket.php?packet=$packet','Envelope Stuffing for OTD$packet')</script>";
 			}
 		}
 		if($d[attorneys_id] == 3){
