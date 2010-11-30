@@ -58,7 +58,7 @@ function pdfAD2($id){
 	echo "<div>".$command."</div>";
 	echo "<div>".$error."</div>";
 	echo "<div>".$result."</div>";
-	echo "<script>window.open('$id.pdf', '$_GET[id] PDF')<script>";
+	echo "<script>window.open('$id.pdf', '$_GET[id] PDF')</script>";
 	//header('Location: '.$id.'.pdf');
 }
 /*
