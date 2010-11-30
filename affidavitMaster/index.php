@@ -52,6 +52,7 @@ fclose($fh);
 passthru('/usr/local/bin/html2ps '.$id.'.html > '.$id.'.pcl');
 $file = $id.'.pcl';
 passthru('/usr/local/bin/html2ps '.$id.'.pcl > '.$id.'.html');
+sleep(5);
 $command = 'python DocumentConverter.py /sandbox/staff/affidavitMaster/'.$id.'.html /sandbox/staff/affidavitMaster/'.$id.'.pdf';
 $error = system($command,$result);
 echo "<div>COMMAND: [".$command."]</div>";
