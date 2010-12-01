@@ -75,7 +75,7 @@ if(($isVerified != 0) && ($d[uspsVerify] == '')){
 	}
 }
 foreach(range('a','e') as $letter){
-	if($d[address1a]){ 
+	if($d["address1$letter"]){ 
 		$add=strtoupper($d["address1$letter"].', '.$d["city1$letter"].', '.$d["state1$letter"].' '.$d["zip1$letter"]);
 		if (checkVerify($add) !== true){
 			echo "<iframe src='http://service.mdwestserve.com/usps.php?address=".$d["address1$letter"]."&city=".$d["city1$letter"]."&state=".$d["state1$letter"]."' width='300' height='100'></iframe>";
@@ -90,7 +90,7 @@ if ($_GET[matrix]){
 	$matrix="";
 }
 echo "<table border='1'>";
-if ($d["address1"] != ''){
+if ($d["address1"]){
 	$makeLnL = strtoupper($d[address1].', '.$d[city1].', '.$d[state1].' '.$d[zip1]);
 	echo "<tr><td>$makeLnL</td>";
 	if (checkVerify($makeLnL) !== true){
@@ -99,7 +99,7 @@ if ($d["address1"] != ''){
 		echo "<td>Address Confirmed by ".getUser($makeLnL)."</tr></tr>";
 	}
 	foreach(range('a','e') as $letter){
-		if ($d["address1$letter"] != ''){
+		if ($d["address1$letter"]){
 			$makeLnL = strtoupper($d["address1$letter"].', '.$d["city1$letter"].', '.$d["state1$letter"].' '.$d["zip1$letter"]);
 			echo "<tr><td>$makeLnL</td>";
 			if (checkVerify($makeLnL) !== true){
