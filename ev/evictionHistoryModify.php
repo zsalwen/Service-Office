@@ -166,8 +166,6 @@ if ($_POST[submit]){
 			if ($dt != $_POST["actionDate$i"]){
 				//echo "<script>alert('History ID: ".$_POST["history_id$i"]." | NEW actionDate: $dt | OLD actionDate: ".$_POST["actionDate$i"]."')</script>";
 				$dtQ=", actionDate='$dt'";
-			}else{
-				echo "<script>alert('$dt is not a valid datetime for History ID ".$_POST["history_id$i"].".')</script>";
 			}
 			$q="UPDATE evictionHistory SET action_str='".addslashes($_POST["action_str$i"])."', serverID='".$_POST["serverID$i"]."', address='".$_POST["address$i"]."', resident='".$_POST["resident$i"]."', residentDesc='".addslashes($_POST["residentDesc$i"])."', onAffidavit='".$_POST["onAffidavit$i"]."'".$dtQ." WHERE history_id='".$_POST["history_id$i"]."'";
 			$r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
