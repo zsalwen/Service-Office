@@ -250,7 +250,7 @@ function serverActiveListe($id){ $_SESSION[active]++;
 //begin evictionPackets functions:******************************************************
 function evictionActiveList($id){ $_SESSION[active]++;
 $data='<ol>';
-$r=@mysql_query("select eviction_id, date_received, request_close affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF(estFileDate, CURDATE()) as estHours from evictionPackets where server_id='$id' and (process_status = 'Assigned' OR process_status = 'ASSIGNED') order by  eviction_id");
+$r=@mysql_query("select eviction_id, date_received, request_close, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF(estFileDate, CURDATE()) as estHours from evictionPackets where server_id='$id' and (process_status = 'Assigned' OR process_status = 'ASSIGNED') order by  eviction_id");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
 $estHours=($d[estHours]*24)-date('G');
 $_SESSION[active3]++;
