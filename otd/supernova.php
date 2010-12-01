@@ -66,24 +66,24 @@ if ($_GET[close] && ($isVerified == 0)){
 if(($isVerified != 0) && ($d[uspsVerify] == '')){
 ?>
 <form method="post">
-<? if($d[address1]){ ?>
-<iframe src="http://service.mdwestserve.com/usps.php?address=<?=$d[address1]?>&city=<?=$d[city1]?>&state=<?=$d[state1]?>" width="300" height="100"></iframe>
-<? }?>
-<? if($d[address1a]){ ?>
-<iframe src="http://service.mdwestserve.com/usps.php?address=<?=$d[address1a]?>&city=<?=$d[city1a]?>&state=<?=$d[state1a]?>" width="300" height="100"></iframe>
-<? }?>
-<? if($d[address1b]){ ?>
-<iframe src="http://service.mdwestserve.com/usps.php?address=<?=$d[address1b]?>&city=<?=$d[city1b]?>&state=<?=$d[state1b]?>" width="300" height="100"></iframe>
-<? }?>
-<? if($d[address1c]){ ?>
-<iframe src="http://service.mdwestserve.com/usps.php?address=<?=$d[address1c]?>&city=<?=$d[city1c]?>&state=<?=$d[state1c]?>" width="300" height="100"></iframe>
-<? }?>
-<? if($d[address1d]){ ?>
-<iframe src="http://service.mdwestserve.com/usps.php?address=<?=$d[address1d]?>&city=<?=$d[city1d]?>&state=<?=$d[state1d]?>" width="300" height="100"></iframe>
-<? }?>
-<? if($d[address1e]){ ?>
-<iframe src="http://service.mdwestserve.com/usps.php?address=<?=$d[address1e]?>&city=<?=$d[city1e]?>&state=<?=$d[state1e]?>" width="300" height="100"></iframe>
-<? }
+<? if($d[address1]){
+	$add=strtoupper($d[address1].', '.$d[city1].', '.$d[state1].' '.$d[zip1]);
+	if (checkVerify($add) !== true){
+		echo "<iframe src='http://service.mdwestserve.com/usps.php?address=$d[address1]&city=$d[city1]&state=$d[state1]' width='300' height='100'></iframe>";
+	}else{
+		echo "<div style='height:100px; width:300px; border: 1px solid black; background-color:green; font-size:24px;'>VERIFIED</div>";
+	}
+}
+foreach(range('a','e') as $letter){
+	if($d[address1a]){ 
+		$add=strtoupper($d["address1$letter"].', '.$d["city1$letter"].', '.$d["state1$letter"].' '.$d["zip1$letter"]);
+		if (checkVerify($add) !== true){
+			echo "<iframe src='http://service.mdwestserve.com/usps.php?address=".$d["address1$letter"]."&city=".$d["city1$letter"]."&state=".$d["state1$letter"]."' width='300' height='100'></iframe>";
+		}else{
+			echo "<div style='height:100px; width:300px; border: 1px solid black; background-color:green; font-size:24px;'>VERIFIED</div>";
+		}
+	}
+}
 if ($_GET[matrix]){
 	$matrix = " (and proceed with MAIL ONLY)";
 }else{
