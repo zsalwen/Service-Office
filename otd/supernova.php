@@ -71,7 +71,7 @@ if(($isVerified != 0) && ($d[uspsVerify] == '')){
 	if (checkVerify($add) !== true){
 		echo "<iframe src='http://service.mdwestserve.com/usps.php?address=$d[address1]&city=$d[city1]&state=$d[state1]' width='300' height='100'></iframe>";
 	}else{
-		echo "<div style='height:100px; width:300px; border: 1px solid black; background-color:green; font-size:24px; text-align:center; vertical-align:middle; color:CCFF00;'>VERIFIED</div>";
+		echo "<div style='height:100px; width:300px; border: 1px solid black; background-color:green; font-size:24px; text-align:center; vertical-align:text-bottom; color:CCFF00;'>VERIFIED</div>";
 	}
 }
 foreach(range('a','e') as $letter){
@@ -80,7 +80,7 @@ foreach(range('a','e') as $letter){
 		if (checkVerify($add) !== true){
 			echo "<iframe src='http://service.mdwestserve.com/usps.php?address=".$d["address1$letter"]."&city=".$d["city1$letter"]."&state=".$d["state1$letter"]."' width='300' height='100'></iframe>";
 		}else{
-			echo "<div style='height:100px; width:300px; border: 1px solid black; background-color:green; font-size:24px; text-align:center; vertical-align:middle; color:CCFF00;'>VERIFIED</div>";
+			echo "<div style='height:100px; width:300px; border: 1px solid black; background-color:green; font-size:24px; text-align:center; vertical-align:text-bottom; color:CCFF00;'>VERIFIED</div>";
 		}
 	}
 }
