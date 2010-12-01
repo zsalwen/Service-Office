@@ -255,7 +255,7 @@ while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
 $estHours=($d[estHours]*24)-date('G');
 $_SESSION[active3]++;
 if (stripHours($d[hours]) > $_SESSION[cap]){
-	if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
+	if ($d[request_close]){
 		$mod="<a href='http://staff.mdwestserve.com/ev_wizard.php?jump=".$d[eviction_id]."-1' target='_blank' style='background-color:#00FFFF;'><b>QC</b></a> ";
 	}else{
 		$mod="";
