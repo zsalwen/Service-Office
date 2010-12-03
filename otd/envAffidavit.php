@@ -50,7 +50,7 @@ $header="<td class='a' width='49%'>$plaintiff<br><small>________________________
 			$header .=strtoupper($d['address1']).'<br>';
 			$header .=strtoupper($d['city1']).', '.strtoupper($d['state1']).' '.$d['zip1'].'<br>';
 			$header .= "<small>_________________________<br /><em>Defendant(s)</em></small></td><td style='width:10px; height:100%' align='center'><div style='height:100%; border:solid 1px black;'>*<br>*<br>*<br>*<br>*<br>*<br>*<br>*<br>*<br>*<br>*<br>*<br>*<br>*</div></td>
-				<td  width='49%' align='left' valign='top' nowrap='nowrap' style='padding-left:15px;'><div style='font-size:16px; font-weight:bold;'>IN THE<BR>CIRCUIT COURT<BR>FOR<BR>$court<BR><BR>Case N&ordm; ".str_replace(0,'&Oslash;',$d[case_no])."</div>";
+				<td  width='49%' align='left' valign='top' nowrap='nowrap' style='padding-left:15px;'><div style='font-size:16px; font-weight:bold;'>IN THE<BR><BR>CIRCUIT COURT<BR><BR>FOR<BR><BR>$court<BR><BR><BR>Case N&ordm; ".str_replace(0,'&Oslash;',$d[case_no])."</div>";
 $mailerID=$_COOKIE[psdata][user_id];
 $cord=$d[packet_id]."-ENV-".$mailerID."%";
 $mailer=$_COOKIE[psdata][name];
@@ -89,13 +89,13 @@ table {page-break-after:always;}
 <center><div style="width: 800px;">
 <table align="center" width="100%" border="1" style='border-collapse:collapse;'>
 <tr><?=$header?><IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=<?=$cord?>&width=300&height=40'><center><br>File Number: <?=$d[client_file]?><br>Set 1</center></td></tr>
-<tr><td colspan="3" align='justify' width='100%'><span style='width:100%';>*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*</span></td></tr>
+<tr><td colspan="3" align='center' width='100%'><span style='width:100%';>*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*&nbsp;*</span></td></tr>
 <tr><td align="center" colspan="3" valign="top"><span style="font-size:16px; text-decoration:underline;"><?=$title?></span></td>
 </tr><tr>
 <td colspan="3" style="text-indent:20px"><?=$text?></td>
 </tr><tr><td colspan="3" style="text-indent:20px;">I solemnly affirm under the penalties of perjury that the contents of the foregoing paper are true to the best of my knowledge, information, and belief.</td></tr><tr><td valign='top'><br>
 ________________<br>Date
-</td><td></td><td valign='top'><br><div style='border-bottom:solid 1px black; width:200px;'>&nbsp;</span><br>Signature<br><span style='border-bottom:solid 1px black; width:200px;'><?=$mailer?></span><br>Name [typed]<br><span style='border-bottom:solid 1px black; width:200px;'><?=$position?></span><br>Title [typed]<br><span style='border-bottom:solid 1px black; width:200px;'>300 E Joppa Road, Suite 1102<br>Towson, MD 21286</span><br>Address of Affiant [typed]</td></tr></table>
+</td><td></td><td valign='top'><br><span style='border-bottom:solid 1px black; width:200px;'>&nbsp;</span><br>Signature<br><span style='border-bottom:solid 1px black; width:200px;'><?=$mailer?></span><br>Name [typed]<br><span style='border-bottom:solid 1px black; width:200px;'><?=$position?></span><br>Title [typed]<br><span style='border-bottom:solid 1px black; width:200px;'>300 E Joppa Road, Suite 1102<br>Towson, MD 21286</span><br>Address of Affiant [typed]</td></tr></table>
 </div></center>
 <?
 $buffer = ob_get_clean();
