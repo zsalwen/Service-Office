@@ -49,7 +49,7 @@ $header="<td class='a' width='550px'>$plaintiff<br><small>______________________
 			if ($d['name6']){$header .= strtoupper($d['name6']).'<br>';}
 			$header .=strtoupper($d['address1']).'<br>';
 			$header .=strtoupper($d['city1']).', '.strtoupper($d['state1']).' '.$d['zip1'].'<br>';
-			$header .= "<small>_________________________<br /><em>Defendant(s)</em></small></td><td width='10px;'>**************</td>
+			$header .= "<small>_________________________<br /><em>Defendant(s)</em></small></td><td style='width:10px;'>**************</td>
 				<td align='right' valign='top' style='width:100px;' nowrap='nowrap'><div style='font-size:16px; border:solid 1px #666666; text-align:center;'>IN THE<BR>CIRCUIT COURT<BR>FOR<BR>$court<BR><BR>Case N&ordm; ".str_replace(0,'&Oslash;',$d[case_no])."</div>";
 $mailerID=$_COOKIE[psdata][user_id];
 $cord=$d[packet_id]."-ENV-".$mailerID."%";
