@@ -261,7 +261,6 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	// hard code
 	$header="<td cellpadding='0' cellspacing='0' colspan='2' align='center' style='font-variant:small-caps; padding-top:0px; padding-bottom:0px;'><font size='5'>State of Maryland</font></td></tr>
 		<tr cellpadding='0' cellspacing='0'><td cellpadding='0' cellspacing='0' colspan='2' align='center' style=' padding-top:0px; padding-bottom:0px;'><font size='4'>Circuit Court for ".$court."</font></td></tr>
-		<tr cellpadding='0' cellspacing='0'></tr>
 		<tr cellpadding='0' cellspacing='0'><td cellpadding='0' cellspacing='0' class='a' style=' padding-top:0px; padding-bottom:0px;'><font size='2'>".$plaintiff."<br /><small>_____________________<br /><em>Plaintiff</em></small><br /><br />v.<br /><br />";
 			if ($d1[onAffidavit1]=='checked'){$header .= strtoupper($d1['name1']).'<br />';}
 			if ($d1['name2'] && $d1[onAffidavit2]=='checked'){$header .= strtoupper($d1['name2']).'<br />';}
