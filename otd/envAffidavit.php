@@ -49,7 +49,7 @@ $header="<td class='a' width='49%'>$plaintiff<br><small>________________________
 			if ($d['name6']){$header .= strtoupper($d['name6']).'<br>';}
 			$header .=strtoupper($d['address1']).'<br>';
 			$header .=strtoupper($d['city1']).', '.strtoupper($d['state1']).' '.$d['zip1'].'<br>';
-			$header .= "<small>_________________________<br /><em>Defendant(s)</em></small></td><td style='width:10px; line-height:100%;' align='center'>*<br>*<br>*<br>*<br>*<br>*<br>*<br>*<br>*<br>*<br>*<br>*<br>*<br>*</td>
+			$header .= "<small>_________________________<br /><em>Defendant(s)</em></small></td><td style='width:10px;' align='center'><div style='height:100%;'>*<br>*<br>*<br>*<br>*<br>*<br>*<br>*<br>*<br>*<br>*<br>*<br>*<br>*</div></td>
 				<td  width='49%' align='left' valign='top' nowrap='nowrap' style='padding-left:15px;'><div style='font-size:16px; font-weight:bold;'>IN THE<BR>CIRCUIT COURT<BR>FOR<BR>$court<BR><BR>Case N&ordm; ".str_replace(0,'&Oslash;',$d[case_no])."</div>";
 $mailerID=$_COOKIE[psdata][user_id];
 $cord=$d[packet_id]."-ENV-".$mailerID."%";
