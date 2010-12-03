@@ -64,12 +64,16 @@ if ($mailerID == 1){
 }else{
 	$position="Document Processor";
 }
+//determine whether pd or m&p, find date, append correct terminology
+//$sent=" via personal delivery";
+//$sent=" via posting to the property";
+//$sent=" via the United States Postal Service by Certified Mail, Return Receipt Requested, and by First Class Mail";
 if ($d[lossMit] == 'PRELIMINARY'){
 	$title="AFFIDAVIT OF INCLUSION OF ENVELOPE PURSUANT TO MD. REAL<br>PROPERTY CODE ARTICLE &#167;7-105.1(d)(2)(viii)(2)(D)(re: PLMA)";
-	$text="Pursuant to Maryland Real Property Code Article &#167;7-105.1(d)(2)(viii)(2)(D), I hereby certify that on [DATE], an envelope addressed to the attorney handling this foreclosure, was sent to the mortgagor(s)/grantor(s).";
+	$text="Pursuant to Maryland Real Property Code Article &#167;7-105.1(d)(2)(viii)(2)(D), I hereby certify that on [DATE], an envelope addressed to the attorney handling this foreclosure, was sent to the mortgagor(s)/grantor(s)$sent.";
 }else{
-	$title="AFFIDAVIT OF INCLUSION OF ENVELOPE<br>PURSUANT TO MD. REAL PROPERTY CODE<br>ARTICLE &#167;7-105-1(d)(2)(x)(2) and (3)(re: FLMA - Owner-Occupied)"
-	$text="Pursuant to Maryland Real Property Code Article &#167;7-105.1(d)(2)(x)(2) and (3), I hereby certify that on [DATE], two envelopes, including an envelope addressed to the \"$county,\" and an envelope addressed to the attorney handling this foreclosure, were sent to the mortgagor(s)/grantor(s).";
+	$title="AFFIDAVIT OF INCLUSION OF ENVELOPE<br>PURSUANT TO MD. REAL PROPERTY CODE<br>ARTICLE &#167;7-105-1(d)(2)(x)(2) and (3)(re: FLMA - Owner-Occupied)";
+	$text="Pursuant to Maryland Real Property Code Article &#167;7-105.1(d)(2)(x)(2) and (3), I hereby certify that on [DATE], two envelopes, including an envelope addressed to the \"$county,\" and an envelope addressed to the attorney handling this foreclosure, were sent to the mortgagor(s)/grantor(s)$sent.";
 }
 
 ?>
