@@ -40,7 +40,7 @@ if ($d[altPlaintiff] != ''){
 }else{
 	$plaintiff=str_replace("-","<br>",$d1[ps_plaintiff]);
 }
-$header="<td class='a' width='550px'>$plaintiff<br><small>_________________________<br /><em>Substitute Trustees<br>Plaintiff(s)</em></small><br /><br />v.<br /><br />";
+$header="<td class='a'>$plaintiff<br><small>_________________________<br /><em>Substitute Trustees<br>Plaintiff(s)</em></small><br /><br />v.<br /><br />";
 			$header .= strtoupper($d['name1']).'<br>';
 			if ($d['name2']){$header .= strtoupper($d['name2']).'<br>';}
 			if ($d['name3']){$header .= strtoupper($d['name3']).'<br>';}
@@ -50,7 +50,7 @@ $header="<td class='a' width='550px'>$plaintiff<br><small>______________________
 			$header .=strtoupper($d['address1']).'<br>';
 			$header .=strtoupper($d['city1']).', '.strtoupper($d['state1']).' '.$d['zip1'].'<br>';
 			$header .= "<small>_________________________<br /><em>Defendant(s)</em></small></td><td style='width:10px;'>*<br>*<br>*<br>*<br>*<br>*<br>*<br>*<br>*<br>*<br>*<br>*<br>*<br>*</td>
-				<td align='right' valign='top' style='width:100px;' nowrap='nowrap'><div style='font-size:16px; border:solid 1px #666666; text-align:center;'>IN THE<BR>CIRCUIT COURT<BR>FOR<BR>$court<BR><BR>Case N&ordm; ".str_replace(0,'&Oslash;',$d[case_no])."</div>";
+				<td align='right' valign='top' nowrap='nowrap'><div style='font-size:16px; font-weight:bold;'>IN THE<BR>CIRCUIT COURT<BR>FOR<BR>$court<BR><BR>Case N&ordm; ".str_replace(0,'&Oslash;',$d[case_no])."</div>";
 $mailerID=$_COOKIE[psdata][user_id];
 $cord=$d[packet_id]."-ENV-".$mailerID."%";
 $mailer=$_COOKIE[psdata][name];
