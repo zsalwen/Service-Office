@@ -95,7 +95,7 @@ table {page-break-after:always;}
 <td colspan="3" style="text-indent:20px"><?=$text?></td>
 </tr><tr><td colspan="3" style="text-indent:20px;">I solemnly affirm under the penalties of perjury that the contents of the foregoing paper are true to the best of my knowledge, information, and belief.</td></tr><tr><td valign='top'><br>
 ________________<br>Date
-</td><td></td><td valign='top'><br><div style='border-bottom:solid 1px black; width:200px;'>&nbsp;</div>Signature<br><span style='border-bottom:solid 1px black; width:200px;'><?=$mailer?></span><br>Name [typed]<br><span style='border-bottom:solid 1px black; width:200px;'><?=$position?></span><br>Title [typed]<br><span style='border-bottom:solid 1px black; width:200px;'>300 E Joppa Road, Suite 1102<br>Towson, MD 21286</span><br>Address of Affiant [typed]</td></tr></table>
+</td><td></td><td valign='top'><br><div style='border-bottom:solid 1px black; width:200px;'>&nbsp;</div>Signature<br><div style='border-bottom:solid 1px black; width:200px;'><?=$mailer?></div><br>Name [typed]<br><div style='border-bottom:solid 1px black; width:200px;'><?=$position?></div><br>Title [typed]<br><div style='border-bottom:solid 1px black; width:200px;'>300 E Joppa Road, Suite 1102<br>Towson, MD 21286</div><br>Address of Affiant [typed]</td></tr></table>
 </div></center>
 <?
 $buffer = ob_get_clean();
