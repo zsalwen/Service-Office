@@ -87,8 +87,8 @@ table {page-break-after:always;}
 </style>
 <div style="height:50px"></div>
 <center><div style="width: 800px;">
-<table align="center" width="100%" border="0">
-<tr><?=$header?><IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=<?=$cord?>&width=300&height=40'><center>File Number: <?=$d[client_file]?><br>Set 1</center></td></tr>
+<table align="center" width="100%" border="1" style='border-collapse:collapse;'>
+<tr><?=$header?><IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=<?=$cord?>&width=300&height=40'><center><br>File Number: <?=$d[client_file]?><br>Set 1</center></td></tr>
 <tr><td colspan="3"><span style='width:100%'>* * * * * * * * * * * * * * * * * * * * * * * * * * * * * *</span></td></tr>
 <tr><td align="center" colspan="3" valign="top"><span style="font-size:16px; text-decoration:underline;"><?=$title?></span></td>
 </tr><tr>
