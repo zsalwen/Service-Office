@@ -365,10 +365,10 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	}
 	$cord=$d1[packet_id]."-".$def."-".$serverID."%";
 	?>
-		<table style='page-break-after:left; padding:0px;' cellpadding="0" cellspacing="0" width="100%" height="600px" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){ echo $dim;}?>>
+		<table style='border-collapse:collapse; page-break-after:left; padding:0px;' cellpadding="0" cellspacing="0" width="100%" height="600px" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){ echo $dim;}?>>
 		<tr cellpadding='0' cellspacing='0'><?=$header?><IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=<?=$cord?>&width=300&height=40'><center>File Number: <?=$d1[client_file]?><br />[PAGE]</center></td></tr>
 		<tr cellpadding='0' cellspacing='0'>
-			<td cellpadding='0' cellspacing='0' style="line-height:0px; padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><u><b><?=$amended?>Affidavit of Attempted Delivery<? if ($iID && !$iIDa && !$iIDb && !$iIDc && !$iIDd && !$iIDe){ echo " and Posting";}?></b></u></td>
+			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><u><b><?=$amended?>Affidavit of Attempted Delivery<? if ($iID && !$iIDa && !$iIDb && !$iIDc && !$iIDd && !$iIDe){ echo " and Posting";}?></b></u></td>
 		</tr>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><font size='4'><b><?=$result?></font></b></td>
@@ -399,7 +399,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 		$historyd = "<div style='font-weight:300'><u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:</u></div>
 				".$attemptsd;
 	 ?>
-		<table style='page-break-after:left; padding:0px;' cellpadding="0" cellspacing="0" width="100%" height="600px" cellpadding="0" cellspacing="0" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
+		<table style='border-collapse:collapse; page-break-after:left; padding:0px;' cellpadding="0" cellspacing="0" width="100%" height="600px" cellpadding="0" cellspacing="0" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
 	<?
 	$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iIDd' AND packetID='$packet'");
 	$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
@@ -425,7 +425,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	?>        
 		<? echo "<tr cellpadding='0' cellspacing='0'>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br />[PAGE]</center></td></tr>"; ?>
 		<tr cellpadding='0' cellspacing='0'>
-			<td cellpadding='0' cellspacing='0' style="line-height:0px; padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><u><b><?=$amended?>Affidavit of Attempted Delivery</b></u></td>
+			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><u><b><?=$amended?>Affidavit of Attempted Delivery</b></u></td>
 		</tr>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><font size='4'><b><?=$result?></b></font></td>
@@ -456,7 +456,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 		$historyc = "<div style='font-weight:300'><u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:</u></div>
 				".$attemptsc;
 	?>
-		<table style='page-break-after:left; padding:0px;' cellpadding="0" cellspacing="0" width="100%" height="600px" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
+		<table style='border-collapse:collapse; page-break-after:left; padding:0px;' cellpadding="0" cellspacing="0" width="100%" height="600px" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
 	<?
 	$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iIDc' AND packetID='$packet'");
 	$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
@@ -482,7 +482,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	?>
 		<? echo "<tr cellpadding='0' cellspacing='0'>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br />[PAGE]</center></td></tr>"; ?>
 		<tr cellpadding='0' cellspacing='0'>
-			<td cellpadding='0' cellspacing='0' style="line-height:0px; padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Attempted Delivery</u></b></td>
+			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Attempted Delivery</u></b></td>
 		</tr>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><font size='4'><b><?=$result?></b></font></td>
@@ -514,7 +514,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 		$historyb = "<div style='font-weight:300'><u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:</u></div>
 				".$attemptsb;
 	?>
-		<table style='page-break-after:left; padding:0px;' cellpadding="0" cellspacing="0" width="100%" height="600px" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
+		<table style='border-collapse:collapse; page-break-after:left; padding:0px;' cellpadding="0" cellspacing="0" width="100%" height="600px" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
 	<?
 	$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iIDb' AND packetID='$packet'");
 	$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
@@ -540,7 +540,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	?>   
 		<? echo "<tr cellpadding='0' cellspacing='0'>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br />[PAGE]</center></td></tr>"; ?>
 		<tr cellpadding='0' cellspacing='0'>
-			<td cellpadding='0' cellspacing='0' style="line-height:0px; padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Attempted Delivery</u></b></td>
+			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Attempted Delivery</u></b></td>
 		</tr>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><font size='4'><b><?=$result?></b></font></td>
@@ -572,7 +572,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 		$historya = "<div style='font-weight:300'><u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:</u></div>
 				".$attemptsa;
 	?>
-		<table style='page-break-after:left; padding:0px;' cellpadding="0" cellspacing="0" width="100%" height="600px" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
+		<table style='border-collapse:collapse; page-break-after:left; padding:0px;' cellpadding="0" cellspacing="0" width="100%" height="600px" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
 	<?
 	$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iIDa' AND packetID='$packet'");
 	$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
@@ -598,7 +598,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	?>  
 		<? echo "<tr cellpadding='0' cellspacing='0'>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br />[PAGE]</center></td></tr>"; ?>
 		<tr cellpadding='0' cellspacing='0'>
-			<td cellpadding='0' cellspacing='0' style="line-height:0px; padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Attempted Delivery</u></b></td>
+			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Attempted Delivery</u></b></td>
 		</tr>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><font size='4'><b><?=$result?></b></font></td>
@@ -628,7 +628,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	if ($iID != $iIDa){
 	?>
-		<table style='page-break-after:left; padding:0px;' cellpadding="0" cellspacing="0" width="100%" height="600px" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
+		<table style='border-collapse:collapse; page-break-after:left; padding:0px;' cellpadding="0" cellspacing="0" width="100%" height="600px" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
 	 <? 
 	$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iID' AND packetID='$packet'");
 	$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
@@ -653,7 +653,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	$cord=$d1[packet_id]."-".$def."-".$serverID."%";
 	 echo "<tr cellpadding='0' cellspacing='0'>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br />[PAGE]</center></td></tr>"; ?>
 		<tr cellpadding='0' cellspacing='0'>
-			<td cellpadding='0' cellspacing='0' style="line-height:0px; padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Attempted Delivery<? if ($iID==$iiID){ echo " and Posting";} ?></u></b></td>
+			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Attempted Delivery<? if ($iID==$iiID){ echo " and Posting";} ?></u></b></td>
 		</tr>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><font size='4'><b><?=$result?></b></font></td>
@@ -688,7 +688,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	if ($iID==$iiID){
 	}else{
 	?>
-		<table style='page-break-after:left; padding:0px;' cellpadding="0" cellspacing="0" width="100%" height="600px" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
+		<table style='border-collapse:collapse; page-break-after:left; padding:0px;' cellpadding="0" cellspacing="0" width="100%" height="600px" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
 	<?
 	$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iiID' AND packetID='$packet'");
 	$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
@@ -714,7 +714,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	?> 
 		<? echo "<tr cellpadding='0' cellspacing='0'>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br />[PAGE]</center></td></tr>"; ?>
 		<tr cellpadding='0' cellspacing='0'>
-			<td cellpadding='0' cellspacing='0' style="line-height:0px; padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Posting</u></b></td>
+			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Posting</u></b></td>
 		</tr>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><font size='4'><b><?=$result?></b></font></td>
@@ -742,7 +742,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	 $postingID["$def"] = $iiID;
 	 ob_start();
 	  if($iiiID){ ?>
-		<table style='page-break-after:left; padding:0px;' cellpadding="0" cellspacing="0" width="100%" height="600px" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
+		<table style='border-collapse:collapse; page-break-after:left; padding:0px;' cellpadding="0" cellspacing="0" width="100%" height="600px" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
 	<?
 	$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iiiID' AND packetID='$packet'");
 	$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
@@ -767,7 +767,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	$cord=$d1[packet_id]."-".$def."-".$serverID."%";
 	 echo "<tr cellpadding='0' cellspacing='0'>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br />[PAGE]</center></td></tr>"; ?>
 		<tr cellpadding='0' cellspacing='0'>
-			<td cellpadding='0' cellspacing='0' style="line-height:0px; padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Mailing</u></b></td>
+			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Mailing</u></b></td>
 		</tr>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><font size='4'><b><?=$result?></b></font></td>
@@ -804,7 +804,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	}elseif($type == "pd"){ 
 	ob_start();
 	?>
-	<table style='page-break-after:left; padding:0px;' cellpadding="0" cellspacing="0" width="100%" height="600px" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
+	<table style='border-collapse:collapse; border-collapse:collapse; page-break-after:left; padding:0px;' cellpadding="0" cellspacing="0" width="100%" height="600px" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
 	<?
 	$r5=@mysql_query("SELECT * from ps_signatory where serverID='$deliveryID' AND packetID='$packet'");
 	$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
@@ -830,7 +830,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	?> 
 	<? echo "<tr cellpadding='0' cellspacing='0'>".$header."<IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=".$cord."&width=300&height=40'><center>File Number: ".$d1[client_file]."<br />[PAGE]</center></td></tr>"; ?>
 		<tr cellpadding='0' cellspacing='0'>
-			<td cellpadding='0' cellspacing='0' style="line-height:0px; padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Personal Delivery</u></b></td>
+			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Personal Delivery</u></b></td>
 		</tr>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><font size='4'><b><?=$result?></b></font></td>
