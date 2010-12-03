@@ -34,7 +34,7 @@ $r1=@mysql_query("select ps_plaintiff, full_name from attorneys where attorneys_
 $d1=mysql_fetch_array($r1,MYSQL_ASSOC);
 ob_start();
 $court=strtoupper($d[circuit_court]);
-$county=count2envelope($d[circuit_court]);
+$county=county2envelope2($d[circuit_court]);
 if ($d[altPlaintiff] != ''){
 	$plaintiff=str_replace("-","<br>",$d[altPlaintiff]);
 }else{
