@@ -88,9 +88,9 @@ table {page-break-after:always;}
 <div style="height:50px"></div>
 <center><div style="width: 600px;">
 <table align="center" width="100%" border="0">
-<tr><?=$header?><IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=<?=$cord?>&width=350&height=40'><center>File Number: <?=$d[client_file]?><br>Set 1</center></td>
-</tr><td colspan="3"><span style='width:100%'>* * * * * * * * * * * * * * * * * * * * * * * * * * * * * *</span></td><tr>
-<td align="center" colspan="3" valign="top"><span style="font-size:24px; text-decoration:underline;"><?=$title?></span></td>
+<tr><?=$header?><IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=<?=$cord?>&width=350&height=40'><center>File Number: <?=$d[client_file]?><br>Set 1</center></td></tr>
+<tr><td colspan="3"><span style='width:100%'>* * * * * * * * * * * * * * * * * * * * * * * * * * * * * *</span></td></tr>
+<tr><td align="center" colspan="3" valign="top"><span style="font-size:24px; text-decoration:underline;"><?=$title?></span></td>
 </tr><tr>
 <td colspan="3" style="text-indent:20px"><?=$text?></td>
 </tr><tr><td colspan="3" style="text-indent:20px;">I solemnly affirm under the penalties of perjury that the contents of the foregoing paper are true to the best of my knowledge, information, and belief.</td></tr><tr><td></td><td><br>
