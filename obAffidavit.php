@@ -832,7 +832,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><b><u><?=$amended?>Affidavit of Personal Delivery</u></b></td>
 		</tr>
 		<tr cellpadding='0' cellspacing='0'>
-			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="center" valign="top"><font size='4'><b><?=$result?></b></font></td>
+			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px; line-height:5px;" colspan="2" align="center" valign="top"><font size='3'><b><?=$result?></b></font></td>
 		</tr>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="left"><font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:</font></td>
