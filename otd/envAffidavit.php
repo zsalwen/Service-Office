@@ -93,9 +93,9 @@ table {page-break-after:always;}
 <tr><td align="center" colspan="3" valign="top"><span style="font-size:16px; text-decoration:underline;"><?=$title?></span></td>
 </tr><tr>
 <td colspan="3" style="text-indent:20px"><?=$text?></td>
-</tr><tr><td colspan="3" style="text-indent:20px;">I solemnly affirm under the penalties of perjury that the contents of the foregoing paper are true to the best of my knowledge, information, and belief.</td></tr><tr><td></td><td><br>
+</tr><tr><td colspan="3" style="text-indent:20px;">I solemnly affirm under the penalties of perjury that the contents of the foregoing paper are true to the best of my knowledge, information, and belief.</td></tr><tr><td><br>
 ________________<br>Date
-</td><td></td><td><br><span style='text-decoration:underline; width:200px;'>&nbsp;</span><br>Signature<br><span style='text-decoration:underline; width:200px;'><?=$mailer?></span><br>Name [typed]<br>span style='text-decoration:underline; width:200px;'><?=$position?></span><br>Title [typed]<br><span style='text-decoration:underline; width:200px;'>300 E Joppa Road, Suite 1102<br>Towson, MD 21286</span><br>Address of Affiant [typed]</td></tr></table>
+</td><td></td><td><br><span style='text-decoration:underline; width:200px;'>&nbsp;</span><br>Signature<br><span style='text-decoration:underline; width:200px;'><?=$mailer?></span><br>Name [typed]<br><span style='text-decoration:underline; width:200px;'><?=$position?></span><br>Title [typed]<br><span style='text-decoration:underline; width:200px;'>300 E Joppa Road, Suite 1102<br>Towson, MD 21286</span><br>Address of Affiant [typed]</td></tr></table>
 </div></center>
 <?
 $buffer = ob_get_clean();
