@@ -27,37 +27,6 @@ function attorneyCustomLang($att,$str){
 	}
 	return $str;
 }
-?>
-<style>
-.dim {
-   /* the filter attribute is recognized in
-   Internet Explorer and should be a percentage */
-   filter: Alpha(opacity=40);
-   /* the -moz-opacity attribute is recognized by 
-   Gecko browsers and should be a decimal */
-   -moz-opacity: .40;
-   /* opacity is the proposed CSS3 method, supported
-   in recent Gecko browsers */
-   opacity: .40;
-}
-.dimmer {
-   /* the filter attribute is recognized in
-   Internet Explorer and should be a percentage */
-   filter: Alpha(opacity=25);
-   /* the -moz-opacity attribute is recognized by 
-   Gecko browsers and should be a decimal */
-   -moz-opacity: .25;
-   /* opacity is the proposed CSS3 method, supported
-   in recent Gecko browsers */
-   opacity: .25;
-}
-body, table {padding:0px;}
-td { font-variant:small-caps; font-size:12px;}
-td.a {font-size:14px;}
-td.b {font-size:24px;}
-p {padding:0px;}
-</style>
-<?
 /*
 if ($_GET[server]){
 	$serveID=$_GET[server];
