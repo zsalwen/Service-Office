@@ -1,26 +1,4 @@
 <?
-function talk($to,$message){
-	include_once '/thirdParty/xmpphp/XMPPHP/XMPP.php';
-	$conn = new XMPPHP_XMPP('talk.google.com', 5222, 'talkabout.files@gmail.com', '', 'xmpphp', 'gmail.com', $printlog=false, $loglevel=XMPPHP_Log::LEVEL_INFO);
-	try {
-		$conn->useEncryption(true);
-		$conn->connect();
-		$conn->processUntil('session_start');
-		$conn->presence("Sending Log Files","available","gmail.com");
-		$conn->message($to, $message);
-		$conn->disconnect();
-	} catch(XMPPHP_Exception $e) {
-		die($e->getMessage());
-	}
-}
-function talkLog($filename){
-$handle = fopen($filename, "r");
-$contents = fread($handle, filesize($filename));
-$html = addslashes($contents);
-talk('insidenothing@gmail.com',$html);
-fclose($handle);
-}
-
 function pushPage($log){
 	$file = $log.'.ps';
 	$remote_file = $log.'.ps';
@@ -54,27 +32,26 @@ buildPage('user');
 buildPage('mobile');
 buildPage('contractor');
 buildPage('client');
-if (file_exists('/logs/debug.log')) { buildPage('debug'); }
-if (file_exists('/logs/source.log')) { buildPage('source'); }
+buildPage('debug'); 
+buildPage('source'); 
 buildPage('download');
 buildPage('response');
 buildPage('cache');
 buildPage('reboot');
-if (file_exists('/logs/upload.log')) { buildPage('upload'); }
-if (file_exists('/logs/cancelled.log')) { buildPage('cancelled'); }
-if (file_exists('/logs/courier.log')) { buildPage('courier'); }
-if (file_exists('/logs/fail.log')) { buildPage('fail'); }
-if (file_exists('/logs/mfg.log')) { buildPage('mfg'); }
-if (file_exists('/logs/reboot.log')) { buildPage('reboot'); }
-if (file_exists('/logs/slow.response.log')) { buildPage('slow.response'); }
-if (file_exists('/logs/ssl_access.log')) { buildPage('ssl_access'); }
-if (file_exists('/logs/ssl_error.log')) { buildPage('ssl_error'); }
-if (file_exists('/logs/sso.log')) { buildPage('sso'); }
-if (file_exists('/logs/timeline.log')) { buildPage('timeline'); }
-if (file_exists('/logs/twitter.log')) { buildPage('twitter'); }
-if (file_exists('/logs/watchdog.log')) { buildPage('watchdog'); }
-if (file_exists('/logs/webservice.log')) { buildPage('webservice'); }
-if (file_exists('/var/log/httpd/error_log')) { buildPage2('/var/log/httpd/error_log'); }
-if (file_exists('/logs/printer.log')) { buildPage('printer'); }
-
+buildPage('upload'); 
+buildPage('cancelled');
+buildPage('courier');
+buildPage('fail'); 
+buildPage('mfg'); 
+buildPage('reboot'); 
+buildPage('slow.response'); 
+buildPage('ssl_access'); 
+buildPage('ssl_error'); 
+buildPage('sso'); 
+buildPage('timeline'); 
+buildPage('twitter'); 
+buildPage('watchdog'); 
+buildPage('webservice'); 
+buildPage2('/var/log/httpd/error_log'); 
+buildPage('printer'); 
 ?>
