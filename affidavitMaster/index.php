@@ -31,7 +31,7 @@ header('Location: '.$id.'.doc');
 function explodePrint($str){
 	$explode=explode('page-break-after:always; ',$str);
 	$count=count($explode)-1;
-	$i=0;
+	$i=-1;
 	while ($i < $count){$i++;
 		if ($i == $count){
 			$implode .= $explode["$i"];
