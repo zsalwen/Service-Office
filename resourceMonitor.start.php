@@ -90,16 +90,13 @@ function resourceMonitorStartServerResponse($page,$time,$query,$log,$debug){
 	
 	if (trim($page) != 'report.php'){ // don't log the toolbar
 		$str = "[".date('m/d/Y h:i A')."] [$load] [".resourceMonitorStartGetMemory()."] [".$swap['1']."b] [".resourceMonitorLeading_zeros((number_format($speed,2)),3)."MB/s] [".$loadTime."s] [".trim($page)."] [".$user."]";
-	if($loadTime > 10){
-resourceMonitortalk('zachsalwen@gmail.com','Level 1 PHP Performance Alert: '.$page.' in '.$loadTime.'s');
-resourceMonitortalk('insidenothing@gmail.com','Level 1 PHP Performance Alert: '.$page.' in '.$loadTime.'s');
-	}elseif($loadTime > 7){
-resourceMonitortalk('zachsalwen@gmail.com','Level 2 PHP Performance Alert: '.$page.' in '.$loadTime.'s');
-resourceMonitortalk('insidenothing@gmail.com','Level 2 PHP Performance Alert: '.$page.' in '.$loadTime.'s');
-	}elseif($loadTime > 5){
-resourceMonitortalk('zachsalwen@gmail.com','Level 3 PHP Performance Alert: '.$page.' in '.$loadTime.'s');
-resourceMonitortalk('insidenothing@gmail.com','Level 3 PHP Performance Alert: '.$page.' in '.$loadTime.'s');
-	}
+	
+if($loadTime > 30){
+ mail('zachsalwen@gmail.com','Programmer Alert: '.$page,'Attention Required, page loaded in '.$loadTime.'s');
+ mail('insidenothing@gmail.com','Programmer Alert: '.$page,'Attention Required, page loaded in '.$loadTime.'s');
+}elseif($loadTime > 10){
+ resourceMonitortalk('insidenothing@gmail.com','PHP Alert: '.$page.' in '.$loadTime.'s (+10)');
+}
 
 		if ($debug && $_COOKIE[psdata][level] == 'Operations'){
 			echo "<div style='border:double 10px #F00;'>$str<hr><b>psdata array</b>:<br><pre>";
