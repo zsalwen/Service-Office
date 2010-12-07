@@ -253,24 +253,24 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 		$article = "14-209(b)";
 		$result = "MAILING AND POSTING";
 		if ($attempts != ''){
-				$history = "<div style='font-weight:300; padding-left:20px;'><u><font size='2'>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:</font></u></div>
+				$history = "<b><u><font size='2'>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:</font></u></b>
 				".$attempts;
 			}elseif($attemptsa != ''){
-				$history = "<div style='font-weight:300; padding-left:20px;'><u><font size='2'>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:</font></u></div>
+				$history = "<b><u><font size='2'>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:</font></u></b>
 				".$attemptsa;
 				$iID=$iIDa;
 			}
-			$history2 = "<div style='font-weight:300; padding-left:20px;'><u><font-size='2'>Include the date of the posting and a description of the location of the posting on the property:</font></u></div>".$posting;
+			$history2 = "<b><u><font-size='2'>Include the date of the posting and a description of the location of the posting on the property:</font></u></b>".$posting;
 		if ($mailing == ''){
 			$history3 = "<div class='dim' style='font-weight:300'><u><font size='2'>State the date on which the required papers were mailed by first-class and certified mail, return receipt requested, and the name and address of the addressee:</font></u>
 				<center><font size='36 px'>AWAITING MAILING<br />DO NOT FILE</font></center></div>";
 			$noMail = 1;
 		}else{
 			if ($crr != ''){
-				$history3 = "<div style='font-weight:300; padding-left:20px;'><u><font-size='2'>State the date on which the required papers were mailed by first-class and certified mail, return receipt requested, and the name and address of the addressee:</font></u></div>
+				$history3 = "<b><u><font-size='2'>State the date on which the required papers were mailed by first-class and certified mail, return receipt requested, and the name and address of the addressee:</font></u></b>
 				".$mailing;
 			}elseif(($iiID == $d1[server_id]) || ($first != '' && $crr == '')){
-				$history3 = "<div style='font-weight:300; padding-left:20px;'><u><font-size='2'>State the date on which the required papers were mailed by first-class and the name and address of the addressee:</font></u></div>
+				$history3 = "<b><u><font-size='2'>State the date on which the required papers were mailed by first-class and the name and address of the addressee:</font></u></b>
 				".$mailing;
 			}
 		}
@@ -314,7 +314,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	//6th server
 	if ($iIDe){
 		$historye = "";
-		$historye = "<div style='font-weight:300; padding-left:20px;'><u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:</u></div>
+		$historye = "<b><u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:</u></b>
 				".$attemptse;
 	$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iIDe' AND packetID='$packet'");
 	$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
@@ -359,7 +359,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	//5th server
 	if ($iIDd){
 		$historyd = "";
-		$historyd = "<div style='font-weight:300; padding-left:20px;'><u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:</u></div>
+		$historyd = "<b><u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:</u></b>
 				".$attemptsd;
 	 ?>
 		<table style='border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="100%" height="600px" cellpadding="0" cellspacing="0" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
@@ -405,7 +405,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	//4th server
 	if ($iIDc){
 		$historyc = "";
-		$historyc = "<div style='font-weight:300; padding-left:20px;'><u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:</u></div>
+		$historyc = "<b><u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:</u></b>
 				".$attemptsc;
 	?>
 		<table style='border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="100%" height="600px" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
@@ -452,7 +452,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	//3rd server
 	if ($iIDb){
 		$historyb = "";
-		$historyb = "<div style='font-weight:300; padding-left:20px;'><u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:</u></div>
+		$historyb = "<b><u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:</u></b>
 				".$attemptsb;
 	?>
 		<table style='border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="100%" height="600px" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
@@ -500,7 +500,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	//2nd server
 	if ($iIDa){
 		$historya = "";
-		$historya = "<div style='font-weight:300; padding-left:20px;'><u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:</u></div>
+		$historya = "<b><u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:</u></b>
 				".$attemptsa;
 	?>
 		<table style='border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="100%" height="600px" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
