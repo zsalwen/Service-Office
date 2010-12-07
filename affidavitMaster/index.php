@@ -58,32 +58,7 @@ $error = system($command,$result);
 //echo "<div>".$result."</div>";
 header('Location: '.$id.'.pdf');
 }
-function pdfAD2($id){
-$r=@mysql_query("select LiveAffidavit from ps_packets where packet_id = '$id'");
-$d=mysql_fetch_array($r,MYSQL_ASSOC);
-$myFile = "$id.html";
-$fh = fopen($myFile, 'w') or die("can't open file");
-$la=explodePrint(trim($d[LiveAffidavit]));
-fwrite($fh, $la);
-fclose($fh);
-$command1='/usr/local/bin/html2ps '.$id.'.html > '.$id.'.pcl';
-$error1=passthru($command1,$result1);
-$command2='/usr/local/bin/html2ps '.$id.'.pcl > '.$id.'2.html';
-$error2=passthru($command2,$result2);
-$command3 = 'python DocumentConverter.py /gitbox/Service-Office/affidavitMaster/'.$id.'2.html /gitbox/Service-Office/affidavitMaster/'.$id.'.pdf';
-$error3 = system($command3,$result3);
-echo "<div>COMMAND1: [".$command1."]</div>";
-echo "<div>ERROR1: [".$error1."]</div>";
-echo "<div>RESULT1: [".$result1."]</div>";
-echo "<div>COMMAND2: [".$command2."]</div>";
-echo "<div>ERROR2: [".$error2."]</div>";
-echo "<div>RESULT2: [".$result2."]</div>";
-echo "<div>COMMAND3: [".$command3."]</div>";
-echo "<div>ERROR3: [".$error3."]</div>";
-echo "<div>RESULT3: [".$result3."]</div>";
-echo "<script>window.open('$id.pdf', '$_GET[id] PDF')</script>";
-//header('Location: '.$id.'.pdf');
-}
+
 /*
 if($_GET['doc']){
 docAD($_GET[id]);
@@ -91,9 +66,6 @@ docAD($_GET[id]);
 */
 if($_GET['pdf']){
 pdfAD($_GET[id]);
-}
-if($_GET['pdf2']){
-pdfAD2($_GET[id]);
 }
 
 function printAD($id,$ip){
@@ -199,7 +171,6 @@ a { text-decoration:none; color:#000; }
 <td <?=$mouseover2;?> valign="center" align="center"><a href="?id=<?=$_GET[id];?>&doc=1" target="_Blank">Open .doc</a></td>
 -->
 <td <?=$mouseover2;?> valign="center" align="center"><a href="?id=<?=$_GET[id];?>&pdf=1" target="_Blank">Open .pdf</a></td>
-<td <?=$mouseover2;?> valign="center" align="center"><a href="?id=<?=$_GET[id];?>&pdf2=1">Open PCL->.pdf</a></td>
 <!--
 <td <?=$mouseover3;?> valign="center" align="center"><a href="bursonSendToPublisher.php?auction=<?=$_GET[id];?>" target="_Blank">Send To Paper</a></td>
 <td <?=$mouseover3;?> valign="center" align="center"><a href="SendToClient.php?auction=<?=$_GET[id];?>" target="_Blank">Send To Client</a></td>
