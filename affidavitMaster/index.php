@@ -28,12 +28,26 @@ $error = system('python DocumentConverter.py /gitbox/Service-Office/'.$id.'.html
 header('Location: '.$id.'.doc');
 }
 */
+function explodePrint($str){
+	$explode=explode('page-break-after:always; ',$str);
+	$count=count($explode)-1;
+	$i=0;
+	while ($i < $count){$i++;
+		if ($i == $count){
+			$implode .= $explode["$i"];
+		}else{
+			$implode .= "page-break-after:always; ".$explode["$i"];
+		}
+	}
+	return $implode;
+}
 function pdfAD($id){
 $r=@mysql_query("select LiveAffidavit from ps_packets where packet_id = '$id'");
 $d=mysql_fetch_array($r,MYSQL_ASSOC);
 $myFile = "$id.html";
 $fh = fopen($myFile, 'w') or die("can't open file");
-fwrite($fh, trim($d[LiveAffidavit]));
+$la=explodePrint(trim($d[LiveAffidavit]));
+fwrite($fh, $la);
 fclose($fh);
 $command = 'python DocumentConverter.py /gitbox/Service-Office/affidavitMaster/'.$id.'.html /gitbox/Service-Office/affidavitMaster/'.$id.'.pdf';
 $error = system($command,$result);
@@ -49,10 +63,10 @@ $myFile = "$id.html";
 $fh = fopen($myFile, 'w') or die("can't open file");
 fwrite($fh, trim($d[LiveAffidavit]));
 fclose($fh);
-$command1='/usr/local/bin/html2ps '.$id.'.html > '.$id.'.pcl';
+/*$command1='/usr/local/bin/html2ps '.$id.'.html > '.$id.'.pcl';
 $error1=passthru($command1,$result1);
 $command2='/usr/local/bin/html2ps '.$id.'.pcl > '.$id.'.html';
-$error2=passthru($command2,$result2);
+$error2=passthru($command2,$result2);*/
 $command3 = 'python DocumentConverter.py /gitbox/Service-Office/affidavitMaster/'.$id.'.html /gitbox/Service-Office/affidavitMaster/'.$id.'.pdf';
 $error3 = system($command3,$result3);
 echo "<div>COMMAND1: [".$command1."]</div>";
