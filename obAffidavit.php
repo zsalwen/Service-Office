@@ -668,8 +668,8 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="left" valign="top"><center><b><u><?=$amended?>Affidavit of Mailing</u></b></center>
 			<center><font size='4'><b><?=$result?></b></font></center>
-			<span style='padding-left:20px;'><font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:</font><br>
-			<b><?=stripslashes($history3)?></b></span><br>
+			<font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:</font><br>
+			<span style='padding-left:20px;'><b><?=stripslashes($history3)?></b></span><br>
 			<font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct to the best of my knowledge, information and belief.  And that I mailed the above papers under section 14-209(b) to <?=strtoupper($d1["name$def"])?>.</font><br>
 			<font size='2'>I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action.</font></td>
 		</tr>
