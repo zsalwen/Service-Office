@@ -35,8 +35,10 @@ function explodePrint($str){
 	while ($i < $count){$i++;
 		if ($i == $count){
 			$implode .= $explode["$i"];
-		}else{
+		}elseif($i > 0){
 			$implode .= "page-break-after:always; ".$explode["$i"];
+		}else{
+			$implode .= $explode["$i"];
 		}
 	}
 	return $implode;
