@@ -131,7 +131,7 @@ input,textarea,.select{background-color:CCFFFF;}
 		<td><iframe height="200px" width="700px"  frameborder="0" src="http://staff.mdwestserve.com/market/notes.php?id=<?=$d[marketID]?>"></iframe></td>
 	</tr>
 	<tr>
-		<td colspan="2" align="center" class="y"><input type="submit" name="submit" "value="Submit"> <input type="submit" value="Delete Contact" name="delete"></td>
+		<td colspan="2" align="center" class="y"><input type="submit" name="submit" "value="Submit"> <input type="submit" value="Delete Contact" name="delete"> <a href="index.php">Return to Index</a></td>
 	</tr>
 </table>
 </form>
