@@ -346,11 +346,11 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 			<font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:</font><br>
 			<div style='padding-left:20px;'><?=stripslashes($historye)?></div>
 			<font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct, to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.<br>
-			I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</font></td>
+			I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</font><br></td>
 		</tr>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br /><?=$_SERVER[REMOTE_ADDR]?></font></td> 
+			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=strtoupper($serverName);?><br /><?=strtoupper($serverAdd);?><br /><?=strtoupper($serverCity);?>, <?=strtoupper($serverState);?> <?=strtoupper($serverZip);?><br /><?=strtoupper($serverPhone);?><br /><?=$_SERVER[REMOTE_ADDR]?></font></td> 
 		</tr>
 	</table>
 	<? }
@@ -393,10 +393,10 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 			<font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:</font><br>
 			<div style='padding-left:20px;'><?=stripslashes($historyd)?></div>
 			<font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct, to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.<br>
-			I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</font></td></tr>
+			I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</font><br></td></tr>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br /><?=$_SERVER[REMOTE_ADDR]?></font></td> 
+			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=strtoupper($serverName);?><br /><?=strtoupper($serverAdd);?><br /><?=strtoupper($serverCity);?>, <?=strtoupper($serverState);?> <?=strtoupper($serverZip);?><br /><?=strtoupper($serverPhone);?><br /><?=$_SERVER[REMOTE_ADDR]?></font></td> 
 		</tr>
 	</table>
 	<? } 
@@ -438,11 +438,11 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 			<center><font size='4'><b><?=$result?></b></font></center>
 			<font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:</font><br>
 			<div style='padding-left:20px;'><?=stripslashes($historyc)?></div>
-			<font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct, to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.</font><br><font size='2'>I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</td>
+			<font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct, to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.<br>I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</font><br></td>
 		</tr>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br /><?=$_SERVER[REMOTE_ADDR]?></font></td> 
+			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=strtoupper($serverName);?><br /><?=strtoupper($serverAdd);?><br /><?=strtoupper($serverCity);?>, <?=strtoupper($serverState);?> <?=strtoupper($serverZip);?><br /><?=strtoupper($serverPhone);?><br /><?=$_SERVER[REMOTE_ADDR]?></font></td> 
 		</tr>
 	</table>
 	<? 
@@ -486,11 +486,11 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 			<font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:</font><br>
 			<div style='padding-left:20px;'><?=stripslashes($historyb)?></div>
 		<font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct, to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.<br>
-		I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</font></td>
+		I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</font><br></td>
 		</tr>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br /><?=$_SERVER[REMOTE_ADDR]?></font></td> 
+			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=strtoupper($serverName);?><br /><?=strtoupper($serverAdd);?><br /><?=strtoupper($serverCity);?>, <?=strtoupper($serverState);?> <?=strtoupper($serverZip);?><br /><?=strtoupper($serverPhone);?><br /><?=$_SERVER[REMOTE_ADDR]?></font></td> 
 		</tr>
 	</table>
 	<? 
@@ -533,11 +533,11 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 			<center><font size='4'><b><?=$result?></b></font></center>
 			<font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:</font><br>
 			<div style='padding-left:20px;'><?=stripslashes($historya)?></div>
-		<font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct, to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.<br>I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</font></td>
+		<font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct, to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.<br>I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</font><br></td>
 		</tr>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br /><?=$_SERVER[REMOTE_ADDR]?></font></td> 
+			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=strtoupper($serverName);?><br /><?=strtoupper($serverAdd);?><br /><?=strtoupper($serverCity);?>, <?=strtoupper($serverState);?> <?=strtoupper($serverZip);?><br /><?=strtoupper($serverPhone);?><br /><?=$_SERVER[REMOTE_ADDR]?></font></td> 
 		</tr>
 	</table>
 	<? 
@@ -581,11 +581,11 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	if ($iID == $iiID){
 	}else{
 	?>        
-		<font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.<br>I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</font></td>
+		<font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.<br>I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</font><br></td>
 		</tr>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br /><?=$_SERVER[REMOTE_ADDR]?></font></td> 
+			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=strtoupper($serverName);?><br /><?=strtoupper($serverAdd);?><br /><?=strtoupper($serverCity);?>, <?=strtoupper($serverState);?> <?=strtoupper($serverZip);?><br /><?=strtoupper($serverPhone);?><br /><?=$_SERVER[REMOTE_ADDR]?></font></td> 
 		</tr>
 	</table>
 	<? }
@@ -629,11 +629,11 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 		<? } ?>
 		<div style='padding-left:20px;'><?=stripslashes($history2)?></div>
 		<font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct to the best of my knowledge, information and belief.<br>
-		I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action.</font></td>
+		I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action.</font><br></td>
 		</tr>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br /><?=$_SERVER[REMOTE_ADDR]?></font></td> 
+			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=strtoupper($serverName);?><br /><?=strtoupper($serverAdd);?><br /><?=strtoupper($serverCity);?>, <?=strtoupper($serverState);?> <?=strtoupper($serverZip);?><br /><?=strtoupper($serverPhone);?><br /><?=$_SERVER[REMOTE_ADDR]?></font></td> 
 		</tr>
 	</table>
 	<? } 
@@ -671,11 +671,11 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 			<font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:</font><br>
 			<div style='padding-left:20px;'><?=stripslashes($history3)?></div>
 			<font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct to the best of my knowledge, information and belief.  And that I mailed the above papers under section 14-209(b) to <?=strtoupper($d1["name$def"])?>.</font><br>
-			<font size='2'>I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action.</font></td>
+			<font size='2'>I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action.</font><br></td>
 		</tr>
 		<tr cellpadding='0' cellspacing='0' <? if($noMail == 1 && !$_GET[mail]){ echo 'class="dim"';}?>>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br /><?=$_SERVER[REMOTE_ADDR]?></font></td> 
+			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=strtoupper($serverName);?><br /><?=strtoupper($serverAdd);?><br /><?=strtoupper($serverCity);?>, <?=strtoupper($serverState);?> <?=strtoupper($serverZip);?><br /><?=strtoupper($serverPhone);?><br /><?=$_SERVER[REMOTE_ADDR]?></font></td> 
 		</tr>
 	</table>
 	<? }
@@ -723,11 +723,11 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 		$desc=strtoupper(str_replace('CO-A BORROWER IN THE ABOVE-REFERENCED CASE', 'A BORROWER IN THE ABOVE-REFERENCED CASE', str_replace('BORROWER','A BORROWER IN THE ABOVE-REFERENCED CASE', attorneyCustomLang($d1[attorneys_id],strtoupper($residentDesc)))));
 	}?>
 		<div style='padding-left:20px;'><font size='3'><b><?=stripslashes($delivery)?></b></font></div>
-		<font size='2'>I solemnly affirm under the penalties of perjury that the contents of <? if ($type == 'non'){ ?>section (i) of <? }?>this <?=strtolower($amended)?>affidavit are true and correct to the best of my knowledge, information and belief<? if (($type == 'pd' && $nondef == '1') || ($type == 'pd' && $d1[packet_id] >= "10000")){?>, and that I served<? if (($type == 'pd' && $nondef == '1') && (strpos($delivery,"USUAL PLACE OF ABODE") || strpos($delivery,"RESIDENTIAL PROPERTY"))){ ?> at the usual place of abode<? } ?> the <?=$addlDocs?> and other papers to <? if ($resident){ echo strtoupper($resident);}else{ echo '[PERSON SERVED]';}?>, <? if ($residentDesc){echo $desc;}else{ echo '[RELATION TO DEFENDANT]';}?><? if ($serveAddress){ echo ', at '.$serveAddress;}?><? }elseif($type == 'pd' && $nondef != '1'){?>, and that I served the <?=$addlDocs?> and other papers to <?=strtoupper($d1["name$def"])?><? if ($serveAddress){ echo ', at '.strtoupper($serveAddress);}?><? } ?>.<br>I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action.</font></td>
+		<font size='2'>I solemnly affirm under the penalties of perjury that the contents of <? if ($type == 'non'){ ?>section (i) of <? }?>this <?=strtolower($amended)?>affidavit are true and correct to the best of my knowledge, information and belief<? if (($type == 'pd' && $nondef == '1') || ($type == 'pd' && $d1[packet_id] >= "10000")){?>, and that I served<? if (($type == 'pd' && $nondef == '1') && (strpos($delivery,"USUAL PLACE OF ABODE") || strpos($delivery,"RESIDENTIAL PROPERTY"))){ ?> at the usual place of abode<? } ?> the <?=$addlDocs?> and other papers to <? if ($resident){ echo strtoupper($resident);}else{ echo '[PERSON SERVED]';}?>, <? if ($residentDesc){echo $desc;}else{ echo '[RELATION TO DEFENDANT]';}?><? if ($serveAddress){ echo ', at '.$serveAddress;}?><? }elseif($type == 'pd' && $nondef != '1'){?>, and that I served the <?=$addlDocs?> and other papers to <?=strtoupper($d1["name$def"])?><? if ($serveAddress){ echo ', at '.strtoupper($serveAddress);}?><? } ?>.<br>I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action.</font><br></td>
 		</tr>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br /><?=$_SERVER[REMOTE_ADDR]?></font></td> 
+			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=strtoupper($serverName);?><br /><?=strtoupper($serverAdd);?><br /><?=strtoupper($serverCity);?>, <?=strtoupper($serverState);?> <?=strtoupper($serverZip);?><br /><?=strtoupper($serverPhone);?><br /><?=$_SERVER[REMOTE_ADDR]?></font></td> 
 		</tr>
 	</table>
 	<? 
