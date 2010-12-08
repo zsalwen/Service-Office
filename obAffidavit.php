@@ -237,7 +237,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 	// hard code
 	$header="<td cellpadding='0' cellspacing='0' colspan='2' align='center' style='font-variant:small-caps; padding-top:0px; padding-bottom:0px;'><font size='6'>State of Maryland</font><br>
 	<font size='5'>Circuit Court for ".$court."</font></td></tr>
-		<tr cellpadding='0' cellspacing='0'><td cellpadding='0' cellspacing='0' class='a' style=' padding-top:0px; padding-bottom:0px;'><font size='2'>".$plaintiff."<br /><small>_____________________<br /><em>Plaintiff</em></small><br /><br />v.<br /><br />";
+		<tr cellpadding='0' cellspacing='0'><td cellpadding='0' cellspacing='0' class='a' width='67%' style='padding-top:0px; padding-bottom:0px;'><font size='2'>".$plaintiff."<br /><small>_____________________<br /><em>Plaintiff</em></small><br /><br />v.<br /><br />";
 			if ($d1[onAffidavit1]=='checked'){$header .= strtoupper($d1['name1']).'<br />';}
 			if ($d1['name2'] && $d1[onAffidavit2]=='checked'){$header .= strtoupper($d1['name2']).'<br />';}
 			if ($d1['name3'] && $d1[onAffidavit3]=='checked'){$header .= strtoupper($d1['name3']).'<br />';}
@@ -247,7 +247,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 			$header .=strtoupper($d1['address1']).'<br />';
 			$header .=strtoupper($d1['city1']).', '.strtoupper($d1['state1']).' '.$d1['zip1'].'<br />';
 			$header .= "<small>_____________________<br /><em>Defendant</em></small></font></td>
-				<td cellpadding='0' cellspacing='0' align='right' valign='top' style='padding-left:200px; width:150px;  padding-top:0px; padding-bottom:0px;' width='150px' nowrap='nowrap'><div width='150px' style='width:150px;border:solid 1px #666666;'><center><font size='5'>Case Number<br />&nbsp;".str_replace(0,'&Oslash;',$d1[case_no])."</font></center></div>";
+				<td cellpadding='0' cellspacing='0' align='right' width='33%' valign='top' style='padding-left:200px; padding-top:0px; padding-bottom:0px;' nowrap='nowrap'><div style='border:solid 1px #666666;'><center><font size='5'>Case Number<br />&nbsp;".str_replace(0,'&Oslash;',$d1[case_no])."</font></center></div>";
 
 	if ($type == "non"){
 		$article = "14-209(b)";
