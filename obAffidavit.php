@@ -247,7 +247,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 			$header .=strtoupper($d1['address1']).'<br />';
 			$header .=strtoupper($d1['city1']).', '.strtoupper($d1['state1']).' '.$d1['zip1'].'<br />';
 			$header .= "<small>_____________________<br /><em>Defendant</em></small></font></td>
-				<td cellpadding='0' cellspacing='0' align='right' valign='top' style='padding-left:200px; width:150px;  padding-top:0px; padding-bottom:0px;' width='150px' nowrap='nowrap'><div style='border:solid 1px #666666;'><center><font size='5'>Case Number<br />&nbsp;".str_replace(0,'&Oslash;',$d1[case_no])."</font></center></div>";
+				<td cellpadding='0' cellspacing='0' align='right' valign='top' style='padding-left:200px; width:150px;  padding-top:0px; padding-bottom:0px;' width='150px' nowrap='nowrap'><div width='150px' style='width:150px;border:solid 1px #666666;'><center><font size='5'>Case Number<br />&nbsp;".str_replace(0,'&Oslash;',$d1[case_no])."</font></center></div>";
 
 	if ($type == "non"){
 		$article = "14-209(b)";
