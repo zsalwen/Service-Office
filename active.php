@@ -43,51 +43,51 @@ function colorCode2($hours){
 function abbrCounty($str){
 	if ($str == "ALLEGANY"){
 		return "ALGNY";
-	elseif($str == "ANNE ARUNDEL"){
+	}elseif($str == "ANNE ARUNDEL"){
 		return "AA";
-	elseif($str == "BALTIMORE"){
+	}elseif($str == "BALTIMORE"){
 		return "BALCO";
-	elseif($str == "BALTIMORE CITY"){
+	}elseif($str == "BALTIMORE CITY"){
 		return "BALCI";
-	elseif($str == "CALVERT"){
+	}elseif($str == "CALVERT"){
 		return "CAL";
-	elseif($str == "CAROLINE"){
+	}elseif($str == "CAROLINE"){
 		return "CARLN";
-	elseif($str == "CARROLL"){
+	}elseif($str == "CARROLL"){
 		return "CARR";
-	elseif($str == "CECIL"){
+	}elseif($str == "CECIL"){
 		return "CEC";
-	elseif($str == "CHARLES"){
+	}elseif($str == "CHARLES"){
 		return "CHAR";
-	elseif($str == "DORCHESTER"){
+	}elseif($str == "DORCHESTER"){
 		return "DOR";
-	elseif($str == "FREDERICK"){
+	}elseif($str == "FREDERICK"){
 		return "FRED";
-	elseif($str == "GARRETT"){
+	}elseif($str == "GARRETT"){
 		return "GAR";
-	elseif($str == "HARFORD"){
+	}elseif($str == "HARFORD"){
 		return "HAR";
-	elseif($str == "HOWARD"){
+	}elseif($str == "HOWARD"){
 		return "HOW";
-	elseif($str == "KENT"){
+	}elseif($str == "KENT"){
 		return "KENT";
-	elseif($str == "MONTGOMERY"){
+	}elseif($str == "MONTGOMERY"){
 		return "MONT";
-	elseif($str == "PRINCE GEORGES"){
+	}elseif($str == "PRINCE GEORGES"){
 		return "PG";
-	elseif($str == "QUEEN ANNES"){
+	}elseif($str == "QUEEN ANNES"){
 		return "QA";
-	elseif($str == "SOMERSET"){
+	}elseif($str == "SOMERSET"){
 		return "SOM";
-	elseif($str == "ST MARYS"){
+	}elseif($str == "ST MARYS"){
 		return "SM";
-	elseif($str == "TALBOT"){
+	}elseif($str == "TALBOT"){
 		return "TAL";
-	elseif($str == "WASHINGTON"){
+	}elseif($str == "WASHINGTON"){
 		return "WASH";
-	elseif($str == "WICOMICO"){
+	}elseif($str == "WICOMICO"){
 		return "WIC";
-	elseif($str == "WORCESTER"){
+	}elseif($str == "WORCESTER"){
 		return "WOR";
 	}
 }
