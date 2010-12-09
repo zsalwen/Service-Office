@@ -40,7 +40,7 @@ while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 		$packet=str_replace('EV','',strtoupper($d[packet]));
 		$type="EV";
 	}else{
-		$packet=$d[packet]
+		$packet=$d[packet];
 		$type="OTD";
 	}
 	echo "<tr><td>".strtoupper($d[packet])."</td><td>".justDate($d[binder])."</td><td>".id2name($d[server])."</td><td>".getCase($packet,$type)."</td></tr>";
