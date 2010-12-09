@@ -21,7 +21,11 @@ function getCase($packet,$type){
 	$q="SELECT case_no FROM $table WHERE $idType = '$packet'";
 	$r=@mysql_query($q);
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
-	return $d[case_no];
+	if (trim($d[case_no]) != ''){
+		return $d[case_no];
+	}else{
+		return "<i>N/A</i>";
+	}
 }
 function justDate($dt){
 	$date=explode(' ',$dt);
