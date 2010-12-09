@@ -16,7 +16,7 @@ function getCase($packet,$type){
 		$table="standard_packets";
 	}else{
 		$idType="packet_id";
-		$table="ps_packets"
+		$table="ps_packets";
 	}
 	$q="SELECT case_no FROM $table WHERE $idType = '$id'";
 	$r=@mysql_query($q);
