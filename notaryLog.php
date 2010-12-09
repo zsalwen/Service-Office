@@ -18,7 +18,7 @@ function getCase($packet,$type){
 		$idType="packet_id";
 		$table="ps_packets";
 	}
-	$q="SELECT case_no FROM $table WHERE $idType = '$id'";
+	$q="SELECT case_no FROM $table WHERE $idType = '$packet'";
 	$r=@mysql_query($q);
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 	return $d[case_no];
