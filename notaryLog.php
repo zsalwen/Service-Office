@@ -21,14 +21,19 @@ function getCase($packet,$type){
 	$q="SELECT case_no FROM $table WHERE $idType = '$packet'";
 	$r=@mysql_query($q);
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
-	return $d[case_no];
+	if (trim($d[case_no]) != ''){
+		return $d[case_no];
+	}else{
+		return "<i>N/A</i>";
+	}
 }
 function justDate($dt){
 	$date=explode(' ',$dt);
 	return $date[0];
 }
 $id=$_COOKIE[psdata][user_id];
-echo "<table align='center' border='1' style='border-collapse:collapse;'><tr><td colspan='4' align='center'><h2>NOTARY LOG FOR ".strtoupper($_COOKIE[psdata][name])."</h2></td></tr><tr><td align='center'>Packet ID</td><td align='center'>Date Notarized</td><td align='center'>Signer</td><td>Case #</td></tr>";
+echo "<style>td {text-align:center;}</style>";
+echo "<table align='center' border='1' style='border-collapse:collapse;'><tr><td colspan='4' align='center' style='font-size:18px;'>NOTARY LOG FOR ".strtoupper($_COOKIE[psdata][name])."</td></tr><tr><td align='center'>Packet ID</td><td align='center'>Date Notarized</td><td align='center'>Signer</td><td>Case #</td></tr>";
 $q="SELECT * FROM docuTrack WHERE document='NOTARIZED AFFIDAVIT' AND server='$id' ORDER BY packet ASC";
 $r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
