@@ -105,7 +105,7 @@ function serverActiveList($id){ $_SESSION[active]++;
 			$hours=$d[reopenHours]*24;
 			$reopenDate=explode('-',$d[reopenDate]);
 			$reopenDate=$reopenDate[1].'-'.$reopenDate[2];
-			$reopen = "-<span style='background-color:#FFFFFF; color:000000 !important;'><small>REOPENED $reopenDate</small></span>";
+			$reopen = "-<span style='background-color:#FFFFFF; color:000000 !important;'><small>ReO: $reopenDate</small></span>";
 		}else{
 			$hours=stripHours($d[hours]);
 			$reopen='';
@@ -141,7 +141,7 @@ function serverActiveLista($id){ $_SESSION[active]++;
 			$hours=$d[reopenHours]*24;
 			$reopenDate=explode('-',$d[reopenDate]);
 			$reopenDate=$reopenDate[1].'-'.$reopenDate[2];
-			$reopen = "-<span style='background-color:#FFFFFF; color:000000 !important;'><small>REOPENED $reopenDate</small></span>";
+			$reopen = "-<span style='background-color:#FFFFFF; color:000000 !important;'><small>ReO: $reopenDate</small></span>";
 		}else{
 			$hours=stripHours($d[hours]);
 			$reopen='';
@@ -176,7 +176,7 @@ function serverActiveListb($id){ $_SESSION[active]++;
 			$hours=$d[reopenHours]*24;
 			$reopenDate=explode('-',$d[reopenDate]);
 			$reopenDate=$reopenDate[1].'-'.$reopenDate[2];
-			$reopen = "-<span style='background-color:#FFFFFF; color:000000 !important;'><small>REOPENED $reopenDate</small></span>";
+			$reopen = "-<span style='background-color:#FFFFFF; color:000000 !important;'><small>ReO: $reopenDate</small></span>";
 		}else{
 			$hours=stripHours($d[hours]);
 			$reopen='';
@@ -211,7 +211,7 @@ function serverActiveListc($id){ $_SESSION[active]++;
 			$hours=$d[reopenHours]*24;
 			$reopenDate=explode('-',$d[reopenDate]);
 			$reopenDate=$reopenDate[1].'-'.$reopenDate[2];
-			$reopen = "-<span style='background-color:#FFFFFF; color:000000 !important;'><small>REOPENED $reopenDate</small></span>";
+			$reopen = "-<span style='background-color:#FFFFFF; color:000000 !important;'><small>ReO: $reopenDate</small></span>";
 		}else{
 			$hours=stripHours($d[hours]);
 			$reopen='';
@@ -246,7 +246,7 @@ function serverActiveListd($id){ $_SESSION[active]++;
 			$hours=$d[reopenHours]*24;
 			$reopenDate=explode('-',$d[reopenDate]);
 			$reopenDate=$reopenDate[1].'-'.$reopenDate[2];
-			$reopen = "-<span style='background-color:#FFFFFF; color:000000 !important;'><small>REOPENED $reopenDate</small></span>";
+			$reopen = "-<span style='background-color:#FFFFFF; color:000000 !important;'><small>ReO: $reopenDate</small></span>";
 		}else{
 			$hours=stripHours($d[hours]);
 			$reopen='';
@@ -281,7 +281,7 @@ function serverActiveListe($id){ $_SESSION[active]++;
 			$hours=$d[reopenHours]*24;
 			$reopenDate=explode('-',$d[reopenDate]);
 			$reopenDate=$reopenDate[1].'-'.$reopenDate[2];
-			$reopen = "-<span style='background-color:#FFFFFF; color:000000 !important;'><small>REOPENED $reopenDate</small></span>";
+			$reopen = "-<span style='background-color:#FFFFFF; color:000000 !important;'><small>ReO: $reopenDate</small></span>";
 		}else{
 			$hours=stripHours($d[hours]);
 			$reopen='';
@@ -385,7 +385,7 @@ echo "<fieldset><legend>Slot 1: ".id2name($d[server_id])." #$d[server_id]</legen
 <style>
 body { padding:0px; margin:0px; margin-left:10px;}
 fieldset {width:350px; font-size:12px; padding-top:0px; padding-bottom:0px; background-color:#CCCCCC}
-legend { border:solid 1px; padding:5px; background-color:#66CCFF; }
+legend { border:solid 1px; padding-left:5px; padding-right:5px; background-color:#66CCFF; }
 ol { padding:0px;}
 li { border-bottom:solid 1px #CCCCCC; }
 a {font-size:none; text-decoration:none; font-weight:bold;}
