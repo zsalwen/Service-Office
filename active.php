@@ -110,7 +110,7 @@ function serverActiveList($id){ $_SESSION[active]++;
 			$hours=stripHours($d[hours]);
 			$reopen='';
 		}
-		$reopen .= "-<span style='background-color:#AAAAAA; color:FFFFFF; font-weight:bold;'>DISP: ".justDate($d[dispatchDate])."</span>";
+		$reopen .= "-<span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate($d[dispatchDate])."</span>";
 		if ($d[avoidDOT] != ''){
 			$reopen .= "-<span style='background-color:#000000; color:FF0000; border: 3px solid red; font-weight:bold;'>AvoidDOT</span>";
 		}
@@ -146,7 +146,7 @@ function serverActiveLista($id){ $_SESSION[active]++;
 			$hours=stripHours($d[hours]);
 			$reopen='';
 		}
-		$reopen .= "-<span style='background-color:#AAAAAA; color:FFFFFF; font-weight:bold;'>DISP: ".justDate($d[dispatchDate])."</span>";
+		$reopen .= "-<span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate($d[dispatchDate])."</span>";
 		if ($d[avoidDOT] != ''){
 			$reopen .= "-<span style='background-color:#000000; color:FF0000; border: 3px solid red; font-weight:bold;'>AvoidDOT</span>";
 		}
@@ -181,7 +181,7 @@ function serverActiveListb($id){ $_SESSION[active]++;
 			$hours=stripHours($d[hours]);
 			$reopen='';
 		}
-		$reopen .= "-<span style='background-color:#AAAAAA; color:FFFFFF; font-weight:bold;'>DISP: ".justDate($d[dispatchDate])."</span>";
+		$reopen .= "-<span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate($d[dispatchDate])."</span>";
 		if ($d[avoidDOT] != ''){
 			$reopen .= "-<span style='background-color:#000000; color:FF0000; border: 3px solid red; font-weight:bold;'>AvoidDOT</span>";
 		}
@@ -216,7 +216,7 @@ function serverActiveListc($id){ $_SESSION[active]++;
 			$hours=stripHours($d[hours]);
 			$reopen='';
 		}
-		$reopen .= "-<span style='background-color:#AAAAAA; color:FFFFFF; font-weight:bold;'>DISP: ".justDate($d[dispatchDate])."</span>";
+		$reopen .= "-<span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate($d[dispatchDate])."</span>";
 		if ($d[avoidDOT] != ''){
 			$reopen .= "-<span style='background-color:#000000; color:FF0000; border: 3px solid red; font-weight:bold;'>AvoidDOT</span>";
 		}
@@ -251,7 +251,7 @@ function serverActiveListd($id){ $_SESSION[active]++;
 			$hours=stripHours($d[hours]);
 			$reopen='';
 		}
-		$reopen .= "-<span style='background-color:#AAAAAA; color:FFFFFF; font-weight:bold;'>DISP: ".justDate($d[dispatchDate])."</span>";
+		$reopen .= "-<span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate($d[dispatchDate])."</span>";
 		if ($d[avoidDOT] != ''){
 			$reopen .= "-<span style='background-color:#000000; color:FF0000; border: 3px solid red; font-weight:bold;'>AvoidDOT</span>";
 		}
@@ -286,7 +286,7 @@ function serverActiveListe($id){ $_SESSION[active]++;
 			$hours=stripHours($d[hours]);
 			$reopen='';
 		}
-		$reopen .= "-<span style='background-color:#AAAAAA; color:FFFFFF; font-weight:bold;'>DISP: ".justDate($d[dispatchDate])."</span>";
+		$reopen .= "-<span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate($d[dispatchDate])."</span>";
 		if ($d[avoidDOT] != ''){
 			$reopen .= "-<span style='background-color:#000000; color:FF0000; border: 3px solid red; font-weight:bold;'>AvoidDOT</span>";
 		}
@@ -323,7 +323,7 @@ if (stripHours($d[hours]) > $_SESSION[cap]){
 	}
 	$estFileDate=explode('-',$d[estFileDate]);
 	$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-	$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'>".$mod."<a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> ".abbrCounty(strtoupper($d[circuit_court]))." <em> <small>[".id2attorney($d[attorneys_id])."]</small></em>-<span style='background-color:#AAAAAA; color:FFFFFF; font-weight:bold;'>DISP: ".justDate($d[dispatchDate])."</span>-<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span></li>";
+	$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'>".$mod."<a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> ".abbrCounty(strtoupper($d[circuit_court]))." <em> <small>[".id2attorney($d[attorneys_id])."]</small></em>-<span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate($d[dispatchDate])."</span>-<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span></li>";
 }
 }
 $data.='</ol>';
