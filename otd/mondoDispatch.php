@@ -113,7 +113,8 @@ function packageFile($package_id, $file_id, $contractor_rate, $contractor_ratea,
 									contractor_rated='$contractor_rated',
 									contractor_ratee='$contractor_ratee',
 									outofstate_cost='$oosc',
-									estFileDate='$_SESSION[estFileDate]'
+									estFileDate='$_SESSION[estFileDate]',
+									dispatchDate=NOW()
 										WHERE packet_id = '$file_id'";
 	$r=@mysql_query($q);
 }
