@@ -15,11 +15,11 @@ function oosList($packet){
 	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
 	if ($d[state1] != '' && strtoupper($d[state1]) != 'MD' && $d[server_id] != '' && id2state($d[server_id]) != 'MD' && $d[server_id] != 218){$i++;
-		$list .= $i.". ".id2name($d[server_id]).": <div style='font-size:10px; text-align:right !important; line-height:1px; border:solid 1px black;'>".strtoupper($d[address1])."<br>".strtoupper($d[city1]).", ".strtoupper($d[state1])." ".$d[zip1]."</div>";
+		$list .= $i.". ".id2name($d[server_id]).": <div style='font-size:10px; text-align:right !important; line-height:10px; border:solid 1px black;'>".strtoupper($d[address1])."<br>".strtoupper($d[city1]).", ".strtoupper($d[state1])." ".$d[zip1]."</div>";
 	}
 	foreach(range('a','e') as $letter){
 		if ($d["state1$letter"] != '' && strtoupper($d["state1$letter"]) != 'MD' && $d["server_id$letter"] != '' && id2state($d["server_id$letter"]) != 'MD' && $d["server_id$letter"] != 218){$i++;
-			$list .= $i.". ".id2name($d["server_id$letter"]).": <div style='font-size:10px; text-align:right !important; line-height:1px; border:solid 1px black;'>".strtoupper($d["address1$letter"])."<br>".strtoupper($d["city1$letter"]).", ".strtoupper($d["state1$letter"])." ".$d["zip1$letter"]."</div>";
+			$list .= $i.". ".id2name($d["server_id$letter"]).": <div style='font-size:10px; text-align:right !important; line-height:10px; border:solid 1px black;'>".strtoupper($d["address1$letter"])."<br>".strtoupper($d["city1$letter"]).", ".strtoupper($d["state1$letter"])." ".$d["zip1$letter"]."</div>";
 		}
 	}
 	return $list;
@@ -58,7 +58,7 @@ while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){$i++;
 	$oosList=oosList($d[packet_id]);
 	//if ($oosList != ''){
 		echo "
-		<tr bgcolor='".row_color($i,'#FFFFFF','#DDDDDD')."'><td valign='top'><a href='' target='_blank'>$d[packet_id]</a></td><td valign='top'>$d[dispatchDate]</td><td style='padding-left:20px;' valign='top'>".$oosList."</td><td width='600px' valign='top'><div style='width:600px; background-color:orange; display:inline;' onClick=\"hideshow(document.getElementById('notes-$d[packet_id]')); ChangeText('plus-$d[packet_id]');\">&nbsp;[<a id='plus-$d[packet_id]'>+</a>]&nbsp;</div><div style='display:none;' id='notes-$d[packet_id]'><iframe height='300px' width='600px' frameborder='0' src='http://staff.mdwestserve.com/notes.php?packet=$d[packet_id]'></iframe></div></td></tr>";
+		<tr bgcolor='".row_color($i,'#FFFFFF','#DDDDDD')."'><td valign='top'><a href='' target='_blank'>$d[packet_id]</a></td><td valign='top'>$d[dispatchDate]</td><td style='padding-left:20px;' valign='top'>".$oosList."</td><td width='600px' valign='top' align='center'><div style='width:600px !important; background-color:orange; display:inline;' onClick=\"hideshow(document.getElementById('notes-$d[packet_id]')); ChangeText('plus-$d[packet_id]');\"> &nbsp;[<a id='plus-$d[packet_id]'>+</a>]&nbsp; </div><div style='display:none;' id='notes-$d[packet_id]'><iframe height='300px' width='600px' frameborder='0' src='http://staff.mdwestserve.com/notes.php?packet=$d[packet_id]'></iframe></div></td></tr>";
 	//}
 }
 echo "</table>";
