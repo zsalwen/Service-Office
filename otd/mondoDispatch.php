@@ -80,6 +80,12 @@ function outOfState($packet_id){
 	return ($i * 20);
 }
 
+function getCounty($zip){
+	$r=@mysql_query("select county from zip_code where zip_code = '$zip' LIMIT 0,1");
+	$d=mysql_fetch_array($r,MYSQL_ASSOC);
+	return strtoupper($d[county]);
+}
+
 if ($_COOKIE[psdata][level] != "Operations"){
 			$event = 'packages.php';
 			$email = $_COOKIE[psdata][email];
@@ -236,19 +242,20 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {$i++;
 		<td><?=$d[case_no] ?></td>
         <td><?=str_replace(' ','&nbsp;',$d[circuit_court]) ?></td>
         <td align="center"><?=defTotal($d[packet_id]);?></td>
-        <td nowrap="nowrap"><? if ($d[address1e]){
-				echo "<a target='_Blank' href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=$d[address1e]&city=$d[city1e]&state=$d[state1e]&miles=20' title='$d[address1e], $d[city1e], $d[state1e] $d[zip1e]'>Service: $d[address1e], $d[city1e], $d[state1e] $d[zip1e]</a>".bwaRate($d[zip1e])."<br><a target='_Blank'  href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=$d[address1d]&city=$d[city1d]&state=$d[state1d]&miles=20' title='$d[address1d], $d[city1d], $d[state1d] $d[zip1d]'>Alt. Service: $d[address1d], $d[city1d], $d[state1d] $d[zip1d]</a>".bwaRate($d[zip1d])."<br><a target='_Blank'  href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=$d[address1c]&city=$d[city1c]&state=$d[state1c]&miles=20' title='$d[address1c], $d[city1c], $d[state1c] $d[zip1c]'>Alt. Service: $d[address1c], $d[city1c], $d[state1c] $d[zip1c]</a>".bwaRate($d[zip1c])."<br><a target='_Blank'  href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=$d[address1b]&city=$d[city1b]&state=$d[state1b]&miles=20' title='$d[address1b], $d[city1b], $d[state1b] $d[zip1b]'>Alt. Service: $d[address1b], $d[city1b], $d[state1b] $d[zip1b]</a>".bwaRate($d[zip1b])."<br><a   href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=$d[address1a]&city=$d[city1a]&state=$d[state1a]&miles=20' title='$d[address1a], $d[city1a], $d[state1a] $d[zip1a]'>Alt. Service: $d[address1a], $d[city1a], $d[state1a] $d[zip1a]</a>".bwaRate($d[zip1a])."<br><a   href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=$d[address1]&city=$d[city1]&state=$d[state1]&miles=20' title='$d[address1], $d[city1], $d[state1] $d[zip1]'>Posting: $d[address1], $d[city1], $d[state1] $d[zip1]</a>".bwaRate($d[zip1])."";	
-			}elseif ($d[address1d]){
-				echo "<a target='_Blank' href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=$d[address1d]&city=$d[city1d]&state=$d[state1d]&miles=20' title='$d[address1d], $d[city1d], $d[state1d] $d[zip1d]'>Service: $d[address1d], $d[city1d], $d[state1d] $d[zip1d]</a>".bwaRate($d[zip1d])."<br><a target='_Blank'  href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=$d[address1c]&city=$d[city1c]&state=$d[state1c]&miles=20' title='$d[address1c], $d[city1c], $d[state1c] $d[zip1c]'>Alt. Service: $d[address1c], $d[city1c], $d[state1c] $d[zip1c]</a>".bwaRate($d[zip1c])."<br><a target='_Blank'  href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=$d[address1b]&city=$d[city1b]&state=$d[state1b]&miles=20' title='$d[address1b], $d[city1b], $d[state1b] $d[zip1b]'>Alt. Service: $d[address1b], $d[city1b], $d[state1b] $d[zip1b]</a>".bwaRate($d[zip1b])."<br><a target='_Blank'  href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=$d[address1a]&city=$d[city1a]&state=$d[state1a]&miles=20' title='$d[address1a], $d[city1a], $d[state1a] $d[zip1a]'>Alt. Service: $d[address1a], $d[city1a], $d[state1a] $d[zip1a]</a>".bwaRate($d[zip1a])."<br><a target='_Blank'  href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=$d[address1]&city=$d[city1]&state=$d[state1]&miles=20' title='$d[address1], $d[city1], $d[state1] $d[zip1]'>Posting: $d[address1], $d[city1], $d[state1] $d[zip1]</a>".bwaRate($d[zip1])."";	
-			}elseif ($d[address1c]){
-				echo "<a target='_Blank' href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=$d[address1c]&city=$d[city1c]&state=$d[state1c]&miles=20' title='$d[address1c], $d[city1c], $d[state1c] $d[zip1c]'>Service: $d[address1c], $d[city1c], $d[state1c] $d[zip1c]</a>".bwaRate($d[zip1c])."<br><a target='_Blank'  href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=$d[address1b]&city=$d[city1b]&state=$d[state1b]&miles=20' title='$d[address1b], $d[city1b], $d[state1b] $d[zip1b]'>Alt. Service: $d[address1b], $d[city1b], $d[state1b] $d[zip1b]</a>".bwaRate($d[zip1b])."<br><a target='_Blank'  href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=$d[address1a]&city=$d[city1a]&state=$d[state1a]&miles=20' title='$d[address1a], $d[city1a], $d[state1a] $d[zip1a]'>Alt. Service: $d[address1a], $d[city1a], $d[state1a] $d[zip1a]</a>".bwaRate($d[zip1c])."<br><a title='$d[address1], $d[city1], $d[state1] $d[zip1]' href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=$d[address1]&city=$d[city1]&state=$d[state1]&miles=20'>Posting: $d[address1], $d[city1], $d[state1] $d[zip1]</a>".bwaRate($d[zip1])."";		
-			}elseif ($d[address1b]){
-				echo "<a target='_Blank' href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=$d[address1b]&city=$d[city1b]&state=$d[state1b]&miles=20' title='$d[address1b], $d[city1b], $d[state1b] $d[zip1b]'>Service: $d[address1b], $d[city1b], $d[state1b] $d[zip1b]</a>".bwaRate($d[zip1b])."<br><a target='_Blank' href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=$d[address1a]&city=$d[city1a]&state=$d[state1a]&miles=20'  title='$d[address1a], $d[city1a], $d[state1a] $d[zip1a]'>Alt. Service: $d[address1a], $d[city1a], $d[state1a] $d[zip1a]</a>".bwaRate($d[zip1a])."<br><a target='_Blank'  href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=$d[address1]&city=$d[city1]&state=$d[state1]&miles=20' title='$d[address1], $d[city1], $d[state1] $d[zip1]'>Posting: $d[address1], $d[city1], $d[state1] $d[zip1]</a>".bwaRate($d[zip1])."";		
-			}elseif ($d[address1a]){
-				echo "<a target='_Blank' href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=$d[address1a]&city=$d[city1a]&state=$d[state1a]&miles=20' title='$d[address1a], $d[city1a], $d[state1a] $d[zip1a]'>Service: $d[address1a], $d[city1a], $d[state1a] $d[zip1a]</a>".bwaRate($d[zip1a])."<br><a target='_Blank'  href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=$d[address1]&city=$d[city1]&state=$d[state1]&miles=20' title='$d[address1], $d[city1], $d[state1] $d[zip1]'>Posting: $d[address1], $d[city1], $d[state1] $d[zip1]</a>".bwaRate($d[zip1])."";
+        <td nowrap="nowrap"><? 
+			$list='';
+			foreach (range('a','e') as $letter){
+				if ($d["address1$letter"]){
+					$list .= "<a target='_Blank' href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=".$d["address1$letter"]."&city=".$d["city1$letter"]."&state=".$d["state1$letter"]."&miles=20' title='".$d["address1$letter"].", ".$d["city1$letter"].", ".$d["state1$letter"]." ".$d["zip1$letter"]."'>Service: ".$d["address1$letter"].", ".$d["city1$letter"].", ".$d["state1$letter"]." ".$d["zip1$letter"]." <b>[".getCounty($d["zip1$letter"])."]</b></a>".bwaRate($d["zip1$letter"])."<br>";
+				}
+			}
+			if ($list == ''){
+				$list .= "<a target='_Blank' href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=$d[address1]&city=$d[city1]&state=$d[state1]&miles=20' title='$d[address1], $d[city1], $d[state1], $d[zip1]'>Serve &amp; Post: $d[address1], $d[city1], $d[state1] $d[zip1] <b>[".getCounty($d[zip1])."]</b></a>".bwaRate($d[zip1]);
 			}else{
-				echo "<a target='_Blank' href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=$d[address1]&city=$d[city1]&state=$d[state1]&miles=20' title='$d[address1], $d[city1], $d[state1], $d[zip1]'>Serve &amp; Post: $d[address1], $d[city1], $d[state1] $d[zip1]</a>".bwaRate($d[zip1]);
-			}?></td>
+				$list .= "<a target='_Blank' href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=$d[address1]&city=$d[city1]&state=$d[state1]&miles=20' title='$d[address1], $d[city1], $d[state1], $d[zip1]'>Posting: $d[address1], $d[city1], $d[state1] $d[zip1] <b>[".getCounty($d[zip1])."]</b></a>".bwaRate($d[zip1]);
+			}
+			echo $list;
+			?></td>
 			<td <? if($d[avoidDOT] == 'checked'){echo "style='background-color:#FF0000;'";}?>><? if(addTotal($d[packet_id]) == 1 && $d[avoidDOT] == 'checked'){echo "<blink>";} ?><?=$d[lossMit]?><? if(addTotal($d[packet_id]) == 1 && $d[avoidDOT] == 'checked'){echo "</blink>";} ?><? if ($d[rush]){ echo "<b style='display:block; background-color:FFBB00;'>RUSH</b>";} ?></td>
             <td><?if ($d[attorneys_id] == '70' && $d[lossMit] != 'N/A - OLD L'){ echo "<a href='http://staff.mdwestserve.com/otd/stuffPacket.bgw.php?packet=$d[packet_id]' target='_blank'>[ENVELOPE]</a> ";} if(($d[uspsVerify] == '') || ($d[qualityControl] == '')){ echo "<b>NEEDS VERIFICATION</b><br>"; } ?><?=strtoupper($d[processor_notes])?></td>
 	</tr>
