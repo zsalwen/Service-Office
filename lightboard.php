@@ -20,7 +20,7 @@ function getWidth(items) {
 <style>
 tr	{ background-color:transparent;	}
 table { padding: 0px; }
-a { background-color:#FFFFFF; font-size:10px; height:10px; overflow:auto; }
+a { background-color:#FFFFFF; font-size:14px; height:14px; overflow:auto; }
 </style>
 <div style='height:100%;overflow:auto;'>
 <table border="0" width="100%" height="99%" cellspacing="0" cellpadding="0">
@@ -44,7 +44,7 @@ $r5=@mysql_query($q5) or die ("Query: $q5<br>".mysql_error());
 while ($d5=mysql_fetch_array($r5, MYSQL_ASSOC)){
 	$i++;	
 	$list .= "<script>window.frames['frame".$i."'].location='".str_replace('ps/','',$d5[affidavit])."';</script>";
-	$table["$i"] = "<td><a target='frame".$i."' href='".str_replace('ps/','',$d5[affidavit])."'><strong>".$d5[defendantID]."</strong>: $d5[method]</a><br><iframe id='frame$i' name='frame$i' frameborder='0' height='99%' width='100%'></iframe></td>";
+	$table["$i"] = "<td><a target='frame".$i."' href='".str_replace('ps/','',$d5[affidavit])."'><strong>".$d5[defendantID]."</strong>: $d5[method]</a><br><iframe id='frame$i' name='frame$i' frameborder='0' height='98%' width='100%'></iframe></td>";
 }
 $items=$i+1;
 $break=floor($i/2);
