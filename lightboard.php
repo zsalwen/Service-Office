@@ -22,10 +22,10 @@ tr	{ background-color:transparent;	}
 table { padding: 0px; }
 a { background-color:#FFFFFF; font-size:14px; height:14px; overflow:auto; }
 </style>
-<div style='height:100%;overflow:auto;'>
+<div style='height:98%;overflow:auto;'>
 <table border="0" width="100%" height="100%" cellspacing="0" cellpadding="0">
 	<tr>
-		<td style="background-color:#FFFFFF;"><iframe id="test" name="test" frameborder="0" height="100%" src='http://mdwestserve.com/affidavits/test.php?id=<?=$_GET[packet]?>'></iframe>
+		<td style="background-color:#FFFFFF;"><iframe id="test" name="test" frameborder="0" height="90%" src='http://mdwestserve.com/affidavits/test.php?id=<?=$_GET[packet]?>'></iframe>
 
 <? if(strpos($_GET[packet],"EV")!== false){
 	$packetType='eviction';
