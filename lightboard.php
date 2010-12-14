@@ -22,10 +22,10 @@ tr	{ background-color:transparent;	}
 table { padding: 0px; }
 a { background-color:#FFFFFF; font-size:14px; height:14px; overflow:auto; }
 </style>
-<div style='height:98%;overflow:auto;'>
-<table border="0" width="100%" height="100%" cellspacing="0" cellpadding="0">
+<div style='height:100%;overflow:auto;'>
+<table border="0" width="100%" height="99%" cellspacing="0" cellpadding="0">
 	<tr>
-		<td style="background-color:#FFFFFF;"><iframe id="test" name="test" frameborder="0" height="90%" src='http://mdwestserve.com/affidavits/test.php?id=<?=$_GET[packet]?>'></iframe>
+		<td style="background-color:#FFFFFF;"><iframe id="test" name="test" frameborder="0" height="95%" src='http://mdwestserve.com/affidavits/test.php?id=<?=$_GET[packet]?>'></iframe>
 
 <? if(strpos($_GET[packet],"EV")!== false){
 	$packetType='eviction';
@@ -35,7 +35,7 @@ a { background-color:#FFFFFF; font-size:14px; height:14px; overflow:auto; }
 	$packetType='presale';
 	$mark="Mark Presale Packet <a href='http://staff.mdwestserve.com/otd/order.php?packet=$_GET[packet]' target='_blank'>OTD$_GET[packet]</a> Filed By Staff on $_SESSION[fileDate]";
 } 
-echo "<div style='background-color:#FFFFFF; font-size:16px;'>$mark</div></td>";
+echo "<div style='background-color:#FFFFFF; font-size:16px; font-variant:small-caps;'>$mark</div></td>";
 mysql_connect();
 mysql_select_db('core');
 $i=0;
