@@ -20,7 +20,7 @@ function getWidth(items) {
 <style>
 tr	{ background-color:transparent;	}
 table { padding: 0px; }
-a { background-color:#FFFFFF; font-size:14px; height:14px; overflow:auto; }
+a { background-color:#FFFFFF; font-size:10px; height:10px; overflow:auto; }
 </style>
 <div style='height:100%;overflow:auto;'>
 <table border="0" width="100%" height="99%" cellspacing="0" cellpadding="0">
