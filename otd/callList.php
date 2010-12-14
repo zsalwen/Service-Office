@@ -10,19 +10,17 @@ function id2state($id){
 }
 function oosList($packet){
 	$list='';
+	$i=0;
 	$q="SELECT server_id, server_ida, server_idb, server_idc, server_idd, server_ide, state1, state1a, state1b, state1c, state1d, state1e, address1, address1a, address1b, address1c, address1d, address1e, city1, city1a, city1b, city1c, city1d, city1e, zip1, zip1a, zip1b, zip1c, zip1d, zip1e FROM ps_packets WHERE packet_id='$packet' LIMIT 0,1";
 	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
-	if ($d[state1] != '' && strtoupper($d[state1]) != 'MD' && $d[server_id] != '' && id2state($d[server_id]) != 'MD' && $d[server_id] != 218){
-		$list .= "<li>".id2name($d[server_id])." - <div style='font-size:10px; text-align:right !important; line-height:0px; border:solid 1px black; display:inline;'>".strtoupper($d[address1])."<br>".strtoupper($d[city1]).", ".strtoupper($d[state1])." ".$d[zip1]."</div></li>";
+	if ($d[state1] != '' && strtoupper($d[state1]) != 'MD' && $d[server_id] != '' && id2state($d[server_id]) != 'MD' && $d[server_id] != 218){$i++;
+		$list .= $i.". ".id2name($d[server_id])." - <div style='font-size:10px; text-align:right !important; line-height:0px; border:solid 1px black; display:inline;'>".strtoupper($d[address1])."<br>".strtoupper($d[city1]).", ".strtoupper($d[state1])." ".$d[zip1]."</div>";
 	}
 	foreach(range('a','e') as $letter){
-		if ($d["state1$letter"] != '' && strtoupper($d["state1$letter"]) != 'MD' && $d["server_id$letter"] != '' && id2state($d["server_id$letter"]) != 'MD' && $d["server_id$letter"] != 218){
-			$list .= "<li>".id2name($d["server_id$letter"])." - <div style='font-size:10px; text-align:right !important; line-height:0px; border:solid 1px black; display:inline;'>".strtoupper($d["address1$letter"])."<br>".strtoupper($d["city1$letter"]).", ".strtoupper($d["state1$letter"])." ".$d["zip1$letter"]."</div></li>";
+		if ($d["state1$letter"] != '' && strtoupper($d["state1$letter"]) != 'MD' && $d["server_id$letter"] != '' && id2state($d["server_id$letter"]) != 'MD' && $d["server_id$letter"] != 218){$i++;
+			$list .= $i.". ".id2name($d["server_id$letter"])." - <div style='font-size:10px; text-align:right !important; line-height:0px; border:solid 1px black; display:inline;'>".strtoupper($d["address1$letter"])."<br>".strtoupper($d["city1$letter"]).", ".strtoupper($d["state1$letter"])." ".$d["zip1$letter"]."</div>";
 		}
-	}
-	if ($list != ''){
-		$list = "<ol>$list</ol>";
 	}
 	return $list;
 }
