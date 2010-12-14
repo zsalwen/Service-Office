@@ -20,11 +20,12 @@ function getWidth(items) {
 <style>
 tr	{ background-color:transparent;	}
 table { padding: 0px; }
+a { background-color:#FFFFFF; font-size:14px; height:14px; overflow:auto; }
 </style>
-<div style='height:95%;overflow:auto;'>
+<div style='height:100%;overflow:auto;'>
 <table border="0" width="100%" height="100%" cellspacing="0" cellpadding="0">
 	<tr>
-		<td style="background-color:#FFFFFF;"><iframe id="test" name="test" frameborder="0" height="100%" src='http://mdwestserve.com/affidavits/test.php?id=<?=$_GET[packet]?>'></iframe></td>
+		<td style="background-color:#FFFFFF;"><iframe id="test" name="test" frameborder="0" height="100%" src='http://mdwestserve.com/affidavits/test.php?id=<?=$_GET[packet]?>'></iframe>
 
 <? if(strpos($_GET[packet],"EV")!== false){
 	$packetType='eviction';
@@ -34,7 +35,7 @@ table { padding: 0px; }
 	$packetType='presale';
 	$mark="Mark Presale Packet <a href='http://staff.mdwestserve.com/otd/order.php?packet=$_GET[packet]' target='_blank'>OTD$_GET[packet]</a> Filed By Staff on $_SESSION[fileDate]";
 } 
-echo "";
+echo "<div style='background-color:#FFFFFF; font-size:16px;'>$mark</div></td>";
 mysql_connect();
 mysql_select_db('core');
 $i=0;
@@ -42,9 +43,8 @@ $q5="SELECT * FROM ps_affidavits WHERE packetID = '$_GET[packet]' order by defen
 $r5=@mysql_query($q5) or die ("Query: $q5<br>".mysql_error());
 while ($d5=mysql_fetch_array($r5, MYSQL_ASSOC)){
 	$i++;	
-	$list .= "<a target='frame".$i."' href='".str_replace('ps/','',$d5[affidavit])."'><strong>".$d5[defendantID]."</strong>: $d5[method]</a>, ";
 	$list .= "<script>window.frames['frame".$i."'].location='".str_replace('ps/','',$d5[affidavit])."';</script>";
-	$table["$i"] = "<td><iframe id='frame$i' name='frame$i' frameborder='0' height='100%' width='100%'></iframe></td>";
+	$table["$i"] = "<td><a target='frame".$i."' href='".str_replace('ps/','',$d5[affidavit])."'><strong>".$d5[defendantID]."</strong>: $d5[method]</a><br><iframe id='frame$i' name='frame$i' frameborder='0' height='100%' width='100%'></iframe></td>";
 }
 $items=$i+1;
 $break=floor($i/2);
@@ -65,7 +65,7 @@ while ($i < $count){$i++;
 		$tableList .= "</tr><tr>";
 	}
 }
-echo "$tableList</tr></table>$jsList</div><div style='background-color:#FFFFFF; font-size:16px; height:5%; overflow:auto'>$mark||$list</div>";
+echo "$tableList</tr></table>$jsList</div>$list";
 // We need an alert for a few exceptions
 if ($packetType == 'presale'){
 	$r=@mysql_query("select * from ps_packets where packet_id = '$_GET[packet]'");
