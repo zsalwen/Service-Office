@@ -35,7 +35,7 @@ a { background-color:#FFFFFF; font-size:14px; height:14px; overflow:auto; }
 	$packetType='presale';
 	$mark="Mark Presale Packet <a href='http://staff.mdwestserve.com/otd/order.php?packet=$_GET[packet]' target='_blank'>OTD$_GET[packet]</a> Filed By Staff on $_SESSION[fileDate]";
 } 
-echo "<div style='background-color:#FFFFFF; font-size:16px; font-variant:small-caps;'>$mark</div></td>";
+echo "<div style='background-color:#FFFFFF; font-size:16px; font-variant:small-caps; height:16px; overflow:auto;'>$mark</div></td>";
 mysql_connect();
 mysql_select_db('core');
 $i=0;
@@ -44,7 +44,7 @@ $r5=@mysql_query($q5) or die ("Query: $q5<br>".mysql_error());
 while ($d5=mysql_fetch_array($r5, MYSQL_ASSOC)){
 	$i++;	
 	$list .= "<script>window.frames['frame".$i."'].location='".str_replace('ps/','',$d5[affidavit])."';</script>";
-	$table["$i"] = "<td><a target='frame".$i."' href='".str_replace('ps/','',$d5[affidavit])."'><strong>".$d5[defendantID]."</strong>: $d5[method]</a><br><iframe id='frame$i' name='frame$i' frameborder='0' height='98%' width='100%'></iframe></td>";
+	$table["$i"] = "<td><a target='frame".$i."' href='".str_replace('ps/','',$d5[affidavit])."'><strong>".$d5[defendantID]."</strong>: $d5[method]</a><br><iframe id='frame$i' name='frame$i' frameborder='0' height='97%' width='100%'></iframe></td>";
 }
 $items=$i+1;
 $break=floor($i/2);
