@@ -53,14 +53,14 @@ function ChangeText(field){
 <?
 echo "<table align='center' border='1' style='border-collapse:collapse;'><tr><td align='center' colspan='4' style='font-size:16px;'>OUT OF STATE SERVER CALL LIST</td></tr>
 <tr><td align='center'>Packet #</td><td align='center'>Dispatch Date</td><td align='center'>Servers to Call</td><td align='center'>Notes</td></tr>";
-$q="SELECT * from ps_packets WHERE (affidavit_status = 'SERVICE CONFIRMED' OR affidavit_status='ASSIGNED') and  filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY' AND ((state1a <> '' AND state1a AND 'md' OR state1a <> 'MD') OR (state1b <> '' AND state1b <> 'md' AND state1b <> 'MD') OR (state1c <> '' AND state1c <> 'md' AND state1c <> 'MD') OR (state1d <> '' AND state1d <> 'md' AND state1d <> 'MD') OR (state1e <> '' AND state1e <> 'md' AND state1e <> 'MD')) AND processor_notes NOT LIKE '%$today%' AND dispatchDate <= '$limbo' ORDER BY packet_id ASC";
+$q="SELECT * from ps_packets WHERE (affidavit_status = 'SERVICE CONFIRMED' OR affidavit_status='ASSIGNED') and  filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY' AND ((state1 <> '' AND state1 <> 'md' OR state1 <> 'MD') OR (state1a <> '' AND state1a <> 'md' OR state1a <> 'MD') OR (state1b <> '' AND state1b <> 'md' AND state1b <> 'MD') OR (state1c <> '' AND state1c <> 'md' AND state1c <> 'MD') OR (state1d <> '' AND state1d <> 'md' AND state1d <> 'MD') OR (state1e <> '' AND state1e <> 'md' AND state1e <> 'MD')) AND processor_notes NOT LIKE '%$today%' AND dispatchDate <= '$limbo' ORDER BY packet_id ASC";
 $r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 $i=0;
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){$i++;
 	$oosList=oosList($d[packet_id]);
 	//if ($oosList != ''){
 		echo "
-		<tr bgcolor='".row_color($i,'#FFFFFF','#DDDDDD')."'><td>$d[packet_id]</td><td>$d[dispatchDate]</td><td style='padding:left:20px;'>".$oosList."</td><td><a id='plus-$d[packet_id]' onClick=\"hideshow(document.getElementById('notes-$d[packet_id]')); ChangeText('plus-$d[packet_id]');\">[+]</a><div style='display:none;' id='notes-$d[packet_id]'><iframe height='300px' width='600px' frameborder='0' src='http://staff.mdwestserve.com/notes.php?packet=$d[packet_id]'></iframe></div></td></tr>";
+		<tr bgcolor='".row_color($i,'#FFFFFF','#DDDDDD')."'><td>$d[packet_id]</td><td>$d[dispatchDate]</td><td style='padding:left:20px;'>".$oosList."</td><td>[<a id='plus-$d[packet_id]' onClick=\"hideshow(document.getElementById('notes-$d[packet_id]')); ChangeText('plus-$d[packet_id]');\">+</a>]<div style='display:none;' id='notes-$d[packet_id]'><iframe height='300px' width='600px' frameborder='0' src='http://staff.mdwestserve.com/notes.php?packet=$d[packet_id]'></iframe></div></td></tr>";
 	//}
 }
 echo "</table>";
