@@ -35,10 +35,10 @@ ol {display:inline;}
 function hideshow(which){
 	if (!document.getElementById)
 	return
-	if (which.style.display=="block")
+	if (which.style.display=="inline")
 	which.style.display="none"
 	else
-	which.style.display="block"
+	which.style.display="inline"
 }
 function ChangeText(field){
 	if (document.getElementById(field).innerHTML == '+'){
@@ -58,7 +58,7 @@ while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){$i++;
 	$oosList=oosList($d[packet_id]);
 	//if ($oosList != ''){
 		echo "
-		<tr bgcolor='".row_color($i,'#FFFFFF','#DDDDDD')."'><td valign='top'><a href='' target='_blank'>$d[packet_id]</a></td><td valign='top'>$d[dispatchDate]</td><td style='padding-left:20px;' valign='top'>".$oosList."</td><td width='620px' valign='top'><span style='background-color:orange; display:inline;' onClick=\"hideshow(document.getElementById('notes-$d[packet_id]')); ChangeText('plus-$d[packet_id]');\">[<a id='plus-$d[packet_id]'>+</a>]</span><div style='display:none;' id='notes-$d[packet_id]'><iframe height='300px' width='600px' frameborder='0' src='http://staff.mdwestserve.com/notes.php?packet=$d[packet_id]'></iframe></div></td></tr>";
+		<tr bgcolor='".row_color($i,'#FFFFFF','#DDDDDD')."'><td valign='top'><a href='' target='_blank'>$d[packet_id]</a></td><td valign='top'>$d[dispatchDate]</td><td style='padding-left:20px;' valign='top'>".$oosList."</td><td width='650px' valign='top'><span style='background-color:orange; display:inline;' onClick=\"hideshow(document.getElementById('notes-$d[packet_id]')); ChangeText('plus-$d[packet_id]');\">[<a id='plus-$d[packet_id]'>+</a>]</span>&nbsp;<div style='display:none;' id='notes-$d[packet_id]'><iframe height='300px' width='600px' frameborder='0' src='http://staff.mdwestserve.com/notes.php?packet=$d[packet_id]'></iframe></div></td></tr>";
 	//}
 }
 echo "</table>";
