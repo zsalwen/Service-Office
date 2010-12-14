@@ -14,11 +14,11 @@ function oosList($packet){
 	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
 	if ($d[state1] != '' && strtoupper($d[state1]) != 'MD' && $d[server_id] != '' && id2state($d[server_id]) != 'MD' && $d[server_id] != 218){
-		$list .= "<li>".id2name($d[server_id])." - <span style='font-size:10px; text-align:right; line-height:.5em;'>".strtoupper($d[address1])."<br>".strtoupper($d[city1]).", ".strtoupper($d[state1])." ".$d[zip1]."</span></li>";
+		$list .= "<li>".id2name($d[server_id])." - <span style='font-size:10px; text-align:right; line-height:0px; border:solid 1px black;'>".strtoupper($d[address1])."<br>".strtoupper($d[city1]).", ".strtoupper($d[state1])." ".$d[zip1]."</span></li>";
 	}
 	foreach(range('a','e') as $letter){
 		if ($d["state1$letter"] != '' && strtoupper($d["state1$letter"]) != 'MD' && $d["server_id$letter"] != '' && id2state($d["server_id$letter"]) != 'MD' && $d["server_id$letter"] != 218){
-			$list .= "<li>".id2name($d["server_id$letter"])." - <span style='font-size:10px; text-align:right; line-height:.5em;'>".strtoupper($d["address1$letter"])."<br>".strtoupper($d["city1$letter"]).", ".strtoupper($d["state1$letter"])." ".$d["zip1$letter"]."</span></li>";
+			$list .= "<li>".id2name($d["server_id$letter"])." - <span style='font-size:10px; text-align:right; line-height:0px; border:solid 1px black;'>".strtoupper($d["address1$letter"])."<br>".strtoupper($d["city1$letter"]).", ".strtoupper($d["state1$letter"])." ".$d["zip1$letter"]."</span></li>";
 		}
 	}
 	if ($list != ''){
@@ -31,7 +31,7 @@ $limbo=time();//-86400;
 $limbo=date('Y-m-d H:i:s',$limbo);
 ?>
 <style>
-ol {display:inline;}
+ol, li {display:inline;}
 </style>
 <script>
 function hideshow(which){
