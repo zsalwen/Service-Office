@@ -8,7 +8,7 @@ $zi=0;
 $year=2008;
 $curYear=date('Y');
 
-while ($year < $curYear){
+while ($year <= $curYear){
 	$yr=substr($year,-2);
 	if ($year != $curYear){
 		$topMo=12;
@@ -44,7 +44,7 @@ while ($year < $curYear){
 }
 //pull BURSON files
 $year=2008;
-while ($year < $curYear){
+while ($year <= $curYear){
 	if ($year != $curYear){
 		$topMo=12;
 	}else{
@@ -72,7 +72,7 @@ while ($year < $curYear){
 }
 //pull WHITE files
 $year=2008;
-while ($year < $curYear){
+while ($year <= $curYear){
 	if ($year != $curYear){
 		$topMo=12;
 	}else{
@@ -100,7 +100,7 @@ while ($year < $curYear){
 }
 //pull BGW files
 $year=2008;
-while ($year < $curYear){
+while ($year <= $curYear){
 	if ($year != $curYear){
 		$topMo=12;
 	}else{
@@ -128,7 +128,7 @@ while ($year < $curYear){
 }
 //pull OTHER files
 $year=2008;
-while ($year < $curYear){
+while ($year <= $curYear){
 	if ($year != $curYear){
 		$topMo=12;
 	}else{
