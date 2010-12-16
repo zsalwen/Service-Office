@@ -270,12 +270,12 @@ function serviceSheet($packet){
 		<? } ?>
 		<? if ($d[pobox]){?>
 		<tr>
-			<td><input type="checkbox"> <?=$d[pobox]?>, <?=$d[pocity]?>, <?=$d[postate]?> <?=$d[pozip]?></td>
+			<td><input type="checkbox"> <b>MAILING:</b> <?=$d[pobox]?>, <?=$d[pocity]?>, <?=$d[postate]?> <?=$d[pozip]?></td>
 		</tr>
 		<? } ?>
 		<? if ($d[pobox2]){?>
 		<tr>
-			<td><input type="checkbox"> <?=$d[pobox2]?>, <?=$d[pocity2]?>, <?=$d[postate2]?> <?=$d[pozip2]?></td>
+			<td><input type="checkbox"> <b>MAILING:</b> <?=$d[pobox2]?>, <?=$d[pocity2]?>, <?=$d[postate2]?> <?=$d[pozip2]?></td>
 		</tr>
 		<? } ?>
 	</table>
