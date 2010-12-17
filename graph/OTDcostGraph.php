@@ -112,7 +112,7 @@ while ($year < $curYear){
 	$year++;
 }
 
-/*echo "<table border='1' style='border-collapse:collapse;'><tr>";
+echo "<table border='1' style='border-collapse:collapse;'><tr>";
 echo "<td></td>".str_replace('|','</td><td>',$labels).'</td></tr>';
 echo "<td>CLIENT PAID:</td><td>".str_replace(',','</td><td>',$clientPaid).'</td></tr>';
 echo "<tr><td>BALANCE DUE:</td><td>".str_replace(',','</td><td>',$balanceDue).'</td></tr>';
@@ -120,7 +120,7 @@ echo "<tr><td>CONTRACTOR PAID:</td><td>".str_replace(',','</td><td>',$contractor
 echo "<tr><td>LIVE MARGIN:</td><td>".str_replace(',','</td><td>',$liveMargin).'</td></tr>';
 echo "<tr><td>EST. MARGIN:</td><td>".str_replace(',','</td><td>',$estMargin).'</td></tr>';
 echo "<tr><td>TOTAL:</td><td>".str_replace(',','</td><td>',$total).'</td></tr>';
-echo "</table>";*/
+echo "</table>";
 $za=(($a*-1)+$z)/5;
 //$zb is the vertical percentage where the zero marker should go on the y-axis
 $zb=(($a*-100)+$z)/($z+($a*-1));
