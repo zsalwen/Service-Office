@@ -24,7 +24,7 @@ while ($year <= $curYear){
 			$i2=$i;
 		}
 		$r=mysql_query("SELECT packet_id FROM ps_export WHERE date_received LIKE '%$year-$i2%'");
-		$received08["$i"]=mysql_num_rows($r);
+		$received["$i"]=mysql_num_rows($r);
 		if ($received["$i"] > 0){}else{
 			$received["$i"]='0';
 		}
@@ -44,7 +44,6 @@ while ($year <= $curYear){
 //pull BURSON files
 $year=2008;
 while ($year <= $curYear){
-	$yr=substr($year,-2);
 	if ($year != $curYear){
 		$topMo=12;
 	}else{
@@ -73,7 +72,6 @@ while ($year <= $curYear){
 //pull WHITE files
 $year=2008;
 while ($year <= $curYear){
-	$yr=substr($year,-2);
 	if ($year != $curYear){
 		$topMo=12;
 	}else{
@@ -99,10 +97,9 @@ while ($year <= $curYear){
 	}
 	$year++;
 }
-//pull DRAPER files
+//pull BGW files
 $year=2008;
 while ($year <= $curYear){
-	$yr=substr($year,-2);
 	if ($year != $curYear){
 		$topMo=12;
 	}else{
@@ -131,7 +128,6 @@ while ($year <= $curYear){
 //pull OTHER files
 $year=2008;
 while ($year <= $curYear){
-	$yr=substr($year,-2);
 	if ($year != $curYear){
 		$topMo=12;
 	}else{
