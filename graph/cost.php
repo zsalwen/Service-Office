@@ -50,7 +50,7 @@ $mainPaidOut=0;
 $mainLiveMargin=0;
 $mainMargin=0;
 
-	$patrick = 5166; // salary - no overtime
+	/*$patrick = 5166; // salary - no overtime
 	$zach = 3120 + 540; // 18 hr + overtime
 	$danny = 2600; // 15 hr + overtime
 	$alex = 2253; // 13 / hr
@@ -58,7 +58,9 @@ $mainMargin=0;
 	$salary = $patrick + $zach + $danny + $alex; 
 	$salary2 = $salary * .09; // 9% of monthly total
 	$health = 2500; // staff health insurance
-	$courier = 3000; // better aim high...
+	$courier = 3000; // better aim high...*/
+	//monthly burn rate (not including postage, which is calculated within Service-Web-Service/cost.php
+	$burn=45186.24;
 
 while($month < 12){
 	$month++;
@@ -82,11 +84,7 @@ while($month < 12){
 
 	$stat[5][$count] = $value[4];
 	$mainMargin = $mainMargin + $value[4];
-
 	
-	
-	$management = ($value[0] + $value[1]) * .10;
-	$burn = $salary + $salary2 + $management + $health + $courier;
 	if ($value[4] != 0){
 		$stat[11][$count] = $value[4] - $burn ;
 	}
@@ -116,8 +114,6 @@ while($month < 12){
 	$stat[10][$count] = $value[4];
 	$mainMargin = $mainMargin + $value[4];
 
-	$management = ($value[0] + $value[1]) * .10;
-	$burn = $salary + $salary2 + $management + $health + $courier;
 	if ($value[4] != 0){
 		$stat[12][$count] = $value[4] - $burn ;
 	}
