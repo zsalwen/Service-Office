@@ -140,7 +140,7 @@ while ($year <= $curYear){
 }
 
 echo "<table border='1' style='border-collapse:collapse;'><tr>";
-echo "<td>LABELS:</td>".str_replace('|','</td><td>',$labelsList).'</td></tr>';
+echo "<td>LABELS:</td>".str_replace('|','</td><td>',substr($labelsList,1,-1)).'</td></tr>';
 echo "<td>CLIENT PAID:</td><td>".str_replace(',','</td><td>',$clientPaidList).'</td></tr>';
 echo "<tr><td>BALANCE DUE:</td><td>".str_replace(',','</td><td>',$balanceDueList).'</td></tr>';
 echo "<tr><td>CONTRACTOR PAID:</td><td>".str_replace(',','</td><td>',$contractorPaidList).'</td></tr>';
