@@ -37,7 +37,7 @@ while ($year <= $curYear){
 		}else{
 			$src .= ','.$received["$i"];
 		}
-		$src2 .= '|'.monthConvert($i2)." '08";
+		$src2 .= '|'.monthConvert($i2)." 08";
 	}
 	$year++;
 }

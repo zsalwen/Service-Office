@@ -31,7 +31,7 @@ while ($year <= $curYear){
 		if ($received["$i"] > $z){
 			$z=$received["$i"];
 			$zz=($zi-1);
-			$zzz="-".monthConvert($i2)." '$yr";
+			$zzz="-".monthConvert($i2)." $yr";
 		}
 		if ($src == ''){
 			$src = $received["$i"];
