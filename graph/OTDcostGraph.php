@@ -104,11 +104,11 @@ while ($year <= $curYear){
 		$total["$count"] = $value[4] - $burn ;
 		//}
 		$labels .= "|".monthConvert($month)." $yr";
+		$counter=0;
+		while($counter < count($total)){$counter++;
+			$total["$counter"]=number_format($total["$counter"],0);
+		}
 		$year++;
-	}
-	$counter=0;
-	while($counter < count($total)){$counter++;
-		$total["$counter"]=number_format($total["$counter"],0);
 	}
 	$totalList .= "|".implode('|',$total);
 	if ($clientPaidList != ''){
