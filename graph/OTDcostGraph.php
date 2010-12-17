@@ -103,13 +103,13 @@ while ($year <= $curYear){
 		//if ($value[4] != 0){
 		$total["$count"] = $value[4] - $burn ;
 		//}
-		$labels .= "|".monthConvert($month)."-$yr";
+		$labels .= "|".monthConvert($month)." $yr";
+		$year++;
 	}
 	$counter=0;
 	while($counter < count($total)){$counter++;
 		$total["$counter"]=number_format($total["$counter"],0);
 	}
-	$year++;
 	$totalList .= "|".implode('|',$total);
 	if ($clientPaidList != ''){
 		$clientPaidList .= ",".$clientPaid;
