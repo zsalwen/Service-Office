@@ -135,7 +135,7 @@ while ($year <= $curYear){
 	}else{
 		$estMarginList .= $estMargin;
 	}
-	$labelsList .= "|".$labels;
+	$labelsList .= $labels;
 	$year++;
 }
 
