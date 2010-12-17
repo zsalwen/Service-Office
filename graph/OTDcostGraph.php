@@ -2,6 +2,7 @@
 mysql_connect();
 mysql_select_db('core');
 include "functions.php";
+ini_set("memory_limit","24M");
 $year=$_GET[year];
 $attid=$_GET[attid];
 $month=0;
