@@ -42,6 +42,7 @@ while ($year <= $curYear){
 	$year++;
 }
 //pull BURSON files
+$year=2008;
 while ($year <= $curYear){
 	$yr=substr($year,-2);
 	if ($year != $curYear){
@@ -70,6 +71,7 @@ while ($year <= $curYear){
 	$year++;
 }
 //pull WHITE files
+$year=2008;
 while ($year <= $curYear){
 	$yr=substr($year,-2);
 	if ($year != $curYear){
@@ -98,6 +100,7 @@ while ($year <= $curYear){
 	$year++;
 }
 //pull DRAPER files
+$year=2008;
 while ($year <= $curYear){
 	$yr=substr($year,-2);
 	if ($year != $curYear){
@@ -126,6 +129,7 @@ while ($year <= $curYear){
 	$year++;
 }
 //pull OTHER files
+$year=2008;
 while ($year <= $curYear){
 	$yr=substr($year,-2);
 	if ($year != $curYear){
@@ -166,6 +170,6 @@ echo "<tr><td>BGW:</td><td>".str_replace(',','</td><td>',$bgw).'</td></tr>';
 echo "<tr><td>OTHER:</td><td>".str_replace(',','</td><td>',$other).'</td>';
 echo "</tr></table>";*/
 $src="http://3.chart.apis.google.com/chart?cht=lc&chs=1000x300&chd=t:".$src."|".$burson."|".$white."|".$bgw."|".$other."&chxl=0:".$src2."|1:|0|$z1|$z2|$z3|$z4|$z&chtt=Exported Packets Received 2008-2009&chdl=All Files|Burson|White|BGW|Others&chco=FF0000,00FF00,0000FF,800080,FF8040";
-$rest="&chxt=x,y&chds=0,".$z."&chxtc=0,10|1,-980&chxs=0,000000,10|1,000000,10,-1,lt,333333&chm=f$z,000000,0,$zz,15";
+$rest="&chxt=x,y&chds=0,".$z."&chxtc=0,10|1,-980&chxs=0,000000,8|1,000000,10,-1,lt,333333&chm=f$z,000000,0,$zz,15";
 ?>
 <img src="<?=$src.$rest?>" width="100%">
