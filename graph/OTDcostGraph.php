@@ -110,16 +110,41 @@ while ($year <= $curYear){
 		$total["$counter"]=number_format($total["$counter"],0);
 	}
 	$totalList .= "|".implode('|',$total);
+	if ($clientPaidList != ''){
+		$clientPaidList .= ",".$clientPaid;
+	}else{
+		$clientPaidList .= $clientPaid;
+	}
+	if ($balanceDueList != ''){
+		$balanceDueList .= ",".$balanceDue;
+	}else{
+		$balanceDueList .= $balanceDue;
+	}
+	if ($contractorPaidList != ''){
+		$contractorPaidList .= ",".$contractorPaid;
+	}else{
+		$contractorPaidList .= $contractorPaid;
+	}
+	if ($liveMarginList != ''){
+		$liveMarginList .= ",".$liveMargin;
+	}else{
+		$liveMarginList .= $liveMargin;
+	}
+	if ($estMarginList != ''){
+		$estMarginList .= ",".$estMargin;
+	}else{
+		$estMarginList .= $estMargin;
+	}
 	$year++;
 }
 
 echo "<table border='1' style='border-collapse:collapse;'><tr>";
 echo "<td></td>".str_replace('|','</td><td>',$labels).'</td></tr>';
-echo "<td>CLIENT PAID:</td><td>".str_replace(',','</td><td>',$clientPaid).'</td></tr>';
-echo "<tr><td>BALANCE DUE:</td><td>".str_replace(',','</td><td>',$balanceDue).'</td></tr>';
-echo "<tr><td>CONTRACTOR PAID:</td><td>".str_replace(',','</td><td>',$contractorPaid).'</td></tr>';
-echo "<tr><td>LIVE MARGIN:</td><td>".str_replace(',','</td><td>',$liveMargin).'</td></tr>';
-echo "<tr><td>EST. MARGIN:</td><td>".str_replace(',','</td><td>',$estMargin).'</td></tr>';
+echo "<td>CLIENT PAID:</td><td>".str_replace(',','</td><td>',$clientPaidList).'</td></tr>';
+echo "<tr><td>BALANCE DUE:</td><td>".str_replace(',','</td><td>',$balanceDueList).'</td></tr>';
+echo "<tr><td>CONTRACTOR PAID:</td><td>".str_replace(',','</td><td>',$contractorPaidList).'</td></tr>';
+echo "<tr><td>LIVE MARGIN:</td><td>".str_replace(',','</td><td>',$liveMarginList).'</td></tr>';
+echo "<tr><td>EST. MARGIN:</td><td>".str_replace(',','</td><td>',$estMarginList).'</td></tr>';
 echo "<tr><td>TOTAL:</td><td>".str_replace(',','</td><td>',$totalList).'</td></tr>';
 echo "</table>";
 $za=(($a*-1)+$z)/5;
@@ -130,7 +155,7 @@ $z1=$a+$za;
 $z2=$z1+$za;
 $z3=$z2+$za;
 $z4=$z3+$za;
-$src="http://0.chart.apis.google.com/chart?cht=lc&chs=900x333&chd=t:".$clientPaid."|".$balanceDue."|".$contractorPaid."|".$liveMargin."|".$estMargin."&chxl=0:".$labels."|1:|$a|0|$z1|$z2|$z3|$z4|$z|2:|$totalList&chtt=Costs: 2008-$curYear|&chdl=Client Paid|Balance Due|Contractor Paid|Live Margin|Est. Margin&chco=FF0000,00FF00,0000FF,800080,FF8040&chxt=x,y,x&chds=$a,$z&chxtc=0,10|1,-980&chxp=1,0,$zb,20,40,60,80,100&chxs=1,000000,7|0,000000,8|2,000000,8&chls=0.5,1,0|0.5,1,0|0.5,1,0|0.5,1,0|0.5,1,0&chm=h,CCBB00,0,$zb2,1&chm=f$z$zMonth,000000,$zSet,$zPos,12|f$a$aMonth,000000,$aSet,$aPos,12";
+$src="http://0.chart.apis.google.com/chart?cht=lc&chs=900x333&chd=t:".$clientPaidList."|".$balanceDueList."|".$contractorPaidList."|".$liveMarginList."|".$estMarginList."&chxl=0:".$labels."|1:|$a|0|$z1|$z2|$z3|$z4|$z|2:|$totalList&chtt=Costs: 2008-$curYear|&chdl=Client Paid|Balance Due|Contractor Paid|Live Margin|Est. Margin&chco=FF0000,00FF00,0000FF,800080,FF8040&chxt=x,y,x&chds=$a,$z&chxtc=0,10|1,-980&chxp=1,0,$zb,20,40,60,80,100&chxs=1,000000,7|0,000000,8|2,000000,8&chls=0.5,1,0|0.5,1,0|0.5,1,0|0.5,1,0|0.5,1,0&chm=h,CCBB00,0,$zb2,1&chm=f$z$zMonth,000000,$zSet,$zPos,12|f$a$aMonth,000000,$aSet,$aPos,12";
 //$rest="&chxt=x,y&chds=0,".$z."&chxtc=0,10|1,-980&chxs=0,000000,10|1,000000,10,-1,lt,333333&chm=f$z,000000,0,$zPos,15";
 ?>
 <img src="<?=$src?>" width="100%">
