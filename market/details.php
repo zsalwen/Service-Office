@@ -60,6 +60,11 @@ function phaseList($phase,$date){
 	$list .= '</select>';
 	return $list;
 }
+function getName($id){
+	$r = @mysql_query("select * from market where marketID = '$id' ") or die(mysql_error());
+	$d=mysql_fetch_array($r,MYSQL_ASSOC);
+	return strtoupper($d[name]);
+}
 $today=date('Y-m-d');
 if ($_POST[delete]){
 	echo "<table align='center' style='background-color:FFFFFF;'>
@@ -72,6 +77,7 @@ if ($_POST[confirm]){
 	$r2=@mysql_query($q2) or die("Query: $q2<br>".mysql_error());
 	$msg="Entry Deleted.";
 	echo "<script>window.location='http://staff.mdwestserve.com/market/index.php?msg=$msg'</script>";
+	$logMsg=$_COOKIE[psdata][name]." Deleting Marketing Entry For ".getName($_POST[id])." (ID $_POST[id])";
 }
 if ($_POST[submit]){
 	if ($_POST[phase] == 'CALL BACK'){
@@ -82,10 +88,15 @@ if ($_POST[submit]){
 	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 	echo "<center><h1>Entry Updated.</h1></center>";
 }
-
 // build resources
 $r = @mysql_query("select * from market where marketID = '$id' ");
 $d=mysql_fetch_array($r,MYSQL_ASSOC);
+
+if ($logMsg){
+	error_log("[".date('h:iA n/j/y')."] ".$logMsg,3,"/logs/user.log");
+}else{
+	error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Updating Marketing Entry For ".getName($id)." (ID $id)";,3,"/logs/user.log");
+}
 ?>
 <style>
 .y{background-color:FFFFCC;}
