@@ -43,6 +43,7 @@ while ($year <= $curYear){
 	$year++;
 }
 //pull BURSON files
+$year=2008;
 while ($year <= $curYear){
 	$yr=substr($year,-2);
 	if ($year != $curYear){
@@ -71,6 +72,7 @@ while ($year <= $curYear){
 	$year++;
 }
 //pull WHITE files
+$year=2008;
 while ($year <= $curYear){
 	$yr=substr($year,-2);
 	if ($year != $curYear){
@@ -99,6 +101,7 @@ while ($year <= $curYear){
 	$year++;
 }
 //pull BGW files
+$year=2008;
 while ($year <= $curYear){
 	$yr=substr($year,-2);
 	if ($year != $curYear){
@@ -127,6 +130,7 @@ while ($year <= $curYear){
 	$year++;
 }
 //pull OTHER files
+$year=2008;
 while ($year <= $curYear){
 	$yr=substr($year,-2);
 	if ($year != $curYear){
@@ -158,14 +162,14 @@ $z1=number_format($z/5,0);
 $z2=number_format($z1*2,0);
 $z3=number_format($z1*3,0);
 $z4=number_format($z1*4,0);
-echo "<table><tr>";
+/*echo "<table><tr>";
 echo "<td></td>".str_replace('|','</td><td>',$src2).'</td></tr>';
 echo "<td>ALL:</td><td>".str_replace(',','</td><td>',$src).'</td></tr>';
 echo "<tr><td>BURSON:</td><td>".str_replace(',','</td><td>',$burson).'</td></tr>';
 echo "<tr><td>WHITE:</td><td>".str_replace(',','</td><td>',$white).'</td></tr>';
 echo "<tr><td>BGW:</td><td>".str_replace(',','</td><td>',$bgw).'</td></tr>';
 echo "<tr><td>OTHER:</td><td>".str_replace(',','</td><td>',$other).'</td>';
-echo "</tr></table>";
+echo "</tr></table>";*/
 $src="http://2.chart.apis.google.com/chart?cht=lc&chs=900x333&chd=t:".$src."|".$burson."|".$white."|".$bgw."|".$other."&chxl=0:".$src2."|1:|0|$z1|$z2|$z3|$z4|$z&chtt=Foreclosure File Dates 2008-2009&chdl=All Files|Burson|White|BGW|Others&chco=FF0000,00FF00,0000FF,6622AA,FF7700";
 $markers="&chm=d,990000,0,-1,5|d,009900,1,-1,5|d,000099,2,-1,5|d,662266,3,-1,5|d,994400,4,-1,5|t$z$zzz,000000,0,$zz,10";
 $rest="&chxt=x,y&chds=0,".$z."&chxtc=0,10|1,-980&chxs=0,000000,7|1,000000,10,-1,lt,333333";
