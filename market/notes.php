@@ -26,6 +26,7 @@ $newNote = "<li>From ".$_COOKIE[psdata][name]." on ".date('m/d/y g:ia').": \"".$
 			$headers .= "From: ".$_COOKIE[psdata][name]." <".$_COOKIE[psdata][email].">  \n";
 			$body = "<hr><a href='http://staff.mdwestserve.com/market/details.php?id=$_GET[id]'>View Details Page</a>";
 			mail($to,$subject,stripslashes($newNote.$body),$headers);
+			error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Entering Marketing Note For ".strtoupper($d[name])." (ID $_GET[id])",3,"/logs/user.log");
 }
 ?>
 <style>

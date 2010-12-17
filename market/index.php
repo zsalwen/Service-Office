@@ -3,6 +3,7 @@
 mysql_connect();
 mysql_select_db('core');
 // build resources
+error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Loaded Marketing Index",3,"/logs/user.log");
 $today=date('Y-m-d');
 $r1 = @mysql_query("select * from market where type = 'attorney' AND coldCall <> '$today' AND phase='COLD CALL' AND doNotCall <> 'checked' ORDER BY name ASC");
 $r2 = @mysql_query("select * from market where type = 'attorney' AND coldCall = '$today' AND phase='COLD CALL' AND doNotCall <> 'checked' ORDER BY name ASC");
