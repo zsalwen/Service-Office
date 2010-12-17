@@ -101,7 +101,7 @@ while ($year <= $curYear){
 		//$mainMargin = $mainMargin + $value[4];
 
 		//if ($value[4] != 0){
-		$total["$month"] = $value[4] - $burn ;
+		$total["$count"] = $value[4] - $burn ;
 		//}
 		$labels .= "|".monthConvert($month)."-$yr";
 	}
