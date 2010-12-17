@@ -12,11 +12,13 @@ include "functions.php";
 <tr><td><? include "http://staff.mdwestserve.com/graph/OTDfiledGraph.php";?></td>
 </tr>
 
-<tr><td><? include "http://staff.mdwestserve.com/graph/exportGraph.php";?></td>
+<tr><td><? include "http://staff.mdwestserve.com/graph/OTDexportGraph.php";?></td>
 </tr>
 <tr><td><? include "http://staff.mdwestserve.com/graph/EVreceivedGraph.php";?></td>
 </tr>
 <tr><td><? include "http://staff.mdwestserve.com/graph/EVfiledGraph.php";?></td>
+</tr>
+<tr><td><? include "http://staff.mdwestserve.com/graph/EVexportGraph.php";?></td>
 </tr>
 
 <tr><td><img src="http://staff.mdwestserve.com/graph/cost.php?year=2008&attid=<?=$_GET[attid];?>"></td>
