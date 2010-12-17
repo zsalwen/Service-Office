@@ -10,7 +10,7 @@ $mainPaidIn=0;
 $mainOwed=0;
 $mainPaidOut=0;
 $mainLiveMargin=0;
-$mainMargin=0;
+//$mainMargin=0;
 /*
 $patrick = 5166; // salary - no overtime
 $zach = 3120 + 540; // 18 hr + overtime
@@ -29,12 +29,12 @@ $a=0;
 $z=0;
 $zi=0;
 $month=0;
-while ($year < $curYear){
+while ($year <= $curYear){
 	$yr=substr($year,-2);
 	if ($year != $curYear){
-	$topMo=12;
+		$topMo=12;
 	}else{
-	$topMo=date('n');
+		$topMo=date('n');
 	}
 	while($month < $topMo){$month++;$zi++;
 		$count = $month;
@@ -97,10 +97,10 @@ while ($year < $curYear){
 		}else{
 			$estMargin .= ",".$value[4];
 		}
-		$mainMargin = $mainMargin + $value[4];
+		//$mainMargin = $mainMargin + $value[4];
 
 		//if ($value[4] != 0){
-		$total[$count] = $value[4] - $burn ;
+		$total["$month"] = $value[4] - $burn ;
 		//}
 		$labels .= "|".monthConvert($month)."-$yr";
 	}
@@ -119,7 +119,7 @@ echo "<tr><td>BALANCE DUE:</td><td>".str_replace(',','</td><td>',$balanceDue).'<
 echo "<tr><td>CONTRACTOR PAID:</td><td>".str_replace(',','</td><td>',$contractorPaid).'</td></tr>';
 echo "<tr><td>LIVE MARGIN:</td><td>".str_replace(',','</td><td>',$liveMargin).'</td></tr>';
 echo "<tr><td>EST. MARGIN:</td><td>".str_replace(',','</td><td>',$estMargin).'</td></tr>';
-echo "<tr><td>TOTAL:</td><td>".str_replace(',','</td><td>',$total).'</td></tr>';
+echo "<tr><td>TOTAL:</td><td>".str_replace(',','</td><td>',$totalList).'</td></tr>';
 echo "</table>";
 $za=(($a*-1)+$z)/5;
 //$zb is the vertical percentage where the zero marker should go on the y-axis
