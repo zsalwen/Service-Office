@@ -101,25 +101,25 @@ while ($year <= $curYear){
 		//$mainMargin = $mainMargin + $value[4];
 
 		//if ($value[4] != 0){
-		$total["$count"] = $value[4] - $burn ;
+		$total["$year"]["$count"] = $value[4] - $burn ;
 		//}
 		$labels .= "|".monthConvert($month)." $yr";
-		$counter=0;
-		while($counter < count($total)){$counter++;
-			$total["$counter"]=number_format($total["$counter"],0);
-		}
-		$year++;
 	}
+	$counter=0;
+	while($counter < count($total)){$counter++;
+		$total["$counter"]=number_format($total["$counter"],0);
+	}
+	$year++;
 	$totalList .= "|".implode('|',$total);
 	if ($clientPaidList != ''){
 		$clientPaidList .= ",".$clientPaid;
 	}else{
-		$clientPaidList .= $clientPaid;
+		$clientPaidList = $clientPaid;
 	}
 	if ($balanceDueList != ''){
 		$balanceDueList .= ",".$balanceDue;
 	}else{
-		$balanceDueList .= $balanceDue;
+		$balanceDueList = $balanceDue;
 	}
 	if ($contractorPaidList != ''){
 		$contractorPaidList .= ",".$contractorPaid;
@@ -129,12 +129,12 @@ while ($year <= $curYear){
 	if ($liveMarginList != ''){
 		$liveMarginList .= ",".$liveMargin;
 	}else{
-		$liveMarginList .= $liveMargin;
+		$liveMarginList = $liveMargin;
 	}
 	if ($estMarginList != ''){
 		$estMarginList .= ",".$estMargin;
 	}else{
-		$estMarginList .= $estMargin;
+		$estMarginList = $estMargin;
 	}
 	$labelsList .= $labels;
 }
