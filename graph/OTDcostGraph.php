@@ -29,9 +29,9 @@ $year=2008;
 $a=0;
 $z=0;
 $zi=0;
-$month=0;
 while ($year <= $curYear){
-	echo "<h1>$year</h1>";
+	//echo "<h1>$year</h1>";
+	$month=0;
 	$yr=substr($year,-2);
 	if ($year != $curYear){
 		$topMo=12;
@@ -44,7 +44,7 @@ while ($year <= $curYear){
 
 		$csv = getPage("http://data.mdwestserve.com/cost.php?month=$month&year=$year", 'MDWS GRAPH', '10', '');
 		$value = explode(',',$csv);
-		echo "<fieldset><legend>$month-$year</legend>$csv</fieldset>";
+		//echo "<fieldset><legend>$month-$year</legend>$csv</fieldset>";
 		$i=0;
 		while ($i < 4){
 			if (!is_numeric($value["$i"])){$value["$i"]=0;}
