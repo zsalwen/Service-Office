@@ -70,6 +70,21 @@ while ($year <= $curYear){
 			}
 			$i++;
 		}
+		//if ($value[4] != 0){
+		$total["$count"] = $value[4] - $burn ;
+		//}
+		if($total["$count"] > $z){
+				$z=$value["$i"];
+				$zPos=$zi-1;
+				$zMonth="-".monthConvert($month)." $yr";
+				$zSet=0;
+			}
+		if ($total["$count"] < $a){
+			$a=$value["$i"];
+			$aPos=$zi-1;
+			$aMonth="-".monthConvert($month)." $yr";
+			$aSet=0;
+		}
 		if ($clientPaid == ''){
 			$clientPaid = $value[0];
 		}else{
@@ -100,10 +115,6 @@ while ($year <= $curYear){
 			$estMargin .= ",".$value[4];
 		}
 		//$mainMargin = $mainMargin + $value[4];
-
-		//if ($value[4] != 0){
-		$total["$count"] = $value[4] - $burn ;
-		//}
 		$labels .= "|".monthConvert($month)." $yr";
 	}
 	$counter=0;
