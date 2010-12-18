@@ -115,7 +115,7 @@ while ($year <= $curYear){
 			$estMargin .= ",".$value[4];
 		}
 		//$mainMargin = $mainMargin + $value[4];
-		$labels .= "|".monthConvert($month)." $yr";
+		$labels .= "|$month-$yr";
 		//$counter=0;
 		//while($counter < count($total)){$counter++;
 		$totalList .= "|".number_format($total["$count"],0);
