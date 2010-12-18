@@ -73,7 +73,7 @@ while ($year <= $curYear){
 		//if ($value[4] != 0){
 		$total["$count"] = $value[4] - $burn ;
 		//}
-		if($total["$count"] > $z){
+		/*if($total["$count"] > $z){
 				$z=$value["$i"];
 				$zPos=$zi-1;
 				$zMonth="-".monthConvert($month)." $yr";
@@ -84,7 +84,7 @@ while ($year <= $curYear){
 			$aPos=$zi-1;
 			$aMonth="-".monthConvert($month)." $yr";
 			$aSet=0;
-		}
+		}*/
 		if ($clientPaid == ''){
 			$clientPaid = $value[0];
 		}else{
@@ -121,7 +121,7 @@ while ($year <= $curYear){
 	while($counter < count($total)){$counter++;
 		$totalList .= "|".number_format($total["$counter"],0);
 	}
-	if ($clientPaidList != ''){
+	/*if ($clientPaidList != ''){
 		$clientPaidList .= ",".$clientPaid;
 	}else{
 		$clientPaidList = $clientPaid;
@@ -146,7 +146,7 @@ while ($year <= $curYear){
 	}else{
 		$estMarginList = $estMargin;
 	}
-	$labelsList .= $labels;
+	$labelsList .= $labels;*/
 	$year++;
 }
 
@@ -170,7 +170,7 @@ $z4=$z3+$za;
 if (!$_GET[noLegend]){
 	$legend="&chdl=Client Paid|Balance Due|Contractor Paid|Live Margin|Est. Margin&chco=FF0000,00FF00,0000FF,800080,FF8040";
 }
-$src="http://0.chart.apis.google.com/chart?cht=lc&chs=900x333&chd=t:".$clientPaidList."|".$balanceDueList."|".$contractorPaidList."|".$liveMarginList."|".$estMarginList."&chxl=0:".$labelsList."|1:|$a|0|$z1|$z2|$z3|$z4|$z|2:|$totalList&chtt=Costs: 2008-$curYear|$legend&chxt=x,y,x&chds=$a,$z&chxtc=0,10|1,-980&chxp=1,0,$zb,20,40,60,80,100&chxs=1,000000,6|0,000000,8|2,000000,8&chls=0.5,1,0|0.5,1,0|0.5,1,0|0.5,1,0|0.5,1,0&chm=h,CCBB00,0,$zb2,1&chm=f$z$zMonth,000000,$zSet,$zPos,12|f$a$aMonth,000000,$aSet,$aPos,12";
+$src="http://0.chart.apis.google.com/chart?cht=lc&chs=900x333&chd=t:".$clientPaid."|".$balanceDue."|".$contractorPaid."|".$liveMargin."|".$estMargin."&chxl=0:".$labels."|1:|$a|0|$z1|$z2|$z3|$z4|$z|2:|$totalList&chtt=Costs: 2008-$curYear|$legend&chxt=x,y,x&chds=$a,$z&chxtc=0,10|1,-980&chxp=1,0,$zb,20,40,60,80,100&chxs=1,000000,6|0,000000,8|2,000000,8&chls=0.5,1,0|0.5,1,0|0.5,1,0|0.5,1,0|0.5,1,0&chm=h,CCBB00,0,$zb2,1&chm=f$z$zMonth,000000,$zSet,$zPos,12|f$a$aMonth,000000,$aSet,$aPos,12";
 //$rest="&chxt=x,y&chds=0,".$z."&chxtc=0,10|1,-980&chxs=0,000000,10|1,000000,10,-1,lt,333333&chm=f$z,000000,0,$zPos,15";
 ?>
 <img src="<?=$src?>" width="100%">
