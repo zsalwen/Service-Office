@@ -31,6 +31,7 @@ $z=0;
 $zi=0;
 $month=0;
 while ($year <= $curYear){
+	echo "<h1>$year</h1>";
 	$yr=substr($year,-2);
 	if ($year != $curYear){
 		$topMo=12;
@@ -109,7 +110,6 @@ while ($year <= $curYear){
 	while($counter < count($total)){$counter++;
 		$totalList .= "|".number_format($total["$counter"],0);
 	}
-	$year++;
 	if ($clientPaidList != ''){
 		$clientPaidList .= ",".$clientPaid;
 	}else{
@@ -136,6 +136,7 @@ while ($year <= $curYear){
 		$estMarginList = $estMargin;
 	}
 	$labelsList .= $labels;
+	$year++;
 }
 
 echo "<table border='1' style='border-collapse:collapse;'><tr>";
