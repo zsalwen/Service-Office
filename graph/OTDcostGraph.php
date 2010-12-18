@@ -43,7 +43,7 @@ while ($year <= $curYear){
 
 		$csv = getPage("http://data.mdwestserve.com/cost.php?month=$month&year=$year", 'MDWS GRAPH', '10', '');
 		$value = explode(',',$csv);
-		//echo "<fieldset><legend>$month-$year</legend>$csv</fieldset>";
+		echo "<fieldset><legend>$month-$year</legend>$csv</fieldset>";
 		$i=0;
 		while ($i < 4){
 			if (!is_numeric($value["$i"])){$value["$i"]=0;}
