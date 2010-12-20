@@ -106,7 +106,7 @@ while ($year <= $curYear){
 		//while($counter < count($total)){$counter++;
 		$totalList .= "|".number_format($total["$count"],0);
 		$js .= '
-		data.addRow(["'.$month.'/'.$yr.'",'.$value[0].','.$value[1].','.$value[2].','.$value[3].','.$value[4].','.number_format($total["$count"],0).']);';
+		data.addRow(["'.$month.'/'.$yr.'",'.$value[0].','.$value[1].','.$value[2].','.$value[3].','.$value[4].','.number_format($total["$count"],0,'','').']);';
 		//}
 	}
 	$year++;
