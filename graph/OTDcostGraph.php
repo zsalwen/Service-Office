@@ -150,18 +150,18 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
       function drawVisualization() {
         // Create and populate the data table.
         var data = new google.visualization.DataTable();
-        data.addColumn('string', 'x');
-        data.addColumn('string', 'x2');
-        data.addColumn('number', 'clientPaid');
-        data.addColumn('number', 'balanceDue');
-        data.addColumn('number', 'contractorPaid');
-        data.addColumn('number', 'liveMargin');
-        data.addColumn('number', 'estMargin');
+        data.addColumn('string', 'Date');
+        data.addColumn('string', 'Total');
+        data.addColumn('number', 'Client Paid');
+        data.addColumn('number', 'Balance Due');
+        data.addColumn('number', 'Contractor Paid');
+        data.addColumn('number', 'Live Margin');
+        data.addColumn('number', 'Estimated Margin');
        <?=$js?>
         // Create and draw the visualization.
         new google.visualization.LineChart(document.getElementById('visualization')).
             draw(data, {curveType: "function",
-                        width: 1300, height: 1000,
+                        width: 1300, height: 1300,
                         vAxis: {maxValue: <?=$z?>}}
                 );
       }
