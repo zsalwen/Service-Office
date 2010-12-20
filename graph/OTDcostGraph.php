@@ -7,25 +7,11 @@ $year=$_GET[year];
 $attid=$_GET[attid];
 $month=0;
 
-$mainPaidIn=0;
-$mainOwed=0;
-$mainPaidOut=0;
-$mainLiveMargin=0;
-//$mainMargin=0;
-/*
-$patrick = 5166; // salary - no overtime
-$zach = 3120 + 540; // 18 hr + overtime
-$danny = 2600; // 15 hr + overtime
-$alex = 2253; // 13 / hr
-
-$salary = $patrick + $zach + $danny + $alex;
-$salary2 = $salary * .09; // 9% of monthly total
-$health = 2500; // staff health insurance
-$courier = 3000; // better aim high...*/
 //monthly burn rate (not including postage, which is calculated within Service-Web-Service/cost.php
 $burn=45186.24;
 $curYear=date('Y');
 $year=2008;
+$inc=0;
 $a=0;
 $z=0;
 $zi=0;
@@ -38,7 +24,7 @@ while ($year <= $curYear){
 	}else{
 		$topMo=date('n');
 	}
-	while($month < $topMo){$month++;$zi++;
+	while($month < $topMo){$month++;$zi++;$inc++;
 		$count = $month;
 		$month = leading_zeros($month, '2') ;
 
@@ -90,25 +76,25 @@ while ($year <= $curYear){
 		}else{
 			$clientPaid .= ",".$value[0];
 		}
-		$mainPaidIn = $mainPaidIn + $value[0];
+		//$mainPaidIn = $mainPaidIn + $value[0];
 		if ($balanceDue == ''){
 			$balanceDue = $value[1];
 		}else{
 			$balanceDue .= ",".$value[1];
 		}
-		$mainOwed = $mainOwed + $value[1];
+		//$mainOwed = $mainOwed + $value[1];
 		if ($contractorPaid == ''){
 			$contractorPaid = $value[2];
 		}else{
 			$contractorPaid .= ",".$value[2];
 		}
-		$mainPaidOut = $mainPaidOut + $value[2];
+		//$mainPaidOut = $mainPaidOut + $value[2];
 		if ($liveMargin == ''){
 			$liveMargin = $value[3];
 		}else{
 			$liveMargin .= ",".$value[3];
 		}
-		$mainLiveMargin = $mainLiveMargin + $value[3];
+		//$mainLiveMargin = $mainLiveMargin + $value[3];
 		if ($estMargin == ''){
 			$estMargin = $value[4];
 		}else{
@@ -119,34 +105,9 @@ while ($year <= $curYear){
 		//$counter=0;
 		//while($counter < count($total)){$counter++;
 		$totalList .= "|".number_format($total["$count"],0);
+		$js .= 'data.addRow(["'.$month.' '.$yr.'","'.number_format($total["$count"],0).'",'.$value[0].','.$value[1].','.$value[2].','.$value[3].','.$value[4].']);';
 		//}
 	}
-	/*if ($clientPaidList != ''){
-		$clientPaidList .= ",".$clientPaid;
-	}else{
-		$clientPaidList = $clientPaid;
-	}
-	if ($balanceDueList != ''){
-		$balanceDueList .= ",".$balanceDue;
-	}else{
-		$balanceDueList = $balanceDue;
-	}
-	if ($contractorPaidList != ''){
-		$contractorPaidList .= ",".$contractorPaid;
-	}else{
-		$contractorPaidList .= $contractorPaid;
-	}
-	if ($liveMarginList != ''){
-		$liveMarginList .= ",".$liveMargin;
-	}else{
-		$liveMarginList = $liveMargin;
-	}
-	if ($estMarginList != ''){
-		$estMarginList .= ",".$estMargin;
-	}else{
-		$estMarginList = $estMargin;
-	}
-	$labelsList .= $labels;*/
 	$year++;
 }
 
@@ -173,4 +134,39 @@ if (!$_GET[noLegend]){
 $src="http://0.chart.apis.google.com/chart?cht=lc&chs=900x333&chd=t:".$clientPaid."|".$balanceDue."|".$contractorPaid."|".$liveMargin."|".$estMargin."&chxl=0:".$labels."|1:|$a|0|$z1|$z2|$z3|$z4|$z|2:|$totalList&chtt=Costs: 2008-$curYear|$legend&chxt=x,y,x&chds=$a,$z&chxtc=0,10|1,-980&chxp=1,0,$zb,20,40,60,80,100&chxs=1,000000,6|0,000000,6|2,000000,6&chls=0.5,1,0|0.5,1,0|0.5,1,0|0.5,1,0|0.5,1,0&chm=h,CCBB00,0,$zb2,1&chm=f$z$zMonth,000000,$zSet,$zPos,12|f$a$aMonth,000000,$aSet,$aPos,12";
 //$rest="&chxt=x,y&chds=0,".$z."&chxtc=0,10|1,-980&chxs=0,000000,10|1,000000,10,-1,lt,333333&chm=f$z,000000,0,$zPos,15";
 ?>
+<!--------------
 <img src="<?=$src?>" width="100%">
+----------->
+<!--
+You are free to copy and use this sample in accordance with the terms of the
+Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
+-->
+
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load('visualization', '1', {packages: ['corechart']});
+    </script>
+    <script type="text/javascript">
+      function drawVisualization() {
+        // Create and populate the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'date');
+        data.addColumn('string', 'total');
+        data.addColumn('number', 'clientPaid');
+        data.addColumn('number', 'balanceDue');
+        data.addColumn('number', 'contractorPaid');
+        data.addColumn('number', 'liveMargin');
+        data.addColumn('number', 'estMargin');
+       <?=$js?>
+        // Create and draw the visualization.
+        new google.visualization.LineChart(document.getElementById('visualization')).
+            draw(data, {curveType: "function",
+                        width: 1000, height: 600,
+                        vAxis: {maxValue: <?=$z?>}}
+                );
+      }
+      
+
+      google.setOnLoadCallback(drawVisualization);
+    </script>
+    <div id="visualization" style="width: 500px; height: 400px;"></div>
