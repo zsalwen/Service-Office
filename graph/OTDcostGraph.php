@@ -105,7 +105,7 @@ while ($year <= $curYear){
 		//$counter=0;
 		//while($counter < count($total)){$counter++;
 		$totalList .= "|".number_format($total["$count"],0);
-		$js .= 'data.addRow(["<div style=\'font-size:6px\'>'.$month.'/'.$yr.'</div>'.number_format($total["$count"],0).'",'.$value[0].','.$value[1].','.$value[2].','.$value[3].','.$value[4].']);';
+		$js .= 'data.addRow(["'.$month.'/'.$yr.'",'.$value[0].','.$value[1].','.$value[2].','.$value[3].','.$value[4].','.number_format($total["$count"],0).']);';
 		//}
 	}
 	$year++;
@@ -156,6 +156,7 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
         data.addColumn('number', 'Contractor Paid');
         data.addColumn('number', 'Live Margin');
         data.addColumn('number', 'Estimated Margin');
+        data.addColumn('number', 'Estimated Remainder');
        <?=$js?>
         // Create and draw the visualization.
         new google.visualization.LineChart(document.getElementById('visualization')).
