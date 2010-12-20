@@ -105,7 +105,7 @@ while ($year <= $curYear){
 		//$counter=0;
 		//while($counter < count($total)){$counter++;
 		$totalList .= "|".number_format($total["$count"],0);
-		$js .= 'data.addRow(["'.$month.' '.$yr.'<br>'.number_format($total["$count"],0).'",'.$value[0].','.$value[1].','.$value[2].','.$value[3].','.$value[4].']);';
+		$js .= 'data.addRow(["'.$month.' '.$yr.'","'.number_format($total["$count"],0).'",'.$value[0].','.$value[1].','.$value[2].','.$value[3].','.$value[4].']);';
 		//}
 	}
 	$year++;
@@ -151,6 +151,7 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
         // Create and populate the data table.
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'x');
+        data.addColumn('string', 'x2');
         data.addColumn('number', 'clientPaid');
         data.addColumn('number', 'balanceDue');
         data.addColumn('number', 'contractorPaid');
@@ -160,7 +161,7 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
         // Create and draw the visualization.
         new google.visualization.LineChart(document.getElementById('visualization')).
             draw(data, {curveType: "function",
-                        width: 1200, height: 1000,
+                        width: 1500, height: 1000,
                         vAxis: {maxValue: <?=$z?>}}
                 );
       }
