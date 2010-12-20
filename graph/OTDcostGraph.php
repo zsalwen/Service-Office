@@ -165,6 +165,7 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
                         vAxis: {maxValue: <?=$z?>}, title: 'Costs: 2008-<?=$curYear?>'
 						 hAxis: {title: 'Date', titleTextStyle: {color: '#FF0000'}}
 						  hAxis: {title: 'Total', titleTextStyle: {color: '#FF0000'}}
+						  }
                 );
       }
       
