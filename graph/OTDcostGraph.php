@@ -162,7 +162,7 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
         new google.visualization.LineChart(document.getElementById('visualization')).
             draw(data, {curveType: "function",
                         width: 1000, height: 600,
-                        vAxis: {maxValue: <?=$z?>}}
+                        vAxis: {maxValue: <?=$zb?>}}
                 );
       }
       
