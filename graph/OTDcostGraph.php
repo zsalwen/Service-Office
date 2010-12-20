@@ -165,7 +165,6 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
                         width: 1250, height: 550,
                         vAxis: {maxValue: <?=$z?>}, title: 'Costs: 2008-<?=$curYear?>',
 						 hAxis: {title: 'Date', titleTextStyle: {color: '#FF0000', fontSize:'18'} }
-						 chartArea:{left:0,top:0,width:"99%",height:"99%"}
 						  }
                 );
       }
