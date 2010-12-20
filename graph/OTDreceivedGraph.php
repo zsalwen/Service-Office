@@ -140,4 +140,4 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
 
       google.setOnLoadCallback(drawVisualization);
     </script>
-    <div id="visualization" style="width: 500px; height: 400px;"></div>
+    <div id="visualization" style="width: 100%; height: 100%;"></div>
