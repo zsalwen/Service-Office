@@ -105,7 +105,7 @@ while ($year <= $curYear){
 		//$counter=0;
 		//while($counter < count($total)){$counter++;
 		$totalList .= "|".number_format($total["$count"],0);
-		$js .= 'data.addRow(["'.$month.' '.$yr.'",'.$value[0].','.$value[1].','.$value[2].','.$value[3].','.$value[4].']);';
+		$js .= 'data.addRow(["'.$month.'/'.$yr.'",'.$value[0].','.$value[1].','.$value[2].','.$value[3].','.$value[4].']);';
 		//}
 	}
 	$year++;
@@ -162,7 +162,7 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
             draw(data, {curveType: "function",
                         width: 1300, height: 1300,
                         vAxis: {maxValue: <?=$z?>}, title: 'Costs: 2008-<?=$curYear?>',
-						 hAxis: {title: 'Date', titleTextStyle: {color: '#FF0000'}}
+						 hAxis: {title: 'Date', titleTextStyle: {color: '#FF0000', fontSize:'18', hAxis.slantedText:'true', } }
 						  }
                 );
       }
