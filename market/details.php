@@ -95,7 +95,7 @@ $d=mysql_fetch_array($r,MYSQL_ASSOC);
 if ($logMsg){
 	error_log("[".date('h:iA n/j/y')."] ".$logMsg,3,"/logs/user.log");
 }else{
-	error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Updating Marketing Entry For ".getName($id)." (ID $id)";,3,"/logs/user.log");
+	error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Updating Marketing Entry For ".getName($id)." (ID $id)",3,"/logs/user.log");
 }
 ?>
 <style>
