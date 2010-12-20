@@ -157,7 +157,7 @@ echo "<tr><td>BALANCE DUE:</td><td>".str_replace(',','</td><td>',$balanceDue).'<
 echo "<tr><td>CONTRACTOR PAID:</td><td>".str_replace(',','</td><td>',$contractorPaid).'</td></tr>';
 echo "<tr><td>LIVE MARGIN:</td><td>".str_replace(',','</td><td>',$liveMargin).'</td></tr>';
 echo "<tr><td>EST. MARGIN:</td><td>".str_replace(',','</td><td>',$estMargin).'</td></tr>';
-echo "<tr><td>TOTAL:</td><td>".str_replace('|','</td><td>'$totalList).'</td></tr>';
+echo "<tr><td>TOTAL:</td><td>".str_replace('|','</td><td>',$totalList).'</td></tr>';
 echo "</table>";
 $za=(($a*-1)+$z)/5;
 //$zb is the vertical percentage where the zero marker should go on the y-axis
