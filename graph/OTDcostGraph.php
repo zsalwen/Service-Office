@@ -148,6 +148,34 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
       google.load('visualization', '1', {packages: ['corechart']});
     </script>
     <script type="text/javascript">
+	function getWidth() {
+	  var myWidth = 0;
+	  if( typeof( window.innerWidth ) == 'number' ) {
+		//Non-IE
+		myWidth = window.innerWidth;
+	  } else if( document.documentElement && ( document.documentElement.clientWidth ) ) {
+		//IE 6+ in 'standards compliant mode'
+		myWidth = document.documentElement.clientWidth;
+	  } else if( document.body && ( document.body.clientWidth ) ) {
+		//IE 4 compatible
+		myWidth = document.body.clientWidth;
+	  }
+	  return myWidth;
+	}
+	function getWidth() {
+	  var myWidth = 0;
+	  if( typeof( window.innerWidth ) == 'number' ) {
+		//Non-IE
+		myWidth = window.innerWidth;
+	  } else if( document.documentElement && ( document.documentElement.clientWidth ) ) {
+		//IE 6+ in 'standards compliant mode'
+		myWidth = document.documentElement.clientWidth;
+	  } else if( document.body && ( document.body.clientWidth ) ) {
+		//IE 4 compatible
+		myWidth = document.body.clientWidth;
+	  }
+	  return myWidth;
+	}
       function drawVisualization() {
         // Create and populate the data table.
         var data = new google.visualization.DataTable();
@@ -162,9 +190,10 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
         // Create and draw the visualization.
         new google.visualization.LineChart(document.getElementById('visualization')).
             draw(data, {curveType: "function",
-                        width: 1250, height: 550,
+                        width: getWidth(), height: getHeight(),
                         vAxis: {maxValue: <?=$z?>}, title: 'Costs: 2008-<?=$curYear?>',
 						 hAxis: {title: 'Date', titleTextStyle: {color: '#FF0000', fontSize:'18'} }
+						 chartArea:{left:0,top:0,width:"100%",height:"100%"}
 						  }
                 );
       }
