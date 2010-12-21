@@ -4,23 +4,24 @@ include "functions.php";
 <link rel="stylesheet" type="text/css" href="../fire.css" />
 <style>
 td {text-align:center;}
+iframe {border;0px; margin:0px; padding:0px;}
 </style>
 <table align="center" width='80%'>
 
-<tr><td><iframe width='1205' height='485' src="http://staff.mdwestserve.com/graph/OTDcostGraph.php"></iframe></td>
+<tr><td><iframe width='1210' height='490' src="http://staff.mdwestserve.com/graph/OTDcostGraph.php"></iframe></td>
 </tr>
-<tr><td><iframe width='1205' height='485' src="http://staff.mdwestserve.com/graph/OTDreceivedGraph.php"></iframe></td>
+<tr><td><iframe width='1210' height='490' src="http://staff.mdwestserve.com/graph/OTDreceivedGraph.php"></iframe></td>
 </tr>
-<tr><td><iframe width='1205' height='485' src="http://staff.mdwestserve.com/graph/OTDfiledGraph.php"></iframe></td>
+<tr><td><iframe width='1210' height='490' src="http://staff.mdwestserve.com/graph/OTDfiledGraph.php"></iframe></td>
 </tr>
 
-<tr><td><iframe width='1205' height='485' src="http://staff.mdwestserve.com/graph/OTDexportGraph.php"></iframe></td>
+<tr><td><iframe width='1210' height='490' src="http://staff.mdwestserve.com/graph/OTDexportGraph.php"></iframe></td>
 </tr>
-<tr><td><iframe width='1205' height='485' src="http://staff.mdwestserve.com/graph/EVreceivedGraph.php"></iframe></td>
+<tr><td><iframe width='1210' height='490' src="http://staff.mdwestserve.com/graph/EVreceivedGraph.php"></iframe></td>
 </tr>
-<tr><td><iframe width='1205' height='485' src="http://staff.mdwestserve.com/graph/EVfiledGraph.php"></iframe></td>
+<tr><td><iframe width='1210' height='490' src="http://staff.mdwestserve.com/graph/EVfiledGraph.php"></iframe></td>
 </tr>
-<tr><td><iframe width='1205' height='485' src="http://staff.mdwestserve.com/graph/EVexportGraph.php"></iframe></td>
+<tr><td><iframe width='1210' height='490' src="http://staff.mdwestserve.com/graph/EVexportGraph.php"></iframe></td>
 </tr>
 
 <tr><td><img src="http://staff.mdwestserve.com/graph/cost.php?year=2008&attid=<?=$_GET[attid];?>"></td>
