@@ -38,121 +38,56 @@ while ($year <= $curYear){
 			$src .= ','.$received["$i"];
 		}
 		$src2 .= '|'.monthConvert($i2)." 08";
-	}
-	$year++;
-}
-//pull BURSON files
-$year=2008;
-while ($year <= $curYear){
-	if ($year != $curYear){
-		$topMo=12;
-	}else{
-		$topMo=date('n');
-	}
-	$i=0;
-	while ($i < $topMo){$i++;
-		if ($i < 10){
-			$i2='0'.$i;
-		}else{
-			$i2=$i;
-		}
+		//pull BURSON files
 		$r=mysql_query("SELECT eviction_id FROM evictionPackets WHERE fileDate LIKE '%$year-$i2%' AND attorneys_id='1'");
-		$value=mysql_num_rows($r);
-		if ($value > 0){}else{
-			$value='0';
+		$value1=mysql_num_rows($r);
+		if ($value1 > 0){}else{
+			$value1='0';
 		}
 		if ($burson == ''){
-			$burson = $value;
+			$burson = $value1;
 		}else{
-			$burson .= ','.$value;
+			$burson .= ','.$value1;
 		}
-	}
-	$year++;
-}
-//pull WHITE files
-$year=2008;
-while ($year <= $curYear){
-	if ($year != $curYear){
-		$topMo=12;
-	}else{
-		$topMo=date('n');
-	}
-	$i=0;
-	while ($i < $topMo){$i++;
-		if ($i < 10){
-			$i2='0'.$i;
-		}else{
-			$i2=$i;
-		}
+		//pull WHITE files
 		$r=mysql_query("SELECT eviction_id FROM evictionPackets WHERE fileDate LIKE '%$year-$i2%' AND attorneys_id='3'");
-		$value=mysql_num_rows($r);
-		if ($value > 0){}else{
-			$value='0';
+		$value2=mysql_num_rows($r);
+		if ($value2 > 0){}else{
+			$value2='0';
 		}
 		if ($white == ''){
-			$white = $value;
+			$white = $value2;
 		}else{
-			$white .= ','.$value;
+			$white .= ','.$value2;
 		}
-	}
-	$year++;
-}
-//pull BGW files
-$year=2008;
-while ($year <= $curYear){
-	if ($year != $curYear){
-		$topMo=12;
-	}else{
-		$topMo=date('n');
-	}
-	$i=0;
-	while ($i < $topMo){$i++;
-		if ($i < 10){
-			$i2='0'.$i;
-		}else{
-			$i2=$i;
-		}
+		//pull BGW files
 		$r=mysql_query("SELECT eviction_id FROM evictionPackets WHERE fileDate LIKE '%$year-$i2%' AND attorneys_id='70'");
-		$value=mysql_num_rows($r);
-		if ($value > 0){}else{
-			$value='0';
+		$value3=mysql_num_rows($r);
+		if ($value3 > 0){}else{
+			$value3='0';
 		}
 		if ($bgw == ''){
-			$bgw = $value;
+			$bgw = $value3;
 		}else{
-			$bgw .= ','.$value;
+			$bgw .= ','.$value3;
 		}
-	}
-	$year++;
-}
-//pull OTHER files
-$year=2008;
-while ($year <= $curYear){
-	if ($year != $curYear){
-		$topMo=12;
-	}else{
-		$topMo=date('n');
-	}
-	$i=0;
-	while ($i < $topMo){$i++;
-		if ($i < 10){
-			$i2='0'.$i;
-		}else{
-			$i2=$i;
-		}
+		//pull OTHER files
 		$r=mysql_query("SELECT eviction_id FROM evictionPackets WHERE fileDate LIKE '%$year-$i2%' AND attorneys_id <> '1' AND attorneys_id <> '3' AND attorneys_id <> '70'");
-		$value=mysql_num_rows($r);
-		if ($value > 0){}else{
-			$value='0';
+		$value4=mysql_num_rows($r);
+		if ($value4 > 0){}else{
+			$value4='0';
 		}
 		if ($other == ''){
-			$other = $value;
+			$other = $value4;
 		}else{
-			$other .= ','.$value;
+			$other .= ','.$value4;
 		}
+		$js .= '
+		data.addRow(["'.monthConvert($i2).'/'.$yr.'",'.$received["$i"].' ,'.$value1.' ,'.$value2.' ,'.$value3.','.$value4.']);';
 	}
 	$year++;
 }
+
 $z1=number_format($z/5,0);
 $z2=number_format($z1*2,0);
 $z3=number_format($z1*3,0);
@@ -169,4 +104,40 @@ $src="http://5.chart.apis.google.com/chart?cht=lc&chs=1000x300&chd=t:".$src."|".
 $markers="&chm=d,990000,0,-1,5|d,009900,1,-1,5|d,000099,2,-1,5|d,662266,3,-1,5|d,994400,4,-1,5|t$z$zzz,000000,0,$zz,13";
 $rest="&chxt=x,y&chds=0,".$z."&chxtc=0,10|1,-980&chxs=0,000000,8|1,000000,10,-1,lt,333333";
 ?>
+<!-----------------
 <img src="<?=$src.$rest.$markers?>" width="100%">
+----------------->
+<!--
+You are free to copy and use this sample in accordance with the terms of the
+Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
+-->
+
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load('visualization', '1', {packages: ['corechart']});
+    </script>
+    <script type="text/javascript">
+      function drawVisualization() {
+        // Create and populate the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Date');
+        data.addColumn('number', 'All Files');
+        data.addColumn('number', 'Burson');
+        data.addColumn('number', 'White');
+        data.addColumn('number', 'BGW');
+        data.addColumn('number', 'Others');
+       <?=$js?>
+        // Create and draw the visualization.
+        new google.visualization.LineChart(document.getElementById('visualization')).
+            draw(data, {curveType: "function",
+                        width: 1000, height: 400, backgroundColor: '#CCCCAA',
+                        vAxis: {maxValue: <?=$z?>}, title: 'Evictions Filed: 2008-<?=$curYear?>',
+						 hAxis: {title: 'Date', titleTextStyle: {color: '#FF0000', fontSize:'18'} }
+						  }
+                );
+      }
+      
+
+      google.setOnLoadCallback(drawVisualization);
+    </script>
+    <div id="visualization" style="width: 100%; height: 100%;"></div>

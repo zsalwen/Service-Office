@@ -41,14 +41,14 @@ while ($year <= $curYear){
 		$src2 .= '|'.monthConvert($i2)." $yr";
 		//pull BURSON files
 		$r=mysql_query("SELECT packet_id FROM ps_packets WHERE date_received LIKE '%$year-$i2%' AND attorneys_id='1'");
-		$value=mysql_num_rows($r);
-		if ($value > 0){}else{
-			$value='0';
+		$value1=mysql_num_rows($r);
+		if ($value1 > 0){}else{
+			$value1='0';
 		}
 		if ($burson == ''){
-			$burson = $value;
+			$burson = $value1;
 		}else{
-			$burson .= ','.$value;
+			$burson .= ','.$value1;
 		}
 		//pull WHITE files
 		$r=mysql_query("SELECT packet_id FROM ps_packets WHERE date_received LIKE '%$year-$i2%' AND attorneys_id='3'");
@@ -84,7 +84,7 @@ while ($year <= $curYear){
 			$other .= ','.$value4;
 		}
 		$js .= '
-		data.addRow(["'.monthConvert($i2).'/'.$yr.'",'.$received["$i"].' ,'.$value.' ,'.$value2.' ,'.$value3.','.$value4.']);';
+		data.addRow(["'.monthConvert($i2).'/'.$yr.'",'.$received["$i"].' ,'.$value1.' ,'.$value2.' ,'.$value3.','.$value4.']);';
 	}
 	$year++;
 }
