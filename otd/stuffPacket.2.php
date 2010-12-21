@@ -158,7 +158,7 @@ if ($_GET[packet]){$display++;
 	 }
 	error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Printing GREEN Envelopes For OTD$_GET[packet] \n",3,"/logs/user.log");
 }elseif($_GET[id]){$display++;
-	envPrint($_GET[id],"",$times,"");
+	envPrint($_GET[id],$times,"");
 	$r=@mysql_query("SELECT to1 FROM envelopeImage WHERE envID = '$_GET[id]'");
 	$d=mysql_fetch_array($r,MYSQL_ASSOC); 
 	error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Printing GREEN Envelopes For [$d[to1]] \n",3,"/logs/user.log");
