@@ -48,7 +48,7 @@ function envPrint($id,$matrix,$times,$lossMit){
 		<? }else{ ?>
 			<div style='width:400px;height:40px;'></div>
 		<? } ?>
-		<img  src="http://staff.mdwestserve.com/envelopecard.bgw.jpg.php?line1=<?=washAdd($d[to1])?>&line2=<?=washAdd($d[to2])?>&csz=<?=washAdd($d[to3])?>&client=<?=$client?>&lossMit=<?=$lossMit?>">
+		<img  src="http://staff.mdwestserve.com/envelopecard.hb472.jpg.php?line1=<?=washAdd($d[to1])?>&line2=<?=washAdd($d[to2])?>&csz=<?=washAdd($d[to3])?>&client=<?=$client?>&lossMit=<?=$lossMit?>">
 		</td></tr></table>
 		<?
 	}
