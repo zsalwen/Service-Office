@@ -31,7 +31,7 @@ if (stripos($_GET[line1],"-")){
 	$line2=$explode1[1];
 }elseif (stripos($_GET[line2],"-")){
 	$explode2=explode('-',$_GET[line2]);
-	$line1=$_GET[line1]
+	$line1=$_GET[line1];
 	$line2=$explode2[0];
 	$line3=$explode2[1];
 }elseif($_GET[line1] == "CLERK OF THE CIRCUIT COURT FOR PRINCE GEORGE'S COUNTY"){
