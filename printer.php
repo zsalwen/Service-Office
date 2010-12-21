@@ -3,8 +3,8 @@ function pushPage($log){
 	$file = $log.'.ps';
 	$remote_file = $log.'.ps';
 	$conn_id = ftp_connect('75.94.82.44');
-	$login_result = ftp_login($conn_id, 'alpha', 'beta');
-	if (ftp_chdir($conn_id, "PORT1")) {
+	$login_result = ftp_login($conn_id, 'alpha', 'sMoRgsO4');
+	if (ftp_chdir($conn_id, "192.168.100.190")) {
 	} else { 
 		mail('insidenothing@gmail.com','Daily Log Print Error','Couldn\'t change directory');
 		error_log(date('r')." WARNING: Couldn't change ftp directory for $log. \n", 3, '/logs/printer.log');
