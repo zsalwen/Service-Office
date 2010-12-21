@@ -16,7 +16,7 @@ $size2 = "22";
 $notice1 = "REQUEST FOR FORECLOSURE MEDIATION";
 
 $notice4 = "ATTN: MARYLAND PRESALE";
-
+$line3="";
 //return address
 $line1 = "_______________________"; 
 
@@ -26,14 +26,22 @@ imageTTFText( $canvas, $size, 270, 320, 0, $black, $font2, $line1);
 $cord = "$clientFile".'X';
 //main label
 if (stripos($_GET[line1],"-")){
-	$line1=explode('-',$_GET[line1]);
-	$line1a=$line1[0];
-	$line1b=$line1[1];
+	$explode1=explode('-',$_GET[line1]);
+	$line1=$explode1[0];
+	$line2=$explode1[1];
+}elseif (stripos($_GET[line2],"-")){
+	$explode2=explode('-',$_GET[line2]);
+	$line1=$_GET[line1]
+	$line2=$explode2[0];
+	$line3=$explode2[1];
 }elseif($_GET[line1] == "CLERK OF THE CIRCUIT COURT FOR PRINCE GEORGE'S COUNTY"){
-	$line1a="CLERK OF THE CIRCUIT COURT";
-	$line1b="FOR PRINCE GEORGE'S COUNTY";
+	$line1="CLERK OF THE CIRCUIT COURT";
+	$line2="FOR PRINCE GEORGE'S COUNTY";
 }else{
-	$line1b=$_GET[line1];
+	$line2=$_GET[line1];
+}
+if ($line3 == ""){
+	$line3=$_GET[line2];
 }
 //only display "ATTN: MARYLAND PRESALE" for letters to attorney
 
@@ -45,9 +53,9 @@ if ($_GET[lossMit] != 'PRELIMINARY'){
 }elseif ($_GET[client] != ''){
 	imageTTFText( $canvas, $size, 270, 190, 240, $black, $font, strtoupper($notice4) );
 }
-imageTTFText( $canvas, $size, 270, 170, 240, $black, $font, strtoupper($line1a) );
-imageTTFText( $canvas, $size, 270, 150, 240, $black, $font, strtoupper($line1b) );
-imageTTFText( $canvas, $size, 270, 130, 240, $black, $font, strtoupper($_GET[line2]) );
+imageTTFText( $canvas, $size, 270, 170, 240, $black, $font, strtoupper($line1) );
+imageTTFText( $canvas, $size, 270, 150, 240, $black, $font, strtoupper($line2) );
+imageTTFText( $canvas, $size, 270, 130, 240, $black, $font, strtoupper($line3) );
 imageTTFText( $canvas, $size, 270, 110, 240, $black, $font, strtoupper($_GET[csz]) );
 //imageTTFText( $canvas, $size2, 270, 80, 240, $black, $font3, strtoupper($notice3) );
 header("Content-type: image/png"); 
