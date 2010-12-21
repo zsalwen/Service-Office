@@ -162,7 +162,7 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
         // Create and draw the visualization.
         new google.visualization.LineChart(document.getElementById('visualization')).
             draw(data, {curveType: "function",
-                        width: 1000, height: 400, backgroundColor: '#FFBBAA',
+                        width: 1200, height: 480, backgroundColor: '#FFBBAA',
                         vAxis: {maxValue: <?=$z?>}, title: 'Costs: 2008-<?=$curYear?>',
 						 hAxis: {title: 'Date', titleTextStyle: {color: '#FF0000', fontSize:'18'} }
 						  }
