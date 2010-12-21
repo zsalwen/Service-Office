@@ -130,7 +130,7 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
         // Create and draw the visualization.
         new google.visualization.LineChart(document.getElementById('visualization')).
             draw(data, {curveType: "function",
-                        width: 1000, height: 400, backgroundColor: '#99AACC',
+                        width: 1200, height: 480, backgroundColor: '#99AACC',
                         vAxis: {maxValue: <?=$z?>}, title: 'Foreclosure Files Received: 2008-<?=$curYear?>',
 						 hAxis: {title: 'Date', titleTextStyle: {color: '#FF0000', fontSize:'18'} }
 						  }

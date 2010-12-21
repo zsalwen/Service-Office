@@ -7,20 +7,20 @@ td {text-align:center;}
 </style>
 <table align="center" width='80%'>
 
-<tr><td><iframe width='1010' height='410' src="http://staff.mdwestserve.com/graph/OTDcostGraph.php"></iframe></td>
+<tr><td><iframe width='1205' height='485' src="http://staff.mdwestserve.com/graph/OTDcostGraph.php"></iframe></td>
 </tr>
-<tr><td><iframe width='1010' height='410' src="http://staff.mdwestserve.com/graph/OTDreceivedGraph.php"></iframe></td>
+<tr><td><iframe width='1205' height='485' src="http://staff.mdwestserve.com/graph/OTDreceivedGraph.php"></iframe></td>
 </tr>
-<tr><td><iframe width='1010' height='410' src="http://staff.mdwestserve.com/graph/OTDfiledGraph.php"></iframe></td>
+<tr><td><iframe width='1205' height='485' src="http://staff.mdwestserve.com/graph/OTDfiledGraph.php"></iframe></td>
 </tr>
 
-<tr><td><iframe width='1010' height='410' src="http://staff.mdwestserve.com/graph/OTDexportGraph.php"></iframe></td>
+<tr><td><iframe width='1205' height='485' src="http://staff.mdwestserve.com/graph/OTDexportGraph.php"></iframe></td>
 </tr>
-<tr><td><iframe width='1010' height='410' src="http://staff.mdwestserve.com/graph/EVreceivedGraph.php"></iframe></td>
+<tr><td><iframe width='1205' height='485' src="http://staff.mdwestserve.com/graph/EVreceivedGraph.php"></iframe></td>
 </tr>
-<tr><td><iframe width='1010' height='410' src="http://staff.mdwestserve.com/graph/EVfiledGraph.php"></iframe></td>
+<tr><td><iframe width='1205' height='485' src="http://staff.mdwestserve.com/graph/EVfiledGraph.php"></iframe></td>
 </tr>
-<tr><td><iframe width='1010' height='410' src="http://staff.mdwestserve.com/graph/EVexportGraph.php"></iframe></td>
+<tr><td><iframe width='1205' height='485' src="http://staff.mdwestserve.com/graph/EVexportGraph.php"></iframe></td>
 </tr>
 
 <tr><td><img src="http://staff.mdwestserve.com/graph/cost.php?year=2008&attid=<?=$_GET[attid];?>"></td>
