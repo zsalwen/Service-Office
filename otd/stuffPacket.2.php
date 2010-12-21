@@ -156,12 +156,12 @@ if ($_GET[packet]){$display++;
 			buildFromPacket($packet,$times,$mail);
 		}
 	 }
-	error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Printing BGW Envelopes For OTD$_GET[packet] \n",3,"/logs/user.log");
+	error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Printing GREEN Envelopes For OTD$_GET[packet] \n",3,"/logs/user.log");
 }elseif($_GET[id]){$display++;
 	envPrint($_GET[id],"",$times,"");
 	$r=@mysql_query("SELECT to1 FROM envelopeImage WHERE envID = '$_GET[id]'");
 	$d=mysql_fetch_array($r,MYSQL_ASSOC); 
-	error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Printing BGW Envelopes For [$d[to1]] \n",3,"/logs/user.log");
+	error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Printing GREEN Envelopes For [$d[to1]] \n",3,"/logs/user.log");
 }elseif($_GET[mail]){
 	$qd="select packet_id from ps_packets where process_status = 'READY TO MAIL' AND mail_status <> 'Printed Awaiting Postage' AND attorneys_id <> '70' AND lossMit <> '' AND lossMit <> 'N/A - OLD L' AND (uspsVerify='' OR qualityControl='') order by packet_id ASC";
 	$rd=@mysql_query($qd) or die ("Query: $qd<br>".mysql_error());
