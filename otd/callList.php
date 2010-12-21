@@ -53,7 +53,7 @@ function ChangeText(field){
 }
 </script>
 <?
-echo "<table align='center' border='1' style='border-collapse:collapse;'><tr><td align='center' colspan='4' style='font-size:16px;'>OUT OF STATE SERVER CALL LIST</td></tr>
+echo "<table align='center' border='1' style='border-collapse:collapse;'><tr><td align='center' colspan='5' style='font-size:16px;'>OUT OF STATE SERVER CALL LIST</td></tr>
 <tr><td align='center'>Packet #</td><td align='center'>Dispatch Date</td><td align='center'>Service Status</td><td align='center'>Est. File Date</td><td align='center' style='padding-left:20px;'>Servers to Call</td><td align='center'>Notes</td></tr>";
 $q="SELECT * from ps_packets WHERE (affidavit_status = 'SERVICE CONFIRMED' OR affidavit_status='ASSIGNED') and  filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY' AND ((state1 <> '' AND state1 <> 'md' AND state1 <> 'MD') OR (state1a <> '' AND state1a <> 'md' AND state1a <> 'MD') OR (state1b <> '' AND state1b <> 'md' AND state1b <> 'MD') OR (state1c <> '' AND state1c <> 'md' AND state1c <> 'MD') OR (state1d <> '' AND state1d <> 'md' AND state1d <> 'MD') OR (state1e <> '' AND state1e <> 'md' AND state1e <> 'MD')) AND processor_notes NOT LIKE '%$today%' AND dispatchDate <= '$limbo' ORDER BY packet_id ASC";
 $r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
