@@ -29,9 +29,9 @@ if ($msg != ''){
 	<? if ($d[attorneys_id] == '70'){ ?>
 		<td align='center'><a href='http://staff.mdwestserve.com/otd/stuffPacket.bgw.php?packet=<?=$OTD?>' target='_blank'>Server #10 Envelopes</a> | <a href='http://staff.mdwestserve.com/otd/stuffPacket.bgw.php?packet=<?=$OTD?>&mail=1' target='_blank'>Our #10 Envelopes</a></td>
 	<? }else{ ?>
-		<td align='center'><a href='http://staff.mdwestserve.com/otd/stuffPacket.2.php?packet=<?=$OTD?>' target='_blank'><b style='color:#99FF77; font-weight:bold;'>NEW</b> Server #10 Envelopes</a> | <a href='http://staff.mdwestserve.com/otd/stuffPacket.2.php?packet=<?=$OTD?>&mail=1' target='_blank'><b style='color:#99FF77; font-weight:bold;'>NEW</b> Our #10 Envelopes</a></td>
+		<td align='center'><a href='http://staff.mdwestserve.com/otd/stuffPacket.2.php?packet=<?=$OTD?>' target='_blank'><b style='color:#FFFF00; font-weight:bold; text-decoration:none;'>NEW</b> Server #10 Envelopes</a> | <a href='http://staff.mdwestserve.com/otd/stuffPacket.2.php?packet=<?=$OTD?>&mail=1' target='_blank'><b style='color:#FFFF00; font-weight:bold; text-decoration:none;'>NEW</b> Our #10 Envelopes</a></td>
 	</tr><tr>	
-		<td align='center'><a href='http://service.mdwestserve.com/stuffPacket.php?packet=<?=$OTD?>' target='_blank'><b style='color:red; font-weight:bold;'>OLD</b> Server HB472 Stuffings</a> | <a href='http://staff.mdwestserve.com/otd/stuffPacket.php?packet=<?=$OTD?>' target='_blank'><b style='color:red; font-weight:bold;'>OLD</b> Our HB472 Stuffings</a></td>
+		<td align='center'><a href='http://service.mdwestserve.com/stuffPacket.php?packet=<?=$OTD?>' target='_blank'><b style='color:red; font-weight:bold; text-decoration:none;'>OLD</b> Server HB472 Stuffings</a> | <a href='http://staff.mdwestserve.com/otd/stuffPacket.php?packet=<?=$OTD?>' target='_blank'><b style='color:red; font-weight:bold; text-decoration:none;'>OLD</b> Our HB472 Stuffings</a></td>
 	<? } ?>
 	</tr>
 	<? if ($d2[packet_id]){ ?>
