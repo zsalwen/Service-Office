@@ -16,13 +16,14 @@ $size2 = "22";
 $notice1 = "REQUEST FOR FORECLOSURE MEDIATION";
 
 $notice4 = "ATTN: MARYLAND PRESALE";
+$line1="";
 $line3="";
 //return address
-$line1 = "_______________________"; 
+$return1 = "_______________________"; 
 
-imageTTFText( $canvas, $size, 270, 360, 0, $black, $font2, $line1);
-imageTTFText( $canvas, $size, 270, 340, 0, $black, $font2, $line1);
-imageTTFText( $canvas, $size, 270, 320, 0, $black, $font2, $line1);
+imageTTFText( $canvas, $size, 270, 360, 0, $black, $font2, $return1);
+imageTTFText( $canvas, $size, 270, 340, 0, $black, $font2, $return1);
+imageTTFText( $canvas, $size, 270, 320, 0, $black, $font2, $return1);
 $cord = "$clientFile".'X';
 //main label
 if (stripos($_GET[line1],"-")){
