@@ -54,11 +54,11 @@ function ChangeText(field){
 </script>
 <?
 if ($_GET[all]){
-	$needCall="style='background-color:red;'";
-	$all="style='background-color:green; font-weight:bold;'";
+	$needCall=" style='background-color:red;'";
+	$all=" style='background-color:green; font-weight:bold;'";
 }else{
-	$needCall="style='background-color:green; font-weight:bold;'";
-	$all="style='background-color:red;'";
+	$needCall=" style='background-color:green; font-weight:bold;'";
+	$all=" style='background-color:red;'";
 }
 echo "<table align='center' border='1' style='border-collapse:collapse;'><tr><td align='center' colspan='5' style='font-size:16px;'>OUT OF STATE SERVER CALL LIST</td><td align='center'><span$all><a href='?all=1'>ALL</a></span><span$needCall><a href='?needCall=1'>NEED CALL</a></span></td></tr>
 <tr><td align='center'>Packet #</td><td align='center'>Dispatch Date</td><td align='center'>Service Status</td><td align='center'>Est. File Date</td><td align='center' style='padding-left:20px;'>Servers to Call</td><td align='center'>Notes</td></tr>";
