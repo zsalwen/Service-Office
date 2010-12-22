@@ -126,9 +126,9 @@ function getPacketData($packet){
 	<li><a href='".washOTD($d[otd])."'>Right Click to Save PDF</a></li>
 	";
 	if ($packet >= 12435 && $d[lossMit] != "N/A - OLD L" && $d[attorneys_id] != 70){
-		$data .= "<li><a href='http://staff.mdwestserve.com/otd/stuffPacket.2.php?packet=$packet' target='_blank'>Open Envelope <span style='color:green; background-color:black;'>GREEN</span> Stuffings</a></li>";
+		$data .= "<li><a href='http://staff.mdwestserve.com/otd/stuffPacket.2.php?packet=$packet' target='_blank'>Open Envelope <span style='color:green; background-color:black; font-weight:bold;'>GREEN</span> Stuffings</a></li>";
 	}elseif($packet >= 12435 && $d[lossMit] != "N/A - OLD L" && $d[attorneys_id] == 70){
-		$data .= "<li><a href='http://staff.mdwestserve.com/otd/stuffPacket.bgw.php?packet=$packet&mail=1' target='_blank'>Open <span style='color:white; background-color:black;'>WHITE</span> Envelope Stuffings</a></li>";
+		$data .= "<li><a href='http://staff.mdwestserve.com/otd/stuffPacket.bgw.php?packet=$packet&mail=1' target='_blank'>Open <span style='color:white; background-color:black; font-weight:bold;'>WHITE</span> Envelope Stuffings</a></li>";
 	}
 	$data .= "</td><td nowrap class='noprint' style='background-color:#FF0000;'>";
 	if($_COOKIE[psdata][level] == "Operations"){
