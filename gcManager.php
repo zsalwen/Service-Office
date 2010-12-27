@@ -74,7 +74,7 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {$i++;
 </tr>
 <? }?>
 <?
-$q= "select gcStatus, article1, article1a, article1b, article1c, article1d, article1e, article2, article2a, article2b, article2c, article2d, article2e, article3, article3a, article3b, article3c, article3d, article3e, article4, article4a, article4b, article4c, article4d, article4e, article5, article5a, article5b, article5c, article5d, article5e, article6, article6a, article6b, article6c, article6d, article6e filing_status, packet_id from ps_packets where service_status = 'MAILING AND POSTING' OR service_status = 'CANCELLED' ORDER BY packet_id DESC";
+$q= "select gcStatus, filing_status, packet_id from ps_packets where service_status = 'MAILING AND POSTING' OR service_status = 'CANCELLED' ORDER BY packet_id DESC";
 $r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
 $i=0;
 while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {$i++;
