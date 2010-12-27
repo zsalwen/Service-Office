@@ -16,7 +16,7 @@ function article($packet,$add){
 	$var=$packet."-".strtoupper($add)."X";
 	$q="select article from usps where packet = '$var' LIMIT 0,1";
 	$r=@mysql_query($q);
-	$d=mysql_fetch_array($r, MYSQL_ASSOC) or die ("Query: $q<br>".mysql_error());
+	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 	if ($d["article"] != ''){
 		return $d["article"];
 	}else{
