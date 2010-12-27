@@ -1,15 +1,15 @@
 <? include 'common.php';
 
 function mailCheckIn($art){
-$history = '<li>'.date('r').": Mail returned to sender.</li>";
-$r=@mysql_query("select status, history from usps where article = '$art'");
-$d=mysql_fetch_array($r,MYSQL_ASSOC);
-if($d[status]){
-$newHistory = $d[history].$history;
-@mysql_query("update usps set status='RETURNED TO SENDER', history = '$newHistory', processor='".$_COOKIE[psdata][name]."' where article = '$art'");
-}else{
-@mysql_query("insert into usps (article, status, history, processor) values ('$art','RETURNED TO SENDER','$history','".$_COOKIE[psdata][name]."') ");
-}
+	$history = '<li>'.date('r').": Mail returned to sender.</li>";
+	$r=@mysql_query("select status, history from usps where article = '$art'");
+	$d=mysql_fetch_array($r,MYSQL_ASSOC);
+	if($d[status]){
+		$newHistory = $d[history].$history;
+		@mysql_query("update usps set status='RETURNED TO SENDER', history = '$newHistory', processor='".$_COOKIE[psdata][name]."' where article = '$art'");
+	}else{
+		@mysql_query("insert into usps (article, status, history, processor) values ('$art','RETURNED TO SENDER','$history','".$_COOKIE[psdata][name]."') ");
+	}
 
 }
 

@@ -7,6 +7,22 @@ function wash($str){
 	return $str;
 }
 
+function article($packet,$add){
+	$var=$packet."-".strtoupper($add)."X";
+	$q="select article from usps where packet = '$var' LIMIT 0,1";
+	$r=@mysql_query($q);
+	$d=mysql_fetch_array($r, MYSQL_ASSOC);
+	if ($d["article"] != ''){
+		return $d["article"];
+	}else{
+		return 0;
+	}
+}
+
+function enterArticle2($art,$packet,$status){
+	$q="INSERT INTO usps (article, packet, status, processor, history) values ('$art', '$packetX', '$status', '".$_COOKIE[psdata][name]."', '$history')";
+	@mysql_query($q) or die ("Query: $q<br>".mysql_error());
+}
 ?>
 <style type="text/css">
     @media print {
@@ -56,9 +72,15 @@ if ($_GET[packet]){
 	
 	if ($_GET[card] == "green" && $_GET[art]){
 		if($_GET[svc] == 'EV'){
-			@mysql_query("update evictionPackets set article$_GET[def]$_GET[add] = '$_GET[art]', gcStatus='PRINTED' where eviction_id = '$_GET[packet]'");
+			@mysql_query("update evictionPackets set gcStatus='PRINTED' where eviction_id = '$_GET[packet]'");
+			if (article("EV".$_GET[packet],$_GET[def]) != 0){
+				enterArticle2($_GET[art],"EV".$_GET[packet],"PRINTED");
+			}
 		}else{
-			@mysql_query("update ps_packets set article$_GET[def]$_GET[add] = '$_GET[art]', gcStatus='PRINTED' where packet_id = '$_GET[packet]'");
+			@mysql_query("update ps_packets set gcStatus='PRINTED' where packet_id = '$_GET[packet]'");
+			if (article($_GET[packet],$_GET[def].$_GET[add]) != 0){
+				enterArticle2($_GET[art],$_GET[packet],"PRINTED");
+			}
 		}
 	}
 	
