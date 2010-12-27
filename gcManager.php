@@ -52,7 +52,6 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {$i++;
 	<td nowrap="nowrap">
     <?
 	$ii=0;
-	$i=0;
 	while ($ii < 6){$ii++;
 		if ($d["name$ii"]){
 			if ($d[address1]){
