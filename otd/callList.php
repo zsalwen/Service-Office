@@ -71,7 +71,7 @@ $r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 $i=0;
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){$i++;
 	$oosList=oosList($d[packet_id]);
-	//if ($oosList != ''){
+	if ($oosList != ''){
 		if ($d[reopenDate] >= justDate($d[dispatchDate])){
 			$dispatchDate=$d[reopenDate]."-REOPENED";
 		}else{
@@ -86,7 +86,7 @@ while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){$i++;
 		}
 		echo "
 		<tr bgcolor='".row_color($i,'#FFFFFF','#DDDDDD')."'><td valign='top'><a href='order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td valign='top'>$dispatchDate</td><td valign='top' style='background-color:$color'>$status</td><td valign='top'>$d[estFileDate]</td><td style='padding-left:20px;' valign='top'>".$oosList."</td><td width='600px' valign='top'><span style='background-color:orange; display:inline;' onClick=\"hideshow(document.getElementById('notes-$d[packet_id]')); ChangeText('plus-$d[packet_id]');\">[<a id='plus-$d[packet_id]'>+</a>]</span><div style='display:none;' id='notes-$d[packet_id]'><iframe height='300px' width='600px' frameborder='0' src='http://staff.mdwestserve.com/notes.php?packet=$d[packet_id]'></iframe></div></td></tr>";
-	//}
+	}
 }
 echo "</table>";
 ?>
