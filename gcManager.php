@@ -12,6 +12,17 @@ if ($_GET[update] && $_GET[id] && $_GET[svc]){
 	}
 	echo "<script>window.location='gcManager.php'</script>";
 }
+function article($packet,$add){
+	$var=$packet."-".strtoupper($add)."X";
+	$q="select article from usps where packet = '$var' LIMIT 0,1";
+	$r=@mysql_query($q);
+	$d=mysql_fetch_array($r, MYSQL_ASSOC);
+	if ($d["article"] != ''){
+		return $d["article"];
+	}else{
+		return 0;
+	}
+}
 ?>
 <style>
 .R{ background-color:#33CCFF;}
@@ -32,7 +43,7 @@ a { color:#000000; text-decoration:none;}
 </tr>
 
 <?
-$q= "select gcStatus, article1, article2, article3, article4, article5, article6, filing_status, eviction_id from evictionPackets where service_status = 'MAILING AND POSTING' OR service_status = 'CANCELLED' ORDER BY eviction_id DESC";
+$q= "select gcStatus, filing_status, eviction_id from evictionPackets where service_status = 'MAILING AND POSTING' OR service_status = 'CANCELLED' ORDER BY eviction_id DESC";
 $r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
 $i=0;
 while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {$i++;
@@ -41,12 +52,17 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {$i++;
 	<td nowrap="nowrap">
     <?
 	$ii=0;
+	$i=0;
 	while ($ii < 6){$ii++;
-		if ($d["article".$ii]){
-			if ($ii > 1){
-				echo "<br><a target='_Blank' href=../'usps.php?track=".$d["article".$ii]."'>Art $ii: ".$d["article".$ii]."</a>";
-			}else{
-				echo "<a target='_Blank' href=../'usps.php?track=".$d["article".$ii]."'>Art $ii: ".$d["article".$ii]."</a>";
+		if ($d["name$ii"]){
+			if ($d[address1]){
+				$art=article("EV".$d[eviction_id],$ii);
+				if ($art != 0){
+					if ($ii > 1){
+						echo "<br>";
+					}
+					echo "<a target='_Blank' href=../'usps.php?track=$art'>Art $ii: $art</a>";
+				}
 			}
 		}
 	}
@@ -69,32 +85,48 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {$i++;
     <?
 	$ii=0;
 	while ($ii < 6){$ii++;
-		$vera=$ii.'a';
-		$verb=$ii.'b';
-		$verc=$ii.'c';
-		$verd=$ii.'d';
-		$vere=$ii.'e';
-		if ($d["article".$ii]){
-			if ($ii > 1){
-				echo "<br><a target='_Blank' href=../'usps.php?track=".$d["article".$ii]."'>Art $ii: ".$d["article".$ii]."</a>";
-			}else{
-				echo "<a target='_Blank' href=../'usps.php?track=".$d["article".$ii]."'>Art $ii: ".$d["article".$ii]."</a>";
+		if ($d["name$ii"]){
+			if ($d[address1]){
+				$art=article($d[packet_id],$ii);
+				if ($art != 0){
+					if ($ii > 1){
+						echo "<br>";
+					}
+					echo "<a target='_Blank' href=../'usps.php?track=$art'>Art $ii: $art</a>";
+				}
 			}
-		}
-		if ($d["article".$vera]){
-			echo "<br><a target='_Blank' href=../'usps.php?track=".$d["article".$vera]."'>Art $vera: ".$d["article".$vera]."</a>";
-		}
-		if ($d["article".$verb]){
-			echo "<br><a target='_Blank' href=../'usps.php?track=".$d["article".$verb]."'>Art $verb: ".$d["article".$verb]."</a>";
-		}
-		if ($d["article".$verc]){
-			echo "<br><a target='_Blank' href=../'usps.php?track=".$d["article".$verc]."'>Art $verc: ".$d["article".$verc]."</a>";
-		}
-		if ($d["article".$verd]){
-			echo "<br><a target='_Blank' href=../'usps.php?track=".$d["article".$verd]."'>Art $verd: ".$d["article".$verd]."</a>";
-		}
-		if ($d["article".$vere]){
-			echo "<br><a target='_Blank' href=../'usps.php?track=".$d["article".$vere]."'>Art $vere: ".$d["article".$vere]."</a>";
+			foreach (range('a','e') as $letter){
+				$var=$ii.$letter;
+				if ($d["address$var"]){
+					$art=article($d[packet_id],$var);
+					if ($art != 0){
+						if ($ii > 1){
+							echo "<br>";
+						}
+						echo "<a target='_Blank' href=../'usps.php?track=$art'>Art ".strtoupper($var).": $art</a>";
+					}
+				}
+			}
+			$var=$ii."PO";
+			if ($d["address$var"]){
+				$art=article($d[packet_id],$ii."PO");
+				if ($art != 0){
+					if ($ii > 1){
+						echo "<br>";
+					}
+					echo "<a target='_Blank' href=../'usps.php?track=$art'>Art ".strtoupper($var).": $art</a>";
+				}
+			}
+			$var=$ii."PO2";
+			if ($d["address$var"]){
+				$art=article($d[packet_id],$ii."PO2");
+				if ($art != 0){
+					if ($ii > 1){
+						echo "<br>";
+					}
+					echo "<a target='_Blank' href=../'usps.php?track=$art'>Art ".strtoupper($var).": $art</a>";
+				}
+			}
 		}
 	}
 	?>

@@ -1,12 +1,33 @@
 <? include 'common.php';
-	//include 'menu.php';
+//include 'menu.php';
+
+function article($packet,$add){
+	$var=$packet."-".strtoupper($add)."X";
+	$q="select article from usps where packet = '$var' LIMIT 0,1";
+	$r=@mysql_query($q);
+	$d=mysql_fetch_array($r, MYSQL_ASSOC);
+	if ($d["article"] != ''){
+		return $d["article"];
+	}else{
+		return 0;
+	}
+}
+
+function enterArticle($art,$packet){
+	$q="INSERT INTO usps (article, packet, status, processor, history) values ('$art', '$packetX', 'SENT', '".$_COOKIE[psdata][name]."', '$history')";
+	@mysql_query($q) or die ("Query: $q<br>".mysql_error());
+}
+
 if ($_GET[art] && $_GET[logic2]){
 $logic = explode('X',$_GET[logic2]);
 $packetDef=explode('-',$logic[0]);
 $packet=$packetDef[0];
 $def=strtoupper($packetDef[1]);
-	$q="update ps_packets set article$def = '$_GET[art]', gcStatus='MAILED', process_status='SERVICE COMPLETED' where packet_id = '$packet'";
+	$q="update ps_packets set gcStatus='MAILED', process_status='SERVICE COMPLETED' where packet_id = '$packet'";
 	@mysql_query($q) or die("Query: $q<br>".mysql_error());
+	if (article($packet,$def) != 0){
+		enterArticle($_GET[art],$packet);
+	}
 	timeline($packet,$_COOKIE[psdata][name]." Entered tracking number for defendant $def.");
 
 	?>

@@ -14,6 +14,18 @@ function hardLog($str,$type){
 	}
 }
 
+function article($packet,$add){
+	$var=$packet."-".strtoupper($add)."X";
+	$q="select article from usps where packet = '$var' LIMIT 0,1";
+	$r=@mysql_query($q);
+	$d=mysql_fetch_array($r, MYSQL_ASSOC);
+	if ($d["article"] != ''){
+		return $d["article"];
+	}else{
+		return 0;
+	}
+}
+
 hardLog('Eviction Details for '.$_GET[packet],'user');
 
 function serverName($id){
@@ -194,64 +206,17 @@ $mail_status = $unknown;
 					<td class="title3">Mail</td>
 					<td><?=$mail_status;?>
 										<?
-					if ($d[article1]){ echo "<li>".$d[article1]."</li>"; }
-					if ($d[article1a]){ echo "<li>".$d[article1a]."</li>"; }
-					if ($d[article1b]){ echo "<li>".$d[article1b]."</li>"; }
-					if ($d[article1c]){ echo "<li>".$d[article1c]."</li>"; }
-					if ($d[article1d]){ echo "<li>".$d[article1d]."</li>"; }
-					if ($d[article1e]){ echo "<li>".$d[article1e]."</li>"; }
-					
-					if ($d[article2]){ echo "<li>".$d[article2]."</li>"; }
-					if ($d[article2a]){ echo "<li>".$d[article2a]."</li>"; }
-					if ($d[article2b]){ echo "<li>".$d[article2b]."</li>"; }
-					if ($d[article2c]){ echo "<li>".$d[article2c]."</li>"; }
-					if ($d[article2d]){ echo "<li>".$d[article2d]."</li>"; }
-					if ($d[article2e]){ echo "<li>".$d[article2e]."</li>"; }
-					
-					if ($d[article3]){ echo "<li>".$d[article3]."</li>"; }
-					if ($d[article3a]){ echo "<li>".$d[article3a]."</li>"; }
-					if ($d[article3b]){ echo "<li>".$d[article3b]."</li>"; }
-					if ($d[article3c]){ echo "<li>".$d[article3c]."</li>"; }
-					if ($d[article3d]){ echo "<li>".$d[article3d]."</li>"; }
-					if ($d[article3e]){ echo "<li>".$d[article3e]."</li>"; }
-					
-					if ($d[article4]){ echo "<li>".$d[article4]."</li>"; }
-					if ($d[article4a]){ echo "<li>".$d[article4a]."</li>"; }
-					if ($d[article4b]){ echo "<li>".$d[article4b]."</li>"; }
-					if ($d[article4c]){ echo "<li>".$d[article4c]."</li>"; }
-					if ($d[article4d]){ echo "<li>".$d[article4d]."</li>"; }
-					if ($d[article4e]){ echo "<li>".$d[article4e]."</li>"; }
-					
-					if ($d[article5]){ echo "<li>".$d[article5]."</li>"; }
-					if ($d[article5a]){ echo "<li>".$d[article5a]."</li>"; }
-					if ($d[article5b]){ echo "<li>".$d[article5b]."</li>"; }
-					if ($d[article5c]){ echo "<li>".$d[article5c]."</li>"; }
-					if ($d[article5d]){ echo "<li>".$d[article5d]."</li>"; }
-					if ($d[article5e]){ echo "<li>".$d[article5e]."</li>"; }
-					
-					if ($d[article6]){ echo "<li>".$d[article6]."</li>"; }
-					if ($d[article6a]){ echo "<li>".$d[article6a]."</li>"; }
-					if ($d[article6b]){ echo "<li>".$d[article6b]."</li>"; }
-					if ($d[article6c]){ echo "<li>".$d[article6c]."</li>"; }
-					if ($d[article6d]){ echo "<li>".$d[article6d]."</li>"; }
-					if ($d[article6e]){ echo "<li>".$d[article6e]."</li>"; }
-					
-					
-					if ($d[article1PO]){ echo "<li>".$d[article1PO]."</li>"; }
-					if ($d[article2PO]){ echo "<li>".$d[article2PO]."</li>"; }
-					if ($d[article3PO]){ echo "<li>".$d[article3PO]."</li>"; }
-					if ($d[article4PO]){ echo "<li>".$d[article4PO]."</li>"; }
-					if ($d[article5PO]){ echo "<li>".$d[article5PO]."</li>"; }
-					if ($d[article6PO]){ echo "<li>".$d[article6PO]."</li>"; }
-					
-					if ($d[article1PO2]){ echo "<li>".$d[article1PO2]."</li>"; }
-					if ($d[article2PO2]){ echo "<li>".$d[article2PO2]."</li>"; }
-					if ($d[article3PO2]){ echo "<li>".$d[article3PO2]."</li>"; }
-					if ($d[article4PO2]){ echo "<li>".$d[article4PO2]."</li>"; }
-					if ($d[article5PO2]){ echo "<li>".$d[article5PO2]."</li>"; }
-					if ($d[article6PO2]){ echo "<li>".$d[article6PO2]."</li>"; }
-
-					
+					$i=0;
+					while ($i < 6){$i++;
+						if ($d["name$i"]){
+							if ($d[address1]){
+								$art=article("EV".$d[eviction_id],$i);
+								if ($art != 0){
+									echo "<li>$art</li>";
+								}
+							}
+						}
+					}
 					?>
 
 					</td>
