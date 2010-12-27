@@ -16,7 +16,7 @@ function article($packet,$add){
 	$var=$packet."-".strtoupper($add)."X";
 	$q="select article from usps where packet = '$var' LIMIT 0,1";
 	$r=@mysql_query($q);
-	$d=mysql_fetch_array($r, MYSQL_ASSOC);
+	$d=mysql_fetch_array($r, MYSQL_ASSOC) or die ("Query: $q<br>".mysql_error());
 	if ($d["article"] != ''){
 		return $d["article"];
 	}else{
@@ -108,7 +108,7 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {$i++;
 			}
 			$var=$ii."PO";
 			if ($d["address$var"]){
-				$art=article($d[packet_id],$ii."PO");
+				$art=article($d[packet_id],$var);
 				if ($art != 0){
 					if ($ii > 1){
 						echo "<br>";
@@ -118,7 +118,7 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {$i++;
 			}
 			$var=$ii."PO2";
 			if ($d["address$var"]){
-				$art=article($d[packet_id],$ii."PO2");
+				$art=article($d[packet_id],$var);
 				if ($art != 0){
 					if ($ii > 1){
 						echo "<br>";
