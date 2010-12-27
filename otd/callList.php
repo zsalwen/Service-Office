@@ -69,9 +69,9 @@ if ($_GET[all]){
 }
 $r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 $i=0;
-while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){$i++;
+while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	$oosList=oosList($d[packet_id]);
-	if ($oosList != ''){
+	if ($oosList != ''){$i++;
 		if ($d[reopenDate] >= justDate($d[dispatchDate])){
 			$dispatchDate=$d[reopenDate]."-REOPENED";
 		}else{
