@@ -45,22 +45,21 @@ a { color:#000000; text-decoration:none;}
 <?
 $q= "select gcStatus, filing_status, eviction_id, name1, name2, name3, name4, name5, name6, address1, address2, address3, address4, address5, address6 from evictionPackets where service_status = 'MAILING AND POSTING' OR service_status = 'CANCELLED' ORDER BY eviction_id DESC";
 $r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
-$i=0;
-while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {$i++;
+while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {
 ?>
 <tr class="<?=substr($d[gcStatus],0,1)?>">
 	<td nowrap="nowrap">
     <?
-	$ii=0;
-	while ($ii < 6){$ii++;
-		if ($d["name$ii"]){
+	$i=0;
+	while ($i < 6){$i++;
+		if ($d["name$i"]){
 			if ($d[address1]){
-				$art=article("EV".$d[eviction_id],$ii);
+				$art=article("EV".$d[eviction_id],$i);
 				if ($art != 0){
-					if ($ii > 1){
+					if ($i > 1){
 						echo "<br>";
 					}
-					echo "<a target='_Blank' href=../'usps.php?track=$art'>Art $ii: $art</a>";
+					echo "<a target='_Blank' href=../'usps.php?track=$art'>Art $i: $art</a>";
 				}
 			}
 		}
@@ -76,30 +75,30 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {$i++;
 <?
 $q= "select gcStatus, filing_status, packet_id, name1, name2, name3, name4, name5, name6, address1, address2, address3, address4, address5, address6, address1a, address2a, address3a, address4a, address5a, address6a, address1b, address2b, address3b, address4b, address5b, address6b, address1c, address2c, address3c, address4c, address5c, address6c, address1d, address2d, address3d, address4d, address5d, address6d, address1e, address2e, address3e, address4e, address5e, address6e, pobox, pobox2 from ps_packets where service_status = 'MAILING AND POSTING' OR service_status = 'CANCELLED' ORDER BY packet_id DESC";
 $r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
-$i=0;
-while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {$i++;
+while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {
 ?>
 <tr class="<?=substr($d[gcStatus],0,1)?>">
 	<td nowrap="nowrap">
     <?
-	$ii=0;
-	while ($ii < 6){$ii++;
-		if ($d["name$ii"]){
-			if ($d["address$ii"]){
-				$art=article($d[packet_id],$ii);
-				if ($art != 0){
-					if ($ii > 1){
+	$i=0;
+	while ($i < 6){$i++;
+		$count=0;
+		if ($d["name$i"]){
+			if ($d["address$i"]){
+				$art=article($d[packet_id],$i);
+				if ($art != 0){$count++;
+					if ($count > 1){
 						echo "<br>";
 					}
-					echo "<a target='_Blank' href=../'usps.php?track=$art'>Art $ii: $art</a>";
+					echo "<a target='_Blank' href=../'usps.php?track=$art'>Art $i: $art</a>";
 				}
 			}
 			foreach (range('a','e') as $letter){
-				$var=$ii.$letter;
+				$var=$i.$letter;
 				if ($d["address$var"]){
 					$art=article($d[packet_id],$var);
-					if ($art != 0){
-						if ($ii > 1){
+					if ($art != 0){$count++;
+						if ($count > 1){
 							echo "<br>";
 						}
 						echo "<a target='_Blank' href=../'usps.php?track=$art'>Art ".strtoupper($var).": $art</a>";
@@ -107,22 +106,22 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {$i++;
 				}
 			}
 			if ($d[pobox]){
-				$art=article($d[packet_id],$ii."PO");
-				if ($art != 0){
-					if ($ii > 1){
+				$art=article($d[packet_id],$i."PO");
+				if ($art != 0){$count++;
+					if ($count > 1){
 						echo "<br>";
 					}
-					echo "<a target='_Blank' href=../'usps.php?track=$art'>Art ".$ii."PO: $art</a>";
+					echo "<a target='_Blank' href=../'usps.php?track=$art'>Art ".$i."PO: $art</a>";
 				}
 			}
-			$var=$ii."PO2";
+			$var=$i."PO2";
 			if ($d[pobox2]){
-				$art=article($d[packet_id],$ii."PO2");
-				if ($art != 0){
-					if ($ii > 1){
+				$art=article($d[packet_id],$i."PO2");
+				if ($art != 0){$count++;
+					if ($count > 1){
 						echo "<br>";
 					}
-					echo "<a target='_Blank' href=../'usps.php?track=$art'>Art ".$ii."PO2: $art</a>";
+					echo "<a target='_Blank' href=../'usps.php?track=$art'>Art ".$i."PO2: $art</a>";
 				}
 			}
 		}
