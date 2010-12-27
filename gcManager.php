@@ -43,7 +43,7 @@ a { color:#000000; text-decoration:none;}
 </tr>
 
 <?
-$q= "select gcStatus, filing_status, eviction_id from evictionPackets where service_status = 'MAILING AND POSTING' OR service_status = 'CANCELLED' ORDER BY eviction_id DESC";
+$q= "select gcStatus, filing_status, eviction_id, name1, name2, name3, name4, name5, name6 from evictionPackets where service_status = 'MAILING AND POSTING' OR service_status = 'CANCELLED' ORDER BY eviction_id DESC";
 $r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
 $i=0;
 while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {$i++;
@@ -74,7 +74,7 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {$i++;
 </tr>
 <? }?>
 <?
-$q= "select gcStatus, filing_status, packet_id from ps_packets where service_status = 'MAILING AND POSTING' OR service_status = 'CANCELLED' ORDER BY packet_id DESC";
+$q= "select gcStatus, filing_status, packet_id, name1, name2, name3, name4, name5, name6 from ps_packets where service_status = 'MAILING AND POSTING' OR service_status = 'CANCELLED' ORDER BY packet_id DESC";
 $r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
 $i=0;
 while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {$i++;
