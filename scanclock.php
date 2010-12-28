@@ -149,3 +149,15 @@ td { background-color:ffffff; font-size: 30px; }
 <span id="sBann" class="minitext">100 characters left.</span> - <?=$status?></div>
 
 </form>
+<? if($_COOKIE[psdata][user_id]){ ?>
+<center>
+<table id="buttons">
+<tr>
+<td>Clock <?=$_COOKIE[psdata][name];?> In</td>
+<td>Clock <?=$_COOKIE[psdata][name];?> Out</td>
+<td>Break <?=$_COOKIE[psdata][name];?> In</td>
+<td>Break<?=$_COOKIE[psdata][name];?> buttons Out</td>
+</tr>
+</table>
+</center>
+<? } ?>
