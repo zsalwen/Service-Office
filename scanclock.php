@@ -19,7 +19,19 @@ $parts = explode('-',$_GET[text1]);
 $user_id = $parts[0];
 $record = explode('%',$parts[1]);
 $record = $record[0];
-if (($now < 8.3 || $now > 17.3 || $weekDay == 'SUNDAY' || $weekDay == 'SATURDAY') && $_POST[note] == ''){
+
+if($_COOKIE[psdata][user_id] == '1'){
+		$q="INSERT INTO MDWestServeTimeClock (user_id, punch_time, punch_date, action, note) values
+									('$user_id', NOW(), NOW(), '$record', '$note')";
+		$r = @mysql_query($q);
+		$msg = id2name($user_id).' '.$record;
+		mail('mdwestserve@gmail.com',$msg,$msg);
+		mail('patrick@mdwestserve.com',$msg,$msg);
+		mail('zachsalwen@gmail.com',$msg,$msg);
+		echo "<script>alert('$msg');</script>";
+
+
+} elseif (($now < 8.3 || $now > 17.3 || $weekDay == 'SUNDAY' || $weekDay == 'SATURDAY') && $_POST[note] == ''){
 		echo "<script>alert('MISSING OVERTIME NOTE!!!!  $record UNSUCCESSFUL.')</script>";
 	}else{
 		$q="INSERT INTO MDWestServeTimeClock (user_id, punch_time, punch_date, action, note) values
