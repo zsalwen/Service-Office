@@ -10,7 +10,26 @@ return $d[name];
 
 
 
+if ($_GET[text1]){
+$now=date('G.i');
+$weekDay=strtoupper(date('l'));
+mysql_connect();
+mysql_select_db('core');
+$parts = explode('-',$_GET[text1]);
+$user_id = $parts[0];
+$record = explode('%',$parts[1]);
+$record = $record[0];
 
+		$q="INSERT INTO MDWestServeTimeClock (user_id, punch_time, punch_date, action, note) values
+									('$user_id', NOW(), NOW(), '$record', '$note')";
+		$r = @mysql_query($q);
+		$msg = id2name($user_id).' '.$record;
+		mail('mdwestserve@gmail.com',$msg,$msg);
+		mail('patrick@mdwestserve.com',$msg,$msg);
+		mail('zachsalwen@gmail.com',$msg,$msg);
+		echo "<script>alert('$msg');</script>";
+
+}
 
 
 if ($_POST[text1]){
@@ -149,15 +168,23 @@ td { background-color:ffffff; font-size: 30px; }
 <span id="sBann" class="minitext">100 characters left.</span> - <?=$status?></div>
 
 </form>
-<? if($_COOKIE[psdata][user_id]){ ?>
+<? if($_COOKIE[psdata][user_id] == '1'){ ?>
 <center>
 <table id="buttons">
 <tr>
-<td>Clock <?=$_COOKIE[psdata][name];?> In</td>
-<td>Clock <?=$_COOKIE[psdata][name];?> Out</td>
-<td>Break <?=$_COOKIE[psdata][name];?> In</td>
-<td>Break<?=$_COOKIE[psdata][name];?> buttons Out</td>
+<td><?=$_COOKIE[psdata][name];?>:</td>
+<td><a href="?text1=1-CLOCK IN">Clock In</a></td>
+<td><a href="?text1=1-CLOCK OUT">Clock Out</td>
+<td><a href="?text1=1-BREAK IN">Break In</td>
+<td><a href="?text1=1-BREAK OUT">Break Out</td>
 </tr>
 </table>
 </center>
-<? } ?>
+<? } else{ ?>
+<table id="buttons">
+<tr>
+<td>No User Logged In.</td>
+
+</tr>
+</table>
+<? }?>
