@@ -19,7 +19,9 @@ $parts = explode('-',$_GET[text1]);
 $user_id = $parts[0];
 $record = explode('%',$parts[1]);
 $record = $record[0];
-
+if (($now < 8.3 || $now > 17.3 || $weekDay == 'SUNDAY' || $weekDay == 'SATURDAY') && $_POST[note] == ''){
+		echo "<script>alert('MISSING OVERTIME NOTE!!!!  $record UNSUCCESSFUL.')</script>";
+	}else{
 		$q="INSERT INTO MDWestServeTimeClock (user_id, punch_time, punch_date, action, note) values
 									('$user_id', NOW(), NOW(), '$record', '$note')";
 		$r = @mysql_query($q);
@@ -28,6 +30,7 @@ $record = $record[0];
 		mail('patrick@mdwestserve.com',$msg,$msg);
 		mail('zachsalwen@gmail.com',$msg,$msg);
 		echo "<script>alert('$msg');</script>";
+}
 
 }
 
@@ -168,15 +171,15 @@ td { background-color:ffffff; font-size: 30px; }
 <span id="sBann" class="minitext">100 characters left.</span> - <?=$status?></div>
 
 </form>
-<? if($_COOKIE[psdata][user_id] == '1'){ ?>
+<? if($_COOKIE[psdata][user_id]){ ?>
 <center>
 <table id="buttons">
 <tr>
 <td><?=$_COOKIE[psdata][name];?>:</td>
-<td><a href="?text1=1-CLOCK IN">Clock In</a></td>
-<td><a href="?text1=1-CLOCK OUT">Clock Out</td>
-<td><a href="?text1=1-BREAK IN">Break In</td>
-<td><a href="?text1=1-BREAK OUT">Break Out</td>
+<td><a href="?text1=<?=$_COOKIE[psdata][user_id];?>-CLOCK IN">Clock In</a></td>
+<td><a href="?text1=<?=$_COOKIE[psdata][user_id];?>-CLOCK OUT">Clock Out</td>
+<td><a href="?text1=<?=$_COOKIE[psdata][user_id];?>-BREAK IN">Break In</td>
+<td><a href="?text1=<?=$_COOKIE[psdata][user_id];?>-BREAK OUT">Break Out</td>
 </tr>
 </table>
 </center>
