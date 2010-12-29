@@ -2,13 +2,53 @@
 include "functions.php";
 ?>
 <script type="text/javascript">
-function checkUncheck(fmobj) {
-  for (var i=0;i<fmobj.elements.length;i++) {
-    var e = fmobj.elements[i];
-    if ( (e.name != 'allbox') && (e.type=='checkbox') && (!e.disabled) ) {
-      e.checked = fmobj.allbox.checked;
-    }
-  }
+function checkAllFields(ref)
+{
+var chkAll = document.getElementById('checkAll');
+var checks = document.getElementsByName('delAnn[]');
+var removeButton = document.getElementById('removeChecked');
+var boxLength = checks.length;
+var allChecked = false;
+var totalChecked = 0;
+	if ( ref == 1 )
+	{
+		if ( chkAll.checked == true )
+		{
+			for ( i=0; i < boxLength; i++ )
+			checks[i].checked = true;
+		}
+		else
+		{
+			for ( i=0; i < boxLength; i++ )
+			checks[i].checked = false;
+		}
+	}
+	else
+	{
+		for ( i=0; i < boxLength; i++ )
+		{
+			if ( checks[i].checked == true )
+			{
+			allChecked = true;
+			continue;
+			}
+			else
+			{
+			allChecked = false;
+			break;
+			}
+		}
+		if ( allChecked == true )
+		chkAll.checked = true;
+		else
+		chkAll.checked = false;
+	}
+	for ( j=0; j < boxLength; j++ )
+	{
+		if ( checks[j].checked == true )
+		totalChecked++;
+	}
+	removeButton.value = "Remove ["+totalChecked+"] Selected";
 }
 </script>
 <link rel="stylesheet" type="text/css" href="../fire.css" />
@@ -51,7 +91,7 @@ iframe {border;0px; margin:0px; padding:0px;}
 		<td><input type='checkbox' name='EVfiled2' value='checked' <?=$_GET[EVfiled2]?>> Eviction File Dates</td>
 	</tr>
 	<tr>
-		<td colspan='3'><input type='button' name='checkAll' value='Check All' onclick='checkUncheck(document.form1);'> | <input type='submit' name='Submit' value='GO!'></td>
+		<td colspan='3'><input type='button' name='checkAll' value='Check All' onclick='checkAllFields(1);'> | <input type='submit' name='Submit' value='GO!'></td>
 	</tr>
 </table>
 </form>
