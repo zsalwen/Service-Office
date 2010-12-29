@@ -3,7 +3,7 @@ include "functions.php";
 ?>
 
 <script>
-function checkUncheck2(fmobj){
+function checkUncheck(fmobj){
 	  for (var i=0;i<fmobj.elements.length;i++) {
 			var e = fmobj.elements[i];
 			if ( (e.name != 'allbox') && (e.type=='checkbox') && (!e.disabled) ) {
@@ -17,7 +17,7 @@ function checkUncheck2(fmobj){
 <link rel="stylesheet" type="text/css" href="../fire.css" />
 <style>
 td {text-align:center; color:white;}
-iframe {border-width;0px; margin-width:0px; padding:0px;}
+iframe {border:0px solid black; margin:0px; padding:0px;}
 </style>
 <form name="form1">
 <table align="center" width="50%" border="1" style='border-collapse:collapse;'>
@@ -54,7 +54,7 @@ iframe {border-width;0px; margin-width:0px; padding:0px;}
 		<td><input type='checkbox' name='EVfiled2' value='checked' <?=$_GET[EVfiled2]?>> Eviction File Dates</td>
 	</tr>
 	<tr>
-		<td colspan='3'><input type='checkbox' name='checkAll' onclick='checkUncheck2(document.form1);' > Check All | <input type='submit' name='Submit' value='GO!'></td>
+		<td colspan='3'><input type='checkbox' name='allbox' onclick='checkUncheck(document.form1);' > Check All | <input type='submit' name='Submit' value='GO!'></td>
 	</tr>
 </table>
 </form>
