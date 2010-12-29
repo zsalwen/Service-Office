@@ -6,17 +6,6 @@ include "functions.php";
 td {text-align:center; color:white;}
 iframe {border;0px; margin:0px; padding:0px;}
 </style>
-<script>
-function checkAll(field)
-{
-for (i = 0; i < field.length; i++)
-	if (field[i].checked == true){
-		field[i].checked = false;
-	}else{
-		field[i].checked = true;
-	}
-}
-</script>
 <form name="form1">
 <table align="center" width="50%" border="1" style='border-collapse:collapse;'>
 	<tr>
@@ -52,7 +41,7 @@ for (i = 0; i < field.length; i++)
 		<td><input type='checkbox' name='EVfiled2' value='checked' <?=$_GET[EVfiled2]?>> Eviction File Dates</td>
 	</tr>
 	<tr>
-		<td colspan='3'><input type='button' name='checkAll' value='Check All' onclick='checkAll(document.form1);'> | <input type='submit' name='Submit' value='GO!'></td>
+		<td colspan='3'><input type='submit' name='Submit' value='GO!'></td>
 	</tr>
 </table>
 </form>
