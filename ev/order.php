@@ -65,6 +65,7 @@ function dbCleaner($str){
 	$str = trim($str);
 	$str = addslashes($str);
 	$str = strtoupper($str);
+	$str = normalize_special_characters($str);
 	//$str = ucwords($str);
 	return $str;
 }
@@ -308,20 +309,20 @@ $d=mysql_fetch_array($r, MYSQL_ASSOC) or die(mysql_error());
 $nC=0;
 while ($nC < 6){$nC++;
 	if ($_POST["name$nC"] || ($_POST["name$nC"] != $d["name$nC"])){
-		$updateQ .= "name$nC='".addslashes($_POST["name$nC"])."'|";
+		$updateQ .= "name$nC='".dbCleaner($_POST["name$nC"])."'|";
 	}
 }
 if ($_POST[address] || ($_POST[address] != $d[address1])){
-	$updateQ .= "address1='".addslashes($_POST[address])."'|";
+	$updateQ .= "address1='".dbCleaner($_POST[address])."'|";
 }
 if ($_POST[city] || ($_POST[city] != $d[city1])){
-	$updateQ .= "city1='".addslashes($_POST[city])."'|";
+	$updateQ .= "city1='".dbCleaner($_POST[city])."'|";
 }
 if ($_POST[state] || ($_POST[state] != $d[state1])){
-	$updateQ .= "state1='".addslashes($_POST[state])."'|";
+	$updateQ .= "state1='".dbCleaner($_POST[state])."'|";
 }
 if ($_POST[zip] || ($_POST[zip] != $d[zip1])){
-	$updateQ .= "zip1='".addslashes($_POST[zip])."'|";
+	$updateQ .= "zip1='".dbCleaner($_POST[zip])."'|";
 }
 if (trim($updateQ) != ''){
 	//remove last "|"
