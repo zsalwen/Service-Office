@@ -1,7 +1,8 @@
 <?
 include "functions.php";
 ?>
-<script type="text/javascript">
+
+<script>
 function CheckUncheck(fmobj) {
   for (var i=0;i<fmobj.elements.length;i++) {
     var e = fmobj.elements[i];
@@ -12,6 +13,7 @@ function CheckUncheck(fmobj) {
 }
 
 </script>
+
 <link rel="stylesheet" type="text/css" href="../fire.css" />
 <style>
 td {text-align:center; color:white;}
