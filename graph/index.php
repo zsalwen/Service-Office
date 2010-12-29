@@ -3,13 +3,13 @@ include "functions.php";
 ?>
 
 <script>
-function CheckUncheck2(fmobj) {
-  for (var i=0;i<fmobj.elements.length;i++) {
-    var e = fmobj.elements[i];
-    if ( (e.name != 'allbox') && (e.type=='checkbox') && (!e.disabled) ) {
-      e.checked = fmobj.allbox.checked;
-    }
-  }
+function CheckUncheck2(fmobj){
+	  for (var i=0;i<fmobj.elements.length;i++) {
+			var e = fmobj.elements[i];
+			if ( (e.name != 'allbox') && (e.type=='checkbox') && (!e.disabled) ) {
+			  e.checked = fmobj.allbox.checked;
+			}
+	  }
 }
 
 </script>
