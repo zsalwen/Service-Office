@@ -94,4 +94,5 @@ if ($_GET[EVrec2]){ ?>
 if ($_GET[EVfiled2]){ ?>
 <tr><td><img src="http://staff.mdwestserve.com/graph/time.php?year=2008&src=eviction"></td>
 </tr>
+<? } ?>
 </table>
