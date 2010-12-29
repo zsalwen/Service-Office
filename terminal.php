@@ -29,7 +29,14 @@ function enterArticle($art,$packet){
 	$q="INSERT INTO usps (article, packet, status, processor, history) values ('$art', '$packetX', 'SENT', '".$_COOKIE[psdata][name]."', '$history')";
 	@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 }
-
+function getStatus($art){
+	$q="select status from usps where article = '$art' LIMIT 0,1";
+	$r=@mysql_query($q);
+	$d=mysql_fetch_array($r, MYSQL_ASSOC);
+	if ($d[status] != ''){
+		return $d[status];
+	}
+}
 
 	//include 'menu.php';
 if ($_GET[art] && $_GET[logic2]){
@@ -43,16 +50,22 @@ if ($packet[1] == ''){
 	$packet=$packet[0];
 	$q="update ps_packets set gcStatus='MAILED', process_status='SERVICE COMPLETED' where packet_id = '$packet'";
 	@mysql_query($q) or die("Query: $q<br>".mysql_error());
-	if (article($packet,$def) != 0){
+	if (article($packet,$def) == 0){
 		enterArticle($_GET[art],$packet);
+	}elseif(getStatus($_GET[art]) != 'SENT'){
+		$q1="UPDATE usps SET status='SENT', processor='".strtoupper($_COOKIE[psdata][name])."' WHERE article='$_GET[art]'";
+		@mysql_query($q1) or die ("Query: $q1<br>".mysql_error());
 	}
 	timeline($packet,$_COOKIE[psdata][name]." Entered tracking number for defendant $def.");
 }else{
 	$packet=$packet[1];
 	$q="update evictionPackets set gcStatus='MAILED', process_status='SERVICE COMPLETED' where eviction_id = '$packet'";
 	@mysql_query($q) or die("Query: $q<br>".mysql_error());
-	if (article("EV".$packet,$def) != 0){
+	if (article("EV".$packet,$def) == 0){
 		enterArticle($_GET[art],"EV".$packet);
+	}elseif(getStatus($_GET[art]) != 'SENT'){
+		$q1="UPDATE usps SET status='SENT', processor='".strtoupper($_COOKIE[psdata][name])."' WHERE article='$_GET[art]'";
+		@mysql_query($q1) or die ("Query: $q1<br>".mysql_error());
 	}
 	ev_timeline($packet,$_COOKIE[psdata][name]." Entered tracking number for defendant $def.");
 }
