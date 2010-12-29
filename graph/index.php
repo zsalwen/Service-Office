@@ -3,7 +3,7 @@ include "functions.php";
 ?>
 
 <script>
-function CheckUncheck2(fmobj){
+function checkUncheck2(fmobj){
 	  for (var i=0;i<fmobj.elements.length;i++) {
 			var e = fmobj.elements[i];
 			if ( (e.name != 'allbox') && (e.type=='checkbox') && (!e.disabled) ) {
@@ -17,7 +17,7 @@ function CheckUncheck2(fmobj){
 <link rel="stylesheet" type="text/css" href="../fire.css" />
 <style>
 td {text-align:center; color:white;}
-iframe {border;0px; margin:0px; padding:0px;}
+iframe {border-width;0px; margin-width:0px; padding:0px;}
 </style>
 <form name="form1">
 <table align="center" width="50%" border="1" style='border-collapse:collapse;'>
