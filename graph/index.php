@@ -1,11 +1,8 @@
 <?
 include "functions.php";
 ?>
-<script type="text/javascript" >
-//==========================================
-// Check All boxes
-//==========================================
-function CheckAll2(fmobj) {
+<script type="text/javascript">
+function checkUncheck(fmobj) {
   for (var i=0;i<fmobj.elements.length;i++) {
     var e = fmobj.elements[i];
     if ( (e.name != 'allbox') && (e.type=='checkbox') && (!e.disabled) ) {
@@ -13,7 +10,6 @@ function CheckAll2(fmobj) {
     }
   }
 }
-
 </script>
 <link rel="stylesheet" type="text/css" href="../fire.css" />
 <style>
@@ -55,7 +51,7 @@ iframe {border;0px; margin:0px; padding:0px;}
 		<td><input type='checkbox' name='EVfiled2' value='checked' <?=$_GET[EVfiled2]?>> Eviction File Dates</td>
 	</tr>
 	<tr>
-		<td colspan='3'><input type='button' name='checkAll' value='Check All' onclick='checkAll2(document.form1);'> | <input type='submit' name='Submit' value='GO!'></td>
+		<td colspan='3'><input type='button' name='checkAll' value='Check All' onclick='checkUncheck(document.form1);'> | <input type='submit' name='Submit' value='GO!'></td>
 	</tr>
 </table>
 </form>
