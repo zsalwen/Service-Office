@@ -15,30 +15,30 @@ iframe {border;0px; margin:0px; padding:0px;}
 		<td align="center" style='font-size:18px; color:white;' colspan='3'>GOOGLE GRAPHS</td>
 	</tr>
 	<tr>
-		<td><input type='checkbox' name='cost1' value='checked'> Costs</td>
-		<td><input type='checkbox' name='OTDrec' value='checked'> Presale Files Received</td>
-		<td><input type='checkbox' name='OTDfiled' value='checked'> Presale File Dates</td>
+		<td><input type='checkbox' name='cost1' value='checked' <?=$_GET[cost1]?>> Costs</td>
+		<td><input type='checkbox' name='OTDrec' value='checked' <?=$_GET[OTDrec]?>> Presale Files Received</td>
+		<td><input type='checkbox' name='OTDfiled' value='checked' <?=$_GET[OTDfiled]?>> Presale File Dates</td>
 	</tr>
 	<tr>
-		<td><input type='checkbox' name='OTDexp' value='checked'> Presale Exports</td>
-		<td><input type='checkbox' name='EVrec' value='checked'> Eviction Files Received</td>
-		<td><input type='checkbox' name='EVfiled' value='checked'> Eviction File Dates</td>
+		<td><input type='checkbox' name='OTDexp' value='checked' <?=$_GET[OTDexp]?>> Presale Exports</td>
+		<td><input type='checkbox' name='EVrec' value='checked' <?=$_GET[EVrec]?>> Eviction Files Received</td>
+		<td><input type='checkbox' name='EVfiled' value='checked' <?=$_GET[EVfiled]?>> Eviction File Dates</td>
 	</tr>
 	<tr>
-		<td><input type='checkbox' name='EVexp' value='checked'> Eviction Exports</td>
+		<td><input type='checkbox' name='EVexp' value='checked' <?=$_GET[EVexp]?>> Eviction Exports</td>
 	</tr>
 	<tr>
 		<td align="center" style='font-size:18px; color:white;' colspan='3'>LINE GRAPH GENERATOR GRAPHS</td>
 	</tr>
 	<tr>
-		<td><input type='checkbox' name='cost2' value='checked'> Costs</td>
-		<td><input type='checkbox' name='OTDrec2' value='checked'> Presale Files Received</td>
-		<td><input type='checkbox' name='OTDfiled2' value='checked'> Presale File Dates</td>
+		<td><input type='checkbox' name='cost2' value='checked' <?=$_GET[cost2]?>> Costs</td>
+		<td><input type='checkbox' name='OTDrec2' value='checked' <?=$_GET[OTDrec2]?>> Presale Files Received</td>
+		<td><input type='checkbox' name='OTDfiled2' value='checked' <?=$_GET[OTDfiled2]?>> Presale File Dates</td>
 	</tr>
 	<tr>
-		<td><input type='checkbox' name='OTDexp2' value='checked'> Presale Exports</td>
-		<td><input type='checkbox' name='EVrec2' value='checked'> Eviction Files Received</td>
-		<td><input type='checkbox' name='EVfiled2' value='checked'> Eviction File Dates</td>
+		<td><input type='checkbox' name='OTDexp2' value='checked' <?=$_GET[OTDexp2]?>> Presale Exports</td>
+		<td><input type='checkbox' name='EVrec2' value='checked' <?=$_GET[EVrec2]?>> Eviction Files Received</td>
+		<td><input type='checkbox' name='EVfiled2' value='checked' <?=$_GET[EVfiled2]?>> Eviction File Dates</td>
 	</tr>
 	<tr>
 		<td colspan='3'><input type='submit' name='Submit' value='GO!'></td>
