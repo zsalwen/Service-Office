@@ -688,7 +688,7 @@ if ($_POST[submit]){
 			$qList .="name$i2='".dbCleaner($_POST["name$i2"])."', ";
 		}
 		if ($_POST[address] != '' && $_POST[address] != $d["address$i2"]){
-			$qList .="address$i2='".dbCleaner($_POST[address])"', ";
+			$qList .="address$i2='".dbCleaner($_POST[address])."', ";
 		}
 		if ($_POST[city] != '' && $_POST[city] != $d["city$i2"]){
 			$qList .="city$i2='".dbCleaner($_POST[city])."', ";
