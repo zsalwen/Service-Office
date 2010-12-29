@@ -40,6 +40,9 @@ iframe {border;0px; margin:0px; padding:0px;}
 		<td><input type='checkbox' name='EVrec2' value='checked'> Eviction Files Received</td>
 		<td><input type='checkbox' name='EVfiled2' value='checked'> Eviction File Dates</td>
 	</tr>
+	<tr>
+		<td colspan='3'><input type='submit' name='Submit' value='GO!'></td>
+	</tr>
 </table>
 </form>
 <table align="center" width='80%'>
