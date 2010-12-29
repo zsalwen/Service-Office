@@ -74,7 +74,7 @@ iframe {border;0px; margin:0px; padding:0px;}
 		<td><input type='checkbox' name='EVfiled2' value='checked' <?=$_GET[EVfiled2]?>> Eviction File Dates</td>
 	</tr>
 	<tr>
-		<td colspan='3'><input type='checkbox' name='checkAll' value='checked' onclick='checkUncheck(document.form1);'> Check All | <input type='submit' name='Submit' value='GO!'></td>
+		<td colspan='3'><input type='checkbox' name='checkAll' checked='false' onclick='checkUncheck(document.form1);' > Check All | <input type='submit' name='Submit' value='GO!'></td>
 	</tr>
 </table>
 </form>
