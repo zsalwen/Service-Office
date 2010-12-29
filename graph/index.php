@@ -1,6 +1,11 @@
 <?
 include "functions.php";
 ?>
+<link rel="stylesheet" type="text/css" href="../fire.css" />
+<style>
+td {text-align:center; color:white;}
+iframe {border;0px; margin:0px; padding:0px;}
+</style>
 <script>
 function checkAll(field)
 {
@@ -11,13 +16,7 @@ for (i = 0; i < field.length; i++)
 		field[i].checked = true;
 	}
 }
-
 </script>
-<link rel="stylesheet" type="text/css" href="../fire.css" />
-<style>
-td {text-align:center; color:white;}
-iframe {border;0px; margin:0px; padding:0px;}
-</style>
 <form name="form1">
 <table align="center" width="50%" border="1" style='border-collapse:collapse;'>
 	<tr>
@@ -53,7 +52,7 @@ iframe {border;0px; margin:0px; padding:0px;}
 		<td><input type='checkbox' name='EVfiled2' value='checked' <?=$_GET[EVfiled2]?>> Eviction File Dates</td>
 	</tr>
 	<tr>
-		<td colspan='3'><input type='button' name='checkAll' value='Check All' onclick='checkAll(document.form1)'> | <input type='submit' name='Submit' value='GO!'></td>
+		<td colspan='3'><input type='button' name='checkAll' value='Check All' onclick='checkAll(document.form1);'> | <input type='submit' name='Submit' value='GO!'></td>
 	</tr>
 </table>
 </form>
