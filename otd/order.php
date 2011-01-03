@@ -684,33 +684,33 @@ if ($_POST[submit]){
 	$i2=0;
 	$qList="";
 	while ($i2 < 6){$i2++;
-		if ($_POST["name$i2"] != '' && ($_POST["name$i2"] != $d["name$i2"])){
+		if (isset($_POST["name$i2"]) && ($_POST["name$i2"] != $d["name$i2"])){
 			$qList .="name$i2='".dbCleaner($_POST["name$i2"])."', ";
 		}
-		if ($_POST[address] != '' && $_POST[address] != $d["address$i2"]){
+		if (isset($_POST[address]) && $_POST[address] != $d["address$i2"]){
 			$qList .="address$i2='".dbCleaner($_POST[address])."', ";
 		}
-		if ($_POST[city] != '' && $_POST[city] != $d["city$i2"]){
+		if (isset($_POST[city]) && $_POST[city] != $d["city$i2"]){
 			$qList .="city$i2='".dbCleaner($_POST[city])."', ";
 		}
-		if ($_POST[state] != '' && $_POST[state] != $d["state$i2"]){
+		if (isset($_POST[state]) && $_POST[state] != $d["state$i2"]){
 			$qList .="state$i2='".dbCleaner($_POST[state])."', ";
 		}
-		if ($_POST[zip] != '' && $_POST[zip] != $d["zip$i2"]){
+		if (isset($_POST[zip]) && $_POST[zip] != $d["zip$i2"]){
 			$qList .="zip$i2='".dbCleaner($_POST[zip])."', ";
 		}
 		foreach(range('a','e') as $letter){
 			$var=$i2.$letter;
-			if ($_POST["address$letter"] != '' && $_POST["address$letter"] != $d["address$var"]){
+			if (isset($_POST["address$letter"]) && $_POST["address$letter"] != $d["address$var"]){
 				$qList .="address$var='".dbCleaner($_POST["address$letter"])."', ";
 			}
-			if ($_POST["city$letter"] != '' && $_POST["city$letter"] != $d["city$var"]){
+			if (isset($_POST["city$letter"]) && $_POST["city$letter"] != $d["city$var"]){
 				$qList .="city$var='".dbCleaner($_POST["city$letter"])."', ";
 			}
-			if ($_POST["state$letter"] != '' && $_POST["state$letter"] != $d["state$var"]){
+			if (isset($_POST["state$letter"]) && $_POST["state$letter"] != $d["state$var"]){
 				$qList .="state$var='".dbCleaner($_POST["state$letter"])."', ";
 			}
-			if ($_POST["zip$letter"] != '' && $_POST["zip$letter"] != $d["zip$var"]){
+			if (isset($_POST["zip$letter"]) && $_POST["zip$letter"] != $d["zip$var"]){
 				$qList .="zip$var='".dbCleaner($_POST["zip$letter"])."', ";
 			}
 		}
