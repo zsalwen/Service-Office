@@ -1,5 +1,5 @@
 <?php
-$pipe="fifo";
+$pipe="/data/fifo";
 
 if (! $handle=@fopen($pipe,"r") ) {
    echo "can't open pipe for reading\n";
