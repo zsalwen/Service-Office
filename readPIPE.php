@@ -1,4 +1,5 @@
 <?php
+error_log("[".date('g:iA n/j/y')."] [readPIPE] [start] \n", 3, '/logs/fail.log');
 $pipe="/data/fifo";
 
 if (! $handle=@fopen($pipe,"r") ) {
@@ -17,4 +18,6 @@ while (1) {
 }
 
 fclose($handle);
+error_log("[".date('g:iA n/j/y')."] [readPIPE] [end] \n", 3, '/logs/fail.log');
+
 ?>
