@@ -1,4 +1,4 @@
-<php
+<?php
 $pipe="fifo";
 
 if (! $handle=@fopen($pipe,"r") ) {
