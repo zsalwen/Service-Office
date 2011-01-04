@@ -81,8 +81,8 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {
 	<td nowrap="nowrap">
     <?
 	$i=0;
+	$count=0;
 	while ($i < 6){$i++;
-		$count=0;
 		if ($d["name$i"]){
 			if ($d["address$i"]){
 				$art=article($d[packet_id],$i);
