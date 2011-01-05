@@ -125,10 +125,10 @@ function getPacketData($packet){
 	<li><a href='?mail4=$packet'>Open Papers to Print (And Mark Printed)</a></li>
 	<li><a href='".washOTD($d[otd])."'>Right Click to Save PDF</a></li>
 	";
-	if ($packet >= 12435 && $d[lossMit] != "N/A - OLD L" && $d[attorneys_id] != 70){
-		$data .= "<li><a href='http://staff.mdwestserve.com/otd/stuffPacket.2.php?packet=$packet&mail=1' target='_blank'><span style='color:green; background-color:black; font-weight:bold;'>Open Envelope GREEN Stuffings</span></a></li>";
-	}elseif($packet >= 12435 && $d[lossMit] != "N/A - OLD L" && $d[attorneys_id] == 70){
-		$data .= "<li><a href='http://staff.mdwestserve.com/otd/stuffPacket.bgw.php?packet=$packet&mail=1' target='_blank'><span style='color:white; background-color:black; font-weight:bold;'>Open WHITE Envelope Stuffings</span></a></li>";
+	if ($packet >= 12435 && $d[lossMit] != "N/A - OLD L" && $d[attorneys_id] == 1){
+		$data .= "<li><a href='http://staff.mdwestserve.com/otd/stuffPacket.2.php?packet=$packet&mail=1' target='_blank'><span style='color:green; background-color:black; font-weight:bold;'>GREEN HB472 Envelopes</span></a></li>";
+	}elseif($packet >= 12435 && $d[lossMit] != "N/A - OLD L" && $d[attorneys_id] != 1){
+		$data .= "<li><a href='http://staff.mdwestserve.com/otd/stuffPacket.bgw.php?packet=$packet&mail=1' target='_blank'><span style='color:white; background-color:black; font-weight:bold;'>WHITE HB472 Envelopes</span></a></li>";
 	}
 	$data .= "</td><td nowrap class='noprint' style='background-color:#FF0000;'>";
 	if($_COOKIE[psdata][level] == "Operations"){
@@ -175,7 +175,7 @@ function getPacketData($packet){
 		$data .= " <br>PRIORITY";
 	}
 	$data .="</td>";	
-	$data .= "<td>".$d["mail_status"]."</td>";	
+	$data .= "<td>".$d["mail_status"]."</td><td>(".id2attorney($d[attorneys_id]).")<br>$d[circuit_court]</td>";	
 	return $data;
 }
 //will return list with pop up js alerts instead of links
@@ -346,7 +346,7 @@ function getEvictionData($eviction){
 		$data .= " <br>PRIORITY";
 	}
 	$data .="</td>";	
-	$data .= "<td>".$d["mail_status"]."</td>";	
+	$data .= "<td>".$d["mail_status"]."</td><td>(".id2attorney($d[attorneys_id]).")<br>$d[circuit_court]</td>";	
 	return $data;
 }
 
@@ -434,7 +434,7 @@ if($_COOKIE[psdata][level] == "Operations"){
 $r=@mysql_query($q);?>
 
 <table width="100%" border="1" style="border-collapse:collapse; padding:5px;">
-<tr><td colspan='5' align='center' style='text-spacing: 5px; background-color:99AAEE; background-color:00BBAA; font-weight:bold;'>FORECLOSURES</td></tr>
+<tr><td colspan='6' align='center' style='text-spacing: 5px; background-color:99AAEE; background-color:00BBAA; font-weight:bold;'>FORECLOSURES</td></tr>
 <? while($d=mysql_fetch_array($r, MYSQL_ASSOC)){ $i++;
 		if ($d[qualityControl] != ''){
 			echo getPacketData($d[packet_id]);
@@ -473,7 +473,7 @@ $r=@mysql_query($q);?>
 		<?=getEvictionData($d[eviction_id])?>
     </tr>    
 <? }
-echo "<tr><td colspan='5' align='center' style='text-spacing: 5px; background-color:99AAEE; font-weight:bold;'>EVICTIONS</td></tr>";
+echo "<tr><td colspan='6' align='center' style='text-spacing: 5px; background-color:99AAEE; font-weight:bold;'>EVICTIONS</td></tr>";
 if($_COOKIE[psdata][level] == "Operations"){
 $q="select eviction_id, mail_status from evictionPackets where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') and rush <> 'checked' order by mail_status, eviction_id";
 }else{
@@ -493,7 +493,7 @@ if ($_GET['mail99']){
 	timeline($_GET['mail99'],'Status updated to READY FOR AFFIDAVITS by: '.$_COOKIE[psdata][name]);
 }
 ?>
-<tr><td colspan='5' align='center' style='text-spacing: 5px; background-color:FF00FF; font-weight:bold;'>STANDARD</td></tr>
+<tr><td colspan='6' align='center' style='text-spacing: 5px; background-color:FF00FF; font-weight:bold;'>STANDARD</td></tr>
 <?
 $r=@mysql_query("SELECT * FROM standard_packets WHERE process_status = 'READY TO MAIL' order by packet_id");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
