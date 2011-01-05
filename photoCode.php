@@ -43,12 +43,12 @@ while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 				$localPath = $path.$link["$linkCount2"].$link["$linkCount"];
 				$addLetter=add2letter($addressID);
 				$user=$d["server_id.$addLetter"];
-				$q2="SELECT * FROM ps_photos WHERE localPath LIKE '%$localPath%'";
+				$q2="SELECT * FROM ps_photos WHERE packetID='$d[packet_id]' AND defendantID='$i' AND addressID='$addressID'";
 				$r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
 				$d2=mysql_fetch_array($r2,MYSQL_ASSOC);
 				if ($d2[packetID] == ''){
 					$query = "INSERT into ps_photos (packetID,defendantID,addressID,serverID,localPath,browserAddress) VALUES ('$d[packet_id]','$i','$addressID','$user','$localPath','$browserAddress')";
-					@mysql_query($query);
+					//@mysql_query($query);
 					echo "<tr style='color:black; background-color:white;'><td>$i2</td><td>$d[packet_id]</td><td>$var</td><td>$localPath</td><td>$browserAddress</td></tr>";
 				}else{
 					echo "<tr style='color:red; background-color:black;'><td>$i2</td><td>$d[packet_id]</td><td>$var</td><td>$localPath</td><td>$browserAddress -- PRE-EXISTS</td></tr>";
