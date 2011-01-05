@@ -127,7 +127,7 @@ function getPacketData($packet){
 	";
 	if ($packet >= 12435 && $d[lossMit] != "N/A - OLD L" && $d[attorneys_id] == 1){
 		$data .= "<li><a href='http://staff.mdwestserve.com/otd/stuffPacket.2.php?packet=$packet&mail=1' target='_blank'><span style='color:green; background-color:black; font-weight:bold;'>GREEN HB472 Envelopes</span></a></li>";
-	}elseif$packet >= 12435 && $d[lossMit] != "N/A - OLD L" && $d[attorneys_id] == 70)
+	}elseif$packet >= 12435 && $d[lossMit] != "N/A - OLD L" && $d[attorneys_id] == 70){
 		$data .= "<li><a href='http://staff.mdwestserve.com/otd/stuffPacket.bgw.php?packet=$packet&mail=1' target='_blank'><span style='color:white; background-color:black; font-weight:bold;'>WHITE HB472 Envelopes</span></a></li>";
 	}elseif$packet >= 12435 && $d[lossMit] != "N/A - OLD L"){
 		$data .= "<li><a href='http://staff.mdwestserve.com/otd/stuffPacket.2.php?packet=$packet&mail=1' target='_blank'><span style='color:green; background-color:black; font-weight:bold;'>WHITE HB472 Envelopes</span></a></li>";
