@@ -25,14 +25,14 @@ function add2Letter($address){
 mysql_connect();
 mysql_select_db('core');
 $path = "/data/service/photos/";
-$q="SELECT * FROM ps_packets";
+$q="SELECT * FROM evictionPackets";
 $r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
-echo "<table><tr><td>#</td><td>Packet</td><td>Photo Field</td><td>Local Path</td><td>Browser Address</td></tr>";
+echo "<table><tr><td>#</td><td>Eviction</td><td>Photo Field</td><td>Local Path</td><td>Browser Address</td></tr>";
 $i2=0;
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	$i=0;
 	while ($i < 6){$i++;
-		foreach(range('a','m') as $letter){
+		foreach(range('a','c') as $letter){
 			$var="photo".$i.$letter;
 			if ($d["$var"]){$i2++;
 				$addressID=alpha2ID($letter);
@@ -41,11 +41,17 @@ while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 				$linkCount = count($link)-1;
 				$linkCount2 = $linkCount-1;
 				$localPath = $path.$link["$linkCount2"].$link["$linkCount"];
-				$addLetter=add2letter($addressID);
-				$user=$d["server_id.$addLetter"];
-				$query = "INSERT into ps_photos (packetID,defendantID,addressID,serverID,localPath,browserAddress) VALUES ('$d[packet_id]','$i','$addressID','$user','$localPath','$browserAddress')";
-				@mysql_query($query);
-				echo "<tr><td>$i2</td><td>$d[packet_id]</td><td>$var</td><td>$localPath</td><td>$browserLink</td></tr>";
+				$user=$d[server_id];
+				$q2="SELECT * FROM ps_photos WHERE localPath LIKE '%$localPath%'";
+				$r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
+				$d2=mysql_fetch_array($r2,MYSQL_ASSOC);
+				if ($d2[packetID] == ''){
+					$query = "INSERT into ps_photos (packetID,defendantID,addressID,serverID,localPath,browserAddress) VALUES ('EV$d[eviction_id]','$i','$addressID','$user','$localPath','$browserAddress')";
+					@mysql_query($query);
+					echo "<tr style='color:black; background-color:white;'><td>$i2</td><td>$d[eviction_id]</td><td>$var</td><td>$localPath</td><td>$browserLink</td></tr>";
+				}else{
+					echo "<tr style='color:red; background-color:black;'><td>$i2</td><td>$d[eviction_id]</td><td>$var</td><td>$localPath</td><td>$browserLink -- PRE-EXISTS</td></tr>";
+				}
 			}
 		}
 	}
