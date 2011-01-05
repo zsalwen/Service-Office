@@ -43,11 +43,7 @@ function envPrint($id,$matrix,$times,$lossMit){
 		$_SESSION[inc] = $_SESSION[inc]+1;
 		?>
 		<table style='page-break-after:always' align='center'><tr><td>
-		<? if ($matrix != ''){ ?>
-			<IMG SRC="http://staff.mdwestserve.com/barcode.php?barcode=<?=$matrix?>&width=400&height=40"><br>
-		<? }else{ ?>
-			<div style='width:400px;height:40px;'></div>
-		<? } ?>
+		<div style='width:400px;height:40px;'></div>
 		<img  src="http://staff.mdwestserve.com/envelopecard.hb472.jpg.php?line1=<?=washAdd($d[to1])?>&line2=<?=washAdd($d[to2])?>&csz=<?=washAdd($d[to3])?>&client=<?=$client?>&lossMit=<?=$lossMit?>">
 		</td></tr></table>
 		<?
