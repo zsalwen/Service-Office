@@ -86,7 +86,7 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)){
 		if ($d["article$i"] != ''){
 			if (article($packet,$i) == 0){
 				$art2=article2($d["article$i"]);
-				if ($art2 == ''){
+				if ($art2 == 0){
 					echo "OTD$packet missing article $i in USPS<br>";
 					enterArticle($d["article$i"],$packet.'-'.$i);
 				}else{
@@ -106,7 +106,7 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)){
 			if ($d["article$var"] != ''){
 				if (article($packet,$var) == 0){
 					$art2=article2($d["article$var"]);
-					if ($art2 == ''){
+					if ($art2 == 0){
 						echo "OTD$packet missing article $var in USPS<br>";
 						enterArticle($d["article$var"],$packet.'-'.strtoupper($var));
 					}else{
@@ -126,7 +126,7 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)){
 		if ($d["article$var"] != ''){
 			if (article($packet,$var) == 0){
 				$art2=article2($d["article$var"]);
-				if ($art2 == ''){
+				if ($art2 == 0){
 					echo "OTD$packet missing article $var in USPS<br>";
 					enterArticle($d["article$var"],$packet.'-'.strtoupper($var));
 				}else{
@@ -145,7 +145,7 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)){
 		if ($d["article$var"] != ''){
 			if (article($packet,$var) == 0){
 				$art2=article2($d["article$var"]);
-				if ($art2 == ''){
+				if ($art2 == 0){
 					echo "OTD$packet missing article $var in USPS<br>";
 					enterArticle($d["article$var"],$packet.'-'.strtoupper($var));
 				}else{
