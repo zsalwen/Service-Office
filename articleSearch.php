@@ -1,7 +1,9 @@
 <?
 mysql_connect();
 mysql_select_db('core');
-
+function rmSpace($str){
+	return str_replace(' ','',$str);
+}
 function article($packet,$add){
 	$var=$packet."-".strtoupper($add)."X";
 	$q="select article from usps where packet = '$var' LIMIT 0,1";
@@ -14,6 +16,7 @@ function article($packet,$add){
 	}
 }
 function article2($art){
+	$art=rmSpace($art);
 	$q="select packet from usps where article='$art' LIMIT 0,1";
 	$r=@mysql_query($q);
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
@@ -24,6 +27,7 @@ function article2($art){
 	}
 }
 function enterArticle($art,$packet){
+	$art=rmSpace($art);
 	$q="INSERT INTO usps (article, packet, status, processor, history) values ('$art', '$packetX', 'SENT', '".$_COOKIE[psdata][name]."', '$history')";
 	@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 }
@@ -85,11 +89,11 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)){
 				}else{
 					if ($art2 == 0){
 						//update with correct packet #
-						@mysql_query("UPDATE usps SET packet='$packet-$i' WHERE article='".$d["article$i"]."'") or die (mysql_error());
+						@mysql_query("UPDATE usps SET packet='$packet-$i' WHERE article='".rmSpace($d["article$i"])."'") or die (mysql_error());
 						echo "<div style='background-color:green;font-weight:bold;'>OTD$packet missing packet # for article $i in USPS</div>";
 					}else{
 						//return current packet #
-						echo "<div style='background-color:red;font-weight:bold;'>Article ".$d["article$i"]." has packet # $art2 in USPS, should be $packet-$i.</div>";
+						echo "<div style='background-color:red;font-weight:bold;'>Article ".rmSpace($d["article$i"])." has packet # $art2 in USPS, should be $packet-$i.</div>";
 					}
 				}
 			}
@@ -105,11 +109,11 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)){
 					}else{
 						if ($art2 == 0){
 							//update with correct packet #
-							@mysql_query("UPDATE usps SET packet='$packet-$var' WHERE article='".$d["article$var"]."'") or die (mysql_error());
+							@mysql_query("UPDATE usps SET packet='$packet-$var' WHERE article='".rmSpace($d["article$var"])."'") or die (mysql_error());
 							echo "<div style='background-color:green;font-weight:bold;'>OTD$packet missing packet # for article $var in USPS</div>";
 						}else{
 							//return current packet #
-							echo "<div style='background-color:red;font-weight:bold;'>Article ".$d["article$var"]." has packet # $art2 in USPS, should be $packet-$var.</div>";
+							echo "<div style='background-color:red;font-weight:bold;'>Article ".rmSpace($d["article$var"])." has packet # $art2 in USPS, should be $packet-$var.</div>";
 						}
 					}
 				}
@@ -125,11 +129,11 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)){
 				}else{
 					if ($art2 == 0){
 						//update with correct packet #
-						@mysql_query("UPDATE usps SET packet='$packet-$var' WHERE article='".$d["article$var"]."'") or die (mysql_error());
+						@mysql_query("UPDATE usps SET packet='$packet-$var' WHERE article='".rmSpace($d["article$var"])."'") or die (mysql_error());
 						echo "<div style='background-color:green;font-weight:bold;'>OTD$packet missing packet # for article $var in USPS</div>";
 					}else{
 						//return current packet #
-						echo "<div style='background-color:red;font-weight:bold;'>Article ".$d["article$var"]." has packet # $art2 in USPS, should be $packet-$var.</div>";
+						echo "<div style='background-color:red;font-weight:bold;'>Article ".rmSpace($d["article$var"])." has packet # $art2 in USPS, should be $packet-$var.</div>";
 					}
 				}
 			}
@@ -144,11 +148,11 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)){
 				}else{
 					if ($art2 == 0){
 						//update with correct packet #
-						@mysql_query("UPDATE usps SET packet='$packet-$var' WHERE article='".$d["article$var"]."'") or die (mysql_error());
+						@mysql_query("UPDATE usps SET packet='$packet-$var' WHERE article='".rmSpace($d["article$var"])."'") or die (mysql_error());
 						echo "<div style='background-color:green;font-weight:bold;'>OTD$packet missing packet # for article $var in USPS</div>";
 					}else{
 						//return current packet #
-						echo "<div style='background-color:red;font-weight:bold;'>Article ".$d["article$var"]." has packet # $art2 in USPS, should be $packet-$var.</div>";
+						echo "<div style='background-color:red;font-weight:bold;'>Article ".rmSpace($d["article$var"])." has packet # $art2 in USPS, should be $packet-$var.</div>";
 					}
 				}
 			}
