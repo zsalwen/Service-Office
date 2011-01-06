@@ -70,7 +70,7 @@ function reverseArticle($art){
 	}
 }
 echo "SEARCHING OTDs<br>";
-$q="SELECT article1, article1a, article1b, article1c, article1d, article1e, article2, article2a, article2b, article2c, article2d, article2e, article3, article3a, article3b, article3c, article3d, article3e, article4, article4a, article4b, article4c, article4d, article4e, article5, article5a, article5b, article5c, article5d, article5e, article6, article6a, article6b, article6c, article6d, article6e, article1PO, article1PO2, article2PO, article2PO2, article3PO, article3PO2, article4PO, article4PO2, article5PO, article5PO2, article6PO, article6PO2 FROM ps_packets ORDER BY packet_id ASC";
+$q="SELECT packet_id, article1, article1a, article1b, article1c, article1d, article1e, article2, article2a, article2b, article2c, article2d, article2e, article3, article3a, article3b, article3c, article3d, article3e, article4, article4a, article4b, article4c, article4d, article4e, article5, article5a, article5b, article5c, article5d, article5e, article6, article6a, article6b, article6c, article6d, article6e, article1PO, article1PO2, article2PO, article2PO2, article3PO, article3PO2, article4PO, article4PO2, article5PO, article5PO2, article6PO, article6PO2 FROM ps_packets ORDER BY packet_id ASC";
 $r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 while ($d=mysql_fetch_array($r, MYSQL_ASSOC)){
 	$packet=$d[packet_id];
