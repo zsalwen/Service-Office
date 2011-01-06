@@ -11,7 +11,7 @@ function defCount($packet_id){
 	return $c;
 }
 function artLink($art,$color){
-	$tracking = getPage("http://mdwestserve.com/ps/usps.php?track=$art", "USPS Tracking Article $art", '5', '');
+	$tracking = getPage("http://service.mdwestserve.com/usps.php?track=$art", "USPS Tracking Article $art", '5', '');
 	return "<div class='$color'>Live USPS Database Tracking of $art<br>$tracking</div>";
 }
 function article($packet,$add){
