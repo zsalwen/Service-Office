@@ -49,8 +49,9 @@ if ($line3 == ""){
 if ($_GET[lossMit] != 'PRELIMINARY'){
 	if ($_GET[client] != ''){
 		imageTTFText( $canvas, $size, 270, 240, 240, $black, $font, strtoupper($notice4) );
+	}else{
+		imageTTFText( $canvas, $size2, 270, 190, 60, $black, $font3, strtoupper($notice1) );
 	}
-	imageTTFText( $canvas, $size2, 270, 190, 60, $black, $font3, strtoupper($notice1) );
 }elseif ($_GET[client] != ''){
 	imageTTFText( $canvas, $size, 270, 190, 240, $black, $font, strtoupper($notice4) );
 }
