@@ -13,6 +13,16 @@ function article($packet,$add){
 		return 0;
 	}
 }
+function article2($art){
+	$q="select packet from usps where article='$art' LIMIT 0,1";
+	$r=@mysql_query($q);
+	$d=mysql_fetch_array($r, MYSQL_ASSOC);
+	if ($d["article"] != ''){
+		return $d["packet"];
+	}else{
+		return 0;
+	}
+}
 function enterArticle($art,$packet){
 	$q="INSERT INTO usps (article, packet, status, processor, history) values ('$art', '$packetX', 'SENT', '".$_COOKIE[psdata][name]."', '$history')";
 	@mysql_query($q) or die ("Query: $q<br>".mysql_error());
@@ -68,31 +78,79 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)){
 	while ($i < 6){$i++;
 		if ($d["article$i"] != ''){
 			if (article($packet,$i) == 0){
-				echo "OTD$packet missing article $i in USPS<br>";
-				enterArticle($d["article$i"],$packet.'-'.$i);
+				$art2=article2($d["article$i"];
+				if ($art2 == 0){
+					echo "OTD$packet missing article $i in USPS<br>";
+					enterArticle($d["article$i"],$packet.'-'.$i);
+				}else{
+					if ($art2 == ''){
+						//update with correct packet #
+						@mysql_query("UPDATE usps SET packet='$packet-$i' WHERE article='".$d["article$i"]."'") or die (mysql_error());
+						echo "<div style='background-color:green;font-weight:bold;'>OTD$packet missing packet # for article $i in USPS</div>";
+					}else{
+						//return current packet #
+						echo "<div style='background-color:red;font-weight:bold;'>Article ".$d["article$i"]." has packet # $art2 in USPS, should be $packet-$i.</div>";
+					}
+				}
 			}
 		}
 		foreach(range('a','e') as $letter){
 			$var=$i.$letter;
 			if ($d["article$var"] != ''){
 				if (article($packet,$var) == 0){
-					echo "OTD$packet missing article $var in USPS<br>";
-					enterArticle($d["article$var"],$packet.'-'.strtoupper($var));
+					$art2=article2($d["article$var"];
+					if ($art2 == 0){
+						echo "OTD$packet missing article $var in USPS<br>";
+						enterArticle($d["article$var"],$packet.'-'.strtoupper($var));
+					}else{
+						if ($art2 == ''){
+							//update with correct packet #
+							@mysql_query("UPDATE usps SET packet='$packet-$var' WHERE article='".$d["article$var"]."'") or die (mysql_error());
+							echo "<div style='background-color:green;font-weight:bold;'>OTD$packet missing packet # for article $var in USPS</div>";
+						}else{
+							//return current packet #
+							echo "<div style='background-color:red;font-weight:bold;'>Article ".$d["article$var"]." has packet # $art2 in USPS, should be $packet-$var.</div>";
+						}
+					}
 				}
 			}
 		}
 		$var=$i."PO";
 		if ($d["article$var"] != ''){
 			if (article($packet,$var) == 0){
-				echo "OTD$packet missing article $var in USPS<br>";
-				enterArticle($d["article$i"],$packet.'-'.$var);
+				$art2=article2($d["article$var"];
+				if ($art2 == 0){
+					echo "OTD$packet missing article $var in USPS<br>";
+					enterArticle($d["article$var"],$packet.'-'.strtoupper($var));
+				}else{
+					if ($art2 == ''){
+						//update with correct packet #
+						@mysql_query("UPDATE usps SET packet='$packet-$var' WHERE article='".$d["article$var"]."'") or die (mysql_error());
+						echo "<div style='background-color:green;font-weight:bold;'>OTD$packet missing packet # for article $var in USPS</div>";
+					}else{
+						//return current packet #
+						echo "<div style='background-color:red;font-weight:bold;'>Article ".$d["article$var"]." has packet # $art2 in USPS, should be $packet-$var.</div>";
+					}
+				}
 			}
 		}
 		$var=$i."PO2";
 		if ($d["article$var"] != ''){
 			if (article($packet,$var) == 0){
-				echo "OTD$packet missing article $var in USPS<br>";
-				enterArticle($d["article$i"],$packet.'-'.$var);
+				$art2=article2($d["article$var"];
+				if ($art2 == 0){
+					echo "OTD$packet missing article $var in USPS<br>";
+					enterArticle($d["article$var"],$packet.'-'.strtoupper($var));
+				}else{
+					if ($art2 == ''){
+						//update with correct packet #
+						@mysql_query("UPDATE usps SET packet='$packet-$var' WHERE article='".$d["article$var"]."'") or die (mysql_error());
+						echo "<div style='background-color:green;font-weight:bold;'>OTD$packet missing packet # for article $var in USPS</div>";
+					}else{
+						//return current packet #
+						echo "<div style='background-color:red;font-weight:bold;'>Article ".$d["article$var"]." has packet # $art2 in USPS, should be $packet-$var.</div>";
+					}
+				}
 			}
 		}
 	}
