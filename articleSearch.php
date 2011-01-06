@@ -20,7 +20,7 @@ function article2($art){
 	$q="select packet from usps where article='$art' LIMIT 0,1";
 	$r=@mysql_query($q);
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
-	if ($d["article"] != ''){
+	if ($d["packet"] != ''){
 		return $d["packet"];
 	}elseif($d[packet] == ''){
 		return 'X';
