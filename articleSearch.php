@@ -28,7 +28,7 @@ function article2($art){
 }
 function enterArticle($art,$packet){
 	$art=rmSpace($art);
-	$q="INSERT INTO usps (article, packet, status, processor, history) values ('$art', '$packetX', 'SENT', '".$_COOKIE[psdata][name]."', '$history')";
+	$q="INSERT INTO usps (article, packet, status, processor, history) values ('$art', '$packet', 'SENT', '".$_COOKIE[psdata][name]."', '$history')";
 	@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 }
 function reverseArticle($art){
