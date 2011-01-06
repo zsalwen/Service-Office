@@ -23,7 +23,7 @@ function article2($art){
 	if ($d["article"] != ''){
 		return $d["packet"];
 	}else{
-		return 0;
+		return '0';
 	}
 }
 function enterArticle($art,$packet){
