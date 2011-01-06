@@ -86,18 +86,16 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)){
 		if ($d["article$i"] != ''){
 			if (article($packet,$i) == 0){
 				$art2=article2($d["article$i"]);
-				if ($art2 == 0){
+				if ($art2 != 0 && $art2 != 'X'){
+					//return current packet #
+					echo "<div style='background-color:red;font-weight:bold;'>Article ".rmSpace($d["article$i"])." has packet # $art2 in USPS, should be $packet-$i.</div>";	
+				}elseif ($art2 == 'X'){
+					//update with correct packet #
+					@mysql_query("UPDATE usps SET packet='$packet-$i' WHERE article='".rmSpace($d["article$i"])."'") or die (mysql_error());
+					echo "<div style='background-color:green;font-weight:bold;'>OTD$packet missing packet # for article $i in USPS</div>";
+				}else{
 					echo "OTD$packet missing article $i in USPS<br>";
 					enterArticle($d["article$i"],$packet.'-'.$i);
-				}else{
-					if ($art2 == 'X'){
-						//update with correct packet #
-						@mysql_query("UPDATE usps SET packet='$packet-$i' WHERE article='".rmSpace($d["article$i"])."'") or die (mysql_error());
-						echo "<div style='background-color:green;font-weight:bold;'>OTD$packet missing packet # for article $i in USPS</div>";
-					}else{
-						//return current packet #
-						echo "<div style='background-color:red;font-weight:bold;'>Article ".rmSpace($d["article$i"])." has packet # $art2 in USPS, should be $packet-$i.</div>";
-					}
 				}
 			}
 		}
@@ -106,18 +104,16 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)){
 			if ($d["article$var"] != ''){
 				if (article($packet,$var) == 0){
 					$art2=article2($d["article$var"]);
-					if ($art2 == 0){
+					if ($art2 != 0 && $art2 != 'X'){
+						//return current packet #
+						echo "<div style='background-color:red;font-weight:bold;'>Article ".rmSpace($d["article$var"])." has packet # $art2 in USPS, should be $packet-$var.</div>";
+					}elseif ($art2 == 'X'){
+						//update with correct packet #
+						@mysql_query("UPDATE usps SET packet='$packet-$var' WHERE article='".rmSpace($d["article$var"])."'") or die (mysql_error());
+						echo "<div style='background-color:green;font-weight:bold;'>OTD$packet missing packet # for article $var in USPS</div>";
+					}else{
 						echo "OTD$packet missing article $var in USPS<br>";
 						enterArticle($d["article$var"],$packet.'-'.strtoupper($var));
-					}else{
-						if ($art2 == 'X'){
-							//update with correct packet #
-							@mysql_query("UPDATE usps SET packet='$packet-$var' WHERE article='".rmSpace($d["article$var"])."'") or die (mysql_error());
-							echo "<div style='background-color:green;font-weight:bold;'>OTD$packet missing packet # for article $var in USPS</div>";
-						}else{
-							//return current packet #
-							echo "<div style='background-color:red;font-weight:bold;'>Article ".rmSpace($d["article$var"])." has packet # $art2 in USPS, should be $packet-$var.</div>";
-						}
 					}
 				}
 			}
@@ -126,18 +122,16 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)){
 		if ($d["article$var"] != ''){
 			if (article($packet,$var) == 0){
 				$art2=article2($d["article$var"]);
-				if ($art2 == 0){
+				if ($art2 != 0 && $art2 != 'X'){
+					//return current packet #
+					echo "<div style='background-color:red;font-weight:bold;'>Article ".rmSpace($d["article$var"])." has packet # $art2 in USPS, should be $packet-$var.</div>";
+				}elseif ($art2 == 'X'){
+					//update with correct packet #
+					@mysql_query("UPDATE usps SET packet='$packet-$var' WHERE article='".rmSpace($d["article$var"])."'") or die (mysql_error());
+					echo "<div style='background-color:green;font-weight:bold;'>OTD$packet missing packet # for article $var in USPS</div>";
+				}else{
 					echo "OTD$packet missing article $var in USPS<br>";
 					enterArticle($d["article$var"],$packet.'-'.strtoupper($var));
-				}else{
-					if ($art2 == 'X'){
-						//update with correct packet #
-						@mysql_query("UPDATE usps SET packet='$packet-$var' WHERE article='".rmSpace($d["article$var"])."'") or die (mysql_error());
-						echo "<div style='background-color:green;font-weight:bold;'>OTD$packet missing packet # for article $var in USPS</div>";
-					}else{
-						//return current packet #
-						echo "<div style='background-color:red;font-weight:bold;'>Article ".rmSpace($d["article$var"])." has packet # $art2 in USPS, should be $packet-$var.</div>";
-					}
 				}
 			}
 		}
@@ -145,18 +139,16 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)){
 		if ($d["article$var"] != ''){
 			if (article($packet,$var) == 0){
 				$art2=article2($d["article$var"]);
-				if ($art2 == 0){
+				if ($art2 != 0 && $art2 != 'X'){
+					//return current packet #
+					echo "<div style='background-color:red;font-weight:bold;'>Article ".rmSpace($d["article$var"])." has packet # $art2 in USPS, should be $packet-$var.</div>";
+				}elseif ($art2 == 'X'){
+					//update with correct packet #
+					@mysql_query("UPDATE usps SET packet='$packet-$var' WHERE article='".rmSpace($d["article$var"])."'") or die (mysql_error());
+					echo "<div style='background-color:green;font-weight:bold;'>OTD$packet missing packet # for article $var in USPS</div>";
+				}else{
 					echo "OTD$packet missing article $var in USPS<br>";
 					enterArticle($d["article$var"],$packet.'-'.strtoupper($var));
-				}else{
-					if ($art2 == 'X'){
-						//update with correct packet #
-						@mysql_query("UPDATE usps SET packet='$packet-$var' WHERE article='".rmSpace($d["article$var"])."'") or die (mysql_error());
-						echo "<div style='background-color:green;font-weight:bold;'>OTD$packet missing packet # for article $var in USPS</div>";
-					}else{
-						//return current packet #
-						echo "<div style='background-color:red;font-weight:bold;'>Article ".rmSpace($d["article$var"])." has packet # $art2 in USPS, should be $packet-$var.</div>";
-					}
 				}
 			}
 		}
