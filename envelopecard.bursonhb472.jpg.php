@@ -59,11 +59,11 @@ if ($_GET[lossMit] != 'PRELIMINARY'){
 		imageTTFText( $canvas, $size2, 270, 40, 0, $black, $font6, strtoupper($notice1) );
 	}
 }
-imageTTFText( $canvas, $size, 270, 190, 290, $black, $font5, $line1 );
-imageTTFText( $canvas, $size, 270, 170, 290, $black, $font6, $line1a );
-imageTTFText( $canvas, $size, 270, 150, 290, $black, $font5, $line2 );
-imageTTFText( $canvas, $size, 270, 130, 290, $black, $font5, $line3 );
-imageTTFText( $canvas, $size, 270, 110, 290, $black, $font5, $_GET[csz] );
+imageTTFText( $canvas, $size, 270, 190, 320, $black, $font5, $line1 );
+imageTTFText( $canvas, $size, 270, 170, 320, $black, $font6, $line1a );
+imageTTFText( $canvas, $size, 270, 150, 320, $black, $font5, $line2 );
+imageTTFText( $canvas, $size, 270, 130, 320, $black, $font5, $line3 );
+imageTTFText( $canvas, $size, 270, 110, 320, $black, $font5, $_GET[csz] );
 //imageTTFText( $canvas, $size2, 270, 80, 240, $black, $font3, strtoupper($notice3) );
 header("Content-type: image/png"); 
 $insert_x = imagesx($insert); 
