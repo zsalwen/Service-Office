@@ -48,17 +48,17 @@ if ($line3 == ""){
 
 if ($_GET[lossMit] != 'PRELIMINARY'){
 	if ($_GET[client] != ''){
-		imageTTFText( $canvas, $size, 270, 240, 240, $black, $font, strtoupper($notice4) );
+		imageTTFText( $canvas, $size, 270, 240, 240, $black, $font3, strtoupper($notice4) );
 	}else{
 		imageTTFText( $canvas, $size2, 270, 190, 60, $black, $font3, strtoupper($notice1) );
 	}
 }elseif ($_GET[client] != ''){
-	imageTTFText( $canvas, $size, 270, 190, 240, $black, $font, strtoupper($notice4) );
+	imageTTFText( $canvas, $size, 270, 190, 240, $black, $font3, strtoupper($notice4) );
 }
-imageTTFText( $canvas, $size, 270, 170, 240, $black, $font, strtoupper($line1) );
-imageTTFText( $canvas, $size, 270, 150, 240, $black, $font, strtoupper($line2) );
-imageTTFText( $canvas, $size, 270, 130, 240, $black, $font, strtoupper($line3) );
-imageTTFText( $canvas, $size, 270, 110, 240, $black, $font, strtoupper($_GET[csz]) );
+imageTTFText( $canvas, $size, 270, 170, 240, $black, $font3, strtoupper($line1) );
+imageTTFText( $canvas, $size, 270, 150, 240, $black, $font3, strtoupper($line2) );
+imageTTFText( $canvas, $size, 270, 130, 240, $black, $font3, strtoupper($line3) );
+imageTTFText( $canvas, $size, 270, 110, 240, $black, $font3, strtoupper($_GET[csz]) );
 //imageTTFText( $canvas, $size2, 270, 80, 240, $black, $font3, strtoupper($notice3) );
 header("Content-type: image/png"); 
 $insert_x = imagesx($insert); 
