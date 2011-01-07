@@ -7,6 +7,11 @@ function washAdd($str){
 	$str=str_replace('&','and ',$str);
 	return strtoupper($str);
 }
+function washAdd2($str){
+	$str=str_replace('#','no. ',$str);
+	$str=str_replace('&','and ',$str);
+	return $str;
+}
 function att2envelope($attID){
 	$r=@mysql_query("SELECT envID FROM attorneys WHERE attorneys_id = '$attID'");
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
@@ -45,7 +50,7 @@ function envPrint($id,$times,$lossMit){
 		<table style='page-break-after:always' align='center'><tr><td>
 		<div style='width:400px;height:40px;'></div>
 		<? if ($_GET[sb]){ ?>
-		<img  src="http://staff.mdwestserve.com/envelopecard.bursonhb472.jpg.php?line1=<?=washAdd($d[to1])?>&line2=<?=washAdd($d[to2])?>&csz=<?=washAdd($d[to3])?>&client=<?=$client?>&lossMit=<?=$lossMit?>">
+		<img  src="http://staff.mdwestserve.com/envelopecard.bursonhb472.jpg.php?line1=<?=washAdd2($d[to1])?>&line2=<?=washAdd2($d[to2])?>&csz=<?=washAdd2($d[to3])?>&client=<?=$client?>&lossMit=<?=$lossMit?>">
 		<? }else{ ?>
 		<img  src="http://staff.mdwestserve.com/envelopecard.hb472.jpg.php?line1=<?=washAdd($d[to1])?>&line2=<?=washAdd($d[to2])?>&csz=<?=washAdd($d[to3])?>&client=<?=$client?>&lossMit=<?=$lossMit?>">
 		<? } ?>
