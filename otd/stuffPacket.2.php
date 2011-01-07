@@ -44,7 +44,11 @@ function envPrint($id,$times,$lossMit){
 		?>
 		<table style='page-break-after:always' align='center'><tr><td>
 		<div style='width:400px;height:40px;'></div>
+		<? if ($d[to1] == "SHAPIRO AND BURSON LLP"){ ?>
+		<img  src="http://staff.mdwestserve.com/envelopecard.bursonhb472.jpg.php?line1=<?=washAdd($d[to1])?>&line2=<?=washAdd($d[to2])?>&csz=<?=washAdd($d[to3])?>&client=<?=$client?>&lossMit=<?=$lossMit?>">
+		<? }else{ ?>
 		<img  src="http://staff.mdwestserve.com/envelopecard.hb472.jpg.php?line1=<?=washAdd($d[to1])?>&line2=<?=washAdd($d[to2])?>&csz=<?=washAdd($d[to3])?>&client=<?=$client?>&lossMit=<?=$lossMit?>">
+		<? } ?>
 		</td></tr></table>
 		<?
 	}
