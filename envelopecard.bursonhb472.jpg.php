@@ -15,7 +15,6 @@ $size = "12";
 $size2 = "22";
 $notice1 = "REQUEST FOR FORECLOSURE MEDIATION";
 
-$notice4 = "ATTN: MARYLAND PRESALE";
 $line1="";
 $line3="";
 //return address
@@ -47,13 +46,9 @@ if ($line3 == ""){
 //only display "ATTN: MARYLAND PRESALE" for letters to attorney
 
 if ($_GET[lossMit] != 'PRELIMINARY'){
-	if ($_GET[client] != ''){
-		imageTTFText( $canvas, $size, 270, 240, 240, $black, $font3, strtoupper($notice4) );
-	}else{
-		imageTTFText( $canvas, $size2, 270, 190, 60, $black, $font3, strtoupper($notice1) );
+	if (!$_GET[client]){
+		imageTTFText( $canvas, $size2, 270, 80, 10, $black, $font3, strtoupper($notice1) );
 	}
-}elseif ($_GET[client] != ''){
-	imageTTFText( $canvas, $size, 270, 190, 240, $black, $font3, strtoupper($notice4) );
 }
 imageTTFText( $canvas, $size, 270, 170, 240, $black, $font3, strtoupper($line1) );
 imageTTFText( $canvas, $size, 270, 150, 240, $black, $font3, strtoupper($line2) );
