@@ -10,15 +10,18 @@ $white = imagecolorallocate( $canvas, 255, 255, 255 );
 $black = imagecolorallocate( $canvas, 0, 0, 0 );
 $font = "/fonts/calibri.ttf";
 $font2 = "/fonts/times.ttf";
-$font3 = "/fonts/arial.ttf";
-$size = "12";
-$size2 = "22";
+$font3 = "/fonts/ARIALN.TTF";
+$font4 = "/fonts/ARIALNB.TTF";
+$size = "11";
+$size2 = "18";
 $notice1 = "REQUEST FOR FORECLOSURE MEDIATION";
 
 $line1="";
 $line3="";
 //return address
-$return1 = "_______________________"; 
+$return1 = "Shapiro & Burson LLP"; 
+$return2 = "13135 Lee Jackson Hwy #201"; 
+$return3 = "Fairfax, VA 22033"; 
 
 imageTTFText( $canvas, $size, 270, 360, 0, $black, $font2, $return1);
 imageTTFText( $canvas, $size, 270, 340, 0, $black, $font2, $return1);
@@ -40,6 +43,9 @@ if (stripos($_GET[line1],"-")){
 }else{
 	$line2=$_GET[line1];
 }
+if ($line1 == "CLERK OF THE CIRCUIT COURT FOR BALTIMORE CITY"){
+	$line1a = "Attn: Foreclosure Clerk";
+}
 if ($line3 == ""){
 	$line3=$_GET[line2];
 }
@@ -47,10 +53,11 @@ if ($line3 == ""){
 
 if ($_GET[lossMit] != 'PRELIMINARY'){
 	if (!$_GET[client]){
-		imageTTFText( $canvas, $size2, 270, 80, 10, $black, $font3, strtoupper($notice1) );
+		imageTTFText( $canvas, $size2, 270, 40, 0, $black, $font4, strtoupper($notice1) );
 	}
 }
 imageTTFText( $canvas, $size, 270, 170, 240, $black, $font3, strtoupper($line1) );
+imageTTFText( $canvas, $size, 270, 170, 240, $black, $font4, strtoupper($line1a) );
 imageTTFText( $canvas, $size, 270, 150, 240, $black, $font3, strtoupper($line2) );
 imageTTFText( $canvas, $size, 270, 130, 240, $black, $font3, strtoupper($line3) );
 imageTTFText( $canvas, $size, 270, 110, 240, $black, $font3, strtoupper($_GET[csz]) );
