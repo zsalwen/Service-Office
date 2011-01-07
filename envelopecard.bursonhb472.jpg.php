@@ -8,7 +8,7 @@ $insert = imagecreatefrompng($src);
 imagecolortransparent($insert,imagecolorat($insert,0,0));
 $white = imagecolorallocate( $canvas, 255, 255, 255 );
 $black = imagecolorallocate( $canvas, 0, 0, 0 );
-$font = "/fonts/CALIBRI.TTF";
+$font = "/fonts/calibri.ttf";
 $font2 = "/fonts/times.ttf";
 $font3 = "/fonts/arial.ttf";
 $size = "12";
