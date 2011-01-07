@@ -14,8 +14,8 @@ $font3 = "/fonts/ARIALN.TTF";
 $font4 = "/fonts/ARIALNB.TTF";
 $font5 = "/fonts/arial.ttf";
 $font6 = "/fonts/ariblk.ttf";
-$size = "12";
-$size2 = "16";
+$size = "13";
+$size2 = "15";
 $notice1 = "REQUEST FOR FORECLOSURE MEDIATION";
 
 $line1="";
