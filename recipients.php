@@ -8,9 +8,6 @@ function getClient($id){
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
 	return $d[display_name];
 }
-function washStr($str){
-	return addslashes(strtoupper($str));
-}
 function atDropDown($addressType){
 	$list .= "<select style='background-color:#CCEEFF;' name='addressType'>";
 	if ($addressType != ''){
@@ -21,11 +18,11 @@ function atDropDown($addressType){
 }
 echo "<table align='center' style='border-collapse:collapse;' border='1'><tr><td>ID</td><td>Recipient</td><td>Address Line 1</td><td>Address Line 2</td><td>Address Type</td><td></td></tr>";
 if ($_POST[submit]){
-	@mysql_query("INSERT INTO envelopeImage (to1, to2, to3, addressType) VALUES ('".washStr($_POST[to1])."','".washStr($_POST[to2])."','".washStr($_POST[to3])."', '".washStr($_POST[addressType])."')");
+	@mysql_query("INSERT INTO envelopeImage (to1, to2, to3, addressType) VALUES ('".addslashes($_POST[to1])."','".addslashes($_POST[to2])."','".addslashes($_POST[to3])."', '".addslashes($_POST[addressType])."')");
 	echo "<center><h2>ENTRY CREATED</h2></center>";
 }
 if ($_POST[submit2]){
-	@mysql_query("UPDATE envelopeImage SET to1='".washStr($_POST[to1])."', to2='".washStr($_POST[to2])."', to3='".washStr($_POST[to3])."', addressType='".washStr($_POST[addressType])."' WHERE envID='$_POST[envID]'");
+	@mysql_query("UPDATE envelopeImage SET to1='".addslashes($_POST[to1])."', to2='".addslashes($_POST[to2])."', to3='".addslashes($_POST[to3])."', addressType='".addslashes($_POST[addressType])."' WHERE envID='$_POST[envID]'");
 	echo "<center><h2>ENTRY UPDATED</h2></center>";
 }
 if ($_POST[edit]){
