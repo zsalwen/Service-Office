@@ -45,7 +45,7 @@ if (stripos($_GET[line1],"-")){
 }else{
 	$line2=$_GET[line1];
 }
-if ($line1 == "CLERK OF THE CIRCUIT COURT FOR BALTIMORE CITY"){
+if (strtoupper($line1) == "CLERK OF THE CIRCUIT COURT FOR BALTIMORE CITY"){
 	$line1a = "Attn: Foreclosure Clerk";
 }
 if ($line3 == ""){
