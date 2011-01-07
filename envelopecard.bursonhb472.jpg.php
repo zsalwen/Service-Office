@@ -13,7 +13,7 @@ $font2 = "/fonts/times.ttf";
 $font3 = "/fonts/ARIALN.TTF";
 $font4 = "/fonts/ARIALNB.TTF";
 $size = "11";
-$size2 = "18";
+$size2 = "16";
 $notice1 = "REQUEST FOR FORECLOSURE MEDIATION";
 
 $line1="";
@@ -24,8 +24,8 @@ $return2 = "13135 Lee Jackson Hwy #201";
 $return3 = "Fairfax, VA 22033"; 
 
 imageTTFText( $canvas, $size, 270, 360, 0, $black, $font2, $return1);
-imageTTFText( $canvas, $size, 270, 340, 0, $black, $font2, $return1);
-imageTTFText( $canvas, $size, 270, 320, 0, $black, $font2, $return1);
+imageTTFText( $canvas, $size, 270, 340, 0, $black, $font2, $return2);
+imageTTFText( $canvas, $size, 270, 320, 0, $black, $font2, $return3);
 $cord = "$clientFile".'X';
 //main label
 if (stripos($_GET[line1],"-")){
@@ -56,7 +56,7 @@ if ($_GET[lossMit] != 'PRELIMINARY'){
 		imageTTFText( $canvas, $size2, 270, 40, 0, $black, $font4, strtoupper($notice1) );
 	}
 }
-imageTTFText( $canvas, $size, 270, 170, 240, $black, $font3, strtoupper($line1) );
+imageTTFText( $canvas, $size, 270, 190, 240, $black, $font3, strtoupper($line1) );
 imageTTFText( $canvas, $size, 270, 170, 240, $black, $font4, strtoupper($line1a) );
 imageTTFText( $canvas, $size, 270, 150, 240, $black, $font3, strtoupper($line2) );
 imageTTFText( $canvas, $size, 270, 130, 240, $black, $font3, strtoupper($line3) );
