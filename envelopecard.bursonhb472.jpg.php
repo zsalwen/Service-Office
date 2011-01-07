@@ -17,7 +17,6 @@ $font5 = "/fonts/arial.ttf";
 $font6 = "/fonts/arialbd.ttf";
 $size = "13";
 $size2 = "15";
-$size3 = "12";
 $notice1 = "REQUEST FOR FORECLOSURE MEDIATION";
 
 $line1="";
@@ -27,9 +26,9 @@ $return1 = "Shapiro & Burson LLP";
 $return2 = "13135 Lee Jackson Hwy #201"; 
 $return3 = "Fairfax, VA 22033"; 
 
-imageTTFText( $canvas, $size3, 270, 360, 0, $black, $font, $return1);
-imageTTFText( $canvas, $size3, 270, 340, 0, $black, $font, $return2);
-imageTTFText( $canvas, $size3, 270, 320, 0, $black, $font, $return3);
+imageTTFText( $canvas, $size, 270, 360, 0, $black, $font, $return1);
+imageTTFText( $canvas, $size, 270, 340, 0, $black, $font, $return2);
+imageTTFText( $canvas, $size, 270, 320, 0, $black, $font, $return3);
 $cord = "$clientFile".'X';
 //main label
 if (stripos($_GET[line1],"-")){
@@ -60,11 +59,11 @@ if ($_GET[lossMit] != 'PRELIMINARY'){
 		imageTTFText( $canvas, $size2, 270, 40, 0, $black, $font6, strtoupper($notice1) );
 	}
 }
-imageTTFText( $canvas, $size, 270, 190, 270, $black, $font5, $line1 );
-imageTTFText( $canvas, $size, 270, 170, 270, $black, $font6, $line1a );
-imageTTFText( $canvas, $size, 270, 150, 270, $black, $font5, $line2 );
-imageTTFText( $canvas, $size, 270, 130, 270, $black, $font5, $line3 );
-imageTTFText( $canvas, $size, 270, 110, 270, $black, $font5, $_GET[csz] );
+imageTTFText( $canvas, $size, 270, 190, 290, $black, $font5, $line1 );
+imageTTFText( $canvas, $size, 270, 170, 290, $black, $font6, $line1a );
+imageTTFText( $canvas, $size, 270, 150, 290, $black, $font5, $line2 );
+imageTTFText( $canvas, $size, 270, 130, 290, $black, $font5, $line3 );
+imageTTFText( $canvas, $size, 270, 110, 290, $black, $font5, $_GET[csz] );
 //imageTTFText( $canvas, $size2, 270, 80, 240, $black, $font3, strtoupper($notice3) );
 header("Content-type: image/png"); 
 $insert_x = imagesx($insert); 
