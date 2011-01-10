@@ -3,7 +3,7 @@ mysql_connect();
 mysql_select_db('core');
 function RMunarray($array) {
     foreach($array as $key => $value) {
-if (is_array($value){
+if (is_array($value)){
 $final .= RMunarray2($value).' ';
 }elseif($value){     
 $final .= $key.' set to '.$value.' ';
