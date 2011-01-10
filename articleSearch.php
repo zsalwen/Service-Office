@@ -41,7 +41,7 @@ function updateArticle($art,$packet){
 function solveArt($art,$packet,$add){
 	$art=rmSpace($art);
 	$matrix=$packet.'-'.strtoupper($add).'X';
-	if (testArt($packet,$add) == 0){
+	if (testArt($packet,$add) != 0){
 		$test2=testArt2($art);
 		if ($test2 != 0){
 			echo "<div style='background-color:red;font-weight:bold;'>Article $art has packet # $test2 in USPS, should be $packet-$add.</div>";
