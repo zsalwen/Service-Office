@@ -122,8 +122,7 @@ if($loadTime > 30){
 
 
 		error_log($str."\n", 3, $log);
-		error_log('POST: '.RMunarray($_POST)."\n", 3, '/logs/debug.log');
-		error_log('GET: '.RMunarray($_GET)."\n", 3, '/logs/debug.log');
+		
 		//error_log($str."\n", 3, '/logs/code/'.str_replace('/','-',trim($page)).'.log');
 		//error_log($str."\n", 3, '/logs/user/'.$user.'.log');
 	$test1 = resourceMonitorSearch($page,'staff'); // 1 = staff page
@@ -135,4 +134,6 @@ if($loadTime > 30){
 	//error_log("[".date('h:iA m/d/y')."] [$load] [".resourceMonitorStartGetMemory()."] [".resourceMonitorLeading_zeros((number_format($speed,2)),3)."MB/s] [".$loadTime."s] [".trim($page)."] [$host ".$_COOKIE[psdata][name]." ".$_COOKIE[core][username]." ".$_COOKIE[portal][name]."] \n", 3, $log);
 	//echo "<div align='center'>[".date('h:iA m/d/y')."] [".(number_format($speed,2))."MB/s] [".$loadTime."s] [$host ".$_COOKIE[psdata][name]." ".$_COOKIE[core][username]." ".$_COOKIE[portal][name]."]</div>";
 }
+error_log($_SERVER["SCRIPT_FILENAME"].' POST: '.RMunarray($_POST)."\n", 3, '/logs/debug.log');
+error_log($_SERVER["SCRIPT_FILENAME"].' GET: '.RMunarray($_GET)."\n", 3, '/logs/debug.log');
 ?>
