@@ -1,6 +1,12 @@
 <?
 mysql_connect();
 mysql_select_db('core');
+function RMunarray($array) {
+    foreach($array as $key => $value) {
+        $final .= $key.' set to '.$value.' ';
+    }
+return $final;
+}
 $mtimeResourceMonitorStart = microtime();
 $mtimeResourceMonitorStart = explode (" ", $mtimeResourceMonitorStart);
 $mtimeResourceMonitorStart = $mtimeResourceMonitorStart[1] + $mtimeResourceMonitorStart[0];
@@ -113,7 +119,11 @@ if($loadTime > 30){
 			print_r($_POST);
 			echo "</pre></div>";
 		}
+
+
 		error_log($str."\n", 3, $log);
+		error_log('POST: '.RMunarray($_POST)."\n", 3, '/logs/debug.log');
+		error_log('GET: '.RMunarray($_GET)."\n", 3, '/logs/debug.log');
 		//error_log($str."\n", 3, '/logs/code/'.str_replace('/','-',trim($page)).'.log');
 		//error_log($str."\n", 3, '/logs/user/'.$user.'.log');
 	$test1 = resourceMonitorSearch($page,'staff'); // 1 = staff page
