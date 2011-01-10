@@ -134,6 +134,10 @@ if($loadTime > 30){
 	//error_log("[".date('h:iA m/d/y')."] [$load] [".resourceMonitorStartGetMemory()."] [".resourceMonitorLeading_zeros((number_format($speed,2)),3)."MB/s] [".$loadTime."s] [".trim($page)."] [$host ".$_COOKIE[psdata][name]." ".$_COOKIE[core][username]." ".$_COOKIE[portal][name]."] \n", 3, $log);
 	//echo "<div align='center'>[".date('h:iA m/d/y')."] [".(number_format($speed,2))."MB/s] [".$loadTime."s] [$host ".$_COOKIE[psdata][name]." ".$_COOKIE[core][username]." ".$_COOKIE[portal][name]."]</div>";
 }
+if($_POST){
 error_log($_SERVER["SCRIPT_FILENAME"].' POST: '.RMunarray($_POST)."\n", 3, '/logs/debug.log');
+}
+if($_GET){
 error_log($_SERVER["SCRIPT_FILENAME"].' GET: '.RMunarray($_GET)."\n", 3, '/logs/debug.log');
+}
 ?>
