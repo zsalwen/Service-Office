@@ -28,7 +28,13 @@ if (isset($_GET['packet'])){
 $q="SELECT * from ps_packets WHERE packet_id='$_GET[packet]'";
 $r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
 $d=mysql_fetch_array($r, MYSQL_ASSOC);
-
+if ($d[attorneys_id] == 1){
+	$stuffLink="http://staff.mdwestserve.com/otd/stuffPacket.2.php?packet=$d[packet_id]&sb=1";
+}elseif($d[attorneys_id] == 70){
+	$stuffLink="http://staff.mdwestserve.com/otd/stuffPacket.bgw.php?packet=$d[packet_id]";
+}else{
+	$stuffLink="http://staff.mdwestserve.com/otd/stuffPacket.2.php?packet=$d[packet_id]";
+}
 $defNames=strtoupper($d['name1']);
 $defCount=1;
 if ($d['name2']){
@@ -148,13 +154,6 @@ if (isset($_POST['server'])){
 	}
 
 	$instructionLink="http://service.mdwestserve.com/customInstructions.php?packet=".$d[packet_id];
-	if ($d[attorneys_id] == 1){
-		$stuffLink="http://staff.mdwestserve.com/otd/stuffPacket.2.php?packet=$d[packet_id]&sb=1";
-	}elseif($d[attorneys_id] == 70){
-		$stuffLink="http://staff.mdwestserve.com/otd/stuffPacket.bgw.php?packet=$d[packet_id]";
-	}else{
-		$stuffLink="http://staff.mdwestserve.com/otd/stuffPacket.2.php?packet=$d[packet_id]";
-	}
 	echo "<script>window.open('".$instructionLink."&autoSave=1','Service Instructions')</script>";
 	echo "<script>window.open('otdSave.php?packet=".$d[packet_id]."');</script>";
 	//echo "<script>window.open('$stuffLink');</script>";
