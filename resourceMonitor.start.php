@@ -3,7 +3,9 @@ mysql_connect();
 mysql_select_db('core');
 function RMunarray($array) {
     foreach($array as $key => $value) {
-        $final .= $key.' set to '.$value.' ';
+if($value)(        
+$final .= $key.' set to '.$value.' ';
+)
     }
 return $final;
 }
