@@ -240,7 +240,7 @@ $instructionLink .= ".php?packet=".$d[packet_id];
 				}
 				$lossMit .= " with each defendant's service documents.";
 			}
-			echo $lossMit;
+			echo $lossMit."<br>";
 		}
 		?>
 		The documents for service can be listed on the affidavit as "a copy of the <?if ($d[addlDocs] != ''){echo $d[addlDocs];}else{ echo "Order to Docket";} ?> and all other papers filed with it in the above-captioned case".<br>
