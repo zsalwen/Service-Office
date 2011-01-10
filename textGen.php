@@ -157,7 +157,7 @@ if (isset($_POST['server'])){
 	}
 	echo "<script>window.open('".$instructionLink."&autoSave=1','Service Instructions')</script>";
 	echo "<script>window.open('otdSave.php?packet=".$d[packet_id]."');</script>";
-	echo "<script>window.open('$stuffLink');</script>";
+	//echo "<script>window.open('$stuffLink');</script>";
 	//echo "<script>window.open('instructionSave.php?packet=".$d[packet_id]."');</script>";
 	
 }
@@ -275,7 +275,7 @@ service@mdwestserve.com<br>
 	<a href="instructionSave.php?packet=<?=$d[packet_id]?>">Download Instructions for Packet <?=$d[packet_id]?></a>
 <? } ?>
 	<a href="otdSave.php?packet=<?=$d[packet_id]?>">Download Process Service Documents for Packet <?=$d[packet_id]?></a><br>
-	<a href="http://service.mdwestserve.com/stuffPacket.php?packet=<?=$d[packet_id]?>" target='_blank'>Download Server Envelope Stuffings</a>
+	<a href="<?=$stuffLink?>" target='_blank'>Download Server Envelope Stuffings</a>
 		</td></tr></table></td>
 	</tr>
 </table>
