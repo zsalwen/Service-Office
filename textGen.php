@@ -148,9 +148,16 @@ if (isset($_POST['server'])){
 	}
 
 	$instructionLink="http://service.mdwestserve.com/customInstructions.php?packet=".$d[packet_id];
+	if ($d[attorneys_id] == 1){
+		$stuffLink="http://staff.mdwestserve.com/otd/stuffPacket.2.php?packet=$d[packet_id]&sb=1";
+	}elseif($d[attorneys_id] == 70){
+		$stuffLink="http://staff.mdwestserve.com/otd/stuffPacket.bgw.php?packet=$d[packet_id]";
+	}else{
+		$stuffLink="http://staff.mdwestserve.com/otd/stuffPacket.2.php?packet=$d[packet_id]";
+	}
 	echo "<script>window.open('".$instructionLink."&autoSave=1','Service Instructions')</script>";
 	echo "<script>window.open('otdSave.php?packet=".$d[packet_id]."');</script>";
-	echo "<script>window.open('http://service.mdwestserve.com/stuffPacket.php?packet=".$d[packet_id]."');</script>";
+	echo "<script>window.open('$stuffLink');</script>";
 	//echo "<script>window.open('instructionSave.php?packet=".$d[packet_id]."');</script>";
 	
 }
@@ -210,33 +217,26 @@ $instructionLink .= ".php?packet=".$d[packet_id];
 		}else{ echo "<i>NO SERVER SELECTED</i>";}?>, which would make the total cost of service <i><b>INSERT SERVICE TOTAL</b></i>.<br>
 		I have attached the documents for service to this email, along with an instruction sheet for easy reference (you can disregard the names of any other servers/addresses, as they only concern MD service).  After you have completed service, please call our office so we can prepare our affidavits for you.<br><br>
 		<? 
-		if ($data2[envInstruct] == 'GREEN'){
-		
-		echo "<span style='font-variant:small-caps; font-style:italic;'>$lossMit</span>";
-	}elseif($data2[envInstruct] == 'WHITE'){
-		
-		echo "<span style='font-variant:small-caps; font-style:italic;'>$lossMit</span>";
-	}
 		if ($d[lossMit] != '' && $d[lossMit] != 'N/A - OLD L'){
-			if ($d[attorneys_id] != 70){
+			if ($d[attorneys_id] == 1){
 				//if file is a final or preliminary, instruct to include available envelope stuffings
 				$toAttorney=id2attorneyName($d[attorneys_id]);
 				$toCounty=county2envelope2($d[circuit_court]);
-				$lossMit="Per Maryland law HB472, be sure to include the documents that are to be folded and stuffed into the green, #10 envelopes that we have sent you.  Please print these documents and fold them so that the addresses are visible in the envelopes' window.  ";
-				if ($d[lossMit] == 'PRELIMINARY'){
+				if ($d[lossMit] == 'FINAL'){
 					//if preliminary, instruct to include one envelope to client
-					$lossMit .= "One envelope should be included with the service documents for each defendant, addressed to $toAttorney.";
+					$lossMit="Per Maryland law HB472, please include one of the provided GREEN, preprinted #10 envelopes addressed to '$toAttorney', with the service documents for each defendant.";
 				}else{
 					//if final, instruct to include two envelopes: one to court and one to client
-					$lossMit .= "Two envelopes should be included with the service documents for each defendant (one addressed to $toAttorney, and the other to $toCounty).";
+					$lossMit = "Per Maryland law HB472, two envelopes should be included with the service documents for each defendant (one GREEN envelope addressed to '$toAttorney', and one WHITE envelope addressed to '$toCounty').";
 				}
 			}else{
 				//if file requires white BGW-style envelopes, then instruct to include envelope for attorney
-				$lossMit="Per Maryland law HB472, please include one of the provided white, preprinted #10 envelope addressed to BIERMAN, GEESING & WARD, LLC";
+				$toAttorney=id2attorneyName($d[attorneys_id]);
+				$lossMit="Per Maryland law HB472, please include one of the provided white, preprinted #10 envelope addressed to '$toAttorney'";
 				if ($d[lossMit] == 'FINAL'){
 					//if file is a final, instruct to include envelope for court
 					$toCounty=county2envelope2($d[circuit_court]);
-					$lossMit .= " and another white, preprinted #10 envelope addressed to ".$toCounty;
+					$lossMit .= " and another white, preprinted #10 envelope addressed to '$toCounty'";
 				}
 				$lossMit .= " with each defendant's service documents.";
 			}
