@@ -17,13 +17,15 @@ function testArt($packet,$add){
 }
 function testArt2($art){
 	$art=rmSpace($art);
-	$q="select packet from usps where article='$art' LIMIT 0,1";
+	$q="select packet, article from usps where article='$art' LIMIT 0,1";
 	$r=@mysql_query($q);
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 	if ($d["packet"] != ''){
 		return $d["packet"];
-	}else{
+	}elseif($d[article] != ''){
 		return 0;
+	}else{
+		return "X";
 	}
 }
 function enterArticle($art,$packet){
@@ -39,18 +41,16 @@ function updateArticle($art,$packet){
 function solveArt($art,$packet,$add){
 	$art=rmSpace($art);
 	$matrix=$packet.'-'.strtoupper($add).'X';
-	if (testArt($packet,$add) != 0){
-		$test2=testArt2($art);
-		if ($test2 != 0){
-			echo "<div style='background-color:red;font-weight:bold;'>Article $art has packet # $test2 in USPS, should be $packet-$add.</div>";
-		}else{
-			echo "<div style='background-color:green;font-weight:bold;'>OTD$packet missing packet # for article $add: $art in USPS</div>";
-			$query="UPDATE usps SET packet='$matrix' WHERE article='$art'";
-			@mysql_query($query) or die ("Query: $query<br>".mysql_error());
-		}
+	$test2=testArt2($art);
+	if ($test2 != 0 && $test2 != 'X'){
+		echo "<div style='background-color:red;font-weight:bold;'>Article $art has packet # $test2 in USPS, should be $packet-$add.</div>";
+	}elseif($test2 != 'X'){
+		echo "<div style='background-color:green;font-weight:bold;'>OTD$packet missing packet # for article $add: $art in USPS</div>";
+		$query="UPDATE usps SET packet='$matrix' WHERE article='$art'";
+		@mysql_query($query) or die ("Query: $query<br>".mysql_error());
 	}else{
 		echo "OTD$packet missing article $add: $art in USPS<br>";
-		enterArticle($art,$matrix);
+		//enterArticle($art,$matrix);
 	}
 }
 function reverseArticle($art){
