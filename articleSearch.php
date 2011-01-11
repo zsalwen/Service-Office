@@ -27,9 +27,7 @@ function testArt2($art){
 	}
 }
 function enterArticle($art,$packet){
-	$art=rmSpace($art);
-	$packet2=$packet."X";
-	$q="INSERT INTO usps (article, packet, status, processor, history) values ('$art', '$packet2', 'SENT', '".$_COOKIE[psdata][name]."', '$history')";
+	$q="INSERT INTO usps (article, packet, status, processor, history) values ('$art', '$packet', 'SENT', '".$_COOKIE[psdata][name]."', '$history')";
 	@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 }
 function updateArticle($art,$packet){
@@ -46,13 +44,13 @@ function solveArt($art,$packet,$add){
 		if ($test2 != 0){
 			echo "<div style='background-color:red;font-weight:bold;'>Article $art has packet # $test2 in USPS, should be $packet-$add.</div>";
 		}else{
+			echo "<div style='background-color:green;font-weight:bold;'>OTD$packet missing packet # for article $add: $art in USPS</div>";
 			$query="UPDATE usps SET packet='$matrix' WHERE article='$art'";
 			@mysql_query($query) or die ("Query: $query<br>".mysql_error());
-			echo "<div style='background-color:green;font-weight:bold;'>OTD$packet missing packet # for article $add: $art in USPS</div>";
 		}
 	}else{
 		echo "OTD$packet missing article $add: $art in USPS<br>";
-		//	enterArticle($art,$matrix);
+		enterArticle($art,$matrix);
 	}
 }
 function reverseArticle($art){
