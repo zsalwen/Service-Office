@@ -132,7 +132,7 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)){
 		if ($d["article$i"] != ''){
 			if (testArt("EV".$packet,$i) == 0){
 				echo "EV$packet missing article $i in USPS<br>";
-				$art=rmSpace($art);
+				$art=rmSpace($d["article$i"]);
 				$matrix="EV".$packet.'-'.$i.'X';
 				enterArticle($art,$matrix);
 			}
