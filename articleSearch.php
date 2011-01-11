@@ -50,7 +50,7 @@ function solveArt($art,$packet,$add){
 		@mysql_query($query) or die ("Query: $query<br>".mysql_error());
 	}else{
 		echo "OTD$packet missing article $add: $art in USPS<br>";
-		//enterArticle($art,$matrix);
+		enterArticle($art,$matrix);
 	}
 }
 function reverseArticle($art){
