@@ -16,7 +16,6 @@ function testArt($packet,$add){
 	}
 }
 function testArt2($art){
-	$art=rmSpace($art);
 	$q="select packet, article from usps where article='$art' LIMIT 0,1";
 	$r=@mysql_query($q);
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
@@ -43,7 +42,9 @@ function solveArt($art,$packet,$add){
 	$matrix=$packet.'-'.strtoupper($add).'X';
 	$test2=testArt2($art);
 	if ($test2 != 0 && $test2 != 'X'){
-		echo "<div style='background-color:red;font-weight:bold;'>Article $art has packet # $test2 in USPS, should be $packet-$add.</div>";
+		if ($test2 != $matrix){
+			echo "<div style='background-color:red;font-weight:bold;'>Article $art has packet # $test2 in USPS, should be $packet-$add.</div>";
+		}
 	}elseif($test2 != 'X'){
 		echo "<div style='background-color:green;font-weight:bold;'>OTD$packet missing packet # for article $add: $art in USPS</div>";
 		$query="UPDATE usps SET packet='$matrix' WHERE article='$art'";
@@ -131,6 +132,9 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)){
 		if ($d["article$i"] != ''){
 			if (testArt("EV".$packet,$i) == 0){
 				echo "EV$packet missing article $i in USPS<br>";
+				$art=rmSpace($art);
+				$matrix="EV".$packet.'-'.$i.'X';
+				enterArticle($art,$matrix);
 			}
 		}
 	}
