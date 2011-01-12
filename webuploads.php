@@ -1,7 +1,7 @@
 <?
 mysql_connect();
 mysql_select_db('core');
-
+include 'common.php';
 // open this directory 
 $myDirectory = opendir("/home/webuploads/");
 
@@ -43,7 +43,7 @@ for($index=0; $index < $indexCount; $index++) {
 		}else{
 			unlink($from);
 			print("Passed Copy, Link Recorded");
-			@mysql_query( "INSERT into ps_affidavits (packetID, defendantID, affidavit, userID, method, uploadDate) VALUES ('$main[0]','$main[1]','$link','".$_COOKIE[psdata][name]."','$sub[0]', NOW())");
+			@mysql_query( "INSERT into ps_affidavits (packetID, defendantID, affidavit, userID, method, uploadDate) VALUES ('$main[0]','$main[1]','$link','".$_COOKIE[psdata][user_id]."','$sub[0]', NOW())");
 		}
 		print("</td>");
 		print("</TR>\n");

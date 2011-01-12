@@ -130,7 +130,8 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)){
 	$i=0;
 	while ($i < 6){$i++;
 		if ($d["article$i"] != ''){
-			if (testArt("EV".$packet,$i) == 0){
+			$testArt2=testArt2($d["article$i"]);
+			if ($test2 == 'X'){
 				echo "EV$packet missing article $i in USPS<br>";
 				$art=rmSpace($d["article$i"]);
 				$matrix="EV".$packet.'-'.$i.'X';
@@ -143,6 +144,7 @@ echo "<hr>SEARCHING USPS<br>";
 $q="SELECT * FROM usps WHERE article <> '' AND packet=''";
 $r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 while ($d=mysql_fetch_array($r, MYSQL_ASSOC)){
+	echo "$d[article] missing packet #";
 	reverseArticle($d[article]);
 }
 ?>
