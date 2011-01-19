@@ -1,1 +1,1 @@
-<? include '/sandbox/staff/lock.php'; ?>
+<? include '../lock.php'; ?>
