@@ -1,4 +1,4 @@
-<? include '/sandbox/staff/lock.php'; ?>
+<? include '/gitbox/Service-Office/lock.php'; ?>
 <meta http-equiv="refresh" content="60" />
 <?
 function courierDate($id){
