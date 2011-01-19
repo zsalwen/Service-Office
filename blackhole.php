@@ -315,7 +315,7 @@ function serverActiveListd($id,$packet){
 	$data.='</ol>';
 	return $data;
 }
-function serverActiveListe($id,$packet){ 
+function serverActiveListe($id,$packet){
 	$data='<ol>';
 	if ($packet != '0' && $packet != ''){
 		$r=@mysql_query("select packet_id, avoidDOT, affidavit_status, service_status, filing_status, circuit_court, attorneys_id, estFileDate, case_no, caseLookupFlag, reopenDate, affidavit_status2, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where server_ide='$id' and affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND packet_id < '$packet'   order by  packet_id");
@@ -526,7 +526,20 @@ while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 echo "<fieldset><legend>".id2name($d[server_id])." #$d[server_id]</legend>".evictionActiveList($d[server_id],$_GET[packet])."</fieldset>";
 }
 ?>
-</td></tr></table>
+<!--------------------------------BEGIN MAIL ONLYS------------------------------>
+</td></tr></table><tr><td>
+<center><div style="border-style:solid 1px; border-collapse:collapse; font-weight:bold; letter-spacing: 5px;background-color:00BBAA; width:800px;">MAIL ONLY</div></center>
+<table><tr><td valign='top'><?
+if ($_GET[packet]){
+	$q="SELECT packet_id, closeOut from ps_packets where affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status='MAIL ONLY' AND packet_id <= '$_GET[packet]' ORDER BY packet_id ASC";
+}else{
+	$q="SELECT packet_id, closeOut from ps_packets where affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status='MAIL ONLY' ORDER BY packet_id ASC";
+}
+$r=@mysql_query($q);
+while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+echo "<li style='background-color:#99DD66'>$d[packet_id] :: MAILING/MAILED: $d[closeOut]</li>";
+}
+?></td></tr></table>
 </td></tr></table>
 <? mysql_close();?>
 <script>document.title='Blackhole <?=$_SESSION[active]?> Servers <?=$_SESSION[active2]?> Services';</script>
