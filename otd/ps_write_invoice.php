@@ -8,6 +8,8 @@ ini_set("memory_limit","12M");
 //error_reporting(E_ALL);
 set_time_limit(1800);
 include '../class.ezpdf.php';
+mysql_connect();
+mysql_select_db('core');
 // let's set the page size and the margins
 $pdf =& new Cezpdf('LETTER','portrait');
 $pdf -> ezSetMargins(50,70,50,50);
@@ -28,13 +30,6 @@ function dbout($full){
 	$out['day'] = $split[6].$split[7];
 	return $out;
 }
-
-function db_connect($host,$database,$user,$password){
-	$step1 = @mysql_connect ();
-	$step2 = mysql_select_db ($database);
-	return mysql_error();
-}
-db_connect('delta.mdwestserve.com','core','','');
 
 
 function log_action($user_id,$action){
@@ -199,8 +194,8 @@ $pdf->addTextWrap(340,114,300,12,'Hampton Plaza - Suite 1103');
 $pdf->addTextWrap(340,102,300,12,'Baltimore, MD 21286');
 
 //Place Logo
-$logo='smallLogo.jpg';
-$pdf->addJpegFromFile($logo,80,30,120,120);
+/*$logo='smallLogo.jpg';
+$pdf->addJpegFromFile($logo,80,30,120,120);*/
 
 $pdfcode = $pdf->ezOutput();
 
