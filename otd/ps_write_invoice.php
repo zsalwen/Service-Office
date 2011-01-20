@@ -218,8 +218,9 @@ $filename = $data["case_no"]."-"."CLIENT.".time().".PDF";
 }
 
 $fname = $dir.'/'.$filename;
-
-//echo "<h1>$fname</h1>";
+if (!file_exists($fname)){
+	echo "<h1>$fname</h1>";
+}
 $fp = fopen($fname, 'w');
 fwrite($fp, $pdfcode);
 fclose($fp);
