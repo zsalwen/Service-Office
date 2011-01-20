@@ -218,13 +218,12 @@ $filename = $data["case_no"]."-"."CLIENT.".time().".PDF";
 }
 
 $fname = $dir.'/'.$filename;
-if (!file_exists($fname)){
-	echo "<h1>$fname</h1>";
-}
 $fp = fopen($fname, 'w');
 fwrite($fp, $pdfcode);
 fclose($fp);
-
+if (!file_exists($fname)){
+	echo "<h1>$fname</h1>";
+}
 $invoiceName = str_replace('invoices','serviceInvoices',$dir).'/'.$filename;
 $invoiceName = str_replace('/data/service/','/',$invoiceName);
 //echo "<h1>$invoiceName</h1>";
