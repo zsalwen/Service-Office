@@ -222,7 +222,9 @@ $fp = fopen($fname, 'w');
 fwrite($fp, $pdfcode);
 fclose($fp);
 if (!file_exists($fname)){
-	echo "<h1>$fname</h1>";
+	echo "<h1>MISSING: $fname</h1>";
+}else{
+	echo "<h1>FOUND: $fname</h1>";
 }
 $invoiceName = str_replace('invoices','serviceInvoices',$dir).'/'.$filename;
 $invoiceName = str_replace('/data/service/','/',$invoiceName);
