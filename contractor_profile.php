@@ -146,7 +146,7 @@ $d=mysql_fetch_array($r, MYSQL_ASSOC);
                 </tr>
     	<tr>
     	<td valign="top">Notes</td>
-        <td colspan="3" valign="top"><textarea name="manager_review" cols="45" rows="5"><?=stripslashes($d[manager_reviews])?></textarea></td>
+        <td colspan="3" valign="top"><textarea name="manager_review" cols="45" rows="5"><?=stripslashes($d[manager_review])?></textarea></td>
     </tr>
          <tr>
                 	<td colspan="4" align="center"><input  type="submit" name="submit" value="Update <?=$d[level]?>" /></form><? if ($_COOKIE[psdata][level] == "Operations"){?>
