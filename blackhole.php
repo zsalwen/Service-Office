@@ -553,7 +553,7 @@ while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	}else{
 		$color="background-color:000000; color:FFFFFF;";
 	}
-	echo "<fieldset><legend style='$color'>$d[closeOut]</legend>";
+	echo "<fieldset><legend style='$color'>$d[closeOut]</legend><ol>";
 	while ($d2=mysql_fetch_array($r2,MYSQL_ASSOC)){
 		if ($d2[process_status] == 'READY TO MAIL'){
 			$mailed="AWAITING MAILING";
@@ -562,7 +562,7 @@ while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 		}
 		echo "<li style='$color'><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>$d2[packet_id]</a> :: $mailed</li>";
 	}
-	echo "</fieldset>";
+	echo "</ol></fieldset>";
 }
 ?></td></tr></table>
 </td></tr></table>
