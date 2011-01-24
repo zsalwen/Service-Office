@@ -331,7 +331,7 @@ if ($_GET[packet]){
 	}
 }
 if ($pagesTotal != '' && $_GET[noExport] != 1){
-	require_once("/thirdParty/dompdf-0.5.1/dompdf_config.inc.php");
+	require_once("/thirdParty/dompdf/dompdf_config.inc.php");
 	$old_limit = ini_set("memory_limit", "72M");
 	$dompdf = new DOMPDF();
 	$dompdf->load_html($pagesTotal);
