@@ -152,7 +152,7 @@ error_log("\n".$_SERVER["SCRIPT_FILENAME"].' POST: '.RMunarray($_POST)."\n", 3, 
 if($_GET){
 error_log("\n".$_SERVER["SCRIPT_FILENAME"].' GET: '.RMunarray($_GET)."\n", 3, '/logs/debug.log');
 }
-if($_COOKIE){
-error_log("\n".$_SERVER["SCRIPT_FILENAME"].' COOKIE: '.RMunarray($_COOKIE)."\n", 3, '/logs/debug.log');
-}
+//if($_COOKIE){
+//error_log("\n".$_SERVER["SCRIPT_FILENAME"].' COOKIE: '.RMunarray($_COOKIE)."\n", 3, '/logs/debug.log');
+//}
 ?>
