@@ -560,7 +560,7 @@ while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 		}else{
 			$mailed="MAILED";
 		}
-		echo "<li style='$color'>$d2[packet_id] :: $mailed</li>";
+		echo "<li style='$color'><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>$d2[packet_id]</a> :: $mailed</li>";
 	}
 	echo "</fieldset>";
 }
