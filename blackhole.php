@@ -528,16 +528,41 @@ echo "<fieldset><legend>".id2name($d[server_id])." #$d[server_id]</legend>".evic
 ?>
 <!--------------------------------BEGIN MAIL ONLYS------------------------------>
 </td></tr></table><tr><td>
-<center><div style="border-style:solid 1px; border-collapse:collapse; font-weight:bold; letter-spacing: 5px;background-color:00BBAA; width:800px;">MAIL ONLY</div></center>
+<center><div style="border-style:solid 1px; border-collapse:collapse; font-weight:bold; letter-spacing: 5px;background-color:CC66BB; width:800px;">MAIL ONLY</div></center>
 <table><tr><td valign='top'><?
 if ($_GET[packet]){
-	$q="SELECT packet_id, closeOut from ps_packets where affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status='MAIL ONLY' AND packet_id <= '$_GET[packet]' ORDER BY packet_id ASC";
+	$q="SELECT DISTINCT closeOut FROM ps_packets WHERE affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status='MAIL ONLY' AND packet_id <= '$_GET[packet]' ORDER BY closeOut ASC";
+	$q2="SELECT packet_id, process_status FROM ps_packets WHERE affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status='MAIL ONLY' AND packet_id <= '$_GET[packet]' ORDER BY packet_id ASC";
 }else{
-	$q="SELECT packet_id, closeOut from ps_packets where affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status='MAIL ONLY' ORDER BY packet_id ASC";
+	$q="SELECT DISTINCT closeOut FROM ps_packets WHERE affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status='MAIL ONLY' ORDER BY closeOut ASC";
+	$q2="SELECT packet_id, process_status FROM ps_packets WHERE affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status='MAIL ONLY' ORDER BY packet_id ASC";
 }
 $r=@mysql_query($q);
+$r2=@mysql_query($q2);
+$today=date('Y-m-d');
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-echo "<li style='background-color:#99DD66'>$d[packet_id] :: MAILING/MAILED: $d[closeOut]</li>";
+	if ($_GET[packet]){
+		$q2="SELECT packet_id, process_status FROM ps_packets WHERE affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status='MAIL ONLY' AND closeOut='$d[closeOut]' AND packet_id <= '$_GET[packet]' ORDER BY packet_id ASC";
+	}else{
+		$q2="SELECT packet_id, process_status FROM ps_packets WHERE affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status='MAIL ONLY' AND closeOut='$d[closeOut]' ORDER BY packet_id ASC";
+	}
+	if ($d[closeOut] > $today){
+		$color="background-color:CCCCCC; color:000000;";
+	}elseif($d[closeOut] == $today){
+		$color="background-color:99DD66; color:000000;";
+	}else{
+		$color="background-color:000000; color:FFFFFF;";
+	}
+	echo "<fieldset><legend style='$color'>$d[closeOut]</legend>";
+	while ($d2=mysql_fetch_array($r2,MYSQL_ASSOC)){
+		if ($d2[process_status] == 'READY TO MAIL'){
+			$mailed="AWAITING MAILING";
+		}else{
+			$mailed="MAILED";
+		}
+		echo "<li style='$color'>$d2[packet_id] :: $mailed</li>";
+	}
+	echo "</fieldset>";
 }
 ?></td></tr></table>
 </td></tr></table>
