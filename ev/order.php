@@ -516,7 +516,7 @@ fieldset {margin:0px; padding:0px; background-color:#FFFFFF; }
 <? }else{ ?>
 <td><div class="alert">Estimated Close<br><?=getClose($packet);?></div></td>
 <? }?>
-<td><div class="alert"style="font-size:10px;"><a href="?packet=<?=$_GET[packet]?>&export='<?=time();?>'">EXPORT</a><hr><?=$exportStatus;?></div></td>
+<td><div class="alert"style="font-size:10px;"><a href="?packet=<?=$packet?>&export='<?=time();?>'">EXPORT</a><hr><?=$exportStatus;?></div></td>
 </tr></table>
 </center>
 
