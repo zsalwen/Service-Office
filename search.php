@@ -243,7 +243,8 @@ if ($in == 'client_file'){ return 'filenumber'; }
 if ($in == 'name'){ return 'defendantfullname'; }
 if ($in == 'address'){ return 'defendantaddress1'; }
 }
-$r=@mysql_query("select * from defendants where ".ps2ws($_GET['field'])." like '%$search%'");
+$qRow="select * from defendants where ".ps2ws($_GET['field'])." like '%$search%'";
+$r=@mysql_query($qRow) or die ("Query: $qRow<br>".mysql_error());
 while($row=mysql_fetch_array($r,MYSQL_ASSOC)){
 
 	echo '<tr>';
