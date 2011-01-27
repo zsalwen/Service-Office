@@ -96,16 +96,6 @@ $mail_address4 = trim($mail_address[3]);
 		<td>$<?=$d[code430b];?></td>
 	</tr>
 </table>
-<center>
-<div style="font-size:8px;">
-	 <? if($d[photo1]){ echo "<img height='100' width='200' src='".str_replace('ps/','',$d[photo1])."' />";}?>
-	 <? if($d[photo1a]){ echo "<img height='100' width='200' src='".str_replace('ps/','',$d[photo1a])."' />";}?>
-	 <? if($d[photo1b]){ echo "<img height='100' width='200' src='".str_replace('ps/','',$d[photo1b])."' />";}?>
-	 <? if($d[photo1c]){ echo "<img height='100' width='200' src='".str_replace('ps/','',$d[photo1c])."' />";}?>
-	 <? if($d[photo1d]){ echo "<img height='100' width='200' src='".str_replace('ps/','',$d[photo1d])."' />";}?>
-	 <? if($d[photo1e]){ echo "<img height='100' width='200' src='".str_replace('ps/','',$d[photo1e])."' />";}?>
-</div>
-</center>
 <table cellspacing="0" cellpadding="3" width="768px" align="center">
 	<tr>
 		<td>Filing Status</td>

@@ -2,7 +2,7 @@
 include 'common.php';
 $canvas = imagecreate( 380, 800);
 $_SESSION[pass]=$_GET[line2];
-$src = "http://mdwestserve.com/ps/barcode.php";
+$src = "http://service.mdwestserve.com/barcode.php";
 $insert = imagecreatefrompng($src);
 imagecolortransparent($insert,imagecolorat($insert,0,0));
 $white = imagecolorallocate( $canvas, 255, 255, 255 );
