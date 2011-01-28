@@ -1,5 +1,5 @@
 <?
-error_log(date('r')." Start Watchdog Search  \n", 3, '/logs/watchdog.log');
+//error_log(date('r')." Start Watchdog Search  \n", 3, '/logs/watchdog.log');
 function getPage($url, $referer, $timeout, $header){
 	if(!isset($timeout))
         $timeout=30;
