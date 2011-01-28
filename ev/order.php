@@ -1040,9 +1040,12 @@ Request Close<br>
 <? }?>
 <script>document.title='EV<?=$_GET[packet]?>|<?=$d[status]?>|<?=$d[service_status]?>|<?=$d[process_status]?>|<?=$d[affidavit_status]?>'</script>
 <?
-$r=@mysql_query("select * from fileWatch where clientFile = $d[client_file]");
-while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-echo "<script>alert('$d[message]');</script>";
+if ($d[client_file] != ''){
+	$q="select * from fileWatch where clientFile = $d[client_file]";
+	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
+	while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+		echo "<script>alert('$d[message]');</script>";
+	}
 }
 ?>
 
