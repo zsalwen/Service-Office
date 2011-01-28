@@ -25,9 +25,6 @@ if($_COOKIE[psdata][user_id] == '1'){
 									('$user_id', NOW(), NOW(), '$record', '$note')";
 		$r = @mysql_query($q);
 		$msg = id2name($user_id).' '.$record;
-		mail('mdwestserve@gmail.com',$msg,$msg);
-		mail('patrick@mdwestserve.com',$msg,$msg);
-		mail('zachsalwen@gmail.com',$msg,$msg);
 		echo "<script>alert('$msg');</script>";
 
 
@@ -38,9 +35,6 @@ if($_COOKIE[psdata][user_id] == '1'){
 									('$user_id', NOW(), NOW(), '$record', '$note')";
 		$r = @mysql_query($q);
 		$msg = id2name($user_id).' '.$record;
-		mail('mdwestserve@gmail.com',$msg,$msg);
-		mail('patrick@mdwestserve.com',$msg,$msg);
-		mail('zachsalwen@gmail.com',$msg,$msg);
 		echo "<script>alert('$msg');</script>";
 }
 
@@ -64,9 +58,6 @@ $note=addslashes(strtoupper($_POST[note]));
 									('$user_id', NOW(), NOW(), '$record', '$note')";
 		$r = @mysql_query($q);
 		$msg = id2name($user_id).' '.$record;
-		mail('mdwestserve@gmail.com',$msg,$msg);
-		mail('patrick@mdwestserve.com',$msg,$msg);
-		mail('zachsalwen@gmail.com',$msg,$msg);
 		echo "<script>alert('$msg');</script>";
 	}
 }
