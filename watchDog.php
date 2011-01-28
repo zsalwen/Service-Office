@@ -46,11 +46,11 @@ while ($dOut=mysql_fetch_array($rOut,MYSQL_ASSOC)){
 	//echo "<li>$dOut[firstName], $dOut[lastName], $dOut[county]: $response</li>";
 	if (!$dOut['response'] && !$dOut['status']){
 		@mysql_query("UPDATE watchDog set status = 'Case Watch Started', response = '$response', watchStart = NOW(), lastChecked = NOW() where watchID = '$id'") or die (mysql_error());
-		error_log(date('r')." Started Watch: Current cases found under ".$dOut['firstName']." ".$dOut['lastName']." in ".$dOut['county'].", ".$response." cases \n", 3, '/logs/watchdog.log');
+		//error_log(date('r')." Started Watch: Current cases found under ".$dOut['firstName']." ".$dOut['lastName']." in ".$dOut['county'].", ".$response." cases \n", 3, '/logs/watchdog.log');
 		//mail('service@mdwestserve.com','Started Case Watch Dog for '.strtoupper($dOut['firstName']).' '.strtoupper($dOut['lastName']),'Current cases found under '.$dOut['firstName'].' '.$dOut['lastName'].' in '.$dOut['county'].', '.$response.' cases.');
 	}elseif (trim($dOut['response']) < trim($response)){ 
 		@mysql_query("UPDATE watchDog set status = 'New Case Found', lastResult = '$response', lastChecked = NOW() where watchID = '$id'") or die (mysql_error());
-		error_log(date('r').' New case found under '.$dOut['firstName'].' '.$dOut['lastName'].' in '.$dOut['county'].', '.$response.' cases (up from '.$dOut['response'].')'."  \n", 3, '/logs/watchdog.log');
+		//error_log(date('r').' New case found under '.$dOut['firstName'].' '.$dOut['lastName'].' in '.$dOut['county'].', '.$response.' cases (up from '.$dOut['response'].')'."  \n", 3, '/logs/watchdog.log');
 		//mail('service@mdwestserve.com','Case Watch Dog for '.strtoupper($dOut['firstName']).' '.strtoupper($dOut['lastName']),'New case found under '.$dOut['firstName'].' '.$dOut['lastName'].' in '.$dOut['county'].', '.$response.' cases (up from '.$dOut['response'].')');
 	}else{
 		@mysql_query("UPDATE watchDog set status='Searching...', lastChecked = NOW(), lastResult = '$response' where watchID = '$id'") or die (mysql_error());
