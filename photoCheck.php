@@ -42,7 +42,11 @@ function photoCheckList($server_id){
 			$data .= "<tr bgcolor='".colorCode($late)."'><td>$fileCount</td><td>$d[fileDate]</td><td align='center'>$late</td><td><a href='wizard.php?jump=$d[packet_id]-1&photojump=1' target='_blank'>$d[packet_id]</a></td></tr>";
 		}
 	}
-	$avg=number_format($lateTotal/$fileCount,2);
+	if ($fileCount != 0){
+		$avg=number_format($lateTotal/$fileCount,2);
+	}else{
+		$avg=0;
+	}
 	$data .= "</table></div><center style='font-size:16px; padding:0px;'>".id2name($server_id)." has $fileCount files missing photographs, over an average of $avg days.</center>";
 	return $data;
 }
