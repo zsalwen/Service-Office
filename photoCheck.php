@@ -30,9 +30,11 @@ function photoCheckList($server_id){
 		$q2="SELECT * FROM ps_photos WHERE packetID='$d[packet_id]'";
 		$r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
 		$d2=mysql_fetch_array($r2,MYSQL_ASSOC);
-		if (testLink2($d2[browserAddress]) == 1){$_SESSION[fileCount]++;
+		if (testLink2($d2[browserAddress]) == 1){
 			$now=time();
-			if ($d[fileDate] != '0000-00-00'){$fileCount++;
+			if ($d[fileDate] != '0000-00-00'){
+			$fileCount++;
+			$_SESSION[fileCount]++;
 				$fileDate=strtotime($d[fileDate]);
 				$late=number_format(($now-$fileDate)/86400,0);
 				$lateTotal=$lateTotal+$late;
