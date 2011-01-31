@@ -81,18 +81,9 @@ function mkCC($str){
 }
 
 function photoCount($packet){
-	$count=0;
-	$q="SELECT photo1a, photo1b, photo1c, name1, name2, name3, name4, name5, name6 FROM evictionPackets WHERE eviction_id='$packet'";
-	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
-	$d=mysql_fetch_array($r,MYSQL_ASSOC);
-	$i=0;
-	while ($i < 6){$i++;
-		if ($d["name$i"]){
-			foreach(range('a','m') as $letter){
-				$current="photo".$i.$letter;
-				if($d["$current"] != ''){$count++;}
-			}
-		}
+	$count=trim(getPage("http://data.mdwestserve.com/countPhotos.php?packet=EV$packet", 'MDWS Count Photos', '5', ''));
+	if ($count==''){
+		$count=0;
 	}
 	return $count;
 }
