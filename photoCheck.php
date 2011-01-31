@@ -1,6 +1,7 @@
 <?
 mysql_connect();
 mysql_select_db('core');
+include 'common.php';
 $_SESSION[serverCount]='';
 $_SESSION[fileCount]='';
 function testLink2($file){
@@ -23,20 +24,22 @@ return "FFFFFF";
 function photoCheckList($server_id){
 	$i=0;
 	$lateTotal='';
-	$data .= "<div id='$server_id' style='display:none;'><table align='center' border='1' style='border-collapse:collapse; border-style:solid 1px; padding:0px;'><tr><td>#</td><td>Filing Date</td><td># of Days Late</td><td>Photo Links (if they exist)</td><td>Packet #</td></tr>";
-	$r=@mysql_query("select * from ps_packets WHERE server_id='$server_id' AND service_status = 'MAILING AND POSTING' and status <> 'CANCELLED' order by date_received DESC");
+	$data .= "<div id='$server_id' style='display:none;'><table align='center' border='1' style='border-collapse:collapse; border-style:solid 1px; padding:0px;'><tr><td>#</td><td>Filing Date</td><td># of Days Late</td><td>Packet #</td></tr>";
+	$r=@mysql_query("select fileDate, packet_id from ps_packets WHERE server_id='$server_id' AND service_status = 'MAILING AND POSTING' and status <> 'CANCELLED' order by date_received DESC");
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-		if (testLink2($d[photo1c]) == 1){$_SESSION[fileCount]++;
-			$fileCount++;
+		$q2="SELECT * FROM ps_photos WHERE packetID='$d[packet_id]'";
+		$r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
+		$d2=mysql_fetch_array($r2,MYSQL_ASSOC);
+		if (testLink2($d2[browserAddress]) == 1){$_SESSION[fileCount]++;
 			$now=time();
-			if ($d[fileDate] != '0000-00-00'){
+			if ($d[fileDate] != '0000-00-00'){$fileCount++;
 				$fileDate=strtotime($d[fileDate]);
 				$late=number_format(($now-$fileDate)/86400,0);
 				$lateTotal=$lateTotal+$late;
 			}else{
 				$late="UNIDENTIFIABLE";
 			}
-			$data .= "<tr bgcolor='".colorCode($late)."'><td>$fileCount</td><td>$d[fileDate]</td><td align='center'>$late</td><td>".$d[photo1a].' '.$d[photo1b]."</td><td><a href='wizard.php?jump=$d[packet_id]-1&photojump=1' target='_blank'>$d[packet_id]</a></td></tr>";
+			$data .= "<tr bgcolor='".colorCode($late)."'><td>$fileCount</td><td>$d[fileDate]</td><td align='center'>$late</td><td><a href='wizard.php?jump=$d[packet_id]-1&photojump=1' target='_blank'>$d[packet_id]</a></td></tr>";
 		}
 	}
 	$avg=number_format($lateTotal/$fileCount,2);
