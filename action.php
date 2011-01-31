@@ -1,5 +1,5 @@
 <? include '/gitbox/Service-Office/lock.php'; ?>
-<meta http-equiv="refresh" content="60" />
+<meta http-equiv="refresh" content="300" />
 <?
 function courierDate($id){
 $r=@mysql_query("select date_format(estFileDate, '%W, %M %D %Y') as estFileDate	from ps_packets where packet_id = '$id'");
