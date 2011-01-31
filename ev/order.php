@@ -1029,7 +1029,7 @@ Request Close<br>
 <iframe height="640px" width="900px" name="preview" id="preview" src="<?=$src?>" ></iframe>
 </td></tr></table>
 <? }?>
-<script>document.title='EV<?=$_GET[packet]?>|<?=$d[status]?>|<?=$d[service_status]?>|<?=$d[process_status]?>|<?=$d[affidavit_status]?>'</script>
+<script>document.title='EV<?=$_GET[packet]?>|<?=$d[status]?>|<?=$d[service_status]?>|<?=$d[process_status]?>|<?=$d[affidavit_status]?>|<?=$d[filing_status]?>'</script>
 <?
 if ($d[client_file] != ''){
 	$q="select * from fileWatch where clientFile = '$d[client_file]'";
