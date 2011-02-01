@@ -54,7 +54,7 @@ $d=mysql_fetch_array($r,MYSQL_ASSOC);
 		<td>affidavit</td>
 		<td>n/a</td>
 		<td><select name="affidavit"><? if($d[affidavit]){ ?><option><?=stripslashes($d[affidavit])?></option><? }?><?
-$directory = '/gitbox/Staff-Office/templates';
+$directory = '/gitbox/Service-Office/templates';
     $results = array();
     $handler = opendir($directory);
     while ($file = readdir($handler)) {
