@@ -47,7 +47,7 @@ function photoCheckList($server_id){
 			}else{
 				$late="UNIDENTIFIABLE";
 			}
-			$data .= "<tr bgcolor='".colorCode($late)."'><td>$fileCount</td><td>$d[fileDate]</td><td align='center'>$late</td><td><a href='wizard.php?jump=$d[packet_id]-1&photojump=1' target='_blank'>$d[packet_id]</a></td></tr>";
+			$data .= "<tr bgcolor='".colorCode($late)."'><td>$fileCount</td><td>$d[fileDate]</td><td align='center'>$late</td><td><a href='http://service.mdwestserve.com/wizard.php?jump=$d[packet_id]-1&photojump=1' target='_blank'>$d[packet_id]</a></td></tr>";
 		}
 	}
 	$r=@mysql_query("select fileDate, eviction_id from evictionPackets WHERE server_id='$server_id' AND service_status = 'MAILING AND POSTING' and status <> 'CANCELLED' order by date_received DESC");
@@ -63,7 +63,7 @@ function photoCheckList($server_id){
 			}else{
 				$late="UNIDENTIFIABLE";
 			}
-			$data .= "<tr bgcolor='".colorCode($late)."'><td>$fileCount</td><td>$d[fileDate]</td><td align='center'>$late</td><td><a href='ev_wizard.php?jump=$d[eviction_id]-1&photojump=1' target='_blank'>EV$d[eviction_id]</a></td></tr>";
+			$data .= "<tr bgcolor='".colorCode($late)."'><td>$fileCount</td><td>$d[fileDate]</td><td align='center'>$late</td><td><a href='http://service.mdwestserve.com/ev_wizard.php?jump=$d[eviction_id]-1&photojump=1' target='_blank'>EV$d[eviction_id]</a></td></tr>";
 		}
 	}
 	if ($fileCount != 0){
