@@ -29,7 +29,7 @@ if ($_POST[submit] == "Save Settings"){
 }
 if ($_POST[submit2] == "ENTER"){
 	echo "<center>SAVED, <a href='http://staff.mdwestserve.com/attSettings.php'>Select Another Attorney</a></center>";
-	$q = "INSERT INTO attorneys (display_name, address, invoice_to, statement_to, ps_to, ps_to_alt, ps_alt2, ps_plaintiff, authSeller, payInstructions, upcoming_report_to) VALUES ('$_POST[display_name]', '$_POST[address]', '$_POST[invoice_to]', '$_POST[statement_to]', '$_POST[ps_to]', '$_POST[ps_to_alt]', '$_POST[ps_alt2]', '$_POST[ps_plaintiff]', '$_POST[authSeller]', '".addslashes($_POST[payInstructions])."', '$_POST[upcoming_report_to]')";
+	$q = "INSERT INTO attorneys (display_name, address, invoice_to, statement_to, ps_to, ps_to_alt, ps_alt2, ps_plaintiff, authSeller, payInstructions, upcoming_report_to) VALUES ('".strtoupper($_POST[display_name])."', '$_POST[address]', '$_POST[invoice_to]', '$_POST[statement_to]', '$_POST[ps_to]', '$_POST[ps_to_alt]', '$_POST[ps_alt2]', '$_POST[ps_plaintiff]', '$_POST[authSeller]', '".addslashes($_POST[payInstructions])."', '$_POST[upcoming_report_to]')";
 	$r = @mysql_query($q) or die(mysql_error());
 }
  if ($_POST[att_id] || $_GET[att_id]){
