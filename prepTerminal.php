@@ -112,7 +112,7 @@ if ($_GET[logic]){
 		if ($d[attorneys_id] == 1 && $d[circuit_court] == 'PRINCE GEORGES'){
 			echo "<script>alert('BURSON PG EVICTION! DO NOT FILE! MAIL TO BURSON: ATTENTION MAXINE SUAREZ!!!')</script>";
 		}
-		if (($d[attorneys_id] == 3) && (notOnAffidavit($packet,"evictionPackets","eviction_id") > 0)){
+		if (($d[attorneys_id] == 3) && (notOnAff($packet,"evictionPackets","eviction_id") > 0)){
 			echo "<script>alert('WHITE EVICTION WITH ADDITIONAL PARTY TO SERVE! ENSURE THAT ALL PARTIES TO SERVE HAVE AFFIDAVITS PREPPED FOR FILING!')</script>";
 		}
 	}
