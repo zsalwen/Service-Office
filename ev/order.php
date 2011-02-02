@@ -622,7 +622,12 @@ while($CCd=mysql_fetch_array($CCr,MYSQL_ASSOC)){
 </tr>
 <tr>
 <td>Service&nbsp;Docs</td>
-<td><select name="altDocs" style="font-size:10px;"><? if($d[altDocs] != ''){echo "<option>$d[altDocs]</option>";} ?><option>MOTION FOR JUDGMENT AWARDING POSSESSION</option><option>90 DAY NOTICE TO OCCUPANT</option></select></td>
+<td><select name="altDocs" style="font-size:10px;"><? if($d[altDocs] != ''){echo "<option>$d[altDocs]</option>";} 
+$rAD=@mysql_query("SELECT DISTINCT altDocs FROM evictionPackets WHERE altDocs != ''");
+while($dAD=mysql_fetch_array($rAD,MYSQL_ASSOC)){
+	echo "<option>".strtoupper($dAD[altDocs])."</option>";
+}
+?></select></td>
 </tr>
 </table>
 </td><td>
