@@ -26,6 +26,17 @@ function serverCount($packet_id){
 	if ($d[server_ide] != $d[server_idd] && $d[server_ide] != $d[server_idc] && $d[server_ide] != $d[server_idb] && $d[server_ide] != $d[server_ida] && $d[server_ide] != $d[server_id] && $d[server_ide] != ''){ $i++; }
 	return $i;
 }
+function notOnAff($packet, $table, $idType){
+	$q="SELECT name1, name2, name3, name4, name5, name6, onAffidavit1, onAffidavit2, onAffidavit3, onAffidavit4, onAffidavit5, onAffidavit6 FROM $table WHERE $idType='$packet'";
+	$r=@mysql_query($q) or die("Query: isOnAff: $q<br>".mysql_error());
+	$d=mysql_fetch_array($r, MYSQL_ASSOC);
+	$i=0;
+	$count=0;
+	while ($i < 6){$i++;
+		if ((trim($d["name$i"]) != "") && (strtoupper($d["onAffidavit$i"]) != 'CHECKED')){$count++; }
+	}
+	return $count;
+}
 function getAttID($packet_id){
 	
 	return $d[attorneys_id];
@@ -100,6 +111,9 @@ if ($_GET[logic]){
 	}else{
 		if ($d[attorneys_id] == 1 && $d[circuit_court] == 'PRINCE GEORGES'){
 			echo "<script>alert('BURSON PG EVICTION! DO NOT FILE! MAIL TO BURSON: ATTENTION MAXINE SUAREZ!!!')</script>";
+		}
+		if (($d[attorneys_id] == 3) && (notOnAffidavit($packet,"evictionPackets","eviction_id") > 0){
+			echo "<script>alert('WHITE EVICTION WITH ADDITIONAL PARTY TO SERVE! ENSURE THAT ALL PARTIES TO SERVE HAVE AFFIDAVITS PREPPED FOR FILING!')</script>";
 		}
 	}
 	if ($d[process_status] == 'CANCELLED'){

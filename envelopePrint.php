@@ -93,12 +93,11 @@ function getPacketData($packet){
 	return $data;
 }
 
-function EVprintSet($packet,$def){
+function EVprintSet($packet,$def,$name){
 	$_SESSION[inc] = $_SESSION[inc]+2;
-	$r=@mysql_query("select name1, name2, name3, name4, name5, name6, address1, city1, state1, zip1, address2, city2, state2, zip2, address3, city3, state3, zip3, address4, city4, state4, zip4, address5, city5, state5, zip5, address6, city6, state6, zip6 from evictionPackets where eviction_id = '$packet'");
+	$r=@mysql_query("select address1, city1, state1, zip1, address2, city2, state2, zip2, address3, city3, state3, zip3, address4, city4, state4, zip4, address5, city5, state5, zip5, address6, city6, state6, zip6 from evictionPackets where eviction_id = '$packet' LIMIT 0,1");
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 	$card = $_GET[card];
-	$name = "OCCUPANT";
 	$line1 = $d["address$def"];
 	$csz = $d["city$def"].', '.$d["state$def"].' '.$d["zip$def"];
 	$cord = "EV$packet-$def".'X';
@@ -119,6 +118,20 @@ function EVprintSet($packet,$def){
 	</td></tr><tr><td style='padding-left:100px;'><img src="http://staff.mdwestserve.com/small.logo.gif"></td></tr><tr><td style='font-size:25px;' align='left'><div  style='padding-top:20px; padding-left:500px; text-align:left; width:300px;'><?=$name?><br><?=$line1?><br><?=$csz?></div></td></tr></table>
 	<?
 }
+function getEvictionData($packet){
+	$_SESSION[inc] = $_SESSION[inc]+2;
+	$r=@mysql_query("select attorneys_id, name2, name3, name4, name5, name6, address1, city1, state1, zip1, address2, city2, state2, zip2, address3, city3, state3, zip3, address4, city4, state4, zip4, address5, city5, state5, zip5, address6, city6, state6, zip6, onAffidavit2, onAffidavit3, onAffidavit4, onAffidavit5, onAffidavit6 from evictionPackets where eviction_id = '$packet' LIMIT 0,1");
+	$d=mysql_fetch_array($r, MYSQL_ASSOC);
+	EVprintSet($packet,1,"ALL OCCUPANTS");
+	if ($d[attorneys_id] == 3){
+		$i2=1;
+		while ($i2 < 6){$i2++;
+			if ($d["name$i2"] && (strtoupper($d["onAffidavit$i2"]) != 'CHECKED')){
+				EVprintSet($packet,$i2,strtoupper($d["name$i2"]));
+			}
+		}
+	}
+}
 if ($_GET[OTD] && $_GET[start] && $_GET[stop]){
 	$q="select packet_id from ps_packets where process_status='READY TO MAIL' AND packet_id >= '$_GET[start]' AND packet_id <= '$_GET[stop]' order by packet_id";
 	$r=@mysql_query($q);
@@ -136,7 +149,7 @@ if ($_GET[OTD] && $_GET[start] && $_GET[stop]){
 	$q="select eviction_id from evictionPackets where process_status='READY TO MAIL' AND packet_id >= '$_GET[start]' AND packet_id <= '$_GET[stop]' order by eviction_id";
 	$r=@mysql_query($q);
 	 while($d=mysql_fetch_array($r, MYSQL_ASSOC)){ $i++;
-		EVprintSet($d[eviction_id],1);
+		getEvictionData($d[eviction_id]);
 	 }
 }elseif ($_GET[OTD]){
 	$qm="SELECT packetID FROM mailMatrix WHERE packetID='$_GET[OTD]'";
@@ -148,7 +161,7 @@ if ($_GET[OTD] && $_GET[start] && $_GET[stop]){
 		getPacketData($_GET[OTD]);
 	}
 }elseif($_GET[EV]){
-	EVprintSet($_GET[EV],1);
+	getEvictionData($_GET[EV]);
 }else{
 	$qd="select ps_packets.packet_id, evictionPackets.eviction_id from ps_packets, evictionPackets where ps_packets.process_status = 'READY TO MAIL' AND ps_packets.mail_status <> 'Printed Awaiting Postage' AND (ps_packets.uspsVerify='' OR ps_packets.qualityControl='') AND evictionPackets.process_status = 'READY TO MAIL' AND evictionPackets.mail_status <> 'Printed Awaiting Postage' AND (evictionPackets.uspsVerify='' OR evictionPackets.qualityControl='' ) order by ps_packets.packet_id, evictionPackets.eviction_id ASC";
 	$rd=@mysql_query($qd) or die ("Query: $qd<br>".mysql_error());
@@ -187,7 +200,7 @@ if ($_GET[OTD] && $_GET[start] && $_GET[stop]){
 		$q="select eviction_id, mail_status from evictionPackets where process_status = 'READY TO MAIL' AND mail_status <> 'Printed Awaiting Postage' order by mail_status, eviction_id";
 		$r=@mysql_query($q);
 		while($d=mysql_fetch_array($r, MYSQL_ASSOC)){ $i++;
-			EVprintSet($d[eviction_id],1);
+			getEvictionData($d[eviction_id]);
 		}
 	}
 }

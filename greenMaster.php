@@ -81,11 +81,10 @@ function getPacketData($packet){
 	}
 }
 
-function printSetEV($packet,$def){
-	$r=@mysql_query("select name1, name2, name3, name4, name5, name6, address1, city1, state1, zip1, address2, city2, state2, zip2, address3, city3, state3, zip3, address4, city4, state4, zip4, address5, city5, state5, zip5, address6, city6, state6, zip6 from evictionPackets where eviction_id = '$packet'");
+function EVprintSet($packet,$def,$name){
+	$r=@mysql_query("select address1, city1, state1, zip1, address2, city2, state2, zip2, address3, city3, state3, zip3, address4, city4, state4, zip4, address5, city5, state5, zip5, address6, city6, state6, zip6 from evictionPackets where eviction_id = '$packet'");
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 	$card = $_GET[card];
-	$name = "OCCUPANT";
 	$line1 = $d["address$def"];
 	$csz = $d["city$def"].', '.$d["state$def"].' '.$d["zip$def"];
 	$art = $_GET[art];
@@ -98,6 +97,20 @@ function printSetEV($packet,$def){
 	<img src="http://staff.mdwestserve.com/greencard.jpg.php?name=<?=strtoupper(str_replace('#','no. ',$name))?>&line1=<?=strtoupper(str_replace('#','no. ',$line1))?>&line2=<?=strtoupper($line2)?>&csz=<?=strtoupper($csz)?>&art=<?=$art?>&cord=<?=$cord?>*&case_no=<?=str_replace('0','&Oslash;',strtoupper($d[case_no]))?>"><? if($card=='mail'){echo "<img src='gfx/mail.logo.gif'>";}?></div>
 	</table>
 	<?
+}
+
+function getEvictionData($packet){
+	$r=@mysql_query("select attorneys_id, name2, name3, name4, name5, name6, address1, city1, state1, zip1, address2, city2, state2, zip2, address3, city3, state3, zip3, address4, city4, state4, zip4, address5, city5, state5, zip5, address6, city6, state6, zip6, onAffidavit2, onAffidavit3, onAffidavit4, onAffidavit5, onAffidavit6 from evictionPackets where eviction_id = '$packet' LIMIT 0,1");
+	$d=mysql_fetch_array($r, MYSQL_ASSOC);
+	EVprintSet($packet,1,"ALL OCCUPANTS");
+	if ($d[attorneys_id] == 3){
+		$i2=1;
+		while ($i2 < 6){$i2++;
+			if ($d["name$i2"] && (strtoupper($d["onAffidavit$i2"]) != 'CHECKED')){
+				EVprintSet($packet,$i2,strtoupper($d["name$i2"]));
+			}
+		}
+	}
 }
 ?>
 
@@ -119,7 +132,7 @@ if ($_GET[OTD] && $_GET[start] && $_GET[stop]){
 	$q="select eviction_id from evictionPackets where process_status='READY TO MAIL' AND packet_id >= '$_GET[start]' AND packet_id <= '$_GET[stop]' order by eviction_id";
 	$r=@mysql_query($q);
 	 while($d=mysql_fetch_array($r, MYSQL_ASSOC)){ $i++;
-		printSetEV($d[eviction_id],1);
+		getEvictionData($d[eviction_id]);
 	 }
 }elseif ($_GET[OTD]){
 	$qm="SELECT packetID FROM mailMatrix WHERE packetID='$_GET[OTD]'";
@@ -131,7 +144,7 @@ if ($_GET[OTD] && $_GET[start] && $_GET[stop]){
 		getPacketData($_GET[OTD]);
 	}
 }elseif($_GET[EV]){
-	printSetEV($_GET[EV],1);
+	getEvictionData($_GET[EV]);
 }else{
 	$qd="select ps_packets.packet_id, evictionPackets.eviction_id from ps_packets, evictionPackets where ps_packets.process_status = 'READY TO MAIL' AND ps_packets.mail_status <> 'Printed Awaiting Postage' AND (ps_packets.uspsVerify='' OR ps_packets.qualityControl='') AND evictionPackets.process_status = 'READY TO MAIL' AND evictionPackets.mail_status <> 'Printed Awaiting Postage' AND (evictionPackets.uspsVerify='' OR evictionPackets.qualityControl='' ) order by ps_packets.packet_id, evictionPackets.eviction_id ASC";
 	$rd=@mysql_query($qd) or die ("Query: $qd<br>".mysql_error());
@@ -170,9 +183,9 @@ if ($_GET[OTD] && $_GET[start] && $_GET[stop]){
 		$q="select eviction_id, mail_status from evictionPackets where process_status = 'READY TO MAIL' AND mail_status <> 'Printed Awaiting Postage' order by eviction_id";
 		$r=@mysql_query($q);
 		 while($d=mysql_fetch_array($r, MYSQL_ASSOC)){ $i++;
-			printSetEV($d[eviction_id],1);
+			getEvictionData($d[eviction_id]);
 		}
 	}
 }
 ?>
-<script>document.title='<?=$_SESSION[letters]?> Lables';</script>
+<script>document.title='<?=$_SESSION[letters]?> Certified Return Receipt (Green Card) Master Printer';</script>

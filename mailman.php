@@ -319,6 +319,14 @@ function getEvictionData($eviction){
 	$data .= "</td>";
 	$_SESSION[letters] = $_SESSION[letters]+2;
 	$data .= "<td>".article("EV".$eviction,1)."<a target='_Blank' href='http://staff.mdwestserve.com/greencard.php?packet=$eviction&def=1&card=return&svc=EV'>$eviction-1</a></div>";
+	if ($d[attorneys_id] == 3){
+		$i=1;
+		while ($i < 6){$i++;
+			if ($d["name$i"] && (strtoupper($d["onAffidavit$i"]) != "CHECKED")){
+				$data .= "<td>".article("EV".$eviction,$i)."<a target='_Blank' href='http://staff.mdwestserve.com/greencard.php?packet=$eviction&def=$i&card=return&svc=EV'>$eviction-$i</a></div>";
+			}
+		}
+	}
 	$closeOut=strtotime($d['closeOut']);
 	if ($closeOut > time()){
 		$color="style='color: red;'";
