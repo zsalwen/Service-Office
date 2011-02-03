@@ -278,7 +278,7 @@ table {padding: 0px;}
 	</tr>        
 	<tr>
     	<td>HB472 Compliance: <span class="<?=substr($lossMit,0,1)?>"><?=$data[lossMit]?></span></td>
-		<td><? if ($data[attorneys_id] == 70){ echo $data[bill450];}else{ echo "<input tabindex='2' name='bill450' size='2' maxlength='7' value='$data[bill450]' />"; }?></td>
+		<td><? if ($data[attorneys_id] == 70 || $data[attorneys_id] == 80){ echo $data[bill450];}else{ echo "<input tabindex='2' name='bill450' size='2' maxlength='7' value='$data[bill450]' />"; }?></td>
     	<td><input tabindex="6" name="code450" size="2" maxlength="7" value="<?=$data[code450]?>" /></td>
     	<td><input name="code450a" size="2" maxlength="7" value="<?=$data[code450a]?>" /></td>
     	<td><input name="code450b" size="2" maxlength="7" value="<?=$data[code450b]?>" /></td>

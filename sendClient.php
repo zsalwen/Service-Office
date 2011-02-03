@@ -39,7 +39,7 @@ $bgwTotal=0;
 	echo "<table align='center' border='1' style='border-collapse: collapse; font-size: 13px;' width='700px'><tr><td align='center' colspan='8' style='font-size:16px;font-weight:bold;'>FILES SENT TO CLIENT ON $_GET[sendDate]</td></tr><tr><td>Packet ID</td><td>Client File</td><td>Attorney</td><td>County</td><td>Date Received</td><td>Process Status</td><td>Service Status</td><td>closeOut</td></tr>";
 	$r=@mysql_query("select packet_id, client_file, attorneys_id, circuit_court, date_received, process_status, service_status, closeOut from ps_packets where filing_status = 'SEND TO CLIENT' and fileDate='".$_GET[sendDate]."' order by packet_id ASC");
 	while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-	if ($d[attorneys_id] == 70 && $d[service_status] != 'MAIL ONLY'){$bgwTotal++;}
+	if (($d[attorneys_id] == 70 || $d[attorneys_id] == 80) && $d[service_status] != 'MAIL ONLY'){$bgwTotal++;}
 	?>
 		<tr>
 			<td><?=$d[packet_id]?></td>
@@ -54,7 +54,7 @@ $bgwTotal=0;
 <?	}
 	$r=@mysql_query("select eviction_id, client_file, attorneys_id, circuit_court, date_received, process_status, service_status, closeOut from evictionPackets where filing_status = 'SEND TO CLIENT' and fileDate='".$_GET[sendDate]."' order by eviction_id ASC");
 	while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-	if ($d[attorneys_id] == 70){$bgwTotal++;}
+	if ($d[attorneys_id] == 70 || $d[attorneys_id] == 80){$bgwTotal++;}
 	?>
 		<tr>
 			<td>EV<?=$d[eviction_id]?></td>

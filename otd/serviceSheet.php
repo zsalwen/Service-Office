@@ -143,7 +143,7 @@ function serviceSheet($packet){
 	$r=@mysql_query($q) or die(mysql_error());
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 	$date=date("m/d/Y h:i:s A");
-	if ($d[attorneys_id]== 70){
+	if ($d[attorneys_id]== 70 || $d[attorneys_id]== 80){
 		$sum=$d[bill410]+$d[bill420]+$d[bill440];
 	}else{
 		$sum=$d[bill410]+$d[bill420]+$d[bill430]+$d[bill440]+$d[bill450];
@@ -167,9 +167,9 @@ function serviceSheet($packet){
 	<table width="100%" align="center"><tr>
 	<td width="16%" align="left" style="border-bottom:solid 1px;"><b>Service: <?=$d[bill410]?></b></td>
 	<td width="16%" align="left" style="border-bottom:solid 1px;"><b>Mailing: <?=$d[bill420]?></b></td>
-	<td width="16%" align="left" style="border-bottom:solid 1px;"><b>Filing: <? if ($d[attorneys_id] == 70){ echo "BGW";}else{ echo $d[bill430];} ?></b></td>
+	<td width="16%" align="left" style="border-bottom:solid 1px;"><b>Filing: <? if ($d[attorneys_id] == 70){ echo "BGW";}elseif ($d[attorneys_id] == 80){ echo "KOKOLIS";}else{ echo $d[bill430];} ?></b></td>
 	<td width="16%" align="left" style="border-bottom:solid 1px;"><b>Skip Trace: <?=$d[bill440]?></b></td>
-	<? if ($data[attorneys_id] != 70){ ?><td width="16%" align="left" style="border-bottom:solid 1px;"><b>HB472 (<?=substr($d[lossMit],0,3);?>): <?=$d[bill450]?></b></td><? } ?>
+	<? if ($data[attorneys_id] != 70 && $data[attorneys_id] != 80){ ?><td width="16%" align="left" style="border-bottom:solid 1px;"><b>HB472 (<?=substr($d[lossMit],0,3);?>): <?=$d[bill450]?></b></td><? } ?>
 	<td width="16%" align="left" style="border-bottom:solid 1px;"><b>Total: <? echo $sum;?></b></td>
 	</tr>
 	<? if($d[affidavit_status2] == 'REOPENED'){ ?>

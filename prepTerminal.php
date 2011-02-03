@@ -124,6 +124,8 @@ if ($_GET[logic]){
 	}
 	if ($d[attorneys_id] == 70){
 		echo "<script>alert('BGW FILE: SEND TO CLIENT')</script>";
+	}elseif ($d[attorneys_id] == 80){
+		echo "<script>alert('KOKOLIS FILE: SEND TO CLIENT')</script>";
 	}elseif($d[filing_status] == 'DO NOT FILE'){
 		echo "<script>alert('DO NOT FILE')</script>";
 	}
