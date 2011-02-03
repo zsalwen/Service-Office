@@ -9,7 +9,7 @@ function payweeks(){
 	$q="SELECT * FROM paychecks";
 	$r=@mysql_query($q);
 	while ($d = mysql_fetch_array($r, MYSQL_ASSOC)){
-		if ($today > $d[period_start] && $today < $d[period_end]){
+		if ($today >= $d[period_start] && $today <= $d[period_end]){
 			$option .= "<option selected value='$d[period_start]'>$d[period_start] to $d[period_end]</option>";
 		}else{
 			$option .= "<option value='$d[period_start]'>$d[period_start] to $d[period_end]</option>";
