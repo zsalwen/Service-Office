@@ -155,7 +155,7 @@ $def='';
 </form>
 <?
 // If $_GET[list] variable is present, display 
-if ($_GET['display']){
+if ($_GET[display]){
 	$def='';
 	if ($_GET[defendant]){
 		$def = " AND defendantID='$_GET[defendant]'";
@@ -169,6 +169,8 @@ if ($_GET['display']){
 		}
 		$list .= "<tr>$def<td>".id2name($d1[serverID])."</td><td>[".strtoupper(stripslashes($d1[description]))."] - ".id2name($d1[entryID])." ".justDate($d1[entryDate])."</td></tr>";
 	}	
+}else{
+	echo "<br><br>!!!!!";
 }
 if ($list != ''){
 	if (!$_GET[defendant]){
