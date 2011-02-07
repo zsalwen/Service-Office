@@ -1203,7 +1203,7 @@ $dc=mysql_fetch_array($rc,MYSQL_ASSOC);
 		<td><a href="photoDisplay.php?packet=<?=$d[packet_id]?>" target="preview"><?$photoCount=photoCount($d[packet_id]); echo $photoCount;?> Photo<? if($photoCount != 1){echo "s";}?></a></td>
 	</tr>
 	<tr>
-		<td><a href="http://staff.mdwestserve.com/penalize.php?packet=<?=$d[eviction_id]?>&svc=OTD&list=1" target="preview">Penalties</a></td>
+		<td><a href="http://staff.mdwestserve.com/penalize.php?packet=<?=$d[eviction_id]?>&svc=OTD&display=1" target="preview">Penalties</a></td>
 	</tr>
 	<tr>
 		<td><a href="mailings.php?OTD=<?=$d[packet_id]?>" target="preview">Mailings</a><? 	if (webservice($d[client_file]) && ($d[attorneys_id] == 1)){ ?> | <a href="http://staff.mdwestserve.com/otd/webservice.php?fileNumber=<?=$d[client_file];?>" target="preview">Webservice Data</a><? }?></td>
