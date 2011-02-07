@@ -167,7 +167,7 @@ if ($_GET['display']){
 		if (!$_GET[defendant]){
 			$def = "<td>".getName($_GET[packet],$i,$table,$idType)."</td>";
 		}
-		$list .= "<tr>$def<td>".id2name($d1[serverID])."</td><td>[".strtoupper(stripslashes($d2[description]))."] - ".id2name($d2[entryID])." ".justDate($d2[entryDate])."</td></tr>";
+		$list .= "<tr>$def<td>".id2name($d1[serverID])."</td><td>[".strtoupper(stripslashes($d1[description]))."] - ".id2name($d1[entryID])." ".justDate($d1[entryDate])."</td></tr>";
 	}
 	if ($list != ''){
 		if (!$_GET[defendant]){
