@@ -3,7 +3,12 @@ if($_COOKIE[psdata][level]=='Operations'){
 mysql_connect();
 mysql_select_db('core');
 if($_GET[id]){
-$q="update $_GET[core] set attorneys_id = '$_GET[attid]' where $_GET[field] = '$_GET[id]' ";
+if ($_GET[core] == 'evictionPackets'){
+$field = "eviction_id";
+}else{
+$field = "packet_id";
+}
+$q="update $_GET[core] set attorneys_id = '$_GET[attid]' where $field = '$_GET[id]' ";
 echo $q.'<br>';
 //@mysql_query($q) or die(mysql_error());
 }
@@ -13,28 +18,24 @@ echo $q.'<br>';
  <tr>
   <td>Product</td>
   <td></td>
-  <td></td>
   <td>Attorney ID</td>
   <td>Packet ID</td>
  </tr>
  <tr>
   <td>Presale</td>
   <td><input type="radio" name="core" value="ps_packets"></td>
-  <td><input type="radio" name="field" value="packet_id"></td>
   <td><input name="attid"></td>
   <td><input name="id"></td>
  </tr>
  <tr>
   <td>Eviction</td>
   <td><input type="radio" name="core" value="evictionPackets"></td>
-  <td><input type="radio" name="field" value="eviction_id"></td>
   <td></td>
   <td></td>
  </tr>
  <tr>
   <td>Standard</td>
   <td><input type="radio" name="core" value="standard_packets"></td>
-  <td><input type="radio" name="field" value="packet_id"></td>
   <td></td>
   <td></td>
  </tr>
