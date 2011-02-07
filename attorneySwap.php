@@ -9,8 +9,9 @@ $field = "eviction_id";
 $field = "packet_id";
 }
 $q="update $_GET[core] set attorneys_id = '$_GET[attid]' where $field = '$_GET[id]' ";
-echo $q.'<br>';
-//@mysql_query($q) or die(mysql_error());
+echo $q.'<br>Results:<br>';
+@mysql_query($q) or die(mysql_error());
+echo "Success!";
 }
 ?>
 <form method="GET">
