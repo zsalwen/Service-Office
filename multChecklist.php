@@ -474,7 +474,7 @@ function evSheet($eviction){
 	<table cellspacing="0" align="center">
 	<?
 	$delivery='';
-	$delivery=deliveryExplode($eviction,$i,'EV');
+	$delivery=deliveryExplode($eviction,1,'EV');
 	if ($delivery != ''){
 		$dt=$delivery[0];
 		$server=$delivery[1];
@@ -493,7 +493,7 @@ function evSheet($eviction){
 	<?
 	$address=strtoupper($d[address1]);
 	$attempt='';
-	$attempt=attemptExplode($eviction,$i,$address,"FIRST EFFORT",'EV');
+	$attempt=attemptExplode($eviction,1,$address,"FIRST EFFORT",'EV');
 	if ($attempt != ''){
 		$dt=$attempt[0];
 		$server=$attempt[1];
@@ -511,7 +511,7 @@ function evSheet($eviction){
 	<?
 	$address=strtoupper($d[address1]);
 	$attempt='';
-	$attempt=attemptExplode($eviction,$i,$address,"SECOND EFFORT",'EV');
+	$attempt=attemptExplode($eviction,1,$address,"SECOND EFFORT",'EV');
 	if ($attempt != ''){
 		$dt=$attempt[0];
 		$server=$attempt[1];
@@ -529,7 +529,7 @@ function evSheet($eviction){
 	<?
 	$address=strtoupper($d[address1]);
 	$attempt='';
-	$attempt=attemptExplode($eviction,$i,$address,"POSTING DETAILS",'EV');
+	$attempt=attemptExplode($eviction,1,$address,"POSTING DETAILS",'EV');
 	if ($attempt != ''){
 		$dt=$attempt[0];
 		$server=$attempt[1];
@@ -545,7 +545,7 @@ function evSheet($eviction){
 			<td width="300px" style="border-bottom:solid 1px">By: <?=$server?></td>
 		</tr>
 		<tr>
-			<td colspan="4" align="center"><?=historyList($eviction,$i,$d[attorneys_id],'EV')?></td>
+			<td colspan="4" align="center"><?=historyList($eviction,1,$d[attorneys_id],'EV')?></td>
 		</tr>
 	</table>
 	</fieldset>
