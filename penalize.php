@@ -158,9 +158,9 @@ $def='';
 $list='';
 if ($_GET[display] != ''){
 	if ($_GET[defendant]){
-		$q1="SELECT * FROM ps_penalties WHERE packetID='$GET[packet]' AND product='$_GET[svc]' AND defendantID='$_GET[defendant]'";
+		$q1="SELECT * FROM ps_penalties WHERE packetID='$_GET[packet]' AND product='$_GET[svc]' AND defendantID='$_GET[defendant]'";
 	}else{
-		$q1="SELECT * FROM ps_penalties WHERE packetID='$GET[packet]' AND product='$_GET[svc]'";
+		$q1="SELECT * FROM ps_penalties WHERE packetID='$_GET[packet]' AND product='$_GET[svc]'";
 	}
 	$i=0;
 	$r1=@mysql_query($q1) or die ("Query: $q1<br>".mysql_error());
