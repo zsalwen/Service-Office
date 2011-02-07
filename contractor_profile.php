@@ -106,9 +106,9 @@ function isChecked($value){
 
 function contractStatus($str){
 	if (strtoupper($str) == 'YES'){
-		return "<option style='color:green;font-weight:bold;'>ACTIVE</option>";
+		return " style='color:green;font-weight:bold;'><option>ACTIVE</option>";
 	}elseif(strtoupper($str) == 'NO'){
-		return "<option style='color:red;font-weight:bold;'>INACTIVE</option>";
+		return " style='color:red;font-weight:bold;'><option>INACTIVE</option>";
 	}
 }
 
@@ -155,7 +155,7 @@ $d=mysql_fetch_array($r, MYSQL_ASSOC);
                 </tr>
 				<tr>
 					<td>Status</td>
-					<td colspan="3"><select name="contract"><?=contractStatus($d[contract])?><option value='YES'>ACTIVE</option><option value='NO'>INACTIVE</option></select></td>
+					<td colspan="3"><select name="contract"<?=contractStatus($d[contract])?><option value='YES'>ACTIVE</option><option value='NO'>INACTIVE</option></select></td>
 				</tr>
     	<tr>
     	<td valign="top">Notes</td>
