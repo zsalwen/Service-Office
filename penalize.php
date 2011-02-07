@@ -147,7 +147,7 @@ $def='';
 </form>
 <?
 // If $_GET[list] variable is present, display 
-if ($_GET[list]){
+if ($_GET['list']){
 	$def='';
 	if ($_GET[defendant]){
 		$def = " AND defendantID='$_GET[defendant]'";
