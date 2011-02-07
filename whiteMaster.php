@@ -93,11 +93,11 @@ function getPacketData($packet){
 }
 
 function EVprintSet($packet,$def,$name){
-	$r=@mysql_query("select otd, address1, city1, state1, zip1, address2, city2, state2, zip2, address3, city3, state3, zip3, address4, city4, state4, zip4, address5, city5, state5, zip5, address6, city6, state6, zip6 from evictionPackets where eviction_id = '$packet'");
+	$r=@mysql_query("select otd, address1, city1, state1, zip1 from evictionPackets where eviction_id = '$packet'");
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 	$card = $_GET[card];
-	$line1 = $d["address$def"];
-	$csz = $d["city$def"].', '.$d["state$def"].' '.$d["zip$def"];
+	$line1 = $d["address1"];
+	$csz = $d["city1"].', '.$d["state1"].' '.$d["zip1"];
 	$art = $_GET[art];
 	$cord = "EV$packet-$def";
 	$line1=str_replace('&',' AND ',$line1);
