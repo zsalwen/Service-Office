@@ -184,7 +184,9 @@ table {padding: 0px;}
 <input type="hidden" name="qc" value="<?=$_GET[qc]?>" />
 <center style="font-weight:bold; font-size:14px;">ALL FILES MUST HAVE COST ENTERED BEFORE QUALITY CONTROL IS PROCESSED</center>
 <? } ?>
+<!--------
 <a href="http://staff.mdwestserve.com/otd/ps_write_invoice.php?id=<?=$data[packet_id];?>" target="_Blank">PS Write Invoice</a>
+----------->
 <? if ($_GET[qc]){ ?>
 <center><div style="border:1px solid;font-size:18px;"><?=id2attorney($data[attorneys_id])?><?=stripslashes(getPayInstructions($data[attorneys_id],'<br>'));?><? if ($data[rush] != ''){ echo "<br><b style='background-color:red;'>RUSH SERVICE--: $120 IN-STATE, $170 OUT-OF-STATE</b>"; } ?></div></center>
 <? }elseif(stripslashes(getPayInstructions($data[attorneys_id],'')) != ''){ ?>
@@ -240,7 +242,18 @@ table {padding: 0px;}
     	<td><input name="client_ratee" size="2" maxlength="7" value="<?=$data[client_ratee]?>" /></td>
 	</tr>
 </table>
-
+<?
+$i=0;
+$q2="SELECT * FROM ps_penalties WHERE packetID='$_GET[id]' AND product='OTD'";
+$r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
+while ($d2=mysql_fetch_array($r2,MYSQL_ASSOC)){$i++;
+	$def=$d2[defendantID];
+	$list .= "<tr><td>".id2name($d2[serverID])."</td><td>".$data["name$def"]."</td><td>[".strtoupper(stripslashes($d2[desc]))."] - ".id2name($d2[entryID])." entered $d2[entryDate]</td></tr>";
+}
+if ($list != ''){
+	echo "<table width='100%'><tr><td colspan='3'><b>PENALTIES</b></td></tr><tr><td>Server</td><td>Defendant</td><td>Description</td></tr>$list<tr><td colspan='3' align='right' style='font-weight:bold;'>TOTAL PENALTIES: $i</td></table>";
+}
+?>
 
 </fieldset>    
 
