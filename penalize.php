@@ -95,12 +95,20 @@ function defList($packet,$table,$idType){
 			}
 		}
 	}
+	if ($idType == 'eviction_id'){
+		$list = "<option value='1'>ALL OCCUPANTS</option>".$list;
+	}
 	return $list;
 }
 function getName($packet,$i,$table,$idType){
-	$q="SELECT name$i FROM $table WHERE $idType='$packet' LIMIT 0,1";
+	$q="SELECT name$i, onAffidavit$i FROM $table WHERE $idType='$packet' LIMIT 0,1";
 	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
+	if ($idType == 'eviction_id' && $i == 1 && strtoupper($d[onAffidavit1]) != 'CHECKED'){
+		return "ALL OCCUPANTS";
+	}else{
+		return $d["name$i"];
+	}
 }
 function justDate($dt){
 	$date=explode(' ',$dt);
