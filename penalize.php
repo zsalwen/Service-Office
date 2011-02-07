@@ -154,14 +154,15 @@ $def='';
 </table>
 </form>
 <?
-// If $_GET[list] variable is present, display 
-if ($_GET[display]){
-	$def='';
+// If $_GET[display] variable is present, display 
+$list='';
+if ($_GET[display] != ''){
 	if ($_GET[defendant]){
-		$def = " AND defendantID='$_GET[defendant]'";
+		$q1="SELECT * FROM ps_penalties WHERE packetID='$GET[packet]' AND product='$_GET[svc]' AND defendantID='$_GET[defendant]'";
+	}else{
+		$q1="SELECT * FROM ps_penalties WHERE packetID='$GET[packet]' AND product='$_GET[svc]'";
 	}
 	$i=0;
-	$q1="SELECT * FROM ps_penalties WHERE packetID='$GET[packet]' AND product='$_GET[svc]'".$def;
 	$r1=@mysql_query($q1) or die ("Query: $q1<br>".mysql_error());
 	while ($d1=mysql_fetch_array($r1,MYSQL_ASSOC)){$i++;
 		if (!$_GET[defendant]){
