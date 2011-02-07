@@ -28,15 +28,15 @@ echo $q.'<br>';
   <td>Eviction</td>
   <td><input type="radio" name="core" value="evictionPackets"></td>
   <td><input type="radio" name="field" value="eviction_id"></td>
-  <td><input name="attid"></td>
-  <td><input name="id"></td>
+  <td></td>
+  <td></td>
  </tr>
  <tr>
   <td>Standard</td>
   <td><input type="radio" name="core" value="standard_packets"></td>
   <td><input type="radio" name="field" value="packet_id"></td>
-  <td><input name="attid"></td>
-  <td><input name="id"></td>
+  <td></td>
+  <td></td>
  </tr>
 </table>
 <input type="submit">
