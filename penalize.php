@@ -174,10 +174,12 @@ if ($_GET[display] != ''){
 	echo "<br><br>!!!!!";
 }
 if ($list != ''){
-	error_log("[".date('h:iA n/j/y')."] $q1 Zach Testing Service-Office/penalize.php",3,"/logs/debug.log");
+	error_log("[".date('h:iA n/j/y')."] $q1--$list Zach Testing Service-Office/penalize.php",3,"/logs/debug.log");
 	if (!$_GET[defendant]){
 		$def2 = "<td>Defendant</td>";
 	}
 	echo "<table align='center' border='1' style='border-collapse:collapse;'><tr>$def2<td>Server</td><td>Description</td></tr>$list<tr><td colspan='3' align='right' style='font-weight:bold;'>TOTAL PENALTIES: $i</td></tr></table>";
+}else{
+	error_log("[".date('h:iA n/j/y')."] $q1--'$list' Zach Testing Service-Office/penalize.php",3,"/logs/debug.log");
 }
 ?>
