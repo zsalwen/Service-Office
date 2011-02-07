@@ -170,16 +170,11 @@ if ($_GET[display] != ''){
 		}
 		$list .= "<tr>$def<td>".id2name($d1[serverID])."</td><td>[".strtoupper(stripslashes($d1[description]))."] - ".id2name($d1[entryID])." ".justDate($d1[entryDate])."</td></tr>";
 	}	
-}else{
-	echo "<br><br>!!!!!";
-}
-if ($list != ''){
-	error_log("[".date('h:iA n/j/y')."] $q1--$list Zach Testing Service-Office/penalize.php",3,"/logs/debug.log");
-	if (!$_GET[defendant]){
-		$def2 = "<td>Defendant</td>";
+	if ($list != ''){
+		if (!$_GET[defendant]){
+			$def2 = "<td>Defendant</td>";
+		}
+		echo "<table border='1' style='border-collapse:collapse;'><tr>$def2<td>Server</td><td>Description</td></tr>$list<tr><td colspan='3' align='right' style='font-weight:bold;'>TOTAL PENALTIES: $i</td></tr></table>";
 	}
-	echo "<table align='center' border='1' style='border-collapse:collapse;'><tr>$def2<td>Server</td><td>Description</td></tr>$list<tr><td colspan='3' align='right' style='font-weight:bold;'>TOTAL PENALTIES: $i</td></tr></table>";
-}else{
-	error_log("[".date('h:iA n/j/y')."] $q1--'$list' Zach Testing Service-Office/penalize.php",3,"/logs/debug.log");
 }
 ?>
