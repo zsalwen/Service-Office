@@ -264,7 +264,110 @@ function evSheet($eviction){
 		</tr>
 	</table>
 	</fieldset>
-	<? } ?>
+	<? }
+	
+	
+	
+	
+	
+	$i2=1;
+	while ($i2 <  6){
+	if ($d["name$i2"] && strtoupper(($d["onAffidavit$i2"]) != "CHECKED")){ ?>
+	<fieldset>
+	<legend accesskey="C"><u>Process Service on <?=$d["name$i2"]?></u>:</legend>
+	<table cellspacing="0" align="center">
+	<?
+	$delivery='';
+	$delivery=deliveryExplode($eviction,$i2);
+	if ($delivery != ''){
+		$dt=$delivery[0];
+		$server=$delivery[1];
+		$deliveryAddress="@ ".$delivery[2];
+	}else{
+		$dt='';
+		$server='';
+		$deliveryAddress='';
+	}?>
+		<tr>
+			<td width="250px" style="border-bottom:solid 1px"><input type="checkbox"> Personal Delivery</td>
+			<td width="30px" style="border-bottom:solid 1px">Date:</td>
+			<td width="170px" style="border-bottom:solid 1px"><?if ($dt != ''){ echo $dt;}else{echo '&nbsp;';}?></td>
+			<td width="300px" style="border-bottom:solid 1px">By: <?=$server?></td>
+		</tr>
+	<?
+	$address=strtoupper($d[address1]);
+	$attempt='';
+	$attempt=attemptExplode($eviction,$i2,$address,"FIRST EFFORT");
+	if ($attempt != ''){
+		$dt=$attempt[0];
+		$server=$attempt[1];
+	}else{
+		$dt='';
+		$server='';
+	}
+	?>
+		<tr>
+			<td width="250px" style="border-bottom:solid 1px"><input type="checkbox"> 1st Attempt At <?=$d[address1]?></td>
+			<td width="30px" style="border-bottom:solid 1px">Date:</td>
+			<td width="170px" style="border-bottom:solid 1px"><?if ($dt != ''){ echo $dt;}else{echo '&nbsp;';}?></td>
+			<td width="300px" style="border-bottom:solid 1px">By: <?=$server?></td>
+		</tr>
+	<?
+	$address=strtoupper($d[address1]);
+	$attempt='';
+	$attempt=attemptExplode($eviction,$i2,$address,"SECOND EFFORT");
+	if ($attempt != ''){
+		$dt=$attempt[0];
+		$server=$attempt[1];
+	}else{
+		$dt='';
+		$server='';
+	}
+	?>
+		<tr>
+			<td width="250px" style="border-bottom:solid 1px"><input type="checkbox"> 2nd Attempt At <?=$d[address1]?></td>
+			<td width="30px" style="border-bottom:solid 1px">Date:</td>
+			<td width="170px" style="border-bottom:solid 1px"><?if ($dt != ''){ echo $dt;}else{echo '&nbsp;';}?></td>
+			<td width="300px" style="border-bottom:solid 1px">By: <?=$server?></td>
+		</tr>
+	<?
+	$address=strtoupper($d[address1]);
+	$attempt='';
+	$attempt=attemptExplode($eviction,$i2,$address,"POSTING DETAILS");
+	if ($attempt != ''){
+		$dt=$attempt[0];
+		$server=$attempt[1];
+	}else{
+		$dt='';
+		$server='';
+	}
+	?>
+		<tr>
+			<td width="250px" style="border-bottom:solid 1px"><input type="checkbox"> Posting</td>
+			<td width="30px" style="border-bottom:solid 1px">Date:</td>
+			<td width="170px" style="border-bottom:solid 1px"><?if ($dt != ''){ echo $dt;}else{echo '&nbsp;';}?></td>
+			<td width="300px" style="border-bottom:solid 1px">By: <?=$server?></td>
+		</tr>
+		<tr>
+			<td colspan="4" align="center"><?=historyList($eviction,$i2,$d[attorneys_id])?></td>
+		</tr>
+	</table>
+	</fieldset>
+	<? }
+		
+	} ?>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	</td></tr></table>
 	<table width="80%" align="center" cellspacing="0">
 		<tr>
