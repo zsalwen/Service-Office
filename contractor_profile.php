@@ -79,6 +79,7 @@ if ($_POST[submit]){
 	$q1 = "UPDATE ps_users SET 
 								p_update=NOW(),
 								company='$_POST[company]',
+								contract='$_POST[contract]',
 								manager_review='$_POST[manager_review]',
 								name='$_POST[name]',
 								email='$_POST[email]',
@@ -100,6 +101,14 @@ if ($_POST[submit]){
 function isChecked($value){
 	if ($value > '0'){
 	return 'checked';
+	}
+}
+
+function contractStatus($str){
+	if (strtoupper($str) == 'YES'){
+		return "<option style='color:green;font-weight:bold;'>ACTIVE</option>";
+	}elseif(strtoupper($str) == 'NO'){
+		return "<option style='color:red;font-weight:bold;'>INACTIVE</option>";
 	}
 }
 
@@ -144,6 +153,10 @@ $d=mysql_fetch_array($r, MYSQL_ASSOC);
                 	<td>E-Mail</td>
                     <td colspan="3"><input name="email" size="60" value="<?=$d[email]?>" /></td>
                 </tr>
+				<tr>
+					<td>Status</td>
+					<td colspan="3"><select name="contract"><?=contractStatus($d[contract])?><option value='YES'>ACTIVE</option><option value='NO'>INACTIVE</option></select></td>
+				</tr>
     	<tr>
     	<td valign="top">Notes</td>
         <td colspan="3" valign="top"><textarea name="manager_review" cols="45" rows="5"><?=stripslashes($d[manager_review])?></textarea></td>
