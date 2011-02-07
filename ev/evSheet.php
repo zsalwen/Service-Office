@@ -271,7 +271,7 @@ function evSheet($eviction){
 	
 	
 	$i2=1;
-	while ($i2 <  6){
+	while ($i2 <  6){$i2++;
 	if ($d["name$i2"] && strtoupper(($d["onAffidavit$i2"]) != "CHECKED")){ ?>
 	<fieldset>
 	<legend accesskey="C"><u>Process Service on <?=$d["name$i2"]?></u>:</legend>
