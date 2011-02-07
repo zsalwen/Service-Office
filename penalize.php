@@ -168,12 +168,12 @@ if ($_GET['display']){
 			$def = "<td>".getName($_GET[packet],$i,$table,$idType)."</td>";
 		}
 		$list .= "<tr>$def<td>".id2name($d1[serverID])."</td><td>[".strtoupper(stripslashes($d1[description]))."] - ".id2name($d1[entryID])." ".justDate($d1[entryDate])."</td></tr>";
+	}	
+}
+if ($list != ''){
+	if (!$_GET[defendant]){
+		$def2 = "<td>Defendant</td>";
 	}
-	if ($list != ''){
-		if (!$_GET[defendant]){
-			$def2 = "<td>Defendant</td>";
-		}
-		echo "<table align='center' border='1' style='border-collapse:collapse;'><tr>$def2<td>Server</td><td>Description</td></tr>$list<tr><td colspan='3' align='right' style='font-weight:bold;'>TOTAL PENALTIES: $i</td></tr></table>";
-	}
+	echo "<table align='center' border='1' style='border-collapse:collapse;'><tr>$def2<td>Server</td><td>Description</td></tr>$list<tr><td colspan='3' align='right' style='font-weight:bold;'>TOTAL PENALTIES: $i</td></tr></table>";
 }
 ?>
