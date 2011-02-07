@@ -41,6 +41,10 @@ function getPayInstructions($attID,$prefix){
 	$d = mysql_fetch_array($r, MYSQL_ASSOC);
 	return $prefix.trim($d[payInstructions]);
 }
+function justDate($dt){
+	$date=explode(' ',$dt);
+	return $date[0];
+}
 ?>
 <script language="JavaScript">
 <!--
