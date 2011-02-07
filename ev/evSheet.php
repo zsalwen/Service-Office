@@ -185,7 +185,7 @@ function evSheet($eviction){
 	<?
 	if ($d["name1"]){ ?>
 	<fieldset>
-	<legend accesskey="C"><u>Process Service on Occupant</u>:</legend>
+	<legend accesskey="C"><u>Process Service on ALL OCCUPANTS</u>:</legend>
 	<table cellspacing="0" align="center">
 	<?
 	$delivery='';
