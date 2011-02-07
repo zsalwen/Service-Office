@@ -48,7 +48,7 @@ a{border-style:hidden; text-decoration:none;}
 <?
 $i=0;
 $used = 0;
-$q="SELECT id, company, name, last_login, manager_review, contract, DATE_FORMAT(last_login,'%a, %b %D %Y at %r') as login FROM ps_users where level <> 'Administrator' and level <> 'DELETED' ORDER BY name";
+$q="SELECT id, company, name, last_login, manager_review, contract, DATE_FORMAT(last_login,'%a, %b %D %Y at %r') as login FROM ps_users where level <> 'Administrator' and level <> 'DELETED' ORDER BY contract DESC, name ASC";
 $r=@mysql_query($q) or die("Query: $q<br>".mysql_error()); 
 ?>
 	<tr bgcolor='#ccffcc'>
