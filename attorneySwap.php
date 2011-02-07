@@ -2,7 +2,7 @@
 if($_COOKIE[psdata][level]=='Operations'){
 mysql_connect();
 mysql_select_db('core');
-if($_POST[id] && $_POST[attid] && $_POST[core] && $_POST[field]{
+if($_POST[id] && $_POST[attid] && $_POST[core] && $_POST[field]){
 $q="update $_POST[core] set attorneys_id = '$_POST[attid]' where $_POST[field] = '$_POST[id]' ";
 echo $q.'<br>';
 @mysql_query($q) or die(mysql_error());
