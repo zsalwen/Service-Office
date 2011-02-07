@@ -728,19 +728,13 @@ if (!strpos($otdStr,'mdwestserve.com')){
 		<td><a href="http://service.mdwestserve.com/ev_customInstructions.php?id=<?=$d[eviction_id]?>" target="preview">Instructions (<?=id2attorney($d[attorneys_id])?>)</a></td>
 	</tr>
 	<tr>
-		<td><a href="<?=$otdStr?>" target="preview">JAP</a></td>
-	</tr>
-	<tr>
-		<td><a href="ev_write_invoice.php?id=<?=$d[eviction_id]?>" target="preview">*Invoice*</a></td>
-	</tr>
-	<tr>
-		<td><a href="serviceReview.php?packet=<?=$d[eviction_id]?>" target="preview">Timeline</a></td>
-	</tr>
-	<tr>
-		<td><a href="evSheet.php?id=<?=$d[eviction_id]?>&autoPrint=1" target="_blank">Checklist</a></td>
+		<td><a href="<?=$otdStr?>" target="preview">JAP</a> | <a href="serviceReview.php?packet=<?=$d[eviction_id]?>" target="preview">Timeline</a> | <a href="evSheet.php?id=<?=$d[eviction_id]?>&autoPrint=1" target="_blank">Checklist</a></td>
 	</tr>
 	<tr>
 		<td><a href="photoDisplay.php?packet=<?=$d[eviction_id]?>" target="preview"><?$photoCount=photoCount($d[eviction_id]); echo $photoCount;?> Photo<? if($photoCount != 1){echo "s";}?></a></td>
+	</tr>
+	<tr>
+		<td><a href="http://staff.mdwestserve.com/penalize.php?packet=<?=$d[eviction_id]?>&svc=EV&list=1" target="preview">Penalties</a></td>
 	</tr>
 	<tr>
 		<td><a href="mailings.php?EV=<?=$d[eviction_id]?>" target="preview">Mailings</a><? 	if (webservice($d[client_file]) && ($d[attorneys_id] == 1)){ ?> | <a href="http://staff.mdwestserve.com/otd/webservice.php?fileNumber=<?=$d[client_file];?>" target="preview">Webservice Data</a><? }?></td>

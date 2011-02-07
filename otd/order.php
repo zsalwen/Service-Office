@@ -1197,13 +1197,13 @@ $dc=mysql_fetch_array($rc,MYSQL_ASSOC);
 		<td><a href="http://service.mdwestserve.com/customInstructions.php?packet=<?=$d[packet_id]?>" target="preview">Instructions <?=id2attorney($d[attorneys_id])?></a>-<a href="instructMatrix.php?packet=<?=$d[packet_id]?>" <?=$customBG?> target="preview"><small>[CUSTOMIZE]</small></a></td>
 	</tr>
 	<tr>
-		<td><a href="<?=$otdStr?>" target="preview">OTD</a></td>
-	</tr>
-	<tr>
-		<td><a href="ps_write_invoice.php?id=<?=$d[packet_id]?>" target="preview">Invoice</a> | <a href="serviceReview.php?packet=<?=$d[packet_id]?>" target="preview">Timeline</a> | <a href="<?=$checkLink?>" target="_blank">Checklist</a></td>
+		<td><a href="<?=$otdStr?>" target="preview">OTD</a> | <a href="serviceReview.php?packet=<?=$d[packet_id]?>" target="preview">Timeline</a> | <a href="<?=$checkLink?>" target="_blank">Checklist</a></td>
 	</tr>
 	<tr>
 		<td><a href="photoDisplay.php?packet=<?=$d[packet_id]?>" target="preview"><?$photoCount=photoCount($d[packet_id]); echo $photoCount;?> Photo<? if($photoCount != 1){echo "s";}?></a></td>
+	</tr>
+	<tr>
+		<td><a href="http://staff.mdwestserve.com/penalize.php?packet=<?=$d[eviction_id]?>&svc=OTD&list=1" target="preview">Penalties</a></td>
 	</tr>
 	<tr>
 		<td><a href="mailings.php?OTD=<?=$d[packet_id]?>" target="preview">Mailings</a><? 	if (webservice($d[client_file]) && ($d[attorneys_id] == 1)){ ?> | <a href="http://staff.mdwestserve.com/otd/webservice.php?fileNumber=<?=$d[client_file];?>" target="preview">Webservice Data</a><? }?></td>

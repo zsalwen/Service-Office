@@ -188,10 +188,10 @@ $q2="SELECT * FROM ps_penalties WHERE packetID='$_GET[id]' AND product='EV'";
 $r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
 while ($d2=mysql_fetch_array($r2,MYSQL_ASSOC)){$i++;
 	$def=$d2[defendantID];
-	$list .= "<tr><td>".id2name($d2[serverID])."</td><td>".$data["name$def"]."</td><td>[".strtoupper(stripslashes($d2[description]))."] - ".id2name($d2[entryID])." entered $d2[entryDate]</td></tr>";
+	$list .= "<tr><td>".id2name($d2[serverID])."</td><td>".$data["name$def"]."</td><td>[".strtoupper(stripslashes($d2[description]))."] - ".id2name($d2[entryID])." ".justDate($d2[entryDate])."</td></tr>";
 }
 if ($list != ''){
-	echo "<table width='100%'><tr><td colspan='3'><b>PENALTIES</b></td></tr><tr><td>Server</td><td>Defendant</td><td>Description</td></tr>$list<tr><td colspan='3' align='right' style='font-weight:bold;'>TOTAL PENALTIES: $i</td></table>";
+	echo "<table width='100%' border='1' style='border-collapse:collapse;'><tr><td colspan='3'><b style='color:red;'>PENALTIES</b></td></tr><tr><td>Server</td><td>Defendant</td><td>Description</td></tr>$list<tr><td colspan='3' align='right' style='font-weight:bold;'>TOTAL PENALTIES: $i</td></tr></table>";
 }
 ?>
 </fieldset>    
