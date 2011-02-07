@@ -679,7 +679,7 @@ if ($_GET[scanDate]){
 	// echo OTD service sheets
 		echo serviceSheet($d[packet_id]);
 	}
-	$q="SELECT eviction_id from evictionPackets WHERE process_status = 'ASSIGNED' AND (request_close = 'YES' OR request_closea = 'YES' OR request_closeb = 'YES' OR request_closec = 'YES' OR request_closed = 'YES' OR request_closee = 'YES')";
+	$q="SELECT eviction_id from evictionPackets WHERE process_status = 'ASSIGNED' AND request_close = 'YES'";
 	$r=@mysql_query($q) or die(mysql_error());
 	while ($d=mysql_fetch_array($r, MYSQL_ASSOC)){
 	//echo EV service sheets
