@@ -174,7 +174,7 @@ if ($_GET[display] != ''){
 	echo "<br><br>!!!!!";
 }
 if ($list != ''){
-	error_log("[".date('h:iA n/j/y')."] Zach Testing Service-Office/penalize.php",3,"/logs/debug.log");
+	error_log("[".date('h:iA n/j/y')."] $q1 Zach Testing Service-Office/penalize.php",3,"/logs/debug.log");
 	if (!$_GET[defendant]){
 		$def2 = "<td>Defendant</td>";
 	}
