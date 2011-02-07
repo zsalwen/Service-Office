@@ -2,13 +2,13 @@
 if($_COOKIE[psdata][level]=='Operations'){
 mysql_connect();
 mysql_select_db('core');
-if($_POST[id]){
-$q="update $_POST[core] set attorneys_id = '$_POST[attid]' where $_POST[field] = '$_POST[id]' ";
+if($_GET[id]){
+$q="update $_GET[core] set attorneys_id = '$_GET[attid]' where $_GET[field] = '$_GET[id]' ";
 echo $q.'<br>';
 //@mysql_query($q) or die(mysql_error());
 }
 ?>
-<form method="POST">
+<form method="GET">
 <table border="1">
  <tr>
   <td>Product</td>
