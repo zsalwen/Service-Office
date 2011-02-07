@@ -792,7 +792,7 @@ $signer = "Version 1 Barcode";
 <table width="100%" style="display:block;" id="addresses"><tr><td valign="top">
 
 <FIELDSET>
-<LEGEND class="a" ACCESSKEY=C><a href="http://mdwestserve.com/ps/dispatcher.php?aptsut=&address=<?=$d[address1]?>&city=<?=$d[city1]?>&state=<?=$d[state1]?>&miles=5" target="_Blank">Mortgage / Deed of Trust</a><input type="checkbox" checked><br><?=id2name($d[server_id]);?></LEGEND>
+<LEGEND class="a" ACCESSKEY=C><a href="http://service.mdwestserve.com/dispatcher.php?aptsut=&address=<?=$d[address1]?>&city=<?=$d[city1]?>&state=<?=$d[state1]?>&miles=5" target="_Blank">Mortgage / Deed of Trust</a><input type="checkbox" checked><br><?=id2name($d[server_id]);?></LEGEND>
 <table>
 <tr>
 <td><input id="address" name="address" size="30" value="<?=$d[address1]?>" /></td>
