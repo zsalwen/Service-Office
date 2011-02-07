@@ -157,6 +157,7 @@ $def='';
 // If $_GET[display] variable is present, display 
 $list='';
 if ($_GET[display] != ''){
+	error_log("[".date('h:iA n/j/y')."] Zach Testing Service-Office/penalize.php",3,"/logs/debug.log");
 	if ($_GET[defendant]){
 		$q1="SELECT * FROM ps_penalties WHERE packetID='$GET[packet]' AND product='$_GET[svc]' AND defendantID='$_GET[defendant]'";
 	}else{
