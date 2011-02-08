@@ -1,48 +1,7 @@
 <?
 mysql_connect();
-mysql_select_db('core');
-/*
-function addNote($id,$note){
-$q1 = "SELECT notes FROM schedule_items WHERE schedule_id = '$id'";
-$r1 = @mysql_query ($q1) or die(mysql_error());
-$d1 = mysql_fetch_array($r1, MYSQL_ASSOC);
-$notes = "<li>".date('g:iA n/j/y').' '.$_COOKIE[psdata][name].': '.$note."</li>".$d1[notes];
-if ($_COOKIE[psdata][name]){
-$user = $_COOKIE[psdata][name];
-}else{
-$user = 'Server A.I.';
-}
-error_log("[".date('g:iA n/j/y').'] ['.$user.'] ['.$id.'] ['.$note."]\n", 3, '/logs/notes.log');
-$notes = addslashes($notes);
-$q1 = "UPDATE schedule_items set notes='$notes' WHERE schedule_id = '$id'";
-$r1 = @mysql_query ($q1) or die(mysql_error());
-}
-function docAD($id){
-$r=@mysql_query("select LiveAdHTML from schedule_items where schedule_id = '$id'");
-$d=mysql_fetch_array($r,MYSQL_ASSOC);
-$myFile = "$id.html";
-$fh = fopen($myFile, 'w') or die("can't open file");
-fwrite($fh, $d[LiveAdHTML]);
-fclose($fh);
-$error = system('python DocumentConverter.py /gitbox/Service-Office/'.$id.'.html /gitbox/Service-Office/'.$id.'.doc',$result);
-header('Location: '.$id.'.doc');
-}
-*/
-function explodePrint($str){
-	$explode=explode('page-break-after:always; ',$str);
-	$count=count($explode)-1;
-	$i=-1;
-	while ($i < $count){$i++;
-		if ($i == $count){
-			$implode .= $explode["$i"];
-		}elseif($i > 0){
-			$implode .= "page-break-after:always; ".$explode["$i"];
-		}else{
-			$implode .= $explode["$i"];
-		}
-	}
-	return $implode;
-}
+mysql_select_db('service');
+
 function pdfAD($id){
 $r=@mysql_query("select LiveAffidavit from ps_packets where packet_id = '$id'");
 $d=mysql_fetch_array($r,MYSQL_ASSOC);
@@ -51,7 +10,7 @@ $fh = fopen($myFile, 'w') or die("can't open file");
 $la=explodePrint(trim($d[LiveAffidavit]));
 fwrite($fh, $la);
 fclose($fh);
-$command = 'python DocumentConverter.py /gitbox/Service-Office/affidavitMaster/'.$id.'.html /gitbox/Service-Office/affidavitMaster/'.$id.'.pdf';
+$command = 'python DocumentConverter.py /devbox/Service-Office/affidavitMaster/'.$id.'.html /devbox/Service-Office/affidavitMaster/'.$id.'.pdf';
 $error = system($command,$result);
 //echo "<div>".$command."</div>";
 //echo "<div>".$error."</div>";
@@ -161,48 +120,12 @@ generate_wysiwyg('whiteboard');
 a { text-decoration:none; color:#000; }
 </style>
 <div align="center">
-<center>Document Processing and Transmission Center</center>
-<table height="30px" width="100%" border="1" cellpadding="0" cellspacing="0">
-<tr>
-<td <?=$mouseover;?> valign="center" align="center"><a href="?id=<?=$_GET[id];?>&edit=Edit Ad">Edit</a></td>
-<td <?=$mouseover2;?> valign="center" align="center"><a href="?id=<?=$_GET[id];?>&print=1">Autoprint</a></td>
-<td <?=$mouseover2;?> valign="center" align="center"><a href="loader.php?id=<?=$_GET[id];?>">Reload From History Items</a></td>
-<!--
-<td <?=$mouseover2;?> valign="center" align="center"><a href="?id=<?=$_GET[id];?>&doc=1" target="_Blank">Open .doc</a></td>
--->
-<td <?=$mouseover2;?> valign="center" align="center"><a href="?id=<?=$_GET[id];?>&pdf=1" target="_Blank">Open .pdf</a></td>
-<!--
-<td <?=$mouseover3;?> valign="center" align="center"><a href="bursonSendToPublisher.php?auction=<?=$_GET[id];?>" target="_Blank">Send To Paper</a></td>
-<td <?=$mouseover3;?> valign="center" align="center"><a href="SendToClient.php?auction=<?=$_GET[id];?>" target="_Blank">Send To Client</a></td>
-<td <?=$mouseover3;?> valign="center" align="center"><a href="bursonSendCorrectToPublisher.php?auction=<?=$_GET[id];?>" target="_Blank">Send Correction To Paper</a></td>
-<td <?=$mouseover3;?> valign="center" align="center"><a href="SendCorrectToClient.php?auction=<?=$_GET[id];?>" target="_Blank">Send Correction To Client</a></td>
--->
-</tr>
-</table>
-<?
-/*
-$q = "SELECT dept_email FROM papers WHERE paper_name = '$d[paper]'";
-$r = @mysql_query ($q) or die(mysql_error());
-$paper = mysql_fetch_array($r, MYSQL_ASSOC);
-$q = "SELECT sendAdTo FROM attorneys WHERE attorneys_id = '$d[attorneys_id]'";
-$r = @mysql_query ($q) or die(mysql_error());
-$attorney = mysql_fetch_array($r, MYSQL_ASSOC);
-*/
-
-
-?>
-<!--
-<table height="30px" width="100%" border="0" cellpadding="0" cellspacing="0">
-<tr>
-<td valign="center" align="center">Staff From: <?=$_COOKIE[psdata][email];?></td>
-<td valign="center" align="center">Publisher To: <?=$paper[dept_email];?></td>
-<td valign="center" align="center">Staff Cc: hwa.archive@gmail.com</td>
-<td valign="center" align="center">Client To: <?=$attorney[sendAdTo];?></td>
-</tr>
-</table>
--->
+<center>Document Template Center</center>
+<? $r8=mysql_query("select * from template");
+while($d8=mysql_fetch_array($r8,MYSQL_ASSOC)){?>
+<li><?=$d8[id]?>: <?=$d8[description]?></li>
+<? } ?>
 </div>
-<center><div style="border:solid 1px #ccc; width:900px;"><?=stripslashes($d[LiveAffidavit])?></div></center>
 <? } ?>
 </div>
 
@@ -210,29 +133,7 @@ $attorney = mysql_fetch_array($r, MYSQL_ASSOC);
 echo "missing auction id?";
 }
 
-if($_GET['print']){
-//if(printAD($_GET[id],'72.4.227.230') == 'fail'){
-printAD($_GET[id],'75.94.82.44');
-//}
-}
 
-// spell checker
-if($d[LiveAffidavit]){
-$pspell_link = pspell_new("en");
-echo "<div>Spell Checker<ol>";
-$word = explode(" ", strip_tags(stripslashes($d[LiveAffidavit])));
-foreach($word as $k => $v) {
-   if (pspell_check($pspell_link, $v)) {
-      //echo "spelled right";
-   } else {
-$strip = htmlspecialchars($v);
-      echo "<li>Sorry, (<b>$strip</b>), wrong spelling";
-   };
-};
-echo "</ol></div>";
-}
-/*
-$q1 = "UPDATE schedule_items set adProofed='".$_COOKIE[psdata][name]." on ".date('r')."' WHERE schedule_id = '$_GET[id]'";
-$r1 = @mysql_query ($q1) or die(mysql_error());
-*/
+
+
  ?>
