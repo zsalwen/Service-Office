@@ -30,17 +30,18 @@ This is the form to add new attributes<br>
 </table>
 <input type="submit">
 </form>
-<h3>Current System Layout:</h3>
-Attributes 
+<h3>Current Attributes:</h3>
 <table border="1">
  <tr>
+  <td>ID</td>
   <td>Name</td>
   <td>Description</td>
  </tr>
 <? 
-$r=@mysql_query("select * from attribute where status='active'");
+$r=@mysql_query("select * from attribute where status='active' order by name");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ ?>
  <tr>
+  <td><?=$d[id];?></td>
   <td><?=$d[name];?></td>
   <td><?=$d[description];?></td>
  </tr>
