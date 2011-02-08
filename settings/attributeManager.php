@@ -3,7 +3,7 @@ mysql_connect();
 mysql_select_db('service');
 ini_set('error_reporting',E_ERROR | E_WARNING | E_PARSE);
 ini_set('display_errors','Off');
-if ($_POST[name] && $_POST[description]){
+if ($_POST[name]){
 @mysql_query("insert into attribute (name,description) values ( '$_POST[name]','$_POST[description]')");
 }
 if ($_GET[undeleteAttribute]){
