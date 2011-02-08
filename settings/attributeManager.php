@@ -16,32 +16,6 @@ if ($_GET[deleteAttribute]){
 <style>
 small { color:#FF0000; }
 </style>
-<hr>
-<h3>Current System Layout:</h3>
-Attributes 
-<table border="1">
- <tr>
-  <td><b>Attribute ID#<b></td>
-  <td>Description</td>
- </tr>
-<? 
-$r=@mysql_query("select * from attribute where status='active'");
-while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ ?>
- <tr>
-  <td><b><?=$d[name];?></b></td>
-  <td><?=$d[description];?></td>
- </tr>
-<? } ?>
-</table>
-
-
-
-
-
-
-
-
-
 <form method="post">
 This is the form to add new attributes<br>
 <table>
@@ -56,6 +30,19 @@ This is the form to add new attributes<br>
 </table>
 <input type="submit">
 </form>
-
-
-
+<h3>Current System Layout:</h3>
+Attributes 
+<table border="1">
+ <tr>
+  <td>Name</td>
+  <td>Description</td>
+ </tr>
+<? 
+$r=@mysql_query("select * from attribute where status='active'");
+while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ ?>
+ <tr>
+  <td><?=$d[name];?></td>
+  <td><?=$d[description];?></td>
+ </tr>
+<? } ?>
+</table>
