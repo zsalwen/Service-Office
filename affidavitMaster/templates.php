@@ -35,6 +35,7 @@ $user = $_COOKIE[psdata][user_id];
             $q = "update template set html='$whiteboard' WHERE id = '$_GET[id]'";
             $r = @mysql_query ($q) or die(mysql_error());
             $saved = 1;
+header('Location: templates.php');
         }
         $q = "SELECT * FROM template WHERE id = '$_GET[id]'";
         $r = @mysql_query ($q) or die(mysql_error());
