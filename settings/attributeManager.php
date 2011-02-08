@@ -16,7 +16,8 @@ if ($_GET[deleteAttribute]){
 <style>
 small { color:#FF0000; }
 </style>
-<form method="post">
+<BODY OnLoad="document.add.name.focus();">
+<form name="add" method="post">
 This is the form to add new attributes<br>
 <table>
 <tr>
