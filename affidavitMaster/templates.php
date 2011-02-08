@@ -61,6 +61,11 @@ generate_wysiwyg('whiteboard');
 <style>
 a { text-decoration:none; color:#000; }
 </style>
+
+<? } ?>
+</div>
+
+<? }else{ ?>
 <div align="center">
 <center>Document Template Center</center>
 <? $r8=mysql_query("select * from template");
@@ -69,11 +74,6 @@ while($d8=mysql_fetch_array($r8,MYSQL_ASSOC)){?>
 <? } ?>
 </div>
 <? } ?>
-</div>
-
-<? }else{
-echo "missing auction id?";
-}
 
 
 
