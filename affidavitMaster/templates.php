@@ -3,7 +3,7 @@ mysql_connect();
 mysql_select_db('service');
 
 function pdfAD($id){
-$r=@mysql_query("select LiveAffidavit from ps_packets where packet_id = '$id'");
+$r=@mysql_query("select html from template where id = '$id'");
 $d=mysql_fetch_array($r,MYSQL_ASSOC);
 $myFile = "$id.html";
 $fh = fopen($myFile, 'w') or die("can't open file");
@@ -36,15 +36,12 @@ $user = $_COOKIE[psdata][user_id];
             $r = @mysql_query ($q) or die(mysql_error());
             $saved = 1;
         }
-        $q = "SELECT html FROM template WHERE id = '$_GET[id]'";
+        $q = "SELECT * FROM template WHERE id = '$_GET[id]'";
         $r = @mysql_query ($q) or die(mysql_error());
         $d = mysql_fetch_array($r, MYSQL_ASSOC);
         ?>
 <script language="JavaScript" type="text/javascript" src="wysiwyg.js"></script>
-<? if ($_GET[edit] && !$saved ){
-
-
-?>
+<? if ($_GET[edit] && !$saved ){ ?>
 <form method="post">
 <center>
 <textarea id="whiteboard" rows="30" cols="100" name="whiteboard"><?=stripslashes($d[html])?></textarea>
@@ -66,16 +63,11 @@ a { text-decoration:none; color:#000; }
 </div>
 
 <? }else{ ?>
-<div align="center">
+<div>
 <center>Document Template Center</center>
 <? $r8=mysql_query("select * from template");
 while($d8=mysql_fetch_array($r8,MYSQL_ASSOC)){?>
-<li><a href="?id=<?=$d8[id]?>"><?=$d8[id]?>: <?=$d8[description]?></a></li>
+<li><a href="?id=<?=$d8[id]?>&edit=1"><?=$d8[id]?>: <?=$d8[description]?></a></li>
 <? } ?>
 </div>
 <? } ?>
-
-
-
-
- ?>
