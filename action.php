@@ -14,7 +14,7 @@ return $d[estFileDate];
 // ok this will use alot of data report
 $today=date('Y-m-d');
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 echo "
 <style>
 .title1 { font-size:16px; background-color:FFcccc; } 
