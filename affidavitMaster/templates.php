@@ -44,12 +44,12 @@ header('Location: templates.php');
 <script language="JavaScript" type="text/javascript" src="wysiwyg.js"></script>
 <? if ($_GET[edit] && !$saved ){ ?>
 <form method="post">
-<center>
+<center><?=$d[description];?>
 <textarea id="whiteboard" rows="30" cols="100" name="whiteboard"><?=stripslashes($d[html])?></textarea>
 <script language="JavaScript">
 generate_wysiwyg('whiteboard');
 </script> <br>
-<input style="font-size:24px; color:#006666;" name="submit" type="submit" value="Save Ad"></center>
+<input style="font-size:24px; color:#006666;" name="submit" type="submit" value="Save Template"></center>
 </form>
 <? }else{?>
 <? $mouseover = "onmouseover=\"style.backgroundColor='#FFFF00';\" onmouseout=\"style.backgroundColor='#ffffff'\"";?>
