@@ -28,14 +28,6 @@ if (!$packet[id]){ die('Missing packet table data "$packet[id]" '); }
 echo "<li>service.packet Loaded</li>";
 
 
-$q = "SELECT * FROM attempt WHERE instruction_id = '$affidavit[instruction_id]'";
-$r = @mysql_query ($q) or die(mysql_error());
-while($attempt= mysql_fetch_array($r, MYSQL_ASSOC)){
-if (!$attempt[id]){ die('Missing attempt table data "$attempt[id]" '); }
-echo "<li>service.attempt $attempt[id] Loaded</li>";
-// build new array here for processing
-}
-
 $q = "SELECT * FROM server WHERE id = '$affidavit[server_id]' "; 
 $r = @mysql_query ($q) or die(mysql_error());
 $server = mysql_fetch_array($r, MYSQL_ASSOC);
@@ -50,16 +42,37 @@ $r=@mysql_query("select * from attribute where table_name = 'server'");
 while($attribute = mysql_fetch_array($r,MYSQL_ASSOC)){
 $field = $attribute[field_name];
 echo "<li>merge server[$field] (".$server[$field].") into ".$attribute[merge_name]."</li>";
-$base = str_replace($attribute[merge_name], $server[$field], $base); //hardcode
+$base = str_replace($attribute[merge_name], $server[$field], $base); 
 }
 
 $r=@mysql_query("select * from attribute where table_name = 'packet'");
 while($attribute = mysql_fetch_array($r,MYSQL_ASSOC)){
 $field = $attribute[field_name];
 echo "<li>merge packet[$field] (".$packet[$field].") into ".$attribute[merge_name]."</li>";
-$base = str_replace($attribute[merge_name], $packet[$field], $base); //hardcode
+$base = str_replace($attribute[merge_name], $packet[$field], $base); 
 }
 
+
+$q = "SELECT * FROM attempt WHERE instruction_id = '$affidavit[instruction_id]'";
+$r = @mysql_query ($q) or die(mysql_error());
+$it=0;
+while($attempt= mysql_fetch_array($r, MYSQL_ASSOC)){
+if (!$attempt[id]){ die('Missing attempt table data "$attempt[id]" '); }
+$it++;
+echo "<li>service.attempt $it : $attempt[id] Loaded</li>";
+// process attempt merges
+
+$r=@mysql_query("select * from attribute where table_name = 'attempt'");
+while($attribute = mysql_fetch_array($r,MYSQL_ASSOC)){
+$field = $attribute[field_name];
+echo "<li>merge packet[$field] (".$packet[$field].") into ".$attribute[merge_name]."</li>";
+$base = str_replace($attribute[merge_name], $attempt[$field], $base); 
+}
+
+
+
+
+}
 
 // Put the final affidavit
 @mysql_query("update affidavit set html =' ".addslashes($base)." ' where id = '$_GET[affidavit]' ");
