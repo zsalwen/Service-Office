@@ -11,7 +11,7 @@ if($_POST[table_name] && $_POST[field_name] && $_POST[merge_name]){
 ?>
 
 <form method="post">
-<table>
+<table border="1" style="border-collapse:collapse;">
 <tr>
 <td>Add New Attribute</td>
 <td>New Value</td>
@@ -36,8 +36,9 @@ if($_POST[table_name] && $_POST[field_name] && $_POST[merge_name]){
 <td colspan="3"><input type="submit" value="Save"></td>
 </tr>
 </table>
+</form>
 Current Attributes 
-<table>
+<table border="1" style="border-collapse:collapse;">
 <tr>
 <td>table_name</td>
 <td>field_name</td>
@@ -45,7 +46,7 @@ Current Attributes
 </tr>
 
 <?
-$r=@mysql_query("select * from attribute");
+$r=@mysql_query("select * from attribute order by table_name, field_name");
 while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 ?>
 <tr>
