@@ -79,7 +79,7 @@ while($attribute = mysql_fetch_array($r,MYSQL_ASSOC)){
 $query = $attribute[advancedQuery];
 
 
-$resolved <<<EOT
+$resolved =  <<<EOT
 
  "$query" 
 
