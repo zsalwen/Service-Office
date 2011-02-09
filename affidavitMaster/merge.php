@@ -49,7 +49,7 @@ $r=@mysql_query("select * from attribute where table_name = 'packet'");
 while($attribute = mysql_fetch_array($r,MYSQL_ASSOC)){
 $field = $attribute[field_name];
 echo "<li>merge packet[$field] (".$packet[$field].") into ".$attribute[merge_name]."</li>";
-$base = str_replace($attribute[merge_name], $server[$field], $base); //hardcode
+$base = str_replace($attribute[merge_name], $packet[$field], $base); //hardcode
 }
 
 
