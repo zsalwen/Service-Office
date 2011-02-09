@@ -1,7 +1,7 @@
 <?
 // this is the dual layer merge system
-if ($_GET[packet]){ $packet = $_GET[packet]; }else{ die("Missing packet id '?template='"); }
-if ($_GET[template]){ $template = $_GET[packet]; }else{ die("Missing template id '&packet='"); }
+if ($_GET[packet]){ $packet = $_GET[packet]; }else{ die("Missing packet id '?packet='"); }
+if ($_GET[template]){ $template = $_GET[template]; }else{ die("Missing template id '&template='"); }
 if ($_GET[affidavit]){ $affidavit = $_GET[affidavit]; }else{ die("Missing affidavit id '&affidavit='"); }
 mysql_connect();
 mysql_select_db('service');
