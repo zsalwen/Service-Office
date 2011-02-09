@@ -18,8 +18,7 @@ if($_POST[advancedQuery]){
 <td>Add New Attribute</td>
 <td>New Value</td>
 <td>Example</td>
-<td> -or- Advanced Query</td>
-</tr>
+<tr>
 <tr>
 <td>table_name</td>
 <td><input name="table_name"></td>
@@ -36,12 +35,17 @@ if($_POST[advancedQuery]){
 <td>[SERVERNAME]</td>
 </tr>
 <tr>
+<td>-</td>
+<td> - or - </td>
+<td>-</td>
+</tr>
+<tr>
 <td>advancedQuery</td>
 <td><input name="advancedQuery"></td>
 <td>select * from name where packet_id = '$packet[id]' and onaffidavit='yes'</td>
 </tr>
 <tr>
-<td colspan="3"><input type="submit" value="Save"></td>
+<td colspan="3"><input type="submit" value="Save New"></td>
 </tr>
 </table>
 </form>
