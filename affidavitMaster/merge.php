@@ -70,10 +70,11 @@ $base = str_replace($attribute[merge_name], $packet[$field], $base);
 $r=@mysql_query("select * from attribute where table_name = '' and advancedQuery <> '' ");
 while($attribute = mysql_fetch_array($r,MYSQL_ASSOC)){
 $query = $attribute[advancedQuery];
+$break = $attribute[advancedResult];
 echo "<li>run advanced query  (".$attribute[advancedQuery].") results into ".$attribute[merge_name]." below</li>";
 $rSub=@mysql_query($query) or die('<br>Error in Query: '$query.'<br>'.mysql_error());
 while($advanced = mysql_fetch_array($rSub,MYSQL_ASSOC)){
-$compiled .= $rSub[compiled];
+$compiled .= $rSub[compiled].$break;
 }
 $base = str_replace($attribute[merge_name], $compiled, $base); 
 }
