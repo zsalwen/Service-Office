@@ -79,9 +79,11 @@ while($attribute = mysql_fetch_array($r,MYSQL_ASSOC)){
 $query = $attribute[advancedQuery];
 
 
-$resolved <<<EOD
-"$query"
-EOD;
+$resolved <<<EOT
+
+ "$query" 
+
+EOT;
 
 
 echo "<li>resolving query from ".$query." to ".$resolved."</li>";
