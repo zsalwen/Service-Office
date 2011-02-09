@@ -5,25 +5,32 @@ if ($_GET[template]){ $template = $_GET[template]; }else{ die("Missing template 
 if ($_GET[affidavit]){ $affidavit = $_GET[affidavit]; }else{ die("Missing affidavit id '&affidavit='"); }
 mysql_connect();
 mysql_select_db('service');
-// Pull the template
+
+
 $q = "SELECT * FROM template WHERE id = '$template'";
 $r = @mysql_query ($q) or die(mysql_error());
 $d = mysql_fetch_array($r, MYSQL_ASSOC);
 $base = stripslashes($d[html]); 
 if (!$base){ die('Missing template html "$body" '); }
 
-// Pull the data we need. (when we are done, pick the joins)
+
+$q = "SELECT * FROM affidavit WHERE id = '$affidavit'";
+$r = @mysql_query ($q) or die(mysql_error());
+$affidavit = mysql_fetch_array($r, MYSQL_ASSOC);
+if (!$affidavit[id]){ die('Missing affidavit table information "$affidavit[id]" '); }
+
+
 $q = "SELECT * FROM packet WHERE id = '$packet'";
 $r = @mysql_query ($q) or die(mysql_error());
 $packet = mysql_fetch_array($r, MYSQL_ASSOC);
 if (!$packet[id]){ die('Missing packet table data "$packet[id]" '); }
 
-/*
-$q = "SELECT * FROM server WHERE id = '' "; // pull server information get id from ????
+
+$q = "SELECT * FROM server WHERE id = '$affidavit[server_id]' "; 
 $r = @mysql_query ($q) or die(mysql_error());
 $server = mysql_fetch_array($r, MYSQL_ASSOC);
 if (!$server[id]){ die('Missing server table data "$server[id]" '); }
-*/
+
 
 // merge the data
 $base = str_replace('[ID]', $packet[id], $base); 
