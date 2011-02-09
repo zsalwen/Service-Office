@@ -6,8 +6,8 @@ mysql_select_db('service');
 if($_POST[table_name] && $_POST[field_name] && $_POST[merge_name]){
 @mysql_query("insert into attribute (table_name,field_name,merge_name) values ('$_POST[table_name]','$_POST[field_name]','$_POST[merge_name]')");
 }
-if($_POST[advancedQuery]){
-@mysql_query("insert into attribute (advancedQuery) values ( '".addslashes($_POST[advancedQuery])."' ) ");
+if($_POST[advancedQuery] && $_POST[merge_name]){
+@mysql_query("insert into attribute (advancedQuery,merge_name) values ( '".addslashes($_POST[advancedQuery])."','$_POST[merge_name]' ) ");
 }
 
 ?>
@@ -20,6 +20,16 @@ if($_POST[advancedQuery]){
 <td>Example</td>
 <tr>
 <tr>
+<tr>
+<td>merge_name</td>
+<td><input name="merge_name"></td>
+<td>[SERVERNAME]</td>
+</tr>
+<tr>
+<td>-</td>
+<td> - AND - </td>
+<td>-</td>
+</tr>
 <td>table_name</td>
 <td><input name="table_name"></td>
 <td>server</td>
@@ -30,13 +40,8 @@ if($_POST[advancedQuery]){
 <td>name</td>
 </tr>
 <tr>
-<td>merge_name</td>
-<td><input name="merge_name"></td>
-<td>[SERVERNAME]</td>
-</tr>
-<tr>
 <td>-</td>
-<td> - or - </td>
+<td> - OR - </td>
 <td>-</td>
 </tr>
 <tr>
