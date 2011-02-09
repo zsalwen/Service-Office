@@ -22,12 +22,27 @@ function add2Letter($address){
 	if ($address == '5'){return 'd';}
 	if ($address == '6'){return 'e';}
 }
+function alpha2desc($alpha){
+	if ($alpha == 'a'){ return "FIRST DOT ATTEMPT"; }
+	if ($alpha == 'b'){ return "SECOND DOT ATTEMPT"; }
+	if ($alpha == 'c'){ return "POSTED DOT PROPERTY"; }
+	if ($alpha == 'd'){ return "FIRST LKA ATTEMPT"; }
+	if ($alpha == 'e'){ return "SECOND LKA ATTEMPT"; }
+	if ($alpha == 'f'){ return "FIRST ALT ATTEMPT"; }
+	if ($alpha == 'g'){ return "SECOND ALT ATTEMPT"; }
+	if ($alpha == 'h'){ return "FIRST ALT ATTEMPT"; }
+	if ($alpha == 'i'){ return "SECOND ALT ATTEMPT"; }
+	if ($alpha == 'j'){ return "FIRST ALT ATTEMPT"; }
+	if ($alpha == 'k'){ return "SECOND ALT ATTEMPT"; }
+	if ($alpha == 'l'){ return "FIRST ALT ATTEMPT"; }
+	if ($alpha == 'm'){ return "SECOND ALT ATTEMPT"; }
+}
 mysql_connect();
 mysql_select_db('core');
 $path = "/data/service/photos/";
 $q="SELECT * FROM ps_packets";
 $r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
-echo "<table><tr><td>#</td><td>Eviction</td><td>Photo Field</td><td>Local Path</td><td>Browser Address</td></tr>";
+echo "<table><tr><td>#</td><td>Packet</td><td>Photo Field</td><td>Local Path</td><td>Browser Address</td><td>Defendant</td><td>Address</td><td>Description</td></tr>";
 $i2=0;
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	$i=0;
@@ -49,9 +64,9 @@ while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 				if ($d2[packetID] == ''){
 					$query = "INSERT into ps_photos (packetID,defendantID,addressID,serverID,localPath,browserAddress) VALUES ('$d[packet_id]','$i','$addressID','$user','$localPath','$browserAddress')";
 					//@mysql_query($query);
-					echo "<tr style='color:black; background-color:white;'><td>$i2</td><td>$d[packet_id]</td><td>$var</td><td>$localPath</td><td>$browserAddress</td></tr>";
+					echo "<tr style='color:black; background-color:white;'><td>$i2</td><td>$d[packet_id]</td><td>$var</td><td>$localPath</td><td>$browserAddress</td><td>$i</td><td>$addressID</td><td>".alpha2desc($letter)."</td></tr>";
 				}else{
-					echo "<tr style='color:red; background-color:black;'><td>$i2</td><td>$d[packet_id]</td><td>$var</td><td>$localPath</td><td>$browserAddress -- PRE-EXISTS</td></tr>";
+					echo "<tr style='color:red; background-color:black;'><td>$i2</td><td>$d[packet_id]</td><td>$var</td><td>$localPath</td><td>$browserAddress -- PRE-EXISTS</td><td>$i</td><td>$addressID</td><td>".alpha2desc($letter)."</td></tr>";
 				}
 			}
 		}
