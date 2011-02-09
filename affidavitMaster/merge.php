@@ -38,7 +38,7 @@ $base = str_replace('[ID]', $packet[id], $base);
 // attribute manager (per table)
 $r=@mysql_query("select * from attribute where table_name = 'server'");
 while($attribute = mysql_fetch_array($r,MYSQL_ASSOC)){
-$base = str_replace($attribute[merge_name]', $server[$attribute[field_name]], $base); //hardcode
+$base = str_replace($attribute[merge_name], $server[$attribute[field_name]], $base); //hardcode
 }
 
 
