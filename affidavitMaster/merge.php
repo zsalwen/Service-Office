@@ -81,7 +81,7 @@ $query = $attribute[advancedQuery];
 
 $resolved =  <<<EOT
 
- "$query" 
+echo $query;
 
 EOT;
 
