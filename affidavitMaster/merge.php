@@ -41,7 +41,7 @@ $base = str_replace('[ID]', $packet[id], $base);
 $r=@mysql_query("select * from attribute where table_name = 'server'");
 while($attribute = mysql_fetch_array($r,MYSQL_ASSOC)){
 $field = $attribute[field_name];
-echo "<li>merge ".$server[$field]." into ".$attribute[merge_name]."</li>";
+echo "<li>merge server[$field] (".$server[$field].") into ".$attribute[merge_name]."</li>";
 $base = str_replace($attribute[merge_name], $server[$field], $base); //hardcode
 }
 
