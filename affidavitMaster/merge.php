@@ -47,7 +47,7 @@ $base = str_replace($attribute[merge_name], $server[$field], $base); //hardcode
 
 
 // Put the final affidavit
-@mysql_query("update affidavit set html =' ".addslashes($base)." ' where id = '$affidavit' ");
+@mysql_query("update affidavit set html =' ".addslashes($base)." ' where id = '$_GET[affidavit]' ");
 echo "<li>Affidavit merged and recorded.</li>";
 mysql_close();
 ?>
