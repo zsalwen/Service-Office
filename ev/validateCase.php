@@ -83,7 +83,7 @@ alert("Invalid County ID: $id, expecting 01-14, 17-24. ($case)");
 
 if ($_GET[validate]){
 
-mysql_select_db('core');
+mysql_select_db('service');
 @mysql_query("update evictionPackets set caseVerify='".$_COOKIE[psdata][name]."' where eviction_id='$_GET[validate]'") or die(mysql_error());
 timeline($_GET[validate],$_COOKIE[psdata][name]." verfied case number formatting.");
 	hardLog('verfied case number formatting for '.$_GET[validate],'user');

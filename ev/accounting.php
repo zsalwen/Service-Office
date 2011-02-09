@@ -3,7 +3,7 @@ include 'common.php';
 hardLog('access payment information for '.$_GET[id],'user');
 
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 function dupCheck($field,$string){
 $r=@mysql_query("select * from evictionPackets where $field = '$string'");
 $c=mysql_num_rows($r);

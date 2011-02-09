@@ -12,7 +12,7 @@ $tab = $_GET[tab];
 }else{
 $tab = "1";
 }
-mysql_select_db('core');
+mysql_select_db('service');
 $q="SELECT packet_id, name1, name2, name3, name4, name5, name6, address1, address1a, address1b, address1c, address1d, address1e, city1, city1a, city1b, city1c, city1d, city1e, state1, state1a, state1b, state1c, state1d, state1e, zip1, zip1a, zip1b, zip1c, zip1d, zip1e, address2, address2a, address2b, address2c, address2d, address2e, city2, city2a, city2b, city2c, city2d, city2e, state2, state2a, state2b, state2c, state2d, state2e, zip2, zip2a, zip2b, zip2c, zip2d, zip2e, address3, address3a, address3b, address3c, address3d, address3e, city3, city3a, city3b, city3c, city3d, city3e, state3, state3a, state3b, state3c, state3d, state3e, zip3, zip3a, zip3b, zip3c, zip3d, zip3e, address4, address4a, address4b, address4c, address4d, address4e, city4, city4a, city4b, city4c, city4d, city4e, state4, state4a, state4b, state4c, state4d, state4e, zip4, zip4a, zip4b, zip4c, zip4d, zip4e, address5, address5a, address5b, address5c, address5d, address5e, city5, city5a, city5b, city5c, city5d, city5e, state5, state5a, state5b, state5c, state5d, state5e, zip5, zip5a, zip5b, zip5c, zip5d, zip5e, address6, address6a, address6b, address6c, address6d, address6e, city6, city6a, city6b, city6c, city6d, city6e, state6, state6a, state6b, state6c, state6d, state6e, zip6, zip6a, zip6b, zip6c, zip6d, zip6e, case_no, circuit_court, client_file, date_received, attorneys_id FROM standard_packets WHERE packet_id = '$packet'";
 $r=@mysql_query($q);
 $d=mysql_fetch_array($r, MYSQL_ASSOC);
@@ -24,7 +24,7 @@ return $return;
 
 
 if ($_GET['delete']){
-	mysql_select_db('core');
+	mysql_select_db('service');
 	$qd="DELETE from ps_affidavits where affidavitID = '$_GET[delete]'"; 
 	$rd=@mysql_query($qd) or die("Query: $qd<br>".mysql_error());
 	timeline($packet,$_COOKIE[psdata][name]." Removed Scan #$_GET[delete]");
@@ -65,7 +65,7 @@ if ($_FILES['affidavit']){
 				$method=$_POST[freeform];
 			}
 			$query = "INSERT into ps_affidavits (packetID, defendantID, affidavit, userID, method, uploadDate) VALUES ('s$packet','$tab','$link1','$user','$method', NOW())";
-			mysql_select_db('core');
+			mysql_select_db('service');
 
 			@mysql_query($query);
 				timeline($packet,$_COOKIE[psdata][name]." Scanned $method");
@@ -88,7 +88,7 @@ if ($_FILES['affidavit']){
 }
 
 //include 'menu.php';
-mysql_select_db('core');
+mysql_select_db('service');
 $i=0;
 ?>
 <table border="1" style="border-collapse:collapse" width="100%">
@@ -270,7 +270,7 @@ a.spu{text-decoration:none; font-size:15px;}
 	
 </table>
 <?
-mysql_select_db('core');
+mysql_select_db('service');
 
 
 $q5="SELECT * FROM ps_affidavits WHERE packetID = 's$packet' and defendantID = '$tab'";

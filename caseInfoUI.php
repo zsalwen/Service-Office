@@ -4,7 +4,7 @@ td { font-size:10px;}
 </style>
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 
 if ($_GET[complete]){
 	@mysql_query("update watchDog set status = 'Search Complete' where watchID = '$_GET[complete]'");

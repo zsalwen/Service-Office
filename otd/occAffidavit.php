@@ -1,6 +1,6 @@
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 function id2name($id){
 	$q="SELECT name FROM ps_users WHERE id = '$id'";
 	$r=@mysql_query($q);

@@ -20,7 +20,7 @@ function dbout($full){
 	return $out;
 }
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 
 
 function log_action($user_id,$action){

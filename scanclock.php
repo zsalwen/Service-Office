@@ -1,7 +1,7 @@
 <?
 // this page will use no security! 
 function id2name($id){
-mysql_select_db('core');
+mysql_select_db('service');
 	$q="SELECT name FROM ps_users WHERE id = '$id'";
 	$r=@mysql_query($q);
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
@@ -14,7 +14,7 @@ if ($_GET[text1]){
 $now=date('G.i');
 $weekDay=strtoupper(date('l'));
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 $parts = explode('-',$_GET[text1]);
 $user_id = $parts[0];
 $record = explode('%',$parts[1]);
@@ -45,7 +45,7 @@ if ($_POST[text1]){
 $now=date('G.i');
 $weekDay=strtoupper(date('l'));
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 $parts = explode('-',$_POST[text1]);
 $user_id = $parts[0];
 $record = explode('%',$parts[1]);

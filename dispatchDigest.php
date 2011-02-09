@@ -1,7 +1,7 @@
 <?
 //this page generates an email 
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 include 'common.php';
 if ($_GET[date]){
 	$today=$_GET[date];

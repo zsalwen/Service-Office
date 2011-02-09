@@ -560,7 +560,7 @@ while($CCd=mysql_fetch_array($CCr,MYSQL_ASSOC)){
 <tr>
 <td colspan='2'><div style=" font-size:12px; background-color:ffffff; border:solid 1px #ffff00;">
 <?
-mysql_select_db('core');
+mysql_select_db('service');
 $q5="SELECT * FROM ps_affidavits WHERE packetID = '$d[packet_id]' order by defendantID";
 $r5=@mysql_query($q5) or die ("Query: $q5<br>".mysql_error());
 while ($d5=mysql_fetch_array($r5, MYSQL_ASSOC)){

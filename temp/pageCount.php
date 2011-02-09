@@ -42,7 +42,7 @@ function pageCount($file){
 	}
 }
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 $packet=$_GET[packet];
 echo "Packet: ".$packet."<br>";
 //$current="/sandbox/staff/temp";

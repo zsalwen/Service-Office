@@ -18,7 +18,7 @@ include 'common.php';
 	</tr>	
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 $r=@mysql_query("select * from rescanRequests where rescanID = '' order by packetID DESC");
 $i=0;
 while($d=mysql_fetch_array($r,MYSQL_ASSOC)){

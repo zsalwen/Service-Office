@@ -2,7 +2,7 @@
 session_start();
 include '../functions.php';
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 include '../security.php';
 function payweeks(){
 	$today = date('Y-m-d');

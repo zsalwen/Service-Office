@@ -1,6 +1,6 @@
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 //include 'common.php';
 function hardLog($str,$type){
 	if ($type == "user"){

@@ -1,7 +1,7 @@
 <?
 // connect
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 // build resources
 error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Loaded Marketing Index",3,"/logs/user.log");
 $today=date('Y-m-d');

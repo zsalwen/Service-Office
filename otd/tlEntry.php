@@ -1,6 +1,6 @@
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 function talk($to,$message){
 	include_once '/thirdParty/xmpphp/XMPPHP/XMPP.php';
 	$conn = new XMPPHP_XMPP('talk.google.com', 5222, 'talkabout.files@gmail.com', '', 'xmpphp', 'gmail.com', $printlog=false, $loglevel=XMPPHP_Log::LEVEL_INFO);

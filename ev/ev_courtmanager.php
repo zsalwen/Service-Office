@@ -4,7 +4,7 @@ include 'lock.php';
 include 'menu.php';
 function attachmentList($packet){
 $list = "<fieldset><legend>Electronic File Storage</legend>";
-mysql_select_db('core');
+mysql_select_db('service');
 $r=@mysql_query("select * from ps_affidavits where packetID = 'EV$packet' order by defendantID");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	$affidavit=$d[affidavit];

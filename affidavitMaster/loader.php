@@ -1,7 +1,7 @@
 <? 
 $last_line = system('rm -f *.html', $retval); // clear all html for debugging
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 
 
 

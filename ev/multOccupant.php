@@ -1,6 +1,6 @@
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 include 'functions.php';
 function includeOcc($packet,$mailerID){
 	include "http://staff.mdwestserve.com/ev/evictionNotice.php?packet=$packet&mailerID=$mailerID";

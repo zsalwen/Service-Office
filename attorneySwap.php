@@ -1,7 +1,7 @@
 <?
 if($_COOKIE[psdata][level]=='Operations'){
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 if($_GET[id]){
 if ($_GET[core] == 'evictionPackets'){
 $field = "eviction_id";

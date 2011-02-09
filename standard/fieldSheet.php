@@ -1,6 +1,6 @@
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 $def=$_GET[def];
 $packet=$_GET[packet];
 $packet2="S".$_GET[packet];

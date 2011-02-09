@@ -63,7 +63,7 @@ function buildList2($date){
 	return $list;
 }
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 $yearStart = 2008;
 $yearEnd = date('Y');
 $monthEndA = 12;

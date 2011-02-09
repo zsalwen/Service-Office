@@ -12,7 +12,7 @@ $tab = $_GET[tab];
 }else{
 $tab = "1";
 }
-mysql_select_db('core');
+mysql_select_db('service');
 $q="SELECT eviction_id, name1, name2, name3, name4, name5, name6, address1, city1, state1, zip1, address2, city2, state2, zip2, address3, city3, state3, zip3, address4, city4, state4, zip4, address5, city5, state5, zip5, address6, city6, state6, zip6, case_no, circuit_court, client_file, date_received, attorneys_id FROM evictionPackets WHERE eviction_id = '$eviction'";
 $r=@mysql_query($q);
 $d=mysql_fetch_array($r, MYSQL_ASSOC);
@@ -24,7 +24,7 @@ return $return;
 
 
 if ($_GET['delete']){
-	mysql_select_db('core');
+	mysql_select_db('service');
 	$qd="DELETE from ps_affidavits where affidavitID = '$_GET[delete]'";
 	$rd=@mysql_query($qd) or die("Query: $qd<br>".mysql_error());
 	timeline($eviction,$_COOKIE[psdata][name]." Removed Scan #$_GET[delete]");
@@ -66,7 +66,7 @@ if ($_FILES['affidavit']){
 			}
 			$eviction = "EV".$_GET[eviction];
 			$query = "INSERT into ps_affidavits (packetID, defendantID, affidavit, userID, method, uploadDate) VALUES ('$eviction','$tab','$link1','$user','$method', NOW())";
-			mysql_select_db('core');
+			mysql_select_db('service');
 
 			@mysql_query($query);
 				timeline($eviction,$_COOKIE[psdata][name]." Scanned $method");
@@ -291,7 +291,7 @@ a.spu{text-decoration:none; font-size:15px;}
 <td rowspan="2" ><div id="affidavits" style="height:473px; width:405px; overflow:auto; background-color:#FFCC99"><center>
 <?
 
-mysql_select_db('core');
+mysql_select_db('service');
 
 
 $q5="SELECT affidavit, method, affidavitID FROM ps_affidavits WHERE packetID = '$eviction' and defendantID = '$tab'";
@@ -355,7 +355,7 @@ while ($d5=mysql_fetch_array($r5, MYSQL_ASSOC)){
 	
 </table>
 <?
-mysql_select_db('core');
+mysql_select_db('service');
 
 if (strpos($eviction,"EV")){}else{
 	$eviction="EV".$eviction;

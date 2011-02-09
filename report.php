@@ -18,7 +18,7 @@ if ($_GET[svc] == 'Eviction'){
 }
 */
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 include 'security.php';
 hardLog($user[name].' Loaded '.$_SERVER[PHP_SELF].'+'.$_SERVER[QUERY_STRING ],'user');
 if($_GET[sort]){

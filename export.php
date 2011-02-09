@@ -19,7 +19,7 @@ include 'common.php';
 	</tr>	
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 $r=@mysql_query("select * from exportRequests where exportDate = '0000-00-00 00:00:00' and byID <> '".$_COOKIE[psdata][user_id]."' order by requestID DESC");
 $i=0;
 while($d=mysql_fetch_array($r,MYSQL_ASSOC)){

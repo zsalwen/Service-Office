@@ -4,7 +4,7 @@
  </style>
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 include 'common.php';
 if ($_POST[att_id]){
 	$att_id=$_POST[att_id];

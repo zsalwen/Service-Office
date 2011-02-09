@@ -123,7 +123,7 @@ function historyList($id,$attorneys_id){
 
 function attachmentList($packet,$type){
 	$list = "<fieldset><legend>Electronic File Storage</legend>";
-	mysql_select_db('core');
+	mysql_select_db('service');
 	if ($type == 'EV'){
 		$packet='EV'.$packet;
 	}
@@ -645,7 +645,7 @@ while($dAD=mysql_fetch_array($rAD,MYSQL_ASSOC)){
 <table width="100%"><tr>
 <td colspan='2'><div style=" font-size:12px; background-color:ffffff; border:solid 1px #ffff00;">
 <?
-mysql_select_db('core');
+mysql_select_db('service');
 $affID="EV".$d[eviction_id];
 $q5="SELECT * FROM ps_affidavits WHERE packetID = '$affID' order by defendantID";
 $r5=@mysql_query($q5) or die ("Query: $q5<br>".mysql_error());

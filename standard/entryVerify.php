@@ -50,7 +50,7 @@ function talk($to,$message){
 }
 
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 ?>
 <style>
 fieldset, table {padding: 0px;}

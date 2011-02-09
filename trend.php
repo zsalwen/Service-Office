@@ -32,7 +32,7 @@ padding:0px;
 </style>
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 // last 30 days
 function newSTANDARDService($date){
 $r=@mysql_query("SELECT packet_id FROM standard_packets WHERE date_received LIKE '$date %'");

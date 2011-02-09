@@ -34,7 +34,7 @@ function serverName($id){
 return $data[name];
 }
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 $r=@mysql_query("select *,
 						date_format(date_received, '%W, %M %D %Y') as date_received_f,
 						date_format(estFileDate, '%W, %M %D %Y') as estFileDate,

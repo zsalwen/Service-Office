@@ -1,6 +1,6 @@
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 ?>
 <style>
 body {margin:0px; padding:0px;}

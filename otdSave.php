@@ -1,6 +1,6 @@
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 $packet=$_GET[packet];
 $q="SELECT otd, client_file FROM ps_packets WHERE packet_id='$packet'";
 $r=@mysql_query($q) or die("Query: $q<br>".mysql_error());

@@ -46,7 +46,7 @@ function casesOnline($first,$last,$county,$packet,$defendant){
 	}
 }
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 // loop through watchDog table
 $rOut = @mysql_query("select * from watchDog where status = 'SEARCHING...'");
 while ($dOut=mysql_fetch_array($rOut,MYSQL_ASSOC)){

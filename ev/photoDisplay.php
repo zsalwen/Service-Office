@@ -1,7 +1,7 @@
 <?
 include 'common.php';
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 function alpha2desc($alpha){
 	if ($alpha == 'a'){ return "FIRST DOT ATTEMPT"; }
 	if ($alpha == 'b'){ return "SECOND DOT ATTEMPT"; }

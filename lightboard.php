@@ -38,7 +38,7 @@ a:visited {color:red; font-weight:bold;}
 } 
 echo "<div style='background-color:#FFFFFF; font-size:16px; font-variant:small-caps; height:16px; overflow:auto;'>$mark</div></td>";
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 $i=0;
 $q5="SELECT * FROM ps_affidavits WHERE packetID = '$_GET[packet]' order by defendantID";
 $r5=@mysql_query($q5) or die ("Query: $q5<br>".mysql_error());

@@ -1,7 +1,7 @@
 <?
 // connect
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 
 if ($_POST[id]){
 	$id=$_POST[id];

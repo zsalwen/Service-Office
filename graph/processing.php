@@ -66,7 +66,7 @@ echo "</ol><legend>Search for $_POST[search] in $_POST[log]</legend></fieldset>"
 
 /*
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 include "functions.php";
 $i=0;
 //z will be the largest number encountered

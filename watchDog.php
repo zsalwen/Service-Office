@@ -35,7 +35,7 @@ function casesOnline($first,$last,$county,$company){
 }
 ob_start();
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 // first we have to build the search table ?? manual for now...
 
 // loop through watchDog table

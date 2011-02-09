@@ -5,7 +5,7 @@ td { font-variant:small-caps; }
 </style>
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 function id2attorney($id){
 	$q="SELECT display_name FROM attorneys WHERE attorneys_id = '$id'";
 	$r=@mysql_query($q);

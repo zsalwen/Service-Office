@@ -53,7 +53,7 @@ echo $cmd."<br>";
 system($cmd);
 
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 $packet=$_GET[packet];
 $current="/sandbox/staff/temp";
 hardLog('Downloading Full PDF Package','user');

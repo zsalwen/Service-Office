@@ -12,7 +12,7 @@ session_start();
 $row = 1;
 $handle = fopen("/sandbox/tmp/bwa.csv", "r");
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 function leading_zeros($value, $places){
     if(is_numeric($value)){
         for($x = 1; $x <= $places; $x++){

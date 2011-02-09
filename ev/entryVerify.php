@@ -12,7 +12,7 @@ function id2name($id){
 return $d[name];
 }
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 ?>
 <style>
 fieldset, table {padding: 0px;}

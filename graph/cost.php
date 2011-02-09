@@ -1,7 +1,7 @@
 <?
 include("cost.linemaker.php");
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 function leading_zeros($value, $places){
     if(is_numeric($value)){
         for($x = 1; $x <= $places; $x++){

@@ -1,6 +1,6 @@
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 /*
 function addNote($id,$note){
 $q1 = "SELECT notes FROM schedule_items WHERE schedule_id = '$id'";

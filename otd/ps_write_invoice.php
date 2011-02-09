@@ -9,7 +9,7 @@ ini_set("memory_limit","12M");
 set_time_limit(1800);
 include '../class.ezpdf.php';
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 // let's set the page size and the margins
 $pdf =& new Cezpdf('LETTER','portrait');
 $pdf -> ezSetMargins(50,70,50,50);

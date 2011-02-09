@@ -1,6 +1,6 @@
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 include 'common.php';
 // open this directory 
 $myDirectory = opendir("/home/webuploads/");

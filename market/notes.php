@@ -11,7 +11,7 @@ $str = stripslashes($str);
 return $str;
 }
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 if ($_POST[note] && $_GET[id]){
 $r=@mysql_query("select * from market where marketID = '$_GET[id]'");
 $d=mysql_fetch_array($r,MYSQL_ASSOC);

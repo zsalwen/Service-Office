@@ -129,7 +129,7 @@ function convert($link,$field,$packet){
 }
 
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 // this will be the backup routine for our first true archive, 2008 to begin.
 $q="SELECT * from ps_packets where date_received LIKE '2008-%' order by packet_id DESC limit 0,10";
 // we will focus on three areas for OTD's

@@ -1,7 +1,7 @@
 <?
 include 'common.php';
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 function getRate($package){
 	$x=0;
 	$q="SELECT eviction_id, contractor_rate FROM evictionPackets WHERE package_id='$package'";

@@ -3,7 +3,7 @@ session_start();
 include 'security.php';
 include 'functions-calendar.php';
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 if ($_GET['date']){
 $today=$_GET['date'];
 }else{

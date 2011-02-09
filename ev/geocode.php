@@ -27,7 +27,7 @@ function isLnL($eviction,$def){
 	return $data;
 }
 mysql_connect(); 
-mysql_select_db('core');
+mysql_select_db('service');
 if ($_GET[all]){
 	$q = "SELECT * FROM evictionPackets order by eviction_id ASC";
 	$r = @mysql_query ($q) or die(mysql_error());

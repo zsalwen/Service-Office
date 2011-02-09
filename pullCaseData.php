@@ -34,7 +34,7 @@ function caseDetail($caseNumber){
 		//echo "<div style='border:solid 10px #0ff;'><pre>".htmlspecialchars($html)."</pre></div>";
 }
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 // loop through watchDog table
 $rOut = @mysql_query("select caseNumber from marylandCaseData where status = 'Active'");
 while ($dOut=mysql_fetch_array($rOut,MYSQL_ASSOC)){

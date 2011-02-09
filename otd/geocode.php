@@ -27,7 +27,7 @@ function isLnL($packet,$def){
 	return $data;
 }
 mysql_connect(); 
-mysql_select_db('core');
+mysql_select_db('service');
 if ($_GET[all]){
 	$q = "SELECT * FROM ps_packets order by packet_id ASC";
 	$r = @mysql_query ($q) or die(mysql_error());

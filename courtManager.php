@@ -9,7 +9,7 @@ $_SESSION[fileDate] = $today;
 
 function attachmentList($packet,$type){
 $list = "<fieldset><legend>Electronic File Storage</legend>";
-mysql_select_db('core');
+mysql_select_db('service');
 if ($type == 'EV'){
 	$packet='EV'.$packet;
 }

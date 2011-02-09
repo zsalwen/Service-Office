@@ -1,6 +1,6 @@
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 $today = date('Y-m-d');
 $r=@mysql_query("select distinct user from explorer where date = '$today'");
 ?>

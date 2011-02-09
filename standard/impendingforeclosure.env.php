@@ -1,6 +1,6 @@
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 
 $r=@mysql_query("select * from standard_packets where packet_id = '$_GET[packet]'") or die(mysql_error());
 $d=mysql_fetch_array($r,MYSQL_ASSOC);

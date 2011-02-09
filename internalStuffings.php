@@ -1,6 +1,6 @@
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 function pageMaker($id,$matrix){
 $r=@mysql_query("SELECT * FROM envelopeImage WHERE envID = '$id'");
 $d=mysql_fetch_array($r,MYSQL_ASSOC);

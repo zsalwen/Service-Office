@@ -1,6 +1,6 @@
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 function getFolder($otd){
 $path=explode("/",$otd);
 $count=(count($path)-2);

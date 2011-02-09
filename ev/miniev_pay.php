@@ -2,7 +2,7 @@
 include 'common.php';
 hardLog('access eviction payment information for '.$_GET[id],'user');
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 ?>
 <script language="JavaScript">
 <!--

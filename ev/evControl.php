@@ -3,7 +3,7 @@ mysql_connect();
 // this is a read only file 
 // keep it simple
 // maybe offer to limit by date and month
-mysql_select_db('core');
+mysql_select_db('service');
 $r2=@mysql_query("select display_name from attorneys where attorneys_id = '$_GET[attid]'");
 $d2=mysql_fetch_array($r2,MYSQL_ASSOC);
 function leading_zeros($value, $places){

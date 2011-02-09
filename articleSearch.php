@@ -1,6 +1,6 @@
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 function rmSpace($str){
 	return str_replace(' ','',$str);
 }

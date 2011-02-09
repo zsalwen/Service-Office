@@ -1,6 +1,6 @@
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 // loop through watchDog table to find closed cases
 $r = @mysql_query("select details from marylandCaseData where status = 'Active' order by RAND() limit 0,3");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){

@@ -1,6 +1,6 @@
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 
 if($_GET[delete]){
 @mysql_query("update affidavits set status='deleted' where id = '$_GET[delete]'");

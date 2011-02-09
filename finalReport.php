@@ -1,7 +1,7 @@
 <center>
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 function dbIN($str){
 $str = trim($str);
 $str = addslashes($str);

@@ -1,6 +1,6 @@
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 function monthConvert($month){
 	if ($month == '01'){ return 'January'; }
 	if ($month == '02'){ return 'February'; }

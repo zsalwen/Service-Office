@@ -1,6 +1,6 @@
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 include 'common.php';
 $packet=$_GET[packet];
 $q="SELECT name1, name2, name3, name4, name5, name6, circuit_court FROM ps_packets WHERE packet_id='$packet'";

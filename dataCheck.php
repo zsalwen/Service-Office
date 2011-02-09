@@ -35,7 +35,7 @@ function testLink($file){
 }
 
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 
 
 $r=@mysql_query("select * from ps_affidavits order by uploadDate DESC");

@@ -4,7 +4,7 @@ date_default_timezone_set('America/New_York');
 include 'security.php';
 include 'functions.php';
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 $q="UPDATE ps_users SET location='".$_SERVER['PHP_SELF']."', online_now='".time()."' WHERE id = '".$_COOKIE[psdata][user_id]."'";
 @mysql_query($q);
 function talk($to,$message){

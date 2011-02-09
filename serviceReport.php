@@ -3,7 +3,7 @@ if ($_COOKIE[psdata][level] != 'Operations'){
 	header('Location: http://anarchy.org');
 }
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 function serverName($id){
 	$q="SELECT name, company FROM ps_users WHERE id = '$id'";
 	$r=@mysql_query($q);

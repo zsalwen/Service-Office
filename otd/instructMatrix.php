@@ -1,6 +1,6 @@
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 include 'common.php';
 function dbIN($str){
 $str = trim($str);

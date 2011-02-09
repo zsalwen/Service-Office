@@ -1,6 +1,6 @@
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 function fillIn($str){
 	if (!$str){
 		$str = "_____________________";

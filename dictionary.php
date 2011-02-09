@@ -1,6 +1,6 @@
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 
 @mysql_query("UPDATE dictionary SET wordCount = '0'"); // clear before each usage
 

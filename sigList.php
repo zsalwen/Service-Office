@@ -1,6 +1,6 @@
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 function id2company($id){
 	$q="SELECT company FROM ps_users WHERE id = '$id'";
 	$r=@mysql_query($q);

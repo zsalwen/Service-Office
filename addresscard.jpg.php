@@ -2,7 +2,7 @@
 session_start();
 include 'functions.php';
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 //$id=$_GET[id];
 //$q="SELECT * FROM ps_users where id = '$id'";
 //$r=@mysql_query($q) or die(mysql_error());

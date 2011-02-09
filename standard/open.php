@@ -19,7 +19,7 @@ body	{
 
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 function countStatus($status){
 	$r=@mysql_query("select packet_id from standard_packets where process_status = '$status'");
 	$count=mysql_num_rows($r);

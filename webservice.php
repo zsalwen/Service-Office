@@ -1,7 +1,7 @@
 <?
 session_start();
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 function zipData($zip){
 	$r=@mysql_query("select * from zip_code where zip_code = '$zip'");
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);

@@ -2,7 +2,7 @@
 session_start();
 include 'functions.php';
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 include 'security.php';
 $today = $_GET[start];//date('Y-m-d');// we need to get the starting date of the pay week
 $qs="SELECT * FROM paychecks WHERE period_start <= '$today' AND period_end >= '$today' ";

@@ -1,6 +1,6 @@
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 function getPage($url, $referer, $timeout, $header){
 	if(!isset($timeout))
         $timeout=30;

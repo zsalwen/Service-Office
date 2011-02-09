@@ -1,7 +1,7 @@
 Set File Watch<br>
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 if ($_POST[clientFile] && $_POST[message]){
 @mysql_query("insert into fileWatch (clientFile, message) values ('$_POST[clientFile]', '$_POST[message]')");
 }

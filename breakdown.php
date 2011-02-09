@@ -1,7 +1,7 @@
 <?
 session_start();
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 function breakdown($county,$state){
 	$r=@mysql_query("select county from defendants where county = '$county' and defendantstate = '$state' and packet = '' and defendantfullname <> 'ALL OCCUPANTS' and defendantfullname <> 'OCCUPANT'");
 	$count=mysql_num_rows($r);

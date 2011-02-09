@@ -1,6 +1,6 @@
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 $print .= date("F d Y H:i:s.")." : Portal upload started\n";
 function email2name($email){
 	$q="SELECT name FROM ps_users WHERE email LIKE '%$email%'";

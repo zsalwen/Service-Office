@@ -1,6 +1,6 @@
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 include 'common.php';
 function id2state($id){
 	$q="SELECT state FROM ps_users WHERE id='$id' LIMIT 0,1";

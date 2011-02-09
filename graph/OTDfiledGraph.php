@@ -1,6 +1,6 @@
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 include "functions.php";
 //z will be the largest number encountered
 $z=0;

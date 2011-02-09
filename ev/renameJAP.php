@@ -27,7 +27,7 @@ function hardLog($str,$type){
 
 if ($_GET[packet]){
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 $r=@mysql_query("select otd from evictionPackets where eviction_id = '$_GET[packet]'");
 $d=mysql_fetch_array($r,MYSQL_ASSOC);
 $old = washURI2SVR($d[otd]);

@@ -1,6 +1,6 @@
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 include "functions.php";
 ini_set("memory_limit","24M");
 $year=$_GET[year];

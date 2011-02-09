@@ -23,7 +23,7 @@ function add2Letter($address){
 	if ($address == '6'){return 'e';}
 }
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 $path = "/data/service/photos/";
 $q="SELECT * FROM ps_packets";
 $r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());

@@ -1,6 +1,6 @@
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 function exportPacket($packet,$status){
 	$r=@mysql_query("select * from ps_packets where packet_id = '$packet'");
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);

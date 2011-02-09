@@ -304,7 +304,7 @@ function historyList($packet,$attorneys_id){
 }
 function attachmentList($packet,$type){
 	$list = "<fieldset><legend>Electronic File Storage</legend>";
-	mysql_select_db('core');
+	mysql_select_db('service');
 	if ($type == 'EV'){
 		$packet='EV'.$packet;
 	}
@@ -1087,7 +1087,7 @@ if($d[lossMit] != ''){
 <tr>
 <td colspan='2'><div style=" font-size:12px; background-color:ffffff; border:solid 1px #ffff00; padding:0px;">
 <?
-mysql_select_db('core');
+mysql_select_db('service');
 $q5="SELECT * FROM ps_affidavits WHERE packetID = '$d[packet_id]' order by defendantID";
 $r5=@mysql_query($q5) or die ("Query: $q5<br>".mysql_error());
 while ($d5=mysql_fetch_array($r5, MYSQL_ASSOC)){

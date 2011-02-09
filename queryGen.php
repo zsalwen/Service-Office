@@ -1,6 +1,6 @@
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 if ($_POST[submit]){
 	$pass=rand(1000,9999);
 	$q="INSERT INTO `contacts` (`contact_id`, `user_id`, `name`, `email`, `attorneys_id`, `phone`, `position`, `password`, `uid`, `uid_date`, `uid_ip`, `online_now`, `user_admin`, `master_admin`)

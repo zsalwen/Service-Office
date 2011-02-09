@@ -13,7 +13,7 @@ if ($_GET[packet]){
 }
 $def=$_POST[def];
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 include 'common.php';
 function subWord($str,$num){
 	$length=strlen($str);

@@ -1,6 +1,6 @@
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 function valueData($key){
   $r=@mysql_query("select valueData from config where keyData = '$key'");
   $d=mysql_fetch_array($r,MYSQL_ASSOC);

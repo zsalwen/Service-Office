@@ -19,7 +19,7 @@ function talk($to,$message){
 }
 
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 $q="UPDATE ps_users SET location='".$_SERVER['PHP_SELF']."', online_now='".time()."' WHERE id = '".$_COOKIE[psdata][user_id]."'";
 @mysql_query($q);
  function timeline($id,$note){

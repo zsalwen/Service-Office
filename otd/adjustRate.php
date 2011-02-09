@@ -2,7 +2,7 @@
 include 'common.php';
 include 'menu.php';
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 function getRate($package){
 	$x=0;
 	$q="SELECT packet_id, contractor_rate FROM ps_packets WHERE package_id='$package'";

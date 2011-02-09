@@ -2,7 +2,7 @@
 include 'functions.php';
 include 'lock.php';
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 
 function sampleResident(){
 	$r=mysql_query("select resident from standard_history where resident <> '' order by RAND()");

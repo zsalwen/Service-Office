@@ -1,6 +1,6 @@
 <?
 mysql_connect();
-mysql_select_db('core');
+mysql_select_db('service');
 if ($_POST[packet]){
 $q="insert into standard_affidavits ( affidavit, packet, serverX, whenX, whereX, howX, attempt1, attempt2, attempt3 ,ifMAil, processor, cb1, cb2, cb3, cb4, cb5, whoX, resident, officer, agent, personal ) values ('$_POST[affidavit]','$_POST[packet]','$_POST[server]','$_POST[when]','$_POST[where]','$_POST[how]','$_POST[attempt1]','$_POST[attempt2]','$_POST[attempt3]','$_POST[ifMAil]', '".$_COOKIE[psdata][name]."','$_POST[cb1]','$_POST[cb2]','$_POST[cb3]','$_POST[cb4]','$_POST[cb5]', '$_POST[whoX]', '$_POST[resident]', '$_POST[officer]', '$_POST[agent]', '$_POST[personal]')";
 @mysql_query($q);
