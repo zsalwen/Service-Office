@@ -41,6 +41,13 @@ $server = mysql_fetch_array($r, MYSQL_ASSOC);
 if (!$server[id]){ die('Missing server table data "$server[id]" '); }
 echo "<li>service.server Loaded</li>";
 
+
+$q = "SELECT * FROM instruction WHERE id = '$affidavit[instruction_id]' "; 
+$r = @mysql_query ($q) or die(mysql_error());
+$instruction = mysql_fetch_array($r, MYSQL_ASSOC);
+if (!$instruction[id]){ die('Missing instruction table data "$instruction[id]" '); }
+echo "<li>service.instruction Loaded</li>";
+
 // merge the data
 $base = str_replace('[ID]', $packet[id], $base); 
 
