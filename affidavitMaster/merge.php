@@ -12,7 +12,7 @@ $d = mysql_fetch_array($r, MYSQL_ASSOC);
 $base = stripslashes($d[html]); // we are done with $d, good to reuse
 if (!$base){ die('Missing template html "$body" '); }
 // Pull the data we need. (this is where we join!)
-$q = "SELECT * FROM packet WHERE id = '$template'";
+$q = "SELECT * FROM packet WHERE id = '$packet'";
 $r = @mysql_query ($q) or die(mysql_error());
 $d = mysql_fetch_array($r, MYSQL_ASSOC);
 if (!$d[id]){ die('Missing packet data "$d[id]" '); }
