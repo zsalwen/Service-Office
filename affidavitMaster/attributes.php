@@ -6,7 +6,9 @@ mysql_select_db('service');
 if($_POST[table_name] && $_POST[field_name] && $_POST[merge_name]){
 @mysql_query("insert into attribute (table_name,field_name,merge_name) values ('$_POST[table_name]','$_POST[field_name]','$_POST[merge_name]')");
 }
-
+if($_POST[advancedQuery]){
+@mysql_query("insert into attribute (advancedQuery) values ( '".addslashes($_POST[advancedQuery])."' ) ");
+}
 
 ?>
 
@@ -16,6 +18,7 @@ if($_POST[table_name] && $_POST[field_name] && $_POST[merge_name]){
 <td>Add New Attribute</td>
 <td>New Value</td>
 <td>Example</td>
+<td> -or- Advanced Query</td>
 </tr>
 <tr>
 <td>table_name</td>
@@ -33,6 +36,11 @@ if($_POST[table_name] && $_POST[field_name] && $_POST[merge_name]){
 <td>[SERVERNAME]</td>
 </tr>
 <tr>
+<td>advancedQuery</td>
+<td><input name="advancedQuery"></td>
+<td>select * from name where packet_id = '$packet[id]' and onaffidavit='yes'</td>
+</tr>
+<tr>
 <td colspan="3"><input type="submit" value="Save"></td>
 </tr>
 </table>
@@ -43,6 +51,7 @@ Current Attributes
 <td>table_name</td>
 <td>field_name</td>
 <td>merge_name</td>
+<td>advancedQuery</td>
 </tr>
 
 <?
@@ -53,6 +62,7 @@ while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 <td><?=$d[table_name];?></td>
 <td><?=$d[field_name];?></td>
 <td><?=$d[merge_name];?></td>
+<td><?=$d[advancedQuery];?></td>
 </tr>
 <?  } ?>
 </table>
