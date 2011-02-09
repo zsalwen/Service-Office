@@ -43,8 +43,8 @@ function printSet($packet,$def,$add){
 	</table>
 	<?
 }
-function getMatrixData($packet){
-	$qm="SELECT * FROM mailMatrix WHERE packetID='$packet'";
+function getMatrixData($packet,$produt){
+	$qm="SELECT * FROM mailMatrix WHERE packetID='$packet' AND product='$product'";
 	$rm=@mysql_query($qm);
 	$dm=mysql_fetch_array($rm, MYSQL_ASSOC);
 	$i=0;
@@ -134,11 +134,11 @@ if ($_GET[OTD] && $_GET[start] && $_GET[stop]){
 	$q="select packet_id from ps_packets where process_status='READY TO MAIL' AND packet_id >= '$_GET[start]' AND packet_id <= '$_GET[stop]' order by packet_id";
 	$r=@mysql_query($q);
 	 while($d=mysql_fetch_array($r, MYSQL_ASSOC)){ $i++;
-		$qm="SELECT packetID FROM mailMatrix WHERE packetID='$d[packet_id]'";
+		$qm="SELECT packetID FROM mailMatrix WHERE packetID='$d[packet_id]' AND product='OTD'";
 		$rm=@mysql_query($qm) or die ("Query: $qm<br>".mysql_error());
 		$dm=mysql_fetch_array($rm, MYSQL_ASSOC);
 		if ($dm[packetID] != ''){
-			getMatrixData($d[packet_id]);
+			getMatrixData($d[packet_id],'OTD');
 		}else{
 			getPacketData($d[packet_id]);
 		}
@@ -147,10 +147,17 @@ if ($_GET[OTD] && $_GET[start] && $_GET[stop]){
 	$q="select eviction_id from evictionPackets where process_status='READY TO MAIL' AND packet_id >= '$_GET[start]' AND packet_id <= '$_GET[stop]' order by eviction_id";
 	$r=@mysql_query($q);
 	 while($d=mysql_fetch_array($r, MYSQL_ASSOC)){ $i++;
-		getEvictionData($d[eviction_id]);
+		$qm="SELECT packetID FROM mailMatrix WHERE packetID='$d[eviction_id]' AND product='EV'";
+		$rm=@mysql_query($qm) or die ("Query: $qm<br>".mysql_error());
+		$dm=mysql_fetch_array($rm, MYSQL_ASSOC);
+		if ($dm[packetID] != ''){
+			getMatrixData($d[packet_id],'EV');
+		}else{
+			getEvictionData($d[eviction_id]);
+		}
 	 }
 }elseif ($_GET[OTD]){
-	$qm="SELECT packetID FROM mailMatrix WHERE packetID='$_GET[OTD]'";
+	$qm="SELECT packetID FROM mailMatrix WHERE packetID='$_GET[OTD]' AND product='OTD'";
 	$rm=@mysql_query($qm) or die ("Query: $qm<br>".mysql_error());
 	$dm=mysql_fetch_array($rm, MYSQL_ASSOC);
 	if ($dm[packetID] != ''){
@@ -159,7 +166,14 @@ if ($_GET[OTD] && $_GET[start] && $_GET[stop]){
 		getPacketData($_GET[OTD]);
 	}
 }elseif($_GET[EV]){
-	getEvictionData($_GET[EV]);
+	$qm="SELECT packetID FROM mailMatrix WHERE packetID='$_GET[EV]' AND product='EV'";
+	$rm=@mysql_query($qm) or die ("Query: $qm<br>".mysql_error());
+	$dm=mysql_fetch_array($rm, MYSQL_ASSOC);
+	if ($dm[packetID] != ''){
+		getMatrixData($d[packet_id],'EV');
+	}else{
+		getEvictionData($_GET[EV]);
+	}
 }else{
 	$qd="select ps_packets.packet_id, evictionPackets.eviction_id from ps_packets, evictionPackets where ps_packets.process_status = 'READY TO MAIL' AND ps_packets.mail_status <> 'Printed Awaiting Postage' AND (ps_packets.uspsVerify='' OR ps_packets.qualityControl='') AND evictionPackets.process_status = 'READY TO MAIL' AND evictionPackets.mail_status <> 'Printed Awaiting Postage' AND (evictionPackets.uspsVerify='' OR evictionPackets.qualityControl='' ) order by ps_packets.packet_id, evictionPackets.eviction_id ASC";
 	$rd=@mysql_query($qd) or die ("Query: $qd<br>".mysql_error());
@@ -186,11 +200,11 @@ if ($_GET[OTD] && $_GET[start] && $_GET[stop]){
 		$q="select packet_id, mail_status from ps_packets where process_status = 'READY TO MAIL' AND mail_status <> 'Printed Awaiting Postage' order by packet_id";
 		$r=@mysql_query($q);
 		while($d=mysql_fetch_array($r, MYSQL_ASSOC)){ $i++;
-			$qm="SELECT packetID FROM mailMatrix WHERE packetID='$d[packet_id]'";
+			$qm="SELECT packetID FROM mailMatrix WHERE packetID='$d[packet_id]' AND product='OTD'";
 			$rm=@mysql_query($qm) or die ("Query: $qm<br>".mysql_error());
 			$dm=mysql_fetch_array($rm, MYSQL_ASSOC);
 			if ($dm[packetID] != ''){
-				getMatrixData($d[packet_id]);
+				getMatrixData($d[packet_id],'OTD');
 			}else{
 				getPacketData($d[packet_id]);
 			}
@@ -198,7 +212,14 @@ if ($_GET[OTD] && $_GET[start] && $_GET[stop]){
 		$q="select eviction_id, mail_status from evictionPackets where process_status = 'READY TO MAIL' AND mail_status <> 'Printed Awaiting Postage' order by eviction_id";
 		$r=@mysql_query($q);
 		while($d=mysql_fetch_array($r, MYSQL_ASSOC)){ $i++;
-			echo getEvictionData($d[eviction_id]);
+			$qm="SELECT packetID FROM mailMatrix WHERE packetID='$d[eviction_id]' AND product='EV'";
+			$rm=@mysql_query($qm) or die ("Query: $qm<br>".mysql_error());
+			$dm=mysql_fetch_array($rm, MYSQL_ASSOC);
+			if ($dm[packetID] != ''){
+				getMatrixData($d[packet_id],'EV');
+			}else{
+				getEvictionData($d[eviction_id]);
+			}
 		}
 	}
 }

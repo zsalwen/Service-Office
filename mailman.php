@@ -51,8 +51,8 @@ function article($packet,$add){
 	}
 }
 
-function buildFromMatrix($packet){
-	$qm="SELECT * FROM mailMatrix WHERE packetID='$packet'";
+function buildFromMatrix($packet,$product){
+	$qm="SELECT * FROM mailMatrix WHERE packetID='$packet' AND product='$product'";
 	$rm=@mysql_query($qm) or die ("Query: $qm<br>".mysql_error());
 	$dm=mysql_fetch_array($rm, MYSQL_ASSOC);
 	if ($dm[packetID] != ''){
@@ -88,7 +88,7 @@ function buildFromMatrix($packet){
 }
 
 function buildFromPacket($packet){
-	$q="select address1, address1a, address1b, address1c, address1d, address1e, city1, city1a, city1b, city1c, city1d, city1e, state1, state1a, state1b, state1c, state1d, state1e, zip1, zip1a, zip1b, zip1c, zip1d, zip1e, address2, address2a, address2b, address2c, address2d, address2e, city2, city2a, city2b, city2c, city2d, city2e, state2, state2a, state2b, state2c, state2d, state2e, zip2, zip2a, zip2b, zip2c, zip2d, zip2e, address3, address3a, address3b, address3c, address3d, address3e, city3, city3a, city3b, city3c, city3d, city3e, state3, state3a, state3b, state3c, state3d, state3e, zip3, zip3a, zip3b, zip3c, zip3d, zip3e, address4, address4a, address4b, address4c, address4d, address4e, city4, city4a, city4b, city4c, city4d, city4e, state4, state4a, state4b, state4c, state4d, state4e, zip4, zip4a, zip4b, zip4c, zip4d, zip4e, address5, address5a, address5b, address5c, address5d, address5e, city5, city5a, city5b, city5c, city5d, city5e, state5, state5a, state5b, state5c, state5d, state5e, zip5, zip5a, zip5b, zip5c, zip5d, zip5e, address6, address6a, address6b, address6c, address6d, address6e, city6, city6a, city6b, city6c, city6d, city6e, state6, state6a, state6b, state6c, state6d, state6e, zip6, zip6a, zip6b, zip6c, zip6d, zip6e, pobox, pobox2, pocity, pocity2, postate, postate2, pozip, pozip2, name1, name2, name3, name4, name5, name6 from ps_packets where packet_id = '$packet'";
+	$q="select address1, address1a, address1b, address1c, address1d, address1e, city1, city1a, city1b, city1c, city1d, city1e, state1, state1a, state1b, state1c, state1d, state1e, zip1, zip1a, zip1b, zip1c, zip1d, zip1e, address2, address2a, address2b, address2c, address2d, address2e, city2, city2a, city2b, city2c, city2d, city2e, state2, state2a, state2b, state2c, state2d, state2e, zip2, zip2a, zip2b, zip2c, zip2d, zip2e, address3, address3a, address3b, address3c, address3d, address3e, city3, city3a, city3b, city3c, city3d, city3e, state3, state3a, state3b, state3c, state3d, state3e, zip3, zip3a, zip3b, zip3c, zip3d, zip3e, address4, address4a, address4b, address4c, address4d, address4e, city4, city4a, city4b, city4c, city4d, city4e, state4, state4a, state4b, state4c, state4d, state4e, zip4, zip4a, zip4b, zip4c, zip4d, zip4e, address5, address5a, address5b, address5c, address5d, address5e, city5, city5a, city5b, city5c, city5d, city5e, state5, state5a, state5b, state5c, state5d, state5e, zip5, zip5a, zip5b, zip5c, zip5d, zip5e, address6, address6a, address6b, address6c, address6d, address6e, city6, city6a, city6b, city6c, city6d, city6e, state6, state6a, state6b, state6c, state6d, state6e, zip6, zip6a, zip6b, zip6c, zip6d, zip6e, pobox, pobox2, pocity, pocity2, postate, postate2, pozip, pozip2, name1, name2, name3, name4, name5, name6 from ps_packets where packet_id = '$packet' LIMIT 0,1";
 	$r=@mysql_query($q);
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 	$count=0;
@@ -110,6 +110,23 @@ function buildFromPacket($packet){
 			if ($d['pobox2']){
 				$_SESSION[letters] = $_SESSION[letters]+2;
 				$data .= " ".article($packet,$count."PO2")."<a target='_Blank' href='http://staff.mdwestserve.com/greencard.php?packet=$packet&def=$count&add=PO2&card=return&svc=OTD'>[$packet-".$count."PO2]</a></div>";	
+			}
+		}
+	}
+	return $data;
+}
+
+function buildFromEviction($eviction){
+	$q="select attorneys_id, name1, name2, name3, name4, name5, name6, onAffidavit1, onAffidavit2, onAffidavit3, onAffidavit4, onAffidavit5, onAffidavit6 from evictionPackets where eviction_id = '$eviction' LIMIT 0,1";
+	$r=@mysql_query($q);
+	$d=mysql_fetch_array($r, MYSQL_ASSOC);	
+	$_SESSION[letters] = $_SESSION[letters]+2;
+	$data .= "<td>".article("EV".$eviction,1)."<a target='_Blank' href='http://staff.mdwestserve.com/greencard.php?packet=$eviction&def=1&card=return&svc=EV'>$eviction-1</a></div>";
+	if ($d[attorneys_id] == 3){
+		$i=1;
+		while ($i < 6){$i++;
+			if ($d["name$i"] && (strtoupper($d["onAffidavit$i"]) != "CHECKED")){
+				$data .= "<td>".article("EV".$eviction,$i)."<a target='_Blank' href='http://staff.mdwestserve.com/greencard.php?packet=$eviction&def=$i&card=return&svc=EV'>$eviction-$i</a></div>";
 			}
 		}
 	}
@@ -141,11 +158,11 @@ function getPacketData($packet){
 		}
 	}
 	$data .= "</td>";
-	$qm="SELECT packetID FROM mailMatrix WHERE packetID='$packet'";
+	$qm="SELECT packetID FROM mailMatrix WHERE packetID='$packet' AND product='OTD'";
 	$rm=@mysql_query($qm) or die ("Query: $qm<br>".mysql_error());
 	$dm=mysql_fetch_array($rm, MYSQL_ASSOC);
 	if ($dm[packetID] != ""){
-		$data .= buildFromMatrix($packet);
+		$data .= buildFromMatrix($packet,'OTD');
 	}else{
 		$data .= buildFromPacket($packet);
 	}
@@ -182,7 +199,7 @@ function getPacketData($packet){
 }
 //will return list with pop up js alerts instead of links
 function lockFromMatrix($packet,$entry_id){
-	$qm="SELECT * FROM mailMatrix WHERE packetID='$packet'";
+	$qm="SELECT * FROM mailMatrix WHERE packetID='$packet' AND product='OTD'";
 	$rm=@mysql_query($qm) or die ("Query: $qm<br>".mysql_error());
 	$dm=mysql_fetch_array($rm, MYSQL_ASSOC);
 	if ($dm[packetID] != ''){
@@ -264,7 +281,7 @@ function lockPacket($packet){
 	$data .= "</strong></span>";
 	}
 	$data .= "</td>";
-	$qm="SELECT packetID FROM mailMatrix WHERE packetID='$packet'";
+	$qm="SELECT packetID FROM mailMatrix WHERE packetID='$packet' AND product='OTD'";
 	$rm=@mysql_query($qm) or die ("Query: $qm<br>".mysql_error());
 	$dm=mysql_fetch_array($rm, MYSQL_ASSOC);
 	if ($dm[packetID] != ""){
@@ -317,15 +334,13 @@ function getEvictionData($eviction){
 		$data .= "<a style='background-color:#000000; color:#FFFFFF' href='?mail7=$eviction'><strong>CloseOut</strong></a>";
 	}
 	$data .= "</td>";
-	$_SESSION[letters] = $_SESSION[letters]+2;
-	$data .= "<td>".article("EV".$eviction,1)."<a target='_Blank' href='http://staff.mdwestserve.com/greencard.php?packet=$eviction&def=1&card=return&svc=EV'>$eviction-1</a></div>";
-	if ($d[attorneys_id] == 3){
-		$i=1;
-		while ($i < 6){$i++;
-			if ($d["name$i"] && (strtoupper($d["onAffidavit$i"]) != "CHECKED")){
-				$data .= "<td>".article("EV".$eviction,$i)."<a target='_Blank' href='http://staff.mdwestserve.com/greencard.php?packet=$eviction&def=$i&card=return&svc=EV'>$eviction-$i</a></div>";
-			}
-		}
+	$qm="SELECT packetID FROM mailMatrix WHERE packetID='$eviction' AND product='EV'";
+	$rm=@mysql_query($qm) or die ("Query: $qm<br>".mysql_error());
+	$dm=mysql_fetch_array($rm, MYSQL_ASSOC);
+	if ($dm[packetID] != ""){
+		$data .= buildFromMatrix($eviction,'EV');
+	}else{
+		$data .= buildFromEviction($eviction);
 	}
 	$closeOut=strtotime($d['closeOut']);
 	if ($closeOut > time()){

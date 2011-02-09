@@ -87,7 +87,7 @@ if ($_POST[submit]){
 			//update process_status to READY TO MAIL
 			@mysql_query("UPDATE ps_packets SET process_status='READY TO MAIL' WHERE packet_id='$_POST[packet]'");
 			//redirect to mailMatrix for "MAIL ONLY" files
-			echo "<script>window.location.href='http://service.mdwestserve.com/mailMatrix.php?packet=$_POST[packet]';</script>";
+			echo "<script>window.location.href='http://service.mdwestserve.com/mailMatrix.php?packet=$_POST[packet]&product=OTD';</script>";
 		}
 	}
 	die();

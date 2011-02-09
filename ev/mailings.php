@@ -38,6 +38,9 @@ if ($msg != ''){
 	<tr>
 		<td><a href='http://staff.mdwestserve.com/mailDateSwap.php?eviction=<?=$EV?>' target='_blank'>Change Mailing Date(s)</a></td>
 	</tr>
+	<tr>
+		<td><a href='http://service.mdwestserve.com/mailMatrix.php?packet=<?=$EV?>&product=EV'>Mail Matrix</a></td>
+	</tr>
 	<? } ?>
 	<tr>
 		<td><a href='tracking.php?packet=<?=$EV?>'>USPS Tracking</a></td>

@@ -52,7 +52,7 @@ if ($msg != ''){
 		<td><a href='http://staff.mdwestserve.com/mailDateSwap.php?packet=<?=$OTD?>' target='_blank'>Change Mailing Date(s)</a></td>
 	</tr>
 	<tr>
-		<td><a href='http://service.mdwestserve.com/mailMatrix.php?packet=<?=$OTD?>'>Mail Matrix</a></td>
+		<td><a href='http://service.mdwestserve.com/mailMatrix.php?packet=<?=$OTD?>&product=OTD'>Mail Matrix</a></td>
 	</tr>
 	<tr>
 		<td><a href='http://staff.mdwestserve.com/mailRange.php'>Mail Print Range</a></td>
