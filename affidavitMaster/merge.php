@@ -28,6 +28,14 @@ if (!$packet[id]){ die('Missing packet table data "$packet[id]" '); }
 echo "<li>service.packet Loaded</li>";
 
 
+$q = "SELECT * FROM attempt WHERE instruction_id = '$affidavit[instruction_id]'";
+$r = @mysql_query ($q) or die(mysql_error());
+while($attempt= mysql_fetch_array($r, MYSQL_ASSOC)){
+if (!$attempt[id]){ die('Missing attempt table data "$attempt[id]" '); }
+echo "<li>service.attempt $attempt[id] Loaded</li>";
+// build new array here for processing
+}
+
 $q = "SELECT * FROM server WHERE id = '$affidavit[server_id]' "; 
 $r = @mysql_query ($q) or die(mysql_error());
 $server = mysql_fetch_array($r, MYSQL_ASSOC);
