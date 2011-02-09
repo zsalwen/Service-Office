@@ -36,3 +36,22 @@ if($_POST[table_name] && $_POST[field_name] && $_POST[merge_name]){
 <td colspan="3"><input type="submit" value="Save"></td>
 </tr>
 </table>
+Current Attributes 
+<table>
+<tr>
+<td>table_name</td>
+<td>field_name</td>
+<td>merge_name</td>
+</tr>
+
+<?
+$r=@mysql_query("select * from attribute");
+while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+?>
+<tr>
+<td><?=$d[table_name];?></td>
+<td><?=$d[field_name];?></td>
+<td><?=$d[merge_name];?></td>
+</tr>
+<?  } ?>
+</table>
