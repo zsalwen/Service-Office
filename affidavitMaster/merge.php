@@ -65,7 +65,7 @@ echo "<li>service.attempt $it : $attempt[id] Loaded</li>";
 $r=@mysql_query("select * from attribute where table_name = 'attempt'");
 while($attribute = mysql_fetch_array($r,MYSQL_ASSOC)){
 $field = $attribute[field_name];
-echo "<li>merge packet[$field] (".$packet[$field].") into ".$attribute[merge_name]."</li>";
+echo "<li>merge attempt[$field] (".$attempt[$field].") into ".$attribute[merge_name]."</li>";
 $base = str_replace($attribute[merge_name], $attempt[$field], $base); 
 }
 
