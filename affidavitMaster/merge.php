@@ -66,6 +66,18 @@ echo "<li>merge packet[$field] (".$packet[$field].") into ".$attribute[merge_nam
 $base = str_replace($attribute[merge_name], $packet[$field], $base); 
 }
 
+// time to let the sql do it's job!
+$r=@mysql_query("select * from attribute where table_name = '' and advancedQuery <> '' ");
+while($attribute = mysql_fetch_array($r,MYSQL_ASSOC)){
+$query = $attribute[advancedQuery];
+echo "<li>run advanced query  (".$attribute[advancedQuery].") results into ".$attribute[merge_name]." below</li>";
+$rSub=@mysql_query($query) or die('<br>Error in Query: '$query.'<br>'.mysql_error());
+while($advanced = mysql_fetch_array($rSub,MYSQL_ASSOC)){
+$compiled .= $rSub[compiled];
+}
+$base = str_replace($attribute[merge_name], $compiled, $base); 
+}
+
 // ok we have nested data so let's go a little deeper 
 $q = "SELECT * FROM attempt WHERE instruction_id = '$affidavit[instruction_id]'";
 $r = @mysql_query ($q) or die(mysql_error());
