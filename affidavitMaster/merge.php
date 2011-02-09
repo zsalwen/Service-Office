@@ -28,6 +28,13 @@ if (!$packet[id]){ die('Missing packet table data "$packet[id]" '); }
 echo "<li>service.packet Loaded</li>";
 
 
+$q = "SELECT * FROM client WHERE id = '$packet[client_id]'";
+$r = @mysql_query ($q) or die(mysql_error());
+$client = mysql_fetch_array($r, MYSQL_ASSOC);
+if (!$client[id]){ die('Missing client table data "$client[id]" '); }
+echo "<li>service.client Loaded</li>";
+
+
 $q = "SELECT * FROM server WHERE id = '$affidavit[server_id]' "; 
 $r = @mysql_query ($q) or die(mysql_error());
 $server = mysql_fetch_array($r, MYSQL_ASSOC);
@@ -38,6 +45,13 @@ echo "<li>service.server Loaded</li>";
 $base = str_replace('[ID]', $packet[id], $base); 
 
 // attribute manager (per table)
+$r=@mysql_query("select * from attribute where table_name = 'client'");
+while($attribute = mysql_fetch_array($r,MYSQL_ASSOC)){
+$field = $attribute[field_name];
+echo "<li>merge client[$field] (".$client[$field].") into ".$attribute[merge_name]."</li>";
+$base = str_replace($attribute[merge_name], $client[$field], $base); 
+}
+
 $r=@mysql_query("select * from attribute where table_name = 'server'");
 while($attribute = mysql_fetch_array($r,MYSQL_ASSOC)){
 $field = $attribute[field_name];
@@ -52,7 +66,7 @@ echo "<li>merge packet[$field] (".$packet[$field].") into ".$attribute[merge_nam
 $base = str_replace($attribute[merge_name], $packet[$field], $base); 
 }
 
-
+// ok we have nested data so let's go a little deeper 
 $q = "SELECT * FROM attempt WHERE instruction_id = '$affidavit[instruction_id]'";
 $r = @mysql_query ($q) or die(mysql_error());
 $it=0;
@@ -60,8 +74,8 @@ while($attempt= mysql_fetch_array($r, MYSQL_ASSOC)){
 if (!$attempt[id]){ die('Missing attempt table data "$attempt[id]" '); }
 $it++;
 echo "<li>service.attempt $it : $attempt[id] Loaded</li>";
-// process attempt merges
 
+// now we are ready to process attempt merges
 $r=@mysql_query("select * from attribute where table_name = 'attempt'");
 while($attribute = mysql_fetch_array($r,MYSQL_ASSOC)){
 $field = $attribute[field_name];
