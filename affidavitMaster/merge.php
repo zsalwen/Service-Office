@@ -78,7 +78,7 @@ $r=@mysql_query("select * from attribute where table_name = '' and advancedQuery
 while($attribute = mysql_fetch_array($r,MYSQL_ASSOC)){
 $query = $attribute[advancedQuery];
 
-ob_start()
+ob_start();
 
 echo $query;
 
