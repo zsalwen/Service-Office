@@ -12,7 +12,7 @@ $d = mysql_fetch_array($r, MYSQL_ASSOC);
 $base = stripslashes($d[html]); // we are done with $d, good to reuse
 if (!$base){ die('Missing template html "$body" '); }
 // Pull the data we need. (this is where we join!)
-$q = "SELECT * FROM packets WHERE id = '$template'";
+$q = "SELECT * FROM packet WHERE id = '$template'";
 $r = @mysql_query ($q) or die(mysql_error());
 $d = mysql_fetch_array($r, MYSQL_ASSOC);
 if (!$d[id]){ die('Missing packet data "$d[id]" '); }
@@ -26,6 +26,6 @@ $base = str_replace('[ID]', $d[id], $base);
 
 
 // Put the final affidavit
-@mysql_query("update affidavits set html =' ".addslashes($base)." ' where id = '$affidavit' ");
+@mysql_query("update affidavit set html =' ".addslashes($base)." ' where id = '$affidavit' ");
 mysql_close();
 ?>
