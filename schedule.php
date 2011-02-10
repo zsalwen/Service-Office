@@ -365,8 +365,13 @@ Courier: <select name="courier">
 <?
 $CCr=@mysql_query("select * from courier order by name DESC");
 while($CCd=mysql_fetch_array($CCr,MYSQL_ASSOC)){
+if ($CCd[phone]){
+	$phone="-".$CCd[phone];
+}else{
+	$phone='';
+}
 ?>
-<option value="<?=$CCd[courierID]?>"><?=$CCd[name]?></option>
+<option value="<?=$CCd[courierID]?>"><?=$CCd[name]?><?=$phone?></option>
 <? }?></select>
 <input type="submit" value="Set as courier">
 </div>
