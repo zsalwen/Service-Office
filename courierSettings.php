@@ -102,7 +102,7 @@ $d = mysql_fetch_array($r, MYSQL_ASSOC);
 		$q8 = "SELECT * FROM courier ORDER BY name ASC";	
 		$r8 = @mysql_query ($q8) or die(mysql_error());
 		while ($data8 = mysql_fetch_array($r8, MYSQL_ASSOC)){ 
-	echo "<option value='$data8[courerID]'>$data8[name]</option>";
+	echo "<option value='$data8[courierID]'>$data8[name]</option>";
 		}
 		?>
 </select><br>
