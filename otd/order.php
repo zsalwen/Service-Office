@@ -1053,8 +1053,8 @@ if ($dXX[phone]){
 <?
 $CCr=@mysql_query("select * from courier WHERE isActive='1'");
 while($CCd=mysql_fetch_array($CCr,MYSQL_ASSOC)){
-if ($dXX[phone]){
-	$phone="-".$dXX[phone];
+if ($CCd[phone]){
+	$phone="-".$CCd[phone];
 }else{
 	$phone='';
 }
