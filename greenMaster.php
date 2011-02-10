@@ -32,7 +32,7 @@ function printSet($packet,$def,$add){
 	</table>
 	<?
 }
-function getMatrixData($packet,$produt){
+function getMatrixData($packet,$product){
 	$qm="SELECT * FROM mailMatrix WHERE packetID='$packet' AND product='$product'";
 	$rm=@mysql_query($qm);
 	$dm=mysql_fetch_array($rm, MYSQL_ASSOC);

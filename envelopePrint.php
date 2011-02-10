@@ -51,7 +51,7 @@ function printSet($packet,$def,$add,$product){
 	</td></tr><tr><td style='padding-left:100px;'><img src="http://staff.mdwestserve.com/small.logo.gif"></td></tr><tr><td style='font-size:25px;' align='left'><div style='padding-top:20px; padding-left:500px; text-align:left; width:300px;'><?=$name?><br><?=$line1?><br><?=$csz?></div></td></tr></table>
 	<?
 }
-function getMatrixData($packet,$produt){
+function getMatrixData($packet,$product){
 	$qm="SELECT * FROM mailMatrix WHERE packetID='$packet' AND product='$product'";
 	$rm=@mysql_query($qm);
 	$dm=mysql_fetch_array($rm, MYSQL_ASSOC);
