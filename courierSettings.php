@@ -36,7 +36,7 @@ if ($_POST[submit2] == "ENTER"){
 }
  if ($_POST[courierID] || $_GET[courierID]){
  
-$q = "SELECT * FROM courier WHERE courerID = '$courierID'";
+$q = "SELECT * FROM courier WHERE courierID = '$courierID'";
 $r = @mysql_query($q) or die(mysql_error());
 $d = mysql_fetch_array($r, MYSQL_ASSOC);
 ?>
