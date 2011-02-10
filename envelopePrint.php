@@ -228,7 +228,7 @@ if ($_GET[OTD] && $_GET[start] && $_GET[stop]){
 			$rm=@mysql_query($qm) or die ("Query: $qm<br>".mysql_error());
 			$dm=mysql_fetch_array($rm, MYSQL_ASSOC);
 			if ($dm[packetID] != ''){
-				getMatrixData($d[packet_id],'EV');
+				getMatrixData($d[eviction_id],'EV');
 			}else{
 				getEvictionData($d[eviction_id]);
 			}
