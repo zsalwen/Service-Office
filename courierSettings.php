@@ -22,6 +22,7 @@ if ($_POST[submit] == "Save Settings"){
 	echo "<center>SAVED, <a href='http://staff.mdwestserve.com/courierSettings.php'>Select Another Courier</a></center>";
 	$q = "UPDATE courier SET
 							name='$_POST[name]',
+							phone='$_POST[phone]',
 							email='$_POST[email]',
 							password='$_POST[password]',
 							notes='$_POST[notes]',
@@ -31,7 +32,7 @@ if ($_POST[submit] == "Save Settings"){
 }
 if ($_POST[submit2] == "ENTER"){
 	echo "<center>SAVED, <a href='http://staff.mdwestserve.com/courierSettings.php'>Select Another Courier</a></center>";
-	$q = "INSERT INTO courier (name, email, password, notes) VALUES ('$_POST[name]','$_POST[email]','$_POST[password]','$_POST[notes]')";
+	$q = "INSERT INTO courier (name, phone, email, password, notes) VALUES ('$_POST[name]','$_POST[phone]','$_POST[email]','$_POST[password]','$_POST[notes]')";
 	$r = @mysql_query($q) or die(mysql_error());
 }
  if ($_POST[courierID] || $_GET[courierID]){
@@ -47,6 +48,10 @@ $d = mysql_fetch_array($r, MYSQL_ASSOC);
 	<tr>
     	<td>Name</td>
         <td><input name="name" size="100" value="<?=$d[name]?>"></td>
+    </tr>
+	<tr>
+    	<td>Phone</td>
+        <td><input name="name" size="100" value="<?=$d[phone]?>"></td>
     </tr>
 	<tr>
     	<td>Email</td>
@@ -76,6 +81,10 @@ $d = mysql_fetch_array($r, MYSQL_ASSOC);
 <table align="center">
 	<tr>
     	<td>Name</td>
+        <td><input name="name" size="100"></td>
+    </tr>
+	<tr>
+    	<td>Phone</td>
         <td><input name="name" size="100"></td>
     </tr>
 	<tr>
