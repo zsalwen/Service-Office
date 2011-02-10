@@ -59,7 +59,7 @@ if ($_GET[logic]){
 	if ($eviction == 1){
 		$q="SELECT attorneys_id, filing_status, process_status, case_no, prepAlert, caseVerify, circuit_court, rush from evictionPackets WHERE eviction_id = '$packet'";
 	}else{
-		$q="SELECT attorneys_id, filing_status, process_status, case_no, prepAlert, caseVerify, circuit_court, rush, avoidDOT, lossMit from ps_packets WHERE packet_id = '$packet'";
+		$q="SELECT attorneys_id, filing_status, process_status, case_no, prepAlert, caseVerify, circuit_court, rush, avoidDOT, lossMit, affidavit_status2 from ps_packets WHERE packet_id = '$packet'";
 		if (serverCount($packet) > 1){
 			echo "<script>alert('File Contains Multiple Servers')</script>";
 		}
@@ -79,33 +79,12 @@ if ($_GET[logic]){
 				echo "<script>window.open('http://service.mdwestserve.com/stuffPacket.php?packet=$packet','Envelope Stuffing for OTD$packet')</script>";
 			}
 		}*/
-		if($d[attorneys_id] == 3){
+		if($d[attorneys_id] == 3 || $d[attorneys_id] == 7 || $d[attorneys_id] == 12 || $d[attorneys_id] == 68){
 			$q2="SELECT * FROM occNotices WHERE packet_id='$packet'";
 			$r2=@mysql_query($q2) or die("Query: occNotices: $q2<br>".mysql_error());
 			$d2=mysql_fetch_array($r2, MYSQL_ASSOC);
 			if ($d2[packet_id]){
-				echo "<script>alert('WHITE FILE: DO NOT FORGET OCCUPANT NOTICE')</script>";
-			}
-		}elseif($d[attorneys_id] == 7){
-			$q2="SELECT * FROM occNotices WHERE packet_id='$packet'";
-			$r2=@mysql_query($q2) or die("Query: occNotices: $q2<br>".mysql_error());
-			$d2=mysql_fetch_array($r2, MYSQL_ASSOC);
-			if ($d2[packet_id]){
-				echo "<script>alert('LINOWES FILE: DO NOT FORGET OCCUPANT NOTICE')</script>";
-			}
-		}elseif($d[attorneys_id] == 12){
-			$q2="SELECT * FROM occNotices WHERE packet_id='$packet'";
-			$r2=@mysql_query($q2) or die("Query: occNotices: $q2<br>".mysql_error());
-			$d2=mysql_fetch_array($r2, MYSQL_ASSOC);
-			if ($d2[packet_id]){
-				echo "<script>alert('FINK FILE: DO NOT FORGET OCCUPANT NOTICE')</script>";
-			}
-		}elseif($d[attorneys_id] == 68){
-			$q2="SELECT * FROM occNotices WHERE packet_id='$packet'";
-			$r2=@mysql_query($q2) or die("Query: occNotices: $q2<br>".mysql_error());
-			$d2=mysql_fetch_array($r2, MYSQL_ASSOC);
-			if ($d2[packet_id]){
-				echo "<script>alert('FEIDLER FILE: DO NOT FORGET OCCUPANT NOTICE')</script>";
+				echo "<script>alert('".strtoupper(id2attorney($d[attorneys_id]))." FILE: DO NOT FORGET OCCUPANT NOTICE')</script>";
 			}
 		}
 	}else{
@@ -142,7 +121,11 @@ if ($_GET[logic]){
 		$q="update evictionPackets set filing_status = 'PREP TO FILE' where eviction_id = '$packet'";
 	}else{
 		timeline($packet,$_COOKIE[psdata][name]." Prepared Affidavits for Filing ".$_GET[logic]);
-		$q="update ps_packets set filing_status = 'PREP TO FILE' where packet_id = '$packet'";
+		if ($d[affidavit_status2] == 'AWAITING MAILING'){
+			$q="update ps_packets set filing_status = 'PREP TO FILE', affidavit_status2='' where packet_id = '$packet'";
+		}else{
+			$q="update ps_packets set filing_status = 'PREP TO FILE' where packet_id = '$packet'";
+		}
 	}
 	@mysql_query($q) or die("Query: $q<br>".mysql_error());
 	opLog($_COOKIE[psdata][name]." Court Manager #$packet PREP TO FILE");
