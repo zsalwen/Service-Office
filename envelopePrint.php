@@ -41,7 +41,9 @@ function printSet($packet,$def,$add,$product){
 		$csz = $d["city$address"].', '.$d["state$address"].' '.$d["zip$address"];
 	}
 	$cord = "$packet-$def$add".'X';
-
+	if ($product == 'EV'){
+		$cord="EV".$cord;
+	}
 	?>
 	<table style='page-break-after:always' align='left' width='100%' style='font-size:11px; font-variant:small-caps;'><tr><td>
 	<br><br><br><br><br><br><br><br><br><br><div style='padding-left:30px;'>MDWestServe, Inc.<br>300 E JOPPA RD STE 1102<br>TOWSON MD 21286-3012</div><IMG SRC="http://staff.mdwestserve.com/barcode.php?barcode=<?=$cord?>&width=400&height=40"><br><small style="padding-left:155px"><b>**<?=$cost?>**</b></small>
