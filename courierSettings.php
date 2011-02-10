@@ -20,7 +20,7 @@ if ($_POST[courierID]){
 }
 if ($_POST[submit] == "Save Settings"){
 	echo "<center>SAVED, <a href='http://staff.mdwestserve.com/courierSettings.php'>Select Another Courier</a></center>";
-	$q = "UPDATE couriers SET
+	$q = "UPDATE courier SET
 							name='$_POST[name]',
 							email='$_POST[email]',
 							password='$_POST[password]',
@@ -31,12 +31,12 @@ if ($_POST[submit] == "Save Settings"){
 }
 if ($_POST[submit2] == "ENTER"){
 	echo "<center>SAVED, <a href='http://staff.mdwestserve.com/courierSettings.php'>Select Another Courier</a></center>";
-	$q = "INSERT INTO couriers (name, email, password, notes) VALUES ('$_POST[name]','$_POST[email]','$_POST[password]','$_POST[notes]')";
+	$q = "INSERT INTO courier (name, email, password, notes) VALUES ('$_POST[name]','$_POST[email]','$_POST[password]','$_POST[notes]')";
 	$r = @mysql_query($q) or die(mysql_error());
 }
  if ($_POST[courierID] || $_GET[courierID]){
  
-$q = "SELECT * FROM couriers WHERE courerID = '$courierID'";
+$q = "SELECT * FROM courier WHERE courerID = '$courierID'";
 $r = @mysql_query($q) or die(mysql_error());
 $d = mysql_fetch_array($r, MYSQL_ASSOC);
 ?>
@@ -69,7 +69,7 @@ $d = mysql_fetch_array($r, MYSQL_ASSOC);
     </tr>
 </table>
 </form>
-<? }elseif($_POST[newAtt]){ ?>
+<? }elseif($_POST[newCourier]){ ?>
 <form method="post">
 <input type="hidden" name="page" value="email_config"/>
 <h1 align="center">New Courier</h1>
@@ -99,12 +99,12 @@ $d = mysql_fetch_array($r, MYSQL_ASSOC);
 <center>
 <form method="post" style='display:inline;'><select name="courierID">
 		<?
-		$q8 = "SELECT * FROM couriers ORDER BY name ASC";	
+		$q8 = "SELECT * FROM courier ORDER BY name ASC";	
 		$r8 = @mysql_query ($q8) or die(mysql_error());
 		while ($data8 = mysql_fetch_array($r8, MYSQL_ASSOC)){ 
 	echo "<option value='$data8[courerID]'>$data8[name]</option>";
 		}
 		?>
 </select><br>
-<input type="submit" value="Load Settings"></form><form method="post" style='display:inline;'> | <input type="submit" name="newAtt" value="Enter New Courier"></form></center>
+<input type="submit" value="Load Settings"></form><form method="post" style='display:inline;'> | <input type="submit" name="newCourier" value="Enter New Courier"></form></center>
 <? }?>
