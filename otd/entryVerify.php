@@ -112,6 +112,7 @@ if (addTotal($d[packet_id]) == 1 && $d[avoidDOT] == 'checked'){
 <li>File #: <?=$d[client_file]?></li>
 <li>Case #: <?=$d[case_no]?> - County: <?=$d[circuit_court]?></li>
 <li>Client: <?=$client?></li>
+<li>Addl Docs: <?=$d[addlDocs]?></li>
 <li><b>LOSS MITIGATION TYPE: <span style='color:red;'><?=$d[lossMit]?></span></b></li>
 </fieldset>
 <? if ($_GET[frame] != 'no'){ ?>
