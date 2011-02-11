@@ -191,7 +191,7 @@ function addressRevise($packet,$address,$oldType,$newType){
 		if ($dh != ''){
 			$newStr=str_replace($oldType,$newType,$dh[action_str]);
 			$list .= "<tr><td>".$dh[history_id]."</td><td>$oldType</td><td>$newType</td></tr>'";
-			@mysql_query("UPDATE ps_history SET action_str='".$newStr."' WHERE history_id='".$dh[history_id]."'");
+			@mysql_query("UPDATE evictionHistory SET action_str='".$newStr."' WHERE history_id='".$dh[history_id]."'");
 		}
 	}
 	return $list;
