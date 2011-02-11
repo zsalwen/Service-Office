@@ -189,9 +189,9 @@ function addressRevise($packet,$address,$oldType,$newType){
 	$rh=@mysql_query($qh) or die (mysql_error());
 	while ($dh=mysql_fetch_array($rh,MYSQL_ASSOC)){
 		if ($dh[history_id]){
-			$newStr=str_replace($oldType,$newType,$dh[action_str]);
+			$newStr=str_replace($oldType,$newType,stripslashes($dh[action_str]));
 			$list .= "<tr><td>".$dh[history_id]."</td><td>$oldType</td><td>$newType</td></tr>'";
-			@mysql_query("UPDATE evictionHistory SET action_str='".$newStr."' WHERE history_id='".$dh[history_id]."'");
+			@mysql_query("UPDATE evictionHistory SET action_str='".addslashes($newStr)."' WHERE history_id='".$dh[history_id]."'");
 		}
 	}
 	return $list;
