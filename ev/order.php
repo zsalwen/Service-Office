@@ -184,6 +184,19 @@ function getTime($packet,$event){
 	return $array;
 }
 
+function addressRevise($packet,$address,$oldType,$newType){
+	$qh="SELECT action_str, serverID, history_id FROM evictionHistory WHERE eviction_id='$packet' AND action_str LIKE '%$address%'";
+	$rh=@mysql_query($qh) or die (mysql_error());
+	while ($dh=mysql_fetch_array($rh,MYSQL_ASSOC)){
+		if ($dh[history_id]){
+			$newStr=str_replace($oldType,$newType,stripslashes($dh[action_str]));
+			$list .= "<tr><td>".$dh[history_id]."</td><td>$oldType</td><td>$newType</td></tr>'";
+			@mysql_query("UPDATE evictionHistory SET action_str='".addslashes($newStr)."' WHERE history_id='".$dh[history_id]."'");
+		}
+	}
+	return $list;
+}
+
 $id=$_COOKIE[psdata][user_id];
 if ($_POST[sendToClient]){
 	$today=date('Y-m-d');
@@ -192,149 +205,159 @@ if ($_POST[sendToClient]){
 }
 
 if ($_POST[submit]){
-if ($_GET[packet]){
-ev_timeline($_GET[packet],$_COOKIE[psdata][name]." Updated Order");
-$q=@mysql_query("SELECT * from evictionPackets WHERE eviction_id='$_POST[eviction_id]'") or die (mysql_error());
-$d=mysql_fetch_array($q, MYSQL_ASSOC);
-if ($_POST[estFileDate] != $d[estFileDate]){
-	/*//if estFileDate has been changed, send email to service@mdwestserve.com
-	$to = "Service Updates <mdwestserve@gmail.com>";
-	$subject = "Estimated File Date Updated for Eviction $d[eviction_id] ($d[client_file]), From $d[estFileDate] To $_POST[estFileDate]";
-	$headers  = "MIME-Version: 1.0 \n";
-	$headers .= "Content-type: text/html; charset=iso-8859-1 \n";
-	$headers .= "From: ".$_COOKIE[psdata][name]." <".$_COOKIE[psdata][email]."> \n";
-	$body="Service for Eviction $d[eviction_id] (<strong>$d[client_file]</strong>) has been modified by ".$_COOKIE[psdata][name].", Estimated File Date was changed From $d[estFileDate] To $_POST[estFileDate].";
-	$body .= "<br><br>(410) 828-4568<br>service@mdwestserve.com<br>MDWestServe, Inc.";
-	$headers .= "Cc: Service Updates <service@mdwestserve.com> \n";
-	mail($to,$subject,$body,$headers);
-	//make timeline entry
-	ev_timeline($_POST[eviction_id],$_COOKIE[psdata][name]." Updated Est. Close from $d[estFileDate] to $_POST[estFileDate]");*/
-	$newClose=1;
-	$oldFileDate=$d[estFileDate];
-}
-$case_no=trim($_POST[case_no]);
-// un dbCleaner on all items
-if ($newClose != 1){
-	$estQ="estFileDate='$_POST[estFileDate]',
-	";
-}
-	$query="UPDATE evictionPackets SET process_status='$_POST[process_status]',
-	filing_status='$_POST[filing_status]',
-	service_status='$_POST[service_status]',
-	fileDate='$_POST[fileDate]', ".$estQ."
-	movant='".addslashes($_POST[movant])."',
-	altDocs='$_POST[altDocs]',
-	courierID='$_POST[courierID]',
-	reopenDate='$_POST[reopenDate]',
-	status='$_POST[status]',
-	affidavit_status='$_POST[affidavit_status]',
-	affidavit_status2='$_POST[affidavit_status2]',
-	photoStatus='$_POST[photoStatus]',
-	mail_status='$_POST[mail_status]',
-	affidavitType='$_POST[affidavitType]',
-	onAffidavit1='$_POST[onAffidavit1]',
-	onAffidavit2='$_POST[onAffidavit2]',
-	onAffidavit3='$_POST[onAffidavit3]',
-	onAffidavit4='$_POST[onAffidavit4]',
-	onAffidavit5='$_POST[onAffidavit5]',
-	onAffidavit6='$_POST[onAffidavit6]',
-	refile='$_POST[refile]',
-	amendedAff='$_POST[amendedAff]',
-	mailWeight='$_POST[mailWeight]',
-	pages='$_POST[pages]',
-	rush='$_POST[rush]',
-	priority='$_POST[priority]',
-	request_close='$_POST[request_close]',
-	client_file='".strtoupper($_POST[client_file])."',
-	case_no='".str_replace('�',0,$case_no)."',
-	altPlaintiff='".dbCleaner($_POST[altPlaintiff])."',
-	circuit_court='".strtoupper($_POST[circuit_court])."'
-	WHERE eviction_id='$_POST[eviction_id]'";
-	@mysql_query($query) or die("Query: $query<br>".mysql_error());
-}else{
-$case_no=trim($_POST[case_no]);
-@mysql_query("UPDATE evictionPackets SET process_status='$_POST[process_status]',
-	filing_status='$_POST[filing_status]',
-	service_status='$_POST[service_status]',
-	entry_id='$id',
-	fileDate='$_POST[fileDate]',
-	estFileDate='$_POST[estFileDate]',
-	movant='".addslashes($_POST[movant])."',
-	altDocs='$_POST[altDocs]',
-	reopenDate='$_POST[reopenDate]',
-	affidavit_status='$_POST[affidavit_status]',
-	affidavit_status2='$_POST[affidavit_status2]',
-	photoStatus='$_POST[photoStatus]',
-	onAffidavit1='$_POST[onAffidavit1]',
-	onAffidavit2='$_POST[onAffidavit2]',
-	onAffidavit3='$_POST[onAffidavit3]',
-	onAffidavit4='$_POST[onAffidavit4]',
-	onAffidavit5='$_POST[onAffidavit5]',
-	onAffidavit6='$_POST[onAffidavit6]',
-	refile='$_POST[refile]',
-	amendedAff='$_POST[amendedAff]',
-	mailWeight='$_POST[mailWeight]',
-	rush='$_POST[rush]',
-	priority='$_POST[priority]',
-	pages='$_POST[pages]',
-	request_close='$_POST[request_close]',
-	mail_status='$_POST[mail_status]',
-	affidavitType='$_POST[affidavitType]',
-	client_file='".strtoupper($_POST[client_file])."',
-	case_no='".str_replace('�',0,$case_no)."',
-	process_status='READY',
-	status='RECIEVED',
-	circuit_court='".strtoupper($_POST[circuit_court])."',
-	altPlaintiff='".dbCleaner($_POST[altPlaintiff])."'
-	WHERE eviction_id='$_POST[eviction_id]'") or die(mysql_error());
-	ev_timeline($_POST[eviction_id],$_COOKIE[psdata][name]." Performed Data Entry");
-// here is where we will automate the address check
-?><script>window.open('supernova.php?packet=<?=$_POST[eviction_id];?>&close=1',   'supernova',   'width=600, height=800'); </script><?
-}
-$updateQ='';
-if (isset($_POST[server1])){
-	$updateQ .= "server_id='$_POST[server1]'|";
-}
-$r=mysql_query("SELECT name1, name2, name3, name4, name5, name6, address1, city1, state1, zip1 from evictionPackets WHERE eviction_id='$_POST[eviction_id]'");
-$d=mysql_fetch_array($r, MYSQL_ASSOC) or die(mysql_error());
-$nC=0;
-while ($nC < 6){$nC++;
-	if ($_POST["name$nC"] || ($_POST["name$nC"] != $d["name$nC"])){
-		$updateQ .= "name$nC='".dbCleaner($_POST["name$nC"])."'|";
-	}
-}
-if ($_POST[address] || ($_POST[address] != $d[address1])){
-	$updateQ .= "address1='".dbCleaner($_POST[address])."'|";
-}
-if ($_POST[city] || ($_POST[city] != $d[city1])){
-	$updateQ .= "city1='".dbCleaner($_POST[city])."'|";
-}
-if ($_POST[state] || ($_POST[state] != $d[state1])){
-	$updateQ .= "state1='".dbCleaner($_POST[state])."'|";
-}
-if ($_POST[zip] || ($_POST[zip] != $d[zip1])){
-	$updateQ .= "zip1='".dbCleaner($_POST[zip])."'|";
-}
-if (trim($updateQ) != ''){
-	//remove last "|"
-	$updateQ2=substr($updateQ,0,-1);
-	//replace other "|"s with commas
-	$updateQ2=str_replace("|",", ",$updateQ2);
-	//submit query
-	$query2="UPDATE evictionPackets SET ".$updateQ2." WHERE eviction_id='$_POST[eviction_id]'";
-	@mysql_query($query2) or die("Query: $query2<br>[".trim($updateQ)."]<br>".mysql_error());
-}
-if ($_GET[packet] && $newClose == 1){
-	echo "<script>prompter('$_POST[eviction_id]','$_POST[estFileDate]','$oldFileDate');</script>";
-	//prevent further updates.
-	die("<a href='order.php?packet=$_GET[packet]'>RELOAD ORDER</a>");
-}elseif ($_GET[packet]){
-	header ('Location: order.php?packet='.$_GET[packet]);
-}else{
-	if ($_GET[start]){
-		header ('Location: order.php?start='.$_GET[start]);
+	if ($_GET[packet]){
+		ev_timeline($_GET[packet],$_COOKIE[psdata][name]." Updated Order");
+		$q=@mysql_query("SELECT * from evictionPackets WHERE eviction_id='$_POST[eviction_id]'") or die (mysql_error());
+		$d=mysql_fetch_array($q, MYSQL_ASSOC);
+		if ($_POST[estFileDate] != $d[estFileDate]){
+			/*//if estFileDate has been changed, send email to service@mdwestserve.com
+			$to = "Service Updates <mdwestserve@gmail.com>";
+			$subject = "Estimated File Date Updated for Eviction $d[eviction_id] ($d[client_file]), From $d[estFileDate] To $_POST[estFileDate]";
+			$headers  = "MIME-Version: 1.0 \n";
+			$headers .= "Content-type: text/html; charset=iso-8859-1 \n";
+			$headers .= "From: ".$_COOKIE[psdata][name]." <".$_COOKIE[psdata][email]."> \n";
+			$body="Service for Eviction $d[eviction_id] (<strong>$d[client_file]</strong>) has been modified by ".$_COOKIE[psdata][name].", Estimated File Date was changed From $d[estFileDate] To $_POST[estFileDate].";
+			$body .= "<br><br>(410) 828-4568<br>service@mdwestserve.com<br>MDWestServe, Inc.";
+			$headers .= "Cc: Service Updates <service@mdwestserve.com> \n";
+			mail($to,$subject,$body,$headers);
+			//make timeline entry
+			ev_timeline($_POST[eviction_id],$_COOKIE[psdata][name]." Updated Est. Close from $d[estFileDate] to $_POST[estFileDate]");*/
+			$newClose=1;
+			$oldFileDate=$d[estFileDate];
+		}
+		if ($_POST[addressType] != $d[addressType]){
+			$searchAdd=$d[address1].", ".$d[city1].", ".$d[state1]." ".$d[zip1];
+			$searchAdd=strtoupper($searchAdd);
+			$reviseList=addressRevise($_POST[eviction_id],$searchAdd,$d[addressType],$_POST[addressType]);
+			$TYPE .= "<table><tr><td>History ID</td><td>Old Type</td><td>New Type</td></tr>".$reviseList;
+			//$TYPE .= "<h1>POST addressType: ".$_POST[addressType]."</h1><br><h1>DB addressType: ".$d[addressType]."</h1>";
+		}
+		$case_no=trim($_POST[case_no]);
+		// un dbCleaner on all items
+		if ($newClose != 1){
+			$estQ="estFileDate='$_POST[estFileDate]',
+			";
+		}
+		$query="UPDATE evictionPackets SET process_status='$_POST[process_status]',
+		filing_status='$_POST[filing_status]',
+		service_status='$_POST[service_status]',
+		fileDate='$_POST[fileDate]', ".$estQ."
+		movant='".addslashes($_POST[movant])."',
+		altDocs='$_POST[altDocs]',
+		courierID='$_POST[courierID]',
+		reopenDate='$_POST[reopenDate]',
+		status='$_POST[status]',
+		affidavit_status='$_POST[affidavit_status]',
+		affidavit_status2='$_POST[affidavit_status2]',
+		photoStatus='$_POST[photoStatus]',
+		mail_status='$_POST[mail_status]',
+		affidavitType='$_POST[affidavitType]',
+		onAffidavit1='$_POST[onAffidavit1]',
+		onAffidavit2='$_POST[onAffidavit2]',
+		onAffidavit3='$_POST[onAffidavit3]',
+		onAffidavit4='$_POST[onAffidavit4]',
+		onAffidavit5='$_POST[onAffidavit5]',
+		onAffidavit6='$_POST[onAffidavit6]',
+		addressType='$_POST[addressType]',
+		refile='$_POST[refile]',
+		amendedAff='$_POST[amendedAff]',
+		mailWeight='$_POST[mailWeight]',
+		pages='$_POST[pages]',
+		rush='$_POST[rush]',
+		priority='$_POST[priority]',
+		request_close='$_POST[request_close]',
+		client_file='".strtoupper($_POST[client_file])."',
+		case_no='".str_replace('�',0,$case_no)."',
+		altPlaintiff='".dbCleaner($_POST[altPlaintiff])."',
+		circuit_court='".strtoupper($_POST[circuit_court])."'
+		WHERE eviction_id='$_POST[eviction_id]'";
+		@mysql_query($query) or die("Query: $query<br>".mysql_error());
 	}else{
-		?><script>window.location.href='order.php';</script><? }
+	$case_no=trim($_POST[case_no]);
+	@mysql_query("UPDATE evictionPackets SET process_status='$_POST[process_status]',
+		filing_status='$_POST[filing_status]',
+		service_status='$_POST[service_status]',
+		entry_id='$id',
+		fileDate='$_POST[fileDate]',
+		estFileDate='$_POST[estFileDate]',
+		movant='".addslashes($_POST[movant])."',
+		altDocs='$_POST[altDocs]',
+		reopenDate='$_POST[reopenDate]',
+		affidavit_status='$_POST[affidavit_status]',
+		affidavit_status2='$_POST[affidavit_status2]',
+		photoStatus='$_POST[photoStatus]',
+		onAffidavit1='$_POST[onAffidavit1]',
+		onAffidavit2='$_POST[onAffidavit2]',
+		onAffidavit3='$_POST[onAffidavit3]',
+		onAffidavit4='$_POST[onAffidavit4]',
+		onAffidavit5='$_POST[onAffidavit5]',
+		onAffidavit6='$_POST[onAffidavit6]',
+		addressType='$_POST[addressType]',
+		refile='$_POST[refile]',
+		amendedAff='$_POST[amendedAff]',
+		mailWeight='$_POST[mailWeight]',
+		rush='$_POST[rush]',
+		priority='$_POST[priority]',
+		pages='$_POST[pages]',
+		request_close='$_POST[request_close]',
+		mail_status='$_POST[mail_status]',
+		affidavitType='$_POST[affidavitType]',
+		client_file='".strtoupper($_POST[client_file])."',
+		case_no='".str_replace('�',0,$case_no)."',
+		process_status='READY',
+		status='RECIEVED',
+		circuit_court='".strtoupper($_POST[circuit_court])."',
+		altPlaintiff='".dbCleaner($_POST[altPlaintiff])."'
+		WHERE eviction_id='$_POST[eviction_id]'") or die(mysql_error());
+		ev_timeline($_POST[eviction_id],$_COOKIE[psdata][name]." Performed Data Entry");
+	// here is where we will automate the address check
+	?><script>window.open('supernova.php?packet=<?=$_POST[eviction_id];?>&close=1',   'supernova',   'width=600, height=800'); </script><?
+	}
+	$updateQ='';
+	if (isset($_POST[server1])){
+		$updateQ .= "server_id='$_POST[server1]'|";
+	}
+	$r=mysql_query("SELECT name1, name2, name3, name4, name5, name6, address1, city1, state1, zip1 from evictionPackets WHERE eviction_id='$_POST[eviction_id]'");
+	$d=mysql_fetch_array($r, MYSQL_ASSOC) or die(mysql_error());
+	$nC=0;
+	while ($nC < 6){$nC++;
+		if ($_POST["name$nC"] || ($_POST["name$nC"] != $d["name$nC"])){
+			$updateQ .= "name$nC='".dbCleaner($_POST["name$nC"])."'|";
+		}
+	}
+	if ($_POST[address] || ($_POST[address] != $d[address1])){
+		$updateQ .= "address1='".dbCleaner($_POST[address])."'|";
+	}
+	if ($_POST[city] || ($_POST[city] != $d[city1])){
+		$updateQ .= "city1='".dbCleaner($_POST[city])."'|";
+	}
+	if ($_POST[state] || ($_POST[state] != $d[state1])){
+		$updateQ .= "state1='".dbCleaner($_POST[state])."'|";
+	}
+	if ($_POST[zip] || ($_POST[zip] != $d[zip1])){
+		$updateQ .= "zip1='".dbCleaner($_POST[zip])."'|";
+	}
+	if (trim($updateQ) != ''){
+		//remove last "|"
+		$updateQ2=substr($updateQ,0,-1);
+		//replace other "|"s with commas
+		$updateQ2=str_replace("|",", ",$updateQ2);
+		//submit query
+		$query2="UPDATE evictionPackets SET ".$updateQ2." WHERE eviction_id='$_POST[eviction_id]'";
+		@mysql_query($query2) or die("Query: $query2<br>[".trim($updateQ)."]<br>".mysql_error());
+	}
+	if ($_GET[packet] && $newClose == 1){
+		echo "<script>prompter('$_POST[eviction_id]','$_POST[estFileDate]','$oldFileDate');</script>";
+		//prevent further updates.
+		die("<a href='order.php?packet=$_GET[packet]'>RELOAD ORDER</a>");
+	}elseif ($_GET[packet]){
+		header ('Location: order.php?packet='.$_GET[packet].'&type='.addslashes($TYPE));
+	}else{
+		if ($_GET[start]){
+			header ('Location: order.php?start='.$_GET[start].'&type='.addslashes($TYPE));
+		}else{
+			?><script>window.location.href='order.php';</script><? 
+		}
 	}
 }
 
@@ -794,7 +817,7 @@ $signer = "Version 1 Barcode";
 <table width="100%" style="display:block;" id="addresses"><tr><td valign="top">
 
 <FIELDSET>
-<LEGEND class="a" ACCESSKEY=C><a href="http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=<?=$d[address1]?>&city=<?=$d[city1]?>&state=<?=$d[state1]?>&miles=5" target="_Blank">Mortgage / Deed of Trust</a><input type="checkbox" checked><br><?=id2name($d[server_id]);?></LEGEND>
+<LEGEND class="a" ACCESSKEY=C><a href="http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=<?=$d[address1]?>&city=<?=$d[city1]?>&state=<?=$d[state1]?>&miles=5" target="_Blank"><img src="http://staff.mdwestserve.com/small-usps-logo.jpg" border="0"></a><br><?=id2name($d[server_id]);?><br><input name="addressType" size="55" style="font-size:10px; background-color:CCFFCC;" value="<?=$d[addressType]?>"></LEGEND>
 <table>
 <tr>
 <td><input id="address" name="address" size="30" value="<?=$d[address1]?>" /></td>
@@ -1038,6 +1061,9 @@ Request Close<br>
 <? }?>
 <script>document.title='EV<?=$_GET[packet]?>|<?=$d[status]?>|<?=$d[service_status]?>|<?=$d[process_status]?>|<?=$d[affidavit_status]?>|<?=$d[filing_status]?>'</script>
 <?
+if ($_GET[type]){
+	echo $_GET[type];
+}
 if ($d[client_file] != ''){
 	$q="select * from fileWatch where clientFile = '$d[client_file]'";
 	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
