@@ -87,7 +87,7 @@ if ($_POST[submit]){
 			//update process_status to READY TO MAIL
 			@mysql_query("UPDATE ps_packets SET process_status='READY TO MAIL' WHERE packet_id='$_POST[packet]'");
 			//redirect to mailMatrix for "MAIL ONLY" files
-			echo "<script>window.location.href='http://service.mdwestserve.com/mailMatrix.php?packet=$_POST[packet]';</script>";
+			echo "<script>window.location.href='http://service.mdwestserve.com/mailMatrix.php?packet=$_POST[packet]&product=OTD';</script>";
 		}
 	}
 	die();
@@ -112,6 +112,7 @@ if (addTotal($d[packet_id]) == 1 && $d[avoidDOT] == 'checked'){
 <li>File #: <?=$d[client_file]?></li>
 <li>Case #: <?=$d[case_no]?> - County: <?=$d[circuit_court]?></li>
 <li>Client: <?=$client?></li>
+<li>Addl Docs: <?=$d[addlDocs]?></li>
 <li><b>LOSS MITIGATION TYPE: <span style='color:red;'><?=$d[lossMit]?></span></b></li>
 </fieldset>
 <? if ($_GET[frame] != 'no'){ ?>

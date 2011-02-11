@@ -189,7 +189,7 @@ $page .= prelimPageMaker($toAttorney,"$packet-$var");
 return $page;
 }
 function buildFromMatrix($packet){
-$q="SELECT * from mailMatrix where packetID='$packet'";
+$q="SELECT * from mailMatrix where packetID='$packet' AND product='OTD'";
 $r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
 $d=mysql_fetch_array($r,MYSQL_ASSOC);
 $r1=@mysql_query("SELECT lossMit, circuit_court, attorneys_id from ps_packets where packet_id='$packet'");
@@ -243,7 +243,7 @@ return $page;
 }
 if ($_GET[packet]){
 $packet=$_GET[packet];
-$r=@mysql_query("SELECT packetID from mailMatrix where packetID='$packet'");
+$r=@mysql_query("SELECT packetID from mailMatrix where packetID='$packet' AND product='OTD'");
 $d=mysql_fetch_array($r,MYSQL_ASSOC);
 if ($_GET[openDoc]){
 //need file path to display PDF
@@ -303,7 +303,7 @@ echo "<script>alert('PACKETS$list ARE IN THE MAIL QUEUE, BUT HAVE NOT BEEN COMPL
 $q="select packet_id from ps_packets where process_status = 'READY TO MAIL' AND mail_status <> 'Printed Awaiting Postage' AND attorneys_id <> '70' AND lossMit <> '' AND lossMit <> 'N/A - OLD L' order by packet_id ASC";
 $r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 while($d=mysql_fetch_array($r, MYSQL_ASSOC)){$i++;
-$r2=@mysql_query("SELECT packetID from mailMatrix where packetID='$d[packet_id]'");
+$r2=@mysql_query("SELECT packetID from mailMatrix where packetID='$d[packet_id]' AND product='OTD'");
 $d2=mysql_fetch_array($r2,MYSQL_ASSOC);
 if ($d2[packetID]){
 $page = buildFromMatrix($d[packet_id]);
@@ -319,7 +319,7 @@ error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Printing Envelope
 $q="select packet_id from ps_packets where service_status = 'MAILING AND POSTING' AND closeOut='$_GET[mailDate]' AND attorneys_id <> '70' AND lossMit <> '' AND lossMit <> 'N/A - OLD L' order by packet_id ASC";
 $r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 while($d=mysql_fetch_array($r, MYSQL_ASSOC)){$i++;
-$r2=@mysql_query("SELECT packetID from mailMatrix where packetID='$d[packet_id]'");
+$r2=@mysql_query("SELECT packetID from mailMatrix where packetID='$d[packet_id]' AND product='OTD'");
 $d2=mysql_fetch_array($r2,MYSQL_ASSOC);
 if ($d2[packetID]){
 $page = buildFromMatrix($d[packet_id]);

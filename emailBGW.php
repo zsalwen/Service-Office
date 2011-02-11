@@ -18,7 +18,7 @@ function monthConvert($month){
 function mailInfo($packet){
 	$r=@mysql_query("SELECT name1, name2, name3, name4, name5, name6, address1, address1a, address1b, address1c, address1d, address1e, city1, city1a, city1b, city1c, city1d, city1e, state1, state1a, state1b, state1c, state1d, state1e, zip1, zip1a, zip1b, zip1c, zip1d, zip1e, pobox, pobox2, pocity, pocity2, postate, postate2, pozip, pozip2 FROM ps_packets WHERE packet_id='$packet'");
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
-	$r1=@mysql_query("SELECT * FROM mailMatrix WHERE packetID='$packet'");
+	$r1=@mysql_query("SELECT * FROM mailMatrix WHERE packetID='$packet' AND product='OTD'");
 	$d1=mysql_fetch_array($r1,MYSQL_ASSOC);
 	$list .= "<table border='1' style='border-collapse:collapse; border: 1px solid black;'><tr><td align='center'><b>Address</b></td><td align='center'><b>Parties Mailed</td></tr><tr>";
 	
@@ -75,6 +75,32 @@ function mailInfo($packet){
 	$list .= "</ol></td></tr></table>";
 	return $list;
 }
+
+
+function EVmailInfo($packet){
+	$r=@mysql_query("SELECT name1, name2, name3, name4, name5, name6, address1, city1, state1, zip1 FROM evictionPackets WHERE eviction_id='$packet'");
+	$d=mysql_fetch_array($r,MYSQL_ASSOC);
+	$r1=@mysql_query("SELECT * FROM mailMatrix WHERE packetID='$packet' AND product='EV'");
+	$d1=mysql_fetch_array($r1,MYSQL_ASSOC);
+	$list .= "<table border='1' style='border-collapse:collapse; border: 1px solid black;'><tr><td align='center'><b>Address</b></td><td align='center'><b>Parties Mailed</td></tr><tr>";
+	
+	if ($d[address1]){
+		$list .= "<tr><td>".$d["address1"]."<br>".$d["city1"].", ".$d["state1"]." ".$d["zip1"]."</td>";
+		$i=0;
+		$list2='';
+		while ($i < 6){$i++;
+			if ($d["name$i"] && $d1["add$i"]){
+				$list2 .= "<li>".$d["name$i"]."</li>";
+			}
+		}
+		$list .= "<td><ol>$list2</ol></td></tr>";
+	}
+	$list .= "</ol></td></tr></table>";
+	return $list;
+}
+
+
+
 //sends "Service Confirmed" email to client for specific EV or OTD
 function confirmService($packet,$sendName,$sendEmail,$type){
 	if ($type='Packet'){
@@ -188,7 +214,11 @@ function confirmMail($packet,$sendName,$sendEmail,$type){
 	}else{
 		$body .= " is complete, please contact our office for further details.";
 	}
-	$body .= mailInfo($packet);
+	if ($type == 'Packet'){
+		$body .= mailInfo($packet);
+	}else{
+		$body .= EVmailInfo($packet);
+	}
 	$body .= "<br><br><br><br>".$sendName."<br>MDWestServe, Inc.<br>(410) 828-4568<br>service@mdwestserve.com<br>".time()."<br>".md5(time());
 	$headers .= "Cc: $sendName <$sendEmail> \n";
 	mail($to,$subject,$body,$headers);

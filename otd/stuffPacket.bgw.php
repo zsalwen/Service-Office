@@ -91,7 +91,7 @@ function buildFromPacket($packet,$times,$mail){
 	}
 }
 function buildFromMatrix($packet,$times,$mail){
-	$q="SELECT * from mailMatrix where packetID='$packet'";
+	$q="SELECT * from mailMatrix where packetID='$packet' AND product='OTD'";
 	$r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
 	$r1=@mysql_query("SELECT lossMit, circuit_court, attorneys_id from ps_packets where packet_id='$packet'");
@@ -148,7 +148,7 @@ if ($_GET[packet]){$display++;
 	$q="select packet_id from ps_packets where packet_id='$_GET[packet]'";
 	$r=@mysql_query($q);
 	 while($d=mysql_fetch_array($r, MYSQL_ASSOC)){ $i++;
-		$r=@mysql_query("SELECT packetID from mailMatrix where packetID='$packet'");
+		$r=@mysql_query("SELECT packetID from mailMatrix where packetID='$packet' AND product='OTD'");
 		$d=mysql_fetch_array($r,MYSQL_ASSOC);
 		if ($d[packetID]){
 			buildFromMatrix($packet,$times,$mail);
@@ -180,7 +180,7 @@ if ($_GET[packet]){$display++;
 		$q="select packet_id from ps_packets where process_status = 'READY TO MAIL' AND mail_status <> 'Printed Awaiting Postage' AND attorneys_id='70' AND lossMit <> '' AND lossMit <> 'N/A - OLD L' order by packet_id ASC";
 		$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 		while($d=mysql_fetch_array($r, MYSQL_ASSOC)){ $i++;
-			$r2=@mysql_query("SELECT packetID from mailMatrix where packetID='$d[packet_id]'");
+			$r2=@mysql_query("SELECT packetID from mailMatrix where packetID='$d[packet_id]' AND product='OTD'");
 			$d2=mysql_fetch_array($r2,MYSQL_ASSOC);
 			if ($d2[packetID]){$display++;
 				buildFromMatrix($d[packet_id],$times,$mail);

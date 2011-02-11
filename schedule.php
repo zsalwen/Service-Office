@@ -3,7 +3,9 @@ session_start();
 include 'security.php';
 include 'functions-calendar.php';
 mysql_connect();
+
 mysql_select_db('service');
+$_SESSION[inc] = 0;
 ?>
 <script>
 function hideshow(which){
@@ -156,7 +158,7 @@ function hardLog($str,$type){
 		error_log(date('h:iA n/j/y')." ".$_COOKIE[psdata][name]." ".$_SERVER["REMOTE_ADDR"]." ".trim($str)."\n", 3, $log);
 	}
 }
- function dailyList($today){ 
+ function dailyList($today){
 $r=@mysql_query("select DISTINCT circuit_court from ps_packets where estFileDate = '$today' and status <> 'CANCELLED' and service_status <> 'MAIL ONLY' order by circuit_court ");
 ?>
 
@@ -176,6 +178,7 @@ while ($dx=mysql_fetch_array($x,MYSQL_ASSOC)){
 if ($dx[case_no] == ''){
 	$missingCases++;
 	$listNum++;
+	$_SESSION[inc] = $_SESSION[inc]+1;
 	$missingList .= '<div ';
 	if (getCourier($dx[packet_id]) == 'DO NOT FILE!'){
 		$missingList .= "style='background-color:#FFcccc; ";
@@ -243,8 +246,8 @@ if (getCourier($dx[packet_id]) == ' !!!MISSING!!! '){
 }
 }
 if ($missingCases > 0){
-	echo "<div style='display:none;' id='List$listNum'>$missingList</div>";
-	echo "<div style='background-color:#ffffff; color:red;' onclick=\"hideshow(document.getElementById('List$listNum'))\">$missingCases Files Missing Case Numbers</div>";
+	echo "<div style='display:none;' id='List".$_SESSION[inc]."'>$missingList</div>";
+	echo "<div style='background-color:#ffffff; color:red;' onclick=\"hideshow(document.getElementById('List".$_SESSION[inc]."'))\">$missingCases Files Missing Case Numbers</div>";
 }
 ?>	
 </div>
@@ -363,8 +366,13 @@ Courier: <select name="courier">
 <?
 $CCr=@mysql_query("select * from courier order by name DESC");
 while($CCd=mysql_fetch_array($CCr,MYSQL_ASSOC)){
+if ($CCd[phone]){
+	$phone="-".$CCd[phone];
+}else{
+	$phone='';
+}
 ?>
-<option value="<?=$CCd[courierID]?>"><?=$CCd[name]?></option>
+<option value="<?=$CCd[courierID]?>"><?=$CCd[name]?><?=$phone?></option>
 <? }?></select>
 <input type="submit" value="Set as courier">
 </div>

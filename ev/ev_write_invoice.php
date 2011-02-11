@@ -1,4 +1,5 @@
 <?
+/*
 // client invoice to print | email?
 
 
@@ -225,4 +226,7 @@ Your invoice (#<?=mysql_insert_id()?>) is loading in pop-up window.
 		hardLog('REQUESTING INVOICE FOR EVICTION '.$_GET[id],'user');
 		mail('service@mdwestserve.com','INVOICE DETAILS REQUESTED FOR '.$_GET[id],'INVOICE INFORMATION REQUIRED FOR EVICTION '.$_GET[id].' WITHIN 24 HOURS OF THIS REQUEST<br><a href="http://staff.mdwestserve.com/ev/order.php?packet='.$_GET[id].'">ENTER NOW</a>',$headers);
 		echo 'INVOICE INFORMATION FOR EVICTION '.$_GET[id].' WILL BE AVAILABLE WITHIN 24 HOURS OF THIS REQUEST.';
-}?>
+}
+*/
+?>
+Please email service@mdwestserve.com for a copy of this invoice. -Patrick 1/24/2011

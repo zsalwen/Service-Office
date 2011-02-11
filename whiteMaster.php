@@ -4,11 +4,19 @@ include 'mail.class.php';
 hardLog('White Card Printout','user');
 
 $_SESSION[space]=$_GET[space];
-function printSet($packet,$def,$add){
-	$r=@mysql_query("select otd,name1, name2, name3, name4, name5, name6, address1, address1a, address1b, address1c, address1d, address1e, city1, city1a, city1b, city1c, city1d, city1e, state1, state1a, state1b, state1c, state1d, state1e, zip1, zip1a, zip1b, zip1c, zip1d, zip1e, address2, address2a, address2b, address2c, address2d, address2e, city2, city2a, city2b, city2c, city2d, city2e, state2, state2a, state2b, state2c, state2d, state2e, zip2, zip2a, zip2b, zip2c, zip2d, zip2e, address3, address3a, address3b, address3c, address3d, address3e, city3, city3a, city3b, city3c, city3d, city3e, state3, state3a, state3b, state3c, state3d, state3e, zip3, zip3a, zip3b, zip3c, zip3d, zip3e, address4, address4a, address4b, address4c, address4d, address4e, city4, city4a, city4b, city4c, city4d, city4e, state4, state4a, state4b, state4c, state4d, state4e, zip4, zip4a, zip4b, zip4c, zip4d, zip4e, address5, address5a, address5b, address5c, address5d, address5e, city5, city5a, city5b, city5c, city5d, city5e, state5, state5a, state5b, state5c, state5d, state5e, zip5, zip5a, zip5b, zip5c, zip5d, zip5e, address6, address6a, address6b, address6c, address6d, address6e, city6, city6a, city6b, city6c, city6d, city6e, state6, state6a, state6b, state6c, state6d, state6e, zip6, zip6a, zip6b, zip6c, zip6d, zip6e, pobox, pobox2, pocity, pocity2, postate, postate2, pozip, pozip2, lossMit from ps_packets where packet_id = '$packet'");
+function printSet($packet,$def,$add,$product){
+	if ($product == 'OTD'){
+		$r=@mysql_query("select otd,name1, name2, name3, name4, name5, name6, address1, address1a, address1b, address1c, address1d, address1e, city1, city1a, city1b, city1c, city1d, city1e, state1, state1a, state1b, state1c, state1d, state1e, zip1, zip1a, zip1b, zip1c, zip1d, zip1e, address2, address2a, address2b, address2c, address2d, address2e, city2, city2a, city2b, city2c, city2d, city2e, state2, state2a, state2b, state2c, state2d, state2e, zip2, zip2a, zip2b, zip2c, zip2d, zip2e, address3, address3a, address3b, address3c, address3d, address3e, city3, city3a, city3b, city3c, city3d, city3e, state3, state3a, state3b, state3c, state3d, state3e, zip3, zip3a, zip3b, zip3c, zip3d, zip3e, address4, address4a, address4b, address4c, address4d, address4e, city4, city4a, city4b, city4c, city4d, city4e, state4, state4a, state4b, state4c, state4d, state4e, zip4, zip4a, zip4b, zip4c, zip4d, zip4e, address5, address5a, address5b, address5c, address5d, address5e, city5, city5a, city5b, city5c, city5d, city5e, state5, state5a, state5b, state5c, state5d, state5e, zip5, zip5a, zip5b, zip5c, zip5d, zip5e, address6, address6a, address6b, address6c, address6d, address6e, city6, city6a, city6b, city6c, city6d, city6e, state6, state6a, state6b, state6c, state6d, state6e, zip6, zip6a, zip6b, zip6c, zip6d, zip6e, pobox, pobox2, pocity, pocity2, postate, postate2, pozip, pozip2, lossMit from ps_packets where packet_id = '$packet'");
+	}else{
+		$r=@mysql_query("select otd, name1, name2, name3, name4, name5, name6, address1, city1, state1, zip1 from evictionPackets where eviction_id = '$packet'");
+	}
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 	$card = $_GET[card];
-	$name = $d["name$def"];
+	if ($product == 'EV' && $def == 1){
+		$name="ALL OCCUPANTS";
+	}else{
+		$name = $d["name$def"];
+	}
 	// postage calculation
 	$mail = new postage;
 	$mail -> pdf = $d[otd];
@@ -37,34 +45,37 @@ function printSet($packet,$def,$add){
 	$line1=str_replace('&','AND',$line1);
 	$name=str_replace('&',' AND ',$name);
 	$cord = "$packet-$def$add";
+	if ($product == 'EV'){
+		$cord="EV".$cord;
+	}
 	?>
 	<table style='page-break-after:always' align='center'><tr><td style='padding-top:<?=$_SESSION[space]?>; padding-right:120px;'>
 	<img src="http://staff.mdwestserve.com/whitecard.jpg.php?cost=<?=$cost?>&name=<?=strtoupper(str_replace('#','no. ',$name))?>&line1=<?=strtoupper(str_replace('#','no. ',$line1))?>&line2=<?=strtoupper($line2)?>&csz=<?=strtoupper($csz)?>&art=<?=$art?>&cord=<?=$cord?>*&case_no=<?=str_replace('0','&Oslash;',strtoupper($d[case_no]))?>"><? if($card=='mail'){echo "<img src='gfx/mail.logo.gif'>";}?></div>
 	</table>
 	<?
 }
-function getMatrixData($packet){
-	$qm="SELECT * FROM mailMatrix WHERE packetID='$packet'";
+function getMatrixData($packet,$product){
+	$qm="SELECT * FROM mailMatrix WHERE packetID='$packet' AND product='$product'";
 	$rm=@mysql_query($qm);
 	$dm=mysql_fetch_array($rm, MYSQL_ASSOC);
 	$i=0;
 	while ($i < 6){$i++;
 		if ($dm["add$i"] != ''){
-			printSet($packet,$i,'');
+			printSet($packet,$i,'',$product);
 		}
 		foreach(range('a','e') as $letter){
 			$var=$i.$letter;
 			if($dm["add$var"] != ''){
-				printSet($packet,$i,$letter);
+				printSet($packet,$i,$letter,$product);
 			}
 		}
 		$field=$i."PO";
 		if ($dm["add$field"] != ''){
-			printSet($packet,$i,'PO');
+			printSet($packet,$i,'PO',$product);
 		}
 		$field=$i."PO2";
 		if ($dm["add$field"] != ''){
-			printSet($packet,$i,'PO2');	
+			printSet($packet,$i,'PO2',$product);	
 		}
 	}
 }
@@ -75,18 +86,18 @@ function getPacketData($packet){
 	$i=0;
 	while ($i < 6){$i++;
 		if ($d["name$i"]){
-			printSet($packet,$i,'');
+			printSet($packet,$i,'','OTD');
 			foreach(range('a','e') as $letter){
 				$var=$i.$letter;
 				if($d["address$var"]){
-					printSet($packet,$i,$letter);	
+					printSet($packet,$i,$letter,'OTD');	
 				}
 			}
 			if ($d['pobox']){
-				printSet($packet,$i,'PO');
+				printSet($packet,$i,'PO','OTD');
 			}
 			if ($d['pobox2']){
-				printSet($packet,$i,'PO2');	
+				printSet($packet,$i,'PO2','OTD');	
 			}
 		}
 	}
@@ -134,11 +145,11 @@ if ($_GET[OTD] && $_GET[start] && $_GET[stop]){
 	$q="select packet_id from ps_packets where process_status='READY TO MAIL' AND packet_id >= '$_GET[start]' AND packet_id <= '$_GET[stop]' order by packet_id";
 	$r=@mysql_query($q);
 	 while($d=mysql_fetch_array($r, MYSQL_ASSOC)){ $i++;
-		$qm="SELECT packetID FROM mailMatrix WHERE packetID='$d[packet_id]'";
+		$qm="SELECT packetID FROM mailMatrix WHERE packetID='$d[packet_id]' AND product='OTD'";
 		$rm=@mysql_query($qm) or die ("Query: $qm<br>".mysql_error());
 		$dm=mysql_fetch_array($rm, MYSQL_ASSOC);
 		if ($dm[packetID] != ''){
-			getMatrixData($d[packet_id]);
+			getMatrixData($d[packet_id],'OTD');
 		}else{
 			getPacketData($d[packet_id]);
 		}
@@ -147,10 +158,17 @@ if ($_GET[OTD] && $_GET[start] && $_GET[stop]){
 	$q="select eviction_id from evictionPackets where process_status='READY TO MAIL' AND packet_id >= '$_GET[start]' AND packet_id <= '$_GET[stop]' order by eviction_id";
 	$r=@mysql_query($q);
 	 while($d=mysql_fetch_array($r, MYSQL_ASSOC)){ $i++;
-		getEvictionData($d[eviction_id]);
+		$qm="SELECT packetID FROM mailMatrix WHERE packetID='$d[eviction_id]' AND product='EV'";
+		$rm=@mysql_query($qm) or die ("Query: $qm<br>".mysql_error());
+		$dm=mysql_fetch_array($rm, MYSQL_ASSOC);
+		if ($dm[packetID] != ''){
+			getMatrixData($d[eviction_id],'EV');
+		}else{
+			getEvictionData($d[eviction_id]);
+		}
 	 }
 }elseif ($_GET[OTD]){
-	$qm="SELECT packetID FROM mailMatrix WHERE packetID='$_GET[OTD]'";
+	$qm="SELECT packetID FROM mailMatrix WHERE packetID='$_GET[OTD]' AND product='OTD'";
 	$rm=@mysql_query($qm) or die ("Query: $qm<br>".mysql_error());
 	$dm=mysql_fetch_array($rm, MYSQL_ASSOC);
 	if ($dm[packetID] != ''){
@@ -159,7 +177,14 @@ if ($_GET[OTD] && $_GET[start] && $_GET[stop]){
 		getPacketData($_GET[OTD]);
 	}
 }elseif($_GET[EV]){
-	getEvictionData($_GET[EV]);
+	$qm="SELECT packetID FROM mailMatrix WHERE packetID='$_GET[EV]' AND product='EV'";
+	$rm=@mysql_query($qm) or die ("Query: $qm<br>".mysql_error());
+	$dm=mysql_fetch_array($rm, MYSQL_ASSOC);
+	if ($dm[packetID] != ''){
+		getMatrixData($_GET[EV],'EV');
+	}else{
+		getEvictionData($_GET[EV]);
+	}
 }else{
 	$qd="select ps_packets.packet_id, evictionPackets.eviction_id from ps_packets, evictionPackets where ps_packets.process_status = 'READY TO MAIL' AND ps_packets.mail_status <> 'Printed Awaiting Postage' AND (ps_packets.uspsVerify='' OR ps_packets.qualityControl='') AND evictionPackets.process_status = 'READY TO MAIL' AND evictionPackets.mail_status <> 'Printed Awaiting Postage' AND (evictionPackets.uspsVerify='' OR evictionPackets.qualityControl='' ) order by ps_packets.packet_id, evictionPackets.eviction_id ASC";
 	$rd=@mysql_query($qd) or die ("Query: $qd<br>".mysql_error());
@@ -186,11 +211,11 @@ if ($_GET[OTD] && $_GET[start] && $_GET[stop]){
 		$q="select packet_id, mail_status from ps_packets where process_status = 'READY TO MAIL' AND mail_status <> 'Printed Awaiting Postage' order by packet_id";
 		$r=@mysql_query($q);
 		while($d=mysql_fetch_array($r, MYSQL_ASSOC)){ $i++;
-			$qm="SELECT packetID FROM mailMatrix WHERE packetID='$d[packet_id]'";
+			$qm="SELECT packetID FROM mailMatrix WHERE packetID='$d[packet_id]' AND product='OTD'";
 			$rm=@mysql_query($qm) or die ("Query: $qm<br>".mysql_error());
 			$dm=mysql_fetch_array($rm, MYSQL_ASSOC);
 			if ($dm[packetID] != ''){
-				getMatrixData($d[packet_id]);
+				getMatrixData($d[packet_id],'OTD');
 			}else{
 				getPacketData($d[packet_id]);
 			}
@@ -198,7 +223,14 @@ if ($_GET[OTD] && $_GET[start] && $_GET[stop]){
 		$q="select eviction_id, mail_status from evictionPackets where process_status = 'READY TO MAIL' AND mail_status <> 'Printed Awaiting Postage' order by eviction_id";
 		$r=@mysql_query($q);
 		while($d=mysql_fetch_array($r, MYSQL_ASSOC)){ $i++;
-			echo getEvictionData($d[eviction_id]);
+			$qm="SELECT packetID FROM mailMatrix WHERE packetID='$d[eviction_id]' AND product='EV'";
+			$rm=@mysql_query($qm) or die ("Query: $qm<br>".mysql_error());
+			$dm=mysql_fetch_array($rm, MYSQL_ASSOC);
+			if ($dm[packetID] != ''){
+				getMatrixData($d[eviction_id],'EV');
+			}else{
+				getEvictionData($d[eviction_id]);
+			}
 		}
 	}
 }

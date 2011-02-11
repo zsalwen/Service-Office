@@ -1,4 +1,5 @@
 <?
+/*
 // client invoice to print | email?
 
 
@@ -194,8 +195,8 @@ $pdf->addTextWrap(340,114,300,12,'Hampton Plaza - Suite 1103');
 $pdf->addTextWrap(340,102,300,12,'Baltimore, MD 21286');
 
 //Place Logo
-/*$logo='smallLogo.jpg';
-$pdf->addJpegFromFile($logo,80,30,120,120);*/
+//$logo='smallLogo.jpg';
+//$pdf->addJpegFromFile($logo,80,30,120,120);
 
 $pdfcode = $pdf->ezOutput();
 
@@ -256,4 +257,7 @@ Your invoice (#<?=mysql_insert_id()?>) is loading in pop-up window.
 		hardLog('REQUESTING INVOICE FOR PACKET '.$_GET[id],'user');
 		mail('service@mdwestserve.com','INVOICE DETAILS REQUESTED FOR '.$_GET[id],'INVOICE INFORMATION REQUIRED FOR PACKET '.$_GET[id].' WITHIN 24 HOURS OF THIS REQUEST<br><a href="http://staff.mdwestserve.com/otd/order.php?packet='.$_GET[id].'">ENTER NOW</a>',$headers);
 		echo 'INVOICE INFORMATION FOR PACKET '.$_GET[id].' WILL BE AVAILABLE WITHIN 24 HOURS OF THIS REQUEST.';
-}?>
+}
+*/
+?>
+Please email service@mdwestserve.com for a copy of this invoice. -Patrick 1/24/2011

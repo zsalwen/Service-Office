@@ -600,16 +600,24 @@ $dupCheck=dupCheck($d[client_file]);
 </tr>
 <tr>
 <?
-$rXX=@mysql_query("select name from courier where courierID = '$d[courierID]'");
+$rXX=@mysql_query("select name, phone from courier where courierID = '$d[courierID]'");
 $dXX=mysql_fetch_array($rXX,MYSQL_ASSOC);
+if ($dXX[phone]){
+	$phone="-".$dXX[phone];
+}
 ?>
 <td>Courier</td>
-<td><select name="courierID"><option value="<?=$d[courierID]?>"><?=$dXX[name]?></option>
+<td><select name="courierID"><option value="<?=$d[courierID]?>"><?=$dXX[name]?><?=$phone?></option>
 <?
-$CCr=@mysql_query("select * from courier");
+$CCr=@mysql_query("select * from courier WHERE isActive='1'");
 while($CCd=mysql_fetch_array($CCr,MYSQL_ASSOC)){
+if ($CCd[phone]){
+	$phone="-".$CCd[phone];
+}else{
+	$phone='';
+}
 ?>
-<option value="<?=$CCd[courierID]?>"><?=$CCd[name]?> (<?=$CCd[courierID]?>)</option>
+<option value="<?=$CCd[courierID]?>"><?=$CCd[name]?><?=$phone?> (<?=$CCd[courierID]?>)</option>
 <? }?></select></td>
 </tr>
 <tr>
