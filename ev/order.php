@@ -188,7 +188,7 @@ function addressRevise($packet,$address,$oldType,$newType){
 	$qh="SELECT action_str, serverID, history_id FROM evictionHistory WHERE eviction_id='$packet' AND action_str LIKE '%$address%'";
 	$rh=@mysql_query($qh) or die (mysql_error());
 	while ($dh=mysql_fetch_array($rh,MYSQL_ASSOC)){
-		if ($dh != ''){
+		if ($dh[history_id]){
 			$newStr=str_replace($oldType,$newType,$dh[action_str]);
 			$list .= "<tr><td>".$dh[history_id]."</td><td>$oldType</td><td>$newType</td></tr>'";
 			@mysql_query("UPDATE evictionHistory SET action_str='".$newStr."' WHERE history_id='".$dh[history_id]."'");
