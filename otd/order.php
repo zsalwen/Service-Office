@@ -208,10 +208,8 @@ function addressRevise($packet,$address,$oldType,$newType){
 	while ($dh=mysql_fetch_array($rh,MYSQL_ASSOC)){
 		if ($dh != ''){
 			$newStr=str_replace($oldType,$newType,$dh[action_str]);
-			if ($newStr != $dh[action_str]){
-				$list .= "<tr><td>".$dh[history_id]."</td><td>$oldType</td><td>$newType</td></tr>'";
-				@mysql_query("UPDATE ps_history SET action_str='".$newStr."' WHERE history_id='".$dh[history_id]."'");
-			}
+			$list .= "<tr><td>".$dh[history_id]."</td><td>$oldType</td><td>$newType</td></tr>'";
+			@mysql_query("UPDATE ps_history SET action_str='".$newStr."' WHERE history_id='".$dh[history_id]."'");
 		}
 	}
 	return $list;
