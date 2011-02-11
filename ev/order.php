@@ -351,10 +351,10 @@ if ($_POST[submit]){
 		//prevent further updates.
 		die("<a href='order.php?packet=$_GET[packet]'>RELOAD ORDER</a>");
 	}elseif ($_GET[packet]){
-		header ('Location: order.php?packet='.$_GET[packet]);
+		header ('Location: order.php?packet='.$_GET[packet].'&type='.addslashes($TYPE));
 	}else{
 		if ($_GET[start]){
-			header ('Location: order.php?start='.$_GET[start]);
+			header ('Location: order.php?start='.$_GET[start].'&type='.addslashes($TYPE));
 		}else{
 			?><script>window.location.href='order.php';</script><? 
 		}
@@ -1061,6 +1061,9 @@ Request Close<br>
 <? }?>
 <script>document.title='EV<?=$_GET[packet]?>|<?=$d[status]?>|<?=$d[service_status]?>|<?=$d[process_status]?>|<?=$d[affidavit_status]?>|<?=$d[filing_status]?>'</script>
 <?
+if ($_GET[type]){
+	echo $_GET[type];
+}
 if ($d[client_file] != ''){
 	$q="select * from fileWatch where clientFile = '$d[client_file]'";
 	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
