@@ -25,8 +25,13 @@ function printSet($packet,$def,$add,$product){
 		$line1 = $d[pobox2];
 		$csz = $d[pocity2].', '.$d[postate2].' '.$d[pozip2];
 	}else{
-		$line1 = $d["address$def$add"];
-		$csz = $d["city$def$add"].', '.$d["state$def$add"].' '.$d["zip$def$add"];
+		if ($product == 'EV'){
+			$line1 = $d["address1"];
+			$csz = $d["city1"].', '.$d["state1"].' '.$d["zip1"];
+		}else{
+			$line1 = $d["address$def$add"];
+			$csz = $d["city$def$add"].', '.$d["state$def$add"].' '.$d["zip$def$add"];
+		}
 		$art = $_GET[art];
 	}
 	$line1=str_replace('&',' AND ',$line1);
