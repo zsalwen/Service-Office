@@ -42,7 +42,7 @@ class postage{
 					 if(preg_match_all("/\/Count\s+([0-9]+)/", $contents, $capture, PREG_SET_ORDER)) {
 						 foreach($capture as $c) {
 							 if($c[1] > $count)
-								 $count = $c[1];
+								 $count = ceil($c[1]/2);
 						 }
 						 $weight = ($count*.16)+.57+.12+.01;
 						 if ($this->greenEnvelopes){
