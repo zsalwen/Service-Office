@@ -37,8 +37,13 @@ function printSet($packet,$def,$add,$product){
 		$line1 = $d[pobox2];
 		$csz = $d[pocity2].', '.$d[postate2].' '.$d[pozip2];
 	}else{
-		$line1 = $d["address$address"];
-		$csz = $d["city$address"].', '.$d["state$address"].' '.$d["zip$address"];
+		if ($product == 'EV'){
+			$line1 = $d["address1"];
+			$csz = $d["city1"].', '.$d["state1"].' '.$d["zip1"];
+		}else{
+			$line1 = $d["address$address"];
+			$csz = $d["city$address"].', '.$d["state$address"].' '.$d["zip$address"];
+		}
 	}
 	$cord = "$packet-$def$add".'X';
 	if ($product == 'EV'){

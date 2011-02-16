@@ -55,30 +55,35 @@ function buildFromMatrix($packet,$product){
 	$qm="SELECT * FROM mailMatrix WHERE packetID='$packet' AND product='$product'";
 	$rm=@mysql_query($qm) or die ("Query: $qm<br>".mysql_error());
 	$dm=mysql_fetch_array($rm, MYSQL_ASSOC);
+	if ($product == 'EV'){
+		$pre='EV';
+	}else{
+		$pre='';
+	}
 	if ($dm[packetID] != ''){
 		$count=0;
 		$data .= "<td>";
 		while ($count < 6){$count++;
 			if ($dm["add$count"] != ''){
 				$_SESSION[letters] = $_SESSION[letters]+2;
-				$data .= " ".article($packet,$count)."<a target='_Blank' href='http://staff.mdwestserve.com/greencard.php?packet=$packet&def=$count&card=return&svc=OTD'>[$packet-$count]</a></div>";
+				$data .= " ".article($pre.$packet,$count)."<a target='_Blank' href='http://staff.mdwestserve.com/greencard.php?packet=$packet&def=$count&card=return&svc=OTD'>[$pre$packet-$count]</a></div>";
 			}
 			foreach(range('a','e') as $letter){
 				$var=$count.$letter;
 				if($dm["add$var"] != ''){
 					$_SESSION[letters] = $_SESSION[letters]+2;
-					$data .= " ".article($packet,$var)."<a target='_Blank' href='http://staff.mdwestserve.com/greencard.php?packet=$packet&def=$count&add=$letter&card=return&svc=OTD'>[$packet-$var]</a></div>";	
+					$data .= " ".article($pre.$packet,$var)."<a target='_Blank' href='http://staff.mdwestserve.com/greencard.php?packet=$packet&def=$count&add=$letter&card=return&svc=OTD'>[$pre$packet-$var]</a></div>";	
 				}
 			}
 			$field="add".$count."PO";
 			if ($dm["$field"] != ''){
 				$_SESSION[letters] = $_SESSION[letters]+2;
-				$data .= " ".article($packet,$count."PO")."<a target='_Blank' href='http://staff.mdwestserve.com/greencard.php?packet=$packet&def=$count&add=PO&card=return&svc=OTD'>[$packet-".$count."PO]</a></div>";	
+				$data .= " ".article($pre.$packet,$count."PO")."<a target='_Blank' href='http://staff.mdwestserve.com/greencard.php?packet=$packet&def=$count&add=PO&card=return&svc=OTD'>[$pre$packet-".$count."PO]</a></div>";	
 			}
 			$field="add".$count."PO2";
 			if ($dm["$field"] != ''){
 				$_SESSION[letters] = $_SESSION[letters]+2;
-				$data .= " ".article($packet,$count."PO2")."<a target='_Blank' href='http://staff.mdwestserve.com/greencard.php?packet=$packet&def=$count&add=PO2&card=return&svc=OTD'>[$packet-".$count."PO2]</a></div>";	
+				$data .= " ".article($pre.$packet,$count."PO2")."<a target='_Blank' href='http://staff.mdwestserve.com/greencard.php?packet=$packet&def=$count&add=PO2&card=return&svc=OTD'>[$pre$packet-".$count."PO2]</a></div>";	
 			}
 		}
 	}else{
