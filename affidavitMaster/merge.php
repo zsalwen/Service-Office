@@ -78,18 +78,19 @@ $r=@mysql_query("select * from attribute where table_name = '' and advancedQuery
 while($attribute = mysql_fetch_array($r,MYSQL_ASSOC)){
 $query = $attribute[advancedQuery];
 
-ob_start();
+
 
 echo $query;
 
 $resolved = ob_get_clean();
 
-/*
-$resolved =  <<<EOT
+//$data = '5';
 
+//$string = 'this is $data';
 
-EOT;
-*/
+$resolved = str_replace ('$instruction[name_id]' , $instruction[name_id], $query);
+
+//echo $string;
 
 echo "<li>resolving query from ".$query." to ".$resolved."</li>";
 
