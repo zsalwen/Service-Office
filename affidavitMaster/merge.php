@@ -89,6 +89,7 @@ $break = $attribute[advancedResult];
 echo "<li>run resolved query  (".$resolved.") results into ".$attribute[merge_name]." below</li>";
 $rSub=@mysql_query($resolved) or die('<br>Error in Query: '.$resolved.'<br>'.mysql_error());
 while($advanced = mysql_fetch_array($rSub,MYSQL_ASSOC)){
+echo "<li>compiling $rSub[compiled] into $attribute[merge_name]</li>";
 $compiled .= $rSub[compiled].$break;
 }
 $base = str_replace($attribute[merge_name], $compiled, $base); 
