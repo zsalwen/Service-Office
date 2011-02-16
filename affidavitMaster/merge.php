@@ -80,21 +80,11 @@ $query = $attribute[advancedQuery];
 
 
 
-echo $query;
-
-$resolved = ob_get_clean();
-
-//$data = '5';
-
-//$string = 'this is $data';
-
 $resolved = str_replace ('$instruction[name_id]' , $instruction[name_id], $query);
 
-//echo $string;
+
 
 echo "<li>resolving query from ".$query." to ".$resolved."</li>";
-
-
 $break = $attribute[advancedResult];
 echo "<li>run resolved query  (".$resolved.") results into ".$attribute[merge_name]." below</li>";
 $rSub=@mysql_query($resolved) or die('<br>Error in Query: '.$resolved.'<br>'.mysql_error());
