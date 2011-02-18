@@ -762,7 +762,7 @@ if (!strpos($otdStr,'mdwestserve.com')){
 		<td><a href="<?=$otdStr?>" target="preview">JAP</a> | <a href="serviceReview.php?packet=<?=$d[eviction_id]?>" target="preview">Timeline</a> | <a href="evSheet.php?id=<?=$d[eviction_id]?>&autoPrint=1" target="_blank">Checklist</a></td>
 	</tr>
 	<tr>
-		<td><a href="./photoDisplay.php?packet=<?=$d[eviction_id]?>" target="preview"><?$photoCount=photoCount($d[eviction_id]); echo $photoCount;?> Photo<? if($photoCount != 1){echo "s";}?></a></td>
+		<td><a href="../photoDisplay.php?packet=<?=$d[eviction_id]?>" target="preview"><?$photoCount=photoCount($d[eviction_id]); echo $photoCount;?> Photo<? if($photoCount != 1){echo "s";}?></a></td>
 	</tr>
 	<tr>
 		<td><a href="http://staff.mdwestserve.com/penalize.php?packet=<?=$d[eviction_id]?>&svc=EV&display=1" target="preview">Penalties</a></td>
