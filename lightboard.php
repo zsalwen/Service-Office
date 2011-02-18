@@ -75,6 +75,14 @@ if ($packetType == 'presale'){
 	$r=@mysql_query("select * from evictionPackets where eviction_id = '$packet'");
 }
 $d=mysql_fetch_array($r,MYSQL_ASSOC);
+if($d[attorneys_id] == 3 || $d[attorneys_id] == 7 || $d[attorneys_id] == 12 || $d[attorneys_id] == 68){
+	$q2="SELECT * FROM occNotices WHERE packet_id='$_GET[packet]'";
+	$r2=@mysql_query($q2) or die("Query: occNotices: $q2<br>".mysql_error());
+	$d2=mysql_fetch_array($r2, MYSQL_ASSOC);
+	if ($d2[packet_id]){
+		echo "<script>alert('".strtoupper(id2attorney($d[attorneys_id]))." FILE: SHOULD CONTAIN FILED OCCUPANT NOTICE')</script>";
+	}
+}
 if (strtoupper($d[state1a]) != 'MD' && $d[state1a] != ''){ echo "<script>alert('First possible place of abode is out of state.');</script>"; }
 if (strtoupper($d[state1b]) != 'MD' && $d[state1b] != ''){ echo "<script>alert('Second possible place of abode is out of state.');</script>"; }
 if (strtoupper($d[state1c]) != 'MD' && $d[state1c] != ''){ echo "<script>alert('Third possible place of abode is out of state.');</script>"; }
