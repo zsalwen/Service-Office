@@ -61,8 +61,8 @@ function byteConvert(&$bytes){
 	$e = (int)(log($b,$con));
 	return '<b>'.number_format($b/pow($con,$e),0,',','.').' '.$s[$e].'</b>'; 
 }
-function photoCount($packet){
-	$count=trim(getPage("http://data.mdwestserve.com/countPhotos.php?packet=$packet", 'MDWS Count Photos', '5', ''));
+function photoCount($packet,$def){
+	$count=trim(getPage("http://data.mdwestserve.com/countPhotos.php?packet=$packet&def=$def", 'MDWS Count Photos', '5', ''));
 	if ($count==''){
 		$count=0;
 	}
