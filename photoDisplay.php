@@ -81,7 +81,7 @@ if (!$_GET[server] && !$_GET[viewAll]){
 	$r=@mysql_query($q);
 	//echo "$q<br>";
 	$serverCount=mysql_num_rows($r);
-	$allCount=photoCount($packet);
+	$allCount=photoCount($packet,$def);
 	if ($serverCount != $allCount){
 		echo "<table align='center' valign='top'><tr><td><a href='?packet=$packet&defendant=$def&server=1'>View Photos (As Server Would See) [$serverCount]</a></td><td><a href='?packet=$packet&defendant=$def&viewAll=1'>View All Photos [$allCount]</a></td></tr></table>";
 	}else{
