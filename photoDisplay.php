@@ -77,7 +77,10 @@ fieldset, legend, div, table {padding:0px;}
 $packet=$_GET[packet];
 $def=$_GET[defendant];
 if (!$_GET[server] && !$_GET[viewAll]){
-	$q="SELECT photoID FROM ps_photos WHERE packetID='$packet' AND defendantID='$def'";
+	$q="SELECT photoID FROM ps_photos WHERE packetID='$packet'";
+	if ($def != ''){
+		$q .= " AND defendantID='$def'";
+	}
 	$r=@mysql_query($q);
 	//echo "$q<br>";
 	$serverCount=mysql_num_rows($r);
@@ -96,7 +99,10 @@ if (!$_GET[server] && !$_GET[viewAll]){
 		$d=mysql_fetch_array($r,MYSQL_ASSOC);
 		//echo "$q<br>";
 		echo "<table align='center' valign='top'><tr><td valign='top'><fieldset><legend>".strtoupper($d["name$def"])."</legend>";
-		$q2="SELECT * FROM ps_photos WHERE packetID='$packet' AND defendantID='$def'";
+		$q2="SELECT * FROM ps_photos WHERE packetID='$packet'";
+		if ($def != ''){
+			$q2 .= " AND defendantID='$def'";
+		}
 		$r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
 		//echo "$q2<br>";
 		while ($d2=mysql_fetch_array($r2,MYSQL_ASSOC)){
