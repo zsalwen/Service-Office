@@ -1208,7 +1208,7 @@ $dc=mysql_fetch_array($rc,MYSQL_ASSOC);
 		<td><a href="<?=$otdStr?>" target="preview">OTD</a> | <a href="serviceReview.php?packet=<?=$d[packet_id]?>" target="preview">Timeline</a> | <a href="<?=$checkLink?>" target="_blank">Checklist</a></td>
 	</tr>
 	<tr>
-		<td><a href="photoDisplay.php?packet=<?=$d[packet_id]?>" target="preview"><?$photoCount=photoCount($d[packet_id]); echo $photoCount;?> Photo<? if($photoCount != 1){echo "s";}?></a></td>
+		<td><a href="./photoDisplay.php?packet=<?=$d[packet_id]?>" target="preview"><?$photoCount=photoCount($d[packet_id]); echo $photoCount;?> Photo<? if($photoCount != 1){echo "s";}?></a></td>
 	</tr>
 	<tr>
 		<td><a href="http://staff.mdwestserve.com/penalize.php?packet=<?=$d[eviction_id]?>&svc=OTD&display=1" target="preview">Penalties</a></td>
