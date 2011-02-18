@@ -1,4 +1,15 @@
-<? session_start(); ?>
+<?
+
+session_start(); 
+
+function id2attorney($id){
+	$q="SELECT display_name FROM attorneys WHERE attorneys_id = '$id'";
+	$r=@mysql_query($q);
+	$d=mysql_fetch_array($r, MYSQL_ASSOC);
+	return $d[display_name];
+}
+
+?>
 <!-- Designed for 22" widescreen -->
 <link rel="stylesheet" type="text/css" href="fire.css" />
 <script>
@@ -75,7 +86,7 @@ if ($packetType == 'presale'){
 	$r=@mysql_query("select * from evictionPackets where eviction_id = '$packet'");
 }
 $d=mysql_fetch_array($r,MYSQL_ASSOC);
-if($d[attorneys_id] == 3 || $d[attorneys_id] == 7 || $d[attorneys_id] == 12 || $d[attorneys_id] == 68){
+if(($d[attorneys_id] == 3 || $d[attorneys_id] == 7 || $d[attorneys_id] == 12 || $d[attorneys_id] == 68) && $packetType == 'presale'){
 	$q2="SELECT * FROM occNotices WHERE packet_id='$_GET[packet]'";
 	$r2=@mysql_query($q2) or die("Query: occNotices: $q2<br>".mysql_error());
 	$d2=mysql_fetch_array($r2, MYSQL_ASSOC);
