@@ -21,11 +21,29 @@ function hardLog($str,$type){
 hardLog('Cleansing Temp Folder of PDFs, JPEGs & PNGs','user');
 $cmd="rm -f *.pdf";
 exec($cmd,$out,$ret);
-echo "$cmd: OUT: [$out] RET: [$ret]<hr>";
+$i=0;
+echo "$cmd: OUT: [$out";
+while ($i < count($out)){
+	echo $out["$count"];
+	$i++;
+}
+echo "] RET: [$ret]<hr>";
 $cmd="rm -f *.png";
 exec($cmd,$out,$ret);
-echo "$cmd: OUT: [$out] RET: [$ret]";
+$i=0;
+echo "$cmd: OUT: [$out";
+while ($i < count($out)){
+	echo $out["$count"];
+	$i++;
+}
+echo "] RET: [$ret]<hr>";
 $cmd="rm -f *.jpeg";
 exec($cmd,$out,$ret);
-echo "$cmd: OUT: [$out] RET: [$ret]";
+$i=0;
+echo "$cmd: OUT: [$out";
+while ($i < count($out)){
+	echo $out["$count"];
+	$i++;
+}
+echo "] RET: [$ret]<hr>";
 ?>
