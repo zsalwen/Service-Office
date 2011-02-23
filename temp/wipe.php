@@ -24,7 +24,7 @@ exec($cmd,$out,$ret);
 $i=0;
 echo "$cmd: OUT: [$out";
 while ($i < count($out)){
-	echo $out["$count"];
+	echo $out["$i"];
 	$i++;
 }
 echo "] RET: [$ret]<hr>";
@@ -33,7 +33,7 @@ exec($cmd,$out,$ret);
 $i=0;
 echo "$cmd: OUT: [$out";
 while ($i < count($out)){
-	echo $out["$count"];
+	echo $out["$i"];
 	$i++;
 }
 echo "] RET: [$ret]<hr>";
@@ -42,7 +42,7 @@ exec($cmd,$out,$ret);
 $i=0;
 echo "$cmd: OUT: [$out";
 while ($i < count($out)){
-	echo $out["$count"];
+	echo $out["$i"];
 	$i++;
 }
 echo "] RET: [$ret]<hr>";
