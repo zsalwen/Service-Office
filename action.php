@@ -172,3 +172,10 @@ while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 }
 echo "<ol></div></td></tr></table>";
 ?>
+<?
+mysql_close();
+$headers = apache_request_headers();
+$lb = $headers["X-Forwarded-Host"];
+$mirror = $_SERVER['HTTP_HOST'];
+?>
+<center style="padding:0px;">Mysql Closed on <?=$mirror;?> from <?=$lb;?></center>
