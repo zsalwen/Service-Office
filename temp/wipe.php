@@ -15,6 +15,8 @@ function hardLog($str,$type){
 	// this is important code 
 	if ($log){
 		error_log('['.date('h:i:sA m/d/y')."] [".$_SERVER["REMOTE_ADDR"]."] [".trim($str)."]\n", 3, $log);
+	}else{
+		error_log('['.date('h:i:sA m/d/y')."] [".$_SERVER["REMOTE_ADDR"]."] [".trim($str)."]\n", 0);
 	}
 	// this is important code 
 }
@@ -30,7 +32,7 @@ if ($out != ''){
 		$i++;
 	}
 	if ($list != ''){
-		hardLog('ERROR Cleansing Temp Folder of PDFs: '.$list,'user');
+		hardLog('ERROR Cleansing Temp Folder of PDFs: '.$list);
 	}
 }
 $cmd="rm -f *.png";
@@ -45,7 +47,7 @@ if ($out != ''){
 		$i++;
 	}
 	if ($list != ''){
-		hardLog('ERROR Cleansing Temp Folder of PNGs: '.$list,'user');
+		hardLog('ERROR Cleansing Temp Folder of PNGs: '.$list);
 	}
 }
 $cmd="rm -f *.jpeg";
@@ -60,7 +62,7 @@ if ($out != ''){
 		$i++;
 	}
 	if ($list != ''){
-		hardLog('ERROR Cleansing Temp Folder of JPEGs: '.$list,'user');
+		hardLog('ERROR Cleansing Temp Folder of JPEGs: '.$list);
 	}
 }
 ?>
