@@ -18,32 +18,49 @@ function hardLog($str,$type){
 	}
 	// this is important code 
 }
-hardLog('Cleansing Temp Folder of PDFs, JPEGs & PNGs','user');
 $cmd="rm -f *.pdf";
 exec($cmd,$out,$ret);
-$i=0;
-echo "$cmd: OUT: [";
-while ($i < count($out)){
-	echo $out["$i"];
-	$i++;
+if ($out != ''){
+	$i=0;
+	$list='';
+	while ($i < count($out)){
+		if (trim($out["$i"]) != ''){
+			$list .= "[".$out["$i"]."]";
+		}
+		$i++;
+	}
+	if ($list != ''){
+		hardLog('ERROR Cleansing Temp Folder of PDFs: '.$list,'user');
+	}
 }
-echo "] RET: [$ret]<hr>";
 $cmd="rm -f *.png";
 exec($cmd,$out,$ret);
-$i=0;
-echo "$cmd: OUT: [";
-while ($i < count($out)){
-	echo $out["$i"];
-	$i++;
+if ($out != ''){
+	$i=0;
+	$list='';
+	while ($i < count($out)){
+		if (trim($out["$i"]) != ''){
+			$list .= "[".$out["$i"]."]";
+		}
+		$i++;
+	}
+	if ($list != ''){
+		hardLog('ERROR Cleansing Temp Folder of PNGs: '.$list,'user');
+	}
 }
-echo "] RET: [$ret]<hr>";
 $cmd="rm -f *.jpeg";
 exec($cmd,$out,$ret);
-$i=0;
-echo "$cmd: OUT: [";
-while ($i < count($out)){
-	echo $out["$i"];
-	$i++;
+if ($out != ''){
+	$i=0;
+	$list='';
+	while ($i < count($out)){
+		if (trim($out["$i"]) != ''){
+			$list .= "[".$out["$i"]."]";
+		}
+		$i++;
+	}
+	if ($list != ''){
+		hardLog('ERROR Cleansing Temp Folder of JPEGs: '.$list,'user');
+	}
 }
-echo "] RET: [$ret]<hr>";
 ?>
