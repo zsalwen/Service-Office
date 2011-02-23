@@ -22,7 +22,7 @@ hardLog('Cleansing Temp Folder of PDFs, JPEGs & PNGs','user');
 $cmd="rm -f *.pdf";
 exec($cmd,$out,$ret);
 $i=0;
-echo "$cmd: OUT: [$out";
+echo "$cmd: OUT: [";
 while ($i < count($out)){
 	echo $out["$i"];
 	$i++;
@@ -31,7 +31,7 @@ echo "] RET: [$ret]<hr>";
 $cmd="rm -f *.png";
 exec($cmd,$out,$ret);
 $i=0;
-echo "$cmd: OUT: [$out";
+echo "$cmd: OUT: [";
 while ($i < count($out)){
 	echo $out["$i"];
 	$i++;
@@ -40,7 +40,7 @@ echo "] RET: [$ret]<hr>";
 $cmd="rm -f *.jpeg";
 exec($cmd,$out,$ret);
 $i=0;
-echo "$cmd: OUT: [$out";
+echo "$cmd: OUT: [";
 while ($i < count($out)){
 	echo $out["$i"];
 	$i++;
