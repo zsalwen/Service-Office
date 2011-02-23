@@ -20,9 +20,12 @@ function hardLog($str,$type){
 }
 hardLog('Cleansing Temp Folder of PDFs, JPEGs & PNGs','user');
 $cmd="rm -f *.pdf";
-exec($cmd);
+exec($cmd,$out,$ret);
+echo "$cmd: OUT: [$out] RET: [$ret]<hr>";
 $cmd="rm -f *.png";
-exec($cmd);
+exec($cmd,$out,$ret);
+echo "$cmd: OUT: [$out] RET: [$ret]";
 $cmd="rm -f *.jpeg";
-exec($cmd);
+exec($cmd,$out,$ret);
+echo "$cmd: OUT: [$out] RET: [$ret]";
 ?>
