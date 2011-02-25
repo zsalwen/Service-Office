@@ -42,7 +42,7 @@ function colorCode2($hours){
 }
 
 function withCourier($packet){
-	$q="SELECT * from docuTrack WHERE packet='$packet' and document='OUT WITH COURIER'";
+	$q="SELECT * from docuTrack WHERE packet='$packet' and document='OUT WITH COURIER' ORDER BY trackID DESC LIMIT 0,1";
 	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
 	if ($d[packet]){
@@ -59,11 +59,7 @@ function prepExplode($packet){
 		$timeline=explode('<br>',$d[timeline]);
 		for($i = 0; $i < count($timeline); $i++){
 			if (strpos($timeline[$i], "Prepared Affidavits for Filing")){
-				if ($timeList != ''){
-					$timeList .= "<br>$timeline[$i]";
-				}else{
 					$timeList = "<br><div class='note' style='background-color:#6699CC;'><small>$timeline[$i]";
-				}
 			}
 		}
 	}
