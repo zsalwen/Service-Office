@@ -95,6 +95,15 @@ function justDate($dt){
 	$date=explode(' ',$dt);
 	return $date[0];
 }
+function justDate2($dt){
+	$date=explode(' ',$dt);
+	$date2=explode('-',$date[0]);
+	if ($date2[0] != date('Y')){
+		return $date[0];
+	}else{
+		return $date2[1]."-".$date2[2];
+	}
+}
 function serverActiveList($id){ $_SESSION[active]++;
 	$data='<ol>';
 	$r=@mysql_query("select packet_id, avoidDOT, reopenDate, date_received, filing_status, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, dispatchDate, attorneys_id, estFileDate, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where server_id='$id' and (process_status = 'Assigned' OR process_status = 'ASSIGNED') order by  packet_id");
@@ -110,7 +119,7 @@ function serverActiveList($id){ $_SESSION[active]++;
 			$hours=stripHours($d[hours]);
 			$reopen='';
 		}
-		$reopen .= "-<span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate($d[dispatchDate])."</span>";
+		$reopen .= "-<span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate2($d[dispatchDate])."</span>";
 		if ($d[avoidDOT] != ''){
 			$reopen .= "-<span style='background-color:#000000; color:FF0000; border: 3px solid red; font-weight:bold;'>AvoidDOT</span>";
 		}
@@ -146,7 +155,7 @@ function serverActiveLista($id){ $_SESSION[active]++;
 			$hours=stripHours($d[hours]);
 			$reopen='';
 		}
-		$reopen .= "-<span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate($d[dispatchDate])."</span>";
+		$reopen .= "-<span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate2($d[dispatchDate])."</span>";
 		if ($d[avoidDOT] != ''){
 			$reopen .= "-<span style='background-color:#000000; color:FF0000; border: 3px solid red; font-weight:bold;'>AvoidDOT</span>";
 		}
@@ -181,7 +190,7 @@ function serverActiveListb($id){ $_SESSION[active]++;
 			$hours=stripHours($d[hours]);
 			$reopen='';
 		}
-		$reopen .= "-<span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate($d[dispatchDate])."</span>";
+		$reopen .= "-<span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate2($d[dispatchDate])."</span>";
 		if ($d[avoidDOT] != ''){
 			$reopen .= "-<span style='background-color:#000000; color:FF0000; border: 3px solid red; font-weight:bold;'>AvoidDOT</span>";
 		}
@@ -216,7 +225,7 @@ function serverActiveListc($id){ $_SESSION[active]++;
 			$hours=stripHours($d[hours]);
 			$reopen='';
 		}
-		$reopen .= "-<span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate($d[dispatchDate])."</span>";
+		$reopen .= "-<span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate2($d[dispatchDate])."</span>";
 		if ($d[avoidDOT] != ''){
 			$reopen .= "-<span style='background-color:#000000; color:FF0000; border: 3px solid red; font-weight:bold;'>AvoidDOT</span>";
 		}
@@ -251,7 +260,7 @@ function serverActiveListd($id){ $_SESSION[active]++;
 			$hours=stripHours($d[hours]);
 			$reopen='';
 		}
-		$reopen .= "-<span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate($d[dispatchDate])."</span>";
+		$reopen .= "-<span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate2($d[dispatchDate])."</span>";
 		if ($d[avoidDOT] != ''){
 			$reopen .= "-<span style='background-color:#000000; color:FF0000; border: 3px solid red; font-weight:bold;'>AvoidDOT</span>";
 		}
@@ -286,7 +295,7 @@ function serverActiveListe($id){ $_SESSION[active]++;
 			$hours=stripHours($d[hours]);
 			$reopen='';
 		}
-		$reopen .= "-<span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate($d[dispatchDate])."</span>";
+		$reopen .= "-<span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate2($d[dispatchDate])."</span>";
 		if ($d[avoidDOT] != ''){
 			$reopen .= "-<span style='background-color:#000000; color:FF0000; border: 3px solid red; font-weight:bold;'>AvoidDOT</span>";
 		}
@@ -323,7 +332,7 @@ if (stripHours($d[hours]) > $_SESSION[cap]){
 	}
 	$estFileDate=explode('-',$d[estFileDate]);
 	$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-	$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'>".$mod."<a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> ".abbrCounty(strtoupper($d[circuit_court]))." <em> <small>[".id2attorney($d[attorneys_id])."]</small></em>-<span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate($d[dispatchDate])."</span>-<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span></li>";
+	$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'>".$mod."<a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> ".abbrCounty(strtoupper($d[circuit_court]))." <em> <small>[".id2attorney($d[attorneys_id])."]</small></em>-<span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate2($d[dispatchDate])."</span>-<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span></li>";
 }
 }
 $data.='</ol>';
@@ -384,7 +393,7 @@ echo "<fieldset><legend>Slot 1: ".id2name($d[server_id])." #$d[server_id]</legen
 ?></td></tr></table>
 <style>
 body { padding:0px; margin:0px; margin-left:10px;}
-fieldset {width:350px; font-size:12px; padding-top:0px; padding-bottom:0px; background-color:#CCCCCC}
+fieldset {font-size:12px; padding-top:0px; padding-bottom:0px; background-color:#CCCCCC}
 legend { border:solid 1px; padding-left:5px; padding-right:5px; background-color:#66CCFF; }
 ol { padding:0px;}
 li { border-bottom:solid 1px #CCCCCC; }
