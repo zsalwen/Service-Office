@@ -85,7 +85,7 @@ $d = mysql_fetch_array($r, MYSQL_ASSOC);
     </tr>
 	<tr>
     	<td>Phone</td>
-        <td><input name="name" size="100"></td>
+        <td><input name="phone" size="100"></td>
     </tr>
 	<tr>
     	<td>Email</td>
