@@ -57,9 +57,9 @@ if ($_GET[logic]){
 		$eviction=1;
 	}
 	if ($eviction == 1){
-		$q="SELECT attorneys_id, filing_status, process_status, case_no, prepAlert, caseVerify, circuit_court, rush from evictionPackets WHERE eviction_id = '$packet'";
+		$q="SELECT attorneys_id, filing_status, process_status, case_no, prepAlert, caseVerify, circuit_court, rush, service_status from evictionPackets WHERE eviction_id = '$packet'";
 	}else{
-		$q="SELECT attorneys_id, filing_status, process_status, case_no, prepAlert, caseVerify, circuit_court, rush, avoidDOT, lossMit, affidavit_status2 from ps_packets WHERE packet_id = '$packet'";
+		$q="SELECT attorneys_id, filing_status, process_status, case_no, prepAlert, caseVerify, circuit_court, rush, avoidDOT, lossMit, affidavit_status2, service_status from ps_packets WHERE packet_id = '$packet'";
 		if (serverCount($packet) > 1){
 			echo "<script>alert('File Contains Multiple Servers')</script>";
 		}
@@ -95,7 +95,7 @@ if ($_GET[logic]){
 			echo "<script>alert('WHITE EVICTION WITH ADDITIONAL PARTY TO SERVE! ENSURE THAT ALL PARTIES TO SERVE HAVE AFFIDAVITS PREPPED FOR FILING!')</script>";
 		}
 	}
-	if ($d[process_status] == 'CANCELLED'){
+	if ($d[process_status] == 'CANCELLED' || $d[service_status] == 'CANCELLED'){
 		echo "<script>alert('FILE CANCELLED BY CLIENT')</script>";
 	}
 	if ($d[prepAlert] != ''){
