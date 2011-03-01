@@ -96,7 +96,7 @@ if ($_GET[logic]){
 		}
 	}
 	if ($d[process_status] == 'CANCELLED' || $d[service_status] == 'CANCELLED'){
-		echo "<script>alert('FILE CANCELLED BY CLIENT')</script>";
+		echo "<script>alert('FILE CANCELLED BY CLIENT! IF NO DOCUMENTS HAVE BEEN FILED, UPDATE INVOICE TO REFLECT!')</script>";
 	}
 	if ($d[prepAlert] != ''){
 		echo "<script>alert('Prep Alert: ".addslashes($d[prepAlert])."')</script>";
