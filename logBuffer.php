@@ -1,5 +1,6 @@
 <?
 include 'lock.php';
+date_default_timezone_set('America/New_York');
 $log[0] = "tail -40 /logs/user.log";
 $log[1] = "tail -40 /logs/contractor.log";
 $log[2] = "tail -40 /logs/client.log";
