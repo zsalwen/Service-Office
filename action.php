@@ -12,6 +12,7 @@ $d=mysql_fetch_array($r,MYSQL_ASSOC);
 return $d[estFileDate];
 }
 // ok this will use alot of data report
+date_default_timezone_set('America/New_York');
 $today=date('Y-m-d');
 mysql_connect();
 mysql_select_db('core');
