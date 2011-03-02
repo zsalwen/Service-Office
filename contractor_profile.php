@@ -80,6 +80,7 @@ if ($_POST[submit]){
 								p_update=NOW(),
 								company='$_POST[company]',
 								contract='$_POST[contract]',
+								envPrint='$_POST[envPrint]',
 								manager_review='$_POST[manager_review]',
 								name='$_POST[name]',
 								email='$_POST[email]',
@@ -109,6 +110,14 @@ function contractStatus($str){
 		return " style='color:green;font-weight:bold;'><option>ACTIVE</option>";
 	}elseif(strtoupper($str) == 'NO'){
 		return " style='color:red;font-weight:bold;'><option>INACTIVE</option>";
+	}
+}
+
+function printStatus($str){
+	if (strtoupper($str) == 'YES'){
+		return " style='color:green;font-weight:bold;'><option>ALLOWED</option>";
+	}else{
+		return " style='color:red;font-weight:bold;'><option>RESTRICTED</option>";
 	}
 }
 
@@ -154,8 +163,12 @@ $d=mysql_fetch_array($r, MYSQL_ASSOC);
                     <td colspan="3"><input name="email" size="60" value="<?=$d[email]?>" /></td>
                 </tr>
 				<tr>
-					<td>Status</td>
+					<td>Acct. Status</td>
 					<td colspan="3"><select name="contract"<?=contractStatus($d[contract])?><option value='YES'>ACTIVE</option><option value='NO'>INACTIVE</option></select></td>
+				</tr>
+				<tr>
+					<td>Envelope Printing</td>
+					<td colspan="3"><select name="envPrint"<?=printStatus($d[envPrint])?><option value='YES'>ALLOWED</option><option value='NO'>RESTRICTED</option></select></td>
 				</tr>
     	<tr>
     	<td valign="top">Notes</td>
