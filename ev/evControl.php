@@ -108,27 +108,27 @@ if ($_GET[week]){
 
 
 	//echo "<li>Week $_GET[week]: $weekStart to $weekEnd</li>";
-	$con2 = " and ( date_received like '$_GET[year]-$_GET[month]-$day[0]%' or";
-	$con2 .= " date_received like '$_GET[year]-$_GET[month]-$day[1]%' or";
-	$con2 .= " date_received like '$_GET[year]-$_GET[month]-$day[2]%' or";
-	$con2 .= " date_received like '$_GET[year]-$_GET[month]-$day[3]%' or";
-	$con2 .= " date_received like '$_GET[year]-$_GET[month]-$day[4]%' or";
-	$con2 .= " date_received like '$_GET[year]-$_GET[month]-$day[5]%' or";
-	$con2 .= " date_received like '$_GET[year]-$_GET[month]-$day[6]%' )";
-	$con1="attorneys_id= '$_GET[attid]' $con2";
+	$con2 = " and ( evictionPackets.date_received like '$_GET[year]-$_GET[month]-$day[0]%' or";
+	$con2 .= " evictionPackets.date_received like '$_GET[year]-$_GET[month]-$day[1]%' or";
+	$con2 .= " evictionPackets.date_received like '$_GET[year]-$_GET[month]-$day[2]%' or";
+	$con2 .= " evictionPackets.date_received like '$_GET[year]-$_GET[month]-$day[3]%' or";
+	$con2 .= " evictionPackets.date_received like '$_GET[year]-$_GET[month]-$day[4]%' or";
+	$con2 .= " evictionPackets.date_received like '$_GET[year]-$_GET[month]-$day[5]%' or";
+	$con2 .= " evictionPackets.date_received like '$_GET[year]-$_GET[month]-$day[6]%' )";
+	$con1="evictionPackets.attorneys_id= '$_GET[attid]' $con2";
 }else{
-	$con1="date_received like '$statement%' and attorneys_id= '$_GET[attid]'";
+	$con1="evictionPackets.date_received like '$statement%' and evictionPackets.attorneys_id= '$_GET[attid]'";
 }
 
 }
 
 if ($con1){
-	$q="select eviction_id, date_received, service_status, filing_status, bill410, bill420, bill430, code410, code420, code430, code410a, code420a, code430a, code410b, code420b, code430b from evictionPackets where $con1 order by eviction_id";
+	$q="select evictionPackets.eviction_id, evictionPackets.date_received, evictionPackets.service_status, evictionPackets.filing_status, ps_pay.bill410, ps_pay.bill420, ps_pay.bill430, ps_pay.code410, ps_pay.code420, ps_pay.code430, ps_pay.code410a, ps_pay.code420a, ps_pay.code430a, ps_pay.code410b, ps_pay.code420b, ps_pay.code430b from evictionPackets, ps_pay where $con1 AND evictionPackets.eviction_id=ps_pay.packetID AND ps_pay.product='EV' order by eviction_id";
 }else{
 	if ($_GET[limit]){
-		$q="select eviction_id, date_received, service_status, filing_status, bill410, bill420, bill430, code410, code420, code430, code410a, code420a, code430a, code410b, code420b, code430b from evictionPackets where bill410 = '' order by eviction_id limit 0, $_GET[limit]";
+		$q="select evictionPackets.eviction_id, evictionPackets.date_received, evictionPackets.service_status, evictionPackets.filing_status, ps_pay.bill410, ps_pay.bill420, ps_pay.bill430, ps_pay.code410, ps_pay.code420, ps_pay.code430, ps_pay.code410a, ps_pay.code420a, ps_pay.code430a, ps_pay.code410b, ps_pay.code420b, ps_pay.code430b from evictionPackets, ps_pay where bill410 = '' AND evictionPackets.eviction_id=ps_pay.packetID AND ps_pay.product='EV' order by eviction_id limit 0, $_GET[limit]";
 	}else{
-		$q="select eviction_id, date_received, service_status, filing_status, bill410, bill420, bill430, code410, code420, code430, code410a, code420a, code430a, code410b, code420b, code430b from evictionPackets where bill410 = '' order by eviction_id";
+		$q="select evictionPackets.eviction_id, evictionPackets.date_received, evictionPackets.service_status, evictionPackets.filing_status, ps_pay.bill410, ps_pay.bill420, ps_pay.bill430, ps_pay.code410, ps_pay.code420, ps_pay.code430, ps_pay.code410a, ps_pay.code420a, ps_pay.code430a, ps_pay.code410b, ps_pay.code420b, ps_pay.code430b from evictionPackets, ps_pay where bill410 = '' AND evictionPackets.eviction_id=ps_pay.packetID AND ps_pay.product='EV' order by eviction_id";
 	}
 }
 $r=@mysql_query($q);

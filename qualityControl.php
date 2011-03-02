@@ -51,7 +51,7 @@ td { border-bottom:solid 1px; border-right:dotted 1px; font-size:12px;}
         <td>Ext. Notes</td>
         </tr>
 <?
-$qc="SELECT DISTINCT packet_id, attorneys_id, service_status, affidavit_status, filing_status, server_id, server_ida, server_idb, server_idc, server_idd, server_ide, processor_notes, extended_notes, date_received, client_file, rush, avoidDOT, priority, bill410, circuit_court FROM ps_packets WHERE process_status = 'ASSIGNED' AND (request_close = 'YES' OR request_closea = 'YES' OR request_closeb = 'YES' OR request_closec = 'YES' OR request_closed = 'YES' OR request_closee = 'YES') order by date_received";
+$qc="SELECT DISTINCT ps_packets.packet_id, ps_packets.attorneys_id, ps_packets.service_status, ps_packets.affidavit_status, ps_packets.filing_status, ps_packets.server_id, ps_packets.server_ida, ps_packets.server_idb, ps_packets.server_idc, ps_packets.server_idd, ps_packets.server_ide, ps_packets.processor_notes, ps_packets.extended_notes, ps_packets.date_received, ps_packets.client_file, ps_packets.rush, ps_packets.avoidDOT, ps_packets.priority, ps_pay.bill410, ps_packets.circuit_court FROM ps_packets, ps_pay WHERE ps_packets.process_status = 'ASSIGNED' AND (ps_packets.request_close = 'YES' OR ps_packets.request_closea = 'YES' OR ps_packets.request_closeb = 'YES' OR ps_packets.request_closec = 'YES' OR ps_packets.request_closed = 'YES' OR ps_packets.request_closee = 'YES') AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD' order by date_received";
 $rc=@mysql_query($qc) or die(mysql_error());
 while ($dc=mysql_fetch_array($rc, MYSQL_ASSOC)){ $i++;?>
 	
@@ -73,7 +73,7 @@ while ($dc=mysql_fetch_array($rc, MYSQL_ASSOC)){ $i++;?>
 </tr>
 <? } 
 //pull evictions
-$qc="SELECT DISTINCT eviction_id, attorneys_id, service_status, affidavit_status, filing_status, server_id, processor_notes, extended_notes, date_received, client_file, rush, priority, bill410 FROM evictionPackets WHERE process_status = 'ASSIGNED' AND request_close = 'YES' order by date_received";
+$qc="SELECT DISTINCT evictionPackets.eviction_id, evictionPackets.attorneys_id, evictionPackets.service_status, evictionPackets.affidavit_status, evictionPackets.filing_status, evictionPackets.server_id, evictionPackets.processor_notes, evictionPackets.extended_notes, evictionPackets.date_received, evictionPackets.client_file, evictionPackets.rush, evictionPackets.priority, ps_pay.bill410 FROM evictionPackets, ps_pay WHERE evictionPackets.process_status = 'ASSIGNED' AND evictionPackets.request_close = 'YES' AND evictionPackets.eviction_id=ps_pay.packetID AND ps_pay.product='EV' order by date_received";
 $rc=@mysql_query($qc) or die(mysql_error());
 
 while ($dc=mysql_fetch_array($rc, MYSQL_ASSOC)){ $i++;?>

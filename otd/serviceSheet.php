@@ -139,7 +139,7 @@ function attemptExplode($packet,$defendant,$address,$type){
 	return $return;
 }
 function serviceSheet($packet){
-	$q="SELECT * from ps_packets WHERE packet_id='$packet'";
+	$q="SELECT * from ps_packets, ps_pay WHERE ps_packets.packet_id='$packet' AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD'";
 	$r=@mysql_query($q) or die(mysql_error());
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 	$date=date("m/d/Y h:i:s A");

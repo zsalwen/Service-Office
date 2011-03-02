@@ -125,16 +125,16 @@ $to = "3007-01-01";
 $type = $_GET[type];
 if ($type == 'CLOSED'){
 	//$cond = "(filing_status = 'FILED WITH COURT' or filing_status = 'FILED WITH COURT - FBS' or filing_status = 'SEND TO CLIENT')";
-	$cond2 = "fileDate >= '$from' and fileDate <= '$to'";
+	$cond2 = "[TABLE].fileDate >= '$from' and [TABLE].fileDate <= '$to'";
 } else {
-	$cond = "filing_status <> 'FILED WITH COURT' AND service_status <> 'SERVICE COMPLETE' AND process_status <> 'PURGE QUEUE' AND process_status <> 'CANCELLED' AND process_status <> 'ORDER COMPLETE' AND process_status <> 'SERVICE COMPLETE' AND filing_status <> 'FILED WITH COURT - FBS' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'FILE COPY' AND status <> 'DAMAGED PDF' AND status <> 'CANCELLED'  and filing_status <> 'CANCELLED' ";
+	$cond = "[TABLE].filing_status <> 'FILED WITH COURT' AND [TABLE].service_status <> 'SERVICE COMPLETE' AND [TABLE].process_status <> 'PURGE QUEUE' AND [TABLE].process_status <> 'CANCELLED' AND [TABLE].process_status <> 'ORDER COMPLETE' AND [TABLE].process_status <> 'SERVICE COMPLETE' AND [TABLE].filing_status <> 'FILED WITH COURT - FBS' AND [TABLE].filing_status <> 'FILED BY CLIENT' AND [TABLE].filing_status <> 'REQUESTED-DO NOT FILE!' AND [TABLE].filing_status <> 'SEND TO CLIENT' AND [TABLE].status <> 'FILE COPY' AND [TABLE].status <> 'DAMAGED PDF' AND [TABLE].status <> 'CANCELLED'  and [TABLE].filing_status <> 'CANCELLED' ";
 	//$cond2 = "date_received > '$from' and date_received < '$to'";
 }
 
 		//if (!$_GET[attid] || $_GET[attid] == "ALL" ){
-			$r=@mysql_query("select * from ps_packets where $cond $cond2") or die(mysql_error());
-			$r2=@mysql_query("select * from evictionPackets where $cond $cond2") or die(mysql_error());
-			$r3=@mysql_query("select * from standard_packets where $cond $cond2") or die(mysql_error());
+			$r=@mysql_query("select * from ps_packets, ps_pay where ".str_replace('[TABLE]','ps_packets',$cond)." ".str_replace('[TABLE]','ps_packets',$cond2)." AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD'") or die(mysql_error());
+			$r2=@mysql_query("select * from evictionPackets, ps_pay where ".str_replace('[TABLE]','evictionPackets',$cond)." ".str_replace('[TABLE]','evictionPackets',$cond2)." AND evictionPackets.eviction_id=ps_pay.packetID AND ps_pay.product='EV'") or die(mysql_error());
+			$r3=@mysql_query("select * from standard_packets, ps_pay where ".str_replace('[TABLE]','standard_packets',$cond)." ".str_replace('[TABLE]','standard_packets',$cond2)." AND standard_packets.packet_id=ps_pay.packetID AND ps_pay.product='S'") or die(mysql_error());
 		//}else{
 		//	$r=@mysql_query("select * from $table where attorneys_id= '$_GET[attid]' and $cond $cond2 ORDER BY ".sortToField($sort)." $dir") or die(mysql_error());
 		//}
@@ -204,7 +204,7 @@ if ($d[attorneys_id] == '3' || $d[attorneys_id] == '68' || $d[attorneys_id] == '
 		<td><?=benchmark($start,$end);?></td>
 	</tr>
 <? } $count= $i;  $count4= $i4; ?>
-<? while($d2=mysql_fetch_array($r2,MYSQL_ASSOC)){ $i2++; 
+<? while($d2=mysql_fetch_array($r2,MYSQL_ASSOC)){ $i2++; $i++;
 if ($d2[estFileDate] == '0000-00-00' && $type == 'OPEN'){
 	echo "<script>alert('File ".$d2["$idType"]." Missing Est. Close Date!')</script>";
 }
@@ -234,7 +234,7 @@ $notice='';
 		<td><?=benchmark($start,$end);?></td>
 	</tr>
 <? } $count2= $i2; ?>
-<? while($d3=mysql_fetch_array($r3,MYSQL_ASSOC)){ $i3++; 
+<? while($d3=mysql_fetch_array($r3,MYSQL_ASSOC)){ $i3++; $i++; 
 if ($d3[estFileDate] == '0000-00-00' && $type == 'OPEN'){
 	echo "<script>alert('File ".$d3["$idType"]." Missing Est. Close Date!')</script>";
 }

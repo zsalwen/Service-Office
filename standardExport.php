@@ -379,6 +379,7 @@ function exportPacket($packet,$status){
 }
 if($_GET[transfer] && $_GET[status]){
 	$newStandardID = exportPacket($_GET[transfer],$_GET[status]);
+	@mysql_query("UPDATE ps_pay SET packetID='$newStandardID', product='S' WHERE packetID='".$_GET[transfer]."' AND product='OTD'");
 	mail('service@mdwestserve.com','NEW STANDARD SERVICE TRANSFER S'.$newStandardID,'Transfered by '.$_COOKIE[psdata][name].' from OTD'.$_GET[transfer].' to S'.$newStandardID);
 	echo '<h1 align="center">Transferred by '.$_COOKIE[psdata][name].' from OTD'.$_GET[transfer].' to S'.$newStandardID.'</h1>';
 	die();

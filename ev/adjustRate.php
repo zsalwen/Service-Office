@@ -2,131 +2,21 @@
 include 'common.php';
 mysql_connect();
 mysql_select_db('core');
-function getRate($package){
+function getRate($package,$letter){
 	$x=0;
-	$q="SELECT eviction_id, contractor_rate FROM evictionPackets WHERE package_id='$package'";
+	$q="SELECT evictionPackets.eviction_id, ps_pay.contractor_rate$letter FROM evictionPackets, ps_pay WHERE evictionPackets.package_id='$package' AND evictionPackets.eviction_id=ps_pay.packetID AND ps_pay.product='EV'";
 	$r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 		if($rate == ''){
-			$rate=$d[contractor_rate];
-			if ($d[contractor_rate] != ''){
+			$rate=$d["contractor_rate$letter"];
+			if ($d["contractor_rate$letter"] != ''){
 				$x=1;
 			}
-		}elseif($rate == $d[contractor_rate]){
+		}elseif($rate == $d["contractor_rate$letter"]){
 			$x++;
-		}elseif($rate != $d[contractor_rate]){
+		}elseif($rate != $d["contractor_rate$letter"]){
 		
-			$diff .= "<br>CONFLICTED: Packet ".$d[eviction_id]." has a rate of ".$d[contractor_rate];
-		}
-	}
-		$returnStr = $rate."x <b>".$x." files</b>";
-		if ($diff){
-			$returnStr .= $diff;
-		}
-		return $returnStr;
-}
-function getRatea($package){
-	$x=0;
-	$q="SELECT eviction_id, contractor_ratea FROM evictionPackets WHERE package_id='$package'";
-	$r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
-	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-		if(!$rate){
-			$rate=$d[contractor_ratea];
-			if ($d[contractor_ratea] != ''){
-				$x=1;
-			}
-		}elseif($rate == $d[contractor_ratea]){
-			$x++;
-		}elseif($rate != $d[contractor_ratea]){
-			$diff .= "<br>CONFLICTED: Packet ".$d[eviction_id]." has a rate of ".$d[contractor_ratea];
-		}
-	}
-		$returnStr = $rate."x <b>".$x." files</b>";
-		if ($diff){
-			$returnStr .= $diff;
-		}
-		return $returnStr;
-}
-function getRateb($package){
-	$x=0;
-	$q="SELECT eviction_id, contractor_rateb FROM evictionPackets WHERE package_id='$package'";
-	$r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
-	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-		if(!$rate){
-			$rate=$d[contractor_rateb];
-			if ($d[contractor_rateb] != ''){
-				$x=1;
-			}
-		}elseif($rate == $d[contractor_rateb]){
-			$x++;
-		}elseif($rate != $d[contractor_rateb]){
-			$diff .= "<br>CONFLICTED: Packet ".$d[eviction_id]." has a rate of ".$d[contractor_rateb];
-		}
-	}
-		$returnStr = $rate."x <b>".$x." files</b>";
-		if ($diff){
-			$returnStr .= $diff;
-		}
-		return $returnStr;
-}
-function getRatec($package){
-	$x=0;
-	$q="SELECT eviction_id, contractor_ratec FROM evictionPackets WHERE package_id='$package'";
-	$r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
-	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-		if(!$rate){
-			$rate=$d[contractor_ratec];
-			if ($d[contractor_ratec] != ''){
-				$x=1;
-			}
-		}elseif($rate == $d[contractor_ratec]){
-			$x++;
-		}elseif($rate != $d[contractor_ratec]){
-			$diff .= "<br>CONFLICTED: Packet ".$d[eviction_id]." has a rate of ".$d[contractor_ratec];
-		}
-	}
-		$returnStr = $rate."x <b>".$x." files</b>";
-		if ($diff){
-			$returnStr .= $diff;
-		}
-		return $returnStr;
-}
-function getRated($package){
-	$x=0;
-	$q="SELECT eviction_id, contractor_rated FROM evictionPackets WHERE package_id='$package'";
-	$r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
-	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-		if(!$rate){
-			$rate=$d[contractor_rated];
-			if ($d[contractor_rated] != ''){
-				$x=1;
-			}
-		}elseif($rate == $d[contractor_rated]){
-			$x++;
-		}elseif($rate != $d[contractor_rated]){
-			$diff .= "<br>CONFLICTED: Packet ".$d[eviction_id]." has a rate of ".$d[contractor_rated];
-		}
-	}
-		$returnStr = $rate."x <b>".$x." files</b>";
-		if ($diff){
-			$returnStr .= $diff;
-		}
-		return $returnStr;
-}
-function getRatee($package){
-	$x=0;
-	$q="SELECT eviction_id, contractor_ratee FROM evictionPackets WHERE package_id='$package'";
-	$r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
-	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-		if(!$rate){
-			$rate=$d[contractor_ratee];
-			if ($d[contractor_ratee] != ''){
-				$x=1;
-			}
-		}elseif($rate == $d[contractor_ratee]){
-			$x++;
-		}elseif($rate != $d[contractor_ratee]){
-			$diff .= "<br>CONFLICTED: Packet ".$d[eviction_id]." has a rate of ".$d[contractor_ratee];
+			$diff .= "<br>CONFLICTED: Packet ".$d[eviction_id]." has a rate of ".$d["contractor_rate$letter"];
 		}
 	}
 		$returnStr = $rate."x <b>".$x." files</b>";
@@ -137,26 +27,26 @@ function getRatee($package){
 }
 
 if ($_POST[submit1]){
-	$q1 = "UPDATE evictionPackets SET 	contractor_rate='$_POST[quote1]', 
-									contractor_ratea='$_POST[quote1a]', 
-									contractor_rateb='$_POST[quote1b]', 
-									contractor_ratec='$_POST[quote1c]', 
-									contractor_rated='$_POST[quote1d]', 
-									contractor_ratee='$_POST[quote1e]'
-										WHERE package_id='$_POST[id]'";		
+	$q1 = "UPDATE evictionPackets, ps_pay SET ps_pay.contractor_rate='$_POST[quote1]', 
+									ps_pay.contractor_ratea='$_POST[quote1a]', 
+									ps_pay.contractor_rateb='$_POST[quote1b]', 
+									ps_pay.contractor_ratec='$_POST[quote1c]', 
+									ps_pay.contractor_rated='$_POST[quote1d]', 
+									ps_pay.contractor_ratee='$_POST[quote1e]'
+										WHERE evictionPackets.package_id='$_POST[id]' AND evictionPackets.eviction_id=ps_pay.packetID AND ps_pay.product='EV'";		
 	$r1 = @mysql_query ($q1) or die(mysql_error());
 	hardLog('updated package rate information for '.$_GET[id],'user');
 }
 
 if ($_POST[submit2]){
 function packageFile($file_id, $contractor_rate, $contractor_ratea, $contractor_rateb, $contractor_ratec, $contractor_rated, $contractor_ratee){
-	$q = "UPDATE evictionPackets SET contractor_rate='$contractor_rate',
-								contractor_ratea='$contractor_ratea',
-								contractor_rateb='$contractor_rateb',
-								contractor_ratec='$contractor_ratec',
-								contractor_rated='$contractor_rated',
-								contractor_ratee='$contractor_ratee'
-									WHERE eviction_id = '$file_id'";
+	$q = "UPDATE evictionPackets, ps_pay SET ps_pay.contractor_rate='$contractor_rate',
+								ps_pay.contractor_ratea='$contractor_ratea',
+								ps_pay.contractor_rateb='$contractor_rateb',
+								ps_pay.contractor_ratec='$contractor_ratec',
+								ps_pay.contractor_rated='$contractor_rated',
+								ps_pay.contractor_ratee='$contractor_ratee'
+									WHERE evictionPackets.eviction_id = '$file_id' AND evictionPackets.eviction_id=ps_pay.packetID AND ps_pay.product='EV'";
 	$r=@mysql_query($q) or die("Query: $q<br><br><br>".mysql_error());
 }
 
@@ -174,15 +64,15 @@ function makePackage($array1,$array2,$array3,$array4,$array5,$array6,$array7){
 }
 
 if($_GET[id] != ''){
-	$q1 = "SELECT server_id, server_ida, server_idb, server_idc, server_idd, server_ide FROM evictionPackets WHERE package_id = '$_GET[id]'";
+	$q1 = "SELECT server_id FROM evictionPackets WHERE package_id = '$_GET[id]'";
 	$r1 = @mysql_query ($q1) or die("Query: $q1<br>".mysql_error());
 	$d1 = mysql_fetch_array($r1, MYSQL_ASSOC); 
-	$quote1=getRate($_GET[id]);
-	$quote1a=getRatea($_GET[id]);
-	$quote1b=getRateb($_GET[id]);
-	$quote1c=getRatec($_GET[id]);
-	$quote1d=getRated($_GET[id]);
-	$quote1e=getRatee($_GET[id]);	
+	$quote1=getRate($_GET[id],'');
+	$quote1a=getRate($_GET[id],'a');
+	$quote1b=getRate($_GET[id],'b');
+	$quote1c=getRate($_GET[id],'c');
+	$quote1d=getRate($_GET[id],'d');
+	$quote1e=getRate($_GET[id],'e');	
 	?>
 	<form name="form1" method="post">
 	<div align="center"><fieldset><legend>PACKAGE OVERVIEW:</legend>
@@ -242,7 +132,7 @@ if($_GET[id] != ''){
 	</table>
 	</fieldset></div>
 	</form>
-<?	$query = "SELECT eviction_id, server_id, server_ida, server_idb, server_idc, server_idd, server_ide, contractor_rate, contractor_ratea, contractor_rateb, contractor_ratec, contractor_rated, contractor_ratee FROM evictionPackets WHERE package_id = '$_GET[id]'";
+<?	$query = "SELECT evictionPackets.eviction_id, evictionPackets.server_id, ps_pay.contractor_rate, ps_pay.contractor_ratea, ps_pay.contractor_rateb, ps_pay.contractor_ratec, ps_pay.contractor_rated, ps_pay.contractor_ratee FROM evictionPackets, ps_pay WHERE evictionPackets.package_id = '$_GET[id]' AND evictionPackets.eviction_id=ps_pay.packetID AND ps_pay.product='EV'";
 	$result = @mysql_query ($query) or die("Query: $query<br>".mysql_error());
 	echo "<div align='center'><fieldset><legend>PACKET-BY-PACKET VIEW:</legend>";
 	echo "<form name='form2' method='post'><table align='center' border='1' bgcolor='#FFCCCC'>";

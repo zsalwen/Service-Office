@@ -40,25 +40,25 @@ function dispatchTimeline($pkg){
 		timeline($d[eviction_id],$_COOKIE[psdata][name]." Dispatched Order");
 	}
 }
-function packageFile($package_id, $file_id, $contractor_rate, $contractor_ratea, $contractor_rateb, $contractor_ratec, $contractor_rated, $contractor_ratee){
+function packageFile($package_id, $file_id, $contractor_rate, $contractor_ratea,){
 	timeline($file_id,$_COOKIE[psdata][name]." Packaged Order");
-	$q = "UPDATE evictionPackets SET 
-									package_id='$package_id',
-									contractor_rate='$contractor_rate',
-									contractor_ratea='$contractor_ratea',
-									estFileDate='$_SESSION[estFileDate]',
-									dispatchDate=NOW()
-										WHERE eviction_id = '$file_id'";
+	$q = "UPDATE evictionPackets, ps_pay SET 
+									evictionPackets.package_id='$package_id',
+									ps_pay.contractor_rate='$contractor_rate',
+									ps_pay.contractor_ratea='$contractor_ratea',
+									evictionPackets.estFileDate='$_SESSION[estFileDate]',
+									evictionPackets.dispatchDate=NOW()
+										WHERE evictionPackets.eviction_id = '$file_id' AND evictionPackets.eviction_id=ps_pay.packetID AND ps_pay.product='EV'";
 	$r=@mysql_query($q);
 }
 
-function makePackage($array1,$array2,$array3,$array4,$array5,$array6,$array7,$package_id){
+function makePackage($array1,$array2,$array3,$package_id){
 //	echo "Package ID :: $package_id";
 //	echo "Client Rate :: $array2[0]<br>";
 //	echo "Contractor Rate :: $array3[0]<br>";
 //	echo "for file id's (the foreach loop went here) :: ";
 	foreach ($array1 as $id) {
-		packageFile($package_id,$id,$array2[0],$array3[0],$array4[0],$array5[0],$array6[0],$array7[0]);
+		packageFile($package_id,$id,$array2[0],$array3[0]);
 		//echo "$id ";
 	}
 }	
@@ -67,7 +67,7 @@ function makePackage($array1,$array2,$array3,$array4,$array5,$array6,$array7,$pa
 	$q1 = "INSERT into evictionPackages (set_date, assign_date) values (NOW(), NOW()) ";
 	$r1=@mysql_query($q1) or die("Query: $q1<br>".mysql_error());
 	$packageID = mysql_insert_id();	
-	makePackage($_POST[package]['id'],$_POST[package]['contractor'],$_POST[package]['contractora'],$_POST[package]['contractorb'],$_POST[package]['contractorc'],$_POST[package]['contractord'],$_POST[package]['contractore'],$packageID);
+	makePackage($_POST[package]['id'],$_POST[package]['contractor'],$_POST[package]['contractora'],$packageID);
 	hardLog('Created package '.$packageID,'user');
 
 	//monitor('Your package "' .$_POST[name]. '" has been created.');

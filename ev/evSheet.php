@@ -135,7 +135,7 @@ function historyList($eviction,$defendant,$attorneys_id){
 	return $list;
 }
 function evSheet($eviction){
-	$q="SELECT * FROM evictionPackets WHERE eviction_id='$eviction'";
+	$q="SELECT * FROM evictionPackets, ps_pay WHERE evictionPackets.eviction_id='$eviction' AND evictionPackets.eviction_id=ps_pay.packetID AND ps_pay.product='EV'";
 	$r=@mysql_query($q) or die(mysql_error());
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 	$date=date("m/d/Y h:i:s A");

@@ -5,16 +5,16 @@ hardLog('access payment information for '.$_GET[id],'user');
 mysql_connect();
 mysql_select_db('core');
 function dupCheck($field,$string){
-$r=@mysql_query("select * from evictionPackets where $field = '$string'");
-$c=mysql_num_rows($r);
-if ($c == 1){
-$return[0]="class='single'";
-$return[1]=$c;
-}else{
-$return[0]="class='duplicate'";
-$return[1]=$c;
-}
-return $return;
+	$r=@mysql_query("select * from evictionPackets where $field = '$string'");
+	$c=mysql_num_rows($r);
+	if ($c == 1){
+		$return[0]="class='single'";
+		$return[1]=$c;
+	}else{
+		$return[0]="class='duplicate'";
+		$return[1]=$c;
+	}
+	return $return;
 }
 function monthConvert($month){
 	if ($month == '01'){ return 'January'; }
@@ -82,34 +82,34 @@ hardLog('updated payment information for '.$_GET[id],'user');
 	@mysql_query("update psActivity set clientPayment = '$count' where today='".date('Y-m-d')."'") or die(mysql_error());
 	echo "Saved! - $count for the day...";
 
-	$q1 = "UPDATE evictionPackets SET 
+	$q1 = "UPDATE evictionPackets, ps_pay SET 
 
-									bill410='$_POST[bill410]',
-									bill420='$_POST[bill420]',
-									bill430='$_POST[bill430]',
-									bill440='$_POST[bill440]',
-									code410='$_POST[code410]',
-									code410a='$_POST[code410a]',
-									code420='$_POST[code420]',
-									code420a='$_POST[code420a]',
-									code430='$_POST[code430]',
-									code430a='$_POST[code430a]',
-									code440='$_POST[code440]',
-									code440a='$_POST[code440a]',
-									contractor_rate='$_POST[contractor_rate]', 
-									contractor_paid='$_POST[contractor_paid]',
-									contractor_check='$_POST[contractor_check]', 
-									contractor_ratea='$_POST[contractor_ratea]', 
-									contractor_paida='$_POST[contractor_paida]',
-									contractor_checka='$_POST[contractor_checka]', 
-									client_rate='$_POST[client_rate]', 
-									client_ratea='$_POST[client_ratea]', 
-									client_paid='$_POST[client_paid]',
-									client_paida='$_POST[client_paida]',
-									client_check='$_POST[client_check]',
-									client_checka='$_POST[client_checka]',
-									accountingNotes='".addslashes($_POST[accountingNotes])."'
-										WHERE eviction_id='$_POST[id]'";		
+									ps_pay.bill410='$_POST[bill410]',
+									ps_pay.bill420='$_POST[bill420]',
+									ps_pay.bill430='$_POST[bill430]',
+									ps_pay.bill440='$_POST[bill440]',
+									ps_pay.code410='$_POST[code410]',
+									ps_pay.code410a='$_POST[code410a]',
+									ps_pay.code420='$_POST[code420]',
+									ps_pay.code420a='$_POST[code420a]',
+									ps_pay.code430='$_POST[code430]',
+									ps_pay.code430a='$_POST[code430a]',
+									ps_pay.code440='$_POST[code440]',
+									ps_pay.code440a='$_POST[code440a]',
+									ps_pay.contractor_rate='$_POST[contractor_rate]', 
+									ps_pay.contractor_paid='$_POST[contractor_paid]',
+									ps_pay.contractor_check='$_POST[contractor_check]', 
+									ps_pay.contractor_ratea='$_POST[contractor_ratea]', 
+									ps_pay.contractor_paida='$_POST[contractor_paida]',
+									ps_pay.contractor_checka='$_POST[contractor_checka]', 
+									ps_pay.client_rate='$_POST[client_rate]', 
+									ps_pay.client_ratea='$_POST[client_ratea]', 
+									ps_pay.client_paid='$_POST[client_paid]',
+									ps_pay.client_paida='$_POST[client_paida]',
+									ps_pay.client_check='$_POST[client_check]',
+									ps_pay.client_checka='$_POST[client_checka]',
+									evictionPackets.accountingNotes='".addslashes($_POST[accountingNotes])."'
+										WHERE evictionPackets.eviction_id='$_POST[id]' AND evictionPackets.eviction_id=ps_pay.packetID AND ps_pay.product='EV'";
 	$r1 = @mysql_query ($q1) or die(mysql_error());
 	
 //addNote($_POST[id],$_COOKIE[userdata][name].': Entered Payment on '.date('m/d/Y'));
@@ -123,7 +123,7 @@ hardLog('updated payment information for '.$_GET[id],'user');
 	}
 	echo "<script>automation();</script>";
 }
-$q1 = "SELECT * FROM evictionPackets WHERE eviction_id = $_GET[id]";		
+$q1 = "SELECT * FROM evictionPackets, ps_pay WHERE evictionPackets.eviction_id = $_GET[id] AND evictionPackets.eviction_id=ps_pay.packetID AND ps_pay.product='EV'";		
 $r1 = @mysql_query ($q1) or die(mysql_error());
 $data = mysql_fetch_array($r1, MYSQL_ASSOC);
 

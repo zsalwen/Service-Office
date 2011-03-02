@@ -32,11 +32,11 @@ function leading_zeros($value, $places){
     }
     return $output;
 }
-$q="select * from ps_packets where packet_id = '$_GET[packet]'";
+$q="select * from ps_packets, ps_pay where packet_id = '$_GET[packet]' AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD'";
 $r=@mysql_query($q);
 $d=mysql_fetch_array($r,MYSQL_ASSOC);
 
-$q2 = "SELECT bill410, bill420, bill430, address, server_id, packet_id, client_file, case_no, date_received, service_status, display_name, ps_packets.attorneys_id FROM ps_packets, attorneys WHERE ps_packets.attorneys_id = attorneys.attorneys_id AND packet_id = '$_GET[packet]'";
+$q2 = "SELECT attorneys.address FROM ps_packets, attorneys WHERE ps_packets.attorneys_id = attorneys.attorneys_id AND ps_packets.packet_id = '$_GET[packet]'";
 $r2=@mysql_query($q2);
 $d2=mysql_fetch_array($r2,MYSQL_ASSOC);
 

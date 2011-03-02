@@ -70,11 +70,14 @@ if ($_POST[attid] && $_POST[client_file]){//c1
 			}
 			$query = "INSERT INTO standard_packets (date_received, process_status, addlDocs, affidavit_status, case_no, otd, attorneys_id, contact, ip, status, attorney_notes, client_file, timeline) values (NOW(), 'IN PROGRESS', '$jobPapers', '$jobType', '$_POST[case_no]', '$link1', '$_POST[attid]', '$id', '$ip', 'NEW', '$attorney_notes', '$_POST[client_file]', '$timeline')";
 			@mysql_query($query) or die(mysql_error());
+			$newID=mysql_insert_id();
+			@mysql_query("INSERT into ps_pay (packetID, product) VALUES ('$newID','S')");
 			//echo "$query ".mysql_error();
+			
 			$print .= date("F d Y H:i:s.")." : Uploaded by ".$user[name]." \n";
-			$print .= date("F d Y H:i:s.")." : New Packet ID ".mysql_insert_id()." \n";
+			$print .= date("F d Y H:i:s.")." : New Packet ID ".$newID." \n";
 			$print .= date("F d Y H:i:s.")." : Portal upload complete\n";
-			$html .= "<h2>New Packet ID ".mysql_insert_id()."</h2>";
+			$html .= "<h2>New Packet ID ".$newID."</h2>";
 			echo $html;
 			//echo $print;
 			mail('service@mdwestserve.com',$_COOKIE[psdata][name].': NEW STANDARD SERVICE ORDER FOR '.$_POST[client_file],addslashes($print.$_POST[attorney_notes]));

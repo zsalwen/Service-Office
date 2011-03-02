@@ -19,53 +19,25 @@ function w9Status($id){
 
 function paySearch($server_id){
 	$total = 0;
-	$loop = @mysql_query("select contractor_paid from ps_packets where server_id = '$server_id'");
+	$loop = @mysql_query("select ps_pay.contractor_paid from ps_packets, ps_pay where ps_packets.server_id = '$server_id' AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD'");
 	while ($data = mysql_fetch_array($loop,MYSQL_ASSOC)){
 		$total = $total + $data[contractor_paid];
 	}
-	$loop = @mysql_query("select contractor_paida from ps_packets where server_ida = '$server_id'");
-	while ($data = mysql_fetch_array($loop,MYSQL_ASSOC)){
-		$total = $total + $data[contractor_paida];
+	foreach(range('a','e') as $letter){
+		$loop = @mysql_query("select ps_pay.contractor_paid$letter from ps_packets, ps_pay where ps_packets.server_id$letter = '$server_id' AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD'");
+		while ($data = mysql_fetch_array($loop,MYSQL_ASSOC)){
+			$total = $total + $data["contractor_paid$letter"];
+		}
 	}
-	$loop = @mysql_query("select contractor_paidb from ps_packets where server_idb = '$server_id'");
-	while ($data = mysql_fetch_array($loop,MYSQL_ASSOC)){
-		$total = $total + $data[contractor_paidb];
-	}
-	$loop = @mysql_query("select contractor_paidc from ps_packets where server_idc = '$server_id'");
-	while ($data = mysql_fetch_array($loop,MYSQL_ASSOC)){
-		$total = $total + $data[contractor_paidc];
-	}
-	$loop = @mysql_query("select contractor_paidd from ps_packets where server_idd = '$server_id'");
-	while ($data = mysql_fetch_array($loop,MYSQL_ASSOC)){
-		$total = $total + $data[contractor_paidd];
-	}
-	$loop = @mysql_query("select contractor_paide from ps_packets where server_ide = '$server_id'");
-	while ($data = mysql_fetch_array($loop,MYSQL_ASSOC)){
-		$total = $total + $data[contractor_paide];
-	}
-	$loop = @mysql_query("select contractor_paid from evictionPackets where server_id = '$server_id'");
+	$loop = @mysql_query("select ps_pay.contractor_paid from evictionPackets, ps_pay where evictionPackets.server_id = '$server_id' AND evictionPackets.eviction_id=ps_pay.packetID AND ps_pay.product='EV'");
 	while ($data = mysql_fetch_array($loop,MYSQL_ASSOC)){
 		$total = $total + $data[contractor_paid];
 	}
-	$loop = @mysql_query("select contractor_paida from evictionPackets where server_ida = '$server_id'");
-	while ($data = mysql_fetch_array($loop,MYSQL_ASSOC)){
-		$total = $total + $data[contractor_paida];
-	}
-	$loop = @mysql_query("select contractor_paidb from evictionPackets where server_idb = '$server_id'");
-	while ($data = mysql_fetch_array($loop,MYSQL_ASSOC)){
-		$total = $total + $data[contractor_paidb];
-	}
-	$loop = @mysql_query("select contractor_paidc from evictionPackets where server_idc = '$server_id'");
-	while ($data = mysql_fetch_array($loop,MYSQL_ASSOC)){
-		$total = $total + $data[contractor_paidc];
-	}
-	$loop = @mysql_query("select contractor_paidd from evictionPackets where server_idd = '$server_id'");
-	while ($data = mysql_fetch_array($loop,MYSQL_ASSOC)){
-		$total = $total + $data[contractor_paidd];
-	}
-	$loop = @mysql_query("select contractor_paide from evictionPackets where server_ide = '$server_id'");
-	while ($data = mysql_fetch_array($loop,MYSQL_ASSOC)){
-		$total = $total + $data[contractor_paide];
+	foreach(range('a','e') as $letter){
+		$loop = @mysql_query("select ps_pay.contractor_paid$letter from evictionPackets, ps_pay where evictionPackets.server_id$letter = '$server_id' AND evictionPackets.eviction_id=ps_pay.packetID AND ps_pay.product='EV'");
+		while ($data = mysql_fetch_array($loop,MYSQL_ASSOC)){
+			$total = $total + $data["contractor_paid$letter"];
+		}
 	}
 	return $total;
 }

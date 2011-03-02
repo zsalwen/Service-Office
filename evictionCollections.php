@@ -44,9 +44,9 @@ function leading_zeros($value, $places){
 <table border="1">
 <?
 if ($_GET[attid]){
-$q="select eviction_id, date_received, service_status, filing_status, bill410, bill420, bill430, code410, code420, code430, code410a, code420a, code430a, code410b, code420b, code430b, attorneys_id from evictionPackets where bill410 <> '' AND date_received < '$pastDue' AND attorneys_id = '$_GET[attid]' order by eviction_id";
+$q="select evictionPackets.eviction_id, evictionPackets.date_received, evictionPackets.service_status, evictionPackets.filing_status, ps_pay.bill410, ps_pay.bill420, ps_pay.bill430, ps_pay.code410, ps_pay.code420, ps_pay.code430, ps_pay.code410a, ps_pay.code420a, ps_pay.code430a, ps_pay.code410b, ps_pay.code420b, ps_pay.code430b, evictionPackets.attorneys_id from evictionPackets, ps_pay where bill410 <> '' AND date_received < '$pastDue' AND attorneys_id = '$_GET[attid]' order by eviction_id";
 }else{
-$q="select eviction_id, date_received, service_status, filing_status, bill410, bill420, bill430, code410, code420, code430, code410a, code420a, code430a, code410b, code420b, code430b, attorneys_id from evictionPackets where bill410 <> '' AND date_received < '$pastDue' order by eviction_id";
+$q="select evictionPackets.eviction_id, evictionPackets.date_received, evictionPackets.service_status, evictionPackets.filing_status, ps_pay.bill410, ps_pay.bill420, ps_pay.bill430, ps_pay.code410, ps_pay.code420, ps_pay.code430, ps_pay.code410a, ps_pay.code420a, ps_pay.code430a, ps_pay.code410b, ps_pay.code420b, ps_pay.code430b, evictionPackets.attorneys_id from evictionPackets, ps_pay where bill410 <> '' AND date_received < '$pastDue' order by eviction_id";
 }
 $r=@mysql_query($q);
 $i=0;
@@ -90,9 +90,9 @@ $masterDue = $masterDue + $due;
 <table border="1">
 <?
 if ($_GET[attid]){
-$q="select eviction_id, date_received, service_status, filing_status, bill410, bill420, bill430, code410, code420, code430, code410a, code420a, code430a, code410b, code420b, code430b, attorneys_id from evictionPackets where bill410 <> '' AND attorneys_id = '$_GET[attid]' order by eviction_id";
+$q="select evictionPackets.eviction_id, evictionPackets.date_received, evictionPackets.service_status, evictionPackets.filing_status, ps_pay.bill410, ps_pay.bill420, ps_pay.bill430, ps_pay.code410, ps_pay.code420, ps_pay.code430, ps_pay.code410a, ps_pay.code420a, ps_pay.code430a, ps_pay.code410b, ps_pay.code420b, ps_pay.code430b, evictionPackets.attorneys_id from evictionPackets, ps_pay where bill410 <> '' AND attorneys_id = '$_GET[attid]' order by eviction_id";
 }else{
-$q="select eviction_id, date_received, service_status, filing_status, bill410, bill420, bill430, code410, code420, code430, code410a, code420a, code430a, code410b, code420b, code430b, attorneys_id from evictionPackets where bill410 <> '' order by eviction_id";
+$q="select evictionPackets.eviction_id, evictionPackets.date_received, evictionPackets.service_status, evictionPackets.filing_status, ps_pay.bill410, ps_pay.bill420, ps_pay.bill430, ps_pay.code410, ps_pay.code420, ps_pay.code430, ps_pay.code410a, ps_pay.code420a, ps_pay.code430a, ps_pay.code410b, ps_pay.code420b, ps_pay.code430b, evictionPackets.attorneys_id from evictionPackets, ps_pay where bill410 <> '' order by eviction_id";
 }
 $r=@mysql_query($q);
 $i2=0;

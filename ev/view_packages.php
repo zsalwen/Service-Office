@@ -63,7 +63,7 @@ $q="SELECT id, name, set_date from evictionPackages where id != '' order by set_
 $r=mysql_query($q) or die("Query: $q".mysql_error());
 $i=0;
 while ($d=mysql_fetch_array($r, MYSQL_ASSOC)){$i++;
-$q1="SELECT contractor_rate, client_rate from evictionPackets where package_id = '$d[id]'";
+$q1="SELECT ps_pay.contractor_rate, ps_pay.client_rate from evictionPackets, ps_pay where evictionPackets.package_id = '$d[id]' AND evictionPackets.eviction_id=ps_pay.packetID AND ps_pay.product='EV'";
 $r1=mysql_query($q1) or die("Query: $q1".mysql_error());
 $d1=mysql_fetch_array($r1, MYSQL_ASSOC);
 ?>

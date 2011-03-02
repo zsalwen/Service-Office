@@ -110,18 +110,18 @@ function dispatchTimeline($pkg){
 function packageFile($package_id, $file_id, $contractor_rate, $contractor_ratea, $contractor_rateb, $contractor_ratec, $contractor_rated, $contractor_ratee){
 	$oosc=outOfState($file_id);
 	timeline($file_id,$_COOKIE[psdata][name]." Packaged Order");
-	$q = "UPDATE ps_packets SET 
-									package_id='$package_id',
-									contractor_rate='$contractor_rate',
-									contractor_ratea='$contractor_ratea',
-									contractor_rateb='$contractor_rateb',
-									contractor_ratec='$contractor_ratec',
-									contractor_rated='$contractor_rated',
-									contractor_ratee='$contractor_ratee',
-									outofstate_cost='$oosc',
-									estFileDate='$_SESSION[estFileDate]',
-									dispatchDate=NOW()
-										WHERE packet_id = '$file_id'";
+	$q = "UPDATE ps_packets, ps_pay SET 
+									ps_packets.package_id='$package_id',
+									ps_pay.contractor_rate='$contractor_rate',
+									ps_pay.contractor_ratea='$contractor_ratea',
+									ps_pay.contractor_rateb='$contractor_rateb',
+									ps_pay.contractor_ratec='$contractor_ratec',
+									ps_pay.contractor_rated='$contractor_rated',
+									ps_pay.contractor_ratee='$contractor_ratee',
+									ps_packets.outofstate_cost='$oosc',
+									ps_packets.estFileDate='$_SESSION[estFileDate]',
+									ps_packets.dispatchDate=NOW()
+										WHERE packet_id = '$file_id' AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD'";
 	$r=@mysql_query($q);
 }
 

@@ -73,13 +73,13 @@ a{text-decoration:none; color: red;}
 if ($_GET[attid]){
 	$date=$_GET[year]."-".$_GET[month];
 	if ($_GET[attid] == "ALL"){
-		$q="SELECT packet_id, attorneys_id, bill410, bill420, bill430, client_paid, client_paida, client_paidb, client_paidc, client_paidd, client_paide FROM ps_packets WHERE (process_status <> 'DAMAGED PDF' AND process_status <> 'FILE COPY') AND date_received LIKE '%$date%' order by packet_id ASC";
+		$q="SELECT ps_packets.packet_id, ps_packets.attorneys_id, ps_pay.bill410, ps_pay.bill420, ps_pay.bill430, ps_pay.client_paid, ps_pay.client_paida, ps_pay.client_paidb, ps_pay.client_paidc, ps_pay.client_paidd, ps_pay.client_paide FROM ps_packets WHERE (ps_packets.process_status <> 'DAMAGED PDF' AND ps_packets.process_status <> 'FILE COPY') AND ps_packets.date_received LIKE '%$date%' AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD' order by packet_id ASC";
 	}else{
-		$q="SELECT packet_id, attorneys_id, bill410, bill420, bill430, client_paid, client_paida, client_paidb, client_paidc, client_paidd, client_paide FROM ps_packets WHERE (process_status <> 'DAMAGED PDF' AND process_status <> 'FILE COPY') AND date_received LIKE '%$date%' and attorneys_id='".$_GET[attid]."' order by packet_id ASC";
+		$q="SELECT ps_packets.packet_id, ps_packets.attorneys_id, ps_pay.bill410, ps_pay.bill420, ps_pay.bill430, ps_pay.client_paid, ps_pay.client_paida, ps_pay.client_paidb, ps_pay.client_paidc, ps_pay.client_paidd, ps_pay.client_paide FROM ps_packets WHERE (ps_packets.process_status <> 'DAMAGED PDF' AND ps_packets.process_status <> 'FILE COPY') AND ps_packets.date_received LIKE '%$date%' and ps_packets.attorneys_id='".$_GET[attid]."' AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD' order by packet_id ASC";
 	}
 }elseif($_GET[all]){
 	$date=$_GET[year]."-".$_GET[month];
-	$q="SELECT packet_id, attorneys_id, bill410, bill420, bill430, client_paid, client_paida, client_paidb, client_paidc, client_paidd, client_paide FROM ps_packets WHERE (process_status <> 'DAMAGED PDF' AND process_status <> 'FILE COPY') AND date_received LIKE '%$date%' order by packet_id ASC";
+	$q="SELECT ps_packets.packet_id, ps_packets.attorneys_id, ps_pay.bill410, ps_pay.bill420, ps_pay.bill430, ps_pay.client_paid, ps_pay.client_paida, ps_pay.client_paidb, ps_pay.client_paidc, ps_pay.client_paidd, ps_pay.client_paide FROM ps_packets WHERE (ps_packets.process_status <> 'DAMAGED PDF' AND ps_packets.process_status <> 'FILE COPY') AND ps_packets.date_received LIKE '%$date%' AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD' order by packet_id ASC";
 }
 echo "<table align='center' style='border-collapse:collapse;' border='1'><tr><td>Packet ID</td><td>Client Owes</td><td>Client Paid</td><td>Remainder</td></tr>";
 $r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
