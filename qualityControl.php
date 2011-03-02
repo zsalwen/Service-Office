@@ -90,7 +90,7 @@ while ($dc=mysql_fetch_array($rc, MYSQL_ASSOC)){ $i++;?>
 		<td <? if ($dc[rush] == 'checked'){echo "bgcolor='#FF0000'";}elseif($dc[priority] == 'checked'){echo "bgcolor='#00FFFF'";} ?>><?=id2attorney($dc[attorneys_id])?><? if ($dc[rush] == 'checked'){echo "<br><b>RUSH</b>";} ?><? if ($dc[priority] == 'checked'){echo "<br><b>PRIORITY</b>";} ?></td>
         <td><?=$dc[service_status]?></td>
         <td><?=$dc[affidavit_status]?></td>
-		<td></td>
+		<td><?=photoCount("EV".$dc[eviction_id])?></td>
         <td><?=stripslashes($dc[processor_notes])?></td>
         <td><?=stripslashes($dc[extended_notes])?></td>
 </tr>
