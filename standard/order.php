@@ -881,6 +881,7 @@ $server="none";
 <li><a href="serviceReview.php?packet=<?=$d[packet_id]?>" target="_Blank">Timeline</a></li>
 <li><a href="dispatchSheet.php?packet=<?=$d[packet_id]?>" target="_Blank">Dispatch Sheet</a></li>
 <li><a href="fieldSheet.php?packet=<?=$d[packet_id]?>" target="_Blank">Field Sheet</a></li>
+<li><a href="serviceSheet.php?packet=<?=$d[packet_id]?>&autoPrint=1" target="_Blank">Billing Sheet</a></li>
 <li><a href="affidavit.php?packet=<?=$d[packet_id]?>&def=ALL!" target="_Blank">Affidavits</a></li>
 <li><a href="enterHistory.php" target="_Blank">Record Affidavit</a></li>
 <? 
