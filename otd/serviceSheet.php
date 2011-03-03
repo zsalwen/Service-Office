@@ -165,13 +165,13 @@ function serviceSheet($packet){
 	<fieldset>
 	<legend>Billing Matrix</legend>
 	<table width="100%" align="center"><tr>
-	<td width="16%" align="left" style="border-bottom:solid 1px;"><b>Service: <?=$d[bill410]?></b></td>
-	<td width="16%" align="left" style="border-bottom:solid 1px;"><b>Gas: <?=$d[bill460]?></b></td>
-	<td width="16%" align="left" style="border-bottom:solid 1px;"><b>Mailing: <?=$d[bill420]?></b></td>
-	<td width="16%" align="left" style="border-bottom:solid 1px;"><b>Filing: <? if ($d[attorneys_id] == 70){ echo "BGW";}elseif ($d[attorneys_id] == 80){ echo "KOKOLIS";}else{ echo $d[bill430];} ?></b></td>
-	<td width="16%" align="left" style="border-bottom:solid 1px;"><b>Skip Trace: <?=$d[bill440]?></b></td>
-	<? if ($data[attorneys_id] != 70 && $data[attorneys_id] != 80){ ?><td width="16%" align="left" style="border-bottom:solid 1px;"><b>HB472 (<?=substr($d[lossMit],0,3);?>): <?=$d[bill450]?></b></td><? } ?>
-	<td width="16%" align="left" style="border-bottom:solid 1px;"><b>Total: <? echo $sum;?></b></td>
+	<td width="14%" align="left" style="border-bottom:solid 1px;"><b>Service: <?=$d[bill410]?></b></td>
+	<td width="14%" align="left" style="border-bottom:solid 1px;"><b>Gas: <?=$d[bill460]?></b></td>
+	<td width="14%" align="left" style="border-bottom:solid 1px;"><b>Mailing: <?=$d[bill420]?></b></td>
+	<td width="14%" align="left" style="border-bottom:solid 1px;"><b>Filing: <? if ($d[attorneys_id] == 70){ echo "BGW";}elseif ($d[attorneys_id] == 80){ echo "KOKOLIS";}else{ echo $d[bill430];} ?></b></td>
+	<td width="14%" align="left" style="border-bottom:solid 1px;"><b>Skip Trace: <?=$d[bill440]?></b></td>
+	<? if ($data[attorneys_id] != 70 && $data[attorneys_id] != 80){ ?><td width="14%" align="left" style="border-bottom:solid 1px;"><b>HB472 (<?=substr($d[lossMit],0,3);?>): <?=$d[bill450]?></b></td><? } ?>
+	<td width="14%" align="left" style="border-bottom:solid 1px;"><b>Total: <? echo $sum;?></b></td>
 	</tr>
 	<? if($d[affidavit_status2] == 'REOPENED'){ ?>
 	<tr>
