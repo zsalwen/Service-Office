@@ -14,7 +14,7 @@ echo "<form method='post'><table align='center' border='1' style='border-collaps
 	<tr><td colspan='2' align='center'><b>ENTER RATE</b></td></tr>
 	<tr><td>Gas Price</td><td><input name='gasPrice'></td></tr>
 	<tr><td>Client Rate</td><td><input name='client_rate'></td></tr>
-	<tr><td>Contractor Rate</td><input name='contractor_rate'></tr>
+	<tr><td>Contractor Rate</td><td><input name='contractor_rate'></td></tr>
 	<tr><td colspan='2' align='center'><input type='submit' name='submit' value='GO!'></td></tr>
 	</table></form>";
 	
