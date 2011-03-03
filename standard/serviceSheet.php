@@ -91,6 +91,11 @@ function isAddress($str,$address){
 	$add=explode('<BR>',$str);
 	return strpos($add[1],$address);
 }
+function id2invoiceAdd($attID){
+	$r=@mysql_query("SELECT invoice_to FROM attorneys where attorneys_id='$attID' LIMIT 0,1") or die (mysql_error());
+	$d=mysql_fetch_array($r,MYSQL_ASSOC);
+	return str_replace(', ','<br>',$d[invoice_to]);
+}
 function deliveryExplode($packet,$defendant){
 	/*$qh="SELECT action_str, serverID, address, wizard, resident FROM ps_history WHERE packet_id='$packet' AND defendant_id='$defendant' AND (WIZARD='BORROWER' OR WIZARD='NOT BORROWER') AND onAffidavit='checked'";
 	$rh=@mysql_query($qh) or die (mysql_error());
@@ -260,6 +265,8 @@ function serviceSheet($packet){
 		</tr>
 	</table>
 	</td></tr></table>
+	<br>
+	<center><u style='font-weight:bold;'>ATTORNEY EMAILS:</u><br><?=id2invoiceAdd($d[attorneys_id])?></center>
 <?
 	$html = ob_get_clean();
 	return $html;
