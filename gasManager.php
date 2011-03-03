@@ -21,7 +21,7 @@ echo "<form method='post'><table align='center' border='1' style='border-collaps
 	</table></form>";
 	
 //List of Previous Rates
-echo "<table align='center' border='1' style='border-collapse:collapse;'><tr><td colspan='6'><b>Previous Charges</b></td></tr><tr><td>#</td><td>Gas Price</td><td>Client Rate</td><td>Contractor Rate</td><td>Entry Date</td><td>Entered By</td></tr>";
+echo "<table align='center' border='1' style='border-collapse:collapse;'><tr><td colspan='6' align='center'><b>Previous Charges</b></td></tr><tr><td>#</td><td>Gas Price</td><td>Client Rate</td><td>Contractor Rate</td><td>Entry Date</td><td>Entered By</td></tr>";
 $i=0;
 $q="SELECT * FROM gasRates ORDER BY id DESC";
 $r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
