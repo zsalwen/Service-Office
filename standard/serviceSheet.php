@@ -150,7 +150,7 @@ function serviceSheet($packet){
 	div.list {border-bottom:solid 1px; font-size:10px;}
 	</style>
 	<table align="center" style="border:1px solid;"><tr><td>
-	<div class='list'>Quality Control for Process Serving Packet <?=$d[packet_id]?> - <b>Printed <?=$date?></b></div>
+	<div class='list'>Quality Control for STANDARD Process Serving S<?=$d[packet_id]?> - <b>Printed <?=$date?></b></div>
 	<fieldset>
 	<legend>Billing Matrix</legend>
 	<table width="100%" align="center"><tr>
