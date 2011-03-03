@@ -89,6 +89,7 @@ hardLog('updated payment information for '.$_GET[id],'user');
 									ps_pay.bill430='$_POST[bill430]',
 									ps_pay.bill440='$_POST[bill440]',
 									ps_pay.bill450='$_POST[bill450]',
+									ps_pay.bill460='$_POST[bill460]',
 									ps_pay.code410='$_POST[code410]',
 									ps_pay.code410a='$_POST[code410a]',
 									ps_pay.code410b='$_POST[code410b]',
@@ -104,6 +105,9 @@ hardLog('updated payment information for '.$_GET[id],'user');
 									ps_pay.code450='$_POST[code450]',
 									ps_pay.code450a='$_POST[code450a]',
 									ps_pay.code450b='$_POST[code450b]',
+									ps_pay.code460='$_POST[code460]',
+									ps_pay.code460a='$_POST[code460a]',
+									ps_pay.code460b='$_POST[code460b]',
 									ps_pay.contractor_rate='$_POST[contractor_rate]', 
 									ps_pay.contractor_paid='$_POST[contractor_paid]',
 									ps_pay.contractor_check='$_POST[contractor_check]', 
@@ -195,7 +199,13 @@ table {padding: 0px;}
 <center><div style="border:1px solid;font-size:18px;"><?=id2attorney($data[attorneys_id])?><?=stripslashes(getPayInstructions($data[attorneys_id],'<br>'));?><? if ($data[rush] != ''){ echo "<br><b style='background-color:red;'>RUSH SERVICE--: $120 IN-STATE, $170 OUT-OF-STATE</b>"; } ?></div></center>
 <? }elseif(stripslashes(getPayInstructions($data[attorneys_id],'')) != ''){ ?>
 <center><div style="border:1px solid;font-size:22px; width:1000px;"><?=id2attorney($data[attorneys_id])?><?=stripslashes(getPayInstructions($data[attorneys_id],'<br>'));?><? if ($data[rush] != ''){ echo "<br><b style='background-color:red;'>RUSH SERVICE--: $120 IN-STATE, $170 OUT-OF-STATE</b>"; } ?></div></center>
-<? } ?>
+<? } 
+$r1=mysql_query("SELECT * FROM gasRates ORDER BY id DESC LIMIT 0,1");
+$d1=mysql_fetch_array($r1,MYSQL_ASSOC);
+if ($d1[id]){
+echo "<center><div>[GAS: $d1[gasPrice] | CLIENT: $d1[client_rate]| CONTRACTOR: $d1[contractor_rate]]</div></center>";
+}
+?>
 <table><tr><td>
 <fieldset>
 	<legend>Process Service Account Details</legend>
@@ -313,7 +323,14 @@ if ($list != ''){
     	<td><input name="code440" size="2" maxlength="30" value="<?=$data[code440]?>" /></td>
     	<td><input name="code440a" size="2" maxlength="30" value="<?=$data[code440a]?>" /></td>
     	<td><input name="code440b" size="2" maxlength="30" value="<?=$data[code440b]?>" /></td>
-	</tr>        
+	</tr>    
+	<tr>
+    	<td>Gas Surcharge</td>
+		<td><input name="bill460" size="2" maxlength="7" value="<?=$data[bill460]?>" /></td>
+    	<td><input name="code460" size="2" maxlength="30" value="<?=$data[code460]?>" /></td>
+    	<td><input name="code460a" size="2" maxlength="30" value="<?=$data[code460a]?>" /></td>
+    	<td><input name="code460b" size="2" maxlength="30" value="<?=$data[code460b]?>" /></td>
+	</tr>
     <tr>
     	<td style="border-top:solid 1px;">Total Payment</td>
 		<td>$<?=$data[bill410]+$data[bill420]+$data[bill430]+$data[bill440]+$data[bill450];?></td>
