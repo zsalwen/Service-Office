@@ -4,9 +4,11 @@ mysql_select_db('core');
 include 'common.php';
 
 //Submit
-if ($_POST[submit]){
+if ($_POST[submit] && $_POST[gasPrice] && $_POST[client_rate] && $_POST[contractor_rate]){
 	$id=$_COOKIE[psdata][user_id];
 	@mysql_query("INSERT into gasRates (gasPrice, client_rate, contractor_rate, entryDate, entryID) VALUES ('$_POST[gasPrice]', '$_POST[client_rate]', '$_POST[contractor_rate]', NOW(), '$id')") or die(mysql_error());
+}elseif($_POST[submit]){
+	echo "<h1 style='color:red;'>YOU MUST ENTER A GAS PRICE, CLIENT RATE AND CONTRACTOR RATE.</h1>";
 }
 
 //Enter New Rate
