@@ -65,17 +65,6 @@ function postDateImplode($date){
 	$year=$str[2];
 	return $month.'/'.$day.'/'.$year.' @ '.$time;
 }
-function attorneyCustomLang($att,$str){
-	$r=@mysql_query("SELECT * FROM ps_str_replace where attorneys_id = '$att'");
-	while ($d=mysql_fetch_array($r, MYSQL_ASSOC)){
-		if ($d['str_search'] && $d['str_replace'] && $str && $att){
-			$str = str_replace($d['str_search'], strtoupper($d['str_replace']), $str);
-			$str = str_replace(strtoupper($d['str_search']), strtoupper($d['str_replace']), $str);
-			//echo "<script>alert('Replacing ".strtoupper($d['str_search'])." with ".strtoupper($d['str_replace']).".');< /script>";
-		}
-	}
-	return $str;
-}
 function historyList($packet,$defendant,$attorneys_id){
 	/*$qn="SELECT * FROM ps_history WHERE packet_id = '$packet' and defendant_id = '$defendant' order by history_id ASC";
 		$rn=@mysql_query($qn);
