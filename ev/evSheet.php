@@ -154,9 +154,10 @@ function evSheet($eviction){
 	<legend>Billing Matrix</legend>
 	<table width="100%" align="center"><tr>
 	<td width="20%" align="left" style="border-bottom:solid 1px;"><b>Service: <?=$d[bill410]?></b></td>
+	<td width="20%" align="left" style="border-bottom:solid 1px;"><b>Gas: <?=$d[bill460]?></b></td>
 	<td width="20%" align="left" style="border-bottom:solid 1px;"><b>Mailing: <?=$d[bill420]?></b></td>
 	<td width="20%" align="left" style="border-bottom:solid 1px;"><b>Filing: <? if ($d[attorneys_id] == 1 && $d[circuit_court] == 'PRINCE GEORGES'){ echo "<b>MAIL2CLIENT</b>";}else{ echo $d[bill430];}?></b></td>
-	<td width="20%" align="left" style="border-bottom:solid 1px;"><b>Total: <? echo ($d[bill410]+$d[bill420]+$d[bill430]);?></b></td>
+	<td width="20%" align="left" style="border-bottom:solid 1px;"><b>Total: <? echo ($d[bill410]+$d[bill420]+$d[bill430]+$d[bill460]);?></b></td>
 	</tr></table>
 	</fieldset>
 	<table width="100%" align="center"><tr><td>

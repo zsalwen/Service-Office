@@ -88,6 +88,7 @@ hardLog('updated payment information for '.$_GET[id],'user');
 									ps_pay.bill420='$_POST[bill420]',
 									ps_pay.bill430='$_POST[bill430]',
 									ps_pay.bill440='$_POST[bill440]',
+									ps_pay.bill460='$_POST[bill460]',
 									ps_pay.code410='$_POST[code410]',
 									ps_pay.code410a='$_POST[code410a]',
 									ps_pay.code420='$_POST[code420]',
@@ -96,6 +97,8 @@ hardLog('updated payment information for '.$_GET[id],'user');
 									ps_pay.code430a='$_POST[code430a]',
 									ps_pay.code440='$_POST[code440]',
 									ps_pay.code440a='$_POST[code440a]',
+									ps_pay.code460='$_POST[code460]',
+									ps_pay.code460a='$_POST[code460a]',
 									ps_pay.contractor_rate='$_POST[contractor_rate]', 
 									ps_pay.contractor_paid='$_POST[contractor_paid]',
 									ps_pay.contractor_check='$_POST[contractor_check]', 
@@ -154,7 +157,13 @@ td { font-variant:small-caps }
 <center><div style="border:1px solid;font-size:18px;"><?=id2attorney($data[attorneys_id])?><?=stripslashes(getPayInstructions($data[attorneys_id],'<br>'))?></div></center>
 <? }elseif(stripslashes(getPayInstructions($data[attorneys_id],'')) != ''){ ?>
 <center><div style="border:1px solid;font-size:18px; width:600px;"><?=stripslashes(getPayInstructions($data[attorneys_id],'<br>'))?></div></center>
-<? } ?>
+<? }
+$r1=mysql_query("SELECT * FROM gasRates ORDER BY id DESC LIMIT 0,1");
+$d1=mysql_fetch_array($r1,MYSQL_ASSOC);
+if ($d1[id]){
+	echo "<center><div>[GAS: $d1[gasPrice] | CLIENT: $d1[client_rate]| CONTRACTOR: $d1[contractor_rate]]</div></center>";
+}
+?>
 <table><tr><td>
 <fieldset>
 	<legend>Eviction Process Service Account Details</legend>
@@ -239,6 +248,12 @@ if ($list != ''){
     	<td><input name="code440" size="2" maxlength="30" value="<?=$data[code440]?>" /></td>
     	<td><input name="code440a" size="2" maxlength="30" value="<?=$data[code440a]?>" /></td>
 	</tr>        
+	<tr>
+    	<td>Gas Surcharge</td>
+		<td><input name="bill460" size="2" maxlength="7" value="<?=$data[bill460]?>" /></td>
+    	<td><input name="code460" size="2" maxlength="30" value="<?=$data[code460]?>" /></td>
+    	<td><input name="code460a" size="2" maxlength="30" value="<?=$data[code460a]?>" /></td>
+	</tr>
     <tr>
     	<td style="border-top:solid 1px;">Total Payment</td>
 		<td>$<?=$data[bill410]+$data[bill420]+$data[bill430]+$data[bill440];?></td>

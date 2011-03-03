@@ -168,9 +168,9 @@ function serviceSheet($packet){
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 	$date=date("m/d/Y h:i:s A");
 	if ($d[attorneys_id] == 70 || $d[attorneys_id] == 80){
-		$sum=$d[bill410]+$d[bill420]+$d[bill440];
+		$sum=$d[bill410]+$d[bill420]+$d[bill440]+$d[bill460];
 	}else{
-		$sum=$d[bill410]+$d[bill420]+$d[bill430]+$d[bill440]+$d[bill450];
+		$sum=$d[bill410]+$d[bill420]+$d[bill430]+$d[bill440]+$d[bill450]+$d[bill460];
 	}
 	if ($sum == 0){
 		$sum='';
@@ -190,6 +190,7 @@ function serviceSheet($packet){
 	<legend>Billing Matrix</legend>
 	<table width="100%" align="center"><tr>
 	<td width="16%" align="left" style="border-bottom:solid 1px;"><b>Service: <?=$d[bill410]?></b></td>
+	<td width="16%" align="left" style="border-bottom:solid 1px;"><b>Gas: <?=$d[bill460]?></b></td>
 	<td width="16%" align="left" style="border-bottom:solid 1px;"><b>Mailing: <?=$d[bill420]?></b></td>
 	<td width="16%" align="left" style="border-bottom:solid 1px;"><b>Filing: <? if ($d[attorneys_id] == 70){ echo "BGW";}else{ echo $d[bill430];} ?></b></td>
 	<td width="16%" align="left" style="border-bottom:solid 1px;"><b>Skip Trace: <?=$d[bill440]?></b></td>
@@ -198,10 +199,11 @@ function serviceSheet($packet){
 	</tr>
 	<? if($d[affidavit_status2] == 'REOPENED'){ ?>
 	<tr>
-	<td width="50%" align="center" colspan="5" style="border-bottom:solid 1px;"><b style="font-size: 24px;">REOPENED</b><b> - ADDITIONAL COST:</b></td>
+	<td width="50%" align="center" colspan='6' style="border-bottom:solid 1px;"><b style="font-size: 24px;">REOPENED</b><b> - ADDITIONAL COST:</b></td>
 	<td align="center" style="border-bottom:solid 1px;">
 	<table width="100%" align="center" valign="top">
 	<tr><td align="left" style="border-bottom:solid 1px;"><b>Service: </b></td></tr>
+	<tr><td align="left" style="border-bottom:solid 1px;"><b>Gas: </b></td></tr>
 	<tr><td align="left" style="border-bottom:solid 1px;"><b>Mailing: </b></td></tr>
 	<tr><td align="left" style="border-bottom:solid 1px;"><b>Filing: </b></td></tr>
 	<tr><td align="left" style="border-bottom:solid 1px;"><b>Skip Trace: </b></td></tr>
@@ -216,12 +218,12 @@ function serviceSheet($packet){
 	$q2="SELECT * FROM occNotices WHERE packet_id='$d[packet_id]'";
 	$r2=@mysql_query($q2) or die("Query: $q1<br>".mysql_error());
 	while ($d2=mysql_fetch_array($r2,MYSQL_ASSOC)){
-		$notices .= "<tr><td colspan='5' align='center'>$d2[requirements] Notice Sent ".dateExplode($d2[sendDate])." - $".$d2[bill]."</td></tr>";
+		$notices .= "<tr><td colspan='6' align='center'>$d2[requirements] Notice Sent ".dateExplode($d2[sendDate])." - $".$d2[bill]."</td></tr>";
 	}
 	if ($notices != ''){
 		echo $notices;
 	}else{
-		echo "<tr><td colspan='5' align='center'>NO NOTICES SENT FOR THIS PACKET</td></tr>";
+		echo "<tr><td colspan='6' align='center'>NO NOTICES SENT FOR THIS PACKET</td></tr>";
 	}
 	?>
 	</td></tr></table>
@@ -440,9 +442,10 @@ function evSheet($eviction){
 	<legend>Billing Matrix</legend>
 	<table width="100%" align="center"><tr>
 	<td width="20%" align="left" style="border-bottom:solid 1px;"><b>Service: <?=$d[bill410]?></b></td>
+	<td width="20%" align="left" style="border-bottom:solid 1px;"><b>Gas: <?=$d[bill460]?></b></td>
 	<td width="20%" align="left" style="border-bottom:solid 1px;"><b>Mailing: <?=$d[bill420]?></b></td>
 	<td width="20%" align="left" style="border-bottom:solid 1px;"><b>Filing: <? if ($d[attorneys_id] == 1 && $d[circuit_court] == 'PRINCE GEORGES'){ echo "<b>MAIL2CLIENT</b>";}else{ echo $d[bill430];}?></b></td>
-	<td width="20%" align="left" style="border-bottom:solid 1px;"><b>Total: <? echo ($d[bill410]+$d[bill420]+$d[bill430]);?></b></td>
+	<td width="20%" align="left" style="border-bottom:solid 1px;"><b>Total: <? echo ($d[bill410]+$d[bill420]+$d[bill430]+$d[bill460]);?></b></td>
 	</tr></table>
 	</fieldset>
 	<table width="100%" align="center"><tr><td>
