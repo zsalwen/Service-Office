@@ -81,7 +81,8 @@ table { height:100%; width:100%;  margin:0px; padding:0px;}
 form { margin:0px; padding:0px; }
 </style>
 <? 
-if ($_GET[packet]){ $type = "Presale Service"; $q="select * from ps_packets where packet_id='$_GET[packet]'"; } 
+if ($_GET[packet] < '20000'){ $type = "Presale Service"; $q="select * from ps_packets where packet_id='$_GET[packet]'"; } 
+if ($_GET[packet] >= '20000' ){ $type = "Process Service"; $q="select * from packet where id='$_GET[packet]'"; } 
 if ($_GET[eviction]){ $type = "Eviction Service"; $q="select * from evictionPackets where eviction_id = '$_GET[eviction]'"; } 
 if ($_GET[standard]){ $type = "Standard Service"; $q="select * from standard_packets where packet_id = '$_GET[standard]'"; } 
 if ($type){
