@@ -132,8 +132,12 @@ echo "OTD: [$_GET[otd]]<br>";
 echo "EV: [$_GET[ev]]<br>";
 echo "newDate: [$_GET[newDate]]<br>";
 echo "entry: [$_GET[entry]]<br>";
-$ev=explode("|",$_GET[ev]);
-$otd=explode("|",$_GET[otd]);
+if ($_GET[ev] != ''){
+	$ev=explode("|",$_GET[ev]);
+}
+if ($_GET[otd] != ''){
+	$otd=explode("|",$_GET[otd]);
+}
 foreach( $otd as $key => $value){
 	echo "<li>OTD$value</li>";
 	//@mysql_query("update ps_packets set courierID = '$_POST[courier]', estFileDate='$_POST[newEst]' where packet_id = '$key'");
