@@ -12,7 +12,7 @@ if ($_FILES){
 $i=0;
 $max=20;
 while($i<$max){
-$test = $_FILES[file_$i][name];
+$test = $_FILES["file_$i"][name];
 if ($test){
 echo "<li>Processing Upload: $test</li>"
 }
