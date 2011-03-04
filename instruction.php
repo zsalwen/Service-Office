@@ -12,7 +12,7 @@ echo "<script>window.parent.location.href='edit.php?packet=$_GET[packet]';</scri
 }
 
 if ($_POST[addName]){
-@mysql_query("insert into name (prefix,first,middle,last,suffix) values ('$_POST[prefix]','$_POST[first]','$_POST[middle]','$_POST[last]','$_POST[suffix]') ");
+@mysql_query("insert into name (full,last) values ('$_POST[full]','$_POST[last]') ");
 header('Location: instructions.php?packet='.$_GET[packet]);
 }
 
@@ -39,11 +39,11 @@ $q= "select distinct last from name order by last";
 $r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
 while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {
 $nList .= "<OPTGROUP LABEL='$d[last]'>";
-$q2= "select * from name where last = '$d[last]' order by first";
+$q2= "select * from name where last = '$d[last]' order by full";
 $r2=@mysql_query($q2) or die("Query: $q2<br>".mysql_error());
 while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)) {
 if ($d2[on_affidavit]== 'Yes'){ $str="On Affidavit"; }else{ $str = "Not On Affidavit";  }
-$nList .= "<option value='$d2[id]'>$d2[prefix] $d2[first] $d2[middle] $d2[last] $d2[suffix] $str </option>";
+$nList .= "<option value='$d2[id]'>$d2[full] $str </option>";
 }
 $nList .= "</OPTGROUP>" ;
 }
@@ -85,19 +85,13 @@ $nList .= "</OPTGROUP>" ;
 <input type="hidden" name="addName" value="1">
 <table>
 	<tr>
-		<td>Prefix</td>
-		<td>First</td>
-		<td>Middle</td>
-		<td>Last</td>
-		<td>Suffix</td>
+		<td>Full Name</td>
+		<td>Last Name (for sorting)</td>
 		<td>On affidavit headers</td>
 	</tr>
 	<tr>
-		<td><input name="prefix"></td>
-		<td><input name="first"></td>
-		<td><input name="middle"></td>
+		<td><input name="full"></td>
 		<td><input name="last"></td>
-		<td><input name="suffix"></td>
 		<td valign='top"><select name="on_affidavit" size="2"><option>Yes</option><option>No</option></select></td>
 	</tr>
 </table>
