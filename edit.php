@@ -100,7 +100,7 @@ include 'edit.testing.php'; // make sure we have main packet array before testin
 
 <!-- start left pane -->
 <fieldset>
-<legend>Server and Staff Assignments <a href='upload.php' target='preview'>Upload</a>, <a href="#" onclick="window.open('lightboard.php?packet=<?=$d[packet_id]?>','Lightboard','menubar=0,resizable=1,status=0,width=800,height=600') ">PDF Lightboard</a></legend>
+<legend>Server and Staff Assignments</legend>
 <?
 $rSSA=@mysql_query("select * from instruction where packet_id = '$packet'");
 while($dSSA=mysql_fetch_array($rSSA,MYSQL_ASSOC)){
@@ -110,7 +110,7 @@ while($dSSA=mysql_fetch_array($rSSA,MYSQL_ASSOC)){
 </fieldset>
 
 <fieldset>
-<legend>Online File Storage</legend>
+<legend>Online File Storage <a href='upload.php' target='preview'>Upload</a>, <a href="#" onclick="window.open('lightboard.php?packet=<?=$d[packet_id]?>','Lightboard','menubar=0,resizable=1,status=0,width=800,height=600') ">PDF Lightboard</a></legend>
 <?
 $rOFS=@mysql_query("select * from attachment where packet_id = '$packet'");
 while($dOFS=mysql_fetch_array($rOFS,MYSQL_ASSOC)){
