@@ -23,6 +23,17 @@ if ($_POST[addServer]){
 
 }
 
+// build server list
+$q= "select * from ps_users where contract = 'YES' order by id ASC";
+$r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
+while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {
+$sList .= "<option value='$d[id]'>";
+if ($d[company]){ $sList .= "$d[company], $d[name]" ;}else{ $sList .= "$d[name]" ;}
+$sList .= "</option>";
+} 
+
+
+
 ?>
 <li>Add <a href="?packet=<?=$_GET[packet];?>&add=name">name</a> to database</li>
 <li>Add <a href="?packet=<?=$_GET[packet];?>&add=address">address</a> to database</li>
@@ -43,10 +54,10 @@ if ($_POST[addServer]){
 	</tr>
 	<tr>
 		<td><?=$_GET[packet]?></td>
-		<td><select name="server_id" size="10"><option><?=$_GET[packet]?></option></select></td>
+		<td><select name="server_id" size="10"><?=$sList?></select></td>
 		<td><select name="address_id" size="10"><option><?=$_GET[packet]?></option></select></td>
 		<td><select name="name_id" size="10"><option><?=$_GET[packet]?></option></select></td>
-		<td><select name="allowSubService" size="2"><option>Yes</option><option>No</option></select></td>
+		<td valign='top"><select name="allowSubService" size="2"><option>Yes</option><option>No</option></select></td>
 	</tr>
 </table>
 <input type="submit">
