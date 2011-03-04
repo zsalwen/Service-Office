@@ -34,7 +34,7 @@ $d=mysql_fetch_array($r, MYSQL_ASSOC);
 ?>
 </head>
 <body style="padding:0px;">
-
+<?=$query;?>
 <? 
 if (!$d[packet_id]){ // do we really have a good packet id?
 ?>
