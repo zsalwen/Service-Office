@@ -38,7 +38,7 @@ $d=mysql_fetch_array($r, MYSQL_ASSOC);
 <body style="padding:0px;">
 <?=$query;?>
 <? 
-if (!$d[packet_id]){ // do we really have a good packet id?
+if (!$d[packet_id] && !$d[eviction_id] && !$d[id]){ // do we really have a good packet id?
 ?>
 
 <center>
@@ -48,6 +48,15 @@ if (!$d[packet_id]){ // do we really have a good packet id?
 
 <? 
 }else{ // ok we have a good packet number let's go ahead and build the html
+
+if ($d[packet_id]){
+ $packet=$d[packet_id];
+}elseif($d[eviction_id]){
+ $packet=$d[eviction_id];
+}elseif($d[id]){
+ $packet=$d[id];
+}
+
 include 'edit.testing.php'; // make sure we have main packet array before testing packet
 ?>
 <form method="post">
@@ -58,9 +67,6 @@ include 'edit.testing.php'; // make sure we have main packet array before testin
 
 <!-- Start Service Timeline Toolbar -->
 <table align="center" style="padding:0px;"><tr>
-<?
-$packet=$d[packet_id];
-?>
 <? $test1 = getTime($packet,'Data Entry');?>
 <td><div class="<?=$test1[css];?>"><?=$test1[event];?><br><?=$test1[eDate];?></div></td>
 <? $test2 = getTime($packet,'Dispatched');?>
