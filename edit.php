@@ -218,19 +218,40 @@ if ($dupCheck == "class='duplicate'"){
 <FIELDSET style="padding:0px;">
 <LEGEND ACCESSKEY=C>Persons to Serve</LEGEND>
 <table>
+<? if($d[name1]){ // legacy ?>
 <tr>
 <td nowrap>1<input size="20" name="name1" id="name1" value="<?=stripslashes($d[name1])?>" /><input <? if ($d[onAffidavit1]=='checked'){echo "checked";} ?> type="checkbox" value="checked" name="onAffidavit1"></td><? $mult=1;?>
-</tr><tr>
+</tr>
+<? } ?>
+<? if($d[name2]){ // legacy ?>
+<tr>
 <td nowrap>2<input size="20" name="name2" id="name2" value="<?=stripslashes($d[name2])?>" /><input <? if ($d[onAffidavit2]=='checked'){echo "checked";} ?> type="checkbox" value="checked" name="onAffidavit2"></td><? if ($d[name2]){$mult++;}?>
-</tr><tr>
+</tr>
+<? }?>
+<? if($d[name3]){ // legacy ?>
+<tr>
 <td nowrap>3<input size="20" name="name3" id="name3" value="<?=stripslashes($d[name3])?>" /><input <? if ($d[onAffidavit3]=='checked'){echo "checked";} ?> type="checkbox" value="checked" name="onAffidavit3"></td><? if ($d[name3]){$mult++;}?>
-</tr><tr>
+</tr>
+<? } ?>
+<? if($d[name4]){ // legacy ?>
+<tr>
 <td nowrap>4<input size="20" name="name4" id="name4" value="<?=stripslashes($d[name4])?>" /><input <? if ($d[onAffidavit4]=='checked'){echo "checked";} ?> type="checkbox" value="checked" name="onAffidavit4"></td><? if ($d[name4]){$mult++;}?>
-</tr><tr>
+</tr>
+<? }?>
+<? if($d[name5]){ // legacy ?>
+<tr>
 <td nowrap>5<input size="20" name="name5" id="name5" value="<?=stripslashes($d[name5])?>" /><input <? if ($d[onAffidavit5]=='checked'){echo "checked";} ?> type="checkbox" value="checked" name="onAffidavit5"></td><? if ($d[name5]){$mult++;}?>
-</tr><tr>
+</tr>
+<? }?>
+<? if($d[name6]){ // legacy ?>
+<tr>
 <td nowrap>6<input size="20" name="name6" id="name6" value="<?=stripslashes($d[name6])?>" /><input <? if ($d[onAffidavit6]=='checked'){echo "checked";} ?> type="checkbox" value="checked" name="onAffidavit6"></td><? if ($d[name6]){$mult++;}?>
 </tr>
+<? } ?>
+<!-- Start Normalized Name List Here -->
+
+
+
 </table>
 </FIELDSET>
 <?
