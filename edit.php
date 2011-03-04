@@ -96,7 +96,7 @@ $packet=$d[packet_id];
 <?
 $rSSA=@mysql_query("select * from instruction where packet_id = '$packet'");
 while($dSSA=mysql_fetch_array($rSSA,MYSQL_ASSOC)){
- echo "<li>".id2server($dSSA[server_id])." on ".nameID($dSSA[name_id])." at ".addressID($dSSA[address_id])."</li>";
+ echo "<li>".serverID($dSSA[server_id])." on ".nameID($dSSA[name_id])." at ".addressID($dSSA[address_id])."</li>";
 }
 ?>
 </fieldset>
