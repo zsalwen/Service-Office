@@ -1,7 +1,7 @@
 <html>
 <head>
 <?
-$path = "/data/service/scans/'.date('Y').'/'.date('F').'/'.date('j').'/";
+$path = '/data/service/scans/'.date('Y').'/'.date('F').'/'.date('j').'/';
 if (!file_exists('/data/service/scans/'.date('Y'))){
 mkdir ('/data/service/scans/'.date('Y'),0777);
 }
@@ -19,8 +19,11 @@ if ($name){
 echo "<li>Processing Upload: $name</li>";
 $target_path = $path.$name;  
  if(move_uploaded_file($_FILES["file_$i"]['tmp_name'], $target_path)) {
+echo "<li>http://mdwestserve.com/affidavits/".date('Y')."/".date('F')."/".date('j')."/".$name." ready</li>";
+}else{
+echo "<li>$name." failed</li>";
 }
-echo "<li>http://mdwestserve.com/affidavits/".date('Y')."/".date('F')."/".date('j')."/".$name; 
+
 }
 $i++;
 }
