@@ -40,20 +40,22 @@ if ($_POST[addServer]){
 	</tr>
 	<tr>
 		<td>Server</td>
-		<td><select name="server_id"><option><?=$_GET[packet]?></option></select></td>
+		<td><select name="server_id" size="10"><option><?=$_GET[packet]?></option></select></td>
 	</tr>
 	<tr>
 		<td>Address</td>
-		<td><select name="address_id"><option><?=$_GET[packet]?></option></select></td>
+		<td><select name="address_id" size="10"><option><?=$_GET[packet]?></option></select></td>
 	</tr>
 	<tr>
 		<td>Name</td>
-		<td><select name="name_id"><option><?=$_GET[packet]?></option></select></td>
+		<td><select name="name_id" size="10"><option><?=$_GET[packet]?></option></select></td>
 	</tr>
 	<tr>
 		<td>Allow Sub-Service</td>
 		<td><select name="allowSubService"><option>Yes</option><option>No</option></select></td>
 	</tr>
+</table>
+<input type="submit">
 </form>
 <? } ?>
 
