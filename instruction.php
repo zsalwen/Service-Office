@@ -23,7 +23,7 @@ header('Location: instruction.php?packet='.$_GET[packet]);
 
 
 // build server list
-$q= "select * from ps_users where contract = 'YES' order by id ASC";
+$q= "select * from ps_users where contract = 'YES' order by name ASC";
 $r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
 while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {
 $sList .= "";
@@ -81,7 +81,7 @@ $aList .= "</OPTGROUP>" ;
 		<td><select name="server_id" size="10"><?=$sList?></select></td>
 		<td><select name="address_id" size="10"><?=$aList?></select></td>
 		<td><select name="name_id" size="10"><?=$nList?></select></td>
-		<td valign='top"><select name="allowSubService" size="2"><option>Yes</option><option>No</option></select></td>
+		<td valign="top"><select name="allowSubService" size="2"><option>Yes</option><option>No</option></select></td>
 	</tr>
 </table>
 <input type="submit">
@@ -103,7 +103,7 @@ $aList .= "</OPTGROUP>" ;
 	<tr>
 		<td><input name="full"></td>
 		<td><input name="last"></td>
-		<td valign='top"><select name="on_affidavit" size="2"><option>Yes</option><option>No</option></select></td>
+		<td valign="top"><select name="on_affidavit" size="2"><option>Yes</option><option>No</option></select></td>
 	</tr>
 </table>
 <input type="submit">
