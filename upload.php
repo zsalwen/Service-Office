@@ -1,38 +1,7 @@
 <html>
 <head>
-<pre>
-<? 
-if ($_FILES){
- print_r($_FILES);
-}
-?>
-</pre>
 <?
-// test the loop
-$i=0;
-$max=20;
-while($i<$max){
-$test = $_FILES["file_$i"][name];
-if ($test){
-echo "<li>Processing Upload: $test</li>";
-}
-$i++;
-}
-
-
-/*
-	if ($_FILES['affidavit']){
-	if ($_FILES['affidavit']['size'] < 10145728){
-		if ($_FILES['affidavit']['size'] == 0){
-			$ps = id2name($_COOKIE[psdata][user_id]);
-			$error = "<div>Your file size registered as zero (due to oversized files).</div>";
-		}else{
-			// ok first we need to go get the files
-			$path = "/data/service/scans/'.date('Y').'/'.date('F').'/'.date('j').'/";
-			
- 
-
-
+$path = "/data/service/scans/'.date('Y').'/'.date('F').'/'.date('j').'/";
 if (!file_exists('/data/service/scans/'.date('Y'))){
 mkdir ('/data/service/scans/'.date('Y'),0777);
 }
@@ -42,6 +11,26 @@ mkdir ('/data/service/scans/'.date('Y').'/'.date('F'),0777);
 if (!file_exists('/data/service/scans/'.date('Y').'/'.date('F').'/'.date('j'))){
 mkdir ('/data/service/scans/'.date('Y').'/'.date('F').'/'.date('j'),0777);
 }
+$i=0;
+$max=20;
+while($i<$max){
+$name = $_FILES["file_$i"][name];
+if ($name){
+echo "<li>Processing Upload: $name</li>";
+/*
+$target_path = $path.$name;  
+ if(move_uploaded_file($_FILES['affidavit']['tmp_name'], $target_path)) {
+}
+echo "<li>http://mdwestserve.com/affidavits/".date('Y')."/".date('F')."/".date('j')."/".$name; 
+}
+$i++;
+}
+
+
+/*
+
+			
+
 
 
 
