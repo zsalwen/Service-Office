@@ -14,7 +14,7 @@ $max=20;
 while($i<$max){
 $test = $_FILES["file_$i"][name];
 if ($test){
-echo "<li>Processing Upload: $test</li>"
+echo "<li>Processing Upload: $test</li>";
 }
 $i++;
 }
