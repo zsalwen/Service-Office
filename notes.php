@@ -12,7 +12,7 @@ return $str;
 }
 mysql_connect();
 mysql_select_db('core');
-if ($_POST[note] && $_POST[field] && $_GET[packet]){
+if ($_POST[note] && $_POST[field] && $_GET[packet] > '20000'){
 $r=@mysql_query("select $_POST[field] from ps_packets where packet_id = '$_GET[packet]'");
 $d=mysql_fetch_array($r,MYSQL_ASSOC);
 $oldNote = $d[$_POST[field]];
@@ -25,6 +25,21 @@ $newNote = "<li>From ".$_COOKIE[psdata][name]." on ".date('m/d/y g:ia').": \"".$
 			$headers .= "Content-type: text/html; charset=iso-8859-1 \n";
 			$headers .= "From: ".$_COOKIE[psdata][name]." <".$_COOKIE[psdata][email].">  \n";
 			$body = "<hr><a href='http://staff.mdwestserve.com/otd/order.php?packet=$_GET[packet]'>View Order Page</a>";
+			mail($to,$subject,stripslashes($newNote.$body),$headers);
+}
+if ($_POST[note] && $_POST[field] && $_GET[packet] >= '20000'){
+$r=@mysql_query("select $_POST[field] from packet where id = '$_GET[packet]'");
+$d=mysql_fetch_array($r,MYSQL_ASSOC);
+$oldNote = $d[$_POST[field]];
+$newNote = "<li>From ".$_COOKIE[psdata][name]." on ".date('m/d/y g:ia').": \"".$_POST[note]."\"</li>".$oldNote;
+@mysql_query("UPDATE packet SET $_POST[field]='".dbIN($newNote)."' WHERE id='$_GET[packet]'") or die(mysql_error());
+			$about = strtoupper($_POST[field]);
+			$to = "Service Update <service@mdwestserve.com>";
+			$subject = "$about Update: Packet ".$_GET[packet];
+			$headers  = "MIME-Version: 1.0 \n";
+			$headers .= "Content-type: text/html; charset=iso-8859-1 \n";
+			$headers .= "From: ".$_COOKIE[psdata][name]." <".$_COOKIE[psdata][email].">  \n";
+			$body = "<hr><a href='http://staff.mdwestserve.com/edit.php?packet=$_GET[packet]'>View Order Page</a>";
 			mail($to,$subject,stripslashes($newNote.$body),$headers);
 }
 if ($_POST[note] && $_POST[field] && $_GET[eviction]){
