@@ -17,7 +17,7 @@ $id=$_COOKIE[psdata][user_id];
 // select packet and build query / html options for something like number of addresses or names and instruction set's
 if ($_GET[packet] && $_GET[packet] < '20000'){
 	$query = "SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours FROM ps_packets where packet_id='$_GET[packet]'";
-	hardLog('loaded order for '.$_GET[packet],'user');
+	hardLog('loaded legacy otd order for '.$_GET[packet],'user');
 }elseif($_GET[packet] && $_GET[packet] >= '20000'){
 	$query = "SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours FROM packet where id='$_GET[packet]'";
 	hardLog('loaded normalized order for '.$_GET[packet],'user');
@@ -109,6 +109,15 @@ while($dSSA=mysql_fetch_array($rSSA,MYSQL_ASSOC)){
 ?>
 </fieldset>
 
+<fieldset>
+<legend>Online File Storage</legend>
+<?
+$rOFS=@mysql_query("select * from attachment where packet_id = '$packet'");
+while($dOFS=mysql_fetch_array($rOFS,MYSQL_ASSOC)){
+ echo "<li><a href='$dOFS[url]' target='preview'>$dOFS[instruction_id] $dOFS[packet_id] $dOFS[user_id] $dOFS[server_id] $dOFS[processed]</li>";
+}
+?>
+</fieldset>
 
 <FIELDSET style="padding:0px;">
 <div style="background-color:#FFFFFF; padding:0px;" align="center">
