@@ -139,13 +139,17 @@ if ($_GET[otd] != ''){
 	$otd=explode("|",$_GET[otd]);
 }
 foreach( $otd as $key => $value){
-	echo "<li>OTD$value</li>";
-	//@mysql_query("update ps_packets set courierID = '$_POST[courier]', estFileDate='$_POST[newEst]' where packet_id = '$key'");
+	if ($value != ''){
+		echo "<li>[OTD$value]</li>";
+		//@mysql_query("update ps_packets set courierID = '$_POST[courier]', estFileDate='$_POST[newEst]' where packet_id = '$key'");
+	}
 }
 echo "<hr>";
 foreach( $ev as $key => $value){
-	echo "<li>EV$value</li>";
-	//@mysql_query("update evictionPackets set courierID = '$_POST[courier]', estFileDate='$_POST[newEst]' where eviction_id = '$key'");
+	if ($value != ''){
+		echo "<li>[EV$value]</li>";
+		//@mysql_query("update evictionPackets set courierID = '$_POST[courier]', estFileDate='$_POST[newEst]' where eviction_id = '$key'");
+	}
 } 
 echo "<hr>";
 $i=-1;
