@@ -20,8 +20,8 @@ echo "<li>Processing Upload: $name</li>";
 $target_path = $path.$name;  
  if(move_uploaded_file($_FILES["file_$i"]['tmp_name'], $target_path)) {
 $finalPATH = $target_path;
-$finalURL = http://mdwestserve.com."/affidavits/".date('Y')."/".date('F')."/".date('j')."/".$name;
-$finalURL2 = http://".$_SERVER['HTTP_HOST']."/affidavits/".date('Y')."/".date('F')."/".date('j')."/".$name;
+$finalURL = "http://mdwestserve.com."/affidavits/".date('Y')."/".date('F')."/".date('j')."/".$name;
+$finalURL2 = "http://".$_SERVER['HTTP_HOST']."/affidavits/".date('Y')."/".date('F')."/".date('j')."/".$name;
 echo "<li>$name." ready and listed as unclaimed.</li>";
 @mysql_query("insert into attachment (processed, url, path, absolute_url) values (NOW(), '$finalURL','$finalPATH','$finalURL2')");
 }else{
