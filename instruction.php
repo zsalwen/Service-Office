@@ -69,7 +69,7 @@ $aList .= "</OPTGROUP>" ;
 <h3>Adding Instruction Set</h3>
 <form method="POST">
 <input type="hidden" name="mainInstruction" value="1">
-<input type="hidden" name="packet_id" value="<?=$_GET[packet_id]?>">
+<input type="hidden" name="packet_id" value="<?=$_GET[packet]?>">
 <table>
 	<tr>
 		<td>Server</td>
