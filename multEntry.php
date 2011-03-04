@@ -128,6 +128,10 @@ echo "<script>window.location='order.php?packet=$_GET[packet]';</script>";*/
 //schedule.php update code
 
 echo "<div style='background-color:#00FF00;'>Courier Set<br />";
+echo "OTD: [$_GET[otd]]<br>";
+echo "EV: [$_GET[ev]]<br>";
+echo "newEst: [$_GET[newEst]]<br>";
+
 foreach( $_GET[otd] as $key => $value){
 	echo "<li>OTD$key</li>";
 	//@mysql_query("update ps_packets set courierID = '$_POST[courier]', estFileDate='$_POST[newEst]' where packet_id = '$key'");
