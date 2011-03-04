@@ -15,14 +15,14 @@ which.style.display="none"
 else
 which.style.display="block"
 }
-function prompter(otd,ev,newDate){
+function prompter(otd,ev,newDate,courier){
 	var reply = prompt("Please enter your reason for updating the Est. Close Date", "")
 	if (reply == null){
 		alert("That is not a valid reason")
 		window.location="http://staff.mdwestserve.com/schedule.php";
 	}
 	else{
-		window.location="http://staff.mdwestserve.com/multEntry.php?otd="+otd+"&ev="+ev+"&entry="+reply+"&newDate="+newDate;
+		window.location="http://staff.mdwestserve.com/multEntry.php?otd="+otd+"&ev="+ev+"&entry="+reply+"&newDate="+newDate+"&courier="+courier;
 	}
 }
 </script>
@@ -41,7 +41,7 @@ if ($_POST[courier]){
 	}
 	$list2=substr($list2,0,-1);
 	//echo "<script>alert('OTD: $_POST[otd], EV: $_POST[ev], newEst: $_POST[newEst]');</script>";
-	echo "<script>prompter('$list','$list2','$_POST[newEst]');</script>";
+	echo "<script>prompter('$list','$list2','$_POST[newEst]','$_POST[courier]');</script>";
 	}else{
 		echo "<div style='background-color:#00FF00;'>Courier Set<br />";
 		foreach( $_POST[ev] as $key => $value){
