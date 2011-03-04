@@ -1,11 +1,14 @@
 <html>
 
 <head>
+<pre>
 <? 
 if ($_FILES){
  print_r($_FILES);
 }
-
+?>
+</pre>
+<?
 /*
 	if ($_FILES['affidavit']){
 	if ($_FILES['affidavit']['size'] < 10145728){
