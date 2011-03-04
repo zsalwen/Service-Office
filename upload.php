@@ -5,36 +5,15 @@ $user = $_COOKIE[psdata][user_id];
 $packet = $_GET[packet];
 $ip = $_SERVER['REMOTE_ADDR'];
 $name=$_COOKIE['psdata']['name'];
-if ($_POST[tab]){
-$tab = $_POST[tab];
-}elseif($_GET[tab]){
-$tab = $_GET[tab];
-}else{
-$tab = "1";
-}
+
+
 mysql_select_db('core');
-$q="SELECT packet_id, name1, name2, name3, name4, name5, name6, address1, address1a, address1b, address1c, address1d, address1e, city1, city1a, city1b, city1c, city1d, city1e, state1, state1a, state1b, state1c, state1d, state1e, zip1, zip1a, zip1b, zip1c, zip1d, zip1e, address2, address2a, address2b, address2c, address2d, address2e, city2, city2a, city2b, city2c, city2d, city2e, state2, state2a, state2b, state2c, state2d, state2e, zip2, zip2a, zip2b, zip2c, zip2d, zip2e, address3, address3a, address3b, address3c, address3d, address3e, city3, city3a, city3b, city3c, city3d, city3e, state3, state3a, state3b, state3c, state3d, state3e, zip3, zip3a, zip3b, zip3c, zip3d, zip3e, address4, address4a, address4b, address4c, address4d, address4e, city4, city4a, city4b, city4c, city4d, city4e, state4, state4a, state4b, state4c, state4d, state4e, zip4, zip4a, zip4b, zip4c, zip4d, zip4e, address5, address5a, address5b, address5c, address5d, address5e, city5, city5a, city5b, city5c, city5d, city5e, state5, state5a, state5b, state5c, state5d, state5e, zip5, zip5a, zip5b, zip5c, zip5d, zip5e, address6, address6a, address6b, address6c, address6d, address6e, city6, city6a, city6b, city6c, city6d, city6e, state6, state6a, state6b, state6c, state6d, state6e, zip6, zip6a, zip6b, zip6c, zip6d, zip6e, case_no, circuit_court, client_file, date_received, attorneys_id FROM ps_packets WHERE packet_id = '$packet'";
-$r=@mysql_query($q);
-$d=mysql_fetch_array($r, MYSQL_ASSOC);
-
-function washURI2($uri){
-$return = str_replace('/ps','',$uri);
-return $return;
-}
 
 
-if ($_GET['delete']){
-	mysql_select_db('core');
-	$qd="DELETE from ps_affidavits where affidavitID = '$_GET[delete]'";
-	$rd=@mysql_query($qd) or die("Query: $qd<br>".mysql_error());
-	timeline($packet,$_COOKIE[psdata][name]." Removed Scan #$_GET[delete]");
-	header('Location: affidavitUpload.php?packet='.$packet.'&tab='.$tab);
-}
 
-if (isset($_GET['received'])){
-	//@mysql_query("update ps_packets set affidavit_status='RECEIVED' where packet_id = '$_GET[received]' ");
-	//header('Location: affidavitManager.php?server=operations');
-}
+
+
+
 
 
 if ($_FILES['affidavit']){
@@ -44,11 +23,27 @@ if ($_FILES['affidavit']){
 			$error = "<div>Your file size registered as zero (due to oversized files).</div>";
 		}else{
 			// ok first we need to go get the files
-			$path = "/data/service/scans/";
-			if (!file_exists($path)){
-				mkdir ($path,0777);
-			}
+			$path = "/data/service/scans/'.date('Y').'/'.date('F').'/'.date('j').'/";
+			
  
+
+
+if (!file_exists('/data/service/scans/'.date('Y'))){
+mkdir ('/data/service/scans/'.date('Y'),0777);
+}
+if (!file_exists('/data/service/scans/'.date('Y').'/'.date('F'))){
+mkdir ('/data/service/scans/'.date('Y').'/'.date('F'),0777);
+}
+if (!file_exists('/data/service/scans/'.date('Y').'/'.date('F').'/'.date('j'))){
+mkdir ('/data/service/scans/'.date('Y').'/'.date('F').'/'.date('j'),0777);
+}
+
+
+
+
+
+
+
 			$file_path = $path;
 			if (!file_exists($file_path)){
 				mkdir ($file_path,0777);
@@ -87,139 +82,10 @@ if ($_FILES['affidavit']){
 	header('Location: affidavitUpload.php?packet='.$packet.'&tab='.$tab);
 }
 
-//include 'menu.php';
-mysql_select_db('core');
-$i=0;
-?>
-<table border="1" style="border-collapse:collapse" width="100%">
-<tr>
-<?
-while ($i < 6) {$i++;
 
-if ($d["name$i"]){
-	if (!$_GET[tab] && $i == 1){
-		$color = '#000099';
-	}elseif ($_GET[tab] == "$i"){
-		$color = '#000099';
-	}else{
-		$color = '#0066FF';
-	}
-?>
-	<td align="center" bgcolor="<?=$color?>" style="font-size:18px; border:inset 4px #0099FF;">
-	<a class="ser" href="affidavitUpload.php?packet=<?=$packet?>&tab=<?=$i?>"><?=ucwords(strtolower($d["name$i"]))?></a>
-	</td>
 
-<?
-	}
-}
-?>
-</tr>
-<?
-$i=0;
-?>
-</table>
-<?
-
-if ($tab == "2"){
-	$name = $d[name2];
-	$add1 = $d[address2].'<br>'.$d[city2].', '.$d[state2].' '.$d[zip2];
-	$add1x = $d[address2].' '.$d[city2].', '.$d[state2].' '.$d[zip2];
-	if ($d[address2a] != ''){
-		$add1a=$d[address2a].'<br>'.$d[city2a].', '.$d[state2a].' '.$d[zip2a];
-		$add1ax=$d[address2a].' '.$d[city2a].', '.$d[state2a].' '.$d[zip2a];
-	}
-	if ($d[address2b] != ''){
-		$add1b=$d[address2b].'<br>'.$d[city2b].', '.$d[state2b].' '.$d[zip2b];
-		$add1bx=$d[address2b].' '.$d[city2b].', '.$d[state2b].' '.$d[zip2b];
-	}
-} elseif ($tab == "3"){
-	$name = $d[name3];
-	$add1 = $d[address3].'<br>'.$d[city3].', '.$d[state3].' '.$d[zip3];
-	$add1x = $d[address3].' '.$d[city3].', '.$d[state3].' '.$d[zip3];
-	if ($d[address3a] != ''){
-		$add1a=$d[address3a].'<br>'.$d[city3a].', '.$d[state3a].' '.$d[zip3a];
-		$add1ax=$d[address3a].' '.$d[city3a].', '.$d[state3a].' '.$d[zip3a];
-	}
-	if ($d[address3b] != ''){
-		$add1b=$d[address3b].'<br>'.$d[city3b].', '.$d[state3b].' '.$d[zip3b];
-		$add1bx=$d[address3b].' '.$d[city3b].', '.$d[state3b].' '.$d[zip3b];
-	}
-} elseif ($tab == "4"){
-	$name = $d[name4];
-	$add1 = $d[address4].'<br>'.$d[city4].', '.$d[state4].' '.$d[zip4];
-	$add1x = $d[address4].' '.$d[city4].', '.$d[state4].' '.$d[zip4];
-	if ($d[address4a] != ''){
-		$add1a=$d[address4a].'<br>'.$d[city4a].', '.$d[state4a].' '.$d[zip4a];
-		$add1ax=$d[address4a].' '.$d[city4a].', '.$d[state4a].' '.$d[zip4a];
-	}
-	if ($d[address4b] != ''){
-		$add1b=$d[address4b].'<br>'.$d[city4b].', '.$d[state4b].' '.$d[zip4b];
-		$add1bx=$d[address4b].' '.$d[city4b].', '.$d[state4b].' '.$d[zip4b];
-	}
-} elseif ($tab == "5"){
-	$name = $d[name5];
-	$add1 = $d[address5].'<br>'.$d[city5].', '.$d[state5].' '.$d[zip5];
-	$add1x = $d[address5].' '.$d[city5].', '.$d[state5].' '.$d[zip5];
-	if ($d[address5a] != ''){
-		$add1a=$d[address5a].'<br>'.$d[city5a].', '.$d[state5a].' '.$d[zip5a];
-		$add1ax=$d[address5a].' '.$d[city5a].', '.$d[state5a].' '.$d[zip5a];
-	}
-	if ($d[address5b] != ''){
-		$add1b=$d[address5b].'<br>'.$d[city5b].', '.$d[state5b].' '.$d[zip5b];
-		$add1bx=$d[address5b].' '.$d[city5b].', '.$d[state5b].' '.$d[zip5b];
-	}
-} elseif ($tab == "6"){
-	$name = $d[name6];
-	$add1 = $d[address6].'<br>'.$d[city6].', '.$d[state6].' '.$d[zip6];
-	$add1x = $d[address6].' '.$d[city6].', '.$d[state6].' '.$d[zip6];
-	if ($d[address6a] != ''){
-		$add1a=$d[address6a].'<br>'.$d[city6a].', '.$d[state6a].' '.$d[zip6a];
-		$add1ax=$d[address6a].' '.$d[city6a].', '.$d[state6a].' '.$d[zip6a];
-	}
-	if ($d[address6b] != ''){
-		$add1b=$d[address6b].'<br>'.$d[city6b].', '.$d[state6b].' '.$d[zip6b];
-		$add1bx=$d[address6b].' '.$d[city6b].', '.$d[state6b].' '.$d[zip6b];
-	}
-} else {
-	$name = $d[name1];
-	$add1 = $d[address1].'<br>'.$d[city1].', '.$d[state1].' '.$d[zip1];
-	$add1x = $d[address1].' '.$d[city1].', '.$d[state1].' '.$d[zip1];
-	if ($d[address1a] != ''){
-		$add1a=$d[address1a].'<br>'.$d[city1a].', '.$d[state1a].' '.$d[zip1a];
-		$add1ax=$d[address1a].' '.$d[city1a].', '.$d[state1a].' '.$d[zip1a];
-	}
-	if ($d[address1b] != ''){
-		$add1b=$d[address1b].'<br>'.$d[city1b].', '.$d[state1b].' '.$d[zip1b];
-		$add1bx=$d[address1b].' '.$d[city1b].', '.$d[state1b].' '.$d[zip1b];
-	}
-}
-?>
-<style>
-body { padding:0px;
-margin:0px;}
-a.ser{color:#FFFFFF; text-decoration:none;}
-a.ser:hover{color:#FF0000; text-decoration:none;}
-a.spo{text-decoration:none; color:#CC0000}
-a.spo:hover{text-decoration:none; color:#FF0000}
-a.spu{text-decoration:none; font-size:15px;}
-</style>
-<table border="1" style="border-collapse:collapse;" cellpadding="0" align="center"><tr><td>
-
-<div id="tabinfo" style="background-color:#CC99FF; overflow:auto">
-<table align="left">
-<? if (isset($error)){ echo $error;}
-	echo '<tr><td align="left"><strong>'.ucwords(strtolower($name)).'</strong> '.$d['case_no'].'</td></tr>';
-	echo '<tr><td align="left">'.$add1x.'</td></tr>';
-	if ($add1ax){ echo '<tr><td align="left">'.$add1ax.'</tr></td>'; }
-	if ($add1bx){ echo '<tr><td align="LEFT">'.$add1bx.'</tr></td>'; }
-	$court=ucwords(strtolower($d['circuit_court']));
-	echo '<tr><td align="left">Circuit Court For '.$court.' County</tr></td>';
-	echo '<tr><td align="left">'.id2attorney($d['attorneys_id']).'</tr></td>';
-?>
-</table>
-</div></td></tr>
-<tr><td>
-<div id="update" style="padding:5px; background-color:#99CCFF">
+<? if (isset($error)){ echo $error;} ?>
+	
     <table align="center" width="100%">
     <form method="post" name="select">
     <tr>
@@ -269,19 +135,4 @@ a.spu{text-decoration:none; font-size:15px;}
 </div></td></tr>
 	
 </table>
-<?
-mysql_select_db('core');
-
-
-$q5="SELECT * FROM ps_affidavits WHERE packetID = '$packet' and defendantID = '$tab'";
-$r5=@mysql_query($q5) or die ("Query: $q5<br>".mysql_error());
-while ($d5=mysql_fetch_array($r5, MYSQL_ASSOC)){
-		echo "<li>".$d5[method].' - <a target="_blank" href="'.washURI2($d5[affidavit]).'">'.$d5[uploadDate].'</a> - <a href="affidavitUpload.php?packet='.$d[packet_id].'&delete='.$d5[affidavitID].'&tab='.$tab.'"><small>REMOVE</small></a> - <a href="affidavitRename.php?id='.$d5[affidavitID].'&packet='.$packet.'"><small>RENAME</small></a></li>';
-
-
-	 }
-
-
-//include 'footer.php';
-?>
 
