@@ -235,7 +235,7 @@ if ($dupCheck == "class='duplicate'"){
 </td>
 <td valign="top">
 <FIELDSET style="padding:0px;">
-<LEGEND ACCESSKEY=C>Persons to Serve</LEGEND>
+<LEGEND ACCESSKEY=C>Legacy Names</LEGEND>
 <table>
 <? if($d[name1]){ // legacy ?>
 <tr>
@@ -267,10 +267,6 @@ if ($dupCheck == "class='duplicate'"){
 <td nowrap>6<input size="20" name="name6" id="name6" value="<?=stripslashes($d[name6])?>" /><input <? if ($d[onAffidavit6]=='checked'){echo "checked";} ?> type="checkbox" value="checked" name="onAffidavit6"></td><? if ($d[name6]){$mult++;}?>
 </tr>
 <? } ?>
-<!-- Start Normalized Name List Here -->
-
-
-
 </table>
 </FIELDSET>
 <?
@@ -430,6 +426,7 @@ $add1d=strtoupper($d[address1d].', '.$d[city1d].', '.$d[state1d].' '.$d[zip1d]);
 $add1e=strtoupper($d[address1e].', '.$d[city1e].', '.$d[state1e].' '.$d[zip1e]);
 ?>
 <tr><td>
+<? if($d[address1]){ ?>
 <FIELDSET>
 <LEGEND class="a" ACCESSKEY=C><a href="http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=<?=$d[address1]?>&city=<?=$d[city1]?>&state=<?=$d[state1]?>&miles=5" target="_Blank"><img src="http://staff.mdwestserve.com/small-usps-logo.jpg" border="0"></a>&nbsp;<?=getVerify($add1);?>&nbsp;<?=id2name($d[server_id]);?><br><input name="addressType" size="55" style="font-size:10px; background-color:CCFFCC;" value="<?=$d[addressType]?>"></LEGEND>
 <table>
@@ -441,7 +438,9 @@ $add1e=strtoupper($d[address1e].', '.$d[city1e].', '.$d[state1e].' '.$d[zip1e]);
 </tr>
 </table>    
 </FIELDSET>
+<? }?>
 </td><td>
+<? if($d[address1a]){ ?>
 <FIELDSET>
 <LEGEND class="a" ACCESSKEY=C><a href="http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=<?=str_replace('#','',$d[address1a])?>&city=<?=$d[city1a]?>&state=<?=$d[state1a]?>&miles=5" target="_Blank"><img src="http://staff.mdwestserve.com/small-usps-logo.jpg" border="0"></a>&nbsp;<?=getVerify($add1a);?>&nbsp;<?=id2name($d[server_ida]);?><br><input name="addressTypea" size="55" style="font-size:10px; background-color:CCFFCC;" value="<?=$d[addressTypea]?>"></LEGEND>
 <table>
@@ -453,7 +452,9 @@ $add1e=strtoupper($d[address1e].', '.$d[city1e].', '.$d[state1e].' '.$d[zip1e]);
 </tr>
 </table>    
 </FIELDSET>
+<? } ?>
 </td><td>
+<? if($d[address1b]){ ?>
 <FIELDSET>
 <LEGEND class="a" ACCESSKEY=C><a href="http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=<?=$d[address1b]?>&city=<?=$d[city1b]?>&state=<?=$d[state1b]?>&miles=5" target="_Blank"><img src="http://staff.mdwestserve.com/small-usps-logo.jpg" border="0"></a>&nbsp;<?=getVerify($add1b);?>&nbsp;<?=id2name($d[server_idb]);?><br><input name="addressTypeb" size="55" style="font-size:10px; background-color:CCFFCC;" value="<?=$d[addressTypeb]?>"></LEGEND>
 <table>
@@ -465,9 +466,11 @@ $add1e=strtoupper($d[address1e].', '.$d[city1e].', '.$d[state1e].' '.$d[zip1e]);
 </tr>
 </table>    
 </FIELDSET>
+<? } ?>
 </td></tr>
 
 <tr><td>
+<? if($d[address1c]){ ?>
 <FIELDSET>
 <LEGEND class="a" ACCESSKEY=C><a href="http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=<?=$d[address1c]?>&city=<?=$d[city1c]?>&state=<?=$d[state1c]?>&miles=5" target="_Blank"><img src="http://staff.mdwestserve.com/small-usps-logo.jpg" border="0"></a>&nbsp;<?=getVerify($add1c);?>&nbsp;<?=id2name($d[server_idc]);?><br><input name="addressTypec" size="55" style="font-size:10px; background-color:CCFFCC;" value="<?=$d[addressTypec]?>"></LEGEND>
 <table>
@@ -479,7 +482,9 @@ $add1e=strtoupper($d[address1e].', '.$d[city1e].', '.$d[state1e].' '.$d[zip1e]);
 </tr>
 </table>    
 </FIELDSET>
+<? }?>
 </td><td>
+<? if($d[address1d]){ ?>
 <FIELDSET>
 <LEGEND class="a" ACCESSKEY=C><a href="http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=<?=$d[address1d]?>&city=<?=$d[city1d]?>&state=<?=$d[state1d]?>&miles=5" target="_Blank"><img src="http://staff.mdwestserve.com/small-usps-logo.jpg" border="0"></a>&nbsp;<?=getVerify($add1d);?>&nbsp;<?=id2name($d[server_idd]);?><br><input name="addressTyped" size="55" style="font-size:10px; background-color:CCFFCC;" value="<?=$d[addressTyped]?>"></LEGEND>
 <table>
@@ -491,7 +496,9 @@ $add1e=strtoupper($d[address1e].', '.$d[city1e].', '.$d[state1e].' '.$d[zip1e]);
 </tr>
 </table>    
 </FIELDSET>
+<? } ?>
 </td><td>
+<? if($d[address1e]){ ?>
 <FIELDSET>
 <LEGEND class="a" ACCESSKEY=C><a href="http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=<?=$d[address1e]?>&city=<?=$d[city1e]?>&state=<?=$d[state1e]?>&miles=5" target="_Blank"><img src="http://staff.mdwestserve.com/small-usps-logo.jpg" border="0"></a>&nbsp;<?=getVerify($add1e);?>&nbsp;<?=id2name($d[server_ide]);?><br><input name="addressTypee" size="55" style="font-size:10px; background-color:CCFFCC;" value="<?=$d[addressTypee]?>"></LEGEND>
 <table>
@@ -503,6 +510,7 @@ $add1e=strtoupper($d[address1e].', '.$d[city1e].', '.$d[state1e].' '.$d[zip1e]);
 </tr>
 </table>    
 </FIELDSET>
+<? } ?>
 </td></tr>
 </table>
 
@@ -511,10 +519,10 @@ $add1e=strtoupper($d[address1e].', '.$d[city1e].', '.$d[state1e].' '.$d[zip1e]);
 <strong>
 	<div align="center" style="background-color:#FFFF00">
     	<a onClick="hideshow(document.getElementById('track'))">Tracking</a> &curren; 
-    	<a onClick="hideshow(document.getElementById('addresses'))">Addresses</a> &curren; 
-    	<a onClick="hideshow(document.getElementById('pobox'))">Mail Only</a> &curren; 
+    	<a onClick="hideshow(document.getElementById('addresses'))">Legacy Addresses</a> &curren; 
+    	<a onClick="hideshow(document.getElementById('pobox'))">Legacy Mail Only</a> &curren; 
     	<a onClick="hideshow(document.getElementById('status'))">Status</a> &curren; 
-        <a onClick="hideshow(document.getElementById('servers'))">Servers</a> &curren; 
+        <a onClick="hideshow(document.getElementById('servers'))">Legacy Servers</a> &curren; 
         <a onClick="hideshow(document.getElementById('notes'))">Notes</a> &curren; 
     </div>
 </strong>
