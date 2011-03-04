@@ -15,16 +15,18 @@ include 'edit.post.php';
 $id=$_COOKIE[psdata][user_id];
 
 // select packet and build query / html options for something like number of addresses or names and instruction set's
-if ($_GET[packet]){
+if ($_GET[packet] && $_GET[packet] < '20000'){
 	$query = "SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours FROM ps_packets where packet_id='$_GET[packet]'";
 	hardLog('loaded order for '.$_GET[packet],'user');
+}elseif($_GET[packet] && $_GET[packet] >= '20000'){
+	$query = "SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours FROM packet where id='$_GET[packet]'";
+	hardLog('loaded normalized order for '.$_GET[packet],'user');
 }else{
 	if($_GET[start]){
 		$query = "SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours FROM ps_packets where process_status='READY' and qualityControl='' and packet_id >= '$_GET[start]' order by packet_id ";
 	}else{
-		$query = "SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours FROM ps_packets where status='NEW' and process_status <> 'CANCELLED' and process_status <> 'DUPLICATE' AND process_status <> 'DAMAGED PDF' and process_status <> 'DUPLICATE/DIFF-PDF' order by RAND() ";
-		hardLog('loaded NEW order for '.$d[packet_id],'user');
-		$test55 = 1;
+		$query = "SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours FROM packets where status='NEW' and process_status <> 'CANCELLED' and process_status <> 'DUPLICATE' AND process_status <> 'DAMAGED PDF' and process_status <> 'DUPLICATE/DIFF-PDF' order by RAND() ";
+		hardLog('loaded NEW normalized order for '.$d[packet_id],'user');
 	}
 }
 
