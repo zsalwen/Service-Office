@@ -43,9 +43,9 @@ $dTest=mysql_fetch_array($rTest,MYSQL_ASSOC);
 $exportStatus = exportStatus($dTest[byID],$dTest[confirmID],$d[packet_id]);
 // end export commands
 
-$r=@mysql_query("select * from fileWatch where clientFile = '$d[client_file]'");
-while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-	echo "<script>alert('".addslashes($d[message])."');</script>";
+$rWatch=@mysql_query("select * from fileWatch where clientFile = '$d[client_file]'");
+while($dWatch=mysql_fetch_array($rWatch,MYSQL_ASSOC)){
+	echo "<script>alert('".addslashes($dWatch[message])."');</script>";
 }
 
 
