@@ -48,6 +48,25 @@ Files (20max):
 	var multi_selector = new MultiSelector( document.getElementById( 'files_list' ), 20 );
 	multi_selector.addElement( document.getElementById( 'my_file_element' ) );
 </script>
+
+<hr>
+Your unclaimed uploads
+<table>
+ <tr>
+  <td>processed</td>
+  <td>url</td>
+ </tr>
+<? 
+$r=@mysql_query("select * from attachment where server_id = '".$_COOKIE[psdata][user_id]."' and status = 'status' ");
+while($d=mysql_fetch_array($r,MYSQL_ASSOC)){ ?>
+ <tr>
+  <td><?=$d[processed];?></td>
+  <td><a href='<?=$d[url];?>' target='_Blank'><?=$d[url];?></a></td>
+ </tr>
+<? }?>
+</table>
+
+
 <? } ?>
 </body>
 </html>
