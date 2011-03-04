@@ -53,85 +53,13 @@ function hardLog($str,$type){
 }
 
 
-
-
-//OTDs
-
-
-
-/*
-
-//looking for $_GET[packet], $_GET[entry], $_GET[newDate], and $_GET[oldDate]
-$q="SELECT packet_id, client_file FROM ps_packets WHERE packet_id='".$_GET[packet]."'";
-$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
-$d=mysql_fetch_array($r,MYSQL_ASSOC);
-	//update packet
-	@mysql_query("UPDATE ps_packets SET estFileDate='".$_GET[newDate]."' WHERE packet_id='".$_GET[packet]."'");
-	//generate email
-	$entry=strtoupper($_GET[entry]);
-	$to = "Service Updates <mdwestserve@gmail.com>";
-	$subject = "Estimated File Date Updated for Packet $d[packet_id] ($d[client_file]), From $_GET[oldDate] To $_GET[newDate]: $entry";
-	$headers  = "MIME-Version: 1.0 \n";
-	$headers .= "Content-type: text/html; charset=iso-8859-1 \n";
-	$headers .= "From: ".$_COOKIE[psdata][name]." <".$_COOKIE[psdata][email]."> \n";
-	$body="Service for Packet $d[packet_id] (<strong>$d[client_file]</strong>) has been modified by ".$_COOKIE[psdata][name].", Estimated File Date was changed From $_GET[oldDate] To $_GET[newDate].";
-	$body .= "<br>REASON: $entry";
-	$body .= "<br><br>(410) 828-4568<br>service@mdwestserve.com<br>MDWestServe, Inc.";
-	$headers .= "Cc: Service Updates <service@mdwestserve.com> \n";
-	mail($to,$subject,$body,$headers);
-	//make timeline entry
-	timeline($_GET[packet],$_COOKIE[psdata][name]." Updated Est. Close from $_GET[oldDate] to $_GET[newDate]: $entry");
-echo "<script>window.location='order.php?packet=$_GET[packet]';</script>";
-
-
-
-
-
-
-
-
-
-//EVs
-
-
-
-
-//looking for $_GET[packet], $_GET[entry], $_GET[newDate], and $_GET[oldDate]
-$q="SELECT eviction_id, client_file FROM evictionPackets WHERE eviction_id='".$_GET[packet]."'";
-$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
-$d=mysql_fetch_array($r,MYSQL_ASSOC);
-	//update packet
-	@mysql_query("UPDATE evictionPackets SET estFileDate='".$_GET[newDate]."' WHERE eviction_id='".$_GET[packet]."'");
-	//generate email
-	$entry=strtoupper($_GET[entry]);
-	$to = "Service Updates <mdwestserve@gmail.com>";
-	$subject = "Estimated File Date Updated for Eviction $d[eviction_id] ($d[client_file]), From $_GET[oldDate] To $_GET[newDate]: $entry";
-	$headers  = "MIME-Version: 1.0 \n";
-	$headers .= "Content-type: text/html; charset=iso-8859-1 \n";
-	$headers .= "From: ".$_COOKIE[psdata][name]." <".$_COOKIE[psdata][email]."> \n";
-	$body="Service for Eviction $d[eviction_id] (<strong>$d[client_file]</strong>) has been modified by ".$_COOKIE[psdata][name].", Estimated File Date was changed From $_GET[oldDate] To $_GET[newDate].";
-	$body .= "<br>REASON: $entry";
-	$body .= "<br><br>(410) 828-4568<br>service@mdwestserve.com<br>MDWestServe, Inc.";
-	$headers .= "Cc: Service Updates <service@mdwestserve.com> \n";
-	mail($to,$subject,$body,$headers);
-	//make timeline entry
-	ev_timeline($_GET[packet],$_COOKIE[psdata][name]." Updated Est. Close from $_GET[oldDate] to $_GET[newDate]: $entry");
-echo "<script>window.location='order.php?packet=$_GET[packet]';</script>";*/
-
-
-
-
-
-
-
-
-//schedule.php update code
-
-echo "<div style='background-color:#00FF00;'>Courier Set<br />";
 echo "OTD: [$_GET[otd]]<br>";
 echo "EV: [$_GET[ev]]<br>";
 echo "newDate: [$_GET[newDate]]<br>";
 echo "entry: [$_GET[entry]]<br>";
+echo "courier: [$_GET[courier]]<br>";
+/*
+
 if ($_GET[ev] != ''){
 	$ev=explode("|",$_GET[ev]);
 }
@@ -139,17 +67,52 @@ if ($_GET[otd] != ''){
 	$otd=explode("|",$_GET[otd]);
 }
 foreach( $otd as $key => $value){
-	//if ($value != ''){
-		echo "<li>[OTD$value]</li>";
-		//@mysql_query("update ps_packets set courierID = '$_POST[courier]', estFileDate='$_POST[newEst]' where packet_id = '$key'");
-	//}
+	echo "<li>[OTD$value]</li>";
+	//looking for $value, $_GET[entry], $_GET[newDate]
+	$q="SELECT packet_id, client_file, estFileDate FROM ps_packets WHERE packet_id='".$value."' LIMIT 0,1";
+	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
+	$d=mysql_fetch_array($r,MYSQL_ASSOC);
+	//update packet
+	@mysql_query("UPDATE ps_packets SET estFileDate='".$_GET[newDate]."', courierID = '$_GET[courier]' WHERE packet_id='$value'");
+	//generate email
+	$entry=strtoupper($_GET[entry]);
+	$to = "Service Updates <mdwestserve@gmail.com>";
+	$subject = "EstFileDate Updated for OTD$d[packet_id] ($d[client_file]), From $d[estFileDate] To $_GET[newDate]: $entry";
+	$headers  = "MIME-Version: 1.0 \n";
+	$headers .= "Content-type: text/html; charset=iso-8859-1 \n";
+	$headers .= "From: ".$_COOKIE[psdata][name]." <".$_COOKIE[psdata][email]."> \n";
+	$body="Service for Packet $d[packet_id] (<strong>$d[client_file]</strong>) has been modified by ".$_COOKIE[psdata][name].", Estimated File Date was changed From $d[estFileDate] To $_GET[newDate].";
+	$body .= "<br>REASON: $entry";
+	$body .= "<br><br>(410) 828-4568<br>service@mdwestserve.com<br>MDWestServe, Inc.";
+	$headers .= "Cc: Service Updates <service@mdwestserve.com> \n";
+	mail($to,$subject,$body,$headers);
+	//make timeline entry
+	timeline($value,$_COOKIE[psdata][name]." Updated Est. Close from $d[estFileDate] to $_GET[newDate]: $entry");
 }
-echo "<hr>";
 foreach( $ev as $key => $value){
-	//if ($value != ''){
-		echo "<li>[EV$value]</li>";
-		//@mysql_query("update evictionPackets set courierID = '$_POST[courier]', estFileDate='$_POST[newEst]' where eviction_id = '$key'");
-	//}
+	echo "<li>[EV$value]</li>";
+	//looking for $value, $_GET[entry], $_GET[newDate]
+	$q="SELECT eviction_id, client_file, estFileDate FROM evictionPackets WHERE eviction_id='".$value."' LIMIT 0,1";
+	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
+	$d=mysql_fetch_array($r,MYSQL_ASSOC);
+	//update packet
+	@mysql_query("UPDATE evictionPackets SET estFileDate='".$_GET[newDate]."', courierID = '$_GET[courier]' WHERE eviction_id='$value'");
+	//generate email
+	$entry=strtoupper($_GET[entry]);
+	$to = "Service Updates <mdwestserve@gmail.com>";
+	$subject = "EstFileDate Updated for EV$d[eviction_id] ($d[client_file]), From $d[estFileDate] To $_GET[newDate]: $entry";
+	$headers  = "MIME-Version: 1.0 \n";
+	$headers .= "Content-type: text/html; charset=iso-8859-1 \n";
+	$headers .= "From: ".$_COOKIE[psdata][name]." <".$_COOKIE[psdata][email]."> \n";
+	$body="Service for Eviction $d[eviction_id] (<strong>$d[client_file]</strong>) has been modified by ".$_COOKIE[psdata][name].", Estimated File Date was changed From $d[estFileDate] To $_GET[newDate].";
+	$body .= "<br>REASON: $entry";
+	$body .= "<br><br>(410) 828-4568<br>service@mdwestserve.com<br>MDWestServe, Inc.";
+	$headers .= "Cc: Service Updates <service@mdwestserve.com> \n";
+	mail($to,$subject,$body,$headers);
+	//make timeline entry
+	ev_timeline($value,$_COOKIE[psdata][name]." Updated Est. Close from $d[estFileDate] to $_GET[newDate]: $entry");
 }
-echo "</div>";
+echo "<script>window.location='schedule.php';</script>";
+
+*/
 ?>
