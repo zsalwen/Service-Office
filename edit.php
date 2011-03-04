@@ -86,11 +86,22 @@ $packet=$d[packet_id];
 </tr></table>
 <!-- End Service Timeline Toolbar -->
 
-
-
 <table width="100%" style='background-color:<?=colorCode(stripHours($d[hours]),$d[filing_status]);?>; padding:0px;'>
 <tr>
 <td valign="top">
+
+<!-- start left pane -->
+<fieldset>
+<legend>Server and Staff Assignments</legend>
+<?
+$rSSA=@mysql_query("select * from instruction where packet_id = '$packet'");
+while($dSSA=mysql_fetch_array($rSSA,MYSQL_ASSOC)){
+ echo "<li>$dSSA[server_id] on $dSSA[name_id] at $dSSA[address_id]</li>";
+}
+?>
+</fieldset>
+
+
 <FIELDSET style="padding:0px;">
 <div style="background-color:#FFFFFF; padding:0px;" align="center">
 <table width="100%"  style="padding:0px; font-size: 11px;"><tr><td align="center">
