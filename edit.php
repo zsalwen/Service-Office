@@ -1,6 +1,5 @@
-<?PHP
-
-?>
+<html>
+<head>
 <script src="edit.js"></script>
 <link rel="stylesheet" type="text/css" href="edit.css" />
 <?PHP
@@ -8,33 +7,32 @@ if (!$_COOKIE[psdata][user_id]){
 	error_log(date('h:iA j/n/y')." SECURITY PREVENTED ACCESS to ".$_SERVER['SCRIPT_NAME']." by ".$_SERVER["REMOTE_ADDR"]."\n", 3, '/logs/user.log');
 	header ('Location: http://staff.mdwestserve.com'); 
 }
-session_start();
 date_default_timezone_set('America/New_York');
 include 'edit.functions.php';
 mysql_connect();
 mysql_select_db('core');
 include 'edit.post.php';
-$q="UPDATE ps_users SET location='".$_SERVER['PHP_SELF']."', online_now='".time()."' WHERE id = '".$_COOKIE[psdata][user_id]."'";
 $id=$_COOKIE[psdata][user_id];
 
 // select packet and build query / html options for something like number of addresses or names and instruction set's
 if ($_GET[packet]){
-	$r=@mysql_query("SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours FROM ps_packets where packet_id='$_GET[packet]'");
+	$query = "SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours FROM ps_packets where packet_id='$_GET[packet]'";
 	hardLog('loaded order for '.$_GET[packet],'user');
 }else{
 	if($_GET[start]){
-		$r=@mysql_query("SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours FROM ps_packets where process_status='READY' and qualityControl='' and packet_id >= '$_GET[start]' order by packet_id ");
+		$query = "SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours FROM ps_packets where process_status='READY' and qualityControl='' and packet_id >= '$_GET[start]' order by packet_id ";
 	}else{
-		$r=@mysql_query("SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours FROM ps_packets where status='NEW' and process_status <> 'CANCELLED' and process_status <> 'DUPLICATE' AND process_status <> 'DAMAGED PDF' and process_status <> 'DUPLICATE/DIFF-PDF' order by RAND() ");
+		$query = "SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours FROM ps_packets where status='NEW' and process_status <> 'CANCELLED' and process_status <> 'DUPLICATE' AND process_status <> 'DAMAGED PDF' and process_status <> 'DUPLICATE/DIFF-PDF' order by RAND() ";
 		hardLog('loaded NEW order for '.$d[packet_id],'user');
 		$test55 = 1;
 	}
 }
 
 // build main packet array
+$r=@mysql_query($query) or die($query.'<br>'.mysql_error());
 $d=mysql_fetch_array($r, MYSQL_ASSOC);
 ?>
-
+</head>
 <body style="padding:0px;">
 
 <? 
@@ -965,3 +963,5 @@ $lb = $headers["X-Forwarded-Host"];
 $mirror = $_SERVER['HTTP_HOST'];
 ?>
 <center style="padding:0px;">Mysql Closed on <?=$mirror;?> from <?=$lb;?></center>
+</body>
+</html>
