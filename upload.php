@@ -1,21 +1,6 @@
 <? 
-include 'common.php';
 
-$user = $_COOKIE[psdata][user_id];
-$packet = $_GET[packet];
-$ip = $_SERVER['REMOTE_ADDR'];
-$name=$_COOKIE['psdata']['name'];
-
-
-mysql_select_db('core');
-
-
-
-
-
-
-
-
+<?
 if ($_FILES['affidavit']){
 	if ($_FILES['affidavit']['size'] < 10145728){
 		if ($_FILES['affidavit']['size'] == 0){
@@ -49,11 +34,11 @@ mkdir ('/data/service/scans/'.date('Y').'/'.date('F').'/'.date('j'),0777);
 				mkdir ($file_path,0777);
 			}
 			$ext = explode('.', $_FILES['affidavit']['name']);
-			$target_path = $file_path."/".$packet.".".$tab.".".time().".pdf";  
+			$target_path = $file_path."/".$packet.".".time().".pdf";  
 			if(move_uploaded_file($_FILES['affidavit']['tmp_name'], $target_path)) {
 			}
-
-			$link1 = "http://mdwestserve.com/ps/affidavits/".$packet.".".$tab.".".time().".pdf"; 
+			$link1 = "http://mdwestserve.com/ps/affidavits/".date('Y')."/".date('F')."/".date('j')."/".$packet.".".time().".pdf"; 
+/*
 			if ($_POST[method] != 'Freeform'){
 				$method=$_POST[method];
 			}else{
@@ -65,9 +50,10 @@ mkdir ('/data/service/scans/'.date('Y').'/'.date('F').'/'.date('j'),0777);
 			@mysql_query($query);
 				timeline($packet,$_COOKIE[psdata][name]." Scanned $method");
 				psActivity('docUpload');
+*/
 		}
 		}else{
-			$ps = id2name($_COOKIE[psdata][user_id])."<br>".$link1;
+			echo "<br>".$link1;
 			$error = "<div>Your file size was too large.</div>";
 			$message = "<table>";
 			foreach($_FILES as $key => $value){
@@ -79,60 +65,34 @@ mkdir ('/data/service/scans/'.date('Y').'/'.date('F').'/'.date('j'),0777);
 			$message .="</table>";
 			$error .= $message;
 	}
-	header('Location: affidavitUpload.php?packet='.$packet.'&tab='.$tab);
+	//header('Location: upload.php?packet='.$packet.');
 }
 
 
 
-<? if (isset($error)){ echo $error;} ?>
-	
-    <table align="center" width="100%">
-    <form method="post" name="select">
-    <tr>
-    	<td align="center" height="50px" valign="top"><? if(!$_POST[select]){?><select onchange="this.form.submit()" name="select"><option>Select From Below</option>
-                <option>Certified Mail Receipt</option>
-                <option>Copy of out of state affidavit.</option>
-				<option>Complete return from court</option>
-                <option>Faxed Return from court</option>
-				<option>Occupant Notice Return from court</option>
-                <option>Out of State Affidavit of Attempted Service</option>
-                <option>Out of State Affidavit of Personal Delivery</option>
-                <option>Picture of Property</option>
-                <option>Return from court</option>
-				<option>Return from court-Attempts and Posting</option>
-				<option>Return from court-Attempts Only</option>
-				<option>Return from court-Mailing Only</option>
-				<option>Return from court-Posting Only</option>
-				<option>Returned Certified Mail</option>
-                <option>Returned First Class Mail</option>
-                <option>Signed Return Receipt</option>
-				<option>Server Notes</option>
-				<option>Unsigned Return Receipt</option>
-        <option>Freeform</option></select><? } ?></td>
-    </form>
-    </tr>
-    <form enctype="multipart/form-data" method="post" name="upload">
-	<input type="hidden" name="method" value="<?=$_POST[select]?>" />
-    <input type="hidden" name="defendant" value="<?=$name?>" />
-    <input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
-    <input type="hidden" name="case_no" value="<?=$d[case_no]?>" />
-    <input type="hidden" name="tab" value="<?=$tab?>" />
-    <input type="hidden" name="packet" value="<?=$packet?>" />
-    	<? if($_POST[select] == 'Freeform'){ ?>
-    	<tr>
-        	<td align="center">Freeform: <input size="50" name="freeform" /></td>
-        </tr>
-        <? } ?>
-        <tr>
-            <td align="center"><? if($_POST[select]){?><input size="50" name="affidavit" type="file" /><? }?></td>
-        </tr>
-    
-        <tr align="center">
-            <td colspan="2"><? if($_POST[select]){?><input type="submit" name="submit" value="Upload PDF of '<?=$_POST[select]?>' for Logic No. <?=$packet?>-<?=$tab?>" /><? } ?></td>
-        </tr>
-    </form>
-    </table> 
-</div></td></tr>
-	
-</table>
 
+
+
+
+ if (isset($error)){ echo $error;} ?>
+	
+<script>function MultiSelector( list_target, max ){this.list_target = list_target;this.count = 0;this.id = 0;if( max ){this.max = max;} else {this.max = -1;};this.addElement = function( element ){if( element.tagName == 'INPUT' && element.type == 'file' ){element.name = 'file_' + this.id++;element.multi_selector = this;element.onchange = function(){var new_element = document.createElement( 'input' );new_element.type = 'file';this.parentNode.insertBefore( new_element, this );this.multi_selector.addElement( new_element );this.multi_selector.addListRow( this );this.style.position = 'absolute';this.style.left = '-1000px';};if( this.max != -1 && this.count >= this.max ){element.disabled = true;};this.count++;this.current_element = element;} else {alert( 'Error: not a file input element' );};};this.addListRow = function( element ){var new_row = document.createElement( 'div' );var new_row_button = document.createElement( 'input' );new_row_button.type = 'button';new_row_button.value = 'Delete';new_row.element = element;new_row_button.onclick= function(){this.parentNode.element.parentNode.removeChild( this.parentNode.element );this.parentNode.parentNode.removeChild( this.parentNode );this.parentNode.element.multi_selector.count--;this.parentNode.element.multi_selector.current_element.disabled = false;return false;};new_row.innerHTML = element.value;new_row.appendChild( new_row_button );this.list_target.appendChild( new_row );};};<script>    
+
+
+
+<form enctype="multipart/form-data" action="your_script_here.script" method = "post">
+	<!-- The file element -- NOTE: it has an ID -->
+	<input id="my_file_element" type="file" name="file_1" >
+	<input type="submit">
+</form>
+Files:
+<!-- This is where the output will appear -->
+<div id="files_list"></div>
+<script>
+	<!-- Create an instance of the multiSelector class, pass it the output target and the max number of files -->
+	var multi_selector = new MultiSelector( document.getElementById( 'files_list' ), 3 );
+	<!-- Pass in the file element -->
+	multi_selector.addElement( document.getElementById( 'my_file_element' ) );
+</script>
+</body>
+</html>
