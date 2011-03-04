@@ -1,4 +1,23 @@
 <?
+// new functions
+function serverID($id){
+	$q=@mysql_query("SELECT name from ps_users where id='$id'") or die(mysql_error());
+	$d=mysql_fetch_array($q, MYSQL_ASSOC);
+	return $d[name];
+}
+function nameID($id){
+	$q=@mysql_query("SELECT full from name where id='$id'") or die(mysql_error());
+	$d=mysql_fetch_array($q, MYSQL_ASSOC);
+	return $d[full];
+}
+function addressID($id){
+	$q=@mysql_query("SELECT * from address where id='$id'") or die(mysql_error());
+	$d=mysql_fetch_array($q, MYSQL_ASSOC);
+	return $d[mailingAddress].' '.$d[city].' '.$d[state].' '.$d[zip];
+}
+
+
+
 // collected from common
 function initals($str){
 	$str = explode(' ',$str);
