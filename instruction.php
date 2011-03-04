@@ -12,7 +12,7 @@ echo "<script>window.parent.location.href='edit.php?packet=$_GET[packet]';</scri
 }
 
 if ($_POST[addName]){
-
+@mysql_query("insert into name (prefix,first,middle,last,suffix) values ('$_POST[prefix]','$_POST[first]','$_POST[middle]','$_POST[last]','$_POST[suffix]') ");
 }
 
 if ($_POST[addAddress]){
@@ -34,6 +34,19 @@ if ($d[company]){
 }else{ 
  $sList .= "<option value='$d[id]'>$d[name]</option>" ;}
 } 
+
+// build name list
+$q= "select distinct last from name order by last";
+$r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
+while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {
+$nList .= "<OPTGROUP LABEL='$d[last]'>";
+$q2= "select * from name where last = '$d[last]' order by first";
+$r2=@mysql_query($q2) or die("Query: $q2<br>".mysql_error());
+while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)) {
+$nList .= "<option value='$d[id]'>$d[prefix] $d[first] $d[middle] $d[last] $d[suffix] On Aff? $d[on_affidavit] </option>
+}
+$nList .= "</OPTGROUP>" ;
+}
 
 
 
@@ -66,5 +79,36 @@ if ($d[company]){
 <input type="submit">
 </form>
 <? } ?>
+
+
+
+<? if ($_GET[add] == 'name'){ ?>
+<h3>Adding Name</h3>
+<form method="POST">
+<input type="hidden" name="addName" value="1">
+<table>
+	<tr>
+		<td>Prefix</td>
+		<td>First</td>
+		<td>Middle</td>
+		<td>Last</td>
+		<td>Suffix</td>
+		<td>On affidavit headers</td>
+	</tr>
+	<tr>
+		<td><input name="prefix"></td>
+		<td><input name="first"></td>
+		<td><input name="middle"></td>
+		<td><input name="last"></td>
+		<td><input name="suffix"></td>
+		<td valign='top"><select name="on_affidavit" size="2"><option>Yes</option><option>No</option></select></td>
+	</tr>
+</table>
+<input type="submit">
+</form>
+<? } ?>
+
+
+
 
 <? mysql_close(); ?>
