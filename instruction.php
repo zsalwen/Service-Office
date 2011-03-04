@@ -43,7 +43,7 @@ $nList .= "<OPTGROUP LABEL='$d[last]'>";
 $q2= "select * from name where last = '$d[last]' order by first";
 $r2=@mysql_query($q2) or die("Query: $q2<br>".mysql_error());
 while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)) {
-$nList .= "<option value='$d[id]'>$d[prefix] $d[first] $d[middle] $d[last] $d[suffix] On Aff? $d[on_affidavit] </option>";
+$nList .= "<option value='$d2[id]'>$d2[prefix] $d2[first] $d2[middle] $d2[last] $d2[suffix] On Affidavit: $d2[on_affidavit]</option>";
 }
 $nList .= "</OPTGROUP>" ;
 }
