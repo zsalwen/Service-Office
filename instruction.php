@@ -71,7 +71,7 @@ $nList .= "</OPTGROUP>" ;
 	<tr>
 		<td><?=$_GET[packet]?></td>
 		<td><select name="server_id" size="10"><?=$sList?></select></td>
-		<td><select name="address_id" size="10"><option><?=$_GET[packet]?></option></select></td>
+		<td><select name="address_id" size="10"><?=$nList?></select></td>
 		<td><select name="name_id" size="10"><option><?=$_GET[packet]?></option></select></td>
 		<td valign='top"><select name="allowSubService" size="2"><option>Yes</option><option>No</option></select></td>
 	</tr>
