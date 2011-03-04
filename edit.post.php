@@ -1,4 +1,5 @@
 <?
+/*
 if ($_POST[reopen]){
 	$r13=@mysql_query("select processor_notes, fileDate from ps_packets where packet_id = '$_GET[packet]'");
 	$d13=mysql_fetch_array($r13,MYSQL_ASSOC);
@@ -316,5 +317,5 @@ if ($_POST[submit]){
 		}
 	}
 }
-
+*/
 ?>
