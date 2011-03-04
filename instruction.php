@@ -7,7 +7,7 @@ mysql_connect();
 mysql_select_db('core');
 if ($_POST[mainInstruction]){
 @mysql_query("INSERT INTO instruction (packet_id, server_id, address_id, name_id, allowSubService) VALUES
-('$_POST[packet_id]', '$_POST[server_id]', '$_POST[address_id]', '$_POST[name_id]', '$_POST[allowSubService]', '$_POST[]')");
+('$_POST[packet_id]', '$_POST[server_id]', '$_POST[address_id]', '$_POST[name_id]', '$_POST[allowSubService]')");
 <script>window.parent.location.href='edit.php?packet=$_GET[packet]';</script>
 }
 
