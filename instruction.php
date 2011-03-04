@@ -13,12 +13,12 @@ echo "<script>window.parent.location.href='edit.php?packet=$_GET[packet]';</scri
 
 if ($_POST[addName]){
 @mysql_query("insert into name (full,last) values ('$_POST[full]','$_POST[last]') ");
-header('Location: instructions.php?packet='.$_GET[packet]);
+header('Location: instruction.php?packet='.$_GET[packet]);
 }
 
 if ($_POST[addAddress]){
-
-header('Location: instructions.php?packet='.$_GET[packet]);
+@mysql_query("insert into address (mailingAddress,city,state,zip) values ('$_POST[mailingAddress]','$_POST[city]','$_POST[state]','$_POST[zip]') ");
+header('Location: instruction.php?packet='.$_GET[packet]);
 }
 
 
@@ -100,6 +100,27 @@ $nList .= "</OPTGROUP>" ;
 <? } ?>
 
 
+<? if ($_GET[add] == 'address'){ ?>
+<h3>Adding Name</h3>
+<form method="POST">
+<input type="hidden" name="addAddress" value="1">
+<table>
+	<tr>
+		<td>First Line of Address</td>
+		<td>City</td>
+		<td>State</td>
+		<td>Zip</td>
+	</tr>
+	<tr>
+		<td><input name="mailingAddress"></td>
+		<td><input name="city"></td>
+		<td><input name="state"></td>
+		<td><input name="zip"></td>
+	</tr>
+</table>
+<input type="submit">
+</form>
+<? } ?>
 
 
 <? mysql_close(); ?>
