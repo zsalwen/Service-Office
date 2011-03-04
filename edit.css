@@ -1,0 +1,46 @@
+select.italic {
+	font-style:italic;
+	background-color:red;
+}
+.done {
+	height:50px;
+	width:175px;
+	font-size:12pt;
+	text-align:center;
+	background-color:ccffcc;
+	border:ridge 3px #FF0000;
+	}	
+.active {
+	height:50px;
+	width:175px;
+	font-size:12pt;
+	text-align:center;
+	background-color:ffffcc;
+	border:ridge 3px #FFFF00;
+	}
+.alert	{
+	height:50px;
+	width:175px;
+	font-size:12pt;
+	text-align:center;
+	background-color:ffcccc;
+	border:ridge 3px #FF0000;
+	}
+.pending{
+	height:50px;
+	width:175px;
+	font-size:12pt;
+	text-align:center;
+	background-color:cccccc;
+	border:ridge 3px #FF0000;
+	}
+a { text-decoration:none}
+table { padding:0px; margin:0px; cellpadding:0px;}
+body { margin:0px; padding:0px;}
+input, select { background-color:#CCFFFF; font-variant:small-caps; }
+td { font-variant:small-caps;}
+legend {margin:0px; border:solid 1px #FF0000; background-color:#cccccc; padding:0px;}
+legend.a {margin:0px; border:solid 1px #FF0000; background-color:#cccccc; padding:0px; font-size:12px}
+fieldset {margin:0px; padding:0px; background-color:#FFFFFF; }
+.single{background-color:#00FF00}
+.duplicate{background-color:#FF0000}
