@@ -12,7 +12,7 @@ return $str;
 }
 mysql_connect();
 mysql_select_db('core');
-if ($_POST[note] && $_POST[field] && $_GET[packet] > '20000'){
+if ($_POST[note] && $_POST[field] && $_GET[packet] < '20000'){
 $r=@mysql_query("select $_POST[field] from ps_packets where packet_id = '$_GET[packet]'");
 $d=mysql_fetch_array($r,MYSQL_ASSOC);
 $oldNote = $d[$_POST[field]];
