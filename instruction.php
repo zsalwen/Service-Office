@@ -53,7 +53,7 @@ $q= "select distinct state from address order by state";
 $r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
 while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {
 $aList .= "<OPTGROUP LABEL='$d[state]'>";
-$q2= "select * from address where state = '$d[state]' order by city, mailingAddress";
+$q2= "select * from address where state = '$d[state]' order by id DESC";
 $r2=@mysql_query($q2) or die("Query: $q2<br>".mysql_error());
 while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)) {
 $aList .= "<option value='$d2[id]'>$d2[mailingAddress] $d2[city], $d2[state] $d2[zip]</option>";
