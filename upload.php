@@ -1,6 +1,4 @@
 <? 
-
-<?
 if ($_FILES['affidavit']){
 	if ($_FILES['affidavit']['size'] < 10145728){
 		if ($_FILES['affidavit']['size'] == 0){
