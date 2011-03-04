@@ -100,11 +100,11 @@ include 'edit.testing.php'; // make sure we have main packet array before testin
 
 <!-- start left pane -->
 <fieldset>
-<legend>Server and Staff Assignments</legend>
+<legend>Server and Staff Assignments <a href='upload.php' target='preview'>Upload</a>, <a href="#" onclick="window.open('lightboard.php?packet=<?=$d[packet_id]?>','Lightboard','menubar=0,resizable=1,status=0,width=800,height=600') ">PDF Lightboard</a></legend>
 <?
 $rSSA=@mysql_query("select * from instruction where packet_id = '$packet'");
 while($dSSA=mysql_fetch_array($rSSA,MYSQL_ASSOC)){
- echo "<li>".serverID($dSSA[server_id])." on ".nameID($dSSA[name_id])." at ".addressID($dSSA[address_id])."</li>";
+ echo "<li><input type='checkbox'>".serverID($dSSA[server_id])." on ".nameID($dSSA[name_id])." at ".addressID($dSSA[address_id])."</li>";
 }
 ?>
 </fieldset>
@@ -217,7 +217,7 @@ if($d[lossMit] != ''){
 </td>
 </tr>
 <tr>
-<td colspan='2'><div style=" font-size:12px; background-color:ffffff; border:solid 1px #ffff00; padding:0px;">
+<td colspan='2'><div style=" font-size:12px; background-color:ffffff; padding:0px;">
 <?
 mysql_select_db('core');
 $q5="SELECT * FROM ps_affidavits WHERE packetID = '$d[packet_id]' order by defendantID";
@@ -227,7 +227,6 @@ while ($d5=mysql_fetch_array($r5, MYSQL_ASSOC)){
 		echo "<li><a target='_blank' href='".str_replace('ps/','',$d5[affidavit])."'><strong>".$defname."</strong>: $d5[method]</a></li>";
 }
 ?>
-<a href="affidavitUpload.php?packet=<?=$d[packet_id]?>" target="preview">Upload More Documents</a>, <a href="#" onclick="window.open('/lightboard.php?packet=<?=$d[packet_id]?>','Lightboard','menubar=0,resizable=1,status=0,width=800,height=600') ">Lightboard</a>
 </div></td></tr>
 <? if ($d[attorney_notes]){ ?>
 <tr>
