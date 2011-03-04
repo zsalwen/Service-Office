@@ -3,10 +3,7 @@
 <head>
 <? 
 if ($_FILES){
-$max = count($_FILES[my_file_element]);
-echo "Attempting to upload $max";
-
-
+ print_r($_FILES);
 }
 
 /*
