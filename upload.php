@@ -1,5 +1,4 @@
 <html>
-
 <head>
 <pre>
 <? 
@@ -9,6 +8,18 @@ if ($_FILES){
 ?>
 </pre>
 <?
+// test the loop
+$i=0;
+$max=20;
+while($i<$max){
+$test = $_FILES[file_$i][name];
+if ($test){
+echo "<li>Processing Upload: $test</li>"
+}
+$i++;
+}
+
+
 /*
 	if ($_FILES['affidavit']){
 	if ($_FILES['affidavit']['size'] < 10145728){
@@ -96,7 +107,7 @@ Files:
 <div id="files_list"></div>
 <script>
 	<!-- Create an instance of the multiSelector class, pass it the output target and the max number of files -->
-	var multi_selector = new MultiSelector( document.getElementById( 'files_list' ), 3 );
+	var multi_selector = new MultiSelector( document.getElementById( 'files_list' ), 20 );
 	<!-- Pass in the file element -->
 	multi_selector.addElement( document.getElementById( 'my_file_element' ) );
 </script>
