@@ -368,7 +368,7 @@ $today = date('Y-m-d');
 
 
 ?>
-<form method="post" action="multEntry.php">
+<form method="post">
 <div style='background-color:#cc6666;' align="center">
 Courier: <select name="courier">
 <?
