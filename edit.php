@@ -310,6 +310,9 @@ $dc=mysql_fetch_array($rc,MYSQL_ASSOC);
 <LEGEND ACCESSKEY=C>Service Links</LEGEND>
 <table style="padding:0px; font-weight:bold; border-collapse:collapse; height:150px !important; font-size:11px;" cellpadding="0" cellspacing="0">
 	<tr>
+		<td><a href="http://staff.mdwestserve.com/instruction.php?packet=<?=$d[packet_id]?>" target="preview">Payments</a></td>
+	</tr>
+	<tr>
 		<td><a href="http://staff.mdwestserve.com/otd/minips_pay.php?id=<?=$d[packet_id]?>" target="preview">Payments</a></td>
 	</tr>
 	<tr>
