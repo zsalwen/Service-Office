@@ -22,6 +22,7 @@ function prompter(otd,ev,newDate){
 		window.location="http://staff.mdwestserve.com/schedule.php";
 	}
 	else{
+		alert("Redirect!");
 		window.location="http://staff.mdwestserve.com/multEntry.php?otd="+otd+"&ev="+ev+"&entry="+reply+"&newDate="+newDate9;
 	}
 }
@@ -30,7 +31,7 @@ function prompter(otd,ev,newDate){
 if ($_POST[courier]){
 	if ($_POST[newEst] > 0){
 	//use prompter
-	echo "<script>alert('OTD: $_POST[otd], EV: $_POST[ev], newEst: $_POST[newEst]')</script>";
+	echo "<script>alert('OTD: $_POST[otd], EV: $_POST[ev], newEst: $_POST[newEst]');</script>";
 	echo "<script>prompter('$_POST[otd]','$_POST[ev]','$_POST[newEst]');</script>";
 	}else{
 		echo "<div style='background-color:#00FF00;'>Courier Set<br />";
