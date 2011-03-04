@@ -47,7 +47,4 @@ $rWatch=@mysql_query("select * from fileWatch where clientFile = '$d[client_file
 while($dWatch=mysql_fetch_array($rWatch,MYSQL_ASSOC)){
 	echo "<script>alert('".addslashes($dWatch[message])."');</script>";
 }
-
-
-
-?>
+?>, Testing Complete
