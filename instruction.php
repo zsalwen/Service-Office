@@ -36,23 +36,17 @@ if ($_POST[addServer]){
 <table>
 	<tr>
 		<td>Packet ID</td>
-		<td><?=$_GET[packet]?></td>
-	</tr>
-	<tr>
 		<td>Server</td>
-		<td><select name="server_id" size="10"><option><?=$_GET[packet]?></option></select></td>
-	</tr>
-	<tr>
 		<td>Address</td>
-		<td><select name="address_id" size="10"><option><?=$_GET[packet]?></option></select></td>
-	</tr>
-	<tr>
 		<td>Name</td>
-		<td><select name="name_id" size="10"><option><?=$_GET[packet]?></option></select></td>
+		<td>Allow Sub-Service</td>
 	</tr>
 	<tr>
-		<td>Allow Sub-Service</td>
-		<td><select name="allowSubService"><option>Yes</option><option>No</option></select></td>
+		<td><?=$_GET[packet]?></td>
+		<td><select name="server_id" size="10"><option><?=$_GET[packet]?></option></select></td>
+		<td><select name="address_id" size="10"><option><?=$_GET[packet]?></option></select></td>
+		<td><select name="name_id" size="10"><option><?=$_GET[packet]?></option></select></td>
+		<td><select name="allowSubService" size="2"><option>Yes</option><option>No</option></select></td>
 	</tr>
 </table>
 <input type="submit">
