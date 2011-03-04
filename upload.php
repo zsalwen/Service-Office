@@ -19,87 +19,29 @@ if ($name){
 echo "<li>Processing Upload: $name</li>";
 $target_path = $path.$name;  
  if(move_uploaded_file($_FILES["file_$i"]['tmp_name'], $target_path)) {
-echo "<li>http://".$_SERVER['HTTP_HOST']."/affidavits/".date('Y')."/".date('F')."/".date('j')."/".$name." ready</li>";
+$finalPATH = $target_path;
+$finalURL = http://mdwestserve.com."/affidavits/".date('Y')."/".date('F')."/".date('j')."/".$name;
+$finalURL2 = http://".$_SERVER['HTTP_HOST']."/affidavits/".date('Y')."/".date('F')."/".date('j')."/".$name;
+echo "<li>$name." ready and listed as unclaimed.</li>";
+@mysql_query("insert into attachment (processed, url, path, absolute_url) values (NOW(), '$finalURL','$finalPATH','$finalURL2')");
 }else{
 echo "<li>$name failed</li>";
 }
-
 }
 $i++;
 }
-
-
-/*
-
-			
-
-
-
-
-
-
-
-
-			$file_path = $path;
-			if (!file_exists($file_path)){
-				mkdir ($file_path,0777);
-			}
-			$ext = explode('.', $_FILES['affidavit']['name']);
-			$target_path = $file_path."/".$packet.".".time().".pdf";  
-			if(move_uploaded_file($_FILES['affidavit']['tmp_name'], $target_path)) {
-			}
-			$link1 = "http://mdwestserve.com/ps/affidavits/".date('Y')."/".date('F')."/".date('j')."/".$packet.".".time().".pdf"; 
-
-			if ($_POST[method] != 'Freeform'){
-				$method=$_POST[method];
-			}else{
-				$method=$_POST[freeform];
-			}
-			$query = "INSERT into ps_affidavits (packetID, defendantID, affidavit, userID, method, uploadDate) VALUES ('$packet','$tab','$link1','$user','$method', NOW())";
-			mysql_select_db('core');
-
-			@mysql_query($query);
-				timeline($packet,$_COOKIE[psdata][name]." Scanned $method");
-				psActivity('docUpload');
-
-		}
-		}else{
-			echo "<br>".$link1;
-			$error = "<div>Your file size was too large.</div>";
-			$message = "<table>";
-			foreach($_FILES as $key => $value){
-			$message .="<tr><td>$key</td><td>$value</td></tr>";
-			}
-			foreach($_SERVER as $key => $value){
-			$message .="<tr><td>$key</td><td>$value</td></tr>";
-			}
-			$message .="</table>";
-			$error .= $message;
-	}
-	//header('Location: upload.php?packet='.$packet.');
-}
-
-if (isset($error)){ echo $error;} 
-*/
 ?>
-	<script src="multifile_compressed.js"></script>
+<script src="multifile_compressed.js"></script>
 </head>
-
 <body>
-
-<!-- This is the form -->
 <form enctype="multipart/form-data" action="upload.php" method = "post">
-	<!-- The file element -- NOTE: it has an ID -->
 	<input id="my_file_element" type="file" name="file_1" >
-	<input type="submit">
+	<input type="submit" value="Upload to unclaimed">
 </form>
-Files:
-<!-- This is where the output will appear -->
+Files (20max):
 <div id="files_list"></div>
 <script>
-	<!-- Create an instance of the multiSelector class, pass it the output target and the max number of files -->
 	var multi_selector = new MultiSelector( document.getElementById( 'files_list' ), 20 );
-	<!-- Pass in the file element -->
 	multi_selector.addElement( document.getElementById( 'my_file_element' ) );
 </script>
 </body>
