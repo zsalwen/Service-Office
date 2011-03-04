@@ -57,7 +57,7 @@ Your unclaimed uploads
   <td>url</td>
  </tr>
 <? 
-$r=@mysql_query("select * from attachment where server_id = '".$_COOKIE[psdata][user_id]."' and status = 'status' ");
+$r=@mysql_query("select * from attachment where server_id = '".$_COOKIE[psdata][user_id]."' and status = 'unclaimed' ");
 while($d=mysql_fetch_array($r,MYSQL_ASSOC)){ ?>
  <tr>
   <td><?=$d[processed];?></td>
