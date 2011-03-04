@@ -13,15 +13,14 @@ echo "<script>window.parent.location.href='edit.php?packet=$_GET[packet]';</scri
 
 if ($_POST[addName]){
 @mysql_query("insert into name (prefix,first,middle,last,suffix) values ('$_POST[prefix]','$_POST[first]','$_POST[middle]','$_POST[last]','$_POST[suffix]') ");
+header('Location: instructions.php?packet='.$_GET[packet]);
 }
 
 if ($_POST[addAddress]){
 
+header('Location: instructions.php?packet='.$_GET[packet]);
 }
 
-if ($_POST[addServer]){
-
-}
 
 // build server list
 $q= "select * from ps_users where contract = 'YES' order by id ASC";
@@ -54,7 +53,6 @@ $nList .= "</OPTGROUP>" ;
 ?>
 <li>Add <a href="?packet=<?=$_GET[packet];?>&add=name">name</a> to database</li>
 <li>Add <a href="?packet=<?=$_GET[packet];?>&add=address">address</a> to database</li>
-<li>Add <a href="?packet=<?=$_GET[packet];?>&add=server">server</a> to database</li>
 <hr>
 <? if (!$_GET[add]){ ?>
 <h3>Adding Instruction Set</h3>
@@ -63,17 +61,15 @@ $nList .= "</OPTGROUP>" ;
 <input type="hidden" name="packet_id" value="<?=$_GET[packet_id]?>">
 <table>
 	<tr>
-		<td>Packet ID</td>
 		<td>Server</td>
 		<td>Address</td>
 		<td>Name</td>
 		<td>Allow Sub-Service</td>
 	</tr>
 	<tr>
-		<td><?=$_GET[packet]?></td>
 		<td><select name="server_id" size="10"><?=$sList?></select></td>
-		<td><select name="address_id" size="10"><?=$nList?></select></td>
-		<td><select name="name_id" size="10"><option><?=$_GET[packet]?></option></select></td>
+		<td><select name="address_id" size="10"><?=$aList?></select></td>
+		<td><select name="name_id" size="10"><?=$nList?></select></td>
 		<td valign='top"><select name="allowSubService" size="2"><option>Yes</option><option>No</option></select></td>
 	</tr>
 </table>
