@@ -27,9 +27,12 @@ if ($_POST[addServer]){
 $q= "select * from ps_users where contract = 'YES' order by id ASC";
 $r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
 while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {
-$sList .= "<option value='$d[id]'>";
-if ($d[company]){ $sList .= "$d[company], $d[name]" ;}else{ $sList .= "$d[name]" ;}
-$sList .= "</option>";
+$sList .= "";
+
+if ($d[company]){ 
+ $sList .= "<OPTGROUP LABEL='$d[company]'><option value='$d[id]'>$d[name]</option></OPTGROUP>" ;
+}else{ 
+ $sList .= "<option value='$d[id]'>$d[name]</option>" ;}
 } 
 
 
