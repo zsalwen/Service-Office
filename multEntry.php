@@ -138,11 +138,17 @@ foreach( $otd as $key => $value){
 	echo "<li>OTD$key</li>";
 	//@mysql_query("update ps_packets set courierID = '$_POST[courier]', estFileDate='$_POST[newEst]' where packet_id = '$key'");
 }
-echo "<hr>";
 foreach( $ev as $key => $value){
 	echo "<li>EV$key</li>";
 	//@mysql_query("update evictionPackets set courierID = '$_POST[courier]', estFileDate='$_POST[newEst]' where eviction_id = '$key'");
 } 
-
+$i=0;
+while($i < count($otd)){$i++;
+	echo "<li>OTD".$otd[$i]."</li>";
+}
+$i=0;
+while($i < count($ev)){$i++;
+	echo "<li>EV".$ev[$i]."</li>";
+}
 echo "</div>";
 ?>
