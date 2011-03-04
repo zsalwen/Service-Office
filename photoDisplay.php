@@ -86,7 +86,7 @@ if (!$_GET[server] && !$_GET[viewAll]){
 	$serverCount=mysql_num_rows($r);
 	$allCount=photoCount($packet,$def);
 	if ($serverCount != $allCount){
-		echo "<table align='center' valign='top'><tr><td><a href='?packet=$packet&defendant=$def&server=1'>View Photos (As Server Would See) [$serverCount]</a></td><td><a href='?packet=$packet&defendant=$def&viewAll=1'>View All Photos [$allCount]</a></td></tr></table>";
+		echo "<table align='center' valign='top'><tr><td><a href='photoDisplay.php?packet=$packet&defendant=$def&server=1'>View Photos (As Server Would See) [$serverCount]</a></td><td><a href='photoDisplay.php?packet=$packet&defendant=$def&viewAll=1'>View All Photos [$allCount]</a></td></tr></table>";
 	}else{
 		//list all photos within ps_photos table for this packet & defendant
 		if(strpos($packet,'EV') !== false){
