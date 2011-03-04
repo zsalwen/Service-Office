@@ -1,6 +1,9 @@
 <html>
 <head>
 <?
+if($_COOKIE[psdata][name]){
+mysql_connect();
+mysql_select_db('core');
 $path = '/data/service/scans/'.date('Y').'/'.date('F').'/'.date('j').'/';
 if (!file_exists('/data/service/scans/'.date('Y'))){
 mkdir ('/data/service/scans/'.date('Y'),0777);
@@ -44,5 +47,6 @@ Files (20max):
 	var multi_selector = new MultiSelector( document.getElementById( 'files_list' ), 20 );
 	multi_selector.addElement( document.getElementById( 'my_file_element' ) );
 </script>
+<? } ?>
 </body>
 </html>
