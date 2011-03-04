@@ -17,7 +17,6 @@ while($i<$max){
 $name = $_FILES["file_$i"][name];
 if ($name){
 echo "<li>Processing Upload: $name</li>";
-/*
 $target_path = $path.$name;  
  if(move_uploaded_file($_FILES['affidavit']['tmp_name'], $target_path)) {
 }
