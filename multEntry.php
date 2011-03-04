@@ -144,11 +144,12 @@ foreach( $ev as $key => $value){
 	//@mysql_query("update evictionPackets set courierID = '$_POST[courier]', estFileDate='$_POST[newEst]' where eviction_id = '$key'");
 } 
 echo "<hr>";
-$i=0;
+$i=-1;
 while($i < count($otd)){$i++;
 	echo "<li>OTD".$otd[$i]."</li>";
 }
-$i=0;
+echo "<hr>";
+$i=-1;
 while($i < count($ev)){$i++;
 	echo "<li>EV".$ev[$i]."</li>";
 }
