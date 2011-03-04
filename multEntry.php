@@ -53,12 +53,12 @@ function hardLog($str,$type){
 }
 
 
-echo "OTD: [$_GET[otd]]<br>";
+/*echo "OTD: [$_GET[otd]]<br>";
 echo "EV: [$_GET[ev]]<br>";
 echo "newDate: [$_GET[newDate]]<br>";
 echo "entry: [$_GET[entry]]<br>";
-echo "courier: [$_GET[courier]]<br>";
-/*
+echo "courier: [$_GET[courier]]<br>";*/
+
 
 if ($_GET[ev] != ''){
 	$ev=explode("|",$_GET[ev]);
@@ -113,6 +113,4 @@ foreach( $ev as $key => $value){
 	ev_timeline($value,$_COOKIE[psdata][name]." Updated Est. Close from $d[estFileDate] to $_GET[newDate]: $entry");
 }
 echo "<script>window.location='schedule.php';</script>";
-
-*/
 ?>

@@ -15,25 +15,43 @@ which.style.display="none"
 else
 which.style.display="block"
 }
+function prompter(otd,ev,newDate,courier){
+	var reply = prompt("Please enter your reason for updating the Est. Close Date", "")
+	if (reply == null){
+		alert("That is not a valid reason")
+		window.location="http://staff.mdwestserve.com/schedule.php";
+	}
+	else{
+		window.location="http://staff.mdwestserve.com/multEntry.php?otd="+otd+"&ev="+ev+"&entry="+reply+"&newDate="+newDate+"&courier="+courier;
+	}
+}
 </script>
 <?
 if ($_POST[courier]){
-	echo "<div style='background-color:#00FF00;'>Courier Set<br />";
+	if ($_POST[newEst] > 0){
+	//use prompter
+	$list='';
+	foreach( $_POST[otd] as $key => $value){
+		$list .= "$key|";
+	}
+	$list=substr($list,0,-1);
+	$list2='';
 	foreach( $_POST[ev] as $key => $value){
-		if ($_POST[newEst] > 0){
-			@mysql_query("update evictionPackets set courierID = '$_POST[courier]', estFileDate='$_POST[newEst]' where eviction_id = '$key'");
-		}else{
+		$list2 .= "$key|";
+	}
+	$list2=substr($list2,0,-1);
+	//echo "<script>alert('OTD: $_POST[otd], EV: $_POST[ev], newEst: $_POST[newEst]');</script>";
+	echo "<script>prompter('$list','$list2','$_POST[newEst]','$_POST[courier]');</script>";
+	}else{
+		echo "<div style='background-color:#00FF00;'>Courier Set<br />";
+		foreach( $_POST[ev] as $key => $value){
 			@mysql_query("update evictionPackets set courierID = '$_POST[courier]' where eviction_id = '$key'");
 		}
-	}
-	foreach( $_POST[otd] as $key => $value){
-		if ($_POST[newEst] > 0){
-			@mysql_query("update ps_packets set courierID = '$_POST[courier]', estFileDate='$_POST[newEst]' where packet_id = '$key'");
-		}else{
+		foreach( $_POST[otd] as $key => $value){
 			@mysql_query("update ps_packets set courierID = '$_POST[courier]' where packet_id = '$key'");
 		}
+		echo "</div>";
 	}
-	echo "</div>";
 }
 
 
