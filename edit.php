@@ -378,7 +378,7 @@ if ($dc[packet_id]){
 </FIELDSET>
 </td></tr></table>
 <table style="display:<? if ($_GET[packet]){ echo "block";}else{ echo "none"; }?>; padding:0px;" id="notes" width="100%"><tr><td colspan="2"><fieldset><legend>Notes</legend>
-<iframe height="200px" width="700px"  frameborder="0" src="http://staff.mdwestserve.com/notes.php?packet=<?=$d[packet_id]?>"></iframe></fieldset></td></tr></table>
+<iframe height="200px" width="700px"  frameborder="0" src="http://staff.mdwestserve.com/notes.php?packet=<?=$packet?>"></iframe></fieldset></td></tr></table>
 <table style="display:none;" id="track" width="100%"><tr><td align='center'>
 <FIELDSET>
 <LEGEND ACCESSKEY=C>docuTrack: in-house document tracking solution</LEGEND>
