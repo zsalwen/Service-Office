@@ -30,8 +30,16 @@ function prompter(otd,ev,newDate){
 if ($_POST[courier]){
 	if ($_POST[newEst] > 0){
 	//use prompter
+	foreach( $_POST[ev] as $key => $value){
+		$list .= "$key|";
+	}
+	$list=substr($list,0,-1);
+	foreach( $_POST[otd] as $key => $value){
+		$list2 .= "$key|";
+	}
+	$list2=substr($list,0,-1);
 	//echo "<script>alert('OTD: $_POST[otd], EV: $_POST[ev], newEst: $_POST[newEst]');</script>";
-	echo "<script>prompter('$_POST[otd]','$_POST[ev]','$_POST[newEst]');</script>";
+	echo "<script>prompter('$list','$list2','$_POST[newEst]');</script>";
 	}else{
 		echo "<div style='background-color:#00FF00;'>Courier Set<br />";
 		foreach( $_POST[ev] as $key => $value){
