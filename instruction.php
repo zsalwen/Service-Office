@@ -75,19 +75,29 @@ $aList .= "</OPTGROUP>" ;
 <input type="hidden" name="packet_id" value="<?=$_GET[packet]?>">
 <table>
 	<tr>
-		<td>Server</td>
-		<td>Address</td>
+		<td colspan="2">Server</td>
 	</tr>
 	<tr>
-		<td><select name="server_id" size="10"><?=$sList?></select></td>
-		<td><select name="address_id" size="10"><?=$aList?></select></td>
+		<td colspan="2"><select name="server_id" size="10"><?=$sList?></select></td>
 	</tr>
 	<tr>
-		<td>Name</td>
+		<td colspan="2">Address</td>
+	</tr>
+	<tr>
+		<td><select colspan="2" name="address_id" size="10"><?=$aList?></select></td>
+	</tr>
+	<tr>
+		<td colspan="2">Name</td>
+	</tr>
+	<tr>
+		<td><select colspan="2" name="name_id" size="10"><?=$nList?></select></td>
+	</tr>
+	<tr>
+		<td>Allow Posting</td>
 		<td>Allow Sub-Service</td>
 	</tr>
 	<tr>
-		<td><select name="name_id" size="10"><?=$nList?></select></td>
+		<td valign="top"><select name="allowPosting" size="2"><option>Yes</option><option>No</option></select></td>
 		<td valign="top"><select name="allowSubService" size="2"><option>Yes</option><option>No</option></select></td>
 	</tr>
 </table>
@@ -155,9 +165,9 @@ exit;
 }
 else {
 
-echo '<table border="1" style="border-collapse:collapse;" width="200%" >';
+echo '<table border="1">';
 echo '<tr>';
-echo '<td>Defendant Full Name for '.$d[client_file].'</td> <td>Address 1</td> <td>Address 2</td> <td>City</td> <td>State</td> <td>Zip</td> <td>Status</td> <td>Status Date</td> ';
+echo '<td>Service contacts for '.$d[client_file].'</td> <td>Address 1</td> <td>Address 2</td> <td>City</td> <td>State</td> <td>Zip</td> <td>Status</td> <td>Status Date</td> ';
 echo '</tr>';
 
 while ($row = @mysql_fetch_array($result,MYSQL_ASSOC)) {
