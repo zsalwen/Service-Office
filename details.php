@@ -1,4 +1,13 @@
-<? include 'edit.functions.php'; ?>
+<?
+if (!$_COOKIE[psdata][user_id]){
+error_log(date('h:iA j/n/y')." SECURITY PREVENTED ACCESS to ".$_SERVER['SCRIPT_NAME']." by ".$_SERVER["REMOTE_ADDR"]."\n", 3, '/logs/user.log');
+header ('Location: http://staff.mdwestserve.com');
+}
+date_default_timezone_set('America/New_York');
+include 'edit.functions.php';
+mysql_connect();
+mysql_select_db('core');
+?>
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="details.css" />
