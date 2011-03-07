@@ -5,7 +5,7 @@ if($_POST){
 $queryBuilder = '';
 
 foreach ($_POST as $field => $value) {
-    $queryBuilder =  " $key =  '$value', ";
+    $queryBuilder .=  " $field =  '$value', ";
 }
 
 $built = "update packet set $queryBuilder where id = '$_GET[packet]' ";
