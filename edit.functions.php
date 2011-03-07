@@ -180,7 +180,7 @@ function note($file_id, $note){
 }
 
 function hwaLog($id, $note){
-	$q="SELECT hwa_log FROM ps_packets";
+	$q="SELECT hwa_log FROM packet";
 	$r=@mysql_query($q);
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 	if ($d[hwa_log]){
@@ -188,7 +188,7 @@ function hwaLog($id, $note){
 	}else{
 	$new_note = "<br>".addslashes($note);
 	}
-	$q="UPDATE ps_packets set hwa_log = '$new_note' where packet_id = '$id'";
+	$q="UPDATE packet set hwa_log = '$new_note' where id = '$id'";
 	$r=@mysql_query($q);
 }
 
@@ -391,7 +391,7 @@ return "<div style='font-size:18px; background-color:#FF0000; text-align:center;
 }
 }
 function isServer($server,$packet){
-	$r=@mysql_query("select server_id from ps_packets where packet_id='$packet' and (server_id='$server' OR server_ida='$server' OR server_idb='$server' OR server_idc='$server' OR server_idd='$server' OR server_ide='$server')");
+	$r=@mysql_query("select server_id from packet where id='$packet' and (server_id='$server' OR server_ida='$server' OR server_idb='$server' OR server_idc='$server' OR server_idd='$server' OR server_ide='$server')");
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 	if ($d){
 		return 1;
@@ -400,7 +400,7 @@ function isServer($server,$packet){
 	}
 }
 function ev_isServer($server,$packet){
-	$r=@mysql_query("select server_id from ps_packets where packet_id='$packet' and (server_id='$server' OR server_ida='$server' OR server_idb='$server' OR server_idc='$server' OR server_idd='$server' OR server_ide='$server')");
+	$r=@mysql_query("select server_id from packet where id='$packet' and (server_id='$server' OR server_ida='$server' OR server_idb='$server' OR server_idc='$server' OR server_idd='$server' OR server_ide='$server')");
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 	if ($d){
 		return 1;
@@ -411,23 +411,23 @@ function ev_isServer($server,$packet){
 function normalize_special_characters( $str ){
     # Quotes cleanup
     $str = ereg_replace( chr(ord("`")), "'", $str );        # `
-    $str = ereg_replace( chr(ord("�")), "'", $str );        # �
-    $str = ereg_replace( chr(ord("�")), ",", $str );        # �
+    $str = ereg_replace( chr(ord("?")), "'", $str );        # ?
+    $str = ereg_replace( chr(ord("?")), ",", $str );        # ?
     $str = ereg_replace( chr(ord("`")), "'", $str );        # `
-    $str = ereg_replace( chr(ord("�")), "'", $str );        # �
-    $str = ereg_replace( chr(ord("�")), "\"", $str );        # �
-    $str = ereg_replace( chr(ord("�")), "\"", $str );        # �
-    $str = ereg_replace( chr(ord("�")), "'", $str );        # �
+    $str = ereg_replace( chr(ord("?")), "'", $str );        # ?
+    $str = ereg_replace( chr(ord("?")), "\"", $str );        # ?
+    $str = ereg_replace( chr(ord("?")), "\"", $str );        # ?
+    $str = ereg_replace( chr(ord("?")), "'", $str );        # ?
 
-    $unwanted_array = array(    '�'=>'S', '�'=>'s', '�'=>'Z', '�'=>'z', '�'=>'A', '�'=>'A', '�'=>'A', '�'=>'A', '�'=>'A', '�'=>'A', '�'=>'A', '�'=>'C', '�'=>'E', '�'=>'E',
-                                '�'=>'E', '�'=>'E', '�'=>'I', '�'=>'I', '�'=>'I', '�'=>'I', '�'=>'N', '�'=>'O', '�'=>'O', '�'=>'O', '�'=>'O', '�'=>'O', '�'=>'O', '�'=>'U',
-                                '�'=>'U', '�'=>'U', '�'=>'U', '�'=>'Y', '�'=>'B', '�'=>'Ss', '�'=>'a', '�'=>'a', '�'=>'a', '�'=>'a', '�'=>'a', '�'=>'a', '�'=>'a', '�'=>'c',
-                                '�'=>'e', '�'=>'e', '�'=>'e', '�'=>'e', '�'=>'i', '�'=>'i', '�'=>'i', '�'=>'i', '�'=>'o', '�'=>'n', '�'=>'o', '�'=>'o', '�'=>'o', '�'=>'o',
-                                '�'=>'o', '�'=>'o', '�'=>'u', '�'=>'u', '�'=>'u', '�'=>'y', '�'=>'y', '�'=>'b', '�'=>'y' );
+    $unwanted_array = array(    '?'=>'S', '?'=>'s', '?'=>'Z', '?'=>'z', '?'=>'A', '?'=>'A', '?'=>'A', '?'=>'A', '?'=>'A', '?'=>'A', '?'=>'A', '?'=>'C', '?'=>'E', '?'=>'E',
+                                '?'=>'E', '?'=>'E', '?'=>'I', '?'=>'I', '?'=>'I', '?'=>'I', '?'=>'N', '?'=>'O', '?'=>'O', '?'=>'O', '?'=>'O', '?'=>'O', '?'=>'O', '?'=>'U',
+                                '?'=>'U', '?'=>'U', '?'=>'U', '?'=>'Y', '?'=>'B', '?'=>'Ss', '?'=>'a', '?'=>'a', '?'=>'a', '?'=>'a', '?'=>'a', '?'=>'a', '?'=>'a', '?'=>'c',
+                                '?'=>'e', '?'=>'e', '?'=>'e', '?'=>'e', '?'=>'i', '?'=>'i', '?'=>'i', '?'=>'i', '?'=>'o', '?'=>'n', '?'=>'o', '?'=>'o', '?'=>'o', '?'=>'o',
+                                '?'=>'o', '?'=>'o', '?'=>'u', '?'=>'u', '?'=>'u', '?'=>'y', '?'=>'y', '?'=>'b', '?'=>'y' );
     $str = strtr( $str, $unwanted_array );
 
     # Bullets, dashes, and trademarks
-    $str = ereg_replace( chr(149), "&#8226;", $str );    # bullet �
+    $str = ereg_replace( chr(149), "&#8226;", $str );    # bullet ?
     $str = ereg_replace( chr(150), "&ndash;", $str );    # en dash
     $str = ereg_replace( chr(151), "&mdash;", $str );    # em dash
     $str = ereg_replace( chr(153), "&#8482;", $str );    # trademark
@@ -471,7 +471,7 @@ function testLink($file){ //http://mdwestserve.com/portal/PS_PACKETS/October 06 
 }
 
 function dupCheck($string){
-	$r=@mysql_query("select * from ps_packets where client_file LIKE '%$string%'");
+	$r=@mysql_query("select * from packet where client_file LIKE '%$string%'");
 	$c=mysql_num_rows($r);
 	if ($c == 1){
 		$return="class='single'";
@@ -484,10 +484,10 @@ function dupCheck($string){
 }
 function dupList($string,$packet){
 	if ($string){
-		$r=@mysql_query("select * from ps_packets where client_file LIKE '%$string%' and packet_id <> '$packet'");
+		$r=@mysql_query("select * from packet where client_file LIKE '%$string%' and id <> '$packet'");
 		$data="<div style='font-size:12px; background-color:#FF0000; border:solid 1px #ffff00;'>Possible Duplicates:";
 		while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-			$data .= " <a href='order.php?packet=$d[packet_id]' target='_blank'>[$d[packet_id]]</a>";
+			$data .= " <a href='order.php?packet=$d[id]' target='_blank'>[$d[id]]</a>";
 		}
 		$data .= "</div>";
 	}else{
@@ -565,7 +565,7 @@ function dbOUT($str){
 }
 
 function addressRevise($packet,$address,$oldType,$newType){
-	$qh="SELECT action_str, serverID, history_id FROM ps_history WHERE packet_id='$packet' AND action_str LIKE '%$address%'";
+	$qh="SELECT action_str, serverID, history_id FROM ps_history WHERE id='$packet' AND action_str LIKE '%$address%'";
 	$rh=@mysql_query($qh) or die (mysql_error());
 	while ($dh=mysql_fetch_array($rh,MYSQL_ASSOC)){
 		if ($dh != ''){
@@ -610,7 +610,7 @@ function searchForm($packet,$def){
 }
 
 function searchList($packet){
-	$q1="SELECT name1, name2, name3, name4, name5, name6 from ps_packets where packet_id='$packet'";
+	$q1="SELECT name1, name2, name3, name4, name5, name6 from packet where id='$packet'";
 	$r1=@mysql_query($q1);
 	$d1=mysql_fetch_array($r1,MYSQL_ASSOC);
 	$i=0;
@@ -650,7 +650,7 @@ function attorneyCustomLang($att,$str){
 	return $str;
 }
 function historyList($packet,$attorneys_id){
-		$qn="SELECT * FROM ps_history WHERE packet_id = '$packet' order by defendant_id, history_id ASC";
+		$qn="SELECT * FROM ps_history WHERE id = '$packet' order by defendant_id, history_id ASC";
 		$rn=@mysql_query($qn) or die ("Query: $qn<br>".mysql_error());
 		$counter=0;
 		while ($dn=mysql_fetch_array($rn, MYSQL_ASSOC)){$counter++;
@@ -698,7 +698,7 @@ function getVerify($address){
 	}
 }
 function isVerified($packet){
-	$r=@mysql_query("SELECT address1, address1a, address1b, address1c, address1d, address1e, city1, city1a, city1b, city1c, city1d, city1e, state1, state1a, state1b, state1c, state1d, state1e, zip1, zip1a, zip1b, zip1c, zip1d, zip1e FROM ps_packets where packet_id = '$packet' LIMIT 0,1 ");
+	$r=@mysql_query("SELECT address1, address1a, address1b, address1c, address1d, address1e, city1, city1a, city1b, city1c, city1d, city1e, state1, state1a, state1b, state1c, state1d, state1e, zip1, zip1a, zip1b, zip1c, zip1d, zip1e FROM packet where id = '$packet' LIMIT 0,1 ");
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 	$i=0;
 	//if address is not verified, increment counter
@@ -732,13 +732,13 @@ function search($search,$string){
 	return $pass;
 }
 function getClose($packet){
-	$r=@mysql_query("select estFileDate from ps_packets where packet_id = '$packet'") or die (mysql_error());
+	$r=@mysql_query("select estFileDate from packet where id = '$packet'") or die (mysql_error());
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
 	return $d[estFileDate];
 }
 
 function getTime($packet,$event){
-	$r=@mysql_query("select timeline from ps_packets where packet_id = '$packet'") or die (mysql_error());
+	$r=@mysql_query("select timeline from packet where id = '$packet'") or die (mysql_error());
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
 	$explode = explode('<br>',$d[timeline]);
 	foreach ($explode as $key => $value) {	
@@ -766,7 +766,7 @@ function rescanStatus($a,$b,$p){
 function exportStatus($a,$b,$p){
 	if ($a && $b){ return 'REQUEST BY '.id2name($a).' APPROVED BY '.id2name($b); }
 	if ($a && !$b){
-		$r=@mysql_query("SELECT * FROM ps_history WHERE packet_id='$p'");
+		$r=@mysql_query("SELECT * FROM ps_history WHERE id='$p'");
 		$d=mysql_num_rows($r);
 		if ($d){ echo "<script>alert('!! Export Warning !! This packet has $d history items.');</script>"; }
 		return 'EXPORT APPROVAL REQUESTED BY '.id2name($a);
@@ -795,7 +795,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($id)."]
 mysql_select_db ('core');
 hardLog("$note for packet $id",'user');
 //talk('insidenothing@gmail.com',"$note for presale packet $id");
-$q1 = "SELECT timeline FROM ps_packets WHERE packet_id = '$id'";
+$q1 = "SELECT timeline FROM packet WHERE id = '$id'";
 $r1 = @mysql_query ($q1) or die(mysql_error());
 $d1 = mysql_fetch_array($r1, MYSQL_ASSOC);
 $access=date('m/d/y g:i A');
@@ -805,7 +805,7 @@ $notes = $d1[timeline]."<br>$access: ".$note;
 $notes = $access.': '.$note;
 }
 $notes = addslashes($notes);
-$q1 = "UPDATE ps_packets set timeline='$notes' WHERE packet_id = '$id'";
+$q1 = "UPDATE packet set timeline='$notes' WHERE id = '$id'";
 $r1 = @mysql_query ($q1) or die(mysql_error());
 //@mysql_query("insert into syslog (logTime, event) values (NOW(), 'Packet $id: $note')");
 }
