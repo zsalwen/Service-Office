@@ -163,7 +163,7 @@ else {
 
 echo '<table border="1">';
 echo '<tr>';
-echo '<td>Service contacts for '.$d[client_file].'</td> <td>Address 1</td> <td>Address 2</td> <td>City</td> <td>State</td> <td>Zip</td> <td>Status</td> <td>Status Date</td> ';
+echo '<td>Service contacts for '.$d[client_file].'</td> <td>Address</td> <td>City</td> <td>State</td> <td>Zip</td> <td>Status</td> <td>Status Date</td> ';
 echo '</tr>';
 
 while ($row = @mysql_fetch_array($result,MYSQL_ASSOC)) {
@@ -195,8 +195,8 @@ echo '<td valign="top">
 <td>'.$row['defendantfullname'].'</td></tr></table></td> <td valign="top">
 <table>
 <tr>
-<td>'.$row['defendantaddress1'].'</td></tr></table></td>';
-echo '<td valign="top">'.$row['defendantaddress2'].'</td> <td valign="top">'.$row['defendantcity'].'</td> <td valign="top">'.$row['defendantstate'].'</td> <td valign="top">'.$row['defendantzip'].'</td>';
+<td>'.$row['defendantaddress1'].' '.$row['defendantaddress2'].'</td></tr></table></td>';
+echo '<td valign="top">'.$row['defendantcity'].'</td> <td valign="top">'.$row['defendantstate'].'</td> <td valign="top">'.$row['defendantzip'].'</td>';
 echo '<td valign="top">'.$row['status'].'</td> <td valign="top">'.$row['statusdate'].'</td> ';
 
 
