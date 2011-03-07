@@ -161,6 +161,15 @@ echo '<td>Defendant Full Name for '.$d[client_file].'</td> <td>Address 1</td> <t
 echo '</tr>';
 
 while ($row = @mysql_fetch_array($result,MYSQL_ASSOC)) {
+// check and add to name and address tables
+$newData=0;
+
+$rTest=@mysql_query("select id from name where full_name = '".$row['defendantfullname']."' ");
+$dTest=mysql_fetch_array($rTest,MYSQL_ASSOC);
+if(!$dTest[full_name]){
+$newData=1;
+@mysql_query("insert into name (full_name) values ('".$row['defendantfullname']."') ");
+}
 
 echo '<tr>';
 echo '<td valign="top">
