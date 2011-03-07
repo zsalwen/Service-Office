@@ -65,3 +65,13 @@ if ($dc[packet_id]){
 
 
 
+<strong>
+	<div align="center" style="background-color:#FFFF00">
+    	<a onClick="hideshow(document.getElementById('track'))">Tracking</a> &curren; 
+    	<a onClick="hideshow(document.getElementById('addresses'))">Legacy Addresses</a> &curren; 
+    	<a onClick="hideshow(document.getElementById('pobox'))">Legacy Mail Only</a> &curren; 
+    	<a onClick="hideshow(document.getElementById('status'))">Status</a> &curren; 
+        <a onClick="hideshow(document.getElementById('servers'))">Legacy Servers</a> &curren; 
+        <a onClick="hideshow(document.getElementById('notes'))">Notes</a> &curren; 
+    </div>
+</strong>
