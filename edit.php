@@ -77,7 +77,7 @@ while($dSSA=mysql_fetch_array($rSSA,MYSQL_ASSOC)){
 <?
 $rOFS=@mysql_query("select * from attachment where packet_id = '$packet'");
 while($dOFS=mysql_fetch_array($rOFS,MYSQL_ASSOC)){
- echo "<li  onClick=\"parent.frames['pane2'].location.href = '$dOFS[url]">$dOFS[instruction_id] $dOFS[packet_id] $dOFS[user_id] $dOFS[server_id] $dOFS[processed]</li>";
+ echo "<li onClick=\"parent.frames['pane2'].location.href = '$dOFS[url]' \">$dOFS[instruction_id] $dOFS[packet_id] $dOFS[user_id] $dOFS[server_id] $dOFS[processed]</li>";
 }
 ?>
 </fieldset>
