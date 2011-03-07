@@ -65,7 +65,7 @@ include 'edit.testing.php'; // make sure we have main packet array before testin
 <fieldset>
 <legend>Server and Staff Assignments</legend>
 <?
-$rSSA=@mysql_query("select * from instruction where packet_id = '$packet'");
+$rSSA=@mysql_query("select * from instruction where id = '$packet'");
 while($dSSA=mysql_fetch_array($rSSA,MYSQL_ASSOC)){
  echo "<li><input type='checkbox'>".serverID($dSSA[server_id])." on ".nameID($dSSA[name_id])." at ".addressID($dSSA[address_id])."</li>";
 }
@@ -73,11 +73,11 @@ while($dSSA=mysql_fetch_array($rSSA,MYSQL_ASSOC)){
 </fieldset>
 
 <fieldset>
-<legend>Online File Storage <a href='upload.php' target='preview'>Upload</a>, <a href="#" onclick="window.open('lightboard.php?packet=<?=$d[packet_id]?>','Lightboard','menubar=0,resizable=1,status=0,width=800,height=600') ">PDF Lightboard</a></legend>
+<legend>Online File Storage <a href='upload.php' target='preview'>Upload</a>, <a href="#" onclick="window.open('lightboard.php?packet=<?=$d[id]?>','Lightboard','menubar=0,resizable=1,status=0,width=800,height=600') ">PDF Lightboard</a></legend>
 <?
-$rOFS=@mysql_query("select * from attachment where packet_id = '$packet'");
+$rOFS=@mysql_query("select * from attachment where id = '$packet'");
 while($dOFS=mysql_fetch_array($rOFS,MYSQL_ASSOC)){
- echo "<li onClick=\"parent.frames['pane2'].location.href = '$dOFS[url]' \">$dOFS[instruction_id] $dOFS[packet_id] $dOFS[user_id] $dOFS[server_id] $dOFS[processed]</li>";
+ echo "<li onClick=\"parent.frames['pane2'].location.href = '$dOFS[url]' \">$dOFS[instruction_id] $dOFS[id] $dOFS[user_id] $dOFS[server_id] $dOFS[processed]</li>";
 }
 ?>
 </fieldset>
@@ -167,7 +167,7 @@ if($d[lossMit] != ''){
 <td colspan='2'><div style=" font-size:12px; background-color:ffffff; padding:0px;">
 <?
 mysql_select_db('core');
-$q5="SELECT * FROM ps_affidavits WHERE packetID = '$d[packet_id]' order by defendantID";
+$q5="SELECT * FROM ps_affidavits WHERE packetID = '$d[id]' order by defendantID";
 $r5=@mysql_query($q5) or die ("Query: $q5<br>".mysql_error());
 while ($d5=mysql_fetch_array($r5, MYSQL_ASSOC)){
 		$defname = $d["name".$d5[defendantID]];
@@ -184,14 +184,14 @@ while ($d5=mysql_fetch_array($r5, MYSQL_ASSOC)){
 </FIELDSET>
 <?
 if ($dupCheck == "class='duplicate'"){
-	echo dupList($d[client_file],$d[packet_id]);
+	echo dupList($d[client_file],$d[id]);
 }
 ?>
 </td>
 
 <?
-$otdStr=str_replace('portal//var/www/dataFiles/service/orders/','PS_PACKETS/',$d[otd]);
-$otdStr=str_replace('data/service/orders/','PS_PACKETS/',$otdStr);
+$otdStr=str_replace('portal//var/www/dataFiles/service/orders/','packet/',$d[otd]);
+$otdStr=str_replace('data/service/orders/','packet/',$otdStr);
 $otdStr=str_replace('portal/','',$otdStr);
 //$otdStr=str_replace('mdwestserve.com','alpha.mdwestserve.com',$otdStr);
 /*if (!$otdStr){
@@ -200,18 +200,18 @@ $otdStr=str_replace('portal/','',$otdStr);
 if (!strpos($otdStr,'mdwestserve.com')){
 	$otdStr="http://mdwestserve.com/".$otdStr;
 }
-if ($d[packet_id] > 3620 && $d[reopenDate] != ''){
-	$checkLink="serviceSheet.php?packet=$d[packet_id]&autoPrint=1";
+if ($d[id] > 3620 && $d[reopenDate] != ''){
+	$checkLink="serviceSheet.php?packet=$d[id]&autoPrint=1";
 }else{
-	$checkLink="oldServiceSheet.php?packet=$d[packet_id]&autoPrint=1";
+	$checkLink="oldServiceSheet.php?packet=$d[id]&autoPrint=1";
 }
-$q5="SELECT DISTINCT serverID from ps_history WHERE packet_id='$d[packet_id]'";
+$q5="SELECT DISTINCT serverID from ps_history WHERE id='$d[id]'";
 $r5=@mysql_query($q5) or die(mysql_error());
 $i=0;
 $data5=mysql_num_rows($r5);
 if ($data5 > 0){
 while ($d5=mysql_fetch_array($r5, MYSQL_ASSOC)){$i++;
-$q6="SELECT * FROM ps_history WHERE serverID='$d5[serverID]' and packet_id='$d[packet_id]'";
+$q6="SELECT * FROM ps_history WHERE serverID='$d5[serverID]' and id='$d[id]'";
 $r6=@mysql_query($q6) or die(mysql_error());
 $d6=mysql_num_rows($r6);
 if ($i == '1'){
@@ -231,14 +231,14 @@ $server .= ", ".$d6." ".initals(id2name($d5[serverID]));
 }else{
 $server="none";
 }
-$ri=@mysql_query("SELECT packetID FROM ps_instructions WHERE packetID='$d[packet_id]'") or die (mysql_error());
+$ri=@mysql_query("SELECT packetID FROM ps_instructions WHERE packetID='$d[id]'") or die (mysql_error());
 $di=mysql_fetch_array($ri,MYSQL_ASSOC);
 if ($di[packetID]){
 	$customBG="style='background-color:green;'";
 }else{
 	$customBG="style='background-color:red;'";
 }
-$rc=@mysql_query("SELECT * FROM ps_history WHERE packet_id='$d[packet_id]' AND wizard='CERT MAILING' LIMIT 0,1");
+$rc=@mysql_query("SELECT * FROM ps_history WHERE id='$d[id]' AND wizard='CERT MAILING' LIMIT 0,1");
 $dc=mysql_fetch_array($rc,MYSQL_ASSOC);
 ?>
 <FIELDSET style="background-color:#FFFF00; padding:0px;">
@@ -260,7 +260,7 @@ $dc=mysql_fetch_array($rc,MYSQL_ASSOC);
 	<td>Timestamp</td>
 </tr>
 <? 
-$r92=@mysql_query("select * from docuTrack where packet = '$d[packet_id]' order by trackID desc");
+$r92=@mysql_query("select * from docuTrack where packet = '$d[id]' order by trackID desc");
 while($d92=mysql_fetch_array($r92,MYSQL_ASSOC)){
 if ($d92[defendant] == 'OCC'){
 	$defname = "OCCUPANT";
@@ -431,12 +431,12 @@ $add1e=strtoupper($d[address1e].', '.$d[city1e].', '.$d[state1e].' '.$d[zip1e]);
 </td></tr></table>
 
 <table width="100%" id="status" style="display:none; font-size:11px; padding:0px;">
-<input type="hidden" name="packet_id" value="<?=$d[packet_id]?>" />
+<input type="hidden" name="id" value="<?=$d[id]?>" />
 <tr>
 <? if ($_GET[packet]){?>
 <td align="center" width="25%">Client Status<br><select name="status"><option><?=$d[status]?></option>
 <?
-$q1="SELECT DISTINCT status from ps_packets WHERE status <> ''";
+$q1="SELECT DISTINCT status from packet WHERE status <> ''";
 $r1=@mysql_query($q1) or die("Query: $q1<br>".mysql_error());
 while ($d1=mysql_fetch_array($r1, MYSQL_ASSOC)){
 ?>
@@ -447,7 +447,7 @@ while ($d1=mysql_fetch_array($r1, MYSQL_ASSOC)){
 <? }?>
 <td align="center" width="25%">Service Status<br><select name="service_status"><option><?=$d[service_status]?></option>
 <?
-$q1="SELECT DISTINCT service_status from ps_packets WHERE service_status <> ''";
+$q1="SELECT DISTINCT service_status from packet WHERE service_status <> ''";
 $r1=@mysql_query($q1) or die("Query: $q1<br>".mysql_error());
 while ($d1=mysql_fetch_array($r1, MYSQL_ASSOC)){
 ?>
@@ -457,7 +457,7 @@ while ($d1=mysql_fetch_array($r1, MYSQL_ASSOC)){
 </select></td>
 <td align="center" width="25%">Filing Status<br><select name="filing_status"><option><?=$d[filing_status]?></option>
 <?
-$q1="SELECT DISTINCT filing_status from ps_packets WHERE filing_status <> '' AND filing_status <> 'REOPENED'";
+$q1="SELECT DISTINCT filing_status from packet WHERE filing_status <> '' AND filing_status <> 'REOPENED'";
 $r1=@mysql_query($q1) or die("Query: $q1<br>".mysql_error());
 while ($d1=mysql_fetch_array($r1, MYSQL_ASSOC)){
 ?>
@@ -468,7 +468,7 @@ while ($d1=mysql_fetch_array($r1, MYSQL_ASSOC)){
 </select></td></tr><tr>
 <td align="center" width="25%">Process Status<br><select name="process_status"><option><?=$d[process_status]?></option>
 <?
-$q2="SELECT DISTINCT process_status from ps_packets WHERE process_status <> ''";
+$q2="SELECT DISTINCT process_status from packet WHERE process_status <> ''";
 $r2=@mysql_query($q2) or die("Query: $q2<br>".mysql_error());
 while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){
 ?>
@@ -478,7 +478,7 @@ while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){
 </select></td>
 <td align="center" width="25%"><table><tr><td>Affidavit Status<br><select name="affidavit_status"><option><?=$d[affidavit_status]?></option>
 <?
-$q3="SELECT DISTINCT affidavit_status from ps_packets WHERE affidavit_status <> ''";
+$q3="SELECT DISTINCT affidavit_status from packet WHERE affidavit_status <> ''";
 $r3=@mysql_query($q3) or die("Query: $q3<br>".mysql_error());
 while ($d3=mysql_fetch_array($r3, MYSQL_ASSOC)){
 ?>
@@ -490,7 +490,7 @@ while ($d3=mysql_fetch_array($r3, MYSQL_ASSOC)){
 </td><td>
 <td align="center" colspan='3'>Affidavit Status 2<br><select name="affidavit_status2"><option><?=$d[affidavit_status2]?></option>
 <?
-$q3="SELECT DISTINCT affidavit_status2 from ps_packets WHERE affidavit_status2 <> '' AND affidavit_status2 <> 'REOPENED' AND affidavit_status2 <> 'AWAITING OUT OF STATE AFFIDAVITS' AND affidavit_status2 <> 'AWAITING OUT OF STATE SERVICE' AND affidavit_status2 <> 'AWAITING MAILING'";
+$q3="SELECT DISTINCT affidavit_status2 from packet WHERE affidavit_status2 <> '' AND affidavit_status2 <> 'REOPENED' AND affidavit_status2 <> 'AWAITING OUT OF STATE AFFIDAVITS' AND affidavit_status2 <> 'AWAITING OUT OF STATE SERVICE' AND affidavit_status2 <> 'AWAITING MAILING'";
 $r3=@mysql_query($q3) or die("Query: $q3<br>".mysql_error());
 while ($d3=mysql_fetch_array($r3, MYSQL_ASSOC)){
 ?>
@@ -506,7 +506,7 @@ while ($d3=mysql_fetch_array($r3, MYSQL_ASSOC)){
 </td>
 <td align="center">Photo Status<br><select name="photoStatus"><option><?=$d[photoStatus]?></option>
 <?
-$q4="SELECT DISTINCT photoStatus from ps_packets WHERE photoStatus <> ''";
+$q4="SELECT DISTINCT photoStatus from packet WHERE photoStatus <> ''";
 $r4=@mysql_query($q4) or die("Query: $q4<br>".mysql_error());
 while ($d4=mysql_fetch_array($r4, MYSQL_ASSOC)){
 ?>
@@ -516,7 +516,7 @@ while ($d4=mysql_fetch_array($r4, MYSQL_ASSOC)){
 </select></td></tr><tr>
 <td align="center" width="25%">Affidavit Type<br><select name="affidavitType"><option><?=$d[affidavitType]?></option>
 <?
-$q4="SELECT DISTINCT affidavitType from ps_packets WHERE affidavitType <> ''";
+$q4="SELECT DISTINCT affidavitType from packet WHERE affidavitType <> ''";
 $r4=@mysql_query($q4) or die("Query: $q4<br>".mysql_error());
 while ($d4=mysql_fetch_array($r4, MYSQL_ASSOC)){
 ?>
@@ -526,7 +526,7 @@ while ($d4=mysql_fetch_array($r4, MYSQL_ASSOC)){
 </select></td>
 <td align="center" width="25%">Mail Status<br><select name="mail_status"><option><?=$d[mail_status]?></option>
 <?
-$q4="SELECT DISTINCT mail_status from ps_packets WHERE mail_status <> ''";
+$q4="SELECT DISTINCT mail_status from packet WHERE mail_status <> ''";
 $r4=@mysql_query($q4) or die("Query: $q4<br>".mysql_error());
 while ($d4=mysql_fetch_array($r4, MYSQL_ASSOC)){
 ?>
@@ -793,8 +793,8 @@ foreach(range('a','e') as $letter){
 </tr></table>
 </FIELDSET>
 <? if ($_GET[start]){
-	$src=str_replace('portal//var/www/dataFiles/service/orders/','PS_PACKETS/',$d[otd]);
-	$src=str_replace('data/service/orders/','PS_PACKETS/',$src);
+	$src=str_replace('portal//var/www/dataFiles/service/orders/','packet/',$d[otd]);
+	$src=str_replace('data/service/orders/','packet/',$src);
 	$src=str_replace('portal/','',$src);
 
 ?>
@@ -810,16 +810,16 @@ foreach(range('a','e') as $letter){
 	$trioAff='/data/service/orders/'.$getFolder.'/TrioAffidavitService.pdf';
 	//if BGW file with client service affidavit, pop open affidavit
 	if ($d[status] == 'NEW' && $d[process_status] != 'CANCELLED' && $d[process_status] != 'DUPLICATE' && $d[process_status] != 'DAMAGED PDF' && $d[process_status] != 'DUPLICATE/DIFF-PDF' && $d[attorneys_id] == 70 && file_exists($trioAff)){
-		$affPath='http://mdwestserve.com/PS_PACKETS/'.$getFolder.'/TrioAffidavitService.pdf';
+		$affPath='http://mdwestserve.com/packet/'.$getFolder.'/TrioAffidavitService.pdf';
 		echo "<script>window.open('$affPath','Trio Service Affidavit','width=600, height=800')</script>";
 	}
 	//only run rfmMerge if file is from BGW, is new, has an existing Request For Mediation uploaded in the same folder as the OTD, and has not already unsuccessfully tried to merge already.
 	$rfm='/data/service/orders/'.$getFolder.'/RequestforMediation.pdf';
 	if ($d[status] == 'NEW' && $d[process_status] != 'CANCELLED' && $d[process_status] != 'DUPLICATE' && $d[process_status] != 'DAMAGED PDF' && $d[process_status] != 'DUPLICATE/DIFF-PDF' && $d[attorneys_id] == 70 && file_exists($rfm) && ($d[prevOTD] == '' || $d[prevOTD] != $d[otd])){
-		$src= "http://staff.mdwestserve.com/temp/rfmMerge.php?packet=$d[packet_id]";
+		$src= "http://staff.mdwestserve.com/temp/rfmMerge.php?packet=$d[id]";
 	}elseif($d[status]=="NEW" || $_GET[otd] == '1'){
-		$src=str_replace('portal//var/www/dataFiles/service/orders/','PS_PACKETS/',$d[otd]);
-		$src=str_replace('data/service/orders/','PS_PACKETS/',$src);
+		$src=str_replace('portal//var/www/dataFiles/service/orders/','packet/',$d[otd]);
+		$src=str_replace('data/service/orders/','packet/',$src);
 		$src=str_replace('portal/','',$src);
 		
 		//$src=str_replace('mdwestserve.com','alpha.mdwestserve.com',$src);
@@ -827,21 +827,21 @@ foreach(range('a','e') as $letter){
 			$src=$d[otd];
 		}*/
 	}elseif(!$d[uspsVerify]){
-		$src="supernova.php?packet=$d[packet_id]";
+		$src="supernova.php?packet=$d[id]";
 	}elseif(!$d[caseVerify] && $d[case_no]){
-		$src="validateCase.php?case=$d[case_no]&packet=$d[packet_id]&county=$d[circuit_court]";
+		$src="validateCase.php?case=$d[case_no]&packet=$d[id]&county=$d[circuit_court]";
 	}elseif(!$d[qualityControl]){
 		if ($d[service_status] == 'MAIL ONLY'){
-			$src="entryVerify.php?packet=$d[packet_id]&frame=no&matrix=1";
+			$src="entryVerify.php?packet=$d[id]&frame=no&matrix=1";
 		}else{
-			$src="entryVerify.php?packet=$d[packet_id]&frame=no";
+			$src="entryVerify.php?packet=$d[id]&frame=no";
 		}
 	}elseif(!$d[caseVerify]){
-		$src="validateCase.php?case=$d[case_no]&packet=$d[packet_id]&county=$d[circuit_court]";
+		$src="validateCase.php?case=$d[case_no]&packet=$d[id]&county=$d[circuit_court]";
 	}elseif($d[process_status] == "CANCELLED" || $d[filing_status]=="FILED WITH COURT" || $d[filing_status]=="FILED WITH COURT - FBS"){
-		$src="http://staff.mdwestserve.com/otd/minips_pay.php?id=$d[packet_id]";
+		$src="http://staff.mdwestserve.com/otd/minips_pay.php?id=$d[id]";
 	}else{
-		$src="serviceReview.php?packet=$d[packet_id]"; 
+		$src="serviceReview.php?packet=$d[id]"; 
 	}
 
 	$explode = explode("/",$d[otd]);
@@ -851,11 +851,11 @@ foreach(range('a','e') as $letter){
 	<tr>
 		<td style='font-size:12px;' valign="bottom"><input name="pages" value="<?=$d[pages]?>" size="3"> # OTD Pages <?=testLink($d[otd])?> <b style="background-color:#FFFF00; padding:0px;"><?=trim($explode["$explodeCount"])?></b></td>
 		<td style='font-size:12px;' valign="bottom"><input name="mailWeight" size="4" value="<?=$d[mailWeight]?>"> Mail Weight</td></form>
-		<form action="http://staff.mdwestserve.com/temp/pageRemove.php"><td valign="bottom"><input type="hidden" name="id" value="<?=$d[packet_id]?>"><input type="hidden" name="type" value="OTD"><? if ($_GET[packet]){ ?><input type="hidden" name="packet" value="<?=$d[packet_id]?>"><? } ?><input name="skip" onclick="value=''" value="Remove Page #"> <input type="submit" value="GO!"></td></form>
+		<form action="http://staff.mdwestserve.com/temp/pageRemove.php"><td valign="bottom"><input type="hidden" name="id" value="<?=$d[id]?>"><input type="hidden" name="type" value="OTD"><? if ($_GET[packet]){ ?><input type="hidden" name="packet" value="<?=$d[id]?>"><? } ?><input name="skip" onclick="value=''" value="Remove Page #"> <input type="submit" value="GO!"></td></form>
 	</tr>
 	<tr>
 		<td colspan="3" valign="bottom">
-		<input name="otd" value="<?=$d[otd]?>" size="80"> <? if($d[status]=="NEW"){ echo "<a href='renameOTD.php?packet=$d[packet_id]&test=1'>FIX OTD LINK</a>";}else{echo "<a href='renameOTD.php?packet=$d[packet_id]'>FIX</a>";} ?><?=searchList($d[packet_id]);?>
+		<input name="otd" value="<?=$d[otd]?>" size="80"> <? if($d[status]=="NEW"){ echo "<a href='renameOTD.php?packet=$d[id]&test=1'>FIX OTD LINK</a>";}else{echo "<a href='renameOTD.php?packet=$d[id]'>FIX</a>";} ?><?=searchList($d[id]);?>
 		</td>
 	</tr>
 </table>
