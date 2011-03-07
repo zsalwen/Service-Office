@@ -241,14 +241,14 @@ if ($di[packetID]){
 $rc=@mysql_query("SELECT * FROM ps_history WHERE packet_id='$d[id]' AND wizard='CERT MAILING' LIMIT 0,1");
 $dc=mysql_fetch_array($rc,MYSQL_ASSOC);
 ?>
-<FIELDSET style="background-color:#FFFF00; padding:0px;">
+
 
 
 
 </td></tr></table>
 <table style="display:<? if ($_GET[packet]){ echo "block";}else{ echo "none"; }?>; padding:0px;" id="notes" width="100%"><tr><td colspan="2"><fieldset><legend>Notes</legend>
 <iframe height="200px" width="700px"  frameborder="0" src="http://staff.mdwestserve.com/notes.php?packet=<?=$packet?>"></iframe></fieldset></td></tr></table>
-<table style="display:none;" id="track" width="100%"><tr><td align='center'>
+<table  id="track" width="100%"><tr><td align='center'>
 <FIELDSET>
 <LEGEND ACCESSKEY=C>docuTrack: in-house document tracking solution</LEGEND>
 <table width="100%" border="1" style="border-collapse:collapse;" cellspacing='0' cellpadding='2'>
@@ -285,112 +285,14 @@ if ($d92[server]){
 </table>    
 </FIELDSET></td></tr></table>
 
-<? if(!$d[address1]){ ?>
-<table width="100%" style="display:block;" id="addresses">
-<? }else{ ?>
-<table width="100%" style="display:none;" id="addresses">
-<? } ?>
-<?
-$add1=strtoupper($d[address1].', '.$d[city1].', '.$d[state1].' '.$d[zip1]);
-$add1a=strtoupper($d[address1a].', '.$d[city1a].', '.$d[state1a].' '.$d[zip1a]);
-$add1b=strtoupper($d[address1b].', '.$d[city1b].', '.$d[state1b].' '.$d[zip1b]);
-$add1c=strtoupper($d[address1c].', '.$d[city1c].', '.$d[state1c].' '.$d[zip1c]);
-$add1d=strtoupper($d[address1d].', '.$d[city1d].', '.$d[state1d].' '.$d[zip1d]);
-$add1e=strtoupper($d[address1e].', '.$d[city1e].', '.$d[state1e].' '.$d[zip1e]);
-?>
-<tr><td>
-<? if($d[address1]){ ?>
-<FIELDSET>
-<LEGEND class="a" ACCESSKEY=C><a href="http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=<?=$d[address1]?>&city=<?=$d[city1]?>&state=<?=$d[state1]?>&miles=5" target="_Blank"><img src="http://staff.mdwestserve.com/small-usps-logo.jpg" border="0"></a>&nbsp;<?=getVerify($add1);?>&nbsp;<?=id2name($d[server_id]);?><br><input name="addressType" size="55" style="font-size:10px; background-color:CCFFCC;" value="<?=$d[addressType]?>"></LEGEND>
-<table>
-<tr>
-<td><input id="address" name="address" size="30" value="<?=$d[address1]?>" /></td>
-</tr>
-<tr>
-<td><input size="20" name="city" id="city" value="<?=$d[city1]?>" /><input size="1" name="state" id="state" value="<?=$d[state1]?>" /><input size="4" name="zip"id="zip" value="<?=$d[zip1]?>" /></td>
-</tr>
-</table>    
-</FIELDSET>
-<? }?>
-</td><td>
-<? if($d[address1a]){ ?>
-<FIELDSET>
-<LEGEND class="a" ACCESSKEY=C><a href="http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=<?=str_replace('#','',$d[address1a])?>&city=<?=$d[city1a]?>&state=<?=$d[state1a]?>&miles=5" target="_Blank"><img src="http://staff.mdwestserve.com/small-usps-logo.jpg" border="0"></a>&nbsp;<?=getVerify($add1a);?>&nbsp;<?=id2name($d[server_ida]);?><br><input name="addressTypea" size="55" style="font-size:10px; background-color:CCFFCC;" value="<?=$d[addressTypea]?>"></LEGEND>
-<table>
-<tr>
-<td><input name="addressa" id="addressa" size="30" value="<?=$d[address1a]?>" /></td>
-</tr>
-<tr>
-<td><input name="citya" id="citya" size="20" value="<?=$d[city1a]?>" /><input size="1" name="statea" id="statea" value="<?=$d[state1a]?>" /><input size="4" name="zipa" id="zipa" value="<?=$d[zip1a]?>" /></td>
-</tr>
-</table>    
-</FIELDSET>
-<? } ?>
-</td><td>
-<? if($d[address1b]){ ?>
-<FIELDSET>
-<LEGEND class="a" ACCESSKEY=C><a href="http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=<?=$d[address1b]?>&city=<?=$d[city1b]?>&state=<?=$d[state1b]?>&miles=5" target="_Blank"><img src="http://staff.mdwestserve.com/small-usps-logo.jpg" border="0"></a>&nbsp;<?=getVerify($add1b);?>&nbsp;<?=id2name($d[server_idb]);?><br><input name="addressTypeb" size="55" style="font-size:10px; background-color:CCFFCC;" value="<?=$d[addressTypeb]?>"></LEGEND>
-<table>
-<tr>
-<td><input name="addressb" id="addressb" size="30" value="<?=$d[address1b]?>" /></td>
-</tr>
-<tr>
-<td><input name="cityb" id="cityb" size="20" value="<?=$d[city1b]?>" /><input size="1" name="stateb" id="stateb" value="<?=$d[state1b]?>" /><input size="4" name="zipb" id="zipb" value="<?=$d[zip1b]?>" /></td>
-</tr>
-</table>    
-</FIELDSET>
-<? } ?>
-</td></tr>
-
-<tr><td>
-<? if($d[address1c]){ ?>
-<FIELDSET>
-<LEGEND class="a" ACCESSKEY=C><a href="http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=<?=$d[address1c]?>&city=<?=$d[city1c]?>&state=<?=$d[state1c]?>&miles=5" target="_Blank"><img src="http://staff.mdwestserve.com/small-usps-logo.jpg" border="0"></a>&nbsp;<?=getVerify($add1c);?>&nbsp;<?=id2name($d[server_idc]);?><br><input name="addressTypec" size="55" style="font-size:10px; background-color:CCFFCC;" value="<?=$d[addressTypec]?>"></LEGEND>
-<table>
-<tr>
-<td><input name="addressc" id="addressc" value="<?=$d[address1c]?>" size="30" /></td>
-</tr>
-<tr>
-<td><input name="cityc" id="cityc" size="20" value="<?=$d[city1c]?>" /><input size="1" name="statec" id="statec" value="<?=$d[state1c]?>" /><input size="4" name="zipc" id="zipc" value="<?=$d[zip1c]?>" /></td>
-</tr>
-</table>    
-</FIELDSET>
-<? }?>
-</td><td>
-<? if($d[address1d]){ ?>
-<FIELDSET>
-<LEGEND class="a" ACCESSKEY=C><a href="http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=<?=$d[address1d]?>&city=<?=$d[city1d]?>&state=<?=$d[state1d]?>&miles=5" target="_Blank"><img src="http://staff.mdwestserve.com/small-usps-logo.jpg" border="0"></a>&nbsp;<?=getVerify($add1d);?>&nbsp;<?=id2name($d[server_idd]);?><br><input name="addressTyped" size="55" style="font-size:10px; background-color:CCFFCC;" value="<?=$d[addressTyped]?>"></LEGEND>
-<table>
-<tr>
-<td><input name="addressd" id="addressd" size="30" value="<?=$d[address1d]?>" /></td>
-</tr>
-<tr>
-<td><input name="cityd" id="cityd" size="20" value="<?=$d[city1d]?>" /><input size="1" name="stated" id="stated" value="<?=$d[state1d]?>" /><input size="4" name="zipd" id="zipd" value="<?=$d[zip1d]?>" /></td>
-</tr>
-</table>    
-</FIELDSET>
-<? } ?>
-</td><td>
-<? if($d[address1e]){ ?>
-<FIELDSET>
-<LEGEND class="a" ACCESSKEY=C><a href="http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=<?=$d[address1e]?>&city=<?=$d[city1e]?>&state=<?=$d[state1e]?>&miles=5" target="_Blank"><img src="http://staff.mdwestserve.com/small-usps-logo.jpg" border="0"></a>&nbsp;<?=getVerify($add1e);?>&nbsp;<?=id2name($d[server_ide]);?><br><input name="addressTypee" size="55" style="font-size:10px; background-color:CCFFCC;" value="<?=$d[addressTypee]?>"></LEGEND>
-<table>
-<tr>
-<td><input name="addresse" id="addresse" size="30" value="<?=$d[address1e]?>" /></td>
-</tr>
-<tr>
-<td><input name="citye" id="citye" size="20" value="<?=$d[city1e]?>" /><input size="1" name="statee" id="statee" value="<?=$d[state1e]?>" /><input size="4" name="zipe" id="zipe" value="<?=$d[zip1e]?>" /></td>
-</tr>
-</table>    
-</FIELDSET>
-<? } ?>
-</td></tr>
-</table>
 
 
 
 
-<table width="100%" id="pobox" style="display:none;"><tr><td>
+
+
+
+<table width="100%" id="pobox" ><tr><td>
 <table width="100%">
 <tr>
 <td>Mail Only</td>
@@ -429,6 +331,9 @@ $add1e=strtoupper($d[address1e].', '.$d[city1e].', '.$d[state1e].' '.$d[zip1e]);
 </tr>
 </table>    
 </td></tr></table>
+
+
+
 
 <table width="100%" id="status" style="display:none; font-size:11px; padding:0px;">
 <input type="hidden" name="id" value="<?=$d[id]?>" />
@@ -536,7 +441,11 @@ while ($d4=mysql_fetch_array($r4, MYSQL_ASSOC)){
 </select></td>
 <td align='center'><? if ($d[process_status] != 'CANCELLED'){ ?><div style='font-size:11px;' name='cancelRef' value='Client Reference Email' onclick="value=''" size='25' /><div style='background-color:pink; font-size: 10.5px;' type='button' name='cancel' value='CANCEL' onclick="confirmation(cancelRef.value);" /><? }?></td>
 </tr>
-<tr><td align="center" colspan='3'><table align='center' style='font-size:12px;' width='100%'><tr><td align="center" width='25%'>
+
+</table>
+
+
+<table align='center' style='font-size:12px;' width='100%'><tr><td align="center" width='25%'>
 Refile<br>
 <input type="checkbox" name="refile" <? if ($d[refile] == 'checked'){ echo "checked";} ?> value="checked">
 </td><td align="center" width='25%' style="padding-left:5px">
@@ -549,22 +458,6 @@ Priority Service<br>
 Amended Affidavit<br>
 <input type="checkbox" name="amendedAff" <? if ($d[amendedAff] == 'checked'){ echo "checked";} ?> value="checked">
 </td></tr></table>
-
-
-
-
-
-</FIELDSET>
-<? if ($_GET[start]){
-	$src=str_replace('portal//var/www/dataFiles/service/orders/','packet/',$d[otd]);
-	$src=str_replace('data/service/orders/','packet/',$src);
-	$src=str_replace('portal/','',$src);
-
-?>
-<iframe height="285px" width="740px" name="QCOTD" src="<?=$src?>"></iframe>
-<? } ?>
-
-
 
 
 
@@ -610,6 +503,7 @@ Amended Affidavit<br>
 	$explode = explode("/",$d[otd]);
 	$explodeCount=count($explode)-1;
 ?>
+
 <table style="padding:0px;" width="100%">
 	<tr>
 		<td style='font-size:12px;' valign="bottom"><input name="pages" value="<?=$d[pages]?>" size="3"> # OTD Pages <?=testLink($d[otd])?> <b style="background-color:#FFFF00; padding:0px;"><?=trim($explode["$explodeCount"])?></b></td>
@@ -625,8 +519,9 @@ Amended Affidavit<br>
 
 
 
-<? } // end good packet form?>
-<script>document.title='<?=$_GET[packet]?>|<?=$d[status]?>|<?=$d[service_status]?>|<?=$d[process_status]?>|<?=$d[affidavit_status]?>|<?=$d[filing_status]?>|<?=$d[affidavit_status2]?>'</script>
+<? } // end good packet test?>
+
+
 <? 
 if ($_GET[type]){
 	echo $_GET[type];
