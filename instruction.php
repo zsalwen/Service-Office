@@ -5,6 +5,9 @@ header ('Location: http://staff.mdwestserve.com');
 }
 mysql_connect();
 mysql_select_db('core');
+
+
+
 if ($_POST[mainInstruction]){
 @mysql_query("INSERT INTO instruction (packet_id, server_id, address_id, name_id, allowSubService) VALUES
 ('$_POST[packet_id]', '$_POST[server_id]', '$_POST[address_id]', '$_POST[name_id]', '$_POST[allowSubService]')");
@@ -42,8 +45,7 @@ $nList .= "<OPTGROUP LABEL='$d[last]'>";
 $q2= "select * from name where last = '$d[last]' order by full";
 $r2=@mysql_query($q2) or die("Query: $q2<br>".mysql_error());
 while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)) {
-if ($d2[on_affidavit]== 'Yes'){ $str="On Affidavit"; }else{ $str = "Not On Affidavit";  }
-$nList .= "<option value='$d2[id]'>$d2[full] $str </option>";
+$nList .= "<option value='$d2[id]'>$d2[full]</option>";
 }
 $nList .= "</OPTGROUP>" ;
 }
@@ -72,16 +74,28 @@ $aList .= "</OPTGROUP>" ;
 <input type="hidden" name="packet_id" value="<?=$_GET[packet]?>">
 <table>
 	<tr>
-		<td>Server</td>
-		<td>Address</td>
-		<td>Name</td>
-		<td>Allow Sub-Service</td>
+		<td><b>Server</b></td>
+		<td colspan="2"><b>Address</b></td>
 	</tr>
 	<tr>
 		<td><select name="server_id" size="10"><?=$sList?></select></td>
-		<td><select name="address_id" size="10"><?=$aList?></select></td>
-		<td><select name="name_id" size="10"><?=$nList?></select></td>
+		<td colspan="2"><select name="address_id" size="10"><?=$aList?></select></td>
+	</tr>
+	<tr>
+		<td colspan="3"><b>Name</b></td>
+	</tr>
+	<tr>
+		<td colspan="3"><select name="name_id" size="10"><?=$nList?></select></td>
+	</tr>
+	<tr>
+		<td><b>Allow Posting</b></td>
+		<td><b>Allow Sub-Service</b></td>		
+                <td><b>Show name on case header</b></td>
+	</tr>
+	<tr>
+		<td valign="top"><select name="allowPosting" size="2"><option>Yes</option><option>No</option></select></td>
 		<td valign="top"><select name="allowSubService" size="2"><option>Yes</option><option>No</option></select></td>
+		<td valign="top"><select name="onAffidavit" size="2"><option>Yes</option><option>No</option></select></td>
 	</tr>
 </table>
 <input type="submit">
@@ -133,5 +147,72 @@ $aList .= "</OPTGROUP>" ;
 </form>
 <? } ?>
 
+<?
 
-<? mysql_close(); ?>
+$r=@mysql_query("select client_file from packet where id = '$_GET[packet]' ");
+$d=mysql_fetch_array($r,MYSQL_ASSOC);
+
+$select_query = "Select create_id, create_date, update_id, update_date, filenumber,clientidentifier,defendantnumber, defendantfullname,defendantaddress1,defendantaddress2,defendantcity,defendantstate,defendantstateid, defendantzip, defendantrelationship,other,status,statusdate From defendants Where filenumber = '$d[client_file]'";
+$result = mysql_query($select_query);
+
+// Bail out if the query or connection fails
+if ($result == false) {
+echo $system_message[104];
+exit;
+}
+else {
+
+echo '<table border="1">';
+echo '<tr>';
+echo '<td>Service contacts for '.$d[client_file].'</td> <td>Address</td> <td>City</td> <td>State</td> <td>Zip</td> <td>Status</td> <td>Status Date</td> ';
+echo '</tr>';
+
+while ($row = @mysql_fetch_array($result,MYSQL_ASSOC)) {
+// check and add to name and address tables
+$newData=0;
+
+$rTest=@mysql_query("select id from name where full = '".$row['defendantfullname']."' ");
+$dTest=mysql_fetch_array($rTest,MYSQL_ASSOC);
+if(!$dTest[id]){
+$newData=1;
+@mysql_query("insert into name (full) values ('".$row['defendantfullname']."') ");
+}
+
+$address = $row['defendantaddress1'].' '.$row['defendantaddress2'];   
+
+
+$rTest=@mysql_query("select id from address where mailingAddress = '$address' and city = '".$row['defendantcity']."' and zip = '".$row['defendantzip']."' and state = '".$row['defendantstate']."' ");
+$dTest=mysql_fetch_array($rTest,MYSQL_ASSOC);
+if(!$dTest[id]){
+$newData=1;
+@mysql_query("insert into address (mailingAddress, city, state, zip) values ('$address', '".$row['defendantcity']."', '".$row['defendantstate']."',  '".$row['defendantzip']."') ");
+}
+
+echo '<tr>';
+echo '<td valign="top">
+<table>
+<tr>
+
+<td>'.$row['defendantfullname'].'</td></tr></table></td> <td valign="top">
+<table>
+<tr>
+<td>'.$row['defendantaddress1'].' '.$row['defendantaddress2'].'</td></tr></table></td>';
+echo '<td valign="top">'.$row['defendantcity'].'</td> <td valign="top">'.$row['defendantstate'].'</td> <td valign="top">'.$row['defendantzip'].'</td>';
+echo '<td valign="top">'.$row['status'].'</td> <td valign="top">'.$row['statusdate'].'</td> ';
+
+
+echo '</tr>';
+
+}
+
+    }
+echo "</table>";
+?>
+
+
+
+<? 
+if($newData==1){ ?>
+<meta http-equiv="refresh" content="0"> 
+<? } 
+mysql_close(); ?>

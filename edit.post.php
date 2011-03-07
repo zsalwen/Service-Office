@@ -1,7 +1,7 @@
 <?
-/*
+
 if ($_POST[reopen]){
-	$r13=@mysql_query("select processor_notes, fileDate from ps_packets where packet_id = '$_GET[packet]'");
+	$r13=@mysql_query("select processor_notes, fileDate from packet where id = '$_GET[packet]'");
 	$d13=mysql_fetch_array($r13,MYSQL_ASSOC);
 	$oldNote = $d13[processor_notes];
 	$note="file originally closed out on ".$d13[fileDate];
@@ -9,20 +9,20 @@ if ($_POST[reopen]){
 	$today=date('Y-m-d');
 	$deadline=time()+432000;
 	$deadline=date('Y-m-d',$deadline);
-	$q="UPDATE ps_packets SET processor_notes='".dbIN($newNote)."', filing_status='REOPENED', affidavit_status='IN PROGRESS', affidavit_status2='REOPENED', process_status='ASSIGNED', reopenDate='$today', fileDate='0000-00-00', estFileDate='$deadline', request_close='', request_closea='', request_closeb='', request_closec='', request_closed='', request_closee='' WHERE packet_id='".$_GET[packet]."'";
+	$q="UPDATE packet SET processor_notes='".dbIN($newNote)."', filing_status='REOPENED', affidavit_status='IN PROGRESS', affidavit_status2='REOPENED', process_status='ASSIGNED', reopenDate='$today', fileDate='0000-00-00', estFileDate='$deadline', request_close='', request_closea='', request_closeb='', request_closec='', request_closed='', request_closee='' WHERE id='".$_GET[packet]."'";
 	@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 	timeline($_GET[packet],$_COOKIE[psdata][name]." Reopened File for Additional Service");
 }
 
 if ($_POST[sendToClient]){
 	$today=date('Y-m-d');
-	@mysql_query("UPDATE ps_packets SET fileDate='$today', estFileDate='$today', filing_status='SEND TO CLIENT' WHERE packet_id='$_GET[packet]'");
+	@mysql_query("UPDATE packet SET fileDate='$today', estFileDate='$today', filing_status='SEND TO CLIENT' WHERE id='$_GET[packet]'");
 	timeline($_GET[packet],$_COOKIE[psdata][name]." Marked File Send to Client");
 }
 
 if ($_POST[submit]){
 	if ($_GET[packet]){
-		$q=@mysql_query("SELECT * from ps_packets WHERE packet_id='$_POST[packet_id]'") or die (mysql_error());
+		$q=@mysql_query("SELECT * from packet WHERE id='$_POST[id]'") or die (mysql_error());
 		$d=mysql_fetch_array($q, MYSQL_ASSOC);
 		if ($_POST[estFileDate] != $d[estFileDate]){
 			//if estFileDate has been changed, set flag to open prompter
@@ -38,8 +38,8 @@ if ($_POST[submit]){
 			}
 		}
 		//reset uspsVerify if the address has been modified and no confirmed entry already exists within the addressVerify table
-		if ($newAddress != '' && isVerified($d[packet_id]) !== true){
-			@mysql_query("UPDATE ps_packets SET uspsVerify='' WHERE packet_id='$d[packet_id]'");
+		if ($newAddress != '' && isVerified($d[id]) !== true){
+			@mysql_query("UPDATE packet SET uspsVerify='' WHERE id='$d[id]'");
 		}
 		$case_no=trim($_POST[case_no]);
 		// un dbCleaner on all items
@@ -47,7 +47,7 @@ if ($_POST[submit]){
 		if ($_POST[addressType] != $d[addressType]){
 			$searchAdd=$d[address1].", ".$d[city1].", ".$d[state1]." ".$d[zip1];
 			$searchAdd=strtoupper($searchAdd);
-			$reviseList=addressRevise($_POST[packet_id],$searchAd,$d[addressType],$_POST[addressType]);
+			$reviseList=addressRevise($_POST[id],$searchAd,$d[addressType],$_POST[addressType]);
 			$TYPE .= "<table><tr><td>History ID</td><td>Old Type</td><td>New Type</td></tr>".$reviseList;
 			//$TYPE .= "<h1>POST addressType: ".$_POST[addressType]."</h1><br><h1>DB addressType: ".$d[addressType]."</h1>";
 		}
@@ -55,7 +55,7 @@ if ($_POST[submit]){
 			if ($_POST["addressType$letter"] != $d["addressType$letter"]){
 				$searchAdd=$d["address1$letter"].", ".$d["city1$letter"].", ".$d["state1$letter"]." ".$d["zip1$letter"];
 				$searchAdd=strtoupper($searchAdd);
-				$reviseList=addressRevise($_POST[packet_id],$searchAdd,$d["addressType$letter"],$_POST["addressType$letter"]);
+				$reviseList=addressRevise($_POST[id],$searchAdd,$d["addressType$letter"],$_POST["addressType$letter"]);
 				$TYPE .= "<table><tr><td>History ID</td><td>Old Type</td><td>New Type</td></tr>".$reviseList;
 				//$TYPE .= "<h1>POST addressType".$letter.": ".$_POST["addressType$letter"]."</h1><br><h1>DB addressType".$letter.": ".$d["addressType$letter"]."</h1>";
 			}
@@ -63,7 +63,7 @@ if ($_POST[submit]){
 		if ($newClose != 1){
 			$estQ="estFileDate='$_POST[estFileDate]',";
 		}
-			@mysql_query("UPDATE ps_packets SET process_status='$_POST[process_status]',
+			@mysql_query("UPDATE packet SET process_status='$_POST[process_status]',
 			filing_status='$_POST[filing_status]',
 			service_status='$_POST[service_status]',
 			fileDate='$_POST[fileDate]',
@@ -122,10 +122,10 @@ if ($_POST[submit]){
 			reopenNotes='".addslashes(strtoupper($_POST[reopenNotes]))."',
 			auctionNote='".strtoupper($_POST[auctionNote])."',
 			circuit_court='".strtoupper($_POST[circuit_court])."'
-			WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
+			WHERE id='$_POST[id]'") or die(mysql_error());
 	}else{
 		$case_no=trim($_POST[case_no]);
-		@mysql_query("UPDATE ps_packets SET process_status='$_POST[process_status]',
+		@mysql_query("UPDATE packet SET process_status='$_POST[process_status]',
 		filing_status='$_POST[filing_status]',
 		service_status='$_POST[service_status]',
 		pobox='$_POST[pobox]',
@@ -185,26 +185,26 @@ if ($_POST[submit]){
 		process_status='READY',
 		status='RECIEVED',
 		circuit_court='".strtoupper($_POST[circuit_court])."'
-		WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
-		timeline($_POST[packet_id],$_COOKIE[psdata][name]." Performed Data Entry");
+		WHERE id='$_POST[id]'") or die(mysql_error());
+		timeline($_POST[id],$_COOKIE[psdata][name]." Performed Data Entry");
 		//if file is mail only, then open mailMatrix, minips_pay (upon submission of minips_pay, have that open quality control checklist)
 		if ($_POST[service_status] == "MAIL ONLY"){
-			@mysql_query("UPDATE ps_packets SET process_status='AWAITING CONFIRMATION' WHERE packet_id='".$_POST[packet_id]."'");
+			@mysql_query("UPDATE packet SET process_status='AWAITING CONFIRMATION' WHERE id='".$_POST[id]."'");
 		}
 		//here is where we will automate the address check and other popups
-		echo "<script>window.open('supernova.php?packet=".$_POST[packet_id]."&close=1',   'supernova',   'width=600, height=800'); </script>";
+		echo "<script>window.open('supernova.php?packet=".$_POST[id]."&close=1',   'supernova',   'width=600, height=800'); </script>";
 	}
 	//set servers and make timeline entries (if necessary);
 	$timeline='';
 	$dispDate=date('F jS, Y');
 	$to = "Service Updates <mdwestserve@gmail.com>";
-	$subject = "Dispatched Service for Packet $d[packet_id] ($d[client_file])";
+	$subject = "Dispatched Service for Packet $d[id] ($d[client_file])";
 	$headers  = "MIME-Version: 1.0 \n";
 	$headers .= "Content-type: text/html; charset=iso-8859-1 \n";
 	$headers .= "From: ".$_COOKIE[psdata][name]." <".$_COOKIE[psdata][email]."> \n";
-	$body="Service for Packet $d[packet_id] (<strong>$d[client_file]</strong>) has been dispatched by ".$_COOKIE[psdata][name].", today $dispDate.<br><b>Please understand that this email is sent as confirmation of a process service file sent from our office today.  If you do not reply to the contrary--stating files have not been received--within 24 hours, you will be held responsible for any delays not made known to our office.</b><br>".$_COOKIE[psdata][name]."<br>MDWestServe<br>service@mdwestserve.com<br>(410) 828-4568<br>".time()."<br>".md5(time());
+	$body="Service for Packet $d[id] (<strong>$d[client_file]</strong>) has been dispatched by ".$_COOKIE[psdata][name].", today $dispDate.<br><b>Please understand that this email is sent as confirmation of a process service file sent from our office today.  If you do not reply to the contrary--stating files have not been received--within 24 hours, you will be held responsible for any delays not made known to our office.</b><br>".$_COOKIE[psdata][name]."<br>MDWestServe<br>service@mdwestserve.com<br>(410) 828-4568<br>".time()."<br>".md5(time());
 	if (isset($_POST[server1])){
-		@mysql_query("UPDATE ps_packets SET server_id='$_POST[server1]' WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
+		@mysql_query("UPDATE packet SET server_id='$_POST[server1]' WHERE id='$_POST[id]'") or die(mysql_error());
 		if ($_POST[server1] != $d[server_id]){
 			$serverID=$_POST[server1];
 			$id2name=id2name($serverID);
@@ -228,7 +228,7 @@ if ($_POST[submit]){
 	}
 	foreach (range('a','e') as $letter){
 		if (isset($_POST["server1$letter"])){
-			@mysql_query("UPDATE ps_packets SET server_id$letter='".$_POST["server1$letter"]."' WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
+			@mysql_query("UPDATE packet SET server_id$letter='".$_POST["server1$letter"]."' WHERE id='$_POST[id]'") or die(mysql_error());
 			if ($_POST["server1$letter"] != $d["server_id$letter"]){
 				$serverID='';
 				$serverID=$_POST["server1$letter"];
@@ -262,10 +262,10 @@ if ($_POST[submit]){
 		if ($_GET[packet] && $timeline == ''){
 			timeline($_GET[packet],$_COOKIE[psdata][name]." Updated Order");
 		}elseif (trim($timeline) != ''){
-			timeline($_POST[packet_id],$timeline);
+			timeline($_POST[id],$timeline);
 		}
 	}
-	$r=mysql_query("SELECT name1, name2, name3, name4, name5, name6, address1, address1a, address1b, address1c, address1d, address1e, city1, city1a, city1b, city1c, city1d, city1e, state1, state1a, state1b, state1c, state1d, state1e, zip1, zip1a, zip1b, zip1c, zip1d, zip1e, address2, address2a, address2b, address2c, address2d, address2e, city2, city2a, city2b, city2c, city2d, city2e, state2, state2a, state2b, state2c, state2d, state2e, zip2, zip2a, zip2b, zip2c, zip2d, zip2e, address3, address3a, address3b, address3c, address3d, address3e, city3, city3a, city3b, city3c, city3d, city3e, state3, state3a, state3b, state3c, state3d, state3e, zip3, zip3a, zip3b, zip3c, zip3d, zip3e, address4, address4a, address4b, address4c, address4d, address4e, city4, city4a, city4b, city4c, city4d, city4e, state4, state4a, state4b, state4c, state4d, state4e, zip4, zip4a, zip4b, zip4c, zip4d, zip4e, address5, address5a, address5b, address5c, address5d, address5e, city5, city5a, city5b, city5c, city5d, city5e, state5, state5a, state5b, state5c, state5d, state5e, zip5, zip5a, zip5b, zip5c, zip5d, zip5e, address6, address6a, address6b, address6c, address6d, address6e, city6, city6a, city6b, city6c, city6d, city6e, state6, state6a, state6b, state6c, state6d, state6e, zip6, zip6a, zip6b, zip6c, zip6d, zip6e, pobox, pobox2, pocity, pocity2, postate, postate2, pozip, pozip2 from ps_packets WHERE packet_id='$_POST[packet_id]'");
+	$r=mysql_query("SELECT name1, name2, name3, name4, name5, name6, address1, address1a, address1b, address1c, address1d, address1e, city1, city1a, city1b, city1c, city1d, city1e, state1, state1a, state1b, state1c, state1d, state1e, zip1, zip1a, zip1b, zip1c, zip1d, zip1e, address2, address2a, address2b, address2c, address2d, address2e, city2, city2a, city2b, city2c, city2d, city2e, state2, state2a, state2b, state2c, state2d, state2e, zip2, zip2a, zip2b, zip2c, zip2d, zip2e, address3, address3a, address3b, address3c, address3d, address3e, city3, city3a, city3b, city3c, city3d, city3e, state3, state3a, state3b, state3c, state3d, state3e, zip3, zip3a, zip3b, zip3c, zip3d, zip3e, address4, address4a, address4b, address4c, address4d, address4e, city4, city4a, city4b, city4c, city4d, city4e, state4, state4a, state4b, state4c, state4d, state4e, zip4, zip4a, zip4b, zip4c, zip4d, zip4e, address5, address5a, address5b, address5c, address5d, address5e, city5, city5a, city5b, city5c, city5d, city5e, state5, state5a, state5b, state5c, state5d, state5e, zip5, zip5a, zip5b, zip5c, zip5d, zip5e, address6, address6a, address6b, address6c, address6d, address6e, city6, city6a, city6b, city6c, city6d, city6e, state6, state6a, state6b, state6c, state6d, state6e, zip6, zip6a, zip6b, zip6c, zip6d, zip6e, pobox, pobox2, pocity, pocity2, postate, postate2, pozip, pozip2 from packet WHERE id='$_POST[id]'");
 	$d=mysql_fetch_array($r, MYSQL_ASSOC) or die(mysql_error());
 	$i2=0;
 	$qList="";
@@ -302,20 +302,20 @@ if ($_POST[submit]){
 		}
 	}
 	if ($qList != ""){
-		$q="UPDATE ps_packets SET ".substr($qList,0,-2)." WHERE packet_id='$_POST[packet_id]'";
+		$q="UPDATE packet SET ".substr($qList,0,-2)." WHERE id='$_POST[id]'";
 		@mysql_query($q) or die("Query: $q<br>".mysql_error());
 	}
 	if ($_GET[packet] && $newClose == 1){
-		echo "<script>prompter('$_POST[packet_id]','$_POST[estFileDate]','$oldFileDate');</script>";
+		echo "<script>prompter('$_POST[id]','$_POST[estFileDate]','$oldFileDate');</script>";
 	}elseif ($_GET[packet]){
-		header ('Location: order.php?packet='.$_GET[packet].'&type='.addslashes($TYPE));
+		header ('Location: edit.php?packet='.$_GET[packet].'&type='.addslashes($TYPE));
 	}else{
 		if ($_GET[start]){
-			header ('Location: order.php?start='.$_GET[start].'&type='.addslashes($TYPE));
+			header ('Location: edit.php?start='.$_GET[start].'&type='.addslashes($TYPE));
 		}else{
-			echo "<script>window.location.href='order.php';</script>";
+			echo "<script>window.location.href='edit.php';</script>";
 		}
 	}
 }
-*/
+
 ?>
