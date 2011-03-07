@@ -6,7 +6,7 @@ header ('Location: http://staff.mdwestserve.com');
 mysql_connect();
 mysql_select_db('core');
 
-
+ww
 
 if ($_POST[mainInstruction]){
 @mysql_query("INSERT INTO instruction (packet_id, server_id, address_id, name_id, allowSubService) VALUES
@@ -174,7 +174,7 @@ $newData=1;
 $address = $row['defendantaddress1'].' '.$row['defendantaddress2'];   
 
 
-$rTest=@mysql_query("select id from address where mailingAddress = '$address' and city = ''".$row['defendantcity']."'' and zip = ''".$row['defendantzip']."'' and state = ''".$row['defendantstate']."'' ");
+$rTest=@mysql_query("select id from address where mailingAddress = '$address' and city = '".$row['defendantcity']."' and zip = '".$row['defendantzip']."' and state = '".$row['defendantstate']."' ");
 $dTest=mysql_fetch_array($rTest,MYSQL_ASSOC);
 if(!$dTest[id]){
 $newData=1;
