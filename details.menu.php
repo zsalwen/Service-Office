@@ -1,9 +1,15 @@
-<table style="padding:0px; font-weight:bold; border-collapse:collapse; height:150px !important; font-size:11px;" cellpadding="0" cellspacing="0">
+<?
+$packet = $_GET[packet];
+?>
+<table border="1">
 <tr>
-<td><a href="http://staff.mdwestserve.com/upload.php?packet=<?=$packet?>" target="pane1">Attachments</a></td>
+<td><a href="http://staff.mdwestserve.com/instruction.php?packet=<?=$packet?>" target="pane1">Instructions</a></td>
 </tr>
 <tr>
-<td><a href="http://staff.mdwestserve.com/instruction.php?packet=<?=$packet?>" target="pane1">Add instruction set</a></td>
+<td><a href="http://staff.mdwestserve.com/edit.php?packet=<?=$packet?>" target="pane1">Edit Data</a></td>
+</tr>
+<tr>
+<td><a href="http://staff.mdwestserve.com/upload.php?packet=<?=$packet?>" target="pane1">Upload Inbox</a></td>
 </tr>
 <? /*
 <tr>
