@@ -8,6 +8,8 @@ foreach ($_POST as $field => $value) {
     $queryBuilder .=  " $field =  '$value', ";
 }
 
+$queryBuilder = rtrim($queryBuilder, ','); 
+
 $built = "update packet set $queryBuilder where id = '$_GET[packet]' ";
 
 echo $built;
