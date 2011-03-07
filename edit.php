@@ -859,12 +859,6 @@ foreach(range('a','e') as $letter){
 		</td>
 	</tr>
 </table>
-<? if (webservice($d[client_file]) && ($d[attorneys_id] == 1)){
-		echo "<table align='center'><tr><td>";
-		include "http://staff.mdwestserve.com/otd/webservice.php?fileNumber=$d[client_file]";
-		echo "</td></tr></table>";
-	}
-?>
 
 
 
