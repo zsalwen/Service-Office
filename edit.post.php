@@ -1,6 +1,17 @@
 <?
 // new update queries
 if($_POST){
+
+$queryBuilder = '';
+
+foreach ($_POST as $field => $value) {
+    $queryBuilder =  " $key =  '$value', ";
+}
+
+$built = "update packet set $queryBuilder where id = '$_GET[packet]' ";
+
+echo $built;
+
  @mysql_query("update packet set case_no = '$_POST[case_no]' where id = '$_GET[packet]' ");
 }
 
