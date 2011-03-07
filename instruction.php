@@ -178,7 +178,7 @@ $rTest=@mysql_query("select id from address where mailingAddress = '$address' an
 $dTest=mysql_fetch_array($rTest,MYSQL_ASSOC);
 if(!$dTest[id]){
 $newData=1;
-@mysql_query("insert into address (mailingAddress, city, state, zip) values ('".$row['defendantcity']."', '".$row['defendantstate']."', '".$row['defendantstate']."', '".$row['defendantzip']."') ");
+@mysql_query("insert into address (mailingAddress, city, state, zip) values ('$address', '".$row['defendantcity']."', '".$row['defendantstate']."',  '".$row['defendantzip']."') ");
 }
 
 echo '<tr>';
