@@ -1,3 +1,4 @@
+<? include 'edit.functions.php'; ?>
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="details.css" />
