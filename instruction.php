@@ -142,10 +142,10 @@ $aList .= "</OPTGROUP>" ;
 
 <?
 
-$r=@mysql_query("select fileNumber from packet where id = '$_GET[packet]' ");
+$r=@mysql_query("select client_file from packet where id = '$_GET[packet]' ");
 $d=mysql_fetch_array($r,MYSQL_ASSOC);
 
-$select_query = "Select create_id, create_date, update_id, update_date, filenumber,clientidentifier,defendantnumber, defendantfullname,defendantaddress1,defendantaddress2,defendantcity,defendantstate,defendantstateid, defendantzip, defendantrelationship,other,status,statusdate From defendants Where filenumber = '$d[fileNumber]'";
+$select_query = "Select create_id, create_date, update_id, update_date, filenumber,clientidentifier,defendantnumber, defendantfullname,defendantaddress1,defendantaddress2,defendantcity,defendantstate,defendantstateid, defendantzip, defendantrelationship,other,status,statusdate From defendants Where filenumber = '$d[client_file]'";
 $result = mysql_query($select_query);
 
 // Bail out if the query or connection fails
@@ -157,7 +157,7 @@ else {
 
 echo '<table border="1" style="border-collapse:collapse;" width="200%" >';
 echo '<tr>';
-echo '<td>Defendant Full Name for '.$d[fileNumber].'</td> <td>Address 1</td> <td>Address 2</td> <td>City</td> <td>State</td> <td>Zip</td> <td>Status</td> <td>Status Date</td> ';
+echo '<td>Defendant Full Name for '.$d[client_file].'</td> <td>Address 1</td> <td>Address 2</td> <td>City</td> <td>State</td> <td>Zip</td> <td>Status</td> <td>Status Date</td> ';
 echo '</tr>';
 
 while ($row = @mysql_fetch_array($result,MYSQL_ASSOC)) {
