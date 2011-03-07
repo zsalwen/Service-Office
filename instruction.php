@@ -164,11 +164,11 @@ while ($row = @mysql_fetch_array($result,MYSQL_ASSOC)) {
 // check and add to name and address tables
 $newData=0;
 
-$rTest=@mysql_query("select id from name where full_name = '".$row['defendantfullname']."' ");
+$rTest=@mysql_query("select id from name where full = '".$row['defendantfullname']."' ");
 $dTest=mysql_fetch_array($rTest,MYSQL_ASSOC);
 if(!$dTest[id]){
 $newData=1;
-@mysql_query("insert into name (full_name) values ('".$row['defendantfullname']."') ");
+@mysql_query("insert into name (full) values ('".$row['defendantfullname']."') ");
 }
 
 echo '<tr>';
