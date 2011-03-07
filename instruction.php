@@ -157,7 +157,7 @@ else {
 
 echo '<table border="1" style="border-collapse:collapse;" width="200%" >';
 echo '<tr>';
-echo '<td>Defendant Full Name</td> <td>Address 1</td> <td>Address 2</td> <td>City</td> <td>State</td> <td>Zip</td> <td>Status</td> <td>Status Date</td> ';
+echo '<td>Defendant Full Name for '.$d[fileNumber].'</td> <td>Address 1</td> <td>Address 2</td> <td>City</td> <td>State</td> <td>Zip</td> <td>Status</td> <td>Status Date</td> ';
 echo '</tr>';
 
 while ($row = @mysql_fetch_array($result,MYSQL_ASSOC)) {
