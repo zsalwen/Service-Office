@@ -205,7 +205,7 @@ echo "</table>";
 
 
 <? 
-if($newData==1;){ ?>
+if($newData==1){ ?>
 <meta http-equiv="refresh" content="0"> 
 <? } 
 mysql_close(); ?>
