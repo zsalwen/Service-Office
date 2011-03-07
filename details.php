@@ -7,6 +7,18 @@ date_default_timezone_set('America/New_York');
 include 'edit.functions.php';
 mysql_connect();
 mysql_select_db('core');
+if ($_GET[packet] && $_GET[packet] < '20000'){
+die('This details page is for packet 20000 and above, please use the ev/otd/standard versions for legacy packets.');
+}
+
+if($_GET[packet]){
+$query = "SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours FROM packet where id='$_GET[packet]'";
+$r=@mysql_query($query) or die($query.'<br>'.mysql_error());
+$d=mysql_fetch_array($r, MYSQL_ASSOC);
+hardLog('Loaded Details for '.$_GET[packet],'user');
+}else{
+die('Missing Packet Number');
+}
 ?>
 <html>
 <head>
