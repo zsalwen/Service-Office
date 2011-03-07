@@ -292,49 +292,6 @@ if ($d92[server]){
 
 
 
-<table width="100%" id="pobox" ><tr><td>
-<table width="100%">
-<tr>
-<td>Mail Only</td>
-<td><input name="pobox" value="<?=$d[pobox]?>" /></td>
-</tr>
-<tr>
-<td>City</td>
-<td><input name="pocity" value="<?=$d[pocity]?>" /></td>
-</tr>
-<tr>
-<td>State</td>
-<td><input name="postate" value="<?=$d[postate]?>" /></td>
-</tr>
-<tr>
-<td>ZIP</td>
-<td><input name="pozip" value="<?=$d[pozip]?>" /></td>
-</tr>
-</table>
-</td><td>
-<table width="100%">
-<tr>
-<td>Mail Only 2</td>
-<td><input name="pobox2" value="<?=$d[pobox2]?>" /></td>
-</tr>
-<tr>
-<td>City 2</td>
-<td><input name="pocity2" value="<?=$d[pocity2]?>" /></td>
-</tr>
-<tr>
-<td>State 2</td>
-<td><input name="postate2" value="<?=$d[postate2]?>" /></td>
-</tr>
-<tr>
-<td>ZIP 2</td>
-<td><input name="pozip2" value="<?=$d[pozip2]?>" /></td>
-</tr>
-</table>    
-</td></tr></table>
-
-
-
-
 <table width="100%" id="status" style="display:none; font-size:11px; padding:0px;">
 <input type="hidden" name="id" value="<?=$d[id]?>" />
 <tr>
