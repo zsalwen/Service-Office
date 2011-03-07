@@ -875,6 +875,6 @@ $headers = apache_request_headers();
 $lb = $headers["X-Forwarded-Host"];
 $mirror = $_SERVER['HTTP_HOST'];
 ?>
-<center style="padding:0px;">Mysql Closed on <?=$mirror;?> from <?=$lb;?></center>
+<center style="padding:0px;">Mysql Closed on <?=$mirror;?> from <?=$lb;?> <hr> Debug: <?=$built;?></center>
 </body>
 </html>
