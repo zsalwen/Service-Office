@@ -74,12 +74,16 @@ $aList .= "</OPTGROUP>" ;
 	<tr>
 		<td>Server</td>
 		<td>Address</td>
-		<td>Name</td>
-		<td>Allow Sub-Service</td>
 	</tr>
 	<tr>
 		<td><select name="server_id" size="10"><?=$sList?></select></td>
 		<td><select name="address_id" size="10"><?=$aList?></select></td>
+	</tr>
+	<tr>
+		<td>Name</td>
+		<td>Allow Sub-Service</td>
+	</tr>
+	<tr>
 		<td><select name="name_id" size="10"><?=$nList?></select></td>
 		<td valign="top"><select name="allowSubService" size="2"><option>Yes</option><option>No</option></select></td>
 	</tr>
