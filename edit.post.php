@@ -1,20 +1,13 @@
 <?
-// new update queries
+// new update query KEEP IT SIMPLE !
 if($_POST){
-
 $queryBuilder = '';
-
 foreach ($_POST as $field => $value) {
     $queryBuilder .=  " $field =  '$value', ";
 }
-
 $queryBuilder =substr($queryBuilder, 0, -2);
-
 $built = "update packet set $queryBuilder where id = '$_GET[packet]' ";
-
-echo $built;
-
- @mysql_query("update packet set case_no = '$_POST[case_no]' where id = '$_GET[packet]' ");
+ @mysql_query($built) or die($built.'<br>Error: '.mysql_error());
 }
 
 /*
