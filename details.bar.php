@@ -1,3 +1,6 @@
+<?
+$packet = $_GET[packet];
+?>
 <table><tr><td>
 
 
