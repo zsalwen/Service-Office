@@ -27,11 +27,11 @@ die('Missing Packet Number');
 <body>
 <table style="width:100%; height:100%;">
 <tr>
-<td colspan="3" style="height:100px;" align="center"><? include 'details.bar.php';?></td>
+<td colspan="3" style="height:50px;" align="center"><? include 'details.bar.php';?></td>
 </tr>
 <tr>
 <td><iframe name="pane1" id="pane1" style="width:100%; height:100%;"></iframe></td>
-<td valign="center" style="width:100px;"><? include 'details.menu.php';?></td>
+<td valign="top" style="width:100px;"><font size="+2"><?=$_GET[packet]?></font><br><? include 'details.menu.php';?></td>
 <td><iframe name="pane2" id="pane2" style="width:100%; height:100%;"></iframe></td>
 </tr>
 </table>
