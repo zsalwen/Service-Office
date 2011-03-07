@@ -22,8 +22,9 @@ $hours=number_format((time()-$received)/3600,0);
 <? if(!$d[caseVerify]){ ?> <a href="validateCase.php?case=<?=$d[case_no]?>&packet=<?=$d[id]?>&county=<?=$d[circuit_court]?>" target="preview">!!!Verify Case Number!!!</a><? }else{ ?><img src="http://www.courts.state.md.us/newlogosm.gif"><br>Verified by <? echo $d[caseVerify]; }?>
 </td></tr><tr><td align="center">
 <? if(!$d[qualityControl]){ ?> <a href="entryVerify.php?packet=<?=$d[id]?><? if ($d[service_status] == 'MAIL ONLY'){ echo '&matrix=1';} ?>&frame=no" target="preview">!!!Verify Data Entry!!!</a><? }else{ ?><img src="http://staff.mdwestserve.com/small.logo.gif" height="41" width="41"><br>Verified by <? echo $d[qualityControl]; }?>
-</td></tr><tr><td align="center"><div style="font-size:15pt" ><?=$hours?> Hours || <?=$days?> Days<br>Deadline: <?=$deadline?><div></td></tr></table>
+</td></tr><tr><td align="center"><div style="font-size:15pt" ><?=$hours?> Hours<br> <?=$days?> Days<br>Deadline:<br> <?=$deadline?><div></td></tr></table>
 
+<hr>
 
 
 <table border="1">
@@ -37,6 +38,10 @@ $hours=number_format((time()-$received)/3600,0);
 <td><a href="http://staff.mdwestserve.com/upload.php?packet=<?=$packet?>" target="pane1">Upload Inbox</a></td>
 </tr>
 </table>
+
+<hr>
+
+
 <LEGEND ACCESSKEY=C>Legacy Service Links</LEGEND>
 <table style="padding:0px; font-weight:bold; border-collapse:collapse; height:150px !important; font-size:11px;" cellpadding="0" cellspacing="0">
 	<tr>
@@ -88,6 +93,8 @@ if ($dc[packet_id]){
 </table>
 </FIELDSET>
 
+
+<hr>
 
 
 <strong>
