@@ -1,10 +1,17 @@
-<table style="width:100%; height:100%; background-color:#999999; color:#FFFF99">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="details.css" />
+</head>
+<body>
+<table style="width:100%; height:100%;">
 <tr>
-<td colspan="3" style="height:50px;" align="center">AJAX Information Bar</td>
+<td colspan="3" style="height:100px;" align="center"><? include 'details.bar.php';?></td>
 </tr>
 <tr>
 <td><iframe name="pane1" id="pane1" style="width:100%; height:100%;"></iframe></td>
-<td valign="center">Include Menu</td>
+<td valign="center"><? include 'details.menu.php';?></td>
 <td><iframe name="pane2" id="pane2" style="width:100%; height:100%;"></iframe></td>
 </tr>
 </table>
+</body>
+</html>
