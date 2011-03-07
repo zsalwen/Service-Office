@@ -425,16 +425,7 @@ $add1e=strtoupper($d[address1e].', '.$d[city1e].', '.$d[state1e].' '.$d[zip1e]);
 
 
 
-<strong>
-	<div align="center" style="background-color:#FFFF00">
-    	<a onClick="hideshow(document.getElementById('track'))">Tracking</a> &curren; 
-    	<a onClick="hideshow(document.getElementById('addresses'))">Legacy Addresses</a> &curren; 
-    	<a onClick="hideshow(document.getElementById('pobox'))">Legacy Mail Only</a> &curren; 
-    	<a onClick="hideshow(document.getElementById('status'))">Status</a> &curren; 
-        <a onClick="hideshow(document.getElementById('servers'))">Legacy Servers</a> &curren; 
-        <a onClick="hideshow(document.getElementById('notes'))">Notes</a> &curren; 
-    </div>
-</strong>
+
 <table width="100%" id="pobox" style="display:none;"><tr><td>
 <table width="100%">
 <tr>
