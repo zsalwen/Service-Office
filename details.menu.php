@@ -29,6 +29,9 @@ $hours=number_format((time()-$received)/3600,0);
 
 <table border="1">
 <tr>
+<td><a href="http://staff.mdwestserve.com/notes.php?packet=<?=$packet?>" target="pane1">Notes</a></td>
+</tr>
+<tr>
 <td><a href="http://staff.mdwestserve.com/instruction.php?packet=<?=$packet?>" target="pane1">Instructions</a></td>
 </tr>
 <tr>
