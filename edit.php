@@ -93,7 +93,7 @@ $dupCheck=dupCheck($d[client_file]);
 ?>
 <td valign="top" <?=$dupCheck?>>
 <FIELDSET style="padding:0px;">
-<LEGEND ACCESSKEY=C><?=id2attorney($d[attorneys_id]);?> File Data <input type="submit" name="submit" style="background-color:#00FF00; font-weight:bold; width:100px;" value="SAVE"></LEGEND>
+<LEGEND ACCESSKEY=C><?=id2attorney($d[attorneys_id]);?> File Data <input type="submit" style="background-color:#00FF00; font-weight:bold; width:100px;" value="SAVE"></LEGEND>
 <table>
 <tr>
 <td>Client&nbsp;File </td>
