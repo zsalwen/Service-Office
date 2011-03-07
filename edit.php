@@ -242,12 +242,12 @@ $rc=@mysql_query("SELECT * FROM ps_history WHERE packet_id='$d[id]' AND wizard='
 $dc=mysql_fetch_array($rc,MYSQL_ASSOC);
 ?>
 
-
-
-
 </td></tr></table>
-<table style="display:<? if ($_GET[packet]){ echo "block";}else{ echo "none"; }?>; padding:0px;" id="notes" width="100%"><tr><td colspan="2"><fieldset><legend>Notes</legend>
-<iframe height="200px" width="700px"  frameborder="0" src="http://staff.mdwestserve.com/notes.php?packet=<?=$packet?>"></iframe></fieldset></td></tr></table>
+
+
+
+
+
 <table  id="track" width="100%"><tr><td align='center'>
 <FIELDSET>
 <LEGEND ACCESSKEY=C>docuTrack: in-house document tracking solution</LEGEND>
