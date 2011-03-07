@@ -57,7 +57,7 @@ $d=mysql_fetch_array($r,MYSQL_ASSOC);
 	//generate email
 	$entry=strtoupper($_GET[entry]);
 	$to = "Service Updates <mdwestserve@gmail.com>";
-	$subject = "Estimated File Date Updated for Eviction $d[eviction_id] ($d[client_file]), From $_GET[oldDate] To $_GET[newDate]: $entry";
+	$subject = "EstFileDate Updated for EV$d[eviction_id] ($d[client_file]), From $_GET[oldDate] To $_GET[newDate]: $entry";
 	$headers  = "MIME-Version: 1.0 \n";
 	$headers .= "Content-type: text/html; charset=iso-8859-1 \n";
 	$headers .= "From: ".$_COOKIE[psdata][name]." <".$_COOKIE[psdata][email]."> \n";
