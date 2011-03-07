@@ -534,7 +534,7 @@ while ($d4=mysql_fetch_array($r4, MYSQL_ASSOC)){
 <? } ?>
 <option value=""></option>
 </select></td>
-<td align='center'><? if ($d[process_status] != 'CANCELLED'){ ?><input style='font-size:11px;' name='cancelRef' value='Client Reference Email' onclick="value=''" size='25'><br><input style='background-color:pink; font-size: 10.5px;' type='button' name='cancel' value='CANCEL' onclick="confirmation(cancelRef.value);"><? }?></td>
+<td align='center'><? if ($d[process_status] != 'CANCELLED'){ ?><div style='font-size:11px;' name='cancelRef' value='Client Reference Email' onclick="value=''" size='25' /><div style='background-color:pink; font-size: 10.5px;' type='button' name='cancel' value='CANCEL' onclick="confirmation(cancelRef.value);" /><? }?></td>
 </tr>
 <tr><td align="center" colspan='3'><table align='center' style='font-size:12px;' width='100%'><tr><td align="center" width='25%'>
 Refile<br>
