@@ -75,25 +75,27 @@ $aList .= "</OPTGROUP>" ;
 <table>
 	<tr>
 		<td><b>Server</b></td>
-		<td><b>Address</b></td>
+		<td colspan="2"><b>Address</b></td>
 	</tr>
 	<tr>
 		<td><select name="server_id" size="10"><?=$sList?></select></td>
-		<td><select name="address_id" size="10"><?=$aList?></select></td>
+		<td colspan="2"><select name="address_id" size="10"><?=$aList?></select></td>
 	</tr>
 	<tr>
-		<td colspan="2"><b>Name</b></td>
+		<td colspan="3"><b>Name</b></td>
 	</tr>
 	<tr>
-		<td colspan="2"><select name="name_id" size="10"><?=$nList?></select></td>
+		<td colspan="3"><select name="name_id" size="10"><?=$nList?></select></td>
 	</tr>
 	<tr>
 		<td><b>Allow Posting</b></td>
-		<td><b>Allow Sub-Service</b></td>
+		<td><b>Allow Sub-Service</b></td>		
+                <td><b>Show name on case header</b></td>
 	</tr>
 	<tr>
 		<td valign="top"><select name="allowPosting" size="2"><option>Yes</option><option>No</option></select></td>
 		<td valign="top"><select name="allowSubService" size="2"><option>Yes</option><option>No</option></select></td>
+		<td valign="top"><select name="onAffidavit" size="2"><option>Yes</option><option>No</option></select></td>
 	</tr>
 </table>
 <input type="submit">
