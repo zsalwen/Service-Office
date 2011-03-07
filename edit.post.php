@@ -1,5 +1,10 @@
 <?
+// new update queries
+if($_POST){
+ @mysql_query("update packet set case_no = '$_POST[case_no]' where id = '$_GET[packet]' ");
+}
 
+/*
 if ($_POST[reopen]){
 	$r13=@mysql_query("select processor_notes, fileDate from packet where id = '$_GET[packet]'");
 	$d13=mysql_fetch_array($r13,MYSQL_ASSOC);
@@ -317,5 +322,5 @@ if ($_POST[submit]){
 		}
 	}
 }
-
+*/
 ?>
