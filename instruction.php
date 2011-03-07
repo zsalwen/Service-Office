@@ -75,26 +75,22 @@ $aList .= "</OPTGROUP>" ;
 <input type="hidden" name="packet_id" value="<?=$_GET[packet]?>">
 <table>
 	<tr>
-		<td colspan="2">Server</td>
+		<td><b>Server</b></td>
+		<td><b>Address</b></td>
 	</tr>
 	<tr>
-		<td colspan="2"><select name="server_id" size="10"><?=$sList?></select></td>
+		<td><select name="server_id" size="10"><?=$sList?></select></td>
+		<td><select name="address_id" size="10"><?=$aList?></select></td>
 	</tr>
 	<tr>
-		<td colspan="2">Address</td>
+		<td colspan="2"><b>Name</b></td>
 	</tr>
 	<tr>
-		<td><select colspan="2" name="address_id" size="10"><?=$aList?></select></td>
+		<td colspan="2"><select name="name_id" size="10"><?=$nList?></select></td>
 	</tr>
 	<tr>
-		<td colspan="2">Name</td>
-	</tr>
-	<tr>
-		<td><select colspan="2" name="name_id" size="10"><?=$nList?></select></td>
-	</tr>
-	<tr>
-		<td>Allow Posting</td>
-		<td>Allow Sub-Service</td>
+		<td><b>Allow Posting</b></td>
+		<td><b>Allow Sub-Service</b></td>
 	</tr>
 	<tr>
 		<td valign="top"><select name="allowPosting" size="2"><option>Yes</option><option>No</option></select></td>
