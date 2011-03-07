@@ -45,8 +45,7 @@ $nList .= "<OPTGROUP LABEL='$d[last]'>";
 $q2= "select * from name where last = '$d[last]' order by full";
 $r2=@mysql_query($q2) or die("Query: $q2<br>".mysql_error());
 while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)) {
-if ($d2[on_affidavit]== 'Yes'){ $str="On Affidavit"; }else{ $str = "Not On Affidavit";  }
-$nList .= "<option value='$d2[id]'>$d2[full] $str </option>";
+$nList .= "<option value='$d2[id]'>$d2[full]</option>";
 }
 $nList .= "</OPTGROUP>" ;
 }
