@@ -66,11 +66,9 @@ include 'edit.testing.php'; // make sure we have main packet array before testin
 
 
 
-<table width="100%" style='background-color:<?=colorCode(stripHours($d[hours]),$d[filing_status]);?>; padding:0px;'>
-<tr>
-<td valign="top">
 
-<!-- start left pane -->
+
+
 <fieldset>
 <legend>Server and Staff Assignments</legend>
 <?
@@ -900,7 +898,11 @@ foreach(range('a','e') as $letter){
 ?>
 <iframe height="285px" width="740px" name="QCOTD" src="<?=$src?>"></iframe>
 <? } ?>
-</td><td valign="top" width="10%">
+
+
+
+
+
 <?
 	$getFolder=getFolder($d[otd]);
 	$trioAff='/data/service/orders/'.$getFolder.'/TrioAffidavitService.pdf';
@@ -961,8 +963,8 @@ foreach(range('a','e') as $letter){
 		echo "</td></tr></table>";
 	}
 ?>
-<iframe height="622px" width="900px" name="preview" id="preview" src="<?=$src?>" ></iframe>
-</td></tr></table>
+
+
 
 <? } // end good packet form?>
 <script>document.title='<?=$_GET[packet]?>|<?=$d[status]?>|<?=$d[service_status]?>|<?=$d[process_status]?>|<?=$d[affidavit_status]?>|<?=$d[filing_status]?>|<?=$d[affidavit_status2]?>'</script>
