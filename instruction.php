@@ -6,7 +6,7 @@ header ('Location: http://staff.mdwestserve.com');
 mysql_connect();
 mysql_select_db('core');
 
-ww
+
 
 if ($_POST[mainInstruction]){
 @mysql_query("INSERT INTO instruction (packet_id, server_id, address_id, name_id, allowSubService) VALUES
