@@ -171,6 +171,16 @@ $newData=1;
 @mysql_query("insert into name (full) values ('".$row['defendantfullname']."') ");
 }
 
+$address = $row['defendantaddress1'].' '.$row['defendantaddress2'];   
+
+
+$rTest=@mysql_query("select id from address where mailingAddress = '$address' and city = ''".$row['defendantcity']."'' and zip = ''".$row['defendantzip']."'' and state = ''".$row['defendantstate']."'' ");
+$dTest=mysql_fetch_array($rTest,MYSQL_ASSOC);
+if(!$dTest[id]){
+$newData=1;
+@mysql_query("insert into address (mailingAddress, city, state, zip) values ('".$row['defendantcity']."', '".$row['defendantstate']."', '".$row['defendantstate']."', '".$row['defendantzip']."') ");
+}
+
 echo '<tr>';
 echo '<td valign="top">
 <table>
@@ -194,4 +204,9 @@ echo "</table>";
 
 
 
-<? mysql_close(); ?>
+<? 
+if($newData==1;){ ?>
+<meta http-equiv="refresh" content="0"> 
+<? } ?>
+
+mysql_close(); ?>
