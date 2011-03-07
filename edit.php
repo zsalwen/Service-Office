@@ -14,19 +14,19 @@ mysql_select_db('core');
 include 'edit.post.php';
 $id=$_COOKIE[psdata][user_id];
 
-// select packet and build query / html options for something like number of addresses or names and instruction set's
 if ($_GET[packet] && $_GET[packet] < '20000'){
-	$query = "SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours FROM ps_packets where packet_id='$_GET[packet]'";
-	hardLog('loaded legacy otd order for '.$_GET[packet],'user');
-}elseif($_GET[packet] && $_GET[packet] >= '20000'){
+die('This edit page is for packet 20000 and above, please use the ev/otd/standard versions for legacy packets.');
+}
+
+if($_GET[packet]){
 	$query = "SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours FROM packet where id='$_GET[packet]'";
 	hardLog('loaded normalized order for '.$_GET[packet],'user');
 }else{
 	if($_GET[start]){
-		$query = "SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours FROM ps_packets where process_status='READY' and qualityControl='' and packet_id >= '$_GET[start]' order by packet_id ";
+		$query = "SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours FROM packet where process_status='READY' and qualityControl='' and id >= '$_GET[start]' order by id ";
 	}else{
-		$query = "SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours FROM packets where status='NEW' and process_status <> 'CANCELLED' and process_status <> 'DUPLICATE' AND process_status <> 'DAMAGED PDF' and process_status <> 'DUPLICATE/DIFF-PDF' order by RAND() ";
-		hardLog('loaded NEW normalized order for '.$d[packet_id],'user');
+		$query = "SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours FROM packet where status='NEW' and process_status <> 'CANCELLED' and process_status <> 'DUPLICATE' AND process_status <> 'DAMAGED PDF' and process_status <> 'DUPLICATE/DIFF-PDF' order by RAND() ";
+		hardLog('loaded NEW normalized order for '.$d[id],'user');
 	}
 }
 
@@ -38,7 +38,7 @@ $d=mysql_fetch_array($r, MYSQL_ASSOC);
 <body style="padding:0px;">
 <?=$query;?>
 <? 
-if (!$d[packet_id] && !$d[eviction_id] && !$d[id]){ // do we really have a good packet id?
+if (!$d[id]){ // do we really have a good packet id?
 ?>
 
 <center>
@@ -49,13 +49,7 @@ if (!$d[packet_id] && !$d[eviction_id] && !$d[id]){ // do we really have a good 
 <? 
 }else{ // ok we have a good packet number let's go ahead and build the html
 
-if ($d[packet_id]){
- $packet=$d[packet_id];
-}elseif($d[eviction_id]){
- $packet=$d[eviction_id];
-}elseif($d[id]){
- $packet=$d[id];
-}
+$packet=$d[id];
 
 include 'edit.testing.php'; // make sure we have main packet array before testing packet
 ?>
