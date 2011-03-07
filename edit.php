@@ -65,7 +65,7 @@ include 'edit.testing.php'; // make sure we have main packet array before testin
 <fieldset>
 <legend>Server and Staff Assignments</legend>
 <?
-$rSSA=@mysql_query("select * from instruction where id = '$packet'");
+$rSSA=@mysql_query("select * from instruction where packet_id = '$packet'");
 while($dSSA=mysql_fetch_array($rSSA,MYSQL_ASSOC)){
  echo "<li><input type='checkbox'>".serverID($dSSA[server_id])." on ".nameID($dSSA[name_id])." at ".addressID($dSSA[address_id])."</li>";
 }
@@ -75,7 +75,7 @@ while($dSSA=mysql_fetch_array($rSSA,MYSQL_ASSOC)){
 <fieldset>
 <legend>Online File Storage <a href='upload.php' target='preview'>Upload</a>, <a href="#" onclick="window.open('lightboard.php?packet=<?=$d[id]?>','Lightboard','menubar=0,resizable=1,status=0,width=800,height=600') ">PDF Lightboard</a></legend>
 <?
-$rOFS=@mysql_query("select * from attachment where id = '$packet'");
+$rOFS=@mysql_query("select * from attachment where packet_id = '$packet'");
 while($dOFS=mysql_fetch_array($rOFS,MYSQL_ASSOC)){
  echo "<li onClick=\"parent.frames['pane2'].location.href = '$dOFS[url]' \">$dOFS[instruction_id] $dOFS[id] $dOFS[user_id] $dOFS[server_id] $dOFS[processed]</li>";
 }
@@ -205,7 +205,7 @@ if ($d[id] > 3620 && $d[reopenDate] != ''){
 }else{
 	$checkLink="oldServiceSheet.php?packet=$d[id]&autoPrint=1";
 }
-$q5="SELECT DISTINCT serverID from ps_history WHERE id='$d[id]'";
+$q5="SELECT DISTINCT serverID from ps_history WHERE packet_id='$d[id]'";
 $r5=@mysql_query($q5) or die(mysql_error());
 $i=0;
 $data5=mysql_num_rows($r5);
@@ -238,7 +238,7 @@ if ($di[packetID]){
 }else{
 	$customBG="style='background-color:red;'";
 }
-$rc=@mysql_query("SELECT * FROM ps_history WHERE id='$d[id]' AND wizard='CERT MAILING' LIMIT 0,1");
+$rc=@mysql_query("SELECT * FROM ps_history WHERE packet_id='$d[id]' AND wizard='CERT MAILING' LIMIT 0,1");
 $dc=mysql_fetch_array($rc,MYSQL_ASSOC);
 ?>
 <FIELDSET style="background-color:#FFFF00; padding:0px;">
