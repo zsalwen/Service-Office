@@ -696,6 +696,8 @@ $received=strtotime($d[date_received]);
 $deadline=$received+2592000;// now 30 days 
 //$deadline=$received+432000;// was 5 days 
 $deadline=date('F jS',$deadline);
+$estFileDate=strtotime($d[estFileDate]);
+$estFileDate=date('m/d/Y',$estFileDate);
 $days=number_format((time()-$received)/86400,0);
 $hours=number_format((time()-$received)/3600,0);
 ?>
@@ -703,7 +705,7 @@ $hours=number_format((time()-$received)/3600,0);
 <? if(!$d[caseVerify]){ ?> <a href="validateCase.php?case=<?=$d[case_no]?>&packet=<?=$d[packet_id]?>&county=<?=$d[circuit_court]?>" target="preview">!!!Verify Case Number!!!</a><? }else{ ?><img src="http://www.courts.state.md.us/newlogosm.gif"><br>Verified by <? echo $d[caseVerify]; }?>
 </td><td align="center">
 <? if(!$d[qualityControl]){ ?> <a href="entryVerify.php?packet=<?=$d[packet_id]?>&frame=no" target="preview">!!!Verify Data Entry!!!</a><? }else{ ?><img src="http://staff.mdwestserve.com/small.logo.gif" height="41" width="41"><br>Verified by <? echo $d[qualityControl]; }?>
-</td><td align="center"><div style="font-size:15pt" >Service <?=$days?> Days<br>Due: <?=$deadline?><div></td></tr></table>
+</td><td align="center"><div style="font-size:15pt" >Service <?=$days?> Days<br>Due: <?=$estFileDate?><div></td></tr></table>
 </div>
 <? if ($d[possibleDuplicate]){?>
 <div style="background-color:#ff0000" align="center">Duplicate Warning Level: <?=$d[possibleDuplicate]?></div>
