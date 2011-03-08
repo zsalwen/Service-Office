@@ -150,15 +150,6 @@ if ($CCd[phone]){
 <td><textarea name="movant" rows="2" cols="28"><?=stripslashes($d[movant])?></textarea></td>
 </tr>
 <tr>
-<td>Service&nbsp;Docs</td>
-<td><select name="altDocs" style="font-size:10px;"><? if($d[altDocs] != ''){echo "<option>$d[altDocs]</option>";}
-$rAD=@mysql_query("SELECT DISTINCT altDocs FROM evictionPackets WHERE altDocs != ''");
-while($dAD=mysql_fetch_array($rAD,MYSQL_ASSOC)){
-echo "<option>".strtoupper($dAD[altDocs])."</option>";
-}
-?></select></td>
-</tr>
-<tr>
 <td>Addl&nbsp;Docs</td>
 <td><input name="addlDocs" value="<?=$d[addlDocs]?>"></td>
 </tr>
