@@ -12,7 +12,7 @@ function courierDate2($id){
 	return $d[estFileDate];
 }
 function courierDate3($id){
-	$r=@mysql_query("select date_format(estFileDate, '%W, %M %D %Y') as estFileDate	from standard_packet where packet_id = '$id' LIMIT 0,1");
+	$r=@mysql_query("select date_format(estFileDate, '%W, %M %D %Y') as estFileDate	from standard_packets where packet_id = '$id' LIMIT 0,1");
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
 	return $d[estFileDate];
 }
