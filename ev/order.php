@@ -197,6 +197,11 @@ function addressRevise($packet,$address,$oldType,$newType){
 	return $list;
 }
 
+function fileDate($date){
+	$date=strtotime($date)-86400;
+	return date('n/j/y',$date); 
+}
+
 $id=$_COOKIE[psdata][user_id];
 if ($_POST[sendToClient]){
 	$today=date('Y-m-d');
@@ -585,8 +590,7 @@ Copied.execCommand("Copy");
 $received=strtotime($d[date_received]);
 $deadline=$received+432000;
 $deadline=date('F jS Y',$deadline);
-$estFileDate=strtotime($d[estFileDate]);
-$estFileDate=date('m/d/Y',$estFileDate);
+$estFileDate=fileDate($d[estFileDate]);
 $days=number_format((time()-$received)/86400,0);
 $hours=number_format((time()-$received)/3600,0);
 ?>
@@ -594,7 +598,7 @@ $hours=number_format((time()-$received)/3600,0);
 <? if(!$d[caseVerify]){ ?> <a href="validateCase.php?case=<?=$d[case_no]?>&packet=<?=$d[eviction_id]?>&county=<?=$d[circuit_court]?>" target="preview">!!!Verify Case Number!!!</a><? }else{ ?><img src="http://www.courts.state.md.us/newlogosm.gif"><br>Verified by <? echo $d[caseVerify]; }?>
 </td><td align="center">
 <? if(!$d[qualityControl]){ ?> <a href="entryVerify.php?packet=<?=$d[eviction_id]?>&frame=no" target="preview">!!!Verify Data Entry!!!</a><? }else{ ?><img src="http://staff.mdwestserve.com/small.logo.gif" height="41" width="41"><br>Verified by <? echo $d[qualityControl]; }?>
-</td><td align="center"><div style="font-size:30pt" ><?=$hours?> Hours<div><div style="font-size:15pt" ><?=$days?> Days || File Deadline: <?=$estFileDate?><div></td></tr></table>
+</td><td align="center"><div style="font-size:30pt" ><?=$hours?> Hours<div><div style="font-size:15pt" ><?=$days?> Days || Serve Due: <?=$estFileDate?><div></td></tr></table>
 </div>
 <? if ($d[possibleDuplicate]){?>
 <div style="background-color:#ff0000" align="center">Duplicate Warning Level: <?=$d[possibleDuplicate]?></div>

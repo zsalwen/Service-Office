@@ -411,6 +411,11 @@ function exportStatus($a,$b,$p){
 	}
 	if (!$a){ return 'ACTIVE DATABASE'; }
 }
+
+function fileDate($date){
+	$date=strtotime($date)-86400;
+	return date('n/j/y',$date); 
+}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 $id=$_COOKIE[psdata][user_id];
 
@@ -1004,8 +1009,7 @@ Copied.execCommand("Copy");
 $received=strtotime($d[date_received]);
 $deadline=$received+432000;
 $deadline=date('F jS Y',$deadline);
-$estFileDate=strtotime($d[estFileDate]);
-$estFileDate=date('m/d/Y',$estFileDate);
+$estFileDate=fileDate($d[estFileDate]);
 $days=number_format((time()-$received)/86400,0);
 $hours=number_format((time()-$received)/3600,0);
 ?>
@@ -1013,7 +1017,7 @@ $hours=number_format((time()-$received)/3600,0);
 <? if(!$d[caseVerify]){ ?> <a href="validateCase.php?case=<?=$d[case_no]?>&packet=<?=$d[packet_id]?>&county=<?=$d[circuit_court]?>" target="preview">!!!Verify Case Number!!!</a><? }else{ ?><img src="http://www.courts.state.md.us/newlogosm.gif"><br>Verified by <? echo $d[caseVerify]; }?>
 </td><td align="center">
 <? if(!$d[qualityControl]){ ?> <a href="entryVerify.php?packet=<?=$d[packet_id]?><? if ($d[service_status] == 'MAIL ONLY'){ echo '&matrix=1';} ?>&frame=no" target="preview">!!!Verify Data Entry!!!</a><? }else{ ?><img src="http://staff.mdwestserve.com/small.logo.gif" height="41" width="41"><br>Verified by <? echo $d[qualityControl]; }?>
-</td><td align="center"><div style="font-size:15pt" ><?=$hours?> Hours || <?=$days?> Days<br>Deadline: <?=$estFileDate?><div></td></tr></table>
+</td><td align="center"><div style="font-size:15pt" ><?=$hours?> Hours || <?=$days?> Days<br>Serve Due: <?=$estFileDate?><div></td></tr></table>
 </div>
 <? if ($d[possibleDuplicate]){?>
 <div style="background-color:#ff0000" align="center">Duplicate Warning Level: <?=$d[possibleDuplicate]?></div>

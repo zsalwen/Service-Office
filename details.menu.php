@@ -1,4 +1,8 @@
 <?
+function fileDate($date){
+	$date=strtotime($date)-86400;
+	return date('n/j/y',$date); 
+}
 $packet = $_GET[packet];
 ?>
 
@@ -13,8 +17,7 @@ $packet = $_GET[packet];
 $received=strtotime($d[date_received]);
 $deadline=$received+432000;
 $deadline=date('F jS Y',$deadline);
-$estFileDate=strtotime($d[estFileDate]);
-$estFileDate=date('m/d/Y',$estFileDate);
+$estFileDate=fileDate($d[estFileDate]);
 $days=number_format((time()-$received)/86400,0);
 $hours=number_format((time()-$received)/3600,0);
 ?>
@@ -24,7 +27,7 @@ $hours=number_format((time()-$received)/3600,0);
 <? if(!$d[caseVerify]){ ?> <a href="validateCase.php?case=<?=$d[case_no]?>&packet=<?=$d[id]?>&county=<?=$d[circuit_court]?>" target="preview">!!!Verify Case Number!!!</a><? }else{ ?><img src="http://www.courts.state.md.us/newlogosm.gif"><br>Verified by <? echo $d[caseVerify]; }?>
 </td></tr><tr><td align="center">
 <? if(!$d[qualityControl]){ ?> <a href="entryVerify.php?packet=<?=$d[id]?><? if ($d[service_status] == 'MAIL ONLY'){ echo '&matrix=1';} ?>&frame=no" target="preview">!!!Verify Data Entry!!!</a><? }else{ ?><img src="http://staff.mdwestserve.com/small.logo.gif" height="41" width="41"><br>Verified by <? echo $d[qualityControl]; }?>
-</td></tr><tr><td align="center"><div style="font-size:15pt" ><?=$hours?> Hours<br> <?=$days?> Days<br>Deadline:<br> <?=$estFileDate?><div></td></tr></table>
+</td></tr><tr><td align="center"><div style="font-size:15pt" ><?=$hours?> Hours<br> <?=$days?> Days<br>Serve Due:<br> <?=$estFileDate?><div></td></tr></table>
 
 <hr>
 
