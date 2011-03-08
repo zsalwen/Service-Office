@@ -29,16 +29,16 @@ $hours=number_format((time()-$received)/3600,0);
 
 <table border="1">
 <tr>
-<td>Notes <a href="http://staff.mdwestserve.com/notes.php?packet=<?=$packet?>" target="pane1">&gt;</a>|<a href="http://staff.mdwestserve.com/notes.php?packet=<?=$packet?>" target="pane2">&lt;</a></td>
+<td><a href="http://staff.mdwestserve.com/notes.php?packet=<?=$packet?>" target="pane1"><img src="http://connect.stern.nyu.edu/zimbra/img/startup/ImgLeftArrow.gif" border="0"></a> Notes <a href="http://staff.mdwestserve.com/notes.php?packet=<?=$packet?>" target="pane2"><img src="http://connect.stern.nyu.edu/zimbra/img/startup/ImgRightArrow.gif" border="0"></a></td>
 </tr>
 <tr>
-<td>Instructions <a href="http://staff.mdwestserve.com/instruction.php?packet=<?=$packet?>" target="pane1">&gt;</a>| <a href="http://staff.mdwestserve.com/instruction.php?packet=<?=$packet?>" target="pane2">&lt;</a></td>
+<td> <a href="http://staff.mdwestserve.com/instruction.php?packet=<?=$packet?>" target="pane1"><img src="http://connect.stern.nyu.edu/zimbra/img/startup/ImgLeftArrow.gif" border="0"></a> Instructions <a href="http://staff.mdwestserve.com/instruction.php?packet=<?=$packet?>" target="pane2"><img src="http://connect.stern.nyu.edu/zimbra/img/startup/ImgRightArrow.gif" border="0"></a></td>
 </tr>
 <tr>
-<td>Edit Data <a href="http://staff.mdwestserve.com/edit.php?packet=<?=$packet?>" target="pane1">&gt;</a>|<a href="http://staff.mdwestserve.com/edit.php?packet=<?=$packet?>" target="pane2">&lt;</a></td>
+<td><a href="http://staff.mdwestserve.com/edit.php?packet=<?=$packet?>" target="pane1"><img src="http://connect.stern.nyu.edu/zimbra/img/startup/ImgLeftArrow.gif" border="0"></a> Edit Data <a href="http://staff.mdwestserve.com/edit.php?packet=<?=$packet?>" target="pane2"><img src="http://connect.stern.nyu.edu/zimbra/img/startup/ImgRightArrow.gif" border="0"></a></td>
 </tr>
 <tr>
-<td>Upload Inbox <a href="http://staff.mdwestserve.com/upload.php?packet=<?=$packet?>" target="pane1">&gt;</a>|<a href="http://staff.mdwestserve.com/upload.php?packet=<?=$packet?>" target="pane2">&lt;</a></td>
+<td><a href="http://staff.mdwestserve.com/upload.php?packet=<?=$packet?>" target="pane1"><img src="http://connect.stern.nyu.edu/zimbra/img/startup/ImgLeftArrow.gif" border="0"></a> Upload Inbox  <a href="http://staff.mdwestserve.com/upload.php?packet=<?=$packet?>" target="pane2"><img src="http://connect.stern.nyu.edu/zimbra/img/startup/ImgRightArrow.gif" border="0"></a></td>
 </tr>
 </table>
 
