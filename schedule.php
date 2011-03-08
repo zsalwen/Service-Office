@@ -50,6 +50,9 @@ if ($_POST[courier]){
 		foreach( $_POST[otd] as $key => $value){
 			@mysql_query("update ps_packets set courierID = '$_POST[courier]' where packet_id = '$key'");
 		}
+		foreach( $_POST[s] as $key => $value){
+			@mysql_query("update standard_packets set courierID = '$_POST[courier]' where packet_id = '$key'");
+		}
 		echo "</div>";
 	}
 }
@@ -339,12 +342,12 @@ function dailyList2($today){
 }// end function
 function dailyList3($today){
 	$r=@mysql_query("select DISTINCT circuit_court from standard_packets where estFileDate = '$today' and status <> 'CANCELLED' and case_no <> '' order by circuit_court  ");
-	?><div style='background-color:#00FFFF;' align="center"><b>EV<?=$today;?></b></div><?
+	?><div style='background-color:#FF0000;' align="center"><b>S<?=$today;?></b></div><?
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	?>
 	<fieldset>
-		<legend onClick="hideshow(document.getElementById('EV<?=str_replace(' ','',$d[circuit_court])?><?=str_replace('-','',$today);?>'));"><?=$d[circuit_court]?></legend>
-	<div id="EV<?=str_replace(' ','',$d[circuit_court])?><?=str_replace('-','',$today);?>" name="EV<?=str_replace(' ','',$d[circuit_court])?><?=str_replace('-','',$today);?>">
+		<legend onClick="hideshow(document.getElementById('S<?=str_replace(' ','',$d[circuit_court])?><?=str_replace('-','',$today);?>'));"><?=$d[circuit_court]?></legend>
+	<div id="S<?=str_replace(' ','',$d[circuit_court])?><?=str_replace('-','',$today);?>" name="S<?=str_replace(' ','',$d[circuit_court])?><?=str_replace('-','',$today);?>">
 		<?	
 	$x=@mysql_query("select packet_id, date_received, case_no, fileDate, service_status, process_status, filing_status, attorneys_id, server_id from standard_packets where estFileDate = '$today' AND circuit_court = '$d[circuit_court]' and status <> 'CANCELLED' and case_no <> '' and fileDate = '0000-00-00'");
 	//$count=mysql_num_rows($x);
@@ -357,8 +360,8 @@ function dailyList3($today){
 		echo "style='background-color:#ccFFcc'";
 	}
 	?>
-	><input type="checkbox" name="ev[<?=$dx[packet_id]?>]">
-		<a href="/ev/order.php?packet=<?=$dx[packet_id]?>" target="_Blank"><?=$dx[packet_id]?></a> 
+	><input type="checkbox" name="s[<?=$dx[packet_id]?>]">
+		<a href="/standard/order.php?packet=<?=$dx[packet_id]?>" target="_Blank"><?=$dx[packet_id]?></a> 
 		<b style='color:#990000;'><?=strtoupper($dx[case_no]);?></b> 
 		<b style='color:#003377;'><?=getSServer($dx[packet_id]);?></b> 
 		<b style='color:#330077;'><?=getSCourier($dx[packet_id]);?></b> 
