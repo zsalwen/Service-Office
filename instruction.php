@@ -94,7 +94,7 @@ $aList .= "</OPTGROUP>" ;
                 <td><b>Show name on case header</b></td>
 	</tr>
 	<tr>
-		<td valign="top"><input name="attempts"><option>Yes</option><option>No</option></select></td>
+		<td valign="top"><input name="attempts" size="5"></td>
 		<td valign="top"><select name="allowPosting" size="2"><option>Yes</option><option>No</option></select></td>
 		<td valign="top"><select name="allowSubService" size="2"><option>Yes</option><option>No</option></select></td>
 		<td valign="top"><select name="onAffidavit" size="2"><option>Yes</option><option>No</option></select></td>
@@ -105,7 +105,7 @@ $aList .= "</OPTGROUP>" ;
 <?
 $rOFS=@mysql_query("select * from attachment where packet_id = '$_GET[packet]' ");
 while($dOFS=mysql_fetch_array($rOFS,MYSQL_ASSOC)){
- echo "<li><input type='checkbox' name='doc[$dOFS[id]]'>$dOFS[instruction_id]  $dOFS[user_id] $dOFS[server_id] $dOFS[processed] $dOFS[url] <small  onClick=\"parent.frames['pane2'].location.href = '$dOFS[absolute_url]' \">preview</small></li>";
+ echo "<li><input type='checkbox' name='doc[$dOFS[id]]'>$dOFS[instruction_id]  $dOFS[user_id] $dOFS[server_id] $dOFS[processed] ".urldecode($dOFS[url])." <small  onClick=\"parent.frames['pane2'].location.href = '$dOFS[absolute_url]' \">preview</small></li>";
 }
 ?>
 </fieldset>
