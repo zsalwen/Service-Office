@@ -30,9 +30,9 @@ die('Missing Packet Number');
 <td colspan="3" style="height:50px;" align="center"><? include 'details.bar.php';?></td>
 </tr>
 <tr>
-<td><iframe name="pane1" id="pane1" style="width:100%; height:100%;"></iframe></td>
+<td><iframe frameborder="0" name="pane1" id="pane1" style="width:100%; height:100%;"></iframe></td>
 <td valign="top" style="width:100px;" align="center"><font size="+2">Packet <?=$_GET[packet]?></font><br><? include 'details.menu.php';?></td>
-<td><iframe name="pane2" id="pane2" style="width:100%; height:100%;"></iframe></td>
+<td><iframe frameborder="0" name="pane2" id="pane2" style="width:100%; height:100%;"></iframe></td>
 </tr>
 </table>
 </body>
