@@ -2,14 +2,26 @@
 <meta http-equiv="refresh" content="300" />
 <?
 function courierDate($id){
-$r=@mysql_query("select date_format(estFileDate, '%W, %M %D %Y') as estFileDate	from ps_packets where packet_id = '$id'");
-$d=mysql_fetch_array($r,MYSQL_ASSOC);
-return $d[estFileDate];
+	$r=@mysql_query("select date_format(estFileDate, '%W, %M %D %Y') as estFileDate	from ps_packets where packet_id = '$id' LIMIT 0,1");
+	$d=mysql_fetch_array($r,MYSQL_ASSOC);
+	return $d[estFileDate];
 }
 function courierDate2($id){
-$r=@mysql_query("select date_format(estFileDate, '%W, %M %D %Y') as estFileDate	from evictionPackets where eviction_id = '$id'");
-$d=mysql_fetch_array($r,MYSQL_ASSOC);
-return $d[estFileDate];
+	$r=@mysql_query("select date_format(estFileDate, '%W, %M %D %Y') as estFileDate	from evictionPackets where eviction_id = '$id' LIMIT 0,1");
+	$d=mysql_fetch_array($r,MYSQL_ASSOC);
+	return $d[estFileDate];
+}
+function id2name($id){
+	$q="SELECT name FROM ps_users WHERE id = '$id' LIMIT 0,1";
+	$r=@mysql_query($q);
+	$d=mysql_fetch_array($r, MYSQL_ASSOC);
+	return $d[name];
+}
+function id2attorney($id){
+	$q="SELECT display_name FROM attorneys WHERE attorneys_id = '$id' LIMIT 0,1";
+	$r=@mysql_query($q);
+	$d=mysql_fetch_array($r, MYSQL_ASSOC);
+	return $d[display_name];
 }
 // ok this will use alot of data report
 date_default_timezone_set('America/New_York');
@@ -32,10 +44,10 @@ echo "<table width='100%'><tr><td valign='top'><div class='title4'><b>Open Std. 
 ";
 
 // data entry
-$r=@mysql_query("SELECT client_file, case_no, packet_id, date_received, affidavit_status, process_status FROM standard_packets WHERE process_status = 'IN PROGRESS' order by packet_id");
+$r=@mysql_query("SELECT client_file, case_no, packet_id, date_received, affidavit_status, process_status, server_id FROM standard_packets WHERE process_status = 'IN PROGRESS' order by packet_id");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	$optest = 1;
-	echo "<li><a target='_Blank' href='/standard/order.php?packet=$d[packet_id]'>S$d[packet_id] $d[process_status]<br>($d[affidavit_status])</a></li>";
+	echo "<li><a target='_Blank' href='/standard/order.php?packet=$d[packet_id]'>S$d[packet_id] $d[process_status]<br>".id2attorney($d[attorneys_id])." - ".id2name($d[server_id])."<br>($d[affidavit_status])</a></li>";
 }
 
 echo "</ol></div></td><td valign='top'><div class='title4'><b>Data Entry</b><ol>
