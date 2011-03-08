@@ -40,6 +40,9 @@ $hours=number_format((time()-$received)/3600,0);
 <tr>
 <td><a href="http://staff.mdwestserve.com/upload.php?packet=<?=$packet?>" target="pane1"><img src="http://connect.stern.nyu.edu/zimbra/img/startup/ImgLeftArrow.gif" border="0"></a> Upload Inbox  <a href="http://staff.mdwestserve.com/upload.php?packet=<?=$packet?>" target="pane2"><img src="http://connect.stern.nyu.edu/zimbra/img/startup/ImgRightArrow.gif" border="0"></a></td>
 </tr>
+<tr>
+<td><a href="http://staff.mdwestserve.com/dropbox.php?packet=<?=$packet?>" target="pane1"><img src="http://connect.stern.nyu.edu/zimbra/img/startup/ImgLeftArrow.gif" border="0"></a> Attachments  <a href="http://staff.mdwestserve.com/dropbox.php?packet=<?=$packet?>" target="pane2"><img src="http://connect.stern.nyu.edu/zimbra/img/startup/ImgRightArrow.gif" border="0"></a></td>
+</tr>
 </table>
 
 <hr>
@@ -47,15 +50,11 @@ $hours=number_format((time()-$received)/3600,0);
 
 <LEGEND ACCESSKEY=C>Legacy Service Links</LEGEND>
 <table style="padding:0px; font-weight:bold; border-collapse:collapse; height:150px !important; font-size:11px;" cellpadding="0" cellspacing="0">
-	<tr>
-		<td><a href="http://staff.mdwestserve.com/instruction.php?packet=<?=$packet?>" target="preview">Add instruction set</a></td>
-	</tr>
+
 	<tr>
 		<td><a href="http://staff.mdwestserve.com/otd/minips_pay.php?id=<?=$d[packet_id]?>" target="preview">Payments</a></td>
 	</tr>
-	<tr>
-		<td><a href="http://staff.mdwestserve.com/standardExport.php?packet=<?=$d[packet_id]?>" target="preview">Transfer</a></td>
-	</tr>
+
 	<tr>
 		<td><a href="historyModify.php?packet=<?=$d[packet_id]?>&form=1" target="preview">History (<?=$server?>)</a></td>
 	</tr>
