@@ -435,7 +435,7 @@ if ($_POST[reopen]){
 
 if ($_POST[sendToClient]){
 	$today=date('Y-m-d');
-	@mysql_query("UPDATE ps_packets SET fileDate='$today', estFileDate='$today', filing_status='SEND TO CLIENT' WHERE packet_id='$_GET[packet]'");
+	@mysql_query("UPDATE ps_packets SET fileDate='$today', estFileDate='$today', filing_status='SEND TO CLIENT', affidavit_status2='' WHERE packet_id='$_GET[packet]'");
 	timeline($_GET[packet],$_COOKIE[psdata][name]." Marked File Send to Client");
 }
 
