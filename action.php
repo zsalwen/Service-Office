@@ -162,29 +162,31 @@ echo "</table></div></td>";
 
 echo "<td valign='top'><div class='title2'><b>Courier Schedule</b><ol>";
 // couriers
-$r=@mysql_query("select packet_id, circuit_court from ps_packets where process_status <> 'CANCELLED' and courierID = '' and estFileDate > '$today' and fileDate = '0000-00-00' order by circuit_court");
+$r=@mysql_query("select packet_id, circuit_court from ps_packets where process_status <> 'CANCELLED' and courierID = '' and estFileDate >= '$today' and fileDate = '0000-00-00' order by circuit_court");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	echo "<li><a target='_Blank' href='/otd/order.php?packet=$d[packet_id]'>$d[circuit_court], ".courierDate($d[packet_id])."</a></li>";
 }
-$r=@mysql_query("select eviction_id, circuit_court from evictionPackets where process_status <> 'CANCELLED' and courierID = '' and estFileDate > '$today' and fileDate = '0000-00-00' order by circuit_court");
+$r=@mysql_query("select eviction_id, circuit_court from evictionPackets where process_status <> 'CANCELLED' and courierID = '' and estFileDate >= '$today' and fileDate = '0000-00-00' order by circuit_court");
 $count=mysql_num_rows($r);
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	echo "<li><a target='_Blank' href='/ev/order.php?packet=$d[eviction_id]'>$d[circuit_court], ".courierDate2($d[eviction_id])."</a></li>";
 }
 echo "</ol></div></td>";
-echo "<td valign='top'><div class='title2'><b>Benchmark</b><ol>";
 
 // close date
 
 $r=@mysql_query("select * from ps_packets where process_status <> 'CANCELLED' and filing_status <> '' and filing_status <> 'PREP TO FILE' and filing_status <> 'AWAITING CASE NUMBER' and filing_status <> 'REOPENED' and filing_status <> 'DO NOT FILE' and fileDate = '0000-00-00' AND process_status <> 'Assigned' order by date_received DESC");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-	echo "<li><a target='_Blank' href='/otd/order.php?packet=$d[packet_id]'>OTD$d[packet_id], close date set.</a></li>";
+	$list .= "<li><a target='_Blank' href='/otd/order.php?packet=$d[packet_id]'>OTD$d[packet_id], close date set.</a></li>";
 }
 $r=@mysql_query("select * from evictionPackets where process_status <> 'CANCELLED' and filing_status <> '' and filing_status <> 'PREP TO FILE' and filing_status <> 'DO NOT FILE' and fileDate = '0000-00-00' AND process_status <> 'Assigned' order by date_received DESC");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-	echo "<li><a target='_Blank' href='/ev/order.php?packet=$d[eviction_id]'>EV$d[eviction_id], close date set.</a></li>";
+	$list .= "<li><a target='_Blank' href='/ev/order.php?packet=$d[eviction_id]'>EV$d[eviction_id], close date set.</a></li>";
 }
-echo "</ol></div></td>";
+if ($list != ''){
+	echo "<td valign='top'><div class='title2'><b>Benchmark</b><ol>$list</ol></div></td>";
+	$list='';
+}
 
 $r=@mysql_query("select * from exportRequests where exportDate = '0000-00-00 00:00:00'");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
