@@ -146,6 +146,19 @@ if ($CCd[phone]){
 <td><input name="altPlaintiff" value="<?=$d[altPlaintiff]?>"></td>
 </tr>
 <tr>
+<td valign="top">Movant</td>
+<td><textarea name="movant" rows="2" cols="28"><?=stripslashes($d[movant])?></textarea></td>
+</tr>
+<tr>
+<td>Service&nbsp;Docs</td>
+<td><select name="altDocs" style="font-size:10px;"><? if($d[altDocs] != ''){echo "<option>$d[altDocs]</option>";}
+$rAD=@mysql_query("SELECT DISTINCT altDocs FROM evictionPackets WHERE altDocs != ''");
+while($dAD=mysql_fetch_array($rAD,MYSQL_ASSOC)){
+echo "<option>".strtoupper($dAD[altDocs])."</option>";
+}
+?></select></td>
+</tr>
+<tr>
 <td>Addl&nbsp;Docs</td>
 <td><input name="addlDocs" value="<?=$d[addlDocs]?>"></td>
 </tr>
@@ -166,7 +179,8 @@ if($d[lossMit] != ''){
 <tr>
 <td colspan='2'><div style=" font-size:12px; background-color:ffffff; padding:0px;">
 <?
-mysql_select_db('core');
+
+
 $q5="SELECT * FROM ps_affidavits WHERE packetID = '$d[id]' order by defendantID";
 $r5=@mysql_query($q5) or die ("Query: $q5<br>".mysql_error());
 while ($d5=mysql_fetch_array($r5, MYSQL_ASSOC)){
