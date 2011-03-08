@@ -61,7 +61,7 @@ $r=@mysql_query("select * from attachment where server_id = '".$_COOKIE[psdata][
 while($d=mysql_fetch_array($r,MYSQL_ASSOC)){ ?>
  <tr>
   <td><?=$d[processed];?></td>
-  <td onClick="parent.frames['pane2'].location.href = '<?=$d[url];?>'; "> <?=$d[url];?></td>
+  <td onClick="parent.frames['pane2'].location.href = '<?=$d[absolute_url];?>'; "> <?=$d[url];?></td>
  </tr>
 <? }?>
 </table>

@@ -1,5 +1,16 @@
 <?
+// new update query KEEP IT SIMPLE !
+if($_POST){
+$queryBuilder = '';
+foreach ($_POST as $field => $value) {
+    $queryBuilder .=  " $field =  '$value', ";
+}
+$queryBuilder =substr($queryBuilder, 0, -2);
+$built = "update packet set $queryBuilder where id = '$_GET[packet]' ";
+ @mysql_query($built) or die($built.'<br>Error: '.mysql_error());
+}
 
+/*
 if ($_POST[reopen]){
 	$r13=@mysql_query("select processor_notes, fileDate from packet where id = '$_GET[packet]'");
 	$d13=mysql_fetch_array($r13,MYSQL_ASSOC);
@@ -317,5 +328,5 @@ if ($_POST[submit]){
 		}
 	}
 }
-
+*/
 ?>
