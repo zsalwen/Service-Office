@@ -24,55 +24,55 @@ $d=mysql_fetch_array($r,MYSQL_ASSOC);
 <table>
 <tr>
 <td><b>id</b></td>
-<td><form disabled value="<?=$d[id];?>"></td>
+<td><input disabled value="<?=$d[id];?>"></td>
 </tr>
 <tr>
 <td><b>instruction_id</b></td>
-<td><form name="instruction_id" value="<?=$d[instruction_id];?>"></td>
+<td><input name="instruction_id" value="<?=$d[instruction_id];?>"></td>
 </tr>
 <tr>
 <td><b>packet_id</b></td>
-<td><form name="packet_id" value="<?=$d[packet_id];?>"></td>
+<td><input name="packet_id" value="<?=$d[packet_id];?>"></td>
 </tr>
 <tr>
 <td><b>user_id</b></td>
-<td><form name="user_id" value="<?=$d[user_id];?>"></td>
+<td><input name="user_id" value="<?=$d[user_id];?>"></td>
 </tr>
 <tr>
 <td><b>server_id</b></td>
-<td><form name="server_id" value="<?=$d[server_id];?>"></td>
+<td><input name="server_id" value="<?=$d[server_id];?>"></td>
 </tr>
 <tr>
 <td><b>processed</b></td>
-<td><form name="processed" value="<?=$d[processed];?>"></td>
+<td><input name="processed" value="<?=$d[processed];?>"></td>
 </tr>
 <tr>
 <td><b>url</b>  ** do not change without manually moving file **</td>
-<td><form name="url" value="<?=$d[url];?>"></td>
+<td><input name="url" value="<?=$d[url];?>"></td>
 </tr>
 <tr>
 <td><b>path</b> ** do not change without manually moving file **</td>
-<td><form name="path" value="<?=$d[path];?>"></td>
+<td><input name="path" value="<?=$d[path];?>"></td>
 </tr>
 <tr>
 <td><b>description</b></td>
-<td><form name="description" value="<?=$d[description];?>"></td>
+<td><input name="description" value="<?=$d[description];?>"></td>
 </tr>
 <tr>
 <td><b>type</b></td>
-<td><form name="type" value="<?=$d[type];?>"></td>
+<td><input name="type" value="<?=$d[type];?>"></td>
 </tr>
 <tr>
 <td><b>pages</b></td>
-<td><form name="pages" value="<?=$d[pages];?>"></td>
+<td><input name="pages" value="<?=$d[pages];?>"></td>
 </tr>
 <tr>
 <td><b>absolute_url</b> ** do not change without manually moving file **</td>
-<td><form name="absolute_url" value="<?=$d[absolute_url];?>"></td>
+<td><input name="absolute_url" value="<?=$d[absolute_url];?>"></td>
 </tr>
 <tr>
 <td><b>status</b></td>
-<td><form name="status" value="<?=$d[status];?>"></td>
+<td><input name="status" value="<?=$d[status];?>"></td>
 </tr>
 </table>
 <input type="submit" value="Update Database Information">
