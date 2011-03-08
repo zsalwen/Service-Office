@@ -51,16 +51,20 @@ Files (20max):
 
 <hr>
 Your unclaimed uploads
-<table>
+<table border="1">
  <tr>
-  <td>Received</td>
-  <td>Click to Open</td>
+  <td>Date Received</td>
+  <td></td>
+  <td></td>
+  <td>Link</td>
  </tr>
 <? 
 $r=@mysql_query("select * from attachment where server_id = '".$_COOKIE[psdata][user_id]."' and status = 'unclaimed' ");
 while($d=mysql_fetch_array($r,MYSQL_ASSOC)){ ?>
  <tr>
   <td><?=$d[processed];?></td>
+  <td><a href="attachment.php?id<?=$d[id];?>">Edit</a></td>
+  <td onClick="parent.frames['pane2'].location.href = '<?=$d[absolute_url];?>'; "> Open</td>
   <td onClick="parent.frames['pane2'].location.href = '<?=$d[absolute_url];?>'; "> <?=$d[url];?></td>
  </tr>
 <? }?>
