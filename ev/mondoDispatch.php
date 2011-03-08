@@ -40,7 +40,7 @@ function dispatchTimeline($pkg){
 		timeline($d[eviction_id],$_COOKIE[psdata][name]." Dispatched Order");
 	}
 }
-function packageFile($package_id, $file_id, $contractor_rate, $contractor_ratea,){
+function packageFile($package_id, $file_id, $contractor_rate, $contractor_ratea){
 	timeline($file_id,$_COOKIE[psdata][name]." Packaged Order");
 	$q = "UPDATE evictionPackets, ps_pay SET 
 									evictionPackets.package_id='$package_id',
