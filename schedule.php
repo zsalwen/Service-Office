@@ -354,7 +354,7 @@ function dailyList3($today){
 	?>
 	<fieldset>
 		<legend onClick="hideshow(document.getElementById('S<?=str_replace(' ','',standardCourt($d[circuit_court]))?><?=str_replace('-','',$today);?>'));"><?=standardCourt($d[circuit_court])?></legend>
-	<div id="S<?=str_replace(' ','',$d[circuit_court])?><?=str_replace('-','',$today);?>" name="S<?=str_replace(' ','',$d[circuit_court])?><?=str_replace('-','',$today);?>">
+	<div id="S<?=str_replace(' ','',standardCourt($d[circuit_court]))?><?=str_replace('-','',$today);?>" name="S<?=str_replace(' ','',standardCourt($d[circuit_court]))?><?=str_replace('-','',$today);?>">
 		<?	
 	$x=@mysql_query("select packet_id, date_received, case_no, fileDate, service_status, process_status, filing_status, attorneys_id, server_id from standard_packets where estFileDate = '$today' AND circuit_court = '$d[circuit_court]' and status <> 'CANCELLED' and case_no <> '' and fileDate = '0000-00-00'");
 	//$count=mysql_num_rows($x);
