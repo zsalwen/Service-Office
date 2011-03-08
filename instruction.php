@@ -85,7 +85,7 @@ $aList .= "</OPTGROUP>" ;
 		<td colspan="3"><b>Name</b></td>
 	</tr>
 	<tr>
-		<td colspan="3"><select name="name_id" size="10"><?=$nList?></select></td>
+		<td colspan="4"><select name="name_id" size="10"><?=$nList?></select></td>
 	</tr>
 	<tr>
 		<td><b>Allow Posting</b></td>
@@ -98,7 +98,16 @@ $aList .= "</OPTGROUP>" ;
 		<td valign="top"><select name="onAffidavit" size="2"><option>Yes</option><option>No</option></select></td>
 	</tr>
 </table>
-<input type="submit">
+<fieldset>
+<legend>Document to serve</legend>
+<?
+$rOFS=@mysql_query("select * from attachment where packet_id = '$_GET[packet]' ");
+while($dOFS=mysql_fetch_array($rOFS,MYSQL_ASSOC)){
+ echo "<li onClick=\"parent.frames['pane2'].location.href = '$dOFS[absolute_url]' \"><input type='checkbox'>$dOFS[instruction_id] $dOFS[id] $dOFS[user_id] $dOFS[server_id] $dOFS[processed] $dOFS[uri]</li>";
+}
+?>
+</fieldset>
+<input type="submit" value="Add Manual Instruction Set">
 </form>
 <? } ?>
 
