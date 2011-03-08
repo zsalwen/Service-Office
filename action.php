@@ -16,6 +16,13 @@ function courierDate3($id){
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
 	return $d[estFileDate];
 }
+function standardCourt($str){
+	if ($str == ''){
+		return "<b>NO COURT SET</b>";
+	}else{
+		return strtoupper($str);
+	}
+}
 function id2name($id){
 	$q="SELECT name FROM ps_users WHERE id = '$id' LIMIT 0,1";
 	$r=@mysql_query($q);
@@ -177,7 +184,7 @@ while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 }
 $r=@mysql_query("select packet_id, circuit_court from standard_packets where process_status <> 'CANCELLED' and courierID = '' and estFileDate >= '$today' and fileDate = '0000-00-00' order by circuit_court");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-	$list .= "<li><a target='_Blank' href='/standard/order.php?packet=$d[packet_id]'>$d[circuit_court], ".courierDate3($d[packet_id])."</a></li>";
+	$list .= "<li><a target='_Blank' href='/standard/order.php?packet=$d[packet_id]'>".standardCourt($d[circuit_court]).", ".courierDate3($d[packet_id])."</a></li>";
 }
 if ($list != ''){
 	echo "<td valign='top'><div class='title2'><b>Courier Schedule</b><ol>$list</ol></div></td>";
