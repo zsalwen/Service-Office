@@ -44,7 +44,7 @@ echo "<table width='100%'><tr><td valign='top'><div class='title4'><b>Open Std. 
 ";
 
 // data entry
-$r=@mysql_query("SELECT client_file, case_no, packet_id, date_received, affidavit_status, process_status, server_id FROM standard_packets WHERE process_status = 'IN PROGRESS' order by packet_id");
+$r=@mysql_query("SELECT client_file, case_no, packet_id, date_received, affidavit_status, process_status, server_id, attorneys_id FROM standard_packets WHERE process_status = 'IN PROGRESS' order by packet_id");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	$optest = 1;
 	echo "<li><a target='_Blank' href='/standard/order.php?packet=$d[packet_id]'>S$d[packet_id] $d[process_status]<br>".id2attorney($d[attorneys_id])." - ".id2name($d[server_id])."<br>($d[affidavit_status])</a></li>";
