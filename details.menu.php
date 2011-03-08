@@ -29,16 +29,16 @@ $hours=number_format((time()-$received)/3600,0);
 
 <table border="1">
 <tr>
-<td><a href="http://staff.mdwestserve.com/notes.php?packet=<?=$packet?>" target="pane1">Notes</a></td>
+<td>Notes <a href="http://staff.mdwestserve.com/notes.php?packet=<?=$packet?>" target="pane1">&gt;</a>|<a href="http://staff.mdwestserve.com/notes.php?packet=<?=$packet?>" target="pane2">&lt;</a></td>
 </tr>
 <tr>
-<td><a href="http://staff.mdwestserve.com/instruction.php?packet=<?=$packet?>" target="pane1">Instructions</a></td>
+<td>Instructions <a href="http://staff.mdwestserve.com/instruction.php?packet=<?=$packet?>" target="pane1">&gt;</a>| <a href="http://staff.mdwestserve.com/instruction.php?packet=<?=$packet?>" target="pane2">&lt;</a></td>
 </tr>
 <tr>
-<td><a href="http://staff.mdwestserve.com/edit.php?packet=<?=$packet?>" target="pane1">Edit Data</a></td>
+<td>Edit Data <a href="http://staff.mdwestserve.com/edit.php?packet=<?=$packet?>" target="pane1">&gt;</a>|<a href="http://staff.mdwestserve.com/edit.php?packet=<?=$packet?>" target="pane2">&lt;</a></td>
 </tr>
 <tr>
-<td><a href="http://staff.mdwestserve.com/upload.php?packet=<?=$packet?>" target="pane1">Upload Inbox</a></td>
+<td>Upload Inbox <a href="http://staff.mdwestserve.com/upload.php?packet=<?=$packet?>" target="pane1">&gt;</a>|<a href="http://staff.mdwestserve.com/upload.php?packet=<?=$packet?>" target="pane2">&lt;</a></td>
 </tr>
 </table>
 
