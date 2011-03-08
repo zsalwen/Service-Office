@@ -12,6 +12,7 @@ foreach ($_POST as $field => $value) {
 $queryBuilder =substr($queryBuilder, 0, -2);
 $built = "update attachment set $queryBuilder where id = '$_GET[id]' ";
  @mysql_query($built) or die($built.'<br>Error: '.mysql_error());
+ echo "Database Updated, data refreshed.";
 }
 
 // disk / file system settings
