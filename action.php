@@ -40,32 +40,37 @@ td { font-size:12px;}
 b { font-size:18px; }
 a { text-decoration:none; } </style>
 ";
-echo "<table width='100%'><tr><td valign='top'><div class='title4'><b>Open Std. Services</b><ol>
+echo "<table width='100%'><tr>
 ";
 
 // data entry
+$list='';
 $r=@mysql_query("SELECT client_file, case_no, packet_id, date_received, affidavit_status, process_status, server_id, attorneys_id FROM standard_packets WHERE process_status = 'IN PROGRESS' order by packet_id");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	$optest = 1;
-	echo "<li><a target='_Blank' href='/standard/order.php?packet=$d[packet_id]'>S$d[packet_id] $d[process_status]<br>".id2attorney($d[attorneys_id])." - ".id2name($d[server_id])."<br>($d[affidavit_status])</a></li>";
+	$list .= "<li><a target='_Blank' href='/standard/order.php?packet=$d[packet_id]'>S$d[packet_id] $d[process_status]<br>".id2attorney($d[attorneys_id])." - ".id2name($d[server_id])."<br>($d[affidavit_status])</a></li>";
+}
+if ($list != ''){
+	echo "<td valign='top'><div class='title4'><b>Open Std. Services</b><ol>$list</ol></div></td>";
+	$list='';
 }
 
-echo "</ol></div></td><td valign='top'><div class='title4'><b>Data Entry</b><ol>
-";
 // data entry
 $r=@mysql_query("SELECT client_file, case_no, packet_id, date_received FROM ps_packets WHERE status = 'NEW' and process_status <> 'CANCELLED' AND process_status <> 'DUPLICATE' AND  process_status <> 'DAMAGED PDF'");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	$optest = 1;
-	echo "<li><a target='_Blank' href='/otd/order.php?packet=$d[packet_id]'>O$d[packet_id]</a></li>";
+	$list .= "<li><a target='_Blank' href='/otd/order.php?packet=$d[packet_id]'>O$d[packet_id]</a></li>";
 }
 $r=@mysql_query("SELECT client_file, case_no, eviction_id, date_received FROM evictionPackets WHERE status = 'NEW' and process_status <> 'CANCELLED' AND process_status <> 'DUPLICATE' AND  process_status <> 'DAMAGED PDF'");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	$optest = 1;
-	echo "<li><a target='_Blank' href='/ev/order.php?packet=$d[eviction_id]'>E$d[eviction_id]</a></li>";
+	$list .= "<li><a target='_Blank' href='/ev/order.php?packet=$d[eviction_id]'>E$d[eviction_id]</a></li>";
 }
-
-echo "</ol></div></td>";
-echo "<td valign='top'><div class='title4'><b>Dispatch</b><ol>";
+if ($list != ''){
+	echo "<td valign='top'><div class='title4'><b>Data Entry</b><ol>$list</ol></div></td>";
+	$list='';
+}
+echo "";
 $counter8a = 0;
 $counter8b = 0;
 
@@ -74,50 +79,57 @@ $r=@mysql_query("select packet_id, package_id, circuit_court, uspsVerify, qualit
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	$optest = 1;
 	if(($d[uspsVerify] == '') || ($d[qualityControl] == '')){ $color='#FF0000'; $counter8a++;}else{ $color='#00FF00';$counter8b++;}
-	echo "<li style='white-space: pre; background-color:$color'><a target='_Blank' href='/otd/order.php?packet=$d[packet_id]'>$d[circuit_court]</a></li>";
+	$list .= "<li style='white-space: pre; background-color:$color'><a target='_Blank' href='/otd/order.php?packet=$d[packet_id]'>$d[circuit_court]</a></li>";
 }
 $r=@mysql_query("select eviction_id, package_id, circuit_court, uspsVerify, qualityControl from evictionPackets where process_status = 'READY' and package_id = '' order by circuit_court");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	$optest = 1;
 	if(($d[uspsVerify] == '') || ($d[qualityControl] == '')){ $color='#FF0000'; $counter8a++;}else{ $color='#00FF00'; $counter8b++; }
-	echo "<li style='white-space: pre; background-color:$color'><a target='_Blank' href='/ev/order.php?packet=$d[eviction_id]'>$d[circuit_court]</a></li>";
+	$list .= "<li style='white-space: pre; background-color:$color'><a target='_Blank' href='/ev/order.php?packet=$d[eviction_id]'>$d[circuit_court]</a></li>";
 }
 $total8 = $counter8a + $counter8b;
 if($counter8b > '0' && $total8 > '0'){
-$complete = str_replace('1.00','100',str_replace('0.','',number_format($counter8b / $total8,2)));
+	$complete = str_replace('1.00','100',str_replace('0.','',number_format($counter8b / $total8,2)));
 }
-echo "<li style='white-space: pre;'><b>$complete% confirmed</b></li>";
-
- echo "</ol></div></td>";
-echo "<td valign='top'><div class='title4'><b>Quality Control</b><ol>";
-
+if ($complete != ''){
+	$list .= "<li style='white-space: pre;'><b>$complete% confirmed</b></li>";
+}
+if ($list != ''){
+	echo "<td valign='top'><div class='title4'><b>Dispatch</b><ol>$list</ol></div></td>";
+	$list=''; 
+}
 
 $r=@mysql_query("SELECT packet_id FROM ps_packets WHERE process_status = 'ASSIGNED' AND (request_close = 'YES' OR request_closea = 'YES' OR request_closeb = 'YES' OR request_closec = 'YES' OR request_closed = 'YES' OR request_closee = 'YES')");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	$optest = 1;
-	echo "<li><a target='_Blank' href='/otd/order.php?packet=$d[packet_id]'>O$d[packet_id]</a></li>";
+	$list .= "<li><a target='_Blank' href='/otd/order.php?packet=$d[packet_id]'>O$d[packet_id]</a></li>";
 }
 $r=@mysql_query("SELECT eviction_id FROM evictionPackets WHERE process_status = 'ASSIGNED' AND request_close = 'YES'");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	$optest = 1;
-	echo "<li><a target='_Blank' href='/ev/order.php?packet=$d[eviction_id]'>E$d[eviction_id]</a></li>";
+	$list .= "<li><a target='_Blank' href='/ev/order.php?packet=$d[eviction_id]'>E$d[eviction_id]</a></li>";
 }
- echo "</ol></div></td>";
-echo "<td valign='top'><div class='title4'><b>Mail Room</b><ol>";
+if ($list != ''){
+	echo "<td valign='top'><div class='title4'><b>Quality Control</b><ol>$list</ol></div></td>";
+	$list='';
+}
 
 
 $r=@mysql_query("select packet_id, mail_status from ps_packets where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') order by mail_status, packet_id");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	$optest = 1;
-	echo "<li><a target='_Blank' href='/otd/order.php?packet=$d[packet_id]'>O$d[packet_id]-$d[mail_status]</a></li>";
+	$list .= "<li><a target='_Blank' href='/otd/order.php?packet=$d[packet_id]'>O$d[packet_id]-$d[mail_status]</a></li>";
 }
 $r=@mysql_query("select eviction_id, mail_status from evictionPackets where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') order by mail_status, eviction_id");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	$optest = 1;
-	echo "<li><a target='_Blank' href='/ev/order.php?packet=$d[eviction_id]'>E$d[eviction_id]-$d[mail_status]</a></li>";
+	$list .= "<li><a target='_Blank' href='/ev/order.php?packet=$d[eviction_id]'>E$d[eviction_id]-$d[mail_status]</a></li>";
 }
-if (!$optest){ echo "<li>All Good =)</li>"; }
-echo "</ol></div></td>";
+//if (!$optest){ echo "<li>All Good =)</li>"; }
+if ($list != ''){
+	echo "<td valign='top'><div class='title4'><b>Mail Room</b><ol>$list</ol></div></td>";
+	$list='';
+}
 echo "<td valign='top'><div class='title1'><b>Deadline Watch</b><table>
 ";
 
@@ -147,6 +159,7 @@ while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 
 if (!$test11){ echo "<li>All Good =)</li>"; }
 echo "</table></div></td>";
+
 echo "<td valign='top'><div class='title2'><b>Courier Schedule</b><ol>";
 // couriers
 $r=@mysql_query("select packet_id, circuit_court from ps_packets where process_status <> 'CANCELLED' and courierID = '' and estFileDate > '$today' and fileDate = '0000-00-00' order by circuit_court");
@@ -172,18 +185,19 @@ while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	echo "<li><a target='_Blank' href='/ev/order.php?packet=$d[eviction_id]'>EV$d[eviction_id], close date set.</a></li>";
 }
 echo "</ol></div></td>";
-echo "<td valign='top'><div class='title3'><b>Export</b><ol>
 
-";
 $r=@mysql_query("select * from exportRequests where exportDate = '0000-00-00 00:00:00'");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-	echo "<li>$d[packetID], export review.</li>";
+	$list .= "<li>$d[packetID], export review.</li>";
 }
 $r=@mysql_query("select * from rescanRequests where rescanDate = '0000-00-00 00:00:00'");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-	echo "<li>$d[packetID], documents rescanned.</li>";
+	$list .= "<li>$d[packetID], documents rescanned.</li>";
 }
-echo "<ol></div></td></tr></table>";
+if ($list != ''){
+	echo "<td valign='top'><div class='title3'><b>Export</b><ol>$list<ol></div></td>";
+}
+echo "</tr></table>";
 ?>
 <?
 mysql_close();
