@@ -206,6 +206,13 @@ function hardLog($str,$type){
 		error_log(date('h:iA n/j/y')." ".$_COOKIE[psdata][name]." ".$_SERVER["REMOTE_ADDR"]." ".trim($str)."\n", 3, $log);
 	}
 }
+function standardCourt($str){
+	if ($str == ''){
+		return "NO COURT SET";
+	}else{
+		return strtoupper($str);
+	}
+}
  function dailyList($today){
 	$r=@mysql_query("select DISTINCT circuit_court from ps_packets where estFileDate = '$today' and status <> 'CANCELLED' and service_status <> 'MAIL ONLY' order by circuit_court ");
 	?>
@@ -346,7 +353,7 @@ function dailyList3($today){
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	?>
 	<fieldset>
-		<legend onClick="hideshow(document.getElementById('S<?=str_replace(' ','',$d[circuit_court])?><?=str_replace('-','',$today);?>'));"><?=$d[circuit_court]?></legend>
+		<legend onClick="hideshow(document.getElementById('S<?=str_replace(' ','',standardCourt($d[circuit_court]))?><?=str_replace('-','',$today);?>'));"><?=standardCourt($d[circuit_court])?></legend>
 	<div id="S<?=str_replace(' ','',$d[circuit_court])?><?=str_replace('-','',$today);?>" name="S<?=str_replace(' ','',$d[circuit_court])?><?=str_replace('-','',$today);?>">
 		<?	
 	$x=@mysql_query("select packet_id, date_received, case_no, fileDate, service_status, process_status, filing_status, attorneys_id, server_id from standard_packets where estFileDate = '$today' AND circuit_court = '$d[circuit_court]' and status <> 'CANCELLED' and case_no <> '' and fileDate = '0000-00-00'");
