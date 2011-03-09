@@ -333,7 +333,7 @@ if ($list != ''){
 	</tr>
     <tr>
     	<td style="border-top:solid 1px;">Total Payment</td>
-		<td>$<?=$data[bill410]+$data[bill420]+$data[bill430]+$data[bill440]+$data[bill450];?></td>
+		<td>$<?=$data[bill410]+$data[bill420]+$data[bill430]+$data[bill440]+$data[bill450]+$data[bill460];?></td>
     	<td style="border-top:solid 1px;"><input tabindex="8" name="client_paid" size="2" maxlength="7" value="<?=$data[client_paid]?>" /></td>
     	<td style="border-top:solid 1px;"><input name="client_paida" size="2" maxlength="7" value="<?=$data[client_paida]?>" /></td>
     	<td style="border-top:solid 1px;"><input name="client_paidb" size="2" maxlength="7" value="<?=$data[client_paidb]?>" /></td>
