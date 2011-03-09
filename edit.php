@@ -96,6 +96,10 @@ $dupCheck=dupCheck($d[client_file]);
 <LEGEND ACCESSKEY=C><?=id2attorney($d[attorneys_id]);?> File Data <input type="submit" style="background-color:#00FF00; font-weight:bold; width:100px;" value="SAVE"></LEGEND>
 <table>
 <tr>
+<td>Product</td>
+<td><select name="product_id"><option value="<?=$d[product_id]?>"><?=$d[product_id]?> (1-OTD 2-EV 3-S)</option><option value="1">Presale Foreclosure</option><option value="2">Eviction Service</option><option value="3">Standard Service</option></td>
+</tr>
+<tr>
 <td>Client&nbsp;File </td>
 <td><input name="client_file" value="<?=$d[client_file]?>" /></td>
 </tr>
