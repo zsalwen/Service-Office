@@ -53,15 +53,6 @@ $packet=$d[id];
 include 'edit.testing.php'; // make sure we have main packet array before testing packet
 ?>
 <form method="post">
-<!-- prior values to submit for compare -->
-<input type="hidden" name="uspsVerify" value="<?=$d[uspsVerify]?>">
-
-
-
-
-
-
-
 <fieldset>
 <legend>Server and Staff Assignments</legend>
 <?
@@ -95,6 +86,10 @@ $dupCheck=dupCheck($d[client_file]);
 <FIELDSET style="padding:0px;">
 <LEGEND ACCESSKEY=C><?=id2attorney($d[attorneys_id]);?> File Data <input type="submit" style="background-color:#00FF00; font-weight:bold; width:100px;" value="SAVE"></LEGEND>
 <table>
+<tr>
+<td>Product</td>
+<td><select name="product_id"><option value="<?=$d[product_id]?>"><?=$d[product_id]?> (1-OTD 2-EV 3-S)</option><option value="1">Presale Foreclosure</option><option value="2">Eviction Service</option><option value="3">Standard Service</option></td>
+</tr>
 <tr>
 <td>Client&nbsp;File </td>
 <td><input name="client_file" value="<?=$d[client_file]?>" /></td>
