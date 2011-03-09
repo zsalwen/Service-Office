@@ -53,15 +53,6 @@ $packet=$d[id];
 include 'edit.testing.php'; // make sure we have main packet array before testing packet
 ?>
 <form method="post">
-<!-- prior values to submit for compare -->
-<input type="hidden" name="uspsVerify" value="<?=$d[uspsVerify]?>">
-
-
-
-
-
-
-
 <fieldset>
 <legend>Server and Staff Assignments</legend>
 <?
