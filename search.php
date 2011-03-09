@@ -1,7 +1,7 @@
 <? include 'common.php';
 $search = $_GET['q'];
 
-
+?>
 
 <hr>
 Beta Testing New Packet System ( do not update files here, they are downstream and will be overwritten )
@@ -34,7 +34,7 @@ while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 <hr>
 
 
-
+<?
 
 function systemLookup($field, $query){ 
 	if ($_GET[field] == 'client_file'){
