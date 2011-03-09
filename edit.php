@@ -144,10 +144,56 @@ if ($CCd[phone]){
 <td valign="top">Movant</td>
 <td><textarea name="movant" rows="2" cols="28"><?=stripslashes($d[movant])?></textarea></td>
 </tr>
+
 <tr>
 <td>Addl&nbsp;Docs</td>
 <td><input name="addlDocs" value="<?=$d[addlDocs]?>"></td>
 </tr>
+
+
+
+<tr>
+<td>entryVerify</td>
+<td><input name="entryVerify" value="<?=$d[entryVerify]?>"></td>
+</tr>
+
+
+
+<tr>
+<td>Court Type</td>
+<td><input name="courtType" value="<?=$d[courtType]?>"></td>
+</tr>
+
+
+
+<tr>
+<td>Court State</td>
+<td><input name="courtState" value="<?=$d[courtState]?>"></td>
+</tr>
+
+
+
+<tr>
+<td>Lender ID</td>
+<td><input name="lender_id" value="<?=$d[lender_id]?>"></td>
+</tr>
+
+
+
+<tr>
+<td>Ratify Date</td>
+<td><input name="ratifyDate" value="<?=$d[ratifyDate]?>"></td>
+</tr>
+
+
+
+
+
+
+
+
+
+
 <tr>
 <td>Loss Mitigation</td>
 <td><? if ($d[lossMit] != ''){ echo "<select name='lossMit'><option>$d[lossMit]</option>";}elseif($d[status] == 'NEW'){ echo "<select name='lossMit' class='italic'><option value='FINAL' class='italic'>FINAL</option>"; }else{ echo "<select name='lossMit' class='italic'><option value='' class='italic'></option>"; } ?>
@@ -292,7 +338,7 @@ if ($d92[server]){
 
 
 
-<table width="100%" id="status" style="display:none; font-size:11px; padding:0px;">
+<table width="100%" id="status" >
 <input type="hidden" name="id" value="<?=$d[id]?>" />
 <tr>
 <? if ($_GET[packet]){?>
