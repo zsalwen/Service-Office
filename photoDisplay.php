@@ -140,6 +140,7 @@ if (!$_GET[server] && !$_GET[viewAll]){
 	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
 	//echo "$q<br>";
+	echo "GETTING PAGE:<br>http://data.mdwestserve.com/findPhotos.php?packet=$packet&def=$def";
 	$html=trim(getPage("http://data.mdwestserve.com/findPhotos.php?packet=$packet&def=$def", 'MDWS Find Photos', '15', ''));
 	echo "<table align='center' valign='top'><tr>";
 	if ($d["name$def"]){
