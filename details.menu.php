@@ -1,13 +1,13 @@
 <?
-function fileDate($date){
-	$date=strtotime($date)-86400;
-	return date('n/j/y',$date); 
-}
 $packet = $_GET[packet];
+$rLegacy=@mysql_query("select * from sync where to_id = '$packet' ");
+$dLegacy=mysql_fetch_array($rLegacy,MYSQL_ASSOC);
+if($dLegacy[id]){
 ?>
-
-
-
+<hr>
+<small>a.k.a. <?=$dLegacy[product]?> <?=$dLegacy[from_id]?></small>
+<hr>
+<? } ?>
 <table width="100%"  style="padding:0px; font-size: 11px;">
 <tr>
 <td align="center">
