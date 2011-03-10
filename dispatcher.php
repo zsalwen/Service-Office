@@ -78,8 +78,16 @@ function testZIP($test){
 	  $r=@mysql_query("select packet_id from ps_packets where zip1 = '$test' or zip1a = '$test' or zip1b = '$test' or zip1c = '$test' or zip1d = '$test' or zip1e = '$test'");
 	  $d=mysql_fetch_array($r,MYSQL_ASSOC);
 	  if ($d[packet_id]){
-	  return "1";
+		return "1";
 	  }
+}
+
+function getContract($id){
+	$r=@mysql_query("select contract from ps_users where id='$id'");
+	$d=mysql_fetch_array($r,MYSQL_ASSOC);
+	if ($d[contract] == 'YES'){
+		return '1';
+	}
 }
 
 $i1-0;
@@ -90,30 +98,42 @@ if ($zips){
 	  // find all matching pervious serves in this zipcode
 	  $r=@mysql_query("select distinct server_id, zip1 from ps_packets where server_id <> '' and zip1 = '$key'");
 	  while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-	   echo "<a target='peek' href='dispatcher.peek.php?server=$d[server_id]&zip=$key'>".id2name($d[server_id])."</a><br>";
+			if (getContract($d[server_id]) == '1'){
+				echo "<a target='peek' href='dispatcher.peek.php?server=$d[server_id]&zip=$key'>".id2name($d[server_id])."</a><br>";
+			}
 	  }
 	  $r=@mysql_query("select distinct server_ida, zip1a from ps_packets where server_ida <> '' and zip1a = '$key'");
 	  while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-	   echo "<a target='peek' href='dispatcher.peek.php?server=$d[server_ida]&zip=$key'>".id2name($d[server_ida])."</a><br>";
+			if (getContract($d[server_ida]) == '1'){
+				echo "<a target='peek' href='dispatcher.peek.php?server=$d[server_ida]&zip=$key'>".id2name($d[server_ida])."</a><br>";
+			}
 	  }
 	  $r=@mysql_query("select distinct server_idb, zip1b from ps_packets where server_idb <> '' and zip1b = '$key'");
 	  while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-	   echo "<a target='peek' href='dispatcher.peek.php?server=$d[server_idb]&zip=$key'>".id2name($d[server_idb])."</a></br>";
+			if (getContract($d[server_idb]) == '1'){
+				echo "<a target='peek' href='dispatcher.peek.php?server=$d[server_idb]&zip=$key'>".id2name($d[server_idb])."</a></br>";
+			}
 	  }
 	  $r=@mysql_query("select distinct server_idc, zip1c from ps_packets where server_idc <> '' and zip1c = '$key'");
 	  while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-	   echo "<a target='peek' href='dispatcher.peek.php?server=$d[server_idc]&zip=$key'>".id2name($d[server_idc])."</a></br>";
+			if (getContract($d[server_idc]) == '1'){
+				echo "<a target='peek' href='dispatcher.peek.php?server=$d[server_idc]&zip=$key'>".id2name($d[server_idc])."</a></br>";
+			}
 	  }
 	  $r=@mysql_query("select distinct server_idd, zip1d from ps_packets where server_idd <> '' and zip1d = '$key'");
 	  while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-	   echo "<a target='peek' href='dispatcher.peek.php?server=$d[server_idd]&zip=$key'>".id2name($d[server_idd])."</a></br>";
+		  if (getContract($d[server_idd]) == '1'){
+				echo "<a target='peek' href='dispatcher.peek.php?server=$d[server_idd]&zip=$key'>".id2name($d[server_idd])."</a></br>";
+		  }
 	  }
 	  $r=@mysql_query("select distinct server_ide, zip1e from ps_packets where server_ide <> '' and zip1e = '$key'");
 	  while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-	   echo "<a target='peek' href='dispatcher.peek.php?server=$d[server_ide]&zip=$key'>".id2name($d[server_ide])."</a><br>";
+		  if (getContract($d[server_ide]) == '1'){
+				echo "<a target='peek' href='dispatcher.peek.php?server=$d[server_ide]&zip=$key'>".id2name($d[server_ide])."</a><br>";
+		  }
 	  }
 	  
-	 	$r=@mysql_query("select * from ps_users where level='gold member' and zip = '$key'");
+	 	$r=@mysql_query("select * from ps_users where level='gold member' and zip = '$key' AND contract='YES'");
 	  while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	   echo "<a style='background-color:#FFFF00' target='peek' href='dispatcher.peek.php?server=$d[id]&zip=$key'>$d[name]</a><br>";
 	  }
