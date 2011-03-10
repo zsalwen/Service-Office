@@ -152,11 +152,11 @@ if (!$_GET[server] && !$_GET[viewAll]){
 	}elseif($def == ''){
 		$i=0;
 		while ($i < 6){$i++;
-			if ($d["name$def"]){
-				$html=trim(getPage("http://data.mdwestserve.com/findPhotos.php?packet=$packet&def=$def", 'MDWS Find Photos', '15', ''));
-				echo "<td valign='top'><fieldset><legend>".strtoupper($d["name$def"])."</legend>";
+			if ($d["name$i"]){
+				$html=trim(getPage("http://data.mdwestserve.com/findPhotos.php?packet=$packet&def=$i", 'MDWS Find Photos', '15', ''));
+				echo "<td valign='top'><fieldset><legend>".strtoupper($d["name$i"])."</legend>";
 				echo $html;
-				//include "http://data.mdwestserve.com/findPhotos.php?packet=$packet&def=$def";
+				//include "http://data.mdwestserve.com/findPhotos.php?packet=$packet&def=$i";
 				echo "</fieldset></td>";
 			}
 		}
