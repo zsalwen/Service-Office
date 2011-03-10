@@ -108,7 +108,7 @@ function isChecked($value){
 function contractStatus($str){
 	if (strtoupper($str) == 'YES'){
 		return " style='color:green;font-weight:bold;'><option>ACTIVE</option>";
-	}elseif(strtoupper($str) == 'NO'){
+	}else{
 		return " style='color:red;font-weight:bold;'><option>INACTIVE</option>";
 	}
 }
