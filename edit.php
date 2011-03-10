@@ -63,16 +63,6 @@ while($dSSA=mysql_fetch_array($rSSA,MYSQL_ASSOC)){
 ?>
 </fieldset>
 
-<fieldset>
-<legend>Online File Storage <a href='upload.php' target='preview'>Upload</a>, <a href="#" onclick="window.open('lightboard.php?packet=<?=$d[id]?>','Lightboard','menubar=0,resizable=1,status=0,width=800,height=600') ">PDF Lightboard</a></legend>
-<?
-$rOFS=@mysql_query("select * from attachment where packet_id = '$packet'");
-while($dOFS=mysql_fetch_array($rOFS,MYSQL_ASSOC)){
- echo "<li onClick=\"parent.frames['pane2'].location.href = '$dOFS[absolute_url]' \">$dOFS[instruction_id] $dOFS[id] $dOFS[user_id] $dOFS[server_id] $dOFS[processed]  ".urldecode($dOFS[url])."</li>";
-}
-?>
-</fieldset>
-
 <FIELDSET style="padding:0px;">
 
 <? if ($d[possibleDuplicate]){?>
@@ -144,10 +134,56 @@ if ($CCd[phone]){
 <td valign="top">Movant</td>
 <td><textarea name="movant" rows="2" cols="28"><?=stripslashes($d[movant])?></textarea></td>
 </tr>
+
 <tr>
 <td>Addl&nbsp;Docs</td>
 <td><input name="addlDocs" value="<?=$d[addlDocs]?>"></td>
 </tr>
+
+
+
+<tr>
+<td>entryVerify</td>
+<td><input name="entryVerify" value="<?=$d[entryVerify]?>"></td>
+</tr>
+
+
+
+<tr>
+<td>Court Type</td>
+<td><input name="courtType" value="<?=$d[courtType]?>"></td>
+</tr>
+
+
+
+<tr>
+<td>Court State</td>
+<td><input name="courtState" value="<?=$d[courtState]?>"></td>
+</tr>
+
+
+
+<tr>
+<td>Lender ID</td>
+<td><input name="lender_id" value="<?=$d[lender_id]?>"></td>
+</tr>
+
+
+
+<tr>
+<td>Ratify Date</td>
+<td><input name="ratifyDate" value="<?=$d[ratifyDate]?>"></td>
+</tr>
+
+
+
+
+
+
+
+
+
+
 <tr>
 <td>Loss Mitigation</td>
 <td><? if ($d[lossMit] != ''){ echo "<select name='lossMit'><option>$d[lossMit]</option>";}elseif($d[status] == 'NEW'){ echo "<select name='lossMit' class='italic'><option value='FINAL' class='italic'>FINAL</option>"; }else{ echo "<select name='lossMit' class='italic'><option value='' class='italic'></option>"; } ?>
@@ -292,7 +328,7 @@ if ($d92[server]){
 
 
 
-<table width="100%" id="status" style="display:none; font-size:11px; padding:0px;">
+<table width="100%" id="status" >
 <input type="hidden" name="id" value="<?=$d[id]?>" />
 <tr>
 <? if ($_GET[packet]){?>

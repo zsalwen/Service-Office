@@ -1,5 +1,44 @@
 <? include 'common.php';
 $search = $_GET['q'];
+
+?>
+<div style="background-color:#cccccc;">
+<hr>
+Beta Testing New Packet System ( do not update files here, they are downstream and will be overwritten ) 
+<?
+$search = $_GET[q];
+$target = $_GET[field];
+if ($target == 'id' ){ 
+$r=@mysql_query("select * from packet where id like '%$search%' order by id ");
+}
+if ($target == 'case_no' ){ 
+$r=@mysql_query("select * from packet where case_no like '%$search%' order by case_no, id ");
+}
+if ($target == 'client_file' ){ 
+$r=@mysql_query("select * from packet where client_file like '%$search%' order by client_file, id ");
+}
+?>
+<table>
+<tr>
+<td>ID</td>
+<td>Case</td>
+</tr>
+<?
+while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+?>
+<tr>
+<td><a href="http://staff.mdwestserve.com/details.php?packet=<?=$d[id];?>"><?=$d[id];?></a></td>
+<td><?=$d[case_no];?></td>
+</tr>
+<? } ?>
+</table>
+
+
+<hr>
+</div>
+
+<?
+
 function systemLookup($field, $query){ 
 	if ($_GET[field] == 'client_file'){
 		$q2="client_file like '%$query%'";
@@ -204,13 +243,15 @@ function systemLookup5($field, $query){
 form { margin:0px; padding:0px;}
 </style>
 <center><form><input name="q" value="<?=$_GET[q];?>" /> <select name="field">
-		<option value="client_file">File</option>
+		<option value="client_file">File*</option>
 		<option value="packet_id">Packet</option>
 		<option value="eviction_id">Eviction</option>
-		<option value="case_no">Case</option>
+		<option value="case_no">Case*</option>
 		<option value="status">Status</option>
 		<option value="name">Name</option>
 		<option value="address">Address</option>
+<option value="id">New Packet ID*</option>
+
 	</select> <input type="submit" value="Search Records" /></form></center>
 <?
  if ($_GET['q']){?>
@@ -260,14 +301,20 @@ while($row=mysql_fetch_array($r,MYSQL_ASSOC)){
  }
  ?></table>
 <form><input name="q" value="<?=$_GET[q];?>" /> <select name="field">
-		<option value="client_file">File</option>
+		<option value="client_file">File*</option>
 		<option value="packet_id">Packet</option>
 		<option value="eviction_id">Eviction</option>
-		<option value="case_no">Case</option>
+		<option value="case_no">Case*</option>
 		<option value="status">Status</option>
 		<option value="name">Name</option>
 		<option value="address">Address</option>
+<option value="id">New Packet ID*</option>
 	</select> <input type="submit" value="Search Records" /></form>
+
+
 <?
 
-//include 'footer.php';?>
+
+
+include 'footer.php';
+?>
