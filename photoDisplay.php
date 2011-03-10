@@ -141,13 +141,25 @@ if (!$_GET[server] && !$_GET[viewAll]){
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
 	//echo "$q<br>";
 	//echo "GETTING PAGE:<br>http://data.mdwestserve.com/findPhotos.php?packet=$packet&def=$def";
-	//$html=trim(getPage("http://data.mdwestserve.com/findPhotos.php?packet=$packet&def=$def", 'MDWS Find Photos', '15', ''));
+	
 	echo "<table align='center' valign='top'><tr>";
-	if ($d["name$def"]){
+	if ($d["name$def"] && $def != ''){
+		$html=trim(getPage("http://data.mdwestserve.com/findPhotos.php?packet=$packet&def=$def", 'MDWS Find Photos', '15', ''));
 		echo "<td valign='top'><fieldset><legend>".strtoupper($d["name$def"])."</legend>";
-		//echo $html;
-		include "http://data.mdwestserve.com/findPhotos.php?packet=$packet&def=$def";
+		echo $html;
+		//include "http://data.mdwestserve.com/findPhotos.php?packet=$packet&def=$def";
 		echo "</fieldset></td>";
+	}elseif($def = ''){
+		$i=0;
+		while ($i < 6){$i++;
+			if ($d["name$def"]){
+				$html=trim(getPage("http://data.mdwestserve.com/findPhotos.php?packet=$packet&def=$def", 'MDWS Find Photos', '15', ''));
+				echo "<td valign='top'><fieldset><legend>".strtoupper($d["name$def"])."</legend>";
+				echo $html;
+				//include "http://data.mdwestserve.com/findPhotos.php?packet=$packet&def=$def";
+				echo "</fieldset></td>";
+			}
+		}
 	}
 	echo "</tr></table>";
 }elseif($_GET[server]){
