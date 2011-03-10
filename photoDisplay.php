@@ -149,7 +149,7 @@ if (!$_GET[server] && !$_GET[viewAll]){
 		echo $html;
 		//include "http://data.mdwestserve.com/findPhotos.php?packet=$packet&def=$def";
 		echo "</fieldset></td>";
-	}elseif($def = ''){
+	}elseif($def == ''){
 		$i=0;
 		while ($i < 6){$i++;
 			if ($d["name$def"]){
