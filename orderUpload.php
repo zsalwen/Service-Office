@@ -63,7 +63,7 @@ sort($dirArray);
 
 // set timeline
 $userName=email2name($_POST[uploadEmail]);
-$timeline=date("m/d/y H:i:s A")." File Sent Through Staff Portal By ".$userName;
+$timeline=date("m/d/y H:i:s A")." File Uploaded via FTP By ".$userName;
 
 // set contact
 $contact=email2id($_POST[uploadEmail]);
