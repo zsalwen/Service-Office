@@ -63,16 +63,6 @@ while($dSSA=mysql_fetch_array($rSSA,MYSQL_ASSOC)){
 ?>
 </fieldset>
 
-<fieldset>
-<legend>Online File Storage <a href='upload.php' target='preview'>Upload</a>, <a href="#" onclick="window.open('lightboard.php?packet=<?=$d[id]?>','Lightboard','menubar=0,resizable=1,status=0,width=800,height=600') ">PDF Lightboard</a></legend>
-<?
-$rOFS=@mysql_query("select * from attachment where packet_id = '$packet'");
-while($dOFS=mysql_fetch_array($rOFS,MYSQL_ASSOC)){
- echo "<li onClick=\"parent.frames['pane2'].location.href = '$dOFS[absolute_url]' \">$dOFS[instruction_id] $dOFS[id] $dOFS[user_id] $dOFS[server_id] $dOFS[processed]  ".urldecode($dOFS[url])."</li>";
-}
-?>
-</fieldset>
-
 <FIELDSET style="padding:0px;">
 
 <? if ($d[possibleDuplicate]){?>
