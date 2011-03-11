@@ -107,17 +107,17 @@ function isChecked($value){
 
 function contractStatus($str){
 	if (strtoupper($str) == 'YES'){
-		return " style='color:green;font-weight:bold;'><option>ACTIVE</option>";
+		return " style='color:green;font-weight:bold;'><option value='YES'>ACTIVE</option>";
 	}else{
-		return " style='color:red;font-weight:bold;'><option>INACTIVE</option>";
+		return " style='color:red;font-weight:bold;'><option value='NO'>INACTIVE</option>";
 	}
 }
 
 function printStatus($str){
 	if (strtoupper($str) == 'YES'){
-		return " style='color:green;font-weight:bold;'><option>ALLOWED</option>";
+		return " style='color:green;font-weight:bold;'><option value='YES'>ALLOWED</option>";
 	}else{
-		return " style='color:red;font-weight:bold;'><option>RESTRICTED</option>";
+		return " style='color:red;font-weight:bold;'><option value=''>RESTRICTED</option>";
 	}
 }
 
