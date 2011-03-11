@@ -10,7 +10,7 @@ return $d[display_name];
 ?>
 		<ol><li>UPLOAD FILES TO AUTOSTART, USING NAMING CONVENTION 'FILENUMBER_SERVICETYPE.PDF' (E.G. '08-12345_PRESALE.PDF').</li>
 		<li>ENTER COMMON INSTRUCTIONS BELOW, THEY WILL BE APPLIED TO ALL FILES UPLOADED SIMULTANEOUSLY.</li>
-		<li>BE SURE TO SELECT THE PROPER ATTORNEY <i>AND</i> SERVICE TYPE.</li></ol>
+		<li>BE SURE TO SELECT THE PROPER ATTORNEY <i>AND</i> SERVICE TYPE.  THIS WILL ALSO BE APPLIED TO ALL FILES.</li></ol>
 		<form action="http://staff.mdwestserve.com/orderUpload.php" method="post">
 		<input type="hidden" name="uploadEmail" value="<?=$_COOKIE[psdata][email]?>">
 		<textarea name="attorneyNotes" rows="4" cols="50"></textarea><br>
