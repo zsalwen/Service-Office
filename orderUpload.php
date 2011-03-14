@@ -23,21 +23,25 @@ if ($svcType == "OTD"){
 	$svcType3 = "PRESALE";
 	$table = "ps_packets";
 	$svcStatus = "";
+	$product='OTD';
 }elseif($svcType == "MAIL ONLY"){
 	$svcType2 = "Packet";
 	$svcType3 = "MAIL ONLY";
 	$table = "ps_packets";
 	$svcStatus = "MAIL ONLY";
+	$product='OTD';
 }elseif($svcType == "EV"){
 	$svcType2 = "Eviction";
 	$svcType3 = "EVICTION";
 	$table = "evictionPackets";
 	$svcStatus = "";
+	$product='EV';
 }elseif($svcType == "S"){
 	$svcType2 = "Standard";
 	$svcType3 = "STANDARD";
 	$table = "standard_packets";
 	$svcStatus = "";
+	$product='S';
 }
 
 // code attorneys ID
@@ -109,11 +113,13 @@ for($index=0; $index < $indexCount; $index++) {
 				$query = "INSERT INTO $table (date_received, otd, attorneys_id, status, client_file, timeline, contact, attorney_notes, service_status) values (NOW(), '$link1', '$attid', 'NEW', '$clientFile', '$timeline', '$contact', '$attorneyNotes', '$svcStatus')";
 			}
 			@mysql_query($query) or die(mysql_error());
-			print("</td><td>".mysql_insert_id()."</td>");
+			$newID=mysql_insert_id();
+			@mysql_query("INSERT INTO ps_pay (packetID, product) VALUES ('$newID','$product')");
+			print("</td><td>".$newID."</td>");
 			print("<td><a href='".$link1."'>OTD</a>");
 			//generate email
 			$print .= date("F d Y H:i:s.")." : Uploaded by ".$userName." \n";
-			$print .= date("F d Y H:i:s.")." : New $svcType2 ID ".mysql_insert_id()." \n";
+			$print .= date("F d Y H:i:s.")." : New $svcType2 ID ".$newID." \n";
 			if ($_POST[attorneyNotes]){
 				$print .= date("F d Y H:i:s.").": Client Note: $attorneyNotes \n";
 			}
