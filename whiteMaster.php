@@ -177,7 +177,7 @@ if ($_GET[OTD] && $_GET[start] && $_GET[stop]){
 	$rm=@mysql_query($qm) or die ("Query: $qm<br>".mysql_error());
 	$dm=mysql_fetch_array($rm, MYSQL_ASSOC);
 	if ($dm[packetID] != ''){
-		getMatrixData($_GET[OTD]);
+		getMatrixData($_GET[OTD],'OTD');
 	}else{
 		getPacketData($_GET[OTD]);
 	}
