@@ -187,7 +187,7 @@ while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	$list .= "<li><a target='_Blank' href='/standard/order.php?packet=$d[packet_id]'>".standardCourt($d[circuit_court]).", ".courierDate3($d[packet_id])."</a></li>";
 }
 if ($list != ''){
-	echo "<td valign='top'><div class='title2'><b>Courier Schedule</b><ol>$list</ol></div></td>";
+	echo "<td valign='top'><div class='title2'><b>Files Missing Courier</b><ol>$list</ol></div></td>";
 	$list='';
 }
 // close date
