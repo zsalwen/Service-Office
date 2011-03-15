@@ -412,7 +412,11 @@ function serviceSheet($packet){
 	</table>
 	</fieldset>
 	<? }
-	} ?>
+	} 
+	if (trim($d[accountingNotes]) != ''){
+		echo "<table align='center'><tr><td><b>ACCOUNTING NOTES</b><br>$d[accountingNotes]</td></tr></table>";
+	}
+	?>
 	</td></tr></table>
 	<table width="80%" align="center" cellspacing="0">
 		<tr>
@@ -642,7 +646,11 @@ function evSheet($eviction){
 		</fieldset>
 		<? }
 		
-	} ?>
+	} 
+	if (trim($d[accountingNotes]) != ''){
+		echo "<table align='center'><tr><td><b>ACCOUNTING NOTES</b><br>$d[accountingNotes]</td></tr></table>";
+	}
+	?>
 	</td></tr></table>
 	<table width="80%" align="center" cellspacing="0">
 		<tr>
