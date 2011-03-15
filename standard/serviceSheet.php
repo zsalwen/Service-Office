@@ -255,7 +255,7 @@ function serviceSheet($packet){
 	<? } 
 	}
 	if (trim($d[accountingNotes]) != ''){
-		echo "<table align='center'><tr><td><b>ACCOUNTING NOTES</b><br>$d[accountingNotes]</td></tr></table>";
+		echo "<table align='center' border='1' style='border-collapse:collapse;'><tr><td><b>ACCOUNTING NOTES</b><br>".strtoupper(stripslashes($d[accountingNotes]))."</td></tr></table>";
 	}
 	?>
 	</td></tr></table>
