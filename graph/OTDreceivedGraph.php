@@ -23,7 +23,7 @@ while ($year <= $curYear){
 		}else{
 			$i2=$i;
 		}
-		$r=mysql_query("SELECT packet_id FROM ps_packets WHERE date_received LIKE '%$year-$i2%'");
+		$r=mysql_query("SELECT id FROM packet WHERE date_received LIKE '%$year-$i2%'");
 		$received["$i"]=mysql_num_rows($r);
 		if ($received["$i"] > 0){}else{
 			$received["$i"]='0';
@@ -40,7 +40,7 @@ while ($year <= $curYear){
 		}
 		$src2 .= '|'.monthConvert($i2)." $yr";
 		//pull BURSON files
-		$r=mysql_query("SELECT packet_id FROM ps_packets WHERE date_received LIKE '%$year-$i2%' AND attorneys_id='1'");
+		$r=mysql_query("SELECT id FROM packet WHERE date_received LIKE '%$year-$i2%' AND attorneys_id='1'");
 		$value1=mysql_num_rows($r);
 		if ($value1 > 0){}else{
 			$value1='0';
@@ -51,7 +51,7 @@ while ($year <= $curYear){
 			$burson .= ','.$value1;
 		}
 		//pull WHITE files
-		$r=mysql_query("SELECT packet_id FROM ps_packets WHERE date_received LIKE '%$year-$i2%' AND attorneys_id='3'");
+		$r=mysql_query("SELECT id FROM packet WHERE date_received LIKE '%$year-$i2%' AND attorneys_id='3'");
 		$value2=mysql_num_rows($r);
 		if ($value2 > 0){}else{
 			$value2='0';
@@ -62,7 +62,7 @@ while ($year <= $curYear){
 			$white .= ','.$value2;
 		}
 		//pull BGW files
-		$r=mysql_query("SELECT packet_id FROM ps_packets WHERE date_received LIKE '%$year-$i2%' AND attorneys_id='70'");
+		$r=mysql_query("SELECT id FROM packet WHERE date_received LIKE '%$year-$i2%' AND attorneys_id='70'");
 		$value3=mysql_num_rows($r);
 		if ($value3 > 0){}else{
 			$value3='0';
@@ -73,7 +73,7 @@ while ($year <= $curYear){
 			$bgw .= ','.$value3;
 		}
 		//pull OTHER files
-		$r=mysql_query("SELECT packet_id FROM ps_packets WHERE date_received LIKE '%$year-$i2%' AND attorneys_id <> '1' AND attorneys_id <> '3' AND attorneys_id <> '70'");
+		$r=mysql_query("SELECT id FROM packet WHERE date_received LIKE '%$year-$i2%' AND attorneys_id <> '1' AND attorneys_id <> '3' AND attorneys_id <> '70'");
 		$value4=mysql_num_rows($r);
 		if ($value4 > 0){}else{
 			$value4='0';
@@ -101,7 +101,7 @@ echo "<tr><td>WHITE:</td><td>".str_replace(',','</td><td>',$white).'</td></tr>';
 echo "<tr><td>BGW:</td><td>".str_replace(',','</td><td>',$bgw).'</td></tr>';
 echo "<tr><td>OTHER:</td><td>".str_replace(',','</td><td>',$other).'</td>';
 echo "</tr></table>";*/
-$src="http://1.chart.apis.google.com/chart?cht=lc&chs=1000x300&chd=t:".$src."|".$burson."|".$white."|".$bgw."|".$other."&chxl=0:".$src2."|1:|0|$z1|$z2|$z3|$z4|$z&chtt=Foreclosure Files Received 2008-$curYear&chdl=All Files|Burson|White|BGW|Others&chco=FF0000,00FF00,0000FF,800080,FF8040&chls=1,1,0|1,1,0|1,1,0|1,1,0|1,1,0";
+$src="http://1.chart.apis.google.com/chart?cht=lc&chs=1000x300&chd=t:".$src."|".$burson."|".$white."|".$bgw."|".$other."&chxl=0:".$src2."|1:|0|$z1|$z2|$z3|$z4|$z&chtt=All Service Files Received 2008-$curYear&chdl=All Files|Burson|White|BGW|Others&chco=FF0000,00FF00,0000FF,800080,FF8040&chls=1,1,0|1,1,0|1,1,0|1,1,0|1,1,0";
 $rest="&chxt=x,y&chds=0,".$z."&chxtc=0,10|1,-980&chxs=0,000000,7|1,000000,10,-1,lt,333333&chm=t$z$zzz,000000,0,$zz,10";
 ?>
 <!-------------
@@ -131,7 +131,7 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
         new google.visualization.LineChart(document.getElementById('visualization')).
             draw(data, {curveType: "function",
                         width: 1200, height: 480, backgroundColor: '#99AACC',
-                        vAxis: {maxValue: <?=$z?>}, title: 'Foreclosure Files Received: 2008-<?=$curYear?>',
+                        vAxis: {maxValue: <?=$z?>}, title: 'All Service Files Received: 2008-<?=$curYear?>',
 						 hAxis: {title: 'Date', titleTextStyle: {color: '#FF0000', fontSize:'18'} }
 						  }
                 );
