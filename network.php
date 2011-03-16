@@ -45,41 +45,56 @@ $results4 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.2 service httpd status');
 $results5 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.3 service httpd status');
 $results6 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.4 service httpd status');
 $results7 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.6 service httpd status');
+// test for mysqld
+$results1 = my_ssh('mdws1.mdwestserve.com',' service mysqld status');
+$results3 = my_ssh('ww2.mdwestserve.com','service mysqld status');
+$results4 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.2 service mysqld status');
+$results5 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.3 service mysqld status');
+$results6 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.4 service mysqld status');
+$results7 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.6 service mysqld status');
 ?>
 <table>
 <tr>
 <td>Host</td>
 <td>httpd</td>
+<td>mysqld</td>
+</tr>
 
 <tr>
-<td><font size="+2"><?=$host1;?></font></td>
+<td><pre><?=$host1;?></pre></td>
 <td valign="top"><pre><?=$results1;?></pre></td>
+<td valign="top"><pre><?=$results1a;?></pre></td>
 </tr>
 
 
 <tr>
-<td><font size="+2"><?=$host3;?></font></td>
+<td><pre><?=$host3;?></pre></td>
 <td valign="top"><pre><?=$results3;?></pre></td>
+<td valign="top"><pre><?=$results3a;?></pre></td>
 </tr>
 
 <tr>
-<td><font size="+2"><?=$host4;?></font></td>
+<td><pre><?=$host4;?></pre></td>
 <td valign="top"><pre><?=$results4;?></pre></td>
+<td valign="top"><pre><?=$results4a;?></pre></td>
 </tr>
 
 <tr>
-<td><font size="+2"><?=$host5;?></font></td>
+<td><pre><?=$host5;?></pre></td>
 <td valign="top"><pre><?=$results5;?></pre></td>
+<td valign="top"><pre><?=$results5a;?></pre></td>
 </tr>
 
 <tr>
-<td><font size="+2"><?=$host6;?></font></td>
+<td><pre><?=$host6;?></pre></td>
 <td valign="top"><pre><?=$results6;?></pre></td>
+<td valign="top"><pre><?=$results6a;?></pre></td>
 </tr>
 
 <tr>
-<td><font size="+2"><?=$host7;?></font></td>
+<td><pre><?=$host7;?></pre></td>
 <td valign="top"><pre><?=$results7;?></pre></td>
+<td valign="top"><pre><?=$results7a;?></pre></td>
 </tr>
 
 </table>
