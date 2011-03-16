@@ -32,23 +32,23 @@ function my_ssh($server,$command){
 	return $data;
 }
 
+$host1 = my_ssh('mdws1.mdwestserve.com','hostname');
+$host2 = my_ssh('mdws2.mdwestserve.com','hostname');
+$host3 = my_ssh('ww2.mdwestserve.com','hostname');
 $results1 = my_ssh('mdws1.mdwestserve.com','ps -e');
 $results2 = my_ssh('mdws2.mdwestserve.com','ps -e');
 $results3 = my_ssh('ww2.mdwestserve.com','ps -e');
-//$results4 = my_ssh('mdws1.mdwestserve.com','ps -e');
 ?>
 <table>
 <tr>
-<td>mdws1</td>
-<td>mdws2</td>
-<td>db1</td>
-<td>db2</td>
+<td><font size="+2"><?=$host1;?></font></td>
+<td><font size="+2"><?=$host2;?></font></td>
+<td><font size="+2"><?=$host3;?></font></td>
 </tr>
 <tr>
-<td><pre><?=$results1;?></pre></td>
-<td><pre><?=$results2;?></pre></td>
-<td><pre><?=$results3;?></pre></td>
-<td><pre><?=$results4;?></pre></td>
+<td valign="top"><pre><?=$results1;?></pre></td>
+<td valign="top"><pre><?=$results2;?></pre></td>
+<td valign="top"><pre><?=$results3;?></pre></td>
 </tr>
 </table>
 <?
