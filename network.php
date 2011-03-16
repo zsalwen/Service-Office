@@ -1,5 +1,6 @@
 <?
 if ($_COOKIE[psdata][level] == 'Operations'){
+ini_set('mysql.default_host', 'mdws2.mdwestserve.com');
 mysql_connect();
 mysql_select_db('core');
 function valueData($key){
