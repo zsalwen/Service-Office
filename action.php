@@ -1,4 +1,6 @@
-<? include '/gitbox/Service-Office/lock.php'; ?>
+<?
+ini_set('mysql.default_host', 'mdws2.mdwestserve.com');
+ include '/gitbox/Service-Office/lock.php'; ?>
 <meta http-equiv="refresh" content="300" />
 <?
 function courierDate($id){
