@@ -46,12 +46,12 @@ $results5 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.3 service httpd status');
 $results6 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.4 service httpd status');
 $results7 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.6 service httpd status');
 // test for mysqld
-$results1 = my_ssh('mdws1.mdwestserve.com',' service mysqld status');
-$results3 = my_ssh('ww2.mdwestserve.com','service mysqld status');
-$results4 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.2 service mysqld status');
-$results5 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.3 service mysqld status');
-$results6 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.4 service mysqld status');
-$results7 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.6 service mysqld status');
+$results1a = my_ssh('mdws1.mdwestserve.com',' service mysqld status');
+$results3a = my_ssh('ww2.mdwestserve.com','service mysqld status');
+$results4a = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.2 service mysqld status');
+$results5a = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.3 service mysqld status');
+$results6a = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.4 service mysqld status');
+$results7a = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.6 service mysqld status');
 ?>
 <table>
 <tr>
