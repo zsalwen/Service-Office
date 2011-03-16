@@ -39,25 +39,54 @@ $host4 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.2 hostname');
 $host5 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.3 hostname');
 $host6 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.4 hostname');
 $host7 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.6 hostname');
-$results1 = my_ssh('mdws1.mdwestserve.com','ps');
-$results2 = my_ssh('mdws2.mdwestserve.com','ps');
-$results3 = my_ssh('ww2.mdwestserve.com','ps');
-$host4 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.2 ps');
-$host5 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.3 ps');
-$host6 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.4 ps');
-$host7 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.6 ps');
+$results1 = my_ssh('mdws1.mdwestserve.com','w');
+$results2 = my_ssh('mdws2.mdwestserve.com','w');
+$results3 = my_ssh('ww2.mdwestserve.com','w');
+$results4 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.2 w');
+$results5 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.3 w');
+$results6 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.4 w');
+$results7 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.6 w');
 ?>
 <table>
 <tr>
-<td><font size="+2"><?=$host1;?></font></td>
-<td><font size="+2"><?=$host2;?></font></td>
-<td><font size="+2"><?=$host3;?></font></td>
-</tr>
+<td>Host</td>
+<td>w</td>
+
 <tr>
+<td><font size="+2"><?=$host1;?></font></td>
 <td valign="top"><pre><?=$results1;?></pre></td>
+</tr>
+
+<tr>
+<td><font size="+2"><?=$host2;?></font></td>
 <td valign="top"><pre><?=$results2;?></pre></td>
+</tr>
+
+<tr>
+<td><font size="+2"><?=$host3;?></font></td>
 <td valign="top"><pre><?=$results3;?></pre></td>
 </tr>
+
+<tr>
+<td><font size="+2"><?=$host4;?></font></td>
+<td valign="top"><pre><?=$results4;?></pre></td>
+</tr>
+
+<tr>
+<td><font size="+2"><?=$host5;?></font></td>
+<td valign="top"><pre><?=$results5;?></pre></td>
+</tr>
+
+<tr>
+<td><font size="+2"><?=$host6;?></font></td>
+<td valign="top"><pre><?=$results6;?></pre></td>
+</tr>
+
+<tr>
+<td><font size="+2"><?=$host7;?></font></td>
+<td valign="top"><pre><?=$results7;?></pre></td>
+</tr>
+
 </table>
 <?
 }else{
