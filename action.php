@@ -1,9 +1,5 @@
 <?
-if($_SERVER["SERVER_ADDR"] == '10.0.0.3'){
-ini_set('mysql.default_host', '10.0.0.4');
-}else{
 ini_set('mysql.default_host', 'mdws2.mdwestserve.com');
-}
 mysql_connect();
 mysql_select_db('core');
  include '/gitbox/Service-Office/lock.php'; ?>
