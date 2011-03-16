@@ -1,5 +1,5 @@
 <?
-ini_set('mysql.default_host', 'mdws2.mdwestserve.com');
+ini_set('mysql.default_host', '10.0.0.4');
 mysql_connect();
 mysql_select_db('core');
  include '/gitbox/Service-Office/lock.php'; ?>
