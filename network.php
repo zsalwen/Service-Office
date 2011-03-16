@@ -26,7 +26,6 @@ function my_ssh($server,$command){
 					$data .= $buf;
 				}
 				fclose($stream);
-				talk('insidenothing@gmail.com',$_COOKIE[psdata][name].' SSH terminal: '.$server.' -> '.$command);
 			}
 		}
 	}
