@@ -35,9 +35,17 @@ function my_ssh($server,$command){
 $host1 = my_ssh('mdws1.mdwestserve.com','hostname');
 $host2 = my_ssh('mdws2.mdwestserve.com','hostname');
 $host3 = my_ssh('ww2.mdwestserve.com','hostname');
-$results1 = my_ssh('mdws1.mdwestserve.com','ps -e');
-$results2 = my_ssh('mdws2.mdwestserve.com','ps -e');
-$results3 = my_ssh('ww2.mdwestserve.com','ps -e');
+$host4 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.2 hostname');
+$host5 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.3 hostname');
+$host6 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.4 hostname');
+$host7 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.6 hostname');
+$results1 = my_ssh('mdws1.mdwestserve.com','ps');
+$results2 = my_ssh('mdws2.mdwestserve.com','ps');
+$results3 = my_ssh('ww2.mdwestserve.com','ps');
+$host4 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.2 ps');
+$host5 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.3 ps');
+$host6 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.4 ps');
+$host7 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.6 ps');
 ?>
 <table>
 <tr>
