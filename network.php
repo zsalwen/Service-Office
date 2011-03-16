@@ -98,6 +98,66 @@ $results7a = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.6 service mysqld status');
 </tr>
 
 </table>
+
+<table><tr><td><pre>
+[root@mdws1 conf]# grep ServerName httpd.conf
+# ServerName gives the name and port that the server uses to identify itself.
+#ServerName www.example.com:80
+# ServerName directive.
+#    ServerName dummy-host.example.com
+ServerName patrick.mdwestserve.com
+ServerName insidenothing.com
+ServerName www.insidenothing.com
+ServerName wikileaks.insidenothing.com
+ServerName timesharetaskforce.com
+ServerName www.timesharetaskforce.com
+ServerName mdwestserve.com
+ServerName www.mdwestserve.com
+ServerName mobile.mdwestserve.com
+ServerName staff.mdwestserve.com
+ServerName staff1.mdwestserve.com
+ServerName staff2.mdwestserve.com
+ServerName filecopy.mdwestserve.com
+ServerName photos.mdwestserve.com
+ServerName delta.mdwestserve.com
+ServerName cvs.mdwestserve.com
+ServerName data.mdwestserve.com
+ServerName statements.mdwestserve.com
+ServerName www.marylandforeclosuregroup.com
+ServerName marylandforeclosuregroup.com
+ServerName www.investor-insight.com
+ServerName investor-insight.com
+ServerName sysop.mdwestserve.com
+ServerName sysop1.mdwestserve.com
+ServerName sysop2.mdwestserve.com
+ServerName service.mdwestserve.com
+ServerName portal.mdwestserve.com
+ServerName pkwedding.info
+ServerName www.pkwedding.info
+ServerName help.mdwestserve.com
+ServerName data.mdwestserve.com
+[root@mdws1 conf]#
+</pre></td><td><pre>
+[root@mdws2 ~]# grep ServerName /etc/httpd/conf/httpd.conf
+# ServerName gives the name and port that the server uses to identify itself.
+ServerName mdws2.mdwestserve.com:80
+# ServerName directive.
+#    ServerName dummy-host.example.com
+ServerName staff2.mdwestserve.com
+ServerName sysop2.mdwestserve.com
+[root@mdws2 ~]#
+</pre></td><td><pre>
+[root@lb ~]# grep ServerName /etc/httpd/conf/httpd.conf
+# ServerName gives the name and port that the server uses to identify itself.
+#ServerName www.example.com:80
+# ServerName directive.
+#    ServerName dummy-host.example.com
+        ServerName sysop.mdwestserve.com
+        ServerName staff.mdwestserve.com
+[root@lb ~]#
+</pre></td></tr></table>
+
+
 <?
 }else{
 header('Location: http://mdwestserve.com');
