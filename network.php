@@ -38,17 +38,18 @@ $host4 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.2 hostname');
 $host5 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.3 hostname');
 $host6 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.4 hostname');
 $host7 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.6 hostname');
-$results1 = my_ssh('mdws1.mdwestserve.com','ps');
-$results3 = my_ssh('ww2.mdwestserve.com','ps');
-$results4 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.2 ps');
-$results5 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.3 ps');
-$results6 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.4 ps');
-$results7 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.6 ps');
+// test for httpd
+$results1 = my_ssh('mdws1.mdwestserve.com',' service httpd status');
+$results3 = my_ssh('ww2.mdwestserve.com','service httpd status');
+$results4 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.2 service httpd status');
+$results5 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.3 service httpd status');
+$results6 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.4 service httpd status');
+$results7 = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.6 service httpd status');
 ?>
 <table>
 <tr>
 <td>Host</td>
-<td>ps</td>
+<td>httpd</td>
 
 <tr>
 <td><font size="+2"><?=$host1;?></font></td>
