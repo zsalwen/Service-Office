@@ -53,10 +53,10 @@ $results5a = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.3 service mysqld status');
 $results6a = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.4 service mysqld status');
 $results7a = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.6 service mysqld status');
 
-// get server names running on our web servers grep ServerName /etc/httpd/conf/httpd.conf
-$results1b = my_ssh('mdws1.mdwestserve.com',' service mysqld status');
-$results3b = my_ssh('ww2.mdwestserve.com','service mysqld status');
-$results5b = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.3 service mysqld status');
+// get server names running on our web servers 
+$results1b = my_ssh('mdws1.mdwestserve.com','grep ServerName /etc/httpd/conf/httpd.conf');
+$results3b = my_ssh('ww2.mdwestserve.com','grep ServerName /etc/httpd/conf/httpd.conf');
+$results5b = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.3 grep ServerName /etc/httpd/conf/httpd.conf');
 ?>
 <table border="1">
 <tr>
