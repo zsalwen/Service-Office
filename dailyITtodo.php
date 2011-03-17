@@ -2,7 +2,7 @@
 include 'lock.php';
 mysql_connect();
 mysql_select_db('apache');
-if($_GET[done]){ @mysql_query("delete from apacheErrors where id = '$_GET[done]' "); |
+if($_GET[done]){ @mysql_query("delete from apacheErrors where id = '$_GET[done]' "); 
 $r=@mysql_query("select id, counter, lastTime, message from apacheErrors order by counter DESC, lastTime DESC");
 ?>
 <table>
