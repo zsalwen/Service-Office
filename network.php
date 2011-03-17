@@ -1,6 +1,14 @@
 <?
 if ($_COOKIE[psdata][level] == 'Operations'){
+if($_SERVER["SERVER_NAME"] == "staff2.mdwestserve.com"){
+ini_set('mysql.default_host', '10.0.0.4');
+$thisDB = '10.0.0.4';
+}elseif($_SERVER["SERVER_NAME"] == "staff1.mdwestserve.com"){
 ini_set('mysql.default_host', 'mdws2.mdwestserve.com');
+$thisDB = 'mdws2.mdwestserve.com';
+}else{
+$thisDB = 'mdws1.mdwestserve.com';
+}
 mysql_connect();
 mysql_select_db('core');
 function valueData($key){
