@@ -85,7 +85,14 @@ function getCounty($zip){
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
 	return strtoupper($d[county]);
 }
-
+function checkPay($packet,$product){
+	$q="SELECT * from ps_pay WHERE packetID='$packet' AND product='$product' LIMIT 0,1";
+	$r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
+	$d=mysql_fetch_array($r, MYSQL_ASSOC);
+	if (!$d[payID]){
+		@mysql_query("INSERT INTO ps_pay (packetID,product) VALUES ('$packet','$product')");
+	}
+}
 if ($_COOKIE[psdata][level] != "Operations"){
 			$event = 'packages.php';
 			$email = $_COOKIE[psdata][email];
@@ -97,14 +104,14 @@ if ($_COOKIE[psdata][level] != "Operations"){
 if ($_POST[submit]){
 	if (!$_POST[package][contractor] || !$_POST[server_id]){
 		echo '<script>alert("Please make sure that you have entered a contractor rate and selected a server.")</script>';
-	}elseif(!$_POST[estFileDate]){
+	}elseif($_POST[estFileDate] == '' || $_POST[estFileDate] == '0000-00-00'){
 		echo '<script>alert("Please enter an Estimated Close Date.")</script>';
 	}else{
 
 function dispatchTimeline($pkg){
 	$r=@mysql_query("select packet_id from ps_packets where package_id = '$pkg'");
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-		timeline($d[packet_id],$_COOKIE[psdata][name]." Dispatched Order");
+		timeline($d[packet_id],$_COOKIE[psdata][name]." Dispatched Order, Deadline: $_SESSION[estFileDate]");
 	}
 }
 function packageFile($package_id, $file_id, $contractor_rate, $contractor_ratea, $contractor_rateb, $contractor_ratec, $contractor_rated, $contractor_ratee){
@@ -131,6 +138,7 @@ function makePackage($array1,$array2,$array3,$array4,$array5,$array6,$array7,$pa
 //	echo "Contractor Rate :: $array3[0]<br>";
 //	echo "for file id's (the foreach loop went here) :: ";
 	foreach ($array1 as $id) {
+		checkPay($id,'EV');
 		packageFile($package_id,$id,$array2[0],$array3[0],$array4[0],$array5[0],$array6[0],$array7[0]);
 		//echo "$id ";
 	}
@@ -198,7 +206,7 @@ function makePackage($array1,$array2,$array3,$array4,$array5,$array6,$array7,$pa
 		$q3 = "UPDATE ps_packages SET name='$packageName', description='Est. Close $_SESSION[estFileDate]' where id = '$packageID'";
 		@mysql_query($q3) or die ("Query: $q3<br>".mysql_error());
 		hardLog('Dispatched file '.$value,'user');
-		timeline($value,$_COOKIE[psdata][name]." Dispatched Order");
+		timeline($value,$_COOKIE[psdata][name]." Dispatched Order, Deadline: $_SESSION[estFileDate]");
 	}
 	}
 }

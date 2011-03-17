@@ -133,9 +133,15 @@ function attemptExplode($packet,$defendant,$address,$type){
 	return $return;*/
 }
 function serviceSheet($packet){
-	$q="SELECT * from standard_packets, ps_pay WHERE standard_packets.packet_id='$packet' AND standard_packets.packet_id=ps_pay.packetID AND ps_pay.product='S'";
+	$q="SELECT * from standard_packets, ps_pay WHERE standard_packets.packet_id='$packet' AND standard_packets.packet_id=ps_pay.packetID AND ps_pay.product='S' LIMIT 0,1";
 	$r=@mysql_query($q) or die(mysql_error());
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
+	if (!$d[payID]){
+		@mysql_query("INSERT INTO ps_pay (packetID,product) VALUES ('$packet','S')");
+		$q="SELECT * from standard_packets, ps_pay WHERE standard_packets.packet_id='$packet' AND standard_packets.packet_id=ps_pay.packetID AND ps_pay.product='S' LIMIT 0,1";
+		$r=@mysql_query($q) or die(mysql_error());
+		$d=mysql_fetch_array($r, MYSQL_ASSOC);
+	}
 	$date=date("m/d/Y h:i:s A");
 	if ($d[attorneys_id]== 70 || $d[attorneys_id]== 80){
 		$sum=$d[bill410]+$d[bill420]+$d[bill440]+$d[bill460];
