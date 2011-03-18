@@ -13,7 +13,7 @@ $r=@mysql_query("select id, counter, lastTime, message,server,status from apache
 <h3><?=date('r');?></h3>
 <table border="1">
 <? while($d=mysql_fetch_array($r,MYSQL_ASSOC)){ ?>
-<tr>
+<? if(!$d[status]){ ?> <tr bgcolor="#FF0000"> <? }else{ ?> <tr>  <? }?>
 <td><?=$d[counter];?></td>
 <td><?=$d[server]?></td>
 <td><?=$d[status]?></td>
