@@ -24,13 +24,14 @@ $r=@mysql_query("select * from packet where client_file like '%$search%' order b
 <td>Case</td>
 </tr>
 <?
-while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-?>
-<tr>
-<td><a href="http://staff.mdwestserve.com/details.php?packet=<?=$d[id];?>"><?=$d[id];?></a></td>
-<td><?=$d[case_no];?></td>
-</tr>
-<? } ?>
+if ($r){
+	while($d=mysql_fetch_array($r,MYSQL_ASSOC)){ ?>
+	<tr>
+	<td><a href="http://staff.mdwestserve.com/details.php?packet=<?=$d[id];?>"><?=$d[id];?></a></td>
+	<td><?=$d[case_no];?></td>
+	</tr>
+	<? }
+} ?>
 </table>
 
 
