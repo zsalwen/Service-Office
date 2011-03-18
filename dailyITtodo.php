@@ -13,12 +13,12 @@ $r=@mysql_query("select id, counter, lastTime, message,server,status from apache
 <h3><?=date('r');?></h3>
 <table border="1">
 <? while($d=mysql_fetch_array($r,MYSQL_ASSOC)){ ?>
-<? if(!$d[status]){ ?> <tr bgcolor="#FF0000"> <? }else{ ?> <tr>  <? }?>
+<? if(!$d[status]){ ?> <tr bgcolor="#FF6666"> <? }else{ ?> <tr>  <? }?>
 <td><?=$d[counter];?></td>
 <td><?=$d[server]?></td>
 <td><?=$d[status]?></td>
 <td><?=$d[lastTime]?></td>
-<td><?=$d[message]?>, <a href="?done=<?=$d[id]?>">clear</a>, <a href="?zach=<?=$d[id]?>">Zach</a>, <a href="?runner=<?=$d[id]?>">Runner</a>, <a href="?patrick=<?=$d[id]?>">Patrick</a> </td>
+<td><?=$d[message]?>, <a href="?done=<?=$d[id]?>">Remove</a>, <a href="?zach=<?=$d[id]?>">Zach</a>, <a href="?runner=<?=$d[id]?>">Runner</a>, <a href="?patrick=<?=$d[id]?>">Patrick</a> </td>
 </tr>
 <? } ?>
 </table>
