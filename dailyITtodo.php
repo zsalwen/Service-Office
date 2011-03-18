@@ -15,6 +15,7 @@ $r=@mysql_query("select id, counter, lastTime, message from apacheErrors order b
 <? while($d=mysql_fetch_array($r,MYSQL_ASSOC)){ ?>
 <tr>
 <td><?=$d[counter];?></td>
+<td><?=$d[server]?></td>
 <td><?=$d[lastTime]?></td>
 <td><?=$d[message]?>, <a href="?done=<?=$d[id]?>">clear</a></td>
 </tr>
