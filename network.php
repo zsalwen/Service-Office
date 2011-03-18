@@ -67,7 +67,6 @@ $results1b = my_ssh('mdws1.mdwestserve.com','grep ServerName /etc/httpd/conf/htt
 $results3b = my_ssh('ww2.mdwestserve.com','grep ServerName /etc/httpd/conf/httpd.conf');
 $results5b = my_ssh('ww2.mdwestserve.com','ssh 10.0.0.3 grep ServerName /etc/httpd/conf/httpd.conf');
 ?>
-<meta http-equiv="refresh" content="300" />
 <div style="font-size:25px;"><?=date('r');?></div>
 <table border="1">
 <tr>
