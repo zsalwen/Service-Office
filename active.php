@@ -54,6 +54,12 @@ function id2attorney($id){
 return $d[display_name];
 }
 
+function id2server($id){
+	$q=@mysql_query("SELECT name from ps_users where id='$id'") or die(mysql_error());
+	$d=mysql_fetch_array($q, MYSQL_ASSOC);
+	return initals($d[name]);
+}
+
 function stripHours($date){
 	$hours = explode(':',$date);
 	return $hours[0];
