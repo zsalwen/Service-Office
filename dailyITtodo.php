@@ -3,6 +3,7 @@ include 'lock.php';
 mysql_connect();
 mysql_select_db('apache');
 if($_GET[done]){ @mysql_query("delete from apacheErrors where id = '$_GET[done]' "); }
+if($_GET[clear]){ @mysql_query("delete from apacheErrors where counter = '1' "); }
 if($_GET[zach]){ @mysql_query("update apacheErrors set status = 'Assigned to Zach'  where id = '$_GET[zach]' "); }
 if($_GET[runner]){ @mysql_query("update apacheErrors set status = 'Assigned to Runner'  where id = '$_GET[runner]' "); }
 if($_GET[patrick]){ @mysql_query("update apacheErrors set status = 'Assigned to Patrick'  where id = '$_GET[patrick]' "); }
@@ -26,7 +27,7 @@ while($d=mysql_fetch_array($r,MYSQL_ASSOC)){ ?>
 </tr>
 <? } ?>
 </table>
-<div>Most Occurring Errors (Limited by Search)</div>
+<div>Most Occurring Errors (Limited by Search) <a href="?clear=1">Clear All 1 Count Errors</div>
 <table border="1">
 <form>
 <tr>
