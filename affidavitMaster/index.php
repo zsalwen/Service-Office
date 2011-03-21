@@ -65,7 +65,10 @@ fwrite($fh, $la);
 fclose($fh);
 $command = 'python DocumentConverter.py /gitbox/Service-Office/affidavitMaster/'.$id.'.html /gitbox/Service-Office/affidavitMaster/'.$id.'.pdf';
 $error=my_exec($command);
-$error = system($command,$result);
+//$error = system($command,$result);
+if (trim($error) == '1'){
+	@mysql_query("INSERT INTO attachment (path,status) values ('/gitbox/Service-Office/affidavitMaster/".$id.".pdf','PDF Error - ".$_SERVER['HTTP_HOST']."')");
+}
 echo "<div>".$command."</div>";
 echo "<div>".$error."</div>";
 echo "<div>".$result."</div>";
