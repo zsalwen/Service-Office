@@ -58,7 +58,7 @@ while($d=mysql_fetch_array($r,MYSQL_ASSOC)){ ?>
 <td><?=$d[server]?></td>
 <td><?=$d[status]?></td>
 <td><?=$d[lastTime]?></td>
-<td><?=$d[message]?>, <a href="?done=<?=$d[id]?>">Remove</a>, <a href="?zach=<?=$d[id]?>">Zach</a>, <a href="?runner=<?=$d[id]?>">Runner</a>, <a href="?patrick=<?=$d[id]?>">Patrick</a> </td>
+<td><?=$d[message]?>, <a href="?done=<?=$d[id]?>&server=<?=$_GET[server];?>&message=<?=$_GET[message];?>">Remove</a>, <a href="?zach=<?=$d[id]?>&server=<?=$_GET[server];?>&message=<?=$_GET[message];?>">Zach</a>, <a href="?runner=<?=$d[id]?>&server=<?=$_GET[server];?>&message=<?=$_GET[message];?>">Runner</a>, <a href="?patrick=<?=$d[id]?>&server=<?=$_GET[server];?>&message=<?=$_GET[message];?>">Patrick</a> </td>
 </tr>
 <? } ?>
 </table>
