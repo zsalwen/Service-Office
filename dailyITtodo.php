@@ -27,7 +27,7 @@ while($d=mysql_fetch_array($r,MYSQL_ASSOC)){ ?>
 </tr>
 <? } ?>
 </table>
-<div>Most Occurring Errors (Limited by Search) <a href="?clear=1">Clear All 1 Count Errors</div>
+<div>Most Occurring Errors (Limited by Search) <a href="?clear=1">Clear All 1 Count Errors</a></div>
 <table border="1">
 <form>
 <tr>
