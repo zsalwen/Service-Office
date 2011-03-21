@@ -31,32 +31,44 @@ if ($_POST[courier]){
 	if ($_POST[newEst] > 0){
 	//use prompter
 	$list='';
-	foreach( $_POST[otd] as $key => $value){
-		$list .= "$key|";
+	if ($_POST[otd]){
+		foreach( $_POST[otd] as $key => $value){
+			$list .= "$key|";
+		}
+		$list=substr($list,0,-1);
 	}
-	$list=substr($list,0,-1);
 	$list2='';
-	foreach( $_POST[ev] as $key => $value){
-		$list2 .= "$key|";
+	if ($_POST[ev]){
+		foreach( $_POST[ev] as $key => $value){
+			$list2 .= "$key|";
+		}
+		$list2=substr($list2,0,-1);
 	}
-	$list2=substr($list2,0,-1);
 	$list3='';
-	foreach( $_POST[s] as $key => $value){
-		$list3 .= "$key|";
+	if ($_POST[s]){
+		foreach( $_POST[s] as $key => $value){
+			$list3 .= "$key|";
+		}
+		$list3=substr($list3,0,-1);
 	}
-	$list3=substr($list3,0,-1);
 	//echo "<script>alert('OTD: $_POST[otd], EV: $_POST[ev], newEst: $_POST[newEst]');</script>";
 	echo "<script>prompter('$list','$list2','$list3','$_POST[newEst]','$_POST[courier]');</script>";
 	}else{
 		echo "<div style='background-color:#00FF00;'>Courier Set<br />";
-		foreach( $_POST[ev] as $key => $value){
-			@mysql_query("update evictionPackets set courierID = '$_POST[courier]' where eviction_id = '$key'");
+		if ($_POST[ev]){
+			foreach( $_POST[ev] as $key => $value){
+				@mysql_query("update evictionPackets set courierID = '$_POST[courier]' where eviction_id = '$key'");
+			}
 		}
-		foreach( $_POST[otd] as $key => $value){
-			@mysql_query("update ps_packets set courierID = '$_POST[courier]' where packet_id = '$key'");
+		if ($_POST[otd]){
+			foreach( $_POST[otd] as $key => $value){
+				@mysql_query("update ps_packets set courierID = '$_POST[courier]' where packet_id = '$key'");
+			}
 		}
-		foreach( $_POST[s] as $key => $value){
-			@mysql_query("update standard_packets set courierID = '$_POST[courier]' where packet_id = '$key'");
+		if ($_POST[s]){
+			foreach( $_POST[s] as $key => $value){
+				@mysql_query("update standard_packets set courierID = '$_POST[courier]' where packet_id = '$key'");
+			}
 		}
 		echo "</div>";
 	}
