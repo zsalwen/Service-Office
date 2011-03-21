@@ -65,11 +65,12 @@ fwrite($fh, $la);
 fclose($fh);
 $command = 'python DocumentConverter.py /gitbox/Service-Office/affidavitMaster/'.$id.'.html /gitbox/Service-Office/affidavitMaster/'.$id.'.pdf';
 $error=my_exec($command);
-//$error = system($command,$result);
-//echo "<div>".$command."</div>";
-//echo "<div>".$error."</div>";
-//echo "<div>".$result."</div>";
-header('Location: '.$id.'.pdf');
+$error = system($command,$result);
+echo "<div>".$command."</div>";
+echo "<div>".$error."</div>";
+echo "<div>".$result."</div>";
+//header('Location: '.$id.'.pdf');
+echo "<script>window.open('$id.pdf','test')</script>";
 }
 
 /*
