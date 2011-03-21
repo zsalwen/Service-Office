@@ -26,29 +26,29 @@ while($d=mysql_fetch_array($r,MYSQL_ASSOC)){ ?>
 </tr>
 <? } ?>
 </table>
-<form>
-<div>Search</div>
+<div>Most Occurring Errors (Limited by Search)</div>
 <table border="1">
+<form>
 <tr>
-<td>Server</td>
-<td>Message</td>
 <td></td>
+<td>Server</td>
+<td></td>
+<td>Message</td>
 </tr>
 <tr>
+<td></td>
 <td><select name="server">
-<option value=''>All Servers</option>
-<option value='lb'>MDWS Load Balancer</option>
+<option value=''>ALL</option>
+<option value='lb'>MDWS-LB</option>
 <option value='mdws1'>MDWS-1</option>
 <option value='mdws2'>MDWS-2</option>
 <option value='hwa1'>HWA-1</option>
 </select></td>
-<td><input type='submit' value='Set Search'></td>
 <td></td>
+<td><input name="message"> <input type='submit' value='Set Filter'></td>
 </tr>
 </form>
-</table>
-<div>Most Occurring Errors (Limited by Search)</div>
-<table border="1">
+
 <? 
 $r=@mysql_query("select id, counter, lastTime, message,server,status from apacheErrors where server LIKE '%$_GET[server]%' and message LIKE '%$_GET[message]%' order by counter DESC, lastTime DESC");
 while($d=mysql_fetch_array($r,MYSQL_ASSOC)){ ?>
