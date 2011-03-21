@@ -30,7 +30,7 @@ function hardLog($str,$type){
 
 hardLog('Active Service Report','user');
 session_start();
-opLog($_COOKIE[psdata][name]." Loaded Assigned Cases");
+//opLog($_COOKIE[psdata][name]." Loaded Assigned Cases");
 $_SESSION[active]='';
 $_SESSION[active2]='';
 $_SESSION[active3]='';
