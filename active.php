@@ -53,7 +53,10 @@ function id2attorney($id){
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 return $d[display_name];
 }
-
+function initals($str){
+	$str = explode(' ',$str);
+	return strtoupper(substr($str[0],0,1).substr($str[1],0,1).substr($str[2],0,1).substr($str[3],0,1));
+}
 function id2server($id){
 	$q=@mysql_query("SELECT name from ps_users where id='$id'") or die(mysql_error());
 	$d=mysql_fetch_array($q, MYSQL_ASSOC);
