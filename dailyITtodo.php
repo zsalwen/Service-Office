@@ -7,6 +7,9 @@ if($_GET[zach]){ @mysql_query("update apacheErrors set status = 'Assigned to Zac
 if($_GET[runner]){ @mysql_query("update apacheErrors set status = 'Assigned to Runner'  where id = '$_GET[runner]' "); }
 if($_GET[patrick]){ @mysql_query("update apacheErrors set status = 'Assigned to Patrick'  where id = '$_GET[patrick]' "); }
 ?>
+<style>
+td{font-size:11px;}
+</style>
 <meta http-equiv="refresh" content="60;url=http://staff.mdwestserve.com/dailyITtodo.php?server=<?=$_GET[server]?>&message=<?=$_GET[message]?>"> 
 <div>The apache error log is managed by Runner, runner@hwestauctions.com</div>
 <div><b>Last 10 Errors</b></div>
@@ -33,12 +36,13 @@ while($d=mysql_fetch_array($r,MYSQL_ASSOC)){ ?>
 </tr>
 <tr>
 <td><select name="server">
+<option value=''>All Servers</option>
 <option value='lb'>MDWS Load Balancer</option>
 <option value='mdws1'>MDWS-1</option>
 <option value='mdws2'>MDWS-2</option>
 <option value='hwa1'>HWA-1</option>
 </select></td>
-<td><input></td>
+<td><input type='submit' value='Set Search'></td>
 <td></td>
 </tr>
 </form>
