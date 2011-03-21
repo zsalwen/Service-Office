@@ -1,5 +1,33 @@
 <?
-include 'common.php';
+if($_SERVER["SERVER_NAME"] == "staff2.mdwestserve.com"){
+ini_set('mysql.default_host', '10.0.0.4');
+$thisDB = '10.0.0.4';
+}elseif($_SERVER["SERVER_NAME"] == "staff1.mdwestserve.com"){
+ini_set('mysql.default_host', 'mdws2.mdwestserve.com');
+$thisDB = 'mdws2.mdwestserve.com';
+}else{
+$thisDB = 'mdws1.mdwestserve.com';
+}
+
+mysql_connect();
+mysql_select_db('core');
+include '/gitbox/Service-Office/lock.php'; 
+
+function hardLog($str,$type){
+	if ($type == "user"){
+		$log = "/logs/user.log";
+	}
+	if ($type == "contractor"){
+		$log = "/logs/contractor.log";
+	}
+	if ($type == "debug"){
+		$log = "/logs/debug.log";
+	}
+	if ($log){
+		error_log(date('h:iA n/j/y')." ".$_COOKIE[psdata][name]." ".$_SERVER["REMOTE_ADDR"]." ".trim($str)."\n", 3, $log);
+	}
+}
+
 hardLog('Active Service Report','user');
 session_start();
 opLog($_COOKIE[psdata][name]." Loaded Assigned Cases");
@@ -10,6 +38,20 @@ $_SESSION[active3]='';
 $_SESSION[cap] = -1;
 if ($_GET[cap]){
 	$_SESSION[cap] = $_GET[cap];
+}
+
+function id2name($id){
+	$q="SELECT name FROM ps_users WHERE id = '$id'";
+	$r=@mysql_query($q);
+	$d=mysql_fetch_array($r, MYSQL_ASSOC);
+return $d[name];
+}
+
+function id2attorney($id){
+	$q="SELECT display_name FROM attorneys WHERE attorneys_id = '$id'";
+	$r=@mysql_query($q);
+	$d=mysql_fetch_array($r, MYSQL_ASSOC);
+return $d[display_name];
 }
 
 function stripHours($date){
@@ -104,9 +146,9 @@ function justDate2($dt){
 		return $date2[1]."-".$date2[2];
 	}
 }
-function serverActiveList($id){ $_SESSION[active]++;
+function serverActiveList($id,$letter){ $_SESSION[active]++;
 	$data='<ol>';
-	$r=@mysql_query("select packet_id, avoidDOT, reopenDate, date_received, filing_status, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, dispatchDate, attorneys_id, estFileDate, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where server_id='$id' and (process_status = 'Assigned' OR process_status = 'ASSIGNED') order by  packet_id");
+	$r=@mysql_query("select packet_id, avoidDOT, reopenDate, date_received, filing_status, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, dispatchDate, attorneys_id, estFileDate, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where server_id$letter='$id' and (process_status = 'Assigned' OR process_status = 'ASSIGNED') order by  packet_id");
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
 		$_SESSION[active3]++;
 		$estHours=($d[estHours]*24)-date('G');
@@ -132,181 +174,6 @@ function serverActiveList($id){ $_SESSION[active]++;
 		}
 		if ($hours > $_SESSION[cap]){
 			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],'').";'>";
-			if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
-				$data .= "<a href='http://service.mdwestserve.com/wizard.php?jump=".$d[packet_id]."-1' target='_blank' style='background-color:#00FFFF;'><b>QC</b></a> ";
-			}
-			$data .= "<a href='http://staff.mdwestserve.com/otd/order.php?packet=$d[packet_id]' target='_Blank'>$d[packet_id]</a>: <strong>".$hours."</strong> ".abbrCounty(strtoupper($d[circuit_court]))." <em> <small>[".id2attorney($d[attorneys_id])."]</small></em>".$reopen."</li>";
-		}
-	}
-	$data.='</ol>';
-	return $data;
-}
-function serverActiveLista($id){ $_SESSION[active]++;
-	$data='<ol>';
-	$r=@mysql_query("select packet_id, avoidDOT, reopenDate, date_received, filing_status, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, dispatchDate, attorneys_id, estFileDate, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where server_ida='$id' and process_status = 'Assigned' order by  packet_id");
-	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
-		$estHours=($d[estHours]*24)-date('G');
-		if ($d[filing_status] == 'REOPENED'){
-			$hours=$d[reopenHours]*24;
-			$reopenDate=explode('-',$d[reopenDate]);
-			$reopenDate=$reopenDate[1].'-'.$reopenDate[2];
-			$reopen = "-<span style='background-color:#FFFFFF; color:000000 !important;'><small>ReO: $reopenDate</small></span>";
-		}else{
-			$hours=stripHours($d[hours]);
-			$reopen='';
-		}
-		$reopen .= "-<span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate2($d[dispatchDate])."</span>";
-		if ($d[avoidDOT] != ''){
-			$reopen .= "-<span style='background-color:#000000; color:FF0000; border: 3px solid red; font-weight:bold;'>AvoidDOT</span>";
-		}
-		$estFileDate=explode('-',$d[estFileDate]);
-		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-		$reopen .= "&nbsp;<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span>";
-		if ($d[rush] != ''){
-			$reopen .= "-<span style='background-color:#000000; color:FF00FF; border: 3px solid black; font-weight:bold;'>RUSH</span>";
-		}
-		if ($hours > $_SESSION[cap]){
-			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],'a').";'>";
-			if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
-				$data .= "<a href='http://service.mdwestserve.com/wizard.php?jump=".$d[packet_id]."-1' target='_blank' style='background-color:#00FFFF;'><b>QC</b></a> ";
-			}
-			$data .= "<a href='http://staff.mdwestserve.com/otd/order.php?packet=$d[packet_id]' target='_Blank'>$d[packet_id]</a>: <strong>".$hours."</strong> ".abbrCounty(strtoupper($d[circuit_court]))." <em> <small>[".id2attorney($d[attorneys_id])."]</small></em>".$reopen."</li>";
-		}
-	}
-	$data.='</ol>';
-	return $data;
-}
-function serverActiveListb($id){ $_SESSION[active]++;
-	$data='<ol>';
-	$r=@mysql_query("select packet_id, avoidDOT, reopenDate, date_received, filing_status, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, dispatchDate, attorneys_id, estFileDate, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where server_idb='$id' and process_status = 'Assigned' order by  packet_id");
-	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
-		$estHours=($d[estHours]*24)-date('G');
-		if ($d[filing_status] == 'REOPENED'){
-			$hours=$d[reopenHours]*24;
-			$reopenDate=explode('-',$d[reopenDate]);
-			$reopenDate=$reopenDate[1].'-'.$reopenDate[2];
-			$reopen = "-<span style='background-color:#FFFFFF; color:000000 !important;'><small>ReO: $reopenDate</small></span>";
-		}else{
-			$hours=stripHours($d[hours]);
-			$reopen='';
-		}
-		$reopen .= "-<span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate2($d[dispatchDate])."</span>";
-		if ($d[avoidDOT] != ''){
-			$reopen .= "-<span style='background-color:#000000; color:FF0000; border: 3px solid red; font-weight:bold;'>AvoidDOT</span>";
-		}
-		$estFileDate=explode('-',$d[estFileDate]);
-		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-		$reopen .= "&nbsp;<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span>";
-		if ($d[rush] != ''){
-			$reopen .= "-<span style='background-color:#000000; color:FF00FF; border: 3px solid black; font-weight:bold;'>RUSH</span>";
-		}
-		if ($hours > $_SESSION[cap]){
-			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],'b').";'>";
-			if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
-				$data .= "<a href='http://service.mdwestserve.com/wizard.php?jump=".$d[packet_id]."-1' target='_blank' style='background-color:#00FFFF;'><b>QC</b></a> ";
-			}
-			$data .= "<a href='http://staff.mdwestserve.com/otd/order.php?packet=$d[packet_id]' target='_Blank'>$d[packet_id]</a>: <strong>".$hours."</strong> ".abbrCounty(strtoupper($d[circuit_court]))." <em> <small>[".id2attorney($d[attorneys_id])."]</small></em>".$reopen."</li>";
-		}
-	}
-	$data.='</ol>';
-	return $data;
-}
-function serverActiveListc($id){ $_SESSION[active]++;
-	$data='<ol>';
-	$r=@mysql_query("select packet_id, avoidDOT, reopenDate, date_received, filing_status, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, dispatchDate, attorneys_id, estFileDate, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where server_idc='$id' and process_status = 'Assigned' order by  packet_id");
-	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
-		$estHours=($d[estHours]*24)-date('G');
-		if ($d[filing_status] == 'REOPENED'){
-			$hours=$d[reopenHours]*24;
-			$reopenDate=explode('-',$d[reopenDate]);
-			$reopenDate=$reopenDate[1].'-'.$reopenDate[2];
-			$reopen = "-<span style='background-color:#FFFFFF; color:000000 !important;'><small>ReO: $reopenDate</small></span>";
-		}else{
-			$hours=stripHours($d[hours]);
-			$reopen='';
-		}
-		$reopen .= "-<span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate2($d[dispatchDate])."</span>";
-		if ($d[avoidDOT] != ''){
-			$reopen .= "-<span style='background-color:#000000; color:FF0000; border: 3px solid red; font-weight:bold;'>AvoidDOT</span>";
-		}
-		$estFileDate=explode('-',$d[estFileDate]);
-		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-		$reopen .= "&nbsp;<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span>";
-		if ($d[rush] != ''){
-			$reopen .= "-<span style='background-color:#000000; color:FF00FF; border: 3px solid black; font-weight:bold;'>RUSH</span>";
-		}
-		if ($hours > $_SESSION[cap]){
-			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],'c').";'>";
-			if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
-				$data .= "<a href='http://service.mdwestserve.com/wizard.php?jump=".$d[packet_id]."-1' target='_blank' style='background-color:#00FFFF;'><b>QC</b></a> ";
-			}
-			$data .= "<a href='http://staff.mdwestserve.com/otd/order.php?packet=$d[packet_id]' target='_Blank'>$d[packet_id]</a>: <strong>".$hours."</strong> ".abbrCounty(strtoupper($d[circuit_court]))." <em> <small>[".id2attorney($d[attorneys_id])."]</small></em>".$reopen."</li>";
-		}
-	}
-	$data.='</ol>';
-	return $data;
-}
-function serverActiveListd($id){ $_SESSION[active]++;
-	$data='<ol>';
-	$r=@mysql_query("select packet_id, avoidDOT, reopenDate, date_received, filing_status, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, dispatchDate, attorneys_id, estFileDate, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where server_idd='$id' and process_status = 'Assigned' order by  packet_id");
-	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
-		$estHours=($d[estHours]*24)-date('G');
-		if ($d[filing_status] == 'REOPENED'){
-			$hours=$d[reopenHours]*24;
-			$reopenDate=explode('-',$d[reopenDate]);
-			$reopenDate=$reopenDate[1].'-'.$reopenDate[2];
-			$reopen = "-<span style='background-color:#FFFFFF; color:000000 !important;'><small>ReO: $reopenDate</small></span>";
-		}else{
-			$hours=stripHours($d[hours]);
-			$reopen='';
-		}
-		$reopen .= "-<span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate2($d[dispatchDate])."</span>";
-		if ($d[avoidDOT] != ''){
-			$reopen .= "-<span style='background-color:#000000; color:FF0000; border: 3px solid red; font-weight:bold;'>AvoidDOT</span>";
-		}
-		$estFileDate=explode('-',$d[estFileDate]);
-		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-		$reopen .= "&nbsp;<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span>";
-		if ($d[rush] != ''){
-			$reopen .= "-<span style='background-color:#000000; color:FF00FF; border: 3px solid black; font-weight:bold;'>RUSH</span>";
-		}
-		if ($hours > $_SESSION[cap]){
-			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],'d').";'>";
-			if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
-				$data .= "<a href='http://service.mdwestserve.com/wizard.php?jump=".$d[packet_id]."-1' target='_blank' style='background-color:#00FFFF;'><b>QC</b></a> ";
-			}
-			$data .= "<a href='http://staff.mdwestserve.com/otd/order.php?packet=$d[packet_id]' target='_Blank'>$d[packet_id]</a>: <strong>".$hours."</strong> ".abbrCounty(strtoupper($d[circuit_court]))." <em> <small>[".id2attorney($d[attorneys_id])."]</small></em>".$reopen."</li>";
-		}
-	}
-	$data.='</ol>';
-	return $data;
-}
-function serverActiveListe($id){ $_SESSION[active]++;
-	$data='<ol>';
-	$r=@mysql_query("select packet_id, avoidDOT, reopenDate, date_received, filing_status, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, dispatchDate, attorneys_id, estFileDate, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where server_ide='$id' and process_status = 'Assigned' order by  packet_id");
-	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
-		$estHours=($d[estHours]*24)-date('G');
-		if ($d[filing_status] == 'REOPENED'){
-			$hours=$d[reopenHours]*24;
-			$reopenDate=explode('-',$d[reopenDate]);
-			$reopenDate=$reopenDate[1].'-'.$reopenDate[2];
-			$reopen = "-<span style='background-color:#FFFFFF; color:000000 !important;'><small>ReO: $reopenDate</small></span>";
-		}else{
-			$hours=stripHours($d[hours]);
-			$reopen='';
-		}
-		$reopen .= "-<span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate2($d[dispatchDate])."</span>";
-		if ($d[avoidDOT] != ''){
-			$reopen .= "-<span style='background-color:#000000; color:FF0000; border: 3px solid red; font-weight:bold;'>AvoidDOT</span>";
-		}
-		$estFileDate=explode('-',$d[estFileDate]);
-		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-		$reopen .= "&nbsp;<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span>";
-		if ($d[rush] != ''){
-			$reopen .= "-<span style='background-color:#000000; color:FF00FF; border: 3px solid black; font-weight:bold;'>RUSH</span>";
-		}
-		if ($hours > $_SESSION[cap]){
-			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],'e').";'>";
 			if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
 				$data .= "<a href='http://service.mdwestserve.com/wizard.php?jump=".$d[packet_id]."-1' target='_blank' style='background-color:#00FFFF;'><b>QC</b></a> ";
 			}
@@ -349,37 +216,37 @@ return $data;
 $q="SELECT DISTINCT server_id from ps_packets WHERE process_status = 'ASSIGNED'";
 $r=@mysql_query($q);
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-echo "<fieldset><legend>Slot 1: ".id2name($d[server_id])." #$d[server_id]</legend>".serverActiveList($d[server_id])."</fieldset>";
+echo "<fieldset><legend>Slot 1: ".id2name($d[server_id])." #$d[server_id]</legend>".serverActiveList($d[server_id],'')."</fieldset>";
 }
 ?></td><td valign='top'><?
 $q="SELECT DISTINCT server_ida from ps_packets where process_status = 'ASSIGNED' and server_ida <> ''";
 $r=@mysql_query($q);
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-echo "<fieldset><legend>Slot 2: ".id2name($d[server_ida])." #$d[server_ida]</legend>".serverActiveLista($d[server_ida])."</fieldset>";
+echo "<fieldset><legend>Slot 2: ".id2name($d[server_ida])." #$d[server_ida]</legend>".serverActiveList($d[server_ida],'a')."</fieldset>";
 }
 ?></td><td valign='top'><?
 $q="SELECT DISTINCT server_idb from ps_packets where process_status = 'ASSIGNED' and server_idb <> ''";
 $r=@mysql_query($q);
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-echo "<fieldset><legend>Slot 3: ".id2name($d[server_idb])." #$d[server_idb]</legend>".serverActiveListb($d[server_idb])."</fieldset>";
+echo "<fieldset><legend>Slot 3: ".id2name($d[server_idb])." #$d[server_idb]</legend>".serverActiveList($d[server_idb],'b')."</fieldset>";
 }
 ?></td><td valign='top'><?
 $q="SELECT DISTINCT server_idc from ps_packets where process_status = 'ASSIGNED' and server_idc <> ''";
 $r=@mysql_query($q);
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-echo "<fieldset><legend>Slot 4: ".id2name($d[server_idc])." #$d[server_idc]</legend>".serverActiveListc($d[server_idc])."</fieldset>";
+echo "<fieldset><legend>Slot 4: ".id2name($d[server_idc])." #$d[server_idc]</legend>".serverActiveList($d[server_idc],'c')."</fieldset>";
 }
 ?></td><td valign='top'><?
 $q="SELECT DISTINCT server_idd from ps_packets where process_status = 'ASSIGNED' and server_idd <> ''";
 $r=@mysql_query($q);
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-echo "<fieldset><legend>Slot 5: ".id2name($d[server_idd])." #$d[server_idd]</legend>".serverActiveListd($d[server_idd])."</fieldset>";
+echo "<fieldset><legend>Slot 5: ".id2name($d[server_idd])." #$d[server_idd]</legend>".serverActiveList($d[server_idd],'d')."</fieldset>";
 }
 ?></td><td valign='top'><?
 $q="SELECT DISTINCT server_ide from ps_packets where process_status = 'ASSIGNED' and server_ide <> ''";
 $r=@mysql_query($q);
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-echo "<fieldset><legend>Slot 6: ".id2name($d[server_ide])." #$d[server_ide]</legend>".serverActiveListe($d[server_ide])."</fieldset>";
+echo "<fieldset><legend>Slot 6: ".id2name($d[server_ide])." #$d[server_ide]</legend>".serverActiveList($d[server_ide],'e')."</fieldset>";
 }
 ?></td></tr></table>
 <hr>
