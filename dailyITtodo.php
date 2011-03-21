@@ -42,7 +42,6 @@ while($d=mysql_fetch_array($r,MYSQL_ASSOC)){ ?>
 <td></td>
 </tr>
 </form>
-<? } ?>
 </table>
 <div>Most Occurring Errors (Limited by Search)</div>
 <table border="1">
