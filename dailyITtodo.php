@@ -32,7 +32,7 @@ while($d=mysql_fetch_array($r,MYSQL_ASSOC)){ ?>
 <tr>
 <td></td>
 <td>Server</td>
-<td></td>
+<td></td><td></td>
 <td>Message</td>
 </tr>
 <tr>
@@ -44,7 +44,7 @@ while($d=mysql_fetch_array($r,MYSQL_ASSOC)){ ?>
 <option value='mdws2'>MDWS-2</option>
 <option value='hwa1'>HWA-1</option>
 </select></td>
-<td></td>
+<td></td><td></td>
 <td><input name="message"> <input type='submit' value='Set Filter'></td>
 </tr>
 </form>
