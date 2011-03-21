@@ -9,7 +9,7 @@ if($_GET[runner]){ @mysql_query("update apacheErrors set status = 'Assigned to R
 if($_GET[patrick]){ @mysql_query("update apacheErrors set status = 'Assigned to Patrick'  where id = '$_GET[patrick]' "); }
 ?>
 <style>
-td{font-size:11px;}
+td{font-size:11px;white-space:nowrap;}
 </style>
 <meta http-equiv="refresh" content="60;url=http://staff.mdwestserve.com/dailyITtodo.php?server=<?=$_GET[server]?>&message=<?=$_GET[message]?>"> 
 <div>The apache error log is managed by Runner, runner@hwestauctions.com</div>
