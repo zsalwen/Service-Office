@@ -1,5 +1,32 @@
 <?
-include 'common.php';
+if($_SERVER["SERVER_NAME"] == "staff2.mdwestserve.com"){
+ini_set('mysql.default_host', '10.0.0.4');
+$thisDB = '10.0.0.4';
+}elseif($_SERVER["SERVER_NAME"] == "staff1.mdwestserve.com"){
+ini_set('mysql.default_host', 'mdws2.mdwestserve.com');
+$thisDB = 'mdws2.mdwestserve.com';
+}else{
+$thisDB = 'mdws1.mdwestserve.com';
+}
+
+mysql_connect();
+mysql_select_db('core');
+include '/gitbox/Service-Office/lock.php'; 
+
+function hardLog($str,$type){
+	if ($type == "user"){
+		$log = "/logs/user.log";
+	}
+	if ($type == "contractor"){
+		$log = "/logs/contractor.log";
+	}
+	if ($type == "debug"){
+		$log = "/logs/debug.log";
+	}
+	if ($log){
+		error_log(date('h:iA n/j/y')." ".$_COOKIE[psdata][name]." ".$_SERVER["REMOTE_ADDR"]." ".trim($str)."\n", 3, $log);
+	}
+}
 hardLog('Post Service Report','user');
 session_start();
 opLog($_COOKIE[psdata][name]." Loaded Assigned Cases");
@@ -11,6 +38,19 @@ if ($_GET[cap]){
 $_SESSION[cap] = $_GET[cap];
 }
 
+function id2name($id){
+	$q="SELECT name FROM ps_users WHERE id = '$id'";
+	$r=@mysql_query($q);
+	$d=mysql_fetch_array($r, MYSQL_ASSOC);
+return $d[name];
+}
+
+function id2attorney($id){
+	$q="SELECT display_name FROM attorneys WHERE attorneys_id = '$id'";
+	$r=@mysql_query($q);
+	$d=mysql_fetch_array($r, MYSQL_ASSOC);
+return $d[display_name];
+}
 
 function stripHours($date){
 $hours = explode(':',$date);
@@ -67,13 +107,13 @@ function prepExplode($packet){
 	return $timeList;
 }
 
-function serverActiveList($id,$packet){ $_SESSION[active]++;
+function serverActiveList($id,$letter,$packet){ $_SESSION[active]++;
 	$data='<ol>';
+	$pkt='';
 	if ($packet != '0' && $packet != ''){
-		$r=@mysql_query("select packet_id, avoidDOT, affidavit_status, service_status, filing_status, circuit_court, attorneys_id, estFileDate, case_no, caseLookupFlag, reopenDate, affidavit_status2, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where server_id='$id' and affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND packet_id < '$packet'   order by  packet_id");
-	}else{
-		$r=@mysql_query("select packet_id, avoidDOT, affidavit_status, service_status, filing_status, circuit_court, attorneys_id, estFileDate, case_no, caseLookupFlag, reopenDate, affidavit_status2, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where server_id='$id' and affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT'    order by  packet_id");
+		$pkt=" AND packet_id < '$packet'";
 	}
+	$r=@mysql_query("select packet_id, avoidDOT, affidavit_status, service_status, filing_status, circuit_court, attorneys_id, estFileDate, case_no, caseLookupFlag, reopenDate, affidavit_status2, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where server_id$letter='$id' and affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT'$pkt order by packet_id");
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
 		$estHours=($d[estHours]*24)-date('G');
 		if ($d[affidavit_status2] == 'REOPENED'){
@@ -111,250 +151,6 @@ function serverActiveList($id,$packet){ $_SESSION[active]++;
 				}
 			}
 			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],'').";'><a href='http://staff.mdwestserve.com/otd/order.php?packet=$d[packet_id]' target='_Blank'>$d[packet_id]</a>: <strong>".$hours."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em>".$case."</li>";
-		}
-	}
-	$data.='</ol>';
-	return $data;
-}
-function serverActiveLista($id,$packet){
-	$data='<ol>';
-	if ($packet != '0' && $packet != ''){
-		$r=@mysql_query("select packet_id, avoidDOT, affidavit_status, service_status, filing_status, circuit_court, attorneys_id, estFileDate, case_no, caseLookupFlag, reopenDate, affidavit_status2, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where server_ida='$id' and affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND packet_id < '$packet'   order by  packet_id");
-	}else{
-		$r=@mysql_query("select packet_id, avoidDOT, affidavit_status, service_status, filing_status, circuit_court, attorneys_id, estFileDate, case_no, caseLookupFlag, reopenDate, affidavit_status2, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where server_ida='$id' and affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT'    order by  packet_id");
-	}
-	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ 
-		$estHours=($d[estHours]*24)-date('G');
-		if ($d[affidavit_status2] == 'REOPENED'){
-			$hours=$d[reopenHours]*24;
-		}else{
-			$hours=stripHours($d[hours]);
-		}
-		if ($hours > $_SESSION[cap]){
-			if ($d[case_no] == '' && $d[caseLookupFlag] != '0'){
-				$case="<span style='background-color:#FFFFFF; color:000000;'><small>NO CASE!</small></span>";
-			}else{
-				$case='';
-			}
-			if ($d[affidavit_status2] == 'REOPENED'){
-				$reopenDate=explode('-',$d[reopenDate]);
-				$reopenDate=$reopenDate[1].'-'.$reopenDate[2];
-				$case .= "-<span style='background-color:#FFFFFF; color:#000000 !important;'><small>REOPENED $reopenDate</small></span>";
-			}
-			if ($d[rush] != ''){
-				$case .= "-<span style='background-color:#000000; color:FF0000; border: 3px solid black; font-weight:bold;'>RUSH</span>";
-			}
-			if ($d[avoidDOT] != ''){
-				$case .= "-<span style='background-color:#000000; color:FF0000; border: 3px solid red; font-weight:bold;'>AvoidDOT</span>";
-			}
-			$estFileDate=explode('-',$d[estFileDate]);
-			$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-			$case .= "&nbsp;<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)."; border: 1px solid black;'>FILE: $estFileDate</span>";
-			$withCourier=withCourier($d[packet_id]);
-			if($withCourier != ''){
-				$case.=$withCourier;
-			}else{
-				$prepExplode = prepExplode($d[packet_id]);
-				if ($prepExplode != ''){
-					$case .= $prepExplode;
-				}
-			}
-			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],'a').";'><a href='http://staff.mdwestserve.com/otd/order.php?packet=$d[packet_id]' target='_Blank'>$d[packet_id]</a>: <strong>".$hours."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em>".$case."</li>";
-		}
-	}
-	$data.='</ol>';
-	return $data;
-}
-function serverActiveListb($id,$packet){ 
-	$data='<ol>';
-	if ($packet != '0' && $packet != ''){
-		$r=@mysql_query("select packet_id, avoidDOT, affidavit_status, service_status, filing_status, circuit_court, attorneys_id, estFileDate, case_no, caseLookupFlag, reopenDate, affidavit_status2, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where server_idb='$id' and affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND packet_id < '$packet'   order by  packet_id");
-	}else{
-		$r=@mysql_query("select packet_id, avoidDOT, affidavit_status, service_status, filing_status, circuit_court, attorneys_id, estFileDate, case_no, caseLookupFlag, reopenDate, affidavit_status2, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where server_idb='$id' and affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT'    order by  packet_id");
-	}
-	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ 
-		$estHours=($d[estHours]*24)-date('G');
-		if ($d[affidavit_status2] == 'REOPENED'){
-			$hours=$d[reopenHours]*24;
-		}else{
-			$hours=stripHours($d[hours]);
-		}
-		if ($hours > $_SESSION[cap]){
-			if ($d[case_no] == '' && $d[caseLookupFlag] != '0'){
-				$case="<span style='background-color:#FFFFFF; color:000000;'><small>NO CASE!</small></span>";
-			}else{
-				$case='';
-			}
-			if ($d[affidavit_status2] == 'REOPENED'){
-				$reopenDate=explode('-',$d[reopenDate]);
-				$reopenDate=$reopenDate[1].'-'.$reopenDate[2];
-				$case .= "-<span style='background-color:#FFFFFF; color:#000000 !important;'><small>REOPENED $reopenDate</small></span>";
-			}
-			if ($d[rush] != ''){
-				$case .= "-<span style='background-color:#000000; color:FF0000; border: 3px solid black; font-weight:bold;'>RUSH</span>";
-			}
-			if ($d[avoidDOT] != ''){
-				$case .= "-<span style='background-color:#000000; color:FF0000; border: 3px solid red; font-weight:bold;'>AvoidDOT</span>";
-			}
-			$estFileDate=explode('-',$d[estFileDate]);
-			$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-			$case .= "&nbsp;<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)."; border: 1px solid black;'>FILE: $estFileDate</span>";
-			$withCourier=withCourier($d[packet_id]);
-			if($withCourier != ''){
-				$case.=$withCourier;
-			}else{
-				$prepExplode = prepExplode($d[packet_id]);
-				if ($prepExplode != ''){
-					$case .= $prepExplode;
-				}
-			}
-			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],'b').";'><a href='http://staff.mdwestserve.com/otd/order.php?packet=$d[packet_id]' target='_Blank'>$d[packet_id]</a>: <strong>".$hours."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em>".$case."</li>";
-		}
-	}
-	$data.='</ol>';
-	return $data;
-}
-function serverActiveListc($id,$packet){ 
-	$data='<ol>';
-	if ($packet != '0' && $packet != ''){
-		$r=@mysql_query("select packet_id, avoidDOT, affidavit_status, service_status, filing_status, circuit_court, attorneys_id, estFileDate, case_no, caseLookupFlag, reopenDate, affidavit_status2, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where server_idc='$id' and affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND packet_id < '$packet'   order by  packet_id");
-	}else{
-		$r=@mysql_query("select packet_id, avoidDOT, affidavit_status, service_status, filing_status, circuit_court, attorneys_id, estFileDate, case_no, caseLookupFlag, reopenDate, affidavit_status2, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where server_idc='$id' and affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT'    order by  packet_id");
-	}
-	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-		$estHours=($d[estHours]*24)-date('G');
-		if ($d[affidavit_status2] == 'REOPENED'){
-			$hours=$d[reopenHours]*24;
-		}else{
-			$hours=stripHours($d[hours]);
-		}	
-		if ($hours > $_SESSION[cap]){
-			if ($d[case_no] == '' && $d[caseLookupFlag] != '0'){
-				$case="<span style='background-color:#FFFFFF; color:000000;'><small>NO CASE!</small></span>";
-			}else{
-				$case='';
-			}
-			if ($d[affidavit_status2] == 'REOPENED'){
-				$reopenDate=explode('-',$d[reopenDate]);
-				$reopenDate=$reopenDate[1].'-'.$reopenDate[2];
-				$case .= "-<span style='background-color:#FFFFFF; color:#000000 !important;'><small>REOPENED $reopenDate</small></span>";
-			}
-			if ($d[rush] != ''){
-				$case .= "-<span style='background-color:#000000; color:FF0000; border: 3px solid black; font-weight:bold;'>RUSH</span>";
-			}
-			if ($d[avoidDOT] != ''){
-				$case .= "-<span style='background-color:#000000; color:FF0000; border: 3px solid red; font-weight:bold;'>AvoidDOT</span>";
-			}
-			$estFileDate=explode('-',$d[estFileDate]);
-			$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-			$case .= "&nbsp;<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)."; border: 1px solid black;'>FILE: $estFileDate</span>";
-			$withCourier=withCourier($d[packet_id]);
-			if($withCourier != ''){
-				$case.=$withCourier;
-			}else{
-				$prepExplode = prepExplode($d[packet_id]);
-				if ($prepExplode != ''){
-					$case .= $prepExplode;
-				}
-			}
-			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],'c').";'><a href='http://staff.mdwestserve.com/otd/order.php?packet=$d[packet_id]' target='_Blank'>$d[packet_id]</a>: <strong>".$hours."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em>".$case."</li>";
-		}
-	}
-	$data.='<li><a href="desktop.php">Procede to desktop &gt; &gt; &gt;</a></li></ol>';
-	return $data;
-}
-function serverActiveListd($id,$packet){ 
-	if ($packet != '0' && $packet != ''){
-		$r=@mysql_query("select packet_id, avoidDOT, affidavit_status, service_status, filing_status, circuit_court, attorneys_id, estFileDate, case_no, caseLookupFlag, reopenDate, affidavit_status2, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where server_idd='$id' and affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND packet_id < '$packet'   order by  packet_id");
-	}else{
-		$r=@mysql_query("select packet_id, avoidDOT, affidavit_status, service_status, filing_status, circuit_court, attorneys_id, estFileDate, case_no, caseLookupFlag, reopenDate, affidavit_status2, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where server_idd='$id' and affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT'    order by  packet_id");
-	}
-	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ 
-		$estHours=($d[estHours]*24)-date('G');
-		if ($d[affidavit_status2] == 'REOPENED'){
-			$hours=$d[reopenHours]*24;
-		}else{
-			$hours=stripHours($d[hours]);
-		}
-		if ($hours > $_SESSION[cap]){
-			if ($d[case_no] == '' && $d[caseLookupFlag] != '0'){
-				$case="<span style='background-color:#FFFFFF; color:000000;'><small>NO CASE!</small></span>";
-			}else{
-				$case='';
-			}
-			if ($d[affidavit_status2] == 'REOPENED'){
-				$reopenDate=explode('-',$d[reopenDate]);
-				$reopenDate=$reopenDate[1].'-'.$reopenDate[2];
-				$case .= "-<span style='background-color:#FFFFFF; color:#000000 !important;'><small>REOPENED $reopenDate</small></span>";
-			}
-			if ($d[rush] != ''){
-				$case .= "-<span style='background-color:#000000; color:FF0000; border: 3px solid black; font-weight:bold;'>RUSH</span>";
-			}
-			if ($d[avoidDOT] != ''){
-				$case .= "-<span style='background-color:#000000; color:FF0000; border: 3px solid red; font-weight:bold;'>AvoidDOT</span>";
-			}
-			$estFileDate=explode('-',$d[estFileDate]);
-			$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-			$case .= "&nbsp;<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)."; border: 1px solid black;'>FILE: $estFileDate</span>";
-			$withCourier=withCourier($d[packet_id]);
-			if($withCourier != ''){
-				$case.=$withCourier;
-			}else{
-				$prepExplode = prepExplode($d[packet_id]);
-				if ($prepExplode != ''){
-					$case .= $prepExplode;
-				}
-			}
-			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],'d').";'><a href='http://staff.mdwestserve.com/otd/order.php?packet=$d[packet_id]' target='_Blank'>$d[packet_id]</a>: <strong>".$hours."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em>".$case."</li>";
-		}
-	}
-	$data.='</ol>';
-	return $data;
-}
-function serverActiveListe($id,$packet){
-	$data='<ol>';
-	if ($packet != '0' && $packet != ''){
-		$r=@mysql_query("select packet_id, avoidDOT, affidavit_status, service_status, filing_status, circuit_court, attorneys_id, estFileDate, case_no, caseLookupFlag, reopenDate, affidavit_status2, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where server_ide='$id' and affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND packet_id < '$packet'   order by  packet_id");
-	}else{
-		$r=@mysql_query("select packet_id, avoidDOT, affidavit_status, service_status, filing_status, circuit_court, attorneys_id, estFileDate, case_no, caseLookupFlag, reopenDate, affidavit_status2, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where server_ide='$id' and affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT'    order by  packet_id");
-	}
-	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ 
-		$estHours=($d[estHours]*24)-date('G');
-		if ($d[affidavit_status2] == 'REOPENED'){
-			$hours=$d[reopenHours]*24;
-		}else{
-			$hours=stripHours($d[hours]);
-		}
-		if ($hours > $_SESSION[cap]){
-			if ($d[case_no] == '' && $d[caseLookupFlag] != '0'){
-				$case="<span style='background-color:#FFFFFF; color:000000;'><small>NO CASE!</small></span>";
-			}else{
-				$case='';
-			}
-			if ($d[affidavit_status2] == 'REOPENED'){
-				$reopenDate=explode('-',$d[reopenDate]);
-				$reopenDate=$reopenDate[1].'-'.$reopenDate[2];
-				$case .= "-<span style='background-color:#FFFFFF; color:#000000 !important;'><small>REOPENED $reopenDate</small></span>";
-			}
-			if ($d[rush] != ''){
-				$case .= "-<span style='background-color:#000000; color:FF0000; border: 3px solid black; font-weight:bold;'>RUSH</span>";
-			}
-			if ($d[avoidDOT] != ''){
-				$case .= "-<span style='background-color:#000000; color:FF0000; border: 3px solid red; font-weight:bold;'>AvoidDOT</span>";
-			}
-			$estFileDate=explode('-',$d[estFileDate]);
-			$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-			$case .= "&nbsp;<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)."; border: 1px solid black;'>FILE: $estFileDate</span>";
-			$withCourier=withCourier($d[packet_id]);
-			if($withCourier != ''){
-				$case.=$withCourier;
-			}else{
-				$prepExplode = prepExplode($d[packet_id]);
-				if ($prepExplode != ''){
-					$case .= $prepExplode;
-				}
-			}
-			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],'e').";'><a href='http://staff.mdwestserve.com/otd/order.php?packet=$d[packet_id]' target='_Blank'>$d[packet_id]</a>: <strong>".$hours."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em>".$case."</li>";
 		}
 	}
 	$data.='</ol>';
@@ -428,6 +224,11 @@ function evictionActiveList($id,$packet){ $_SESSION[active]++;
 	$data.='</ol>';
 	return $data;
 }
+$pkt='';
+if ($_GET[packet]){
+	$pkt=" AND packet_id <= '$_GET[packet]'";
+	$pkt2=" AND eviction_id <= '$_GET[packet]'";
+}
 ?>
 <style>
 body { padding:0px; margin:0px; margin-left:10px;}
@@ -447,76 +248,47 @@ background-color:#6699CC; background-repeat: no-repeat; }
 </td></tr><tr><td>
 <center><div style="border-style:solid 1px; border-collapse:collapse; font-weight:bold; letter-spacing: 5px;background-color:00BBAA; width:800px;">FORECLOSURES</div></center>
 <table><tr><td valign='top'><?
-if ($_GET[packet]){
-	$q="SELECT DISTINCT server_id from ps_packets where affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY' AND packet_id <= '$_GET[packet]'";
-}else{
-	$q="SELECT DISTINCT server_id from ps_packets where affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY'";
-}
+$q="SELECT DISTINCT server_id from ps_packets where affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY'$pkt";
 $r=@mysql_query($q);
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-echo "<fieldset><legend>Slot 1: ".id2name($d[server_id])." #$d[server_id]</legend>".serverActiveList($d[server_id],$_GET[packet])."</fieldset>";
+echo "<fieldset><legend>Slot 1: ".id2name($d[server_id])." #$d[server_id]</legend>".serverActiveList($d[server_id],'',$_GET[packet])."</fieldset>";
 }
 ?></td><td valign='top'><?
-if ($_GET[packet]){
-	$q="SELECT DISTINCT server_ida from ps_packets where  affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY' AND packet_id <= '$_GET[packet]'  and server_ida <> ''";
-}else{
-	$q="SELECT DISTINCT server_ida from ps_packets where  affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY' and server_ida <> ''";
-}
+$q="SELECT DISTINCT server_ida from ps_packets where  affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY'$pkt and server_ida <> ''";
 $r=@mysql_query($q);
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-echo "<fieldset><legend>Slot 2: ".id2name($d[server_ida])." #$d[server_ida]</legend>".serverActiveLista($d[server_ida],$_GET[packet])."</fieldset>";
+echo "<fieldset><legend>Slot 2: ".id2name($d[server_ida])." #$d[server_ida]</legend>".serverActiveLista($d[server_ida],'a',$_GET[packet])."</fieldset>";
 }
 ?></td><td valign='top'><?
-if ($_GET[packet]){
-	$q="SELECT DISTINCT server_idb from ps_packets where  affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND packet_id AND service_status <> 'MAIL ONLY' <= '$_GET[packet]'  and server_idb <> ''";
-}else{
-	$q="SELECT DISTINCT server_idb from ps_packets where  affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY' and server_idb <> ''";
-}
+$q="SELECT DISTINCT server_idb from ps_packets where  affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY'$pkt and server_idb <> ''";
 $r=@mysql_query($q);
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-echo "<fieldset><legend>Slot 3: ".id2name($d[server_idb])." #$d[server_idb]</legend>".serverActiveListb($d[server_idb],$_GET[packet])."</fieldset>";
+echo "<fieldset><legend>Slot 3: ".id2name($d[server_idb])." #$d[server_idb]</legend>".serverActiveListb($d[server_idb],'b',$_GET[packet])."</fieldset>";
 }
 ?></td><td valign='top'><?
-if ($_GET[packet]){
-	$q="SELECT DISTINCT server_idc from ps_packets where  affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY' AND packet_id <= '$_GET[packet]'  and server_idc <> ''";
-}else{
-	$q="SELECT DISTINCT server_idc from ps_packets where  affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY' and server_idc <> ''";
-}
+$q="SELECT DISTINCT server_idc from ps_packets where  affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY'$pkt and server_idc <> ''";
 $r=@mysql_query($q);
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-echo "<fieldset><legend>Slot 4: ".id2name($d[server_idc])." #$d[server_idc]</legend>".serverActiveListc($d[server_idc],$_GET[packet])."</fieldset>";
+echo "<fieldset><legend>Slot 4: ".id2name($d[server_idc])." #$d[server_idc]</legend>".serverActiveListc($d[server_idc],'c',$_GET[packet])."</fieldset>";
 }
 ?></td><td valign='top'><?
-if ($_GET[packet]){
-	$q="SELECT DISTINCT server_idd from ps_packets where  affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY' AND packet_id <= '$_GET[packet]'  and server_idd <> ''";
-}else{
-	$q="SELECT DISTINCT server_idd from ps_packets where  affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY' and server_idd <> ''";
-}
+$q="SELECT DISTINCT server_idd from ps_packets where  affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY'$pkt  and server_idd <> ''";
 $r=@mysql_query($q);
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-echo "<fieldset><legend>Slot 5: ".id2name($d[server_idd])." #$d[server_idd]</legend>".serverActiveListd($d[server_idd],$_GET[packet])."</fieldset>";
+echo "<fieldset><legend>Slot 5: ".id2name($d[server_idd])." #$d[server_idd]</legend>".serverActiveListd($d[server_idd],'d',$_GET[packet])."</fieldset>";
 }
 ?></td><td valign='top'><?
-if ($_GET[packet]){
-	$q="SELECT DISTINCT server_ide from ps_packets where  affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY' AND packet_id <= '$_GET[packet]'  and server_ide <> ''";
-}else{
-	$q="SELECT DISTINCT server_ide from ps_packets where  affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY' and server_ide <> ''";
-}
+$q="SELECT DISTINCT server_ide from ps_packets where  affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY'$pkt and server_ide <> ''";
 $r=@mysql_query($q);
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-echo "<fieldset><legend>Slot 6: ".id2name($d[server_ide])." #$d[server_ide]</legend>".serverActiveListe($d[server_ide],$_GET[packet])."</fieldset>";
+echo "<fieldset><legend>Slot 6: ".id2name($d[server_ide])." #$d[server_ide]</legend>".serverActiveListe($d[server_ide],'e',$_GET[packet])."</fieldset>";
 }
 ?></td></tr></table><tr><td>
 <center><div style="border-style:solid 1px; border-collapse:collapse; font-weight:bold; letter-spacing: 5px; background-color:99AAEE; width:800px;">EVICTIONS</div></center>
 </td></tr><tr><td>
 <table><tr><td valign='top'>
 <!--------------------------------BEGIN EVICTIONS---------------------->
-<?
-if ($_GET[packet]){
-	$q="SELECT DISTINCT server_id from evictionPackets where   affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND eviction_id <= '$_GET[packet]'";
-}else{
-	$q="SELECT DISTINCT server_id from evictionPackets where   affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY'   ";
-}
+<?$q="SELECT DISTINCT server_id from evictionPackets where   affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY'$pkt2";
 $r=@mysql_query($q);
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 echo "<fieldset><legend>".id2name($d[server_id])." #$d[server_id]</legend>".evictionActiveList($d[server_id],$_GET[packet])."</fieldset>";
@@ -526,22 +298,13 @@ echo "<fieldset><legend>".id2name($d[server_id])." #$d[server_id]</legend>".evic
 </td></tr></table><tr><td>
 <center><div style="border-style:solid 1px; border-collapse:collapse; font-weight:bold; letter-spacing: 5px;background-color:CC66BB; width:800px;">MAIL ONLY</div></center>
 <table><tr><td valign='top'><?
-if ($_GET[packet]){
-	$q="SELECT DISTINCT closeOut FROM ps_packets WHERE affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status='MAIL ONLY' AND packet_id <= '$_GET[packet]' ORDER BY closeOut ASC";
-	$q2="SELECT packet_id, process_status FROM ps_packets WHERE affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status='MAIL ONLY' AND packet_id <= '$_GET[packet]' ORDER BY packet_id ASC";
-}else{
-	$q="SELECT DISTINCT closeOut FROM ps_packets WHERE affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status='MAIL ONLY' ORDER BY closeOut ASC";
-	$q2="SELECT packet_id, process_status FROM ps_packets WHERE affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status='MAIL ONLY' ORDER BY packet_id ASC";
-}
+$q="SELECT DISTINCT closeOut FROM ps_packets WHERE affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status='MAIL ONLY'$pkt ORDER BY closeOut ASC";
+$q2="SELECT packet_id, process_status FROM ps_packets WHERE affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status='MAIL ONLY'$pkt ORDER BY packet_id ASC";
 $r=@mysql_query($q);
 $r2=@mysql_query($q2);
 $today=date('Y-m-d');
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-	if ($_GET[packet]){
-		$q2="SELECT packet_id, process_status FROM ps_packets WHERE affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status='MAIL ONLY' AND closeOut='$d[closeOut]' AND packet_id <= '$_GET[packet]' ORDER BY packet_id ASC";
-	}else{
-		$q2="SELECT packet_id, process_status FROM ps_packets WHERE affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status='MAIL ONLY' AND closeOut='$d[closeOut]' ORDER BY packet_id ASC";
-	}
+	$q2="SELECT packet_id, process_status FROM ps_packets WHERE affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status='MAIL ONLY' AND closeOut='$d[closeOut]'$pkt ORDER BY packet_id ASC";
 	if ($d[closeOut] > $today){
 		$color="background-color:CCCCCC; color:000000;";
 	}elseif($d[closeOut] == $today){
