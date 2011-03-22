@@ -351,7 +351,7 @@ function dailyList2($today){
 			echo "style='background-color:#ccFFcc'";
 		}
 
-		if ($getEVCourier == '!!!MISSING!!!'){
+		if (trim($getEVCourier) == '!!!MISSING!!!'){
 			$missingList .= "text-decoration: blink;'";
 		}else{
 			$missingList .= "'";
@@ -391,12 +391,12 @@ function dailyList3($today){
 	<?
 	$getSCourier='';
 	$getSCourier=getSCourier($dx[packet_id]);
-	if ($getSCourier == 'DO NOT FILE!'){
+	if (trim($getSCourier) == 'DO NOT FILE!'){
 		echo "style='background-color:#FFcccc'";
 	}else{
 		echo "style='background-color:#ccFFcc'";
 	}
-	if ($getSCourier == '!!!MISSING!!!'){
+	if (trim($getSCourier) == '!!!MISSING!!!'){
 		$missingList .= "text-decoration: blink;'";
 	}else{
 		$missingList .= "'";
