@@ -352,9 +352,7 @@ function dailyList2($today){
 		}
 
 		if (trim($getEVCourier) == '!!!MISSING!!!'){
-			$missingList .= "text-decoration: blink;'";
-		}else{
-			$missingList .= "'";
+			echo "text-decoration: blink;'";
 		}
 ?>
 		><input type="checkbox" name="ev[<?=$dx[eviction_id]?>]">
@@ -397,9 +395,7 @@ function dailyList3($today){
 		echo "style='background-color:#ccFFcc'";
 	}
 	if (trim($getSCourier) == '!!!MISSING!!!'){
-		$missingList .= "text-decoration: blink;'";
-	}else{
-		$missingList .= "'";
+		echo "text-decoration: blink;'";
 	}
 	?>
 	><input type="checkbox" name="s[<?=$dx[packet_id]?>]">
