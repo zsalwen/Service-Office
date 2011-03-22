@@ -347,13 +347,13 @@ function dailyList2($today){
 		$getEVCourier='';
 		$getEVCourier=getEVCourier($dx[eviction_id]);
 		if ($getEVCourier == 'DO NOT FILE!'){
-			$missingList .=  "style='background-color:#FFcccc'";
+			$missingList .=  "background-color:#FFcccc;";
 		}else{
-			$missingList .=  "style='background-color:#ccFFcc'";
+			$missingList .=  "background-color:#ccFFcc;";
 		}
 
 		if (trim($getEVCourier) == '!!!MISSING!!!'){
-			$missingList .= "text-decoration: blink;'";
+			$missingList .= "text-decoration: blink;";
 		}
 		if ($missingList != ''){
 			echo "style='$missingList'";
@@ -395,9 +395,9 @@ function dailyList3($today){
 	$getSCourier='';
 	$getSCourier=getSCourier($dx[packet_id]);
 	if (trim($getSCourier) == 'DO NOT FILE!'){
-		$missingList .=  "background-color:#FFcccc";
+		$missingList .=  "background-color:#FFcccc;";
 	}else{
-		$missingList .=  "background-color:#ccFFcc";
+		$missingList .=  "background-color:#ccFFcc;";
 	}
 	if (trim($getSCourier) == '!!!MISSING!!!'){
 		$missingList .= "text-decoration: blink;";
