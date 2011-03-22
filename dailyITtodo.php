@@ -9,7 +9,7 @@ if($_GET[runner]){ @mysql_query("update apacheErrors set status = 'Assigned to R
 if($_GET[patrick]){ @mysql_query("update apacheErrors set status = 'Assigned to Patrick'  where id = '$_GET[patrick]' "); }
 ?>
 <style>
-td{font-size:11px;}
+td{font-size:11px;white-space:nowrap;}
 </style>
 <meta http-equiv="refresh" content="60;url=http://staff.mdwestserve.com/dailyITtodo.php?server=<?=$_GET[server]?>&message=<?=$_GET[message]?>"> 
 <div>The apache error log is managed by Runner, runner@hwestauctions.com</div>
@@ -27,7 +27,7 @@ while($d=mysql_fetch_array($r,MYSQL_ASSOC)){ ?>
 </tr>
 <? } ?>
 </table>
-<div>Most Occurring Errors (Limited by Search) <a href="?clear=1">Clear All 1 Count Errors</div>
+<div>Most Occurring Errors (Limited by Search) <a href="?clear=1">Clear All 1 Count Errors</a></div>
 <table border="1">
 <form>
 <tr>
@@ -58,7 +58,7 @@ while($d=mysql_fetch_array($r,MYSQL_ASSOC)){ ?>
 <td><?=$d[server]?></td>
 <td><?=$d[status]?></td>
 <td><?=$d[lastTime]?></td>
-<td><?=$d[message]?>, <a href="?done=<?=$d[id]?>">Remove</a>, <a href="?zach=<?=$d[id]?>">Zach</a>, <a href="?runner=<?=$d[id]?>">Runner</a>, <a href="?patrick=<?=$d[id]?>">Patrick</a> </td>
+<td><?=$d[message]?>, <a href="?done=<?=$d[id]?>&server=<?=$_GET[server];?>&message=<?=$_GET[message];?>">Remove</a>, <a href="?zach=<?=$d[id]?>&server=<?=$_GET[server];?>&message=<?=$_GET[message];?>">Zach</a>, <a href="?runner=<?=$d[id]?>&server=<?=$_GET[server];?>&message=<?=$_GET[message];?>">Runner</a>, <a href="?patrick=<?=$d[id]?>&server=<?=$_GET[server];?>&message=<?=$_GET[message];?>">Patrick</a> </td>
 </tr>
 <? } ?>
 </table>
