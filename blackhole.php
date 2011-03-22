@@ -29,7 +29,7 @@ function hardLog($str,$type){
 }
 hardLog('Post Service Report','user');
 session_start();
-opLog($_COOKIE[psdata][name]." Loaded Assigned Cases");
+//opLog($_COOKIE[psdata][name]." Loaded Assigned Cases");
 $_SESSION[active]='';
 $_SESSION[active2]='';
 
