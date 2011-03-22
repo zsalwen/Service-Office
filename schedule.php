@@ -343,16 +343,20 @@ function dailyList2($today){
 		while ($dx=mysql_fetch_array($x,MYSQL_ASSOC)){
 		?><div    
 		<?
+		$missingList='';
 		$getEVCourier='';
 		$getEVCourier=getEVCourier($dx[eviction_id]);
 		if ($getEVCourier == 'DO NOT FILE!'){
-			echo "style='background-color:#FFcccc'";
+			$missingList .=  "style='background-color:#FFcccc'";
 		}else{
-			echo "style='background-color:#ccFFcc'";
+			$missingList .=  "style='background-color:#ccFFcc'";
 		}
 
 		if (trim($getEVCourier) == '!!!MISSING!!!'){
-			echo "text-decoration: blink;'";
+			$missingList .= "text-decoration: blink;'";
+		}
+		if ($missingList != ''){
+			echo "style='$missingList'";
 		}
 ?>
 		><input type="checkbox" name="ev[<?=$dx[eviction_id]?>]">
@@ -387,15 +391,19 @@ function dailyList3($today){
 	while ($dx=mysql_fetch_array($x,MYSQL_ASSOC)){
 	?><div    
 	<?
+	$missingList='';
 	$getSCourier='';
 	$getSCourier=getSCourier($dx[packet_id]);
 	if (trim($getSCourier) == 'DO NOT FILE!'){
-		echo "style='background-color:#FFcccc'";
+		$missingList .=  "background-color:#FFcccc";
 	}else{
-		echo "style='background-color:#ccFFcc'";
+		$missingList .=  "background-color:#ccFFcc";
 	}
 	if (trim($getSCourier) == '!!!MISSING!!!'){
-		echo "text-decoration: blink;'";
+		$missingList .= "text-decoration: blink;";
+	}
+	if ($missingList != ''){
+		echo "style='$missingList'";
 	}
 	?>
 	><input type="checkbox" name="s[<?=$dx[packet_id]?>]">
