@@ -252,13 +252,15 @@ function standardCourt($str){
 				$listNum++;
 				$_SESSION[inc] = $_SESSION[inc]+1;
 				$missingList .= '<div ';
-				if (getCourier($dx[packet_id]) == 'DO NOT FILE!'){
+				$getCourier='';
+				$getCourier=getCourier($dx[packet_id]);
+				if ($getCourier == 'DO NOT FILE!'){
 					$missingList .= "style='background-color:#FFcccc; ";
 				}else{
 					$missingList .= "style='background-color:#ccFFcc; ";
 				}
 
-				if (getCourier($dx[packet_id]) == ' !!!MISSING!!! '){
+				if ($getCourier == ' !!!MISSING!!! '){
 					$missingList .= "text-decoration: blink;'";
 				}else{
 					$missingList .= "'";
@@ -289,14 +291,15 @@ function standardCourt($str){
 			?>
 				<div  
 			<?
-
-				if (getCourier($dx[packet_id]) == 'DO NOT FILE!'){
+				$getCourier='';
+				$getCourier=getCourier($dx[packet_id]);
+				if ($getCourier == 'DO NOT FILE!'){
 					echo "style='background-color:#FFcccc; ";
 				}else{
 					echo "style='background-color:#ccFFcc; ";
 				}
 
-				if (getCourier($dx[packet_id]) == ' !!!MISSING!!! '){
+				if ($getCourier == ' !!!MISSING!!! '){
 					echo "text-decoration: blink;'";
 				}else{
 					echo "'";
@@ -306,7 +309,7 @@ function standardCourt($str){
 				<a href="/otd/order.php?packet=<?=$dx[packet_id]?>" target="_Blank"><?=$dx[packet_id]?></a>
 				<? if ($d[rush] != ""){ echo "<b style='background-color:#FFBB00; color:000000; font-weight:bold;'>RUSH</b>";} ?>
 				<b style='color:#990000;'><?=strtoupper($dx[case_no]);?></b> <b style='color:#003377;'><?=getServer($dx[packet_id]);?></b>
-				<b style='color:#330077;'><?=getCourier($dx[packet_id]);?></b> <?=isActive($dx[service_status])?> 
+				<b style='color:#330077;'><?=$getCourier;?></b> <?=isActive($dx[service_status])?> 
 				<?=isActive($dx[process_status])?> 
 				<? 	if ($dx[fileDate] != "0000-00-00"){ echo "<b style='color:#009900;'>FILE CLOSED ON ".$dx[fileDate]."</b>"; }
 					elseif($dx[filing_status] == "PREP TO FILE" && !withCourier($dx[packet_id]) && !clientFile($dx[attorneys_id]) && !serverFile($dx[server_id]) ){ echo "<b style='color:#00cc00;'>Ready for courier.</b>"; }
@@ -340,17 +343,25 @@ function dailyList2($today){
 		while ($dx=mysql_fetch_array($x,MYSQL_ASSOC)){
 		?><div    
 		<?
-		if (getEVCourier($dx[eviction_id]) == 'DO NOT FILE!'){
+		$getEVCourier='';
+		$getEVCourier=getEVCourier($dx[eviction_id]);
+		if ($getEVCourier == 'DO NOT FILE!'){
 			echo "style='background-color:#FFcccc'";
 		}else{
 			echo "style='background-color:#ccFFcc'";
 		}
-		?>
+
+		if ($getEVCourier == ' !!!MISSING!!! '){
+			$missingList .= "text-decoration: blink;'";
+		}else{
+			$missingList .= "'";
+		}
+?>
 		><input type="checkbox" name="ev[<?=$dx[eviction_id]?>]">
 			<a href="/ev/order.php?packet=<?=$dx[eviction_id]?>" target="_Blank"><?=$dx[eviction_id]?></a> 
 			<b style='color:#990000;'><?=strtoupper($dx[case_no]);?></b> 
 			<b style='color:#003377;'><?=getEVServer($dx[eviction_id]);?></b> 
-			<b style='color:#330077;'><?=getEVCourier($dx[eviction_id]);?></b> 
+			<b style='color:#330077;'><?=$getEVCourier;?></b> 
 			<?=isActive($dx[service_status])?> 
 			<? 	if ($dx[fileDate] != "0000-00-00"){ echo "<b style='color:#009900;'>FILE CLOSED ON ".$dx[fileDate]."</b>"; }
 				elseif($dx[filing_status] == "PREP TO FILE" && !EVwithCourier($dx[eviction_id]) && !clientFile($dx[attorneys_id]) && !serverFile($dx[server_id]) ){ echo "<b style='color:#00cc00;'>Ready for courier.</b>"; }
@@ -378,17 +389,24 @@ function dailyList3($today){
 	while ($dx=mysql_fetch_array($x,MYSQL_ASSOC)){
 	?><div    
 	<?
-	if (getSCourier($dx[packet_id]) == 'DO NOT FILE!'){
+	$getSCourier='';
+	$getSCourier=getSCourier($dx[packet_id]);
+	if ($getSCourier == 'DO NOT FILE!'){
 		echo "style='background-color:#FFcccc'";
 	}else{
 		echo "style='background-color:#ccFFcc'";
+	}
+	if ($getSCourier == ' !!!MISSING!!! '){
+		$missingList .= "text-decoration: blink;'";
+	}else{
+		$missingList .= "'";
 	}
 	?>
 	><input type="checkbox" name="s[<?=$dx[packet_id]?>]">
 		<a href="/standard/order.php?packet=<?=$dx[packet_id]?>" target="_Blank"><?=$dx[packet_id]?></a> 
 		<b style='color:#990000;'><?=strtoupper($dx[case_no]);?></b> 
 		<b style='color:#003377;'><?=getSServer($dx[packet_id]);?></b> 
-		<b style='color:#330077;'><?=getSCourier($dx[packet_id]);?></b> 
+		<b style='color:#330077;'><?=$getSCourier;?></b> 
 		<?=isActive($dx[service_status])?> 
 		<? 	if ($dx[fileDate] != "0000-00-00"){ echo "<b style='color:#009900;'>FILE CLOSED ON ".$dx[fileDate]."</b>"; }
 			elseif($dx[filing_status] == "PREP TO FILE" && !SwithCourier($dx[packet_id]) && !clientFile($dx[attorneys_id]) && !serverFile($dx[server_id]) ){ echo "<b style='color:#00cc00;'>Ready for courier.</b>"; }
