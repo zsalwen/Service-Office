@@ -351,7 +351,7 @@ function dailyList2($today){
 			echo "style='background-color:#ccFFcc'";
 		}
 
-		if ($getEVCourier == ' !!!MISSING!!! '){
+		if ($getEVCourier == '!!!MISSING!!!'){
 			$missingList .= "text-decoration: blink;'";
 		}else{
 			$missingList .= "'";
@@ -396,7 +396,7 @@ function dailyList3($today){
 	}else{
 		echo "style='background-color:#ccFFcc'";
 	}
-	if ($getSCourier == ' !!!MISSING!!! '){
+	if ($getSCourier == '!!!MISSING!!!'){
 		$missingList .= "text-decoration: blink;'";
 	}else{
 		$missingList .= "'";
