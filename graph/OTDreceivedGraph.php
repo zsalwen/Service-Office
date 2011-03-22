@@ -102,7 +102,7 @@ echo "<tr><td>EVICTION:</td><td>".str_replace(',','</td><td>',$white).'</td></tr
 echo "<tr><td>STANDARD:</td><td>".str_replace(',','</td><td>',$bgw).'</td></tr>';
 echo "<tr><td>MAILONLY:</td><td>".str_replace(',','</td><td>',$other).'</td>';
 echo "</tr></table>";*/
-$src="http://1.chart.apis.google.com/chart?cht=lc&chs=1000x300&chd=t:".$src."|".$burson."|".$white."|".$bgw."|".$other."&chxl=0:".$src2."|1:|0|$z1|$z2|$z3|$z4|$z&chtt=All Service Files Received 2008-$curYear&chdl=All Files|Burson|White|BGW|Others&chco=FF0000,00FF00,0000FF,800080,FF8040&chls=1,1,0|1,1,0|1,1,0|1,1,0|1,1,0";
+$src="http://1.chart.apis.google.com/chart?cht=lc&chs=1000x300&chd=t:".$src."|".$burson."|".$white."|".$bgw."|".$other."&chxl=0:".$src2."|1:|0|$z1|$z2|$z3|$z4|$z&chtt=Service Files by Product over Time 2008-$curYear&chdl=All Files|Burson|White|BGW|Others&chco=FF0000,00FF00,0000FF,800080,FF8040&chls=1,1,0|1,1,0|1,1,0|1,1,0|1,1,0";
 $rest="&chxt=x,y&chds=0,".$z."&chxtc=0,10|1,-980&chxs=0,000000,7|1,000000,10,-1,lt,333333&chm=t$z$zzz,000000,0,$zz,10";
 ?>
 <!-------------
