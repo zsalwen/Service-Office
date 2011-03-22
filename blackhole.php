@@ -257,31 +257,31 @@ echo "<fieldset><legend>Slot 1: ".id2name($d[server_id])." #$d[server_id]</legen
 $q="SELECT DISTINCT server_ida from ps_packets where  affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY'$pkt and server_ida <> ''";
 $r=@mysql_query($q);
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-echo "<fieldset><legend>Slot 2: ".id2name($d[server_ida])." #$d[server_ida]</legend>".serverActiveLista($d[server_ida],'a',$_GET[packet])."</fieldset>";
+echo "<fieldset><legend>Slot 2: ".id2name($d[server_ida])." #$d[server_ida]</legend>".serverActiveList($d[server_ida],'a',$_GET[packet])."</fieldset>";
 }
 ?></td><td valign='top'><?
 $q="SELECT DISTINCT server_idb from ps_packets where  affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY'$pkt and server_idb <> ''";
 $r=@mysql_query($q);
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-echo "<fieldset><legend>Slot 3: ".id2name($d[server_idb])." #$d[server_idb]</legend>".serverActiveListb($d[server_idb],'b',$_GET[packet])."</fieldset>";
+echo "<fieldset><legend>Slot 3: ".id2name($d[server_idb])." #$d[server_idb]</legend>".serverActiveList($d[server_idb],'b',$_GET[packet])."</fieldset>";
 }
 ?></td><td valign='top'><?
 $q="SELECT DISTINCT server_idc from ps_packets where  affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY'$pkt and server_idc <> ''";
 $r=@mysql_query($q);
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-echo "<fieldset><legend>Slot 4: ".id2name($d[server_idc])." #$d[server_idc]</legend>".serverActiveListc($d[server_idc],'c',$_GET[packet])."</fieldset>";
+echo "<fieldset><legend>Slot 4: ".id2name($d[server_idc])." #$d[server_idc]</legend>".serverActiveList($d[server_idc],'c',$_GET[packet])."</fieldset>";
 }
 ?></td><td valign='top'><?
 $q="SELECT DISTINCT server_idd from ps_packets where  affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY'$pkt  and server_idd <> ''";
 $r=@mysql_query($q);
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-echo "<fieldset><legend>Slot 5: ".id2name($d[server_idd])." #$d[server_idd]</legend>".serverActiveListd($d[server_idd],'d',$_GET[packet])."</fieldset>";
+echo "<fieldset><legend>Slot 5: ".id2name($d[server_idd])." #$d[server_idd]</legend>".serverActiveList($d[server_idd],'d',$_GET[packet])."</fieldset>";
 }
 ?></td><td valign='top'><?
 $q="SELECT DISTINCT server_ide from ps_packets where  affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY'$pkt and server_ide <> ''";
 $r=@mysql_query($q);
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-echo "<fieldset><legend>Slot 6: ".id2name($d[server_ide])." #$d[server_ide]</legend>".serverActiveListe($d[server_ide],'e',$_GET[packet])."</fieldset>";
+echo "<fieldset><legend>Slot 6: ".id2name($d[server_ide])." #$d[server_ide]</legend>".serverActiveList($d[server_ide],'e',$_GET[packet])."</fieldset>";
 }
 ?></td></tr></table><tr><td>
 <center><div style="border-style:solid 1px; border-collapse:collapse; font-weight:bold; letter-spacing: 5px; background-color:99AAEE; width:800px;">EVICTIONS</div></center>
