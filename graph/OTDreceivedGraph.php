@@ -122,11 +122,11 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
         // Create and populate the data table.
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Date');
-        data.addColumn('number', 'All Files');
-        data.addColumn('number', 'Burson');
-        data.addColumn('number', 'White');
-        data.addColumn('number', 'BGW');
-        data.addColumn('number', 'Others');
+        data.addColumn('number', 'All Products');
+        data.addColumn('number', 'Presale');
+        data.addColumn('number', 'Eviction');
+        data.addColumn('number', 'Standard');
+        data.addColumn('number', 'Mail Only');
        <?=$js?>
         // Create and draw the visualization.
         new google.visualization.LineChart(document.getElementById('visualization')).
