@@ -7,7 +7,7 @@ header('Location: http://staff.mdwestserve.com/administrator/login.php');
 <?
 foreach (glob("modules/*.php") as $filename)
 {
-     echo "<td><a href='modules/$filename' target='box'>".strtoupper(str_replace('.php','',$filename))."</a></td>";
+     echo "<td><a href='$filename' target='box'>".strtoupper(str_replace('modules/','',str_replace('.php','',$filename)))."</a></td>";
 }
 ?>
 </tr></table>
