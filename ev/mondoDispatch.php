@@ -65,7 +65,7 @@ function makePackage($array1,$array2,$array3,$package_id){
 //	echo "Contractor Rate :: $array3[0]<br>";
 //	echo "for file id's (the foreach loop went here) :: ";
 	foreach ($array1 as $id) {
-		checkPay($id,'OTD');
+		checkPay($id,'EV');
 		packageFile($package_id,$id,$array2[0],$array3[0]);
 		//echo "$id ";
 	}
