@@ -403,10 +403,24 @@ function Sfill($today,$court){
 		echo "</div>";
 	}
 }
+function next_weekday($timestamp = NULL) {
+	if($timestamp === NULL) $timestamp = time();
+	$next = strtotime("midnight +1 day", $timestamp);
+	$d = getdate($next);
+	if($d['wday'] == 0 || $d['wday'] == 6) $next = strtotime("midnight next monday", $timestamp);
+	return $next;
+} 
 function dailyContainer($today){
 	$i=0;
 	$court=getCounties($today);
-	echo "<div style='background-color:#FFFF00;' align='center'><b>$today</b></div>";
+	if ($today == date('Y-m-d')){
+		$bgcolor="#FF0000;";
+	}elseif($today == getTomorrow()){
+		$bgcolor="#FFFF00";
+	}else{
+		$bgcolor="#00FF00";
+	}
+	echo "<div style='background-color:$bgcolor;' align='center'><b>$today</b></div>";
 	while ($i < count($court)){
 		$missingCases=0;
 		$missingList='';
@@ -536,7 +550,7 @@ if ($_GET[back]){
 $yesterday = date('Y-m-d', mktime(0, 0, 0, date("m") , date("d") - $back, date("Y")));
 $today = date('Y-m-d');
 
-
+echo"<script>alert('".next_weekday()."')</script>";
 
 ?>
 <form method="post">
