@@ -1196,7 +1196,7 @@ while ($d4=mysql_fetch_array($r4, MYSQL_ASSOC)){
 <?
 
 
-$directory = '/sandbox/staff/templates';
+$directory = '/gitbox/Service-Office/templates';
 
 
     // create an array to hold directory list
