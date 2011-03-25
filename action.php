@@ -73,11 +73,11 @@ $list='';
 $r=@mysql_query("SELECT client_file, case_no, packet_id, date_received, affidavit_status, process_status, server_id, attorneys_id, estFileDate FROM standard_packets WHERE process_status = 'IN PROGRESS' order by packet_id");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	$optest = 1;
-	$blink="> S$d[packet_id]";
+	$blink="";
 	if ($d[estFileDate] == '0000-00-00'){
-		$blink="style='text-decoration:blink; color:red;'> S$d[packet_id] <b>MISSING ESTFILEDATE</b>";
+		$blink=" <span style='text-decoration:blink; color:red;'><b>MISSING ESTFILEDATE</b></span>";
 	}
-	$list .= "<li><a target='_Blank' href='/standard/order.php?packet=$d[packet_id]'$blink $d[process_status]<br>".id2attorney($d[attorneys_id])." - ".id2name($d[server_id])."<br>($d[affidavit_status])</a></li>";
+	$list .= "<li><a target='_Blank' href='/standard/order.php?packet=$d[packet_id]'>S$d[packet_id]."$blink."$d[process_status]<br>".id2attorney($d[attorneys_id])." - ".id2name($d[server_id])."<br>($d[affidavit_status])</a></li>";
 }
 if ($list != ''){
 	echo "<td valign='top'><div class='title4'><b>Open Std. Services</b><ol>$list</ol></div></td>";
