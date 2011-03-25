@@ -23,7 +23,7 @@ setcookie ("admin[level]", $data[level], $inEightHours, "/", ".mdwestserve.com")
 //if ($data[level] != "Operations"){
 //header ('Location: http://mdwestserve.com');
 //}else{
-header ('Location: index.php');
+//header ('Location: index.php');
 //}
 }
 
