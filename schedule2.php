@@ -405,7 +405,7 @@ function Sfill($today,$court){
 }
 function dailyContainer($today){
 	$i=0;
-	$court=getCounties($today)
+	$court=getCounties($today);
 	echo "<div style='background-color:#FFFF00;' align='center'><b>$today</b></div>";
 	while ($i < count($court)){
 		$missingCases=0;
