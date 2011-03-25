@@ -11,4 +11,4 @@ foreach (glob("modules/*.php") as $filename)
 }
 ?>
 </tr></table>
-<center><iframe name="box" id ="box" style="width:99%; height:99%;"></iframe></center>
+<center><iframe name="box" id ="box" style="width:90%; height:90%;"></iframe></center>
