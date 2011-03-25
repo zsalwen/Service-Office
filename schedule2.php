@@ -757,7 +757,7 @@ SdailyList($d99[estFileDate]);
 echo '</td>';
 }*/
 $i=0;
-$est=getEstFile($yesterday)
+$est=getEstFile($yesterday);
 while($i < count($est)){
 	dailyContainer($est["$i"]);
 	$i++;
