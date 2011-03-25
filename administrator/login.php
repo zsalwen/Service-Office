@@ -20,11 +20,11 @@ setcookie ("admin[name]", $data[name], $inEightHours, "/", ".mdwestserve.com");
 setcookie ("admin[tos_date]", $data[tos_date], $inEightHours, "/", ".mdwestserve.com");
 setcookie ("admin[email]", $data[email], $inEightHours, "/", ".mdwestserve.com");
 setcookie ("admin[level]", $data[level], $inEightHours, "/", ".mdwestserve.com");
-//if ($data[level] != "Operations"){
-//header ('Location: http://mdwestserve.com');
-//}else{
-//header ('Location: index.php');
-//}
+if ($data[level] != "Operations"){
+header ('Location: http://mdwestserve.com');
+}else{
+header ('Location: index.php');
+}
 }
 
 
