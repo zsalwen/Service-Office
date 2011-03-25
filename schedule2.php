@@ -546,8 +546,10 @@ if ($CCd[phone]){
 $i=0;
 $est=getEstFile($yesterday);
 while($i < count($est)){
-	echo "<script>alert('Getting info for ".$est["$i"]."')</script>";
+	//echo "<script>alert('Getting info for ".$est["$i"]."')</script>";
+	echo "<td>";
 	dailyContainer($est["$i"]);
+	echo "</td>";
 	$i++;
 }
 ?>
