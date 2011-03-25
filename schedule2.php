@@ -272,7 +272,7 @@ function OTDFill($today,$court){
 		echo ">";
 	?>
 	<input type="checkbox" name="otd[<?=$dx[packet_id]?>]">
-		<a href="/otd/order.php?packet=<?=$dx[packet_id]?>" target="_Blank">OTD<?=$dx[packet_id]?></a>
+		<a class="otd" href="/otd/order.php?packet=<?=$dx[packet_id]?>" target="_Blank">OTD<?=$dx[packet_id]?></a>
 		<? if ($d[rush] != ""){ echo "<b style='background-color:#FFBB00; color:000000; font-weight:bold;'>RUSH</b>";} ?>
 		<b style='color:#990000;'><?=strtoupper($dx[case_no]);?></b> <b style='color:#003377;'><?=getServer($dx[packet_id]);?></b>
 		<b style='color:#330077;'><?=$getCourier;?></b> <?=isActive($dx[service_status])?> 
@@ -305,7 +305,7 @@ function OTDmissing($today,$court){
 			$missingList[0] .= "'";
 		}
 		$missingList[0] .= "><input type='checkbox' name='otd[".$dx[packet_id]."]'>
-		<a href='/otd/order.php?packet=".$dx[packet_id]."' target='_Blank'>OTD".$dx[packet_id]."</a>
+		<a class='otd' href='/otd/order.php?packet=".$dx[packet_id]."' target='_Blank'>OTD".$dx[packet_id]."</a>
 		<b style='color:#003377;'>".getServer($dx[packet_id])."</b>
 		<b style='color:#330077;'>".getCourier($dx[packet_id])."</b> ".isActive($dx[service_status])." ".isActive($dx[process_status]);
 		if ($dx[fileDate] != "0000-00-00"){
@@ -353,7 +353,7 @@ function EVfill ($today,$court){
 	}
 ?>
 	><input type="checkbox" name="ev[<?=$dx[eviction_id]?>]">
-		<a href="/ev/order.php?packet=<?=$dx[eviction_id]?>" target="_Blank">EV<?=$dx[eviction_id]?></a> 
+		<a class="ev" href="/ev/order.php?packet=<?=$dx[eviction_id]?>" target="_Blank">EV<?=$dx[eviction_id]?></a> 
 		<b style='color:#990000;'><?=strtoupper($dx[case_no]);?></b> 
 		<b style='color:#003377;'><?=getEVServer($dx[eviction_id]);?></b> 
 		<b style='color:#330077;'><?=$getEVCourier;?></b> 
@@ -389,7 +389,7 @@ function Sfill($today,$court){
 	}
 	?>
 	><input type="checkbox" name="s[<?=$dx[packet_id]?>]">
-		<a href="/standard/order.php?packet=<?=$dx[packet_id]?>" target="_Blank">S<?=$dx[packet_id]?></a> 
+		<a class="s" href="/standard/order.php?packet=<?=$dx[packet_id]?>" target="_Blank">S<?=$dx[packet_id]?></a> 
 		<b style='color:#990000;'><?=strtoupper($dx[case_no]);?></b> 
 		<b style='color:#003377;'><?=getSServer($dx[packet_id]);?></b> 
 		<b style='color:#330077;'><?=$getSCourier;?></b> 
@@ -425,7 +425,7 @@ function dailyContainer($today){
 		$missingCases=$missing[1];
 		if ($missingCases > 0){
 			echo "<div style='display:none;' id='List".$_SESSION[inc]."'>$missingList</div>";
-			echo "<div style='background-color:#ffffff; color:red;' onclick=\"hideshow(document.getElementById('List".$_SESSION[inc]."'))\">$missingCases Files Missing Case Numbers</div>";
+			echo "<div style='background-color:#ffffff; color:red;' onclick=\"hideshow(document.getElementById('List".$_SESSION[inc]."'))\">$missingCases OTD Files Missing Case Numbers</div>";
 		}
 		echo "</div></fieldset>";
 		$i++;
@@ -494,7 +494,27 @@ a
 		border:solid 1px #999999;
 		padding:2px;
 		}
-		
+a.otd
+		{
+		width:200px;
+		border:solid 1px #999999;
+		padding:2px;
+		background-color:#FFFF00;
+		}
+a.ev
+		{
+		width:200px;
+		border:solid 1px #999999;
+		padding:2px;
+		background-color:#00FFFF;
+		}
+a.s
+		{
+		width:200px;
+		border:solid 1px #999999;
+		padding:2px;
+		background-color:#FF0000;
+		}
 b
 		{
 		width:200px;
