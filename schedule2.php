@@ -547,7 +547,7 @@ $i=0;
 $est=getEstFile($yesterday);
 while($i < count($est)){
 	//echo "<script>alert('Getting info for ".$est["$i"]."')</script>";
-	echo "<td>";
+	echo "<td valign='top'>";
 	dailyContainer($est["$i"]);
 	echo "</td>";
 	$i++;
