@@ -230,7 +230,229 @@ function standardCourt($str){
 		return strtoupper($str);
 	}
 }
- function dailyList($today){
+function getCounties($today){
+	$i=0;
+	$r=@mysql_query("select DISTINCT circuit_court from ps_packets where estFileDate = '$today' and status <> 'CANCELLED' and service_status <> 'MAIL ONLY' order by circuit_court ");
+	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+		$list["$i"] = $d[circuit_court];
+		$exclude .= " AND circuit_court <> '$d[circuit_court]'";
+		$i++;
+	}
+	$r=@mysql_query("select DISTINCT circuit_court from evictionPackets where estFileDate = '$today' and status <> 'CANCELLED' and case_no <> ''$exclude order by circuit_court");
+	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+		$list["$i"] = $d[circuit_court];
+		$exclude .= " AND circuit_court <> '$d[circuit_court]'";
+		$i++;
+	}
+	$r=@mysql_query("select DISTINCT circuit_court from standard_packets where estFileDate = '$today' and status <> 'CANCELLED' and case_no <> ''$exclude order by circuit_court  ");
+	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+		$list["$i"] = $d[circuit_court];
+		$i++;
+	}
+	return sort($list);
+}
+function OTDFill($today,$court){
+	$x=@mysql_query("select packet_id, date_received, case_no, fileDate, service_status, process_status, filing_status, attorneys_id, server_id, rush from ps_packets where estFileDate = '$today' AND circuit_court = '$court' and status <> 'CANCELLED' and fileDate = '0000-00-00' and service_status <> 'MAIL ONLY' AND case_no <> ''");
+	while ($dx=mysql_fetch_array($x,MYSQL_ASSOC)){
+		echo "<div ";
+		$getCourier='';
+		$getCourier=getCourier($dx[packet_id]);
+		if ($getCourier == 'DO NOT FILE!'){
+			echo "style='background-color:#FFcccc; ";
+		}else{
+			echo "style='background-color:#ccFFcc; ";
+		}
+
+		if ($getCourier == ' !!!MISSING!!! '){
+			echo "text-decoration: blink;'";
+		}else{
+			echo "'";
+		}
+		echo ">";
+	?>
+	<input type="checkbox" name="otd[<?=$dx[packet_id]?>]">
+		<a href="/otd/order.php?packet=<?=$dx[packet_id]?>" target="_Blank">OTD<?=$dx[packet_id]?></a>
+		<? if ($d[rush] != ""){ echo "<b style='background-color:#FFBB00; color:000000; font-weight:bold;'>RUSH</b>";} ?>
+		<b style='color:#990000;'><?=strtoupper($dx[case_no]);?></b> <b style='color:#003377;'><?=getServer($dx[packet_id]);?></b>
+		<b style='color:#330077;'><?=$getCourier;?></b> <?=isActive($dx[service_status])?> 
+		<?=isActive($dx[process_status])?> 
+		<? 	if ($dx[fileDate] != "0000-00-00"){ echo "<b style='color:#009900;'>FILE CLOSED ON ".$dx[fileDate]."</b>"; }
+			elseif($dx[filing_status] == "PREP TO FILE" && !withCourier($dx[packet_id]) && !clientFile($dx[attorneys_id]) && !serverFile($dx[server_id]) ){ echo "<b style='color:#00cc00;'>Ready for courier.</b>"; }
+			elseif($dx[filing_status] == "PREP TO FILE" && !withCourier($dx[packet_id]) && !clientFile($dx[attorneys_id]) && serverFile($dx[server_id]) ){ echo "<b style='color:#00cc00;'>Ready to send to server to file.</b>"; }
+			elseif($dx[filing_status] == "PREP TO FILE" && !withCourier($dx[packet_id]) && clientFile($dx[attorneys_id]) && !serverFile($dx[server_id]) ){ echo "<b style='color:#00cc00;'>Ready to send to client to file.</b>"; }
+			elseif(withCourier($dx[packet_id])){ echo withCourier($dx[packet_id]); }
+			else{ echo startPrep($dx[packet_id]);}?></div><?
+	}
+}
+function OTDmissing($today,$court){
+	$x=@mysql_query("select packet_id, date_received, case_no, fileDate, service_status, process_status, filing_status, attorneys_id, server_id, rush from ps_packets where estFileDate = '$today' AND circuit_court = '$court' and status <> 'CANCELLED' and fileDate = '0000-00-00' and service_status <> 'MAIL ONLY' AND case_no = ''");
+	while ($dx=mysql_fetch_array($x,MYSQL_ASSOC)){
+		$missingCases++;
+		$listNum++;
+		$_SESSION[inc] = $_SESSION[inc]+1;
+		$missingList[0] .= '<div ';
+		$getCourier='';
+		$getCourier=getCourier($dx[packet_id]);
+		if ($getCourier == 'DO NOT FILE!'){
+			$missingList[0] .= "style='background-color:#FFcccc; ";
+		}else{
+			$missingList[0] .= "style='background-color:#ccFFcc; ";
+		}
+
+		if ($getCourier == ' !!!MISSING!!! '){
+			$missingList[0] .= "text-decoration: blink;'";
+		}else{
+			$missingList[0] .= "'";
+		}
+		$missingList[0] .= "><input type='checkbox' name='otd[".$dx[packet_id]."]'>
+		<a href='/otd/order.php?packet=".$dx[packet_id]."' target='_Blank'>OTD".$dx[packet_id]."</a>
+		<b style='color:#003377;'>".getServer($dx[packet_id])."</b>
+		<b style='color:#330077;'>".getCourier($dx[packet_id])."</b> ".isActive($dx[service_status])." ".isActive($dx[process_status]);
+		if ($dx[fileDate] != "0000-00-00"){
+			$missingList[0] .= "<b style='color:#009900;'>FILE CLOSED ON ".$dx[fileDate]."</b>";
+		}
+		elseif($dx[filing_status] == "PREP TO FILE" && !withCourier($dx[packet_id]) && !clientFile($dx[attorneys_id]) && !serverFile($dx[server_id]) ){
+			$missingList[0] .= "<b style='color:#00cc00;'>Ready for courier.</b>";
+		}
+		elseif($dx[filing_status] == "PREP TO FILE" && !withCourier($dx[packet_id]) && !clientFile($dx[attorneys_id]) && serverFile($dx[server_id]) ){
+			$missingList[0] .= "<b style='color:#00cc00;'>Ready to send to server to file.</b>";
+		}
+		elseif($dx[filing_status] == "PREP TO FILE" && !withCourier($dx[packet_id]) && clientFile($dx[attorneys_id]) && !serverFile($dx[server_id]) ){
+			$missingList[0] .= "<b style='color:#00cc00;'>Ready to send to client to file.</b>";
+		}
+		elseif(withCourier($dx[packet_id])){
+			$missingList[0] .= withCourier($dx[packet_id]);
+		}else{
+			$missingList[0] .= startPrep($dx[packet_id]);
+		}
+		$missingList[0] .= "</div>";
+	}
+	$missingList[1]=$missingCases++;
+	return $missingList;
+}
+function EVfill ($today,$court){
+	$x=@mysql_query("select eviction_id, date_received, case_no, fileDate, service_status, process_status, filing_status, attorneys_id, server_id from evictionPackets where estFileDate = '$today' AND circuit_court = '$court' and status <> 'CANCELLED' and case_no <> '' and fileDate = '0000-00-00'");
+	//$count=mysql_num_rows($x);
+	while ($dx=mysql_fetch_array($x,MYSQL_ASSOC)){
+	?><div    
+	<?
+	$missingList='';
+	$getEVCourier='';
+	$getEVCourier=getEVCourier($dx[eviction_id]);
+	if ($getEVCourier == 'DO NOT FILE!'){
+		$missingList .=  "background-color:#FFcccc;";
+	}else{
+		$missingList .=  "background-color:#ccFFcc;";
+	}
+
+	if (trim($getEVCourier) == '!!!MISSING!!!'){
+		$missingList .= "text-decoration: blink;";
+	}
+	if ($missingList != ''){
+		echo "style='$missingList'";
+	}
+?>
+	><input type="checkbox" name="ev[<?=$dx[eviction_id]?>]">
+		<a href="/ev/order.php?packet=<?=$dx[eviction_id]?>" target="_Blank">EV<?=$dx[eviction_id]?></a> 
+		<b style='color:#990000;'><?=strtoupper($dx[case_no]);?></b> 
+		<b style='color:#003377;'><?=getEVServer($dx[eviction_id]);?></b> 
+		<b style='color:#330077;'><?=$getEVCourier;?></b> 
+		<?=isActive($dx[service_status])?> 
+		<? 	if ($dx[fileDate] != "0000-00-00"){ echo "<b style='color:#009900;'>FILE CLOSED ON ".$dx[fileDate]."</b>"; }
+		elseif($dx[filing_status] == "PREP TO FILE" && !EVwithCourier($dx[eviction_id]) && !clientFile($dx[attorneys_id]) && !serverFile($dx[server_id]) ){ echo "<b style='color:#00cc00;'>Ready for courier.</b>"; }
+		elseif($dx[filing_status] == "PREP TO FILE" && !EVwithCourier($dx[eviction_id]) && !clientFile($dx[attorneys_id]) && serverFile($dx[server_id]) ){ echo "<b style='color:#00cc00;'>Ready to send to server to file.</b>"; }
+		elseif($dx[filing_status] == "PREP TO FILE" && !EVwithCourier($dx[eviction_id]) && clientFile($dx[attorneys_id]) && !serverFile($dx[server_id]) ){ echo "<b style='color:#00cc00;'>Ready to send to client to file.</b>"; }
+		elseif(EVwithCourier($dx[eviction_id])){ echo EVwithCourier($dx[eviction_id]);}
+		else{ echo startPrep('EV'.$dx[eviction_id]);}
+		echo "</div>";
+	}
+}
+function Sfill($today,$court){
+	$x=@mysql_query("select packet_id, date_received, case_no, fileDate, service_status, process_status, filing_status, attorneys_id, server_id from standard_packets where estFileDate = '$today' AND circuit_court = '$court' and status <> 'CANCELLED' and case_no <> '' and fileDate = '0000-00-00'");
+	//$count=mysql_num_rows($x);
+	while ($dx=mysql_fetch_array($x,MYSQL_ASSOC)){
+	?><div    
+	<?
+	$missingList='';
+	$getSCourier='';
+	$getSCourier=getSCourier($dx[packet_id]);
+	if (trim($getSCourier) == 'DO NOT FILE!'){
+		$missingList .=  "background-color:#FFcccc;";
+	}else{
+		$missingList .=  "background-color:#ccFFcc;";
+	}
+	if (trim($getSCourier) == '!!!MISSING!!!'){
+		$missingList .= "text-decoration: blink;";
+	}
+	if ($missingList != ''){
+		echo "style='$missingList'";
+	}
+	?>
+	><input type="checkbox" name="s[<?=$dx[packet_id]?>]">
+		<a href="/standard/order.php?packet=<?=$dx[packet_id]?>" target="_Blank">S<?=$dx[packet_id]?></a> 
+		<b style='color:#990000;'><?=strtoupper($dx[case_no]);?></b> 
+		<b style='color:#003377;'><?=getSServer($dx[packet_id]);?></b> 
+		<b style='color:#330077;'><?=$getSCourier;?></b> 
+		<?=isActive($dx[service_status])?> 
+	<? 	if ($dx[fileDate] != "0000-00-00"){ echo "<b style='color:#009900;'>FILE CLOSED ON ".$dx[fileDate]."</b>"; }
+		elseif($dx[filing_status] == "PREP TO FILE" && !SwithCourier($dx[packet_id]) && !clientFile($dx[attorneys_id]) && !serverFile($dx[server_id]) ){ echo "<b style='color:#00cc00;'>Ready for courier.</b>"; }
+		elseif($dx[filing_status] == "PREP TO FILE" && !SwithCourier($dx[packet_id]) && !clientFile($dx[attorneys_id]) && serverFile($dx[server_id]) ){ echo "<b style='color:#00cc00;'>Ready to send to server to file.</b>"; }
+		elseif($dx[filing_status] == "PREP TO FILE" && !SwithCourier($dx[packet_id]) && clientFile($dx[attorneys_id]) && !serverFile($dx[server_id]) ){ echo "<b style='color:#00cc00;'>Ready to send to client to file.</b>"; }
+		elseif(SwithCourier($dx[packet_id])){ echo SwithCourier($dx[packet_id]);}
+		else{ echo startPrep('S'.$dx[packet_id]);}
+		echo "</div>";
+	}
+}
+function dailyContainer($today){
+	$i=0;
+	$court=getCounties($today)
+	echo "<div style='background-color:#FFFF00;' align='center'><b>$today</b></div>";
+	while ($i < count($court)){
+		$missingCases=0;
+		$missingList='';
+		?>
+		<fieldset>
+			<legend onClick="hideshow(document.getElementById('OTD<?=str_replace(' ','',$court["$i"])?><?=str_replace('-','',$today);?>'));" ><?=$court["$i"]?></legend>
+			<div id="<?=str_replace(' ','',$court["$i"])?><?=str_replace('-','',$today);?>" name="<?=str_replace(' ','',$court["$i"])?><?=str_replace('-','',$today);?>" >
+		<?
+		//run OTD, EV, and S lists
+		OTDfill($today,$court["$i"]);
+		EVfill($today,$court["$i"]);
+		Sfill($today,$court["$i"]);
+		//run missing case # lists
+		$missing=OTDmissing($today,$court["$i"]);
+		$missingList=$missing[0];
+		$missingCases=$missing[1];
+		if ($missingCases > 0){
+			echo "<div style='display:none;' id='List".$_SESSION[inc]."'>$missingList</div>";
+			echo "<div style='background-color:#ffffff; color:red;' onclick=\"hideshow(document.getElementById('List".$_SESSION[inc]."'))\">$missingCases Files Missing Case Numbers</div>";
+		}
+		echo "</div></fieldset>";
+		$i++;
+	}
+}
+function getEstFile($yesterday){
+	$i=0;
+	$r=@mysql_query("select distinct estFileDate from ps_packets where estFileDate > '$yesterday' order by estFileDate");
+	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+		$list["$i"] = $d[estFileDate];
+		$exclude .= " AND estFileDate <> '$d[estFileDate]'";
+		$i++;
+	}
+	$r=@mysql_query("select distinct estFileDate from evictionPackets where estFileDate > '$yesterday'$exclude order by estFileDate");
+	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+		$list["$i"] = $d[estFileDate];
+		$exclude .= " AND estFileDate <> '$d[estFileDate]'";
+		$i++;
+	}
+	$r=@mysql_query("select distinct estFileDate from standard_packets where estFileDate > '$yesterday'$exclude order by estFileDate");
+	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+		$list["$i"] = $d[estFileDate];
+		$i++;
+	}
+	return ksort($list);
+}
+/*function OTDdailyList($today){
 	$r=@mysql_query("select DISTINCT circuit_court from ps_packets where estFileDate = '$today' and status <> 'CANCELLED' and service_status <> 'MAIL ONLY' order by circuit_court ");
 	?>
 
@@ -329,7 +551,8 @@ function standardCourt($str){
 		<?
 	}
 }// end function
-function dailyList2($today){
+
+function EVdailyList($today){
 	$r=@mysql_query("select DISTINCT circuit_court from evictionPackets where estFileDate = '$today' and status <> 'CANCELLED' and case_no <> '' order by circuit_court  ");
 	?><div style='background-color:#00FFFF;' align="center"><b>EV<?=$today;?></b></div><?
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
@@ -377,7 +600,8 @@ function dailyList2($today){
 		<?
 	}
 }// end function
-function dailyList3($today){
+
+function SdailyList($today){
 	$r=@mysql_query("select DISTINCT circuit_court from standard_packets where estFileDate = '$today' and status <> 'CANCELLED' and case_no <> '' order by circuit_court  ");
 	?><div style='background-color:#FF0000;' align="center"><b>S<?=$today;?></b></div><?
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
@@ -424,7 +648,7 @@ function dailyList3($today){
 	<?
 	}
 }// end function
-
+*/
 hardLog('Post-Service Schedule','user');
 
 
@@ -512,25 +736,31 @@ if ($CCd[phone]){
 
 <tr style="background-color:transparent;">
 <?
-$r99=@mysql_query("select distinct estFileDate from evictionPackets where estFileDate > '$yesterday' order by estFileDate");
+/*$r99=@mysql_query("select distinct estFileDate from evictionPackets where estFileDate > '$yesterday' order by estFileDate");
 while($d99=mysql_fetch_array($r99,MYSQL_ASSOC)){
 echo '<td valign="top">';
-dailyList2($d99[estFileDate]);
+EVdailyList($d99[estFileDate]);
 echo '</td>';
 }
 
 $r99=@mysql_query("select distinct estFileDate from ps_packets where estFileDate > '$yesterday' order by estFileDate ");
 while($d99=mysql_fetch_array($r99,MYSQL_ASSOC)){
 echo '<td valign="top">';
-dailyList($d99[estFileDate]);
+OTDdailyList($d99[estFileDate]);
 echo '</td>';
 }
 
 $r99=@mysql_query("select distinct estFileDate from standard_packets where estFileDate > '$yesterday' order by estFileDate ");
 while($d99=mysql_fetch_array($r99,MYSQL_ASSOC)){
 echo '<td valign="top">';
-dailyList3($d99[estFileDate]);
+SdailyList($d99[estFileDate]);
 echo '</td>';
+}*/
+$i=0;
+$est=getEstFile($yesterday)
+while($i < count($est)){
+	dailyContainer($est["$i"]);
+	$i++;
 }
 ?>
 </tr>
