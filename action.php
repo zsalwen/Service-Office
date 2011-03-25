@@ -77,7 +77,7 @@ while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	if ($d[estFileDate] == '0000-00-00'){
 		$blink=" <span style='text-decoration:blink; color:red;'><b>MISSING ESTFILEDATE</b></span>";
 	}
-	$list .= "<li><a target='_Blank' href='/standard/order.php?packet=$d[packet_id]'>S$d[packet_id]."$blink."$d[process_status]<br>".id2attorney($d[attorneys_id])." - ".id2name($d[server_id])."<br>($d[affidavit_status])</a></li>";
+	$list .= "<li><a target='_Blank' href='/standard/order.php?packet=$d[packet_id]'>S$d[packet_id]".$blink."$d[process_status]<br>".id2attorney($d[attorneys_id])." - ".id2name($d[server_id])."<br>($d[affidavit_status])</a></li>";
 }
 if ($list != ''){
 	echo "<td valign='top'><div class='title4'><b>Open Std. Services</b><ol>$list</ol></div></td>";
