@@ -415,7 +415,7 @@ function dailyContainer($today){
 	$court=getCounties($today);
 	if ($today == date('Y-m-d')){
 		$bgcolor="#FF0000;";
-	}elseif($today == getTomorrow()){
+	}elseif($today == date('Y-m-d',next_weekday())){
 		$bgcolor="#FFFF00";
 	}else{
 		$bgcolor="#00FF00";
@@ -549,8 +549,6 @@ if ($_GET[back]){
 }
 $yesterday = date('Y-m-d', mktime(0, 0, 0, date("m") , date("d") - $back, date("Y")));
 $today = date('Y-m-d');
-
-echo"<script>alert('".next_weekday()."')</script>";
 
 ?>
 <form method="post">
