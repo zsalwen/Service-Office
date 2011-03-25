@@ -1,4 +1,5 @@
 <?
+$timer_start = str_replace(" ","",microtime());
 session_start();
 include 'security.php';
 include 'functions-calendar.php';
@@ -544,4 +545,8 @@ echo '</td>';
 </form>
 <?
 include 'footer.php';
+$timer_end = str_replace(" ","",microtime());
+$timer_diff = number_format($timer_end-$timer_start,6,'.','');
+if($timer_diff<0) $timer_diff = "0.00";
+echo "<div id='load-time' style='font-family: verdana; font-size: 8pt; color: #444444; text-align: center'>Page load time: <b>$timer_diff</b> second</div>";
 ?><script>document.title='Post-Service Schedule'</script>
