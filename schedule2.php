@@ -249,7 +249,8 @@ function getCounties($today){
 		$list["$i"] = $d[circuit_court];
 		$i++;
 	}
-	return sort($list);
+	sort($list);
+	return $list;
 }
 function OTDFill($today,$court){
 	$x=@mysql_query("select packet_id, date_received, case_no, fileDate, service_status, process_status, filing_status, attorneys_id, server_id, rush from ps_packets where estFileDate = '$today' AND circuit_court = '$court' and status <> 'CANCELLED' and fileDate = '0000-00-00' and service_status <> 'MAIL ONLY' AND case_no <> ''");
@@ -450,7 +451,8 @@ function getEstFile($yesterday){
 		$list["$i"] = $d[estFileDate];
 		$i++;
 	}
-	return ksort($list);
+	ksort($list);
+	return $list;
 }
 
 hardLog('Post-Service Schedule','user');
