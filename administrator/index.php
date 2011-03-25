@@ -3,7 +3,7 @@ if (!$_COOKIE[admin][name]){
 header('Location: http://staff.mdwestserve.com/administrator/login.php');
 }
 ?>
-<table width="100%"><tr>
+<table align="center"><tr><td>Auto-loaded Modules</td> 
 <?
 foreach (glob("modules/*.php") as $filename)
 {
