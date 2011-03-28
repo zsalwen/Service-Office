@@ -8,6 +8,9 @@ if($_GET[macro]=='1'){
 @mysql_query("delete from apacheErrors where message LIKE  '%patrick%' ");
 @mysql_query("delete from apacheErrors where message LIKE  '%hosting%' ");
 }
+if($_GET[macro]=='2'){ 
+@mysql_query("delete from apacheErrors where message LIKE  '%thirdParty%' ");
+}
 if($_GET[zach]){ @mysql_query("update apacheErrors set status = 'Talk to Zach'  where id = '$_GET[zach]' "); }
 if($_GET[runner]){ @mysql_query("update apacheErrors set status = 'Talk to Runner'  where id = '$_GET[runner]' "); }
 if($_GET[patrick]){ @mysql_query("update apacheErrors set status = 'Talk to Patrick'  where id = '$_GET[patrick]' "); }
@@ -31,7 +34,11 @@ while($d=mysql_fetch_array($r,MYSQL_ASSOC)){ ?>
 </tr>
 <? } ?>
 </table>
-<div>Most Occurring Errors (Limited by Search) <a href="?clear=1">Clear All 1 Count Errors</a> <a href="?macro=1">Clear Macro #1</a></div>
+<div>Most Occurring Errors (Limited by Search) 
+<a href="?clear=1">Clear All 1 Count Errors</a> 
+<a href="?macro=1">Clear Macro #1 [patrick]</a>
+<a href="?macro=2">Clear Macro #2 [thirdParty]</a>
+</div>
 <table border="1">
 <form>
 <tr>
