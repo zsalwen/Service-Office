@@ -552,7 +552,7 @@ $today = date('Y-m-d');
 
 ?>
 <form method="post">
-<div style='background-color:#cc6666;' align="center">
+<div style='background-color:#FF0000;' align="center">
 Courier: <select name="courier">
 <?
 $CCr=@mysql_query("select * from courier order by name DESC");
@@ -566,8 +566,7 @@ if ($CCd[phone]){
 <option value="<?=$CCd[courierID]?>"><?=$CCd[name]?><?=$phone?></option>
 <? }?></select>
 <input type="submit" value="Set as courier">
-</div>
-<div style='background-color:#ff0000;' align="center">!!! ONLY SET IF CHANGING DATE !!! <input name="newEst"> !!! YYYY-MM-DD !!!</div>
+!!! ONLY SET IF CHANGING DATE: <input name="newEst"> !!! YYYY-MM-DD !!!</div>
 <table>
 
 
