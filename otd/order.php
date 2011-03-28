@@ -417,11 +417,11 @@ function fileDate($date){
 	return date('n/j/y',$date); 
 }
 
-function colorCode2($hours){
+function colorCode2($hours,$status){
 	if ($hours <= 0){ return "000000; color:FFFFFF !important;"; }
 	if ($hours > 0 && $hours <= 24){ return "FF0000; color:000000 !important;"; }
 	if ($hours > 24 && $hours <= 48){ return "FFFF00; color:000000 !important;"; }
-	if ($hours > 48){ return "00FF00; color:000000 !important;"; }
+	if ($hours > 48 || $status == 'SERVICE COMPLETED'){ return "00FF00; color:000000 !important;"; }
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 $id=$_COOKIE[psdata][user_id];
@@ -1025,7 +1025,7 @@ $estHours=($d[estHours]*24)-date('G');
 <? if(!$d[caseVerify]){ ?> <a href="validateCase.php?case=<?=$d[case_no]?>&packet=<?=$d[packet_id]?>&county=<?=$d[circuit_court]?>" target="preview">!!!Verify Case Number!!!</a><? }else{ ?><img src="http://www.courts.state.md.us/newlogosm.gif"><br>Verified by <? echo $d[caseVerify]; }?>
 </td><td align="center">
 <? if(!$d[qualityControl]){ ?> <a href="entryVerify.php?packet=<?=$d[packet_id]?><? if ($d[service_status] == 'MAIL ONLY'){ echo '&matrix=1';} ?>&frame=no" target="preview">!!!Verify Data Entry!!!</a><? }else{ ?><img src="http://staff.mdwestserve.com/small.logo.gif" height="41" width="41"><br>Verified by <? echo $d[qualityControl]; }?>
-</td><td align="center"><div style="font-size:15pt" ><?=$hours?> Hours || <?=$days?> Days<br><span style='background-color:<?=colorCode2($estHours)?>'>Serve Due: <?=$estFileDate?></span><div></td></tr></table>
+</td><td align="center"><div style="font-size:15pt" ><?=$hours?> Hours || <?=$days?> Days<br><span style='background-color:<?=colorCode2($estHours,$d[process_status])?>'>Serve Due: <?=$estFileDate?></span><div></td></tr></table>
 </div>
 <? if ($d[possibleDuplicate]){?>
 <div style="background-color:#ff0000" align="center">Duplicate Warning Level: <?=$d[possibleDuplicate]?></div>
