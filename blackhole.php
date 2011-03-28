@@ -312,8 +312,7 @@ $r=@mysql_query($q);
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 echo "<fieldset><legend>Slot 6: ".id2name($d[server_ide])." #$d[server_ide]</legend>".serverActiveList($d[server_ide],'e',$_GET[packet])."</fieldset>";
 }
-?></td></tr></table><tr><td>
-<center><div style="border-style:solid 1px; border-collapse:collapse; font-weight:bold; letter-spacing: 5px; background-color:99AAEE; width:800px;">EVICTIONS</div></center>
+?></td></tr></table>
 </td></tr><tr><td>
 <center><div style="border-style:solid 1px; border-collapse:collapse; font-weight:bold; letter-spacing: 5px;background-color:CC66BB; width:800px;">MAIL ONLY</div></center>
 <table><tr><td valign='top'><?
