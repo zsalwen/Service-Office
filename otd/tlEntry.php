@@ -17,7 +17,7 @@ function talk($to,$message){
 }
 
 function timeline($id,$note){
-  		@mysql_query("insert into explorer (date,date_time,user,packet,uri) values (NOW(),NOW(),'".$_COOKIE[psdata][name]."','C$id','$note')") or die(mysql_error());
+  		@mysql_query("insert into explorer (date,date_time,user,packet,uri) values (NOW(),NOW(),'".$_COOKIE[psdata][name]."','C$id','".addslashes($note)."')") or die(mysql_error());
 
  	error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($id)."] [".trim($note)."] \n", 3, '/logs/timeline.log');
 	//talk('insidenothing@gmail.com',"$note for presale packet $id");
