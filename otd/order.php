@@ -418,10 +418,14 @@ function fileDate($date){
 }
 
 function colorCode2($hours,$status){
-	if ($hours <= 0){ return "000000; color:FFFFFF !important;"; }
-	if ($hours > 0 && $hours <= 24){ return "FF0000; color:000000 !important;"; }
-	if ($hours > 24 && $hours <= 48){ return "FFFF00; color:000000 !important;"; }
-	if ($hours > 48 || $status == 'SERVICE COMPLETED'){ return "00FF00; color:000000 !important;"; }
+	if ($status != 'SERVICE COMPLETED'){
+		if ($hours <= 0){ return "000000; color:FFFFFF !important;"; }
+		if ($hours > 0 && $hours <= 24){ return "FF0000; color:000000 !important;"; }
+		if ($hours > 24 && $hours <= 48){ return "FFFF00; color:000000 !important;"; }
+		if ($hours > 48){ return "00FF00; color:000000 !important;"; }
+	}else{
+		return "00FF00; color:000000 !important;";
+	}
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 $id=$_COOKIE[psdata][user_id];
