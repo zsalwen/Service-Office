@@ -270,7 +270,7 @@ echo "<fieldset><legend>Slot 1: ".id2name($d[server_id])." #$d[server_id]</legen
 <style>
 body { padding:0px; margin:0px; margin-left:10px;}
 fieldset {font-size:12px; padding:0px; background-color:#CCCCCC}
-legend { border:solid 1px; padding-left:0px; padding-right:0px; background-color:#66CCFF; }
+legend { border:solid 1px; padding-left:5px; padding-right:5px; background-color:#66CCFF; }
 ol { padding:0px;}
 li { border-bottom:solid 1px #CCCCCC; }
 a {font-size:none; text-decoration:none; font-weight:bold;}
