@@ -270,12 +270,12 @@ background-color:#6699CC; background-repeat: no-repeat; }
 <table><tr><td valign="top">
 <form>Only display packets below: <input name='packet' <? if ($_GET[packet]){echo "value='".$_GET[packet]."'";}else{ echo "value='0'";}?>> <input type="submit" value="Go"></form>
 </td></tr><tr><td>
-<center><div style="border-style:solid 1px; border-collapse:collapse; font-weight:bold; letter-spacing: 5px;background-color:00BBAA; width:800px;">FORECLOSURES</div></center>
 <table><tr><td valign='top'><?
 $i=0;
 $servers=getServers($_GET[packet]);
 while ($i < count($servers)){
 	echo "<fieldset><legend>Slot 1: ".id2name($servers["$i"])." #".$servers["$i"]."</legend>".serverActiveList($servers["$i"],'',$_GET[packet]).evictionActiveList($servers["$i"],$_GET[packet])."</fieldset>";
+	$i++;
 }
 /*$q="SELECT DISTINCT server_id from ps_packets where affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY'$pkt";
 $r=@mysql_query($q);
