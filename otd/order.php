@@ -424,7 +424,7 @@ function colorCode2($hours,$status){
 		if ($hours > 24 && $hours <= 48){ return "FFFF00; color:000000 !important;"; }
 		if ($hours > 48){ return "00FF00; color:000000 !important;"; }
 	}else{
-		return "00FF00; color:000000 !important;";
+		return "FFFFFF; color:000000 !important;";
 	}
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
