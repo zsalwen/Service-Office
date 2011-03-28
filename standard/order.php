@@ -206,6 +206,13 @@ function fileDate($date){
 	return date('n/j/y',$date); 
 }
 
+function colorCode2($hours){
+	if ($hours <= -24){ return "000000; color:FFFFFF !important;"; }
+	if ($hours > -24 && $hours <= 0){ return "FF0000; color:000000 !important;"; }
+	if ($hours > 0 && $hours <= 24){ return "FFFF00; color:000000 !important;"; }
+	if ($hours > 48){ return "00FF00; color:000000 !important;"; }
+}
+
 if ($_POST[reopen]){
 	$r13=@mysql_query("select processor_notes, fileDate from standard_packets where packet_id = '$_GET[packet]'");
 	$d13=mysql_fetch_array($r13,MYSQL_ASSOC);
@@ -558,13 +565,13 @@ header ('Location: order.php?start='.$_GET[start]);
 
 
 if ($_GET[packet]){
-$r=@mysql_query("SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours FROM standard_packets where packet_id='$_GET[packet]'");
+$r=@mysql_query("SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours, DATEDIFF(estFileDate, CURDATE()) as estHours FROM standard_packets where packet_id='$_GET[packet]'");
 hardLog('loaded order for '.$_GET[packet],'user');
 }else{
 if($_GET[start]){
-$r=@mysql_query("SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours FROM standard_packets where status='NEW' and process_status <> 'CANCELLED' AND process_status <> 'DUPLICATE' AND process_status <> 'DAMAGED PDF' and process_status <> 'DUPLICATE/DIFF-PDF' and packet_id >= '$_GET[start]' order by packet_id ");
+$r=@mysql_query("SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours, DATEDIFF(estFileDate, CURDATE()) as estHours FROM standard_packets where status='NEW' and process_status <> 'CANCELLED' AND process_status <> 'DUPLICATE' AND process_status <> 'DAMAGED PDF' and process_status <> 'DUPLICATE/DIFF-PDF' and packet_id >= '$_GET[start]' order by packet_id ");
 }else{
-$r=@mysql_query("SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours FROM standard_packets where status='NEW' and process_status <> 'CANCELLED' and process_status <> 'DUPLICATE' AND process_status <> 'DAMAGED PDF' and process_status <> 'DUPLICATE/DIFF-PDF' order by RAND() ");
+$r=@mysql_query("SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours, DATEDIFF(estFileDate, CURDATE()) as estHours FROM standard_packets where status='NEW' and process_status <> 'CANCELLED' and process_status <> 'DUPLICATE' AND process_status <> 'DAMAGED PDF' and process_status <> 'DUPLICATE/DIFF-PDF' order by RAND() ");
 $test55 = 1;
 }
 }
@@ -703,12 +710,13 @@ $deadline=date('F jS',$deadline);
 $estFileDate=fileDate($d[estFileDate]);
 $days=number_format((time()-$received)/86400,0);
 $hours=number_format((time()-$received)/3600,0);
+$estHours=($d[estHours]*24)-date('G');
 ?>
  </td><td align="center">
 <? if(!$d[caseVerify]){ ?> <a href="validateCase.php?case=<?=$d[case_no]?>&packet=<?=$d[packet_id]?>&county=<?=$d[circuit_court]?>" target="preview">!!!Verify Case Number!!!</a><? }else{ ?><img src="http://www.courts.state.md.us/newlogosm.gif"><br>Verified by <? echo $d[caseVerify]; }?>
 </td><td align="center">
 <? if(!$d[qualityControl]){ ?> <a href="entryVerify.php?packet=<?=$d[packet_id]?>&frame=no" target="preview">!!!Verify Data Entry!!!</a><? }else{ ?><img src="http://staff.mdwestserve.com/small.logo.gif" height="41" width="41"><br>Verified by <? echo $d[qualityControl]; }?>
-</td><td align="center"><div style="font-size:15pt" >Service <?=$days?> Days<br>Serve Due: <?=$estFileDate?><div></td></tr></table>
+</td><td align="center"><div style="font-size:15pt" >Service <?=$days?> Days<br><span style='background-color:<?=colorCode2($estHours)?>'>Serve Due: <?=$estFileDate?></span><div></td></tr></table>
 </div>
 <? if ($d[possibleDuplicate]){?>
 <div style="background-color:#ff0000" align="center">Duplicate Warning Level: <?=$d[possibleDuplicate]?></div>
