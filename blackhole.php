@@ -1,4 +1,6 @@
 <?
+date_default_timezone_set('America/New_York');
+include 'security.php';
 if($_SERVER["SERVER_NAME"] == "staff2.mdwestserve.com"){
 ini_set('mysql.default_host', '10.0.0.4');
 $thisDB = '10.0.0.4';
@@ -11,6 +13,8 @@ $thisDB = 'mdws1.mdwestserve.com';
 
 mysql_connect();
 mysql_select_db('core');
+$q="UPDATE ps_users SET location='".$_SERVER['PHP_SELF']."', online_now='".time()."' WHERE id = '".$_COOKIE[psdata][user_id]."'";
+@mysql_query($q);
 include '/gitbox/Service-Office/lock.php'; 
 
 function hardLog($str,$type){
