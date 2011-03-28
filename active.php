@@ -165,28 +165,28 @@ function serverActiveList($id,$letter){ $_SESSION[active]++;
 			$hours=$d[reopenHours]*24;
 			$reopenDate=explode('-',$d[reopenDate]);
 			$reopenDate=$reopenDate[1].'-'.$reopenDate[2];
-			$reopen = "<span style='background-color:#FFFFFF; color:000000 !important;'><small>ReO:&nbsp;$reopenDate</small></span>";
+			$reopen = " <span style='background-color:#FFFFFF; color:000000 !important;'><small>ReO:&nbsp;$reopenDate</small></span>";
 		}else{
 			$hours=stripHours($d[hours]);
 			$reopen='';
 		}
-		$reopen .= "<span style='background-color:#AAAAAA; color:FFFFFF;'>DISP:&nbsp;".justDate2($d[dispatchDate])."</span>";
+		$reopen .= " <span style='background-color:#AAAAAA; color:FFFFFF;'>DISP:&nbsp;".justDate2($d[dispatchDate])."</span>";
 		if ($d[avoidDOT] != ''){
-			$reopen .= "<span style='background-color:#000000; color:FF0000; border: 3px solid red; font-weight:bold;'>AvoidDOT</span>";
+			$reopen .= " <span style='background-color:#000000; color:FF0000; border: 3px solid red; font-weight:bold;'>AvoidDOT</span>";
 		}
 		if ($d)
 		$estFileDate=explode('-',$d[estFileDate]);
 		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-		$reopen .= "<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE:&nbsp;$estFileDate</span>";
+		$reopen .= " <span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE:&nbsp;$estFileDate</span>";
 		if ($d[rush] != ''){
-			$reopen .= "<span style='background-color:#000000; color:FF00FF; border: 3px solid black; font-weight:bold;'>RUSH</span>";
+			$reopen .= " <span style='background-color:#000000; color:FF00FF; border: 3px solid black; font-weight:bold;'>RUSH</span>";
 		}
 		if ($hours > $_SESSION[cap]){
 			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],'').";'>";
 			if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
 				$data .= "<a href='http://service.mdwestserve.com/wizard.php?jump=".$d[packet_id]."-1' target='_blank' style='background-color:#00FFFF;'><b>QC</b></a> ";
 			}
-			$data .= "<a href='http://staff.mdwestserve.com/otd/order.php?packet=$d[packet_id]' target='_Blank'>$d[packet_id]</a>: <strong>".$hours."</strong> ".abbrCounty(strtoupper($d[circuit_court]))." <em> <small>[".id2attorney($d[attorneys_id])."]</small></em>".$reopen."</li>";
+			$data .= "<a href='http://staff.mdwestserve.com/otd/order.php?packet=$d[packet_id]' target='_Blank'>$d[packet_id]</a>: <strong>".$hours."</strong> ".abbrCounty(strtoupper($d[circuit_court]))." <em> <small>[".id2attorney($d[attorneys_id])."]</small></em> ".$reopen."</li>";
 		}
 	}
 	$data.='</ol>';
