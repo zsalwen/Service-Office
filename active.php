@@ -273,7 +273,7 @@ if ($list != ''){
 <tr><td valign='top'><?
 $servers=getServers();
 $i=0;
-while ($i > count($servers)){
+while ($i < count($servers)){
 	echo "<fieldset><legend>Slot 1: ".id2name($servers["$i"])." #$d[server_id]</legend>".serverActiveList($servers["$i"],'').evictionActiveList($servers["$i"])."</fieldset>";
 	$i++;
 }
