@@ -275,12 +275,13 @@ $servers=getServers();
 $i=0;
 while ($i > count($servers)){
 	echo "<fieldset><legend>Slot 1: ".id2name($d["$i"])." #$d[server_id]</legend>".serverActiveList($d["$i"],'').evictionActiveList($d[server_id])."</fieldset>";
+	$i++;
 }
-$q="SELECT DISTINCT server_id from ps_packets WHERE process_status = 'ASSIGNED'";
+/*$q="SELECT DISTINCT server_id from ps_packets WHERE process_status = 'ASSIGNED'";
 $r=@mysql_query($q);
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 echo "<fieldset><legend>Slot 1: ".id2name($d[server_id])." #$d[server_id]</legend>".serverActiveList($d[server_id],'')."</fieldset>";
-}
+}*/
 ?></td><td valign='top'><?
 $q="SELECT DISTINCT server_ida from ps_packets where process_status = 'ASSIGNED' and server_ida <> ''";
 $r=@mysql_query($q);
