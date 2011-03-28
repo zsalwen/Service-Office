@@ -152,7 +152,7 @@ function justDate2($dt){
 	if ($date2[0] != date('Y')){
 		return $date[0];
 	}else{
-		return $date2[1]."-".$date2[2];
+		return date('n-j',$date[0]);
 	}
 }
 function serverActiveList($id,$letter){ $_SESSION[active]++;
@@ -174,10 +174,7 @@ function serverActiveList($id,$letter){ $_SESSION[active]++;
 		if ($d[avoidDOT] != ''){
 			$reopen .= " <span style='background-color:#000000; color:FF0000; border: 3px solid red; font-weight:bold;'>AvoidDOT</span>";
 		}
-		if ($d)
-		$estFileDate=explode('-',$d[estFileDate]);
-		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-		$reopen .= " <span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE:&nbsp;$estFileDate</span>";
+		$reopen .= " <span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE:&nbsp;".justDate2($d[estFileDate])."</span>";
 		if ($d[rush] != ''){
 			$reopen .= " <span style='background-color:#000000; color:FF00FF; border: 3px solid black; font-weight:bold;'>RUSH</span>";
 		}
