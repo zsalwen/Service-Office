@@ -22,7 +22,7 @@ function ev_timeline($id,$note){
 	//talk('insidenothing@gmail.com',"$note for eviction packet $id");
 
 	$q1 = "SELECT timeline FROM evictionPackets WHERE eviction_id = '$id'";		
-	$r1 = @mysql_query ($q1) or die(mysql_error());
+	$r1 = @mysql_query ($q1) or die("Query: $q1<br>".mysql_error());
 	$d1 = mysql_fetch_array($r1, MYSQL_ASSOC);
 	$access=date('m/d/y g:i A');
 	if ($d1[timeline] != ''){

@@ -26,7 +26,7 @@ function timeline($id,$note){
 	hardLog("$note for packet $id",'user');
 
 	$q1 = "SELECT timeline FROM ps_packets WHERE packet_id = '$id'";		
-	$r1 = @mysql_query ($q1) or die(mysql_error());
+	$r1 = @mysql_query ($q1) or die("Query: $q1<br>".mysql_error());
 	$d1 = mysql_fetch_array($r1, MYSQL_ASSOC);
 	$access=date('m/d/y g:i A');
 	if ($d1[timeline] != ''){
@@ -34,6 +34,7 @@ function timeline($id,$note){
 	}else{
 		$notes = $access.': '.$note;
 	}
+	$notes = addslashes($notes);
 	$q1 = "UPDATE ps_packets set timeline='".addslashes($notes)."' WHERE packet_id = '$id'";		
 	$r1 = @mysql_query ($q1) or die("Query: $q1<br>".mysql_error());
 	//@mysql_query("insert into syslog (logTime, event) values (NOW(), 'Packet $id: $note')");
