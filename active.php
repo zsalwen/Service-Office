@@ -274,7 +274,7 @@ if ($list != ''){
 $servers=getServers();
 $i=0;
 while ($i > count($servers)){
-	echo "<fieldset><legend>Slot 1: ".id2name($d["$i"])." #$d[server_id]</legend>".serverActiveList($d["$i"],'').evictionActiveList($d[server_id])."</fieldset>";
+	echo "<fieldset><legend>Slot 1: ".id2name($servers["$i"])." #$d[server_id]</legend>".serverActiveList($servers["$i"],'').evictionActiveList($servers["$i"])."</fieldset>";
 	$i++;
 }
 /*$q="SELECT DISTINCT server_id from ps_packets WHERE process_status = 'ASSIGNED'";
