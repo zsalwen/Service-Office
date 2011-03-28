@@ -268,7 +268,7 @@ head { display: block; }
 background-color:#6699CC; background-repeat: no-repeat; }
 </style>
 <table><tr><td valign="top">
-<form>Only display packets below: <input name='packet' <? if ($_GET[packet]){echo "value='".$_GET[packet]."'";}else{ echo "value='0'";}?>> <input type="submit" value="Go"></form>
+<form style='display:inline;'>Only display packets below: <input name='packet' <? if ($_GET[packet]){echo "value='".$_GET[packet]."'";}else{ echo "value='0'";}?>> <input type="submit" value="Go"></form>
 </td></tr><tr><td>
 <table><tr><td valign='top'><?
 $i=0;
