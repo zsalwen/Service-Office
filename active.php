@@ -177,7 +177,7 @@ function serverActiveList($id,$letter){ $_SESSION[active]++;
 		if ($d)
 		$estFileDate=explode('-',$d[estFileDate]);
 		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-		$reopen .= "&nbsp;<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span>";
+		$reopen .= "<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span>";
 		if ($d[rush] != ''){
 			$reopen .= "<span style='background-color:#000000; color:FF00FF; border: 3px solid black; font-weight:bold;'>RUSH</span>";
 		}
