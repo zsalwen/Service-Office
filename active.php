@@ -41,14 +41,14 @@ if ($_GET[cap]){
 }
 
 function id2name($id){
-	$q="SELECT name FROM ps_users WHERE id = '$id'";
+	$q="SELECT name FROM ps_users WHERE id = '$id' LIMIT 0,1";
 	$r=@mysql_query($q);
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 return $d[name];
 }
 
 function id2attorney($id){
-	$q="SELECT display_name FROM attorneys WHERE attorneys_id = '$id'";
+	$q="SELECT display_name FROM attorneys WHERE attorneys_id = '$id' LIMIT 0,1";
 	$r=@mysql_query($q);
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 return $d[display_name];
@@ -58,7 +58,7 @@ function initals($str){
 	return strtoupper(substr($str[0],0,1).substr($str[1],0,1).substr($str[2],0,1).substr($str[3],0,1));
 }
 function id2server($id){
-	$q=@mysql_query("SELECT name from ps_users where id='$id'") or die(mysql_error());
+	$q=@mysql_query("SELECT name from ps_users where id='$id' LIMIT 0,1") or die(mysql_error());
 	$d=mysql_fetch_array($q, MYSQL_ASSOC);
 	return initals($d[name]);
 }
@@ -74,7 +74,7 @@ function colorCode($hours,$packet,$letter){
 	if ($hours > 168 &&  $hours <= 288){ $html = "ff0000; color:000000;"; }
 	if ($hours > 288){ $html = "000000; color:ffffff"; }
 	if ($packet != ''){
-		$r=@mysql_query("SELECT serveComplete, serveCompletea, serveCompleteb, serveCompletec, serveCompleted, serveCompletee from ps_packets where packet_id = '$packet'");
+		$r=@mysql_query("SELECT serveComplete, serveCompletea, serveCompleteb, serveCompletec, serveCompleted, serveCompletee from ps_packets where packet_id = '$packet' LIMIT 0,1");
 		$d=mysql_fetch_array($r, MYSQL_ASSOC);
 		if ($letter != '' && $d["serveComplete$letter"] == '+'){
 			$html .= ";border-style:solid;border-width:5px;border-color:CCFF00";
@@ -182,7 +182,7 @@ function serverActiveList($id,$letter){ $_SESSION[active]++;
 			$reopen .= " <span style='background-color:#000000; color:FF00FF; border: 3px solid black; font-weight:bold;'>RUSH</span>";
 		}
 		if ($hours > $_SESSION[cap]){
-			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],'').";'>";
+			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],$letter).";'>";
 			if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
 				$data .= "<a href='http://service.mdwestserve.com/wizard.php?jump=".$d[packet_id]."-1' target='_blank' style='background-color:#00FFFF;'><b>QC</b></a> ";
 			}
