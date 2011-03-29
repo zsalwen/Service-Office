@@ -317,8 +317,8 @@ echo "<fieldset><legend>Slot 6: ".id2name($d[server_ide])." #$d[server_ide]</leg
 body { padding:0px; margin:0px; margin-left:10px;}
 fieldset {font-size:12px; padding:0px; background-color:#CCCCCC}
 legend { border:solid 1px; padding-left:5px; padding-right:5px; background-color:#66CCFF; }
-ol { padding:0px;}
-li { border-bottom:solid 1px #CCCCCC; }
+ol, table { padding:0px;}
+li { border-bottom:solid 1px #CCCCCC; padding:0px; }
 a {font-size:none; text-decoration:none; font-weight:bold;}
 a:hover {font-size:underline overline; color:#6600FF;}
 a:visited {font-weight:bold; color:CC6600;}
