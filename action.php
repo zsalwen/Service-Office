@@ -35,7 +35,7 @@ function courierDate3($id){
 }
 function standardCourt($str){
 	if ($str == ''){
-		return "<b>NO COURT SET</b>";
+		return "<b style='color:red; text-decoration:blink;'>NO COURT SET</b>";
 	}else{
 		return strtoupper($str);
 	}
