@@ -265,10 +265,10 @@ while ($d67=mysql_fetch_array($r67,MYSQL_ASSOC)){
 }
 
 if ($list != ''){
-	echo "<fieldset style='background-color:FF0000;'><legend>Custom Watch List</legend>$list</fieldset>";
+	echo "<fieldset style='background-color:FF0000;width: 600px;'><legend>Custom Watch List</legend>$list</fieldset></td><td>";
 }?>
 <center><form>Start at <input name="cap" value="<?=$_SESSION[cap];?>" size="3" /> hours <input type="submit" value="Go!" /></form></center>
-</td></tr><tr><td valign='top'>
+</td></tr><tr><td valign='top' colspan='2'>
 <table>
 <tr><td valign='top'><?
 $servers=getServers();
