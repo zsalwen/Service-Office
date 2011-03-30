@@ -1197,7 +1197,7 @@ $server .= ", ".$d6." ".initals(id2name($d5[serverID]));
 }else{
 $server="none";
 }
-$ri=@mysql_query("SELECT packetID FROM ps_instructions WHERE packetID='$d[packet_id]'") or die (mysql_error());
+$ri=@mysql_query("SELECT packetID FROM ps_instructions WHERE packetID='$d[packet_id]' LIMIT 0,1") or die (mysql_error());
 $di=mysql_fetch_array($ri,MYSQL_ASSOC);
 if ($di[packetID]){
 	$customBG="style='background-color:green;'";
@@ -1622,7 +1622,7 @@ Request Close 'E'<br>
 <LEGEND ACCESSKEY=C>Process Server #<?=$d[server_id]?><? if ($d[svrPrint] > 0){echo " - <small>PRINTED</small>";}?></LEGEND>
 <?
 mysql_select_db("core");
-$r2=@mysql_query("select * from ps_users where id = '$d[server_id]'");
+$r2=@mysql_query("select * from ps_users where id = '$d[server_id]' LIMIT 0,1");
 $d2=mysql_fetch_array($r2, MYSQL_ASSOC);
 ?>
 <table <? if ($d[svrPrint] > 0){echo "bgcolor='#FFFFFF'";}?>>
@@ -1647,7 +1647,7 @@ $d2=mysql_fetch_array($r2, MYSQL_ASSOC);
 <LEGEND ACCESSKEY=C>Process Server "a" #<?=$d[server_ida]?><? if ($d[svrPrinta] > 0){echo " - <small>PRINTED</small>";}?></LEGEND>
 <?
 mysql_select_db("core");
-$r2=@mysql_query("select * from ps_users where id = '$d[server_ida]'");
+$r2=@mysql_query("select * from ps_users where id = '$d[server_ida]' LIMIT 0,1");
 $d2=mysql_fetch_array($r2, MYSQL_ASSOC);
 ?>
 <table <? if ($d[svrPrinta] > 0){echo "bgcolor='#FFFFFF'";}?>>
@@ -1673,7 +1673,7 @@ $d2=mysql_fetch_array($r2, MYSQL_ASSOC);
 <LEGEND ACCESSKEY=C>Process Server "b" #<?=$d[server_idb]?><? if ($d[svrPrintb] > 0){echo " - <small>PRINTED</small>";}?></LEGEND>
 <?
 mysql_select_db("core");
-$r2=@mysql_query("select * from ps_users where id = '$d[server_idb]'");
+$r2=@mysql_query("select * from ps_users where id = '$d[server_idb]' LIMIT 0,1");
 $d2=mysql_fetch_array($r2, MYSQL_ASSOC);
 ?>
 <table <? if ($d[svrPrintb] > 0){echo "bgcolor='#FFFFFF'";}?>>
@@ -1701,7 +1701,7 @@ $d2=mysql_fetch_array($r2, MYSQL_ASSOC);
 <LEGEND ACCESSKEY=C>Process Server "c" #<?=$d[server_idc]?><? if ($d[svrPrintc] > 0){echo " - <small>PRINTED</small>";}?></LEGEND>
 <?
 mysql_select_db("core");
-$r2=@mysql_query("select * from ps_users where id = '$d[server_idc]'");
+$r2=@mysql_query("select * from ps_users where id = '$d[server_idc]' LIMIT 0,1");
 $d2=mysql_fetch_array($r2, MYSQL_ASSOC);
 ?>
 <table <? if ($d[svrPrintc] > 0){echo "bgcolor='#FFFFFF'";}?>>
@@ -1727,7 +1727,7 @@ $d2=mysql_fetch_array($r2, MYSQL_ASSOC);
 <LEGEND ACCESSKEY=C>Process Server "d" #<?=$d[server_idd]?><? if ($d[svrPrintd] > 0){echo " - <small>PRINTED</small>";}?></LEGEND>
 <?
 mysql_select_db("core");
-$r2=@mysql_query("select * from ps_users where id = '$d[server_idd]'");
+$r2=@mysql_query("select * from ps_users where id = '$d[server_idd]' LIMIT 0,1");
 $d2=mysql_fetch_array($r2, MYSQL_ASSOC);
 ?>
 <table <? if ($d[svrPrintd] > 0){echo "bgcolor='#FFFFFF'";}?>>
@@ -1753,7 +1753,7 @@ $d2=mysql_fetch_array($r2, MYSQL_ASSOC);
 <LEGEND ACCESSKEY=C>Process Server "e" #<?=$d[server_ide]?><? if ($d[svrPrinte] > 0){echo " - <small>PRINTED</small>";}?></LEGEND>
 <?
 mysql_select_db("core");
-$r2=@mysql_query("select * from ps_users where id = '$d[server_ide]'");
+$r2=@mysql_query("select * from ps_users where id = '$d[server_ide]' LIMIT 0,1");
 $d2=mysql_fetch_array($r2, MYSQL_ASSOC);
 ?>
 <table <? if ($d[svrPrinte] > 0){echo "bgcolor='#FFFFFF'";}?>>
@@ -1876,7 +1876,7 @@ foreach(range('a','e') as $letter){
 if ($_GET[type]){
 	echo $_GET[type];
 }
-$r=@mysql_query("select * from fileWatch where clientFile = '$d[client_file]'");
+$r=@mysql_query("select * from fileWatch where clientFile = '$d[client_file]' LIMIT 0,1");
 while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 echo "<script>alert('".addslashes($d[message])."');</script>";
 }

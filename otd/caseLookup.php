@@ -22,7 +22,7 @@ function wdCounty($county){
 }
 
 function wdMarker($packet,$def){
-	$q1="SELECT status, packetID from watchDog where packetID='$packet' AND defID='$def'";
+	$q1="SELECT status, packetID from watchDog where packetID='$packet' AND defID='$def' LIMIT 0,1";
 	$r1=@mysql_query($q1);
 	$d1=mysql_fetch_array($r1,MYSQL_ASSOC);
 	if ($d1[packetID] && $d1[status] == 'New Case Found'){
@@ -93,7 +93,7 @@ function searchForm2($packet,$def,$firstName,$lastName,$county){
 }
 
 function watchLink($packet,$def){
-	$q2="SELECT name$def, circuit_court from ps_packets WHERE packet_id='$packet'";
+	$q2="SELECT name$def, circuit_court from ps_packets WHERE packet_id='$packet' LIMIT 0,1";
 	$r2=@mysql_query($q2);
 	$d2=mysql_fetch_array($r2,MYSQL_ASSOC);
 	$county=wdCounty($d2[circuit_court]);
@@ -253,7 +253,7 @@ function searchForm($packet,$def){
 	$start=date('Y');
 	$start="01/01/".($start-1);
 	$end=date('m/d/Y');
-	$q1="SELECT status, packetID, firstName, lastName, county, company from watchDog where packetID='$packet' AND defID='$def'";
+	$q1="SELECT status, packetID, firstName, lastName, county, company from watchDog where packetID='$packet' AND defID='$def' LIMIT 0,1";
 	$r1=@mysql_query($q1);
 	$d1=mysql_fetch_array($r1,MYSQL_ASSOC);
 	if ($d1[packetID] != ''){
@@ -316,7 +316,7 @@ if ($FC != '' && $FC != '1'){
 }else{
 	$link='';
 }
-$q1="SELECT status, packetID from watchDog where packetID='".$d[packet_id]."'";
+$q1="SELECT status, packetID from watchDog where packetID='".$d[packet_id]."' LIMIT 0,1";
 $r1=@mysql_query($q1);
 $d1=mysql_fetch_array($r1,MYSQL_ASSOC);
 if($d[process_status] === 'READY'){
@@ -345,7 +345,7 @@ if ($FC != '' && $FC != '1'){
 }else{
 	$link='';
 }
-$q1="SELECT status, packetID from watchDog where packetID='".$d[packet_id]."'";
+$q1="SELECT status, packetID from watchDog where packetID='".$d[packet_id]."' LIMIT 0,1";
 $r1=@mysql_query($q1);
 $d1=mysql_fetch_array($r1,MYSQL_ASSOC);
 if($d[process_status] === 'READY'){

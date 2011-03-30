@@ -4,7 +4,7 @@ function initals($str){
 	return strtoupper(substr($str[0],0,1).substr($str[1],0,1).substr($str[2],0,1).substr($str[3],0,1));
 }
 function id2server($id){
-	$q=@mysql_query("SELECT name from ps_users where id='$id'") or die(mysql_error());
+	$q=@mysql_query("SELECT name from ps_users where id='$id' LIMIT 0,1") or die(mysql_error());
 	$d=mysql_fetch_array($q, MYSQL_ASSOC);
 	return initals($d[name]);
 }
@@ -17,7 +17,7 @@ function print4100($string){
 }
 function psActivity($field){
 	@mysql_query("insert into psActivity (today) values (NOW())");
-	$r=@mysql_query("select * from psActivity where today='".date('Y-m-d')."'");
+	$r=@mysql_query("select * from psActivity where today='".date('Y-m-d')."' LIMIT 0,1");
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
 	$count=$d[$field]+1;
 	@mysql_query("update psActivity set $field = '$count' where today='".date('Y-m-d')."'");
@@ -29,7 +29,7 @@ function db_connect($host,$database,$user,$password){
 	return mysql_error();
 }
 function getPageTitle($template){
-	$q="select title from help_templates where name='$template' order by id desc";
+	$q="select title from help_templates where name='$template' order by id desc LIMIT 0,1";
 	$r=@mysql_query($q);
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 	return stripslashes($d[title]);
@@ -43,7 +43,7 @@ if ($_COOKIE[psdata][elephant]){
 }	
 }
 function attorneysList($current){
-	$q = "select * from attorneys where attorneys_id = '$current'";
+	$q = "select * from attorneys where attorneys_id = '$current' LIMIT 0,1";
 	$r = @mysql_query($q) or die(mysql_error());
 	$d = mysql_fetch_array($r, MYSQL_ASSOC);
 		$option = "<option value='$d[attorneys_id]'>$d[display_name]</option>";
@@ -56,44 +56,44 @@ function attorneysList($current){
 }
 
 function id2name($id){
-	$q="SELECT name FROM ps_users WHERE id = '$id'";
+	$q="SELECT name FROM ps_users WHERE id = '$id' LIMIT 0,1";
 	$r=@mysql_query($q);
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 return $d[name];
 }
 function id2name2($id){
-	$q="SELECT name FROM users WHERE user_id = '$id'";
+	$q="SELECT name FROM users WHERE user_id = '$id' LIMIT 0,1";
 	$r=@mysql_query($q);
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 return $d[name];
 }
 function id2phone($id){
-	$q="SELECT phone FROM ps_users WHERE id = '$id'";
+	$q="SELECT phone FROM ps_users WHERE id = '$id' LIMIT 0,1";
 	$r=@mysql_query($q);
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 return $d[phone];
 }
 function id2csz($id){
-	$q="SELECT city, state, zip FROM ps_users WHERE id = '$id'";
+	$q="SELECT city, state, zip FROM ps_users WHERE id = '$id' LIMIT 0,1";
 	$r=@mysql_query($q);
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 return $d[city].', '.$d[state].' '.$d[zip];
 }
 function id2zip($id){
-	$q="SELECT zip FROM ps_users WHERE id = '$id'";
+	$q="SELECT zip FROM ps_users WHERE id = '$id' LIMIT 0,1";
 	$r=@mysql_query($q);
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 return $d[zip];
 }
 function id2user($id){
-	$q="SELECT name FROM users WHERE user_id = '$id'";
+	$q="SELECT name FROM users WHERE user_id = '$id' LIMIT 0,1";
 	$r=@mysql_query($q);
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 return $d[name];
 }
 
 function id2attorney($id){
-	$q="SELECT display_name FROM attorneys WHERE attorneys_id = '$id'";
+	$q="SELECT display_name FROM attorneys WHERE attorneys_id = '$id' LIMIT 0,1";
 	$r=@mysql_query($q);
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 return $d[display_name];
@@ -160,7 +160,7 @@ function note($file_id, $note){
 }
 
 function hwaLog($id, $note){
-	$q="SELECT hwa_log FROM ps_packets";
+	$q="SELECT hwa_log FROM ps_packets WHERE packet_id='$id' LIMIT 0,1";
 	$r=@mysql_query($q);
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 	if ($d[hwa_log]){
@@ -206,7 +206,7 @@ return "<img src='http://portal.hwestauctions.com/images/nopic.jpg' height='$hei
 }}
 
 function getTemplate($template){
-	$q="select template from ps_templates where name='$template' order by id desc";
+	$q="select template from ps_templates where name='$template' order by id desc LIMIT 0,1";
 	$r=@mysql_query($q);
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 	return stripslashes($d[template]);
@@ -226,7 +226,7 @@ $table .= "</table>";
 return $table;
 }
 function getTemplateDate($template){ // version history ?
-$q="select *, DATE_FORMAT(saved, '%W, %M %D at %r') as saved_f from ps_templates where name='$template' order by id desc";
+$q="select *, DATE_FORMAT(saved, '%W, %M %D at %r') as saved_f from ps_templates where name='$template' order by id desc LIMIT 0,1";
 $r=@mysql_query($q);
 $d=mysql_fetch_array($r, MYSQL_ASSOC);
 $date[0] = $d[saved];
@@ -242,14 +242,14 @@ return $str1.' '.$str2;
 }
 
 function ps2county($str){
-	$q="SELECT county_name FROM ps_county WHERE ps_name = '$str'";
+	$q="SELECT county_name FROM ps_county WHERE ps_name = '$str' LIMIT 0,1";
 	$r=@mysql_query($q);
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 return $d[county_name];
 }
 
 function county2ps($str){
-	$q="SELECT ps_name FROM ps_county WHERE county_name = '$str'";
+	$q="SELECT ps_name FROM ps_county WHERE county_name = '$str' LIMIT 0,1";
 	$r=@mysql_query($q);
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 return $d[ps_name];
@@ -361,7 +361,7 @@ $key = "ABQIAAAA8yH4sz3KTLMIhZ9V81HVqBQso08lYJ1q7ZFMltqpfDEr9X0BYxR_WOQKemPMetn4
 }
 function workStatus($server){
 $today=date('Y-m-d');
-$r=@mysql_query("select * from ps_users where id='$server' and workRequestDate='$today'");
+$r=@mysql_query("select * from ps_users where id='$server' and workRequestDate='$today' LIMIT 0,1");
 $d=mysql_fetch_array($r, MYSQL_ASSOC);
 if ($d[workRequestDate]){
 return "<div style='font-size:18px; background-color:#FFFFFF; text-align:center; border-bottom:solid 1px;'><strong>".id2name($server)."</strong>'s active files will be completed in <strong>$d[workRequestDone] days</strong>. Currently accepting up to <strong>$d[workRequestMax] new files</strong>.</div>";
@@ -371,7 +371,7 @@ return "<div style='font-size:18px; background-color:#FF0000; text-align:center;
 }
 }
 function isServer($server,$packet){
-	$r=@mysql_query("select server_id from ps_packets where packet_id='$packet' and (server_id='$server' OR server_ida='$server' OR server_idb='$server' OR server_idc='$server' OR server_idd='$server' OR server_ide='$server')");
+	$r=@mysql_query("select server_id from ps_packets where packet_id='$packet' and (server_id='$server' OR server_ida='$server' OR server_idb='$server' OR server_idc='$server' OR server_idd='$server' OR server_ide='$server') LIMIT 0,1");
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 	if ($d){
 		return 1;
@@ -380,7 +380,7 @@ function isServer($server,$packet){
 	}
 }
 function ev_isServer($server,$packet){
-	$r=@mysql_query("select server_id from ps_packets where packet_id='$packet' and (server_id='$server' OR server_ida='$server' OR server_idb='$server' OR server_idc='$server' OR server_idd='$server' OR server_ide='$server')");
+	$r=@mysql_query("select server_id from ps_packets where packet_id='$packet' and (server_id='$server' OR server_ida='$server' OR server_idb='$server' OR server_idc='$server' OR server_idd='$server' OR server_ide='$server') LIMIT 0,1");
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 	if ($d){
 		return 1;
