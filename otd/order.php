@@ -80,7 +80,7 @@ select.italic {
 </style>
 <?
 function webservice($clientFile){
-	$select_query = "Select create_id From defendants  Where filenumber = '$clientFile'";
+	$select_query = "Select create_id From defendants  Where filenumber = '$clientFile' LIMIT 0,1";
 	$result = mysql_query($select_query);
 	$data = mysql_fetch_array($result,MYSQL_ASSOC);
 	if ($data[create_id]) {
@@ -220,7 +220,7 @@ function searchForm($packet,$def){
 	$start=date('Y');
 	$start="01/01/".($start-1);
 	$end=date('m/d/Y');
-	$q1="SELECT status, packetID, firstName, lastName, county, company from watchDog where packetID='$packet' AND defID='$def'";
+	$q1="SELECT status, packetID, firstName, lastName, county, company from watchDog where packetID='$packet' AND defID='$def' LIMIT 0,1";
 	$r1=@mysql_query($q1);
 	$d1=mysql_fetch_array($r1,MYSQL_ASSOC);
 	if ($d1[packetID] != ''){
@@ -249,7 +249,7 @@ function searchForm($packet,$def){
 }
 
 function searchList($packet){
-	$q1="SELECT name1, name2, name3, name4, name5, name6 from ps_packets where packet_id='$packet'";
+	$q1="SELECT name1, name2, name3, name4, name5, name6 from ps_packets where packet_id='$packet' LIMIT 0,1";
 	$r1=@mysql_query($q1);
 	$d1=mysql_fetch_array($r1,MYSQL_ASSOC);
 	$i=0;
@@ -268,12 +268,12 @@ function getFolder($otd){
 	return $folder;
 }
 function id2email($id){
-	$q=@mysql_query("SELECT email from ps_users where id='$id'") or die(mysql_error());
+	$q=@mysql_query("SELECT email from ps_users where id='$id' LIMIT 0,1") or die(mysql_error());
 	$d=mysql_fetch_array($q, MYSQL_ASSOC);
 	return $d[email];
 }
 function id2company($id){
-	$q=@mysql_query("SELECT company from ps_users where id='$id'") or die(mysql_error());
+	$q=@mysql_query("SELECT company from ps_users where id='$id' LIMIT 0,1") or die(mysql_error());
 	$d=mysql_fetch_array($q, MYSQL_ASSOC);
 	return strtoupper($d[company]);
 }
@@ -355,7 +355,7 @@ function isVerified($packet){
 }
 
 function id2name3($id){
-	$q="SELECT name FROM ps_users WHERE id = '$id'";
+	$q="SELECT name FROM ps_users WHERE id = '$id' LIMIT 0,1";
 	$r=@mysql_query($q);
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 	return $d[name];
@@ -370,14 +370,9 @@ function search($search,$string){
 	}
 	return $pass;
 }
-function getClose($packet){
-	$r=@mysql_query("select estFileDate from ps_packets where packet_id = '$packet'") or die (mysql_error());
-	$d=mysql_fetch_array($r,MYSQL_ASSOC);
-	return $d[estFileDate];
-}
 
 function getTime($packet,$event){
-	$r=@mysql_query("select timeline from ps_packets where packet_id = '$packet'") or die (mysql_error());
+	$r=@mysql_query("select timeline from ps_packets where packet_id = '$packet' LIMIT 0,1") or die (mysql_error());
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
 	$explode = explode('<br>',$d[timeline]);
 	foreach ($explode as $key => $value) {	
@@ -432,7 +427,7 @@ function colorCode2($hours,$status){
 $id=$_COOKIE[psdata][user_id];
 
 if ($_POST[reopen]){
-	$r13=@mysql_query("select processor_notes, fileDate from ps_packets where packet_id = '$_GET[packet]'");
+	$r13=@mysql_query("select processor_notes, fileDate from ps_packets where packet_id = '$_GET[packet]' LIMIT 0,1");
 	$d13=mysql_fetch_array($r13,MYSQL_ASSOC);
 	$oldNote = $d13[processor_notes];
 	$note="file originally closed out on ".$d13[fileDate];
@@ -453,7 +448,7 @@ if ($_POST[sendToClient]){
 
 if ($_POST[submit]){
 	if ($_GET[packet]){
-		$q=@mysql_query("SELECT * from ps_packets WHERE packet_id='$_POST[packet_id]'") or die (mysql_error());
+		$q=@mysql_query("SELECT * from ps_packets WHERE packet_id='$_POST[packet_id]' LIMIT 0,1") or die (mysql_error());
 		$d=mysql_fetch_array($q, MYSQL_ASSOC);
 		if ($_POST[estFileDate] != $d[estFileDate]){
 			//if estFileDate has been changed, set flag to open prompter
@@ -696,7 +691,7 @@ if ($_POST[submit]){
 			timeline($_POST[packet_id],$timeline);
 		}
 	}
-	$r=mysql_query("SELECT name1, name2, name3, name4, name5, name6, address1, address1a, address1b, address1c, address1d, address1e, city1, city1a, city1b, city1c, city1d, city1e, state1, state1a, state1b, state1c, state1d, state1e, zip1, zip1a, zip1b, zip1c, zip1d, zip1e, address2, address2a, address2b, address2c, address2d, address2e, city2, city2a, city2b, city2c, city2d, city2e, state2, state2a, state2b, state2c, state2d, state2e, zip2, zip2a, zip2b, zip2c, zip2d, zip2e, address3, address3a, address3b, address3c, address3d, address3e, city3, city3a, city3b, city3c, city3d, city3e, state3, state3a, state3b, state3c, state3d, state3e, zip3, zip3a, zip3b, zip3c, zip3d, zip3e, address4, address4a, address4b, address4c, address4d, address4e, city4, city4a, city4b, city4c, city4d, city4e, state4, state4a, state4b, state4c, state4d, state4e, zip4, zip4a, zip4b, zip4c, zip4d, zip4e, address5, address5a, address5b, address5c, address5d, address5e, city5, city5a, city5b, city5c, city5d, city5e, state5, state5a, state5b, state5c, state5d, state5e, zip5, zip5a, zip5b, zip5c, zip5d, zip5e, address6, address6a, address6b, address6c, address6d, address6e, city6, city6a, city6b, city6c, city6d, city6e, state6, state6a, state6b, state6c, state6d, state6e, zip6, zip6a, zip6b, zip6c, zip6d, zip6e, pobox, pobox2, pocity, pocity2, postate, postate2, pozip, pozip2 from ps_packets WHERE packet_id='$_POST[packet_id]'");
+	$r=mysql_query("SELECT name1, name2, name3, name4, name5, name6, address1, address1a, address1b, address1c, address1d, address1e, city1, city1a, city1b, city1c, city1d, city1e, state1, state1a, state1b, state1c, state1d, state1e, zip1, zip1a, zip1b, zip1c, zip1d, zip1e, address2, address2a, address2b, address2c, address2d, address2e, city2, city2a, city2b, city2c, city2d, city2e, state2, state2a, state2b, state2c, state2d, state2e, zip2, zip2a, zip2b, zip2c, zip2d, zip2e, address3, address3a, address3b, address3c, address3d, address3e, city3, city3a, city3b, city3c, city3d, city3e, state3, state3a, state3b, state3c, state3d, state3e, zip3, zip3a, zip3b, zip3c, zip3d, zip3e, address4, address4a, address4b, address4c, address4d, address4e, city4, city4a, city4b, city4c, city4d, city4e, state4, state4a, state4b, state4c, state4d, state4e, zip4, zip4a, zip4b, zip4c, zip4d, zip4e, address5, address5a, address5b, address5c, address5d, address5e, city5, city5a, city5b, city5c, city5d, city5e, state5, state5a, state5b, state5c, state5d, state5e, zip5, zip5a, zip5b, zip5c, zip5d, zip5e, address6, address6a, address6b, address6c, address6d, address6e, city6, city6a, city6b, city6c, city6d, city6e, state6, state6a, state6b, state6c, state6d, state6e, zip6, zip6a, zip6b, zip6c, zip6d, zip6e, pobox, pobox2, pocity, pocity2, postate, postate2, pozip, pozip2 from ps_packets WHERE packet_id='$_POST[packet_id]' LIMIT 0,1");
 	$d=mysql_fetch_array($r, MYSQL_ASSOC) or die(mysql_error());
 	$i2=0;
 	$qList="";
@@ -751,13 +746,13 @@ if ($_POST[submit]){
 
 
 if ($_GET[packet]){
-	$r=@mysql_query("SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours, DATEDIFF(estFileDate, CURDATE()) as estHours FROM ps_packets where packet_id='$_GET[packet]'");
+	$r=@mysql_query("SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours, DATEDIFF(estFileDate, CURDATE()) as estHours FROM ps_packets where packet_id='$_GET[packet]' LIMIT 0,1");
 	hardLog('loaded order for '.$_GET[packet],'user');
 }else{
 	if($_GET[start]){
-		$r=@mysql_query("SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours, DATEDIFF(estFileDate, CURDATE()) as estHours FROM ps_packets where process_status='READY' and qualityControl='' and packet_id >= '$_GET[start]' order by packet_id ");
+		$r=@mysql_query("SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours, DATEDIFF(estFileDate, CURDATE()) as estHours FROM ps_packets where process_status='READY' and qualityControl='' and packet_id >= '$_GET[start]' order by packet_id  LIMIT 0,1");
 	}else{
-		$r=@mysql_query("SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours, DATEDIFF(estFileDate, CURDATE()) as estHours FROM ps_packets where status='NEW' and process_status <> 'CANCELLED' and process_status <> 'DUPLICATE' AND process_status <> 'DAMAGED PDF' and process_status <> 'DUPLICATE/DIFF-PDF' order by RAND() ");
+		$r=@mysql_query("SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours, DATEDIFF(estFileDate, CURDATE()) as estHours FROM ps_packets where status='NEW' and process_status <> 'CANCELLED' and process_status <> 'DUPLICATE' AND process_status <> 'DAMAGED PDF' and process_status <> 'DUPLICATE/DIFF-PDF' order by RAND()  LIMIT 0,1");
 		$test55 = 1;
 	}
 }
@@ -841,9 +836,8 @@ if ($_GET[cancel] == 1){
 
 <?
 // rescan commands
-$rTest=@mysql_query("select * from rescanRequests where packetID = '$d[packet_id]'");
+$rTest=@mysql_query("select * from rescanRequests where packetID = '$d[packet_id]' LIMIT 0,1");
 $dTest=mysql_fetch_array($rTest,MYSQL_ASSOC);
-
 if ($_GET[rescan]){
 	if(!$dTest[byID]){
 		hardLog('requested rescan '.$d[packet_id],'user');
@@ -857,15 +851,13 @@ if ($_GET[rescan]){
 		echo "<script>automation();</script>";
 	}
 }
-$rTest=@mysql_query("select * from rescanRequests where packetID = '$d[packet_id]'");
-$dTest=mysql_fetch_array($rTest,MYSQL_ASSOC);
 $rescanStatus = rescanStatus($dTest[byID],$dTest[rescanID],$d[packet_id]);
 // end rescan commands
 
 
 
 // export commands
-$rTest=@mysql_query("select * from exportRequests where packetID = '$d[packet_id]'");
+$rTest=@mysql_query("select * from exportRequests where packetID = '$d[packet_id]' LIMIT 0,1");
 $dTest=mysql_fetch_array($rTest,MYSQL_ASSOC);
 if ($_GET[export]){
 	if(!$dTest[byID]){
@@ -880,8 +872,6 @@ if ($_GET[export]){
 		echo "<script>alert('You cannot approve exports you requested silly goose!');</script>";
 	}
 }
-$rTest=@mysql_query("select * from exportRequests where packetID = '$d[packet_id]'");
-$dTest=mysql_fetch_array($rTest,MYSQL_ASSOC);
 $exportStatus = exportStatus($dTest[byID],$dTest[confirmID],$d[packet_id]);
 // end export commands
 ?>
@@ -955,7 +945,7 @@ $packet=$d[packet_id];
 <? if($test4[eDate]){ ?>
 <td><div class="<?=$test4[css];?>"><?=$test4[event];?><br><?=$test4[eDate];?></div></td>
 <? }else{ ?>
-<td><div class="alert">Estimated Close<br><?=getClose($packet);?></div></td>
+<td><div class="alert">Estimated Close<br><?=$d[estFileDate];?></div></td>
 <? }?>
 <td><div class="alert"style="font-size:10px;"><a href="?packet=<?=$packet?>&rescan='<?=time();?>'">RESCAN</a><hr><?=$rescanStatus;?></div></td>
 <td><div class="alert"style="font-size:10px;"><a href="?packet=<?=$packet?>&export='<?=time();?>'">EXPORT</a><hr><?=$exportStatus;?></div></td>
@@ -1060,7 +1050,7 @@ $dupCheck=dupCheck($d[client_file]);
 <td><input name="estFileDate" value="<?=$d[estFileDate]?>"></td>
 </tr>
 <?
-$rXX=@mysql_query("select name, phone from courier where courierID = '$d[courierID]'");
+$rXX=@mysql_query("select name, phone from courier where courierID = '$d[courierID]' LIMIT 0,1");
 $dXX=mysql_fetch_array($rXX,MYSQL_ASSOC);
 if ($dXX[phone]){
 	$phone="-".$dXX[phone];
