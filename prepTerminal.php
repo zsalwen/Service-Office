@@ -1,7 +1,7 @@
-<? include 'common.php';
+otd<? include 'common.php';
 	//include 'menu.php';
 function outOfState($packet_id){
-	$q="SELECT state1, state1a, state1b, state1c, state1d, state1e from ps_packets WHERE packet_id = '$packet_id'";
+	$q="SELECT state1, state1a, state1b, state1c, state1d, state1e from ps_packets WHERE packet_id = '$packet_id' LIMIT 0,1";
 	$r=@mysql_query($q) or die("Query: outOfState: $q<br>".mysql_error());
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 	$i=0;
@@ -14,7 +14,7 @@ function outOfState($packet_id){
 	return $i;
 }
 function serverCount($packet_id){
-	$q="SELECT server_id, server_ida, server_idb, server_idc, server_idd, server_ide from ps_packets WHERE packet_id = '$packet_id'";
+	$q="SELECT server_id, server_ida, server_idb, server_idc, server_idd, server_ide from ps_packets WHERE packet_id = '$packet_id' LIMIT 0,1";
 	$r=@mysql_query($q) or die("Query: outOfState: $q<br>".mysql_error());
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 	$i=0;
@@ -27,7 +27,7 @@ function serverCount($packet_id){
 	return $i;
 }
 function notOnAff($packet, $table, $idType){
-	$q="SELECT name1, name2, name3, name4, name5, name6, onAffidavit1, onAffidavit2, onAffidavit3, onAffidavit4, onAffidavit5, onAffidavit6 FROM $table WHERE $idType='$packet'";
+	$q="SELECT name1, name2, name3, name4, name5, name6, onAffidavit1, onAffidavit2, onAffidavit3, onAffidavit4, onAffidavit5, onAffidavit6 FROM $table WHERE $idType='$packet' LIMIT 0,1";
 	$r=@mysql_query($q) or die("Query: isOnAff: $q<br>".mysql_error());
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 	$i=0;
@@ -57,9 +57,9 @@ if ($_GET[logic]){
 		$eviction=1;
 	}
 	if ($eviction == 1){
-		$q="SELECT attorneys_id, filing_status, process_status, case_no, prepAlert, caseVerify, circuit_court, rush, service_status from evictionPackets WHERE eviction_id = '$packet'";
+		$q="SELECT attorneys_id, filing_status, process_status, case_no, prepAlert, caseVerify, circuit_court, rush, service_status from evictionPackets WHERE eviction_id = '$packet' LIMIT 0,1";
 	}else{
-		$q="SELECT attorneys_id, filing_status, process_status, case_no, prepAlert, caseVerify, circuit_court, rush, avoidDOT, lossMit, affidavit_status2, service_status from ps_packets WHERE packet_id = '$packet'";
+		$q="SELECT attorneys_id, filing_status, process_status, case_no, prepAlert, caseVerify, circuit_court, rush, avoidDOT, lossMit, affidavit_status2, service_status from ps_packets WHERE packet_id = '$packet' LIMIT 0,1";
 		if (serverCount($packet) > 1){
 			echo "<script>alert('File Contains Multiple Servers')</script>";
 		}
@@ -80,7 +80,7 @@ if ($_GET[logic]){
 			}
 		}*/
 		if($d[attorneys_id] == 3 || $d[attorneys_id] == 7 || $d[attorneys_id] == 12 || $d[attorneys_id] == 68){
-			$q2="SELECT * FROM occNotices WHERE packet_id='$packet'";
+			$q2="SELECT * FROM occNotices WHERE packet_id='$packet' LIMIT 0,1";
 			$r2=@mysql_query($q2) or die("Query: occNotices: $q2<br>".mysql_error());
 			$d2=mysql_fetch_array($r2, MYSQL_ASSOC);
 			if ($d2[packet_id]){

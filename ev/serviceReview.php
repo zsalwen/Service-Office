@@ -6,7 +6,7 @@ echo "Service Review for Packet $_GET[packet]<br>";
 
 
 
-$r=@mysql_query("SELECT timeline FROM evictionPackets where eviction_id='$_GET[packet]'");
+$r=@mysql_query("SELECT timeline FROM evictionPackets where eviction_id='$_GET[packet]' LIMIT 0,1");
 $d=mysql_fetch_array($r, MYSQL_ASSOC);
 
 echo "<div>".$d[timeline]."</div>";

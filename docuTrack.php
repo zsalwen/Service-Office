@@ -14,7 +14,7 @@ function strpos2($hay,$nd1,$nd2){
 	}
 }
 function isOp($server){
-	$r=@mysql_query("SELECT level FROM ps_users WHERE id='$server'");
+	$r=@mysql_query("SELECT level FROM ps_users WHERE id='$server' LIMIT 0,1");
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
 	if ($d[level] == 'Operations'){
 		return true;
@@ -31,7 +31,7 @@ $packet=$packetDef[0];
 $defendant=strtoupper($packetDef[1]);
 $server=$packetDef[2];
 	$today=date('Y-m-d');
-	$q="SELECT * FROM docuTrack WHERE packet='$packet' AND defendant='$defendant' AND server='$server' AND document='$_POST[document]'";
+	$q="SELECT * FROM docuTrack WHERE packet='$packet' AND defendant='$defendant' AND server='$server' AND document='$_POST[document]' LIMIT 0,1";
 	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
 	if ($d[trackID]){

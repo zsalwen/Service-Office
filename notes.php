@@ -13,7 +13,7 @@ return $str;
 mysql_connect();
 mysql_select_db('core');
 if ($_POST[note] && $_POST[field] && $_GET[packet] < '20000'){
-$r=@mysql_query("select $_POST[field] from ps_packets where packet_id = '$_GET[packet]'");
+$r=@mysql_query("select $_POST[field] from ps_packets where packet_id = '$_GET[packet]' LIMIT 0,1");
 $d=mysql_fetch_array($r,MYSQL_ASSOC);
 $oldNote = $d[$_POST[field]];
 $newNote = "<li>From ".$_COOKIE[psdata][name]." on ".date('m/d/y g:ia').": \"".$_POST[note]."\"</li>".$oldNote;
@@ -28,7 +28,7 @@ $newNote = "<li>From ".$_COOKIE[psdata][name]." on ".date('m/d/y g:ia').": \"".$
 			mail($to,$subject,stripslashes($newNote.$body),$headers);
 }
 if ($_POST[note] && $_POST[field] && $_GET[packet] >= '20000'){
-$r=@mysql_query("select $_POST[field] from packet where id = '$_GET[packet]'");
+$r=@mysql_query("select $_POST[field] from packet where id = '$_GET[packet]' LIMIT 0,1");
 $d=mysql_fetch_array($r,MYSQL_ASSOC);
 $oldNote = $d[$_POST[field]];
 $newNote = "<li>From ".$_COOKIE[psdata][name]." on ".date('m/d/y g:ia').": \"".$_POST[note]."\"</li>".$oldNote;
@@ -43,7 +43,7 @@ $newNote = "<li>From ".$_COOKIE[psdata][name]." on ".date('m/d/y g:ia').": \"".$
 			mail($to,$subject,stripslashes($newNote.$body),$headers);
 }
 if ($_POST[note] && $_POST[field] && $_GET[eviction]){
-$r=@mysql_query("select $_POST[field] from evictionPackets where eviction_id = '$_GET[eviction]'");
+$r=@mysql_query("select $_POST[field] from evictionPackets where eviction_id = '$_GET[eviction]' LIMIT 0,1");
 $d=mysql_fetch_array($r,MYSQL_ASSOC);
 $oldNote = $d[$_POST[field]];
 $newNote = "<li>".date('m/d/y g:ia').": ".dbIN($_POST[note])." by ".$_COOKIE[psdata][name]."</li>".$oldNote;
@@ -58,7 +58,7 @@ $newNote = "<li>".date('m/d/y g:ia').": ".dbIN($_POST[note])." by ".$_COOKIE[psd
 			mail($to,$subject,stripslashes($newNote.$body),$headers); 
 }
 if ($_POST[note] && $_POST[field] && $_GET[standard]){
-$r=@mysql_query("select $_POST[field] from standard_packets where packet_id = '$_GET[standard]'");
+$r=@mysql_query("select $_POST[field] from standard_packets where packet_id = '$_GET[standard]' LIMIT 0,1");
 $d=mysql_fetch_array($r,MYSQL_ASSOC);
 $oldNote = $d[$_POST[field]];
 $newNote = "<li>".date('m/d/y g:ia').": ".dbIN($_POST[note])." by ".$_COOKIE[psdata][name]."</li>".$oldNote;
