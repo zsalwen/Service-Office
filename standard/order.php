@@ -1,5 +1,6 @@
 <?
 include 'common.php';
+@mysql_query("update sync set status='automated rescan requested' where product = 'STANDARD' and from_id = '$_GET[packet]' ");
 ?>
 <script>
 function automation() {
@@ -293,7 +294,7 @@ $q = "UPDATE standard_packets SET process_status='$_POST[process_status]',
 	serveCompleted='$_POST[serveCompleted]',
 	serveCompletee='$_POST[serveCompletee]',
 	client_file='".strtoupper($_POST[client_file])."',
-	case_no='".str_replace('Ø',0,$case_no)."',
+	case_no='".str_replace('ï¿½',0,$case_no)."',
 	reopenNotes='".addslashes(strtoupper($_POST[reopenNotes]))."',
 	auctionNote='".strtoupper($_POST[auctionNote])."',
 	circuit_court='".strtoupper($_POST[circuit_court])."'
@@ -356,7 +357,7 @@ $case_no=trim($_POST[case_no]);
 	mail_status='$_POST[mail_status]',
 	affidavitType='$_POST[affidavitType]',
 	client_file='".strtoupper($_POST[client_file])."',
-	case_no='".str_replace('Ø',0,$case_no)."',
+	case_no='".str_replace('ï¿½',0,$case_no)."',
 	process_status='READY',
 	status='RECIEVED',
 	circuit_court='".strtoupper($_POST[circuit_court])."'

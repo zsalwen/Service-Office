@@ -1,5 +1,6 @@
 <?php
 include 'common.php';
+@mysql_query("update sync set status='automated rescan requested' where product = 'OTD' and from_id = '$_GET[packet]' ");
 ?>
 <script>
 function automation() {

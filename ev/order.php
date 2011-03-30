@@ -1,7 +1,6 @@
 <?php
 include 'common.php';
-
-
+@mysql_query("update sync set status='automated rescan requested' where product = 'EV' and from_id = '$_GET[packet]' ");
 include 'lock.php';
 ?>
 <script>
