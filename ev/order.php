@@ -23,7 +23,7 @@ if ($_GET[packet]){
 }
 
 function webservice($clientFile){
-	$select_query = "Select create_id From defendants  Where filenumber = '$clientFile'";
+	$select_query = "Select create_id From defendants  Where filenumber = '$clientFile' LIMIT 0,1";
 	$result = mysql_query($select_query);
 	$data = mysql_fetch_array($result,MYSQL_ASSOC);
 	if ($data[create_id]) {
@@ -88,7 +88,7 @@ function photoCount($packet){
 }
 
 function id2email($id){
-	$q=@mysql_query("SELECT email from ps_users where id='$id'") or die(mysql_error());
+	$q=@mysql_query("SELECT email from ps_users where id='$id' LIMIT 0,1") or die(mysql_error());
 	$d=mysql_fetch_array($q, MYSQL_ASSOC);
 	return $d[email];
 }
@@ -157,14 +157,9 @@ function search($search,$string){
 	return $pass;
 }
 
-function getClose($packet){
-	$r=@mysql_query("select estFileDate from evictionPackets where eviction_id = '$packet'");
-	$d=mysql_fetch_array($r,MYSQL_ASSOC);
-	return $d[estFileDate];
-}
 
 function getTime($packet,$event){
-	$r=@mysql_query("select timeline from evictionPackets where eviction_id = '$packet'");
+	$r=@mysql_query("select timeline from evictionPackets where eviction_id = '$packet' LIMIT 0,1");
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
 	$explode = explode('<br>',$d[timeline]);
 	foreach ($explode as $key => $value) {
@@ -222,7 +217,7 @@ if ($_POST[sendToClient]){
 if ($_POST[submit]){
 	if ($_GET[packet]){
 		ev_timeline($_GET[packet],$_COOKIE[psdata][name]." Updated Order");
-		$q=@mysql_query("SELECT * from evictionPackets WHERE eviction_id='$_POST[eviction_id]'") or die (mysql_error());
+		$q=@mysql_query("SELECT * from evictionPackets WHERE eviction_id='$_POST[eviction_id]' LIMIT 0,1") or die (mysql_error());
 		$d=mysql_fetch_array($q, MYSQL_ASSOC);
 		if ($_POST[estFileDate] != $d[estFileDate]){
 			/*//if estFileDate has been changed, send email to service@mdwestserve.com
@@ -332,7 +327,7 @@ if ($_POST[submit]){
 	if (isset($_POST[server1])){
 		$updateQ .= "server_id='$_POST[server1]'|";
 	}
-	$r=mysql_query("SELECT name1, name2, name3, name4, name5, name6, address1, city1, state1, zip1 from evictionPackets WHERE eviction_id='$_POST[eviction_id]'");
+	$r=mysql_query("SELECT name1, name2, name3, name4, name5, name6, address1, city1, state1, zip1 from evictionPackets WHERE eviction_id='$_POST[eviction_id]' LIMIT 0,1");
 	$d=mysql_fetch_array($r, MYSQL_ASSOC) or die(mysql_error());
 	$nC=0;
 	while ($nC < 6){$nC++;
@@ -379,13 +374,13 @@ if ($_POST[submit]){
 
 
 if ($_GET[packet]){
-	$r=@mysql_query("SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours, DATEDIFF(estFileDate, CURDATE()) as estHours FROM evictionPackets where eviction_id='$_GET[packet]'");
+	$r=@mysql_query("SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours, DATEDIFF(estFileDate, CURDATE()) as estHours FROM evictionPackets where eviction_id='$_GET[packet]' LIMIT 0,1");
 	hardLog('loaded order for '.$_GET[packet],'user');
 }else{
 	if($_GET[start]){
-		$r=@mysql_query("SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours, DATEDIFF(estFileDate, CURDATE()) as estHours FROM evictionPackets where status='NEW' and process_status <> 'CANCELLED' AND process_status <> 'DUPLICATE' AND process_status <> 'DAMAGED PDF' and process_status <> 'DUPLICATE/DIFF-PDF' and eviction_id >= '$_GET[start]' order by eviction_id ");
+		$r=@mysql_query("SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours, DATEDIFF(estFileDate, CURDATE()) as estHours FROM evictionPackets where status='NEW' and process_status <> 'CANCELLED' AND process_status <> 'DUPLICATE' AND process_status <> 'DAMAGED PDF' and process_status <> 'DUPLICATE/DIFF-PDF' and eviction_id >= '$_GET[start]' order by eviction_id  LIMIT 0,1");
 	}else{
-		$r=@mysql_query("SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours, DATEDIFF(estFileDate, CURDATE()) as estHours FROM evictionPackets where status='NEW' and process_status <> 'CANCELLED' and process_status <> 'DUPLICATE' AND process_status <> 'DAMAGED PDF' and process_status <> 'DUPLICATE/DIFF-PDF' order by RAND() ");
+		$r=@mysql_query("SELECT *, CONCAT(TIMEDIFF( NOW(), date_received)) as hours, DATEDIFF(estFileDate, CURDATE()) as estHours FROM evictionPackets where status='NEW' and process_status <> 'CANCELLED' and process_status <> 'DUPLICATE' AND process_status <> 'DAMAGED PDF' and process_status <> 'DUPLICATE/DIFF-PDF' order by RAND()  LIMIT 0,1");
 		$test55 = 1;
 	}
 }
@@ -471,7 +466,7 @@ if ($_GET[export]){
 		echo "<script>alert('You cannot approve exports you requested silly goose!');</script>";
 	}
 }
-$rTest=@mysql_query("select * from EVexportRequests where evictionID = '$packet'") or die (mysql_error());
+$rTest=@mysql_query("select * from EVexportRequests where evictionID = '$packet' LIMIT 0,1") or die (mysql_error());
 $dTest=mysql_fetch_array($rTest,MYSQL_ASSOC);
 $exportStatus = exportStatus($dTest[byID],$dTest[confirmID],$packet);
 //end export commands
@@ -543,7 +538,7 @@ fieldset {margin:0px; padding:0px; background-color:#FFFFFF; }
 <? if($test4[eDate]){ ?>
 <td><div class="<?=$test4[css];?>"><?=$test4[event];?><br><?=$test4[eDate];?></div></td>
 <? }else{ ?>
-<td><div class="alert">Estimated Close<br><?=getClose($packet);?></div></td>
+<td><div class="alert">Estimated Close<br><?=$d[estFileDate];?></div></td>
 <? }?>
 <td><div class="alert"style="font-size:10px;"><a href="?packet=<?=$packet?>&export='<?=time();?>'">EXPORT</a><hr><?=$exportStatus;?></div></td>
 </tr></table>
@@ -640,7 +635,7 @@ $dupCheck=dupCheck($d[client_file]);
 </tr>
 <tr>
 <?
-$rXX=@mysql_query("select name, phone from courier where courierID = '$d[courierID]'");
+$rXX=@mysql_query("select name, phone from courier where courierID = '$d[courierID]' LIMIT 0,1");
 $dXX=mysql_fetch_array($rXX,MYSQL_ASSOC);
 if ($dXX[phone]){
 	$phone="-".$dXX[phone];
@@ -738,7 +733,7 @@ if ($dupCheck == "class='duplicate'"){
 </table>
 </FIELDSET>
 <?
-$q5="SELECT DISTINCT serverID from evictionHistory WHERE eviction_id='$d[eviction_id]'";
+$q5="SELECT DISTINCT serverID from evictionHistory WHERE eviction_id='$d[eviction_id]' LIMIT 0,1";
 $r5=@mysql_query($q5) or die(mysql_error());
 $i=0;
 $data5=mysql_num_rows($r5);
@@ -850,7 +845,7 @@ $signer = "Version 1 Barcode";
 <LEGEND ACCESSKEY=C>Process Server #<?=$d[server_id]?><? if ($d[svrPrint] > 0){echo " - <small>PRINTED</small>";}?></LEGEND>
 <?
 mysql_select_db("core");
-$r2=@mysql_query("select * from ps_users where id = '$d[server_id]'");
+$r2=@mysql_query("select * from ps_users where id = '$d[server_id]' LIMIT 0,1");
 $d2=mysql_fetch_array($r2, MYSQL_ASSOC);
 ?>
 <table <? if ($d[svrPrint] > 0){echo "bgcolor='#FFFFFF'";}?>>
