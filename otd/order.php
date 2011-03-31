@@ -1867,7 +1867,7 @@ foreach(range('a','e') as $letter){
 if ($_GET[type]){
 	echo $_GET[type];
 }
-$r=@mysql_query("select * from fileWatch where clientFile = '$d[client_file]' LIMIT 0,1");
+$r=@mysql_query("select * from fileWatch where clientFile = '$d[client_file]'");
 while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 echo "<script>alert('".addslashes($d[message])."');</script>";
 }
