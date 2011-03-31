@@ -8,19 +8,19 @@ if ($_GET[date]){
 $_SESSION[fileDate] = $today;
 
 function attachmentList($packet,$type){
-$list = "<fieldset><legend>Electronic File Storage</legend>";
-mysql_select_db('core');
-if ($type == 'EV'){
-	$packet='EV'.$packet;
-}
-$r=@mysql_query("select * from ps_affidavits where packetID = '$packet' order by defendantID");
-while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-	$affidavit=$d[affidavit];
-	$affidavit=str_replace('http://mdwestserve.com/ps/affidavits/','http://mdwestserve.com/affidavits/',$affidavit);
-$list .= "<li><a href='$affidavit'>$d[method]</a></li>";
-}
-$list .= "</fieldset>";
-return $list;
+	$list = "<fieldset><legend>Electronic File Storage</legend>";
+	mysql_select_db('core');
+	if ($type == 'EV'){
+		$packet='EV'.$packet;
+	}
+	$r=@mysql_query("select * from ps_affidavits where packetID = '$packet' order by defendantID");
+	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+		$affidavit=$d[affidavit];
+		$affidavit=str_replace('http://mdwestserve.com/ps/affidavits/','http://mdwestserve.com/affidavits/',$affidavit);
+		$list .= "<li><a href='$affidavit'>$d[method]</a></li>";
+	}
+	$list .= "</fieldset>";
+	return $list;
 }
 
 function monthConvert($month){
@@ -43,10 +43,10 @@ if ($_GET[update] && $_GET[id]){
 	if ($_GET[update] == 'FILED WITH COURT' || $_GET[update] == 'FILED WITH COURT - FBS'){
 		if ($_GET[svc] == 'EV'){
 			ev_timeline($_GET[id],$_COOKIE[psdata][name]." Confirmed Filing by Return From Court");
-			$qdr=@mysql_query("SELECT * from evictionPackets where eviction_id='$_GET[id]'");
+			$qdr=@mysql_query("SELECT * from evictionPackets where eviction_id='$_GET[id]' LIMIT 0,1");
 		}else{
 			timeline($_GET[id],$_COOKIE[psdata][name]." Confirmed Filing by Return From Court");
-			$qdr=@mysql_query("SELECT * from ps_packets where packet_id='$_GET[id]'");
+			$qdr=@mysql_query("SELECT * from ps_packets where packet_id='$_GET[id]' LIMIT 0,1");
 		}
 		$ddr=mysql_fetch_array($qdr, MYSQL_ASSOC);
 		if ($ddr[filing_status] != 'FILED WITH COURT' && $ddr[filing_status] != 'FILED WITH COURT - FBS'){
@@ -68,12 +68,12 @@ if ($_GET[update] && $_GET[id]){
 			$headers  = "MIME-Version: 1.0 \n";
 			$headers .= "Content-type: text/html; charset=iso-8859-1 \n";
 			$headers .= "From: File Complete <file.complete@mdwestserve.com> \n";
-			if ($ddr[affidavitType=='DEFAULTING PURCHASER']){
-				$attR = @mysql_query("select ps_alt2 from attorneys where attorneys_id = '$ddr[attorneys_id]'");
+			if ($ddr[affidavitType]=='DEFAULTING PURCHASER']){
+				$attR = @mysql_query("select ps_alt2 from attorneys where attorneys_id = '$ddr[attorneys_id]' LIMIT 0,1");
 				$attD = mysql_fetch_array($attR, MYSQL_BOTH);
 				$cc = explode(',',$attD[ps_alt2]);
 			}else{
-				$attR = @mysql_query("select ps_to from attorneys where attorneys_id = '$ddr[attorneys_id]'");
+				$attR = @mysql_query("select ps_to from attorneys where attorneys_id = '$ddr[attorneys_id]' LIMIT 0,1");
 				$attD = mysql_fetch_array($attR, MYSQL_BOTH);
 				$cc = explode(',',$attD[ps_to]);
 			}
@@ -218,7 +218,7 @@ if ($_GET[all]){
 $r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
 $i=0;
 while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {$i++;
-	$q1="SELECT method FROM ps_affidavits WHERE packetID='$d[packet_id]' AND (method LIKE '%Return from court%' OR method LIKE '%Copy of%')";
+	$q1="SELECT method FROM ps_affidavits WHERE packetID='$d[packet_id]' AND (method LIKE '%Return from court%' OR method LIKE '%Copy of%') LIMIT 0,1";
 	$r1=@mysql_query($q1) or die ("Query: $q1<br>".mysql_error());
 	$d1=mysql_fetch_array($r1, MYSQL_ASSOC);
 ?>
@@ -263,7 +263,7 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {$i++;
 <? }
 $r2=@mysql_query($q2) or die("Query: $q2<br>".mysql_error());
 while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)) {$i++;
-	$q1="SELECT method FROM ps_affidavits WHERE packetID='EV$d2[eviction_id]' AND (method LIKE '%Return from court%' OR method LIKE '%Copy of%')";
+	$q1="SELECT method FROM ps_affidavits WHERE packetID='EV$d2[eviction_id]' AND (method LIKE '%Return from court%' OR method LIKE '%Copy of%') LIMIT 0,1";
 	$r1=@mysql_query($q1) or die ("Query: $q1<br>".mysql_error());
 	$d1=mysql_fetch_array($r1, MYSQL_ASSOC);
 ?>
