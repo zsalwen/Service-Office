@@ -52,7 +52,7 @@ function article($packet,$add){
 }
 
 function buildFromMatrix($packet,$product){
-	$qm="SELECT * FROM mailMatrix WHERE packetID='$packet' AND product='$product'";
+	$qm="SELECT * FROM mailMatrix WHERE packetID='$packet' AND product='$product' LIMIT 0,1";
 	$rm=@mysql_query($qm) or die ("Query: $qm<br>".mysql_error());
 	$dm=mysql_fetch_array($rm, MYSQL_ASSOC);
 	if ($product == 'EV'){
@@ -139,7 +139,7 @@ function buildFromEviction($eviction){
 }
 
 function getPacketData($packet){
-	$q="select * from ps_packets where packet_id = '$packet'";
+	$q="select * from ps_packets where packet_id = '$packet' LIMIT 0,1";
 	$r=@mysql_query($q);
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);//$data = "<td>$d[packet_id]-$defendant</td>";	
 	$data .= "<tr bgcolor='".statusColor($d[mail_status])."'>
@@ -167,7 +167,7 @@ function getPacketData($packet){
 		}
 	}
 	$data .= "</td>";
-	$qm="SELECT packetID FROM mailMatrix WHERE packetID='$packet' AND product='OTD'";
+	$qm="SELECT packetID FROM mailMatrix WHERE packetID='$packet' AND product='OTD' LIMIT 0,1";
 	$rm=@mysql_query($qm) or die ("Query: $qm<br>".mysql_error());
 	$dm=mysql_fetch_array($rm, MYSQL_ASSOC);
 	if ($dm[packetID] != ""){
@@ -208,7 +208,7 @@ function getPacketData($packet){
 }
 //will return list with pop up js alerts instead of links
 function lockFromMatrix($packet,$entry_id){
-	$qm="SELECT * FROM mailMatrix WHERE packetID='$packet' AND product='OTD'";
+	$qm="SELECT * FROM mailMatrix WHERE packetID='$packet' AND product='OTD' LIMIT 0,1";
 	$rm=@mysql_query($qm) or die ("Query: $qm<br>".mysql_error());
 	$dm=mysql_fetch_array($rm, MYSQL_ASSOC);
 	if ($dm[packetID] != ''){
@@ -244,7 +244,7 @@ function lockFromMatrix($packet,$entry_id){
 }
 //will return list with pop up js alerts instead of links
 function lockFromPacket($packet){
-	$q="select address1, address1a, address1b, address1c, address1d, address1e, city1, city1a, city1b, city1c, city1d, city1e, state1, state1a, state1b, state1c, state1d, state1e, zip1, zip1a, zip1b, zip1c, zip1d, zip1e, address2, address2a, address2b, address2c, address2d, address2e, city2, city2a, city2b, city2c, city2d, city2e, state2, state2a, state2b, state2c, state2d, state2e, zip2, zip2a, zip2b, zip2c, zip2d, zip2e, address3, address3a, address3b, address3c, address3d, address3e, city3, city3a, city3b, city3c, city3d, city3e, state3, state3a, state3b, state3c, state3d, state3e, zip3, zip3a, zip3b, zip3c, zip3d, zip3e, address4, address4a, address4b, address4c, address4d, address4e, city4, city4a, city4b, city4c, city4d, city4e, state4, state4a, state4b, state4c, state4d, state4e, zip4, zip4a, zip4b, zip4c, zip4d, zip4e, address5, address5a, address5b, address5c, address5d, address5e, city5, city5a, city5b, city5c, city5d, city5e, state5, state5a, state5b, state5c, state5d, state5e, zip5, zip5a, zip5b, zip5c, zip5d, zip5e, address6, address6a, address6b, address6c, address6d, address6e, city6, city6a, city6b, city6c, city6d, city6e, state6, state6a, state6b, state6c, state6d, state6e, zip6, zip6a, zip6b, zip6c, zip6d, zip6e, pobox, pobox2, pocity, pocity2, postate, postate2, pozip, pozip2, name1, name2, name3, name4, name5, name6, entry_id from ps_packets where packet_id = '$packet'";
+	$q="select address1, address1a, address1b, address1c, address1d, address1e, city1, city1a, city1b, city1c, city1d, city1e, state1, state1a, state1b, state1c, state1d, state1e, zip1, zip1a, zip1b, zip1c, zip1d, zip1e, address2, address2a, address2b, address2c, address2d, address2e, city2, city2a, city2b, city2c, city2d, city2e, state2, state2a, state2b, state2c, state2d, state2e, zip2, zip2a, zip2b, zip2c, zip2d, zip2e, address3, address3a, address3b, address3c, address3d, address3e, city3, city3a, city3b, city3c, city3d, city3e, state3, state3a, state3b, state3c, state3d, state3e, zip3, zip3a, zip3b, zip3c, zip3d, zip3e, address4, address4a, address4b, address4c, address4d, address4e, city4, city4a, city4b, city4c, city4d, city4e, state4, state4a, state4b, state4c, state4d, state4e, zip4, zip4a, zip4b, zip4c, zip4d, zip4e, address5, address5a, address5b, address5c, address5d, address5e, city5, city5a, city5b, city5c, city5d, city5e, state5, state5a, state5b, state5c, state5d, state5e, zip5, zip5a, zip5b, zip5c, zip5d, zip5e, address6, address6a, address6b, address6c, address6d, address6e, city6, city6a, city6b, city6c, city6d, city6e, state6, state6a, state6b, state6c, state6d, state6e, zip6, zip6a, zip6b, zip6c, zip6d, zip6e, pobox, pobox2, pocity, pocity2, postate, postate2, pozip, pozip2, name1, name2, name3, name4, name5, name6, entry_id from ps_packets where packet_id = '$packet' LIMIT 0,1";
 	$r=@mysql_query($q);
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 	$count=0;
@@ -273,7 +273,7 @@ function lockFromPacket($packet){
 }
 //function to create locked entry for a file if data entry has not been confirmed
 function lockPacket($packet){
-	$q="select * from ps_packets where packet_id = '$packet'";
+	$q="select * from ps_packets where packet_id = '$packet' LIMIT 0,1";
 	$r=@mysql_query($q);
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);//$data = "<td>$d[packet_id]-$defendant</td>";	
 	$data .= "<tr bgcolor='#CCCCCC' id='OTD$packet'>
@@ -290,7 +290,7 @@ function lockPacket($packet){
 	$data .= "</strong></span>";
 	}
 	$data .= "</td>";
-	$qm="SELECT packetID FROM mailMatrix WHERE packetID='$packet' AND product='OTD'";
+	$qm="SELECT packetID FROM mailMatrix WHERE packetID='$packet' AND product='OTD' LIMIT 0,1";
 	$rm=@mysql_query($qm) or die ("Query: $qm<br>".mysql_error());
 	$dm=mysql_fetch_array($rm, MYSQL_ASSOC);
 	if ($dm[packetID] != ""){
@@ -331,7 +331,7 @@ function lockPacket($packet){
 }
 
 function getEvictionData($eviction){
-	$q="select * from evictionPackets where eviction_id = '$eviction'";
+	$q="select * from evictionPackets where eviction_id = '$eviction' LIMIT 0,1";
 	$r=@mysql_query($q);
 	$d=mysql_fetch_array($r, MYSQL_ASSOC);
 	$data .= "<tr bgcolor='".statusColor($d[mail_status])."'>
@@ -343,7 +343,7 @@ function getEvictionData($eviction){
 		$data .= "<a style='background-color:#000000; color:#FFFFFF' href='?mail7=$eviction'><strong>CloseOut</strong></a>";
 	}
 	$data .= "</td>";
-	$qm="SELECT packetID FROM mailMatrix WHERE packetID='$eviction' AND product='EV'";
+	$qm="SELECT packetID FROM mailMatrix WHERE packetID='$eviction' AND product='EV' LIMIT 0,1";
 	$rm=@mysql_query($qm) or die ("Query: $qm<br>".mysql_error());
 	$dm=mysql_fetch_array($rm, MYSQL_ASSOC);
 	if ($dm[packetID] != ""){
@@ -386,7 +386,7 @@ function getEvictionData($eviction){
 
 if (isset($_GET['mail4'])){
 	//OTD open papers to print (and mark printed)
-	$q4="SELECT otd FROM ps_packets WHERE packet_id='".$_GET['mail4']."'";
+	$q4="SELECT otd FROM ps_packets WHERE packet_id='".$_GET['mail4']."' LIMIT 0,1";
 	$r4=@mysql_query($q4) or die (mysql_error());
 	$d4=mysql_fetch_array($r4, MYSQL_ASSOC);
 	$href=washURI2($d4[otd]);
@@ -409,7 +409,7 @@ if (isset($_GET['mail5'])){
 }
 if (isset($_GET['mail6'])){
 	//EV open papers to print (and mark printed)
-	$q4="SELECT otd FROM evictionPackets WHERE eviction_id='".$_GET['mail6']."'";
+	$q4="SELECT otd FROM evictionPackets WHERE eviction_id='".$_GET['mail6']."' LIMIT 0,1";
 	$r4=@mysql_query($q4) or die (mysql_error());
 	$d4=mysql_fetch_array($r4, MYSQL_ASSOC);
 	$href=washURI2($d4[otd]);
@@ -461,29 +461,11 @@ if($_COOKIE[psdata][level] == "Operations"){
 		}
 		echo "<div align='center'><font size='+2'>$msg</font></div>";
 	}
-	$q="select packet_id, mail_status, qualityControl from ps_packets where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') and rush='checked' order by mail_status, packet_id";
-}else{
-	$q="select packet_id, mail_status, qualityControl from ps_packets where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') and rush='checked' and (server_id = '$me' OR server_ida = '$me' OR server_idb = '$me' OR server_idc = '$me' OR server_idd = '$me' OR server_ide = '$me' ) order by mail_status, packet_id";
-}
-$r=@mysql_query($q);?>
 
-<table width="100%" border="1" style="border-collapse:collapse; padding:5px;">
-<tr><td colspan='6' align='center' style='text-spacing: 5px; background-color:99AAEE; background-color:00BBAA; font-weight:bold;'>FORECLOSURES</td></tr>
-<? while($d=mysql_fetch_array($r, MYSQL_ASSOC)){ $i++;
-		if ($d[qualityControl] != ''){
-			echo getPacketData($d[packet_id]);
-		}else{
-			echo lockPacket($d[packet_id]);
-		}
-		?>
-    </tr>    
-<? } ?>
-
-<?
 if($_COOKIE[psdata][level] == "Operations"){
-$q="select packet_id, mail_status, qualityControl from ps_packets where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') and rush <> 'checked' order by mail_status, packet_id";
+$q="select packet_id, mail_status, qualityControl from ps_packets where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') order by rush DESC, mail_status, packet_id";
 }else{
-$q="select packet_id, mail_status, qualityControl from ps_packets where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') and rush <> 'checked' and (server_id = '$me' OR server_ida = '$me' OR server_idb = '$me' OR server_idc = '$me' OR server_idd = '$me' OR server_ide = '$me' ) order by mail_status, packet_id";
+$q="select packet_id, mail_status, qualityControl from ps_packets where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') and (server_id = '$me' OR server_ida = '$me' OR server_idb = '$me' OR server_idc = '$me' OR server_idd = '$me' OR server_ide = '$me' ) order by rush DESC, mail_status, packet_id";
 }
 $r=@mysql_query($q);
 
@@ -497,21 +479,11 @@ $r=@mysql_query($q);
     </tr>    
 <? }
 //pull Evictions!
-if($_COOKIE[psdata][level] == "Operations"){
-$q="select eviction_id, mail_status from evictionPackets where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') and rush='checked' order by mail_status, eviction_id";
-}else{
-$q="select eviction_id, mail_status from evictionPackets where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') and rush='checked' AND (server_id = '$me' OR server_ida = '$me' OR server_idb = '$me' OR server_idc = '$me' OR server_idd = '$me' OR server_ide = '$me') order by mail_status, eviction_id";
-}
-$r=@mysql_query($q);?>
-<? while($d=mysql_fetch_array($r, MYSQL_ASSOC)){ $i++;?>
-		<?=getEvictionData($d[eviction_id])?>
-    </tr>    
-<? }
 echo "<tr><td colspan='6' align='center' style='text-spacing: 5px; background-color:99AAEE; font-weight:bold;'>EVICTIONS</td></tr>";
 if($_COOKIE[psdata][level] == "Operations"){
-$q="select eviction_id, mail_status from evictionPackets where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') and rush <> 'checked' order by mail_status, eviction_id";
+$q="select eviction_id, mail_status from evictionPackets where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') order by rush DESC, mail_status, eviction_id";
 }else{
-$q="select eviction_id, mail_status from evictionPackets where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') and rush <> 'checked' and (server_id = '$me' OR server_ida = '$me' OR server_idb = '$me' OR server_idc = '$me' OR server_idd = '$me' OR server_ide = '$me' ) order by mail_status, eviction_id";
+$q="select eviction_id, mail_status from evictionPackets where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') and (server_id = '$me' OR server_ida = '$me' OR server_idb = '$me' OR server_idc = '$me' OR server_idd = '$me' OR server_ide = '$me' ) order by rush DESC, mail_status, eviction_id";
 }
 $r=@mysql_query($q);
 
@@ -522,7 +494,7 @@ $r=@mysql_query($q);
 <?
 // standard queries
 if ($_GET['mail99']){
-	@mysql_query("update standard_packets set process_status = 'READY FOR AFFIDAVITS' where packet_id = $_GET[mail99]");
+	@mysql_query("update standard_packets set process_status = 'READY FOR AFFIDAVITS' where packet_id = $_GET[mail99] LIMIT 0,1");
 	mail('service@mdwestserve.com','Standard Packet '.$_GET[mail99].' ready for affidavits','s'.$_GET[mail99].' ready for affidavits by: '.$_COOKIE[psdata][name]);
 	timeline($_GET['mail99'],'Status updated to READY FOR AFFIDAVITS by: '.$_COOKIE[psdata][name]);
 }
