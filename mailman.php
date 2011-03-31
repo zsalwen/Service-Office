@@ -461,13 +461,31 @@ if($_COOKIE[psdata][level] == "Operations"){
 		}
 		echo "<div align='center'><font size='+2'>$msg</font></div>";
 	}
-
-if($_COOKIE[psdata][level] == "Operations"){
-$q="select packet_id, mail_status, qualityControl from ps_packets where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') order by rush DESC, mail_status, packet_id";
+	$q="select packet_id, mail_status, qualityControl from ps_packets where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') and rush='checked' order by mail_status, packet_id";
 }else{
-$q="select packet_id, mail_status, qualityControl from ps_packets where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') and (server_id = '$me' OR server_ida = '$me' OR server_idb = '$me' OR server_idc = '$me' OR server_idd = '$me' OR server_ide = '$me' ) order by rush DESC, mail_status, packet_id";
+	$q="select packet_id, mail_status, qualityControl from ps_packets where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') and rush='checked' and (server_id = '$me' OR server_ida = '$me' OR server_idb = '$me' OR server_idc = '$me' OR server_idd = '$me' OR server_ide = '$me' ) order by mail_status, packet_id";
 }
-$r=@mysql_query($q) or die (mysql_error());
+$r=@mysql_query($q);?>
+
+<table width="100%" border="1" style="border-collapse:collapse; padding:5px;">
+<tr><td colspan='6' align='center' style='text-spacing: 5px; background-color:99AAEE; background-color:00BBAA; font-weight:bold;'>FORECLOSURES</td></tr>
+<? while($d=mysql_fetch_array($r, MYSQL_ASSOC)){ $i++;
+		if ($d[qualityControl] != ''){
+			echo getPacketData($d[packet_id]);
+		}else{
+			echo lockPacket($d[packet_id]);
+		}
+		?>
+    </tr>    
+<? } ?>
+
+<?
+if($_COOKIE[psdata][level] == "Operations"){
+$q="select packet_id, mail_status, qualityControl from ps_packets where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') and rush <> 'checked' order by mail_status, packet_id";
+}else{
+$q="select packet_id, mail_status, qualityControl from ps_packets where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') and rush <> 'checked' and (server_id = '$me' OR server_ida = '$me' OR server_idb = '$me' OR server_idc = '$me' OR server_idd = '$me' OR server_ide = '$me' ) order by mail_status, packet_id";
+}
+$r=@mysql_query($q);
 
  while($d=mysql_fetch_array($r, MYSQL_ASSOC)){ $i++;
 		if ($d[qualityControl] != ''){
@@ -479,13 +497,23 @@ $r=@mysql_query($q) or die (mysql_error());
     </tr>    
 <? }
 //pull Evictions!
+if($_COOKIE[psdata][level] == "Operations"){
+$q="select eviction_id, mail_status from evictionPackets where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') and rush='checked' order by mail_status, eviction_id";
+}else{
+$q="select eviction_id, mail_status from evictionPackets where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') and rush='checked' AND (server_id = '$me' OR server_ida = '$me' OR server_idb = '$me' OR server_idc = '$me' OR server_idd = '$me' OR server_ide = '$me') order by mail_status, eviction_id";
+}
+$r=@mysql_query($q);?>
+<? while($d=mysql_fetch_array($r, MYSQL_ASSOC)){ $i++;?>
+		<?=getEvictionData($d[eviction_id])?>
+    </tr>    
+<? }
 echo "<tr><td colspan='6' align='center' style='text-spacing: 5px; background-color:99AAEE; font-weight:bold;'>EVICTIONS</td></tr>";
 if($_COOKIE[psdata][level] == "Operations"){
-$q="select eviction_id, mail_status from evictionPackets where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') order by rush DESC, mail_status, eviction_id";
+$q="select eviction_id, mail_status from evictionPackets where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') and rush <> 'checked' order by mail_status, eviction_id";
 }else{
-$q="select eviction_id, mail_status from evictionPackets where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') and (server_id = '$me' OR server_ida = '$me' OR server_idb = '$me' OR server_idc = '$me' OR server_idd = '$me' OR server_ide = '$me' ) order by rush DESC, mail_status, eviction_id";
+$q="select eviction_id, mail_status from evictionPackets where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') and rush <> 'checked' and (server_id = '$me' OR server_ida = '$me' OR server_idb = '$me' OR server_idc = '$me' OR server_idd = '$me' OR server_ide = '$me' ) order by mail_status, eviction_id";
 }
-$r=@mysql_query($q) or die (mysql_error());
+$r=@mysql_query($q);
 
  while($d=mysql_fetch_array($r, MYSQL_ASSOC)){ $i++;?>
 		<?=getEvictionData($d[eviction_id])?>
@@ -494,7 +522,7 @@ $r=@mysql_query($q) or die (mysql_error());
 <?
 // standard queries
 if ($_GET['mail99']){
-	@mysql_query("update standard_packets set process_status = 'READY FOR AFFIDAVITS' where packet_id = $_GET[mail99] LIMIT 0,1");
+	@mysql_query("update standard_packets set process_status = 'READY FOR AFFIDAVITS' where packet_id = $_GET[mail99]");
 	mail('service@mdwestserve.com','Standard Packet '.$_GET[mail99].' ready for affidavits','s'.$_GET[mail99].' ready for affidavits by: '.$_COOKIE[psdata][name]);
 	timeline($_GET['mail99'],'Status updated to READY FOR AFFIDAVITS by: '.$_COOKIE[psdata][name]);
 }
