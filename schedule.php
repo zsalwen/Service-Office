@@ -93,51 +93,39 @@ function isActive($status){
 }
 
 function getCourier($cid){
-$r=@mysql_query("select courierID from ps_packets where packet_id = '$cid'");
-$d=mysql_fetch_array($r,MYSQL_ASSOC);
-$r=@mysql_query("select name from courier where courierID = '$d[courierID]'");
+$r=@mysql_query("SELECT courier.name, ps_packets.courierID FROM courier, ps_packets WHERE courier.courierID = ps_packets.courierID AND packet_id = '$cid' LIMIT 0,1 ");
 $d=mysql_fetch_array($r,MYSQL_ASSOC);
 if ($d[name]){ return strtoupper($d[name]); }else{ return " !!!MISSING!!! ";}
 }
 function getServer($cid){
-$r=@mysql_query("select attorneys_id from ps_packets where packet_id = '$cid'");
-$d=mysql_fetch_array($r,MYSQL_ASSOC);
-$r=@mysql_query("select display_name from attorneys where attorneys_id = '$d[attorneys_id]'");
+$r=@mysql_query("select ps_packets.attorneys_id, attorneys.display_name from ps_packets, attorneys where ps_packets.packet_id = '$cid' AND attorneys.attorneys_id=ps_packets.attorneys_id LIMIT 0,1");
 $d=mysql_fetch_array($r,MYSQL_ASSOC);
 return strtoupper($d[display_name]);
 }
 function getEVServer($cid){
-$r=@mysql_query("select attorneys_id from evictionPackets where eviction_id = '$cid'");
-$d=mysql_fetch_array($r,MYSQL_ASSOC);
-$r=@mysql_query("select display_name from attorneys where attorneys_id = '$d[attorneys_id]'");
+$r=@mysql_query("select evictionPackets.attorneys_id, attorneys.display_name from evictionPackets, attorneys where evictionPackets.eviction_id = '$cid' AND attorneys.attorneys_id=evictionPackets.attorneys_id LIMIT 0,1");
 $d=mysql_fetch_array($r,MYSQL_ASSOC);
 return strtoupper($d[display_name]);
 }
 
 function getEVCourier($cid){
-$r=@mysql_query("select courierID from evictionPackets where eviction_id = '$cid'");
-$d=mysql_fetch_array($r,MYSQL_ASSOC);
-$r=@mysql_query("select name from courier where courierID = '$d[courierID]'");
+$r=@mysql_query("SELECT courier.name, evictionPackets.courierID FROM courier, evictionPackets WHERE courier.courierID = evictionPackets.courierID AND eviction_id = '$cid' LIMIT 0,1 ");
 $d=mysql_fetch_array($r,MYSQL_ASSOC);
 if ($d[name]){ return strtoupper($d[name]); }else{ return "!!!MISSING!!!";}
 }
 function getSServer($cid){
-$r=@mysql_query("select attorneys_id from standard_packets where packet_id = '$cid'");
-$d=mysql_fetch_array($r,MYSQL_ASSOC);
-$r=@mysql_query("select display_name from attorneys where attorneys_id = '$d[attorneys_id]'");
+$r=@mysql_query("select standard_packets.attorneys_id, attorneys.display_name from standard_packets, attorneys where standard_packets.packet_id = '$cid' AND attorneys.attorneys_id=standard_packets.attorneys_id LIMIT 0,1");
 $d=mysql_fetch_array($r,MYSQL_ASSOC);
 return strtoupper($d[display_name]);
 }
 
 function getSCourier($cid){
-$r=@mysql_query("select courierID from standard_packets where packet_id = '$cid'");
-$d=mysql_fetch_array($r,MYSQL_ASSOC);
-$r=@mysql_query("select name from courier where courierID = '$d[courierID]'");
+$r=@mysql_query("SELECT courier.name, standard_packets.courierID FROM courier, standard_packets WHERE courier.courierID = standard_packets.courierID AND packet_id = '$cid' LIMIT 0,1 ");
 $d=mysql_fetch_array($r,MYSQL_ASSOC);
 if ($d[name]){ return strtoupper($d[name]); }else{ return "!!!MISSING!!!";}
 }
 function checkTrack($packet,$doc){
-	$q="SELECT * from docuTrack WHERE packet='$packet' and document like '%$doc%'";
+	$q="SELECT * from docuTrack WHERE packet='$packet' and document like '%$doc%' LIMIT 0,1";
 	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
 	if ($d){
@@ -152,7 +140,7 @@ function checkTrack($packet,$doc){
 	}
 }
 function withCourier($packet){
-	$q="SELECT * from docuTrack WHERE packet='$packet' and document='OUT WITH COURIER'";
+	$q="SELECT * from docuTrack WHERE packet='$packet' and document='OUT WITH COURIER' LIMIT 0,1";
 	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
 	if ($d && !checkTrack($packet,'FILED AFFIDAVIT')){
@@ -165,7 +153,7 @@ function withCourier($packet){
 
 
 function gotScans($packet){
-	$q1="SELECT method FROM ps_affidavits WHERE packetID='$packet' AND method LIKE '%Return from court%'";
+	$q1="SELECT method FROM ps_affidavits WHERE packetID='$packet' AND method LIKE '%Return from court%' LIMIT 0,1";
 	$r1=@mysql_query($q1) or die ("Query: $q1<br>".mysql_error());
 	$d1=mysql_fetch_array($r1, MYSQL_ASSOC);
 	if ($d1){ 
@@ -176,7 +164,7 @@ function gotScans($packet){
 }
 
 function startPrep($packet){
-	$q="SELECT * from docuTrack WHERE packet='$packet' and document like '%SIGNED AFFIDAVIT%'";
+	$q="SELECT * from docuTrack WHERE packet='$packet' and document like '%SIGNED AFFIDAVIT%' LIMIT 0,1";
 	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
 	if ($d){
@@ -186,7 +174,7 @@ function startPrep($packet){
 }
 
 function EVwithCourier($packet){
-	$q="SELECT * from docuTrack WHERE packet='EV$packet' and document='OUT WITH COURIER'";
+	$q="SELECT * from docuTrack WHERE packet='EV$packet' and document='OUT WITH COURIER' LIMIT 0,1";
 	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
 	if ($d && !checkTrack('EV'.$packet,'FILED AFFIDAVIT')){
@@ -198,7 +186,7 @@ function EVwithCourier($packet){
 }
 
 function SwithCourier($packet){
-	$q="SELECT * from docuTrack WHERE packet='S$packet' and document='OUT WITH COURIER'";
+	$q="SELECT * from docuTrack WHERE packet='S$packet' and document='OUT WITH COURIER' LIMIT 0,1";
 	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
 	if ($d && !checkTrack('S'.$packet,'FILED AFFIDAVIT')){
@@ -555,7 +543,7 @@ $today = date('Y-m-d');
 <div style='background-color:#FF0000;' align="center">
 Courier: <select name="courier">
 <?
-$CCr=@mysql_query("select * from courier order by name DESC");
+$CCr=@mysql_query("select * from courier WHERE isActive='1' order by name DESC");
 while($CCd=mysql_fetch_array($CCr,MYSQL_ASSOC)){
 if ($CCd[phone]){
 	$phone="-".$CCd[phone];
