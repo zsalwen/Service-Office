@@ -92,20 +92,17 @@ function searchForm2($packet,$def,$firstName,$lastName,$county){
 	return $link;
 }
 
-function watchLink($packet,$def){
-	$q2="SELECT name$def, circuit_court from ps_packets WHERE packet_id='$packet' LIMIT 0,1";
-	$r2=@mysql_query($q2);
-	$d2=mysql_fetch_array($r2,MYSQL_ASSOC);
-	$county=wdCounty($d2[circuit_court]);
-	$dN=' '.strtoupper($d2["name$def"]).' ';
+function watchLink($packet,$def,$name,$court){
+	$county=wdCounty($court);
+	$dN=' '.strtoupper($name).' ';
 	if (strpos($dN,'LLC') || strpos($dN,' INC ') || strpos($dN,' INC.') || strpos($dN,' CO ') || strpos($dN,' CO ')){
-		$link .= companyBtn(strtoupper($d2["name$def"]),$county);
+		$link .= companyBtn(strtoupper($name),$county);
 	}elseif(strpos($dN,'ESTATE')){
 		$link .= searchBtn();
-	}elseif($d2["name$def"] != ''){
+	}elseif($name != ''){
 		//check name for aka, fka, nka
-		if (strpos(strtoupper($d2["name$def"]),'AKA')){
-			$var=explode('AKA',strtoupper($d2["name$def"]));
+		if (strpos(strtoupper($name),'AKA')){
+			$var=explode('AKA',strtoupper($name));
 			$i=-1;
 			//process each part of separated array
 			while ($i < count($var)){$i++;
@@ -141,8 +138,8 @@ function watchLink($packet,$def){
 					}
 				}
 			}
-		}elseif (strpos(strtoupper($d2["name$def"]),'FKA')){
-			$var=explode('FKA',strtoupper($d2["name$def"]));
+		}elseif (strpos(strtoupper($name),'FKA')){
+			$var=explode('FKA',strtoupper($name));
 			$i=-1;
 			//process each part of separated array
 			while ($i < count($var)){$i++;
@@ -178,8 +175,8 @@ function watchLink($packet,$def){
 					}
 				}
 			}
-		}elseif (strpos(strtoupper($d2["name$def"]),'NKA')){
-			$var=explode('NKA',strtoupper($d2["name$def"]));
+		}elseif (strpos(strtoupper($name),'NKA')){
+			$var=explode('NKA',strtoupper($name));
 			$i=-1;
 			//process each part of separated array
 			while ($i < count($var)){$i++;
@@ -216,7 +213,7 @@ function watchLink($packet,$def){
 				}
 			}
 		}else{
-			$nameArray=split_full_name(strtoupper($d2["name$def"]));
+			$nameArray=split_full_name(strtoupper($name));
 			$fname='';
 			$lname='';
 			//search first name for spaces
@@ -249,7 +246,7 @@ function watchLink($packet,$def){
 	return $link;
 }
 
-function searchForm($packet,$def){
+function searchForm($packet,$def,$name,$court){
 	$start=date('Y');
 	$start="01/01/".($start-1);
 	$end=date('m/d/Y');
@@ -278,7 +275,7 @@ function searchForm($packet,$def){
 		}
 		$link .= "</form>";
 	}else{
-		$link = watchLink($packet,$def);
+		$link = watchLink($packet,$def,$name,$court);
 	}
 	return $link;
 }
@@ -306,34 +303,6 @@ function scrnHeight(field){
     	<td valign="top" bgcolor="#CCFFFF" width="15%" height="100%">
         <div id="div1" style="overflow:auto; width:100%; height:100%;">
 		<a style="font-size:10px; padding: 0px !important;" href="http://casesearch.courts.state.md.us/inquiry/processDisclaimer.jis" target="preview">Load Case Lookup</a><hr>
-<ol><?
-$q="select process_status, client_file, packet_id, name1, name2, name3, name4, name5, name6, lossMit from ps_packets where case_no = '' and filing_status='FILED WITH COURT' and  caseLookupFlag = '0'";
-$r=@mysql_query($q);
-while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){$i++;
-$FC = trim(getPage("http://data.mdwestserve.com/findFC.php?clientFile=".$d[client_file], 'MDWS File Copy for Packet'.$d[packet_id], '5', ''));
-if ($FC != '' && $FC != '1'){
-	$link=$FC;
-}else{
-	$link='';
-}
-$q1="SELECT status, packetID from watchDog where packetID='".$d[packet_id]."' LIMIT 0,1";
-$r1=@mysql_query($q1);
-$d1=mysql_fetch_array($r1,MYSQL_ASSOC);
-if($d[process_status] === 'READY'){
-	echo "<div style='border:1px solid orange; background-color: orange;'>";
-}elseif ($d1[packetID] && $d1[status] == 'New Case Found'){
-	echo "<div style='border:1px solid green; background-color: #33FF00;'>";
-}elseif ($d1[packetID] && $d1[status] != 'Search Complete'){
-	echo "<div style='border:1px solid red;'>";
-}
-echo "<li><a name='$d[packet_id]'></a><a href='order.php?packet=$d[packet_id]#case_no' target='order'>".strtoupper($d[packet_id]).'</a> <a href="?mark=1">DONE</a> '.$link.' ('.$d[lossMit].') <div>'.strtoupper(stripslashes($d[name1])).searchForm($d[packet_id],1).'</div><div>'.strtoupper(stripslashes($d[name2])).searchForm($d[packet_id],2).'</div><div>'.strtoupper(stripslashes($d[name3])).searchForm($d[packet_id],3).'</div><div>'.strtoupper(stripslashes($d[name4])).searchForm($d[packet_id],4).'</div><div>'.strtoupper(stripslashes($d[name5])).searchForm($d[packet_id],5).'</div><div>'.strtoupper(stripslashes($d[name6])).searchForm($d[packet_id],6).'</div></li>';
-if (($d1[packetID] && $d1[status] != 'Search Complete') || ($d[process_status] == 'READY')){
-	echo "</div>";
-}
-echo '<hr>';
-        }
-?>
-</ol>
 <ol>
 <?
 $q="select process_status, client_file, packet_id, name1, name2, name3, name4, name5, name6, lossMit from ps_packets where case_no = '' and caseLookupFlag = '0' and filing_status <> 'FILED WITH COURT' and filing_status <> 'SEND TO CLIENT' and process_status <> 'DUPLICATE' and process_status <> 'DAMAGED PDF' AND attorneys_id <> '70' and (status = 'RECEIVED' or status = 'RECIEVED') ORDER BY packet_id";
@@ -355,7 +324,7 @@ if($d[process_status] === 'READY'){
 }elseif ($d1[packetID] && $d1[status] != 'Search Complete'){
 	echo "<div style='border:1px solid red;'>";
 }
-echo "<li><a name='$d[packet_id]'></a>".wdLink($d[packet_id])."<a href='order.php?packet=$d[packet_id]#case_no' target='order'>".strtoupper($d[packet_id]).'</a> <a href="?mark=1">DONE</a> '.$link.' ('.$d[lossMit].') <div>'.strtoupper(stripslashes($d[name1])).searchForm($d[packet_id],1).'</div><div>'.strtoupper(stripslashes($d[name2])).searchForm($d[packet_id],2).'</div><div>'.strtoupper(stripslashes($d[name3])).searchForm($d[packet_id],3).'</div><div>'.strtoupper(stripslashes($d[name4])).searchForm($d[packet_id],4).'</div><div>'.strtoupper(stripslashes($d[name5])).searchForm($d[packet_id],5).'</div><div>'.strtoupper(stripslashes($d[name6])).searchForm($d[packet_id],6).'</div></li>';
+echo "<li><a name='$d[packet_id]'></a>".wdLink($d[packet_id])."<a href='order.php?packet=$d[packet_id]#case_no' target='order'>".strtoupper($d[packet_id]).'</a> <a href="?mark=1">DONE</a> '.$link.' ('.$d[lossMit].') <div>'.strtoupper(stripslashes($d[name1])).searchForm($d[packet_id],1,$d[name1],$d[circuit_court]).'</div><div>'.strtoupper(stripslashes($d[name2])).searchForm($d[packet_id],2,$d[name2],$d[circuit_court]).'</div><div>'.strtoupper(stripslashes($d[name3])).searchForm($d[packet_id],3,$d[name3],$d[circuit_court]).'</div><div>'.strtoupper(stripslashes($d[name4])).searchForm($d[packet_id],4,$d[name4],$d[circuit_court]).'</div><div>'.strtoupper(stripslashes($d[name5])).searchForm($d[packet_id],5,$d[name5],$d[circuit_court]).'</div><div>'.strtoupper(stripslashes($d[name6])).searchForm($d[packet_id],6,$d[name6],$d[circuit_court]).'</div></li>';
 if (($d1[packetID] && $d1[status] != 'Search Complete') || ($d[process_status] == 'READY')){
 	echo "</div>";
 }
