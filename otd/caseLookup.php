@@ -101,114 +101,48 @@ function watchLink($packet,$def,$name,$court){
 		$link .= searchBtn();
 	}elseif($name != ''){
 		//check name for aka, fka, nka
-		if (strpos(strtoupper($name),'AKA')){
-			$var=explode('AKA',strtoupper($name));
+		$split='';
+		if (strpos(strtoupper($name),'AKA') !== false){
+			$split='AKA';
+		}elseif (strpos(strtoupper($name),'FKA') !== false){
+			$split='FKA';
+		}elseif (strpos(strtoupper($name),'NKA') !== false){
+			$split='NKA';
+		}
+		if ($split != ''){
+			$var=explode($split,strtoupper($name));
 			$i=-1;
 			//process each part of separated array
 			while ($i < count($var)){$i++;
 				if (trim($var["$i"]) != ''){
-					$AKA=split_full_name(trim($var["$i"]));
-					//cycle through $AKA array, analyze and make entry for each name
+					$splitName=split_full_name(trim($var["$i"]));
+					//cycle through $splitName array, analyze and make entry for each name
 					$fname='';
 					$lname='';
 					//search first name for spaces
-					if(strpos($AKA['fname'],' ')){
-						$fname=explode(' ',$AKA['fname']);
+					if(strpos($splitName['fname'],' ')){
+						$fname=explode(' ',$splitName['fname']);
 						$fname=$fname[0];
 					}
 					//search first name for hyphen
-					if(strpos($AKA['fname'],'-')){
-						$fname=explode('-',$AKA['fname']);
+					if(strpos($splitName['fname'],'-')){
+						$fname=explode('-',$splitName['fname']);
 						$fname=$fname[0];
 					}
 					//search last name for hyphen
-					if(strpos($AKA['lname'],'-')){
-						$lname=explode('-',$AKA['lname']);
+					if(strpos($splitName['lname'],'-')){
+						$lname=explode('-',$splitName['lname']);
 						$lname=$lname[0];
 					}
 					//make separate watchDog entry for each permutation of name
 					if (($fname != '') && ($lname != '')){
 						$link .= searchForm2($packet,$def,addslashes(strtoupper($fname)),addslashes(strtoupper($lname)),$county);
 					}elseif($fname != ''){
-						$link .= searchForm2($packet,$def,addslashes(strtoupper($fname)),addslashes(strtoupper($AKA['lname'])),$county);
+						$link .= searchForm2($packet,$def,addslashes(strtoupper($fname)),addslashes(strtoupper($splitName['lname'])),$county);
 					}elseif($lname != ''){
-						$link .= searchForm2($packet,$def,addslashes(strtoupper($AKA['fname'])),addslashes(strtoupper($lname)),$county);
+						$link .= searchForm2($packet,$def,addslashes(strtoupper($splitName['fname'])),addslashes(strtoupper($lname)),$county);
 					}else{
-						$link .= searchForm2($packet,$def,addslashes(strtoupper($AKA['fname'])),addslashes(strtoupper($AKA['lname'])),$county);
-					}
-				}
-			}
-		}elseif (strpos(strtoupper($name),'FKA')){
-			$var=explode('FKA',strtoupper($name));
-			$i=-1;
-			//process each part of separated array
-			while ($i < count($var)){$i++;
-				if (trim($var["$i"]) != ''){
-					$FKA=split_full_name(trim($var["$i"]));
-					//cycle through $FKA array, analyze and make entry for each name
-					$fname='';
-					$lname='';
-					//search first name for spaces
-					if(strpos($FKA['fname'],' ')){
-						$fname=explode(' ',$FKA['fname']);
-						$fname=$fname[0];
-					}
-					//search first name for hyphen
-					if(strpos($FKA['fname'],'-')){
-						$fname=explode('-',$FKA['fname']);
-						$fname=$fname[0];
-					}
-					//search last name for hyphen
-					if(strpos($FKA['lname'],'-')){
-						$lname=explode('-',$FKA['lname']);
-						$lname=$lname[0];
-					}
-					//make separate watchDog entry for each permutation of name
-					if (($fname != '') && ($lname != '')){
-						$link .= searchForm2($packet,$def,addslashes(strtoupper($fname)),addslashes(strtoupper($lname)),$county);
-					}elseif($fname != ''){
-						$link .= searchForm2($packet,$def,addslashes(strtoupper($fname)),addslashes(strtoupper($FKA['lname'])),$county);
-					}elseif($lname != ''){
-						$link .= searchForm2($packet,$def,addslashes(strtoupper($FKA['fname'])),addslashes(strtoupper($lname)),$county);
-					}else{
-						$link .= searchForm2($packet,$def,addslashes(strtoupper($FKA['fname'])),addslashes(strtoupper($FKA['lname'])),$county);
-					}
-				}
-			}
-		}elseif (strpos(strtoupper($name),'NKA')){
-			$var=explode('NKA',strtoupper($name));
-			$i=-1;
-			//process each part of separated array
-			while ($i < count($var)){$i++;
-				if (trim($var["$i"]) != ''){
-					$NKA=split_full_name(trim($var["$i"]));
-					//cycle through $NKA array, analyze and make entry for each name
-					$fname='';
-					$lname='';
-					//search first name for spaces
-					if(strpos($NKA['fname'],' ')){
-						$fname=explode(' ',$NKA['fname']);
-						$fname=$fname[0];
-					}
-					//search first name for hyphen
-					if(strpos($NKA['fname'],'-')){
-						$fname=explode('-',$NKA['fname']);
-						$fname=$fname[0];
-					}
-					//search last name for hyphen
-					if(strpos($NKA['lname'],'-')){
-						$lname=explode('-',$NKA['lname']);
-						$lname=$lname[0];
-					}
-					//make separate watchDog entry for each permutation of name
-					if (($fname != '') && ($lname != '')){
-						$link .= searchForm2($packet,$def,addslashes(strtoupper($fname)),addslashes(strtoupper($lname)),$county);
-					}elseif($fname != ''){
-						$link .= searchForm2($packet,$def,addslashes(strtoupper($fname)),addslashes(strtoupper($NKA['lname'])),$county);
-					}elseif($lname != ''){
-						$link .= searchForm2($packet,$def,addslashes(strtoupper($NKA['fname'])),addslashes(strtoupper($lname)),$county);
-					}else{
-						$link .= searchForm2($packet,$def,addslashes(strtoupper($NKA['fname'])),addslashes(strtoupper($NKA['lname'])),$county);
+						$link .= searchForm2($packet,$def,addslashes(strtoupper($splitName['fname'])),addslashes(strtoupper($splitName['lname'])),$county);
 					}
 				}
 			}
