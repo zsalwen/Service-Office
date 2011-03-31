@@ -1,9 +1,9 @@
 <?
 include 'common.php';
 $OTD=$_GET[OTD];
-$r=@mysql_query("SELECT attorneys_id, uspsVerify, qualityControl FROM ps_packets WHERE packet_id='$OTD'");
+$r=@mysql_query("SELECT attorneys_id, uspsVerify, qualityControl FROM ps_packets WHERE packet_id='$OTD' LIMIT 0,1");
 $d=mysql_fetch_array($r,MYSQL_ASSOC);
-$r2=@mysql_query("SELECT * FROM occNotices WHERE packet_id='$OTD'");
+$r2=@mysql_query("SELECT * FROM occNotices WHERE packet_id='$OTD' LIMIT 0,1");
 $d2=mysql_fetch_array($r2,MYSQL_ASSOC);
 if ($d[qualityControl] == ''){
 	if ($d[msg] == ''){

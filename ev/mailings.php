@@ -1,7 +1,7 @@
 <?
 include 'common.php';
 $EV=$_GET[EV];
-$r=@mysql_query("SELECT uspsVerify, qualityControl FROM evictionPackets WHERE eviction_id='$EV'");
+$r=@mysql_query("SELECT uspsVerify, qualityControl FROM evictionPackets WHERE eviction_id='$EV' LIMIT 0,1");
 $d=mysql_fetch_array($r,MYSQL_ASSOC);
 if ($d[uspsVerify] == ''){
 	$msg="ADDRESSES ";

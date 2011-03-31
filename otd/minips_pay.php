@@ -36,7 +36,7 @@ function dateExplode($date){
 	return $date;
 }
 function getPayInstructions($attID,$prefix){
-	$q = "SELECT payInstructions FROM attorneys WHERE attorneys_id = '$attID'";
+	$q = "SELECT payInstructions FROM attorneys WHERE attorneys_id = '$attID' LIMIT 0,1";
 	$r = @mysql_query($q) or die(mysql_error());
 	$d = mysql_fetch_array($r, MYSQL_ASSOC);
 	return $prefix.trim($d[payInstructions]);
@@ -76,7 +76,7 @@ function setSize(width,height) {
 if ($_POST[submit]){
 hardLog('updated payment information for '.$_GET[id],'user');
 
-	$rxx=@mysql_query("select * from psActivity where today='".date('Y-m-d')."'") or die(mysql_error());
+	$rxx=@mysql_query("select * from psActivity where today='".date('Y-m-d')."' LIMIT 0,1") or die(mysql_error());
 	$dxx=mysql_fetch_array($rxx,MYSQL_ASSOC);
 	$count=$dxx[clientPayment]+1;
 	@mysql_query("update psActivity set clientPayment = '$count' where today='".date('Y-m-d')."'") or die(mysql_error());
@@ -161,7 +161,7 @@ hardLog('updated payment information for '.$_GET[id],'user');
 	}
 }
 
-$q1 = "SELECT * FROM ps_packets, ps_pay WHERE packet_id = $_GET[id] AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD'";		
+$q1 = "SELECT * FROM ps_packets, ps_pay WHERE packet_id = $_GET[id] AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD' LIMIT 0,1";		
 $r1 = @mysql_query ($q1) or die(mysql_error());
 $data = mysql_fetch_array($r1, MYSQL_ASSOC);
 if ($data[lossMit] == '' || $data[lossMit] == 'N/A - OLD L'){
