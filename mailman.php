@@ -467,7 +467,7 @@ $q="select packet_id, mail_status, qualityControl from ps_packets where (process
 }else{
 $q="select packet_id, mail_status, qualityControl from ps_packets where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') and (server_id = '$me' OR server_ida = '$me' OR server_idb = '$me' OR server_idc = '$me' OR server_idd = '$me' OR server_ide = '$me' ) order by rush DESC, mail_status, packet_id";
 }
-$r=@mysql_query($q);
+$r=@mysql_query($q) or die (mysql_error());
 
  while($d=mysql_fetch_array($r, MYSQL_ASSOC)){ $i++;
 		if ($d[qualityControl] != ''){
@@ -485,7 +485,7 @@ $q="select eviction_id, mail_status from evictionPackets where (process_status =
 }else{
 $q="select eviction_id, mail_status from evictionPackets where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') and (server_id = '$me' OR server_ida = '$me' OR server_idb = '$me' OR server_idc = '$me' OR server_idd = '$me' OR server_ide = '$me' ) order by rush DESC, mail_status, eviction_id";
 }
-$r=@mysql_query($q);
+$r=@mysql_query($q) or die (mysql_error());
 
  while($d=mysql_fetch_array($r, MYSQL_ASSOC)){ $i++;?>
 		<?=getEvictionData($d[eviction_id])?>
