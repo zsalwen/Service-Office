@@ -68,7 +68,7 @@ if ($_GET[update] && $_GET[id]){
 			$headers  = "MIME-Version: 1.0 \n";
 			$headers .= "Content-type: text/html; charset=iso-8859-1 \n";
 			$headers .= "From: File Complete <file.complete@mdwestserve.com> \n";
-			if ($ddr[affidavitType]=='DEFAULTING PURCHASER']){
+			if ($ddr[affidavitType]=='DEFAULTING PURCHASER'){
 				$attR = @mysql_query("select ps_alt2 from attorneys where attorneys_id = '$ddr[attorneys_id]' LIMIT 0,1");
 				$attD = mysql_fetch_array($attR, MYSQL_BOTH);
 				$cc = explode(',',$attD[ps_alt2]);
