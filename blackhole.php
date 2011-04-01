@@ -321,12 +321,14 @@ $q="SELECT DISTINCT closeOut FROM ps_packets WHERE filing_status <> 'FILED WITH 
 $r=@mysql_query($q);
 $today=date('Y-m-d');
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-	$q2="SELECT packet_id, process_status FROM ps_packets WHERE affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status='MAIL ONLY' AND closeOut='$d[closeOut]'$pkt ORDER BY packet_id ASC";
+	$q2="SELECT packet_id, process_status FROM ps_packets WHERE and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status='MAIL ONLY' AND closeOut='$d[closeOut]'$pkt ORDER BY packet_id ASC";
 	$r2=@mysql_query($q2);
 	if ($d[closeOut] > $today){
 		$color="background-color:CCCCCC; color:000000;";
 	}elseif($d[closeOut] == $today){
 		$color="background-color:99DD66; color:000000;";
+	}elseif($d[closeOut] == '0000-00-00'){
+		$color="background-color:FF0000; color:FFFFFF;";
 	}else{
 		$color="background-color:000000; color:FFFFFF;";
 	}
