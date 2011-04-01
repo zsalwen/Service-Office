@@ -383,7 +383,7 @@ $r=@mysql_query("select id, mail_status from packet where (process_status = 'REA
 $count=mysql_num_rows($r);
 if($count){
 $active = $active + $count;
-echo= "<li>Mailroom: $count </li>";
+echo  "<li>Mailroom: $count </li>";
 }
 $r=@mysql_query("SELECT id from packet where affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'DO NOT FILE' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' ") or die(mysql_error());
 $count=mysql_num_rows($r);
