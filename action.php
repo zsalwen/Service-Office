@@ -279,15 +279,13 @@ echo "</tr></table>";
 
 Testing UpStream Packet Status Monitoring (should match above ~2hr sync delay)
 <table border="1"><tr><td valign="top">
-
 <?
 // dispatch
-$r=@mysql_query("select id, package_id, circuit_court, qualityControl, product_id from packet where process_status = 'READY' and package_id = '' order by circuit_court") or die(mysql_error());
+$r=@mysql_query("select packet.id, packet.package_id, packet.circuit_court, packet.qualityControl, product.name from packet, product where packet.process_status = 'READY' and packet.package_id = '' and packet.product_id = product.id order by circuit_court") or die(mysql_error());
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-	$product=getProduct($d[product_id]);
 	$optest = 1;
 	if(($d[qualityControl] == '')){ $color='#FF0000'; $counter8a++;}else{ $color='#00FF00';$counter8b++;}
-	$list .= "<tr><td style='white-space: pre; background-color:$color'><a target='_Blank' href='/details.php?packet=$d[id]'>$product$d[id]</a></td><td> $d[circuit_court]</td></tr>";
+	$list .= "<tr><td style='white-space: pre; background-color:$color'><a target='_Blank' href='/details.php?packet=$d[id]'>$d[id]</a></td><td> $d[name]</td><td> $d[circuit_court]</td></tr>";
 }
 $total8 = $counter8a + $counter8b;
 if($counter8b > '0' && $total8 > '0'){
@@ -308,8 +306,7 @@ if ($list != ''){
 // Deadline Watch
 $r=@mysql_query("select * from packet where process_status <> 'CANCELLED' and fileDate = '0000-00-00' AND estFileDate < '$today' AND estFileDate <> '0000-00-00' order by estFileDate, circuit_court");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-	$product=getProduct($d[product_id]);
-	$list= "<tr><td><a target='_Blank' href='/details.php?packet=$d[id]'>$product$d[id]</a></td><td>$d[estFileDate]</td><td>$d[circuit_court]</td><td>$d[filing_status]</td><td>#$d[server_id]</td><td>#$d[server_ida]</td><td>#$d[server_idb]</td></tr>";
+	$list= "<tr><td><a target='_Blank' href='/details.php?packet=$d[id]'>$d[marker]</a></td><td>$d[estFileDate]</td><td>$d[circuit_court]</td><td>$d[filing_status]</td><td>#$d[server_id]</td><td>#$d[server_ida]</td><td>#$d[server_idb]</td></tr>";
 }
 if ($list != ''){
 	echo "<b>Deadline Alert</b><table border='1'>$list</table>";
@@ -321,9 +318,8 @@ if ($list != ''){
 // couriers
 $r=@mysql_query("select id, circuit_court, product_id from packet where process_status <> 'CANCELLED' and courierID = '' and estFileDate >= '$today' and fileDate = '0000-00-00' order by circuit_court");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-	$product=getProduct($d[product_id]);
 	$list .= "<tr>
-<td><a target='_Blank' href='/details.php?packet=$d[id]'>$product$d[id]</a></td>
+<td><a target='_Blank' href='/details.php?packet=$d[id]'>$d[marker]</a></td>
 <td>".standardCourt($d[circuit_court])."</td>
 <td>".courierDate($d[id])."</td></tr>";
 }
