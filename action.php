@@ -304,9 +304,9 @@ if ($list != ''){
 
 <?
 // Deadline Watch
-$r=@mysql_query("select *, product.name from packet, product where packet.process_status <> 'CANCELLED' and packet.fileDate = '0000-00-00' AND packet.estFileDate < '$today' AND packet.estFileDate <> '0000-00-00'  and packet.product_id = product.id order by packet.estFileDate, packet.circuit_court");
+$r=@mysql_query("select packet.id, packet.product_id, packet.estFileDate, packet.circuit_court, packet.filing_status,  product.name from packet, product where packet.process_status <> 'CANCELLED' and packet.fileDate = '0000-00-00' AND packet.estFileDate < '$today' AND packet.estFileDate <> '0000-00-00'  and packet.product_id = product.id order by packet.estFileDate, packet.circuit_court");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-	$list= "<tr><td><a target='_Blank' href='/details.php?packet=$d[id]'>$d[id]</a></td><td>$d[name]</td><td>$d[estFileDate]</td><td>$d[circuit_court]</td><td>$d[filing_status]</td><td>#$d[server_id]</td><td>#$d[server_ida]</td><td>#$d[server_idb]</td></tr>";
+	$list= "<tr><td><a target='_Blank' href='/details.php?packet=$d[id]'>$d[id]</a></td><td>$d[name]</td><td>$d[estFileDate]</td><td>$d[circuit_court]</td><td>$d[filing_status]</td></tr>";
 }
 if ($list != ''){
 	echo "<b>Deadline Alert</b><table border='1'>$list</table>";
