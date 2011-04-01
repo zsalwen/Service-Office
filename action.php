@@ -288,6 +288,10 @@ $r=@mysql_query("select id, circuit_court from packet where process_status <> 'C
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	$list .= "<li><a target='_Blank' href='/details.php?packet=$d[id]'>Packet $d[id], $d[circuit_court], ".courierDate($d[id])."</a></li>";
 }
+if ($list != ''){
+	echo "<div class='title2'><b>Missing Courier</b><ol>$list</ol></div>";
+	$list='';
+}
 ?>
 
 
