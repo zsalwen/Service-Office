@@ -336,6 +336,9 @@ while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	while ($d2=mysql_fetch_array($r2,MYSQL_ASSOC)){
 		if ($d2[process_status] == 'READY TO MAIL'){
 			$mailed="AWAITING MAILING";
+		}elseif($d2[process_status] == 'AWAITING CONFIRMATION'){
+			$mailed="AWAITING CONFIRMATION";
+		}
 		}else{
 			$mailed="MAILED";
 		}
