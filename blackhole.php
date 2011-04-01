@@ -316,7 +316,7 @@ echo "<fieldset><legend>Slot 6: ".id2name($d[server_ide])." #$d[server_ide]</leg
 </td></tr><tr><td>
 <center><div style="border-style:solid 1px; border-collapse:collapse; font-weight:bold; letter-spacing: 5px;background-color:CC66BB; width:800px;">MAIL ONLY</div></center>
 <table><tr><td valign='top'><?
-$q="SELECT DISTINCT closeOut FROM ps_packets WHERE affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status='MAIL ONLY'$pkt ORDER BY closeOut ASC";
+$q="SELECT DISTINCT closeOut FROM ps_packets WHERE filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND service_status='MAIL ONLY'$pkt ORDER BY closeOut ASC";
 //$q2="SELECT packet_id, process_status FROM ps_packets WHERE affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status='MAIL ONLY'$pkt ORDER BY packet_id ASC";
 $r=@mysql_query($q);
 $today=date('Y-m-d');
