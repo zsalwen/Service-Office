@@ -352,6 +352,31 @@ if ($list != ''){
 
 <hr>
 Testing System Counters
+
+<?
+function isTransfered($file){
+ $r=@mysql_query("select packet_id, client_file from ps_packets where client_file = '$file'");
+ $d=mysql_fetch_array($r,MYSQL_ASSOC);
+ if($d[client_file]){
+  return $d[packet_id];
+ }
+}
+
+
+$webservice=0;
+$q = "Select distinct filenumber from defendants where packet=''  ";
+$r=@mysql_query($q);
+while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+if(isTransfered($d[filenumber]) < 1){
+$webservice = $webservice + 1;
+//$active++;
+}
+}
+if($webservice){
+echo  "<li>Awaiting Order: $webservice </li>";
+}
+?>
+
 <?
 $r=@mysql_query("SELECT client_file, case_no, id, date_received FROM packet WHERE status = 'NEW' and process_status <> 'CANCELLED' AND process_status <> 'DUPLICATE' AND process_status <> 'DAMAGED PDF'") or die(mysql_error());
 $count=mysql_num_rows($r);
@@ -394,29 +419,7 @@ echo  "<li>Blackhole: $count </li>";
 ?>
 
 <li>Total Active Files: <?=$active;?></li>
-<?
-function isTransfered($file){
- $r=@mysql_query("select packet_id, client_file from ps_packets where client_file = '$file'");
- $d=mysql_fetch_array($r,MYSQL_ASSOC);
- if($d[client_file]){
-  return $d[packet_id];
- }
-}
 
-
-$webservice=0;
-$q = "Select distinct filenumber from defendants where packet=''  ";
-$r=@mysql_query($q);
-while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-if(isTransfered($d[filenumber]) < 1){
-$webservice = $webservice + 1;
-//$active++;
-}
-}
-if($webservice){
-echo  "<li> [PRE: $webservice </li>";
-}
-?>
 
 
 
