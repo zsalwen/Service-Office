@@ -280,16 +280,19 @@ if ($list != ''){
 </td><td>
 
 
-</td><td>
+</td><td valign="top">
 
 <?
 // couriers
 $r=@mysql_query("select id, circuit_court from packet where process_status <> 'CANCELLED' and courierID = '' and estFileDate >= '$today' and fileDate = '0000-00-00' order by circuit_court");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-	$list .= "<li><a target='_Blank' href='/details.php?packet=$d[id]'>Packet $d[id], $d[circuit_court], ".courierDate($d[id])."</a></li>";
+	$list .= "<tr>
+<td><a target='_Blank' href='/details.php?packet=$d[id]'>Packet $d[id]</a></td>
+<td>".standardCourt($d[circuit_court])."</td>
+<td>".courierDate($d[id])."</td></tr>";
 }
 if ($list != ''){
-	echo "<div class='title2'><b>Missing Courier</b><ol>$list</ol></div>";
+	echo "<b>Missing Courier</b><table>$list</table>";
 	$list='';
 }
 ?>
