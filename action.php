@@ -278,10 +278,18 @@ if ($list != ''){
 
 
 </td><td>
-
-
+<?
+// Deadline Watch
+$r=@mysql_query("select * from packet where process_status <> 'CANCELLED' and fileDate = '0000-00-00' AND estFileDate < '$today' AND estFileDate <> '0000-00-00' order by estFileDate, circuit_court");
+while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+	$list= "<tr><td><a target='_Blank' href='/details.php?packet=$d[id]'>Packet $d[packet_id]</a></td><td>$d[estFileDate]</td><td>$d[circuit_court]</td><td>$d[filing_status]</td><td>#$d[server_id]</td><td>#$d[server_ida]</td><td>#$d[server_idb]</td></tr>";
+}
+if ($list != ''){
+	echo "<b>Deadline Alert</b><table>$list</table>";
+	$list='';
+}
+?>
 </td><td valign="top">
-
 <?
 // couriers
 $r=@mysql_query("select id, circuit_court from packet where process_status <> 'CANCELLED' and courierID = '' and estFileDate >= '$today' and fileDate = '0000-00-00' order by circuit_court");
@@ -296,9 +304,6 @@ if ($list != ''){
 	$list='';
 }
 ?>
-
-
-
 </td></tr></table>
 <hr>
 <center><small>da footer</small></center>
