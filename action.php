@@ -316,7 +316,7 @@ if ($list != ''){
 </td><td valign="top">
 <?
 // couriers
-$r=@mysql_query("select packet.id, packet.circuit_court, packet.product_id, packet.product.name from packet, product where process_status <> 'CANCELLED' and courierID = '' and estFileDate >= '$today' and fileDate = '0000-00-00' and packet.product_id = product.id order by circuit_court");
+$r=@mysql_query("select packet.id, packet.circuit_court, packet.product_id, product.name from packet, product where packet.process_status <> 'CANCELLED' and packet.courierID = '' and packet.estFileDate >= '$today' and packet.fileDate = '0000-00-00' and packet.product_id = product.id order by circuit_court");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	$list .= "<tr>
 <td><a target='_Blank' href='/details.php?packet=$d[id]'>$d[id]</a></td>
@@ -329,6 +329,27 @@ if ($list != ''){
 }
 ?>
 </td></tr></table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <hr>
 <?
 $r=@mysql_query("SELECT client_file, case_no, id, date_received FROM packet WHERE status = 'NEW' and process_status <> 'CANCELLED' AND process_status <> 'DUPLICATE' AND process_status <> 'DAMAGED PDF'") or die(mysql_error());
