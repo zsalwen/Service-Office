@@ -249,7 +249,7 @@ Testing UpStream Packet Status
 
 <?
 // dispatch
-$r=@mysql_query("select id, package_id, circuit_court, uspsVerify, qualityControl from ps_packets where process_status = 'READY' and package_id = '' order by circuit_court");
+$r=@mysql_query("select id, package_id, circuit_court, uspsVerify, qualityControl from packet where process_status = 'READY' and package_id = '' order by circuit_court");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	$optest = 1;
 	if(($d[uspsVerify] == '') || ($d[qualityControl] == '')){ $color='#FF0000'; $counter8a++;}else{ $color='#00FF00';$counter8b++;}
@@ -281,6 +281,15 @@ if ($list != ''){
 
 
 </td><td>
+
+<?
+// couriers
+$r=@mysql_query("select id, circuit_court from packet where process_status <> 'CANCELLED' and courierID = '' and estFileDate >= '$today' and fileDate = '0000-00-00' order by circuit_court");
+while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+	$list .= "<li><a target='_Blank' href='/details.php?packet=$d[id]'>Packet $d[id], $d[circuit_court], ".courierDate($d[id])."</a></li>";
+}
+?>
+
 
 
 </td></tr></table>
