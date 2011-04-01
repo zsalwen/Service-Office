@@ -352,7 +352,6 @@ if ($list != ''){
 
 <hr>
 Testing System Counters
-
 <?
 function isTransfered($file){
  $r=@mysql_query("select packet_id, client_file from ps_packets where client_file = '$file'");
@@ -361,8 +360,6 @@ function isTransfered($file){
   return $d[packet_id];
  }
 }
-
-
 $webservice=0;
 $q = "Select distinct filenumber from defendants where packet=''  ";
 $r=@mysql_query($q);
@@ -375,9 +372,6 @@ $webservice = $webservice + 1;
 if($webservice){
 echo  "<li>Awaiting Order: $webservice </li>";
 }
-?>
-
-<?
 $r=@mysql_query("SELECT client_file, case_no, id, date_received FROM packet WHERE status = 'NEW' and process_status <> 'CANCELLED' AND process_status <> 'DUPLICATE' AND process_status <> 'DAMAGED PDF'") or die(mysql_error());
 $count=mysql_num_rows($r);
 if($count){
@@ -417,12 +411,8 @@ $active = $active + $count;
 echo  "<li>Blackhole: $count </li>";
 }
 ?>
-
-<li>Total Active Files: <?=$active;?></li>
-
-
-
-
+<li>Current Volume: <?=$active;?></li>
+<li>Total Files: <?=$active+$webservice;?></li>
 <?
 mysql_close();
 $headers = apache_request_headers();
