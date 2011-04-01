@@ -405,7 +405,7 @@ function isTransfered($file){
 
 
 $webservice=0;
-$q = "Select distinct filenumber,create_date from defendants where packet=''  ";
+$q = "Select distinct filenumber from defendants where packet=''  ";
 $r=@mysql_query($q);
 while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 if(isTransfered($d[filenumber]) < 1){
