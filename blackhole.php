@@ -338,7 +338,6 @@ while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 			$mailed="AWAITING MAILING";
 		}elseif($d2[process_status] == 'AWAITING CONFIRMATION'){
 			$mailed="AWAITING CONFIRMATION";
-		}
 		}else{
 			$mailed="MAILED";
 		}
