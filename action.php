@@ -67,7 +67,12 @@ ol { padding:0px; margin:0px; padding-left:30px; }
 li { font-size:12px;}
 td { font-size:12px;}
 b { font-size:18px; }
-a { text-decoration:none; } </style>
+a { text-decoration:none; } 
+table
+{
+border-collapse:collapse;
+}
+</style>
 ";
 echo "<table width='100%'><tr>
 ";
@@ -267,8 +272,8 @@ echo "</tr></table>";
 
 
 
-Testing UpStream Packet Status
-<table><tr><td valign="top">
+Testing UpStream Packet Status Monitoring (should match above ~2hr sync delay)
+<table border="1"><tr><td valign="top">
 
 <?
 // dispatch
@@ -276,7 +281,7 @@ $r=@mysql_query("select id, package_id, circuit_court, qualityControl from packe
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	$optest = 1;
 	if(($d[qualityControl] == '')){ $color='#FF0000'; $counter8a++;}else{ $color='#00FF00';$counter8b++;}
-	$list .= "<tr style='white-space: pre; background-color:$color'><td><a target='_Blank' href='/details.php?packet=$d[id]'>Packet $d[id]</a></td><td> $d[circuit_court]</td></tr>";
+	$list .= "<tr><td style='white-space: pre; background-color:$color'><a target='_Blank' href='/details.php?packet=$d[id]'>Packet $d[id]</a></td><td> $d[circuit_court]</td></tr>";
 }
 $total8 = $counter8a + $counter8b;
 if($counter8b > '0' && $total8 > '0'){
@@ -286,7 +291,7 @@ if ($complete != ''){
 	$list .= "<tr><td colspan='2'><b>$complete% confirmed</b></td></tr>";
 }
 if ($list != ''){
-	echo "<td valign='top'><b>Dispatch Queue</b><table>$list</table></td>";
+	echo "<td valign='top'><b>Dispatch Queue</b><table border='1'>$list</table></td>";
 	$list=''; 
 }
 ?>
@@ -300,7 +305,7 @@ while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	$list= "<tr><td><a target='_Blank' href='/details.php?packet=$d[id]'>Packet $d[id]</a></td><td>$d[estFileDate]</td><td>$d[circuit_court]</td><td>$d[filing_status]</td><td>#$d[server_id]</td><td>#$d[server_ida]</td><td>#$d[server_idb]</td></tr>";
 }
 if ($list != ''){
-	echo "<b>Deadline Alert</b><table>$list</table>";
+	echo "<b>Deadline Alert</b><table border='1'>$list</table>";
 	$list='';
 }
 ?>
@@ -315,17 +320,15 @@ while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 <td>".courierDate($d[id])."</td></tr>";
 }
 if ($list != ''){
-	echo "<b>Missing Courier</b><table>$list</table>";
+	echo "<b>Missing Courier</b><table border='1'>$list</table>";
 	$list='';
 }
 ?>
 </td></tr></table>
-<hr>
-<center><small>da footer</small></center>
 <?
 mysql_close();
 $headers = apache_request_headers();
 $lb = $headers["X-Forwarded-Host"];
 $mirror = $_SERVER['HTTP_HOST'];
 ?>
-<center style="padding:0px;">Mysql <?=$thisDB;?> Closed on <?=$mirror;?> from <?=$lb;?></center>
+<title>Mysql <?=$thisDB;?> Closed on <?=$mirror;?> from <?=$lb;?></title>
