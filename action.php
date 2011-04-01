@@ -249,10 +249,10 @@ Testing UpStream Packet Status
 
 <?
 // dispatch
-$r=@mysql_query("select id, package_id, circuit_court, uspsVerify, qualityControl from packet where process_status = 'READY' and package_id = '' order by circuit_court") or die(mysql_error());
+$r=@mysql_query("select id, package_id, circuit_court, qualityControl from packet where process_status = 'READY' and package_id = '' order by circuit_court") or die(mysql_error());
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	$optest = 1;
-	if(($d[uspsVerify] == '') || ($d[qualityControl] == '')){ $color='#FF0000'; $counter8a++;}else{ $color='#00FF00';$counter8b++;}
+	if(($d[qualityControl] == '')){ $color='#FF0000'; $counter8a++;}else{ $color='#00FF00';$counter8b++;}
 	$list .= "<li style='white-space: pre; background-color:$color'><a target='_Blank' href='/details.php?packet=$d[id]'>$d[circuit_court]</a></li>";
 }
 $total8 = $counter8a + $counter8b;
