@@ -131,7 +131,7 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
         // Create and draw the visualization.
         new google.visualization.LineChart(document.getElementById('visualization')).
             draw(data, {curveType: "function",
-                        width: 1200, height: 480, backgroundColor: '#99AACC',
+                        width: 1600, height: 1024, backgroundColor: '#99AACC',
                         vAxis: {maxValue: <?=$z?>}, title: 'Service Files by Product over Time: 2008-<?=$curYear?>',
 						 hAxis: {title: 'Date', titleTextStyle: {color: '#FF0000', fontSize:'18'} }
 						  }
