@@ -63,7 +63,7 @@ while ($year <= $curYear){
 			$white .= ','.$value2;
 		}
 		//this is the standard line (was BGW files)
-		$r=mysql_query("SELECT id FROM packet WHERE date_received LIKE '%$year-$i2%' AND product_id='3'");
+		$r=mysql_query("SELECT id FROM packet WHERE date_received LIKE '%$year-$i2%' AND product_id='8'");
 		$value3=mysql_num_rows($r);
 		if ($value3 > 0){}else{
 			$value3='0';
