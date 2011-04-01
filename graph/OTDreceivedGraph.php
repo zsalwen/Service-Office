@@ -89,7 +89,7 @@ while ($year <= $curYear){
 	}
 	$year++;
 }
-$z=750;
+$z=500;
 $z1=number_format($z/5,0);
 $z2=number_format($z1*2,0);
 $z3=number_format($z1*3,0);
