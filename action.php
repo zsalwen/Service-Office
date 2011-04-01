@@ -352,6 +352,7 @@ if ($list != ''){
 
 <hr>
 Testing System Counters
+
 <?
 function isTransfered($file){
  $r=@mysql_query("select packet_id, client_file from ps_packets where client_file = '$file'");
@@ -413,6 +414,36 @@ echo  "<li>Blackhole: $count </li>";
 ?>
 <li>Current Volume: <?=$active;?></li>
 <li>Total Files: <?=$active+$webservice;?></li>
+<hr>
+Counter Break-Down
+<table>
+<tr><td>
+<div>Webservice</div>
+<?
+$q = "Select distinct filenumber from defendants where packet=''  ";
+$r=@mysql_query($q);
+while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+if(isTransfered($d[filenumber]) < 1){
+echo "<li>$d[filenumber]</li>";
+}
+}
+?>
+</td><td>
+<div>New Files</div>
+<?$r=@mysql_query("SELECT client_file, case_no, id, date_received FROM packet WHERE status = 'NEW' and process_status <> 'CANCELLED' AND process_status <> 'DUPLICATE' AND process_status <> 'DAMAGED PDF'") or die(mysql_error());
+while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+echo  "<li>$d[id]</li>";
+}?>
+</td><td>
+<div>Dispatch</div>
+<?
+$r=@mysql_query("select id, package_id from packet where process_status = 'READY' and package_id = ''") or die(mysql_error());
+while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+echo  "<li>$d[id]</li>";
+}
+?>
+</td></tr></table>
+
 <?
 mysql_close();
 $headers = apache_request_headers();
