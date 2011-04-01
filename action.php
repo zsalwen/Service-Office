@@ -16,7 +16,7 @@ mysql_select_db('core');
 $q="UPDATE ps_users SET location='".$_SERVER['PHP_SELF']."', online_now='".time()."' WHERE id = '".$_COOKIE[psdata][user_id]."'";
 @mysql_query($q);
  include '/gitbox/Service-Office/lock.php'; ?>
-<meta http-equiv="refresh" content="300" />
+<meta http-equiv="refresh" content="600" />
 <?
 function courierDate($id){
 	$r=@mysql_query("select date_format(estFileDate, '%W, %M %D %Y') as estFileDate	from ps_packets where packet_id = '$id' LIMIT 0,1");
@@ -394,8 +394,32 @@ echo  "<li>Blackhole: $count </li>";
 ?>
 
 <li>Total Active Files: <?=$active;?></li>
+<?
+function isTransfered($file){
+ $r=@mysql_query("select packet_id, client_file from ps_packets where client_file = '$file'");
+ $d=mysql_fetch_array($r,MYSQL_ASSOC);
+ if($d[client_file]){
+  return $d[packet_id];
+ }
+}
 
-<hr>
+
+$webservice=0;
+$q = "Select distinct filenumber,create_date from defendants where packet=''  ";
+$r=@mysql_query($q);
+while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+if(isTransfered($d[filenumber]) < 1){
+$webservice = $webservice + 1;
+//$active++;
+}
+}
+if($webservice){
+echo  "<li> [PRE: $webservice </li>";
+}
+?>
+
+
+
 <?
 mysql_close();
 $headers = apache_request_headers();
