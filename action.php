@@ -351,24 +351,25 @@ if ($list != ''){
 
 
 <hr>
+Testing System Counters
 <?
 $r=@mysql_query("SELECT client_file, case_no, id, date_received FROM packet WHERE status = 'NEW' and process_status <> 'CANCELLED' AND process_status <> 'DUPLICATE' AND process_status <> 'DAMAGED PDF'") or die(mysql_error());
 $count=mysql_num_rows($r);
 if($count){
 $active = $active + $count;
-$xml .= "$count N, ";
+echo = "<li>New: $count </li>";
 }
 $r=@mysql_query("select id, package_id from packet where process_status = 'READY' and package_id = ''") or die(mysql_error());
 $count=mysql_num_rows($r);
 if($count){
 $active = $active + $count;
-$xml .= "$count D, ";
+echo = "<li>Dispatch: $count </li>";
 }
 $r=@mysql_query("SELECT id from packet WHERE process_status = 'ASSIGNED'") or die(mysql_error());
 $count=mysql_num_rows($r);
 if($count){
 $active = $active + $count;
-$xml .= "$count A, ";
+echo = "<li>Assigned: $count </li>";
 }
 /*
 $r=@mysql_query("SELECT id FROM packet WHERE process_status = 'ASSIGNED' AND (request_close = 'YES' OR request_closea = 'YES' OR request_closeb = 'YES' OR request_closec = 'YES' OR request_closed = 'YES' OR request_closee = 'YES')") or die(mysql_error());
@@ -382,17 +383,17 @@ $r=@mysql_query("select id, mail_status from packet where (process_status = 'REA
 $count=mysql_num_rows($r);
 if($count){
 $active = $active + $count;
-$xml .= "$count M, ";
+echo = "<li>Mailroom: $count </li>";
 }
 $r=@mysql_query("SELECT id from packet where affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'DO NOT FILE' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' ") or die(mysql_error());
 $count=mysql_num_rows($r);
 if($count){
 $active = $active + $count;
-$xml .= "$count B, ";
+echo = "<li>Blackhole: $count </li>";
 }
 ?>
 
-<?=$xml;?>
+<li>Total Active Files: <?=$active;?></li>
 
 <hr>
 <?
