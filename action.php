@@ -304,9 +304,9 @@ if ($list != ''){
 
 <?
 // Deadline Watch
-$r=@mysql_query("select * from packet where process_status <> 'CANCELLED' and fileDate = '0000-00-00' AND estFileDate < '$today' AND estFileDate <> '0000-00-00' order by estFileDate, circuit_court");
+$r=@mysql_query("select *, product.name from packet, product where packet.process_status <> 'CANCELLED' and packet.fileDate = '0000-00-00' AND packet.estFileDate < '$today' AND packet.estFileDate <> '0000-00-00'  and packet.product_id = product.id order by packet.estFileDate, packet.circuit_court");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-	$list= "<tr><td><a target='_Blank' href='/details.php?packet=$d[id]'>$d[marker]</a></td><td>$d[estFileDate]</td><td>$d[circuit_court]</td><td>$d[filing_status]</td><td>#$d[server_id]</td><td>#$d[server_ida]</td><td>#$d[server_idb]</td></tr>";
+	$list= "<tr><td><a target='_Blank' href='/details.php?packet=$d[id]'>$d[id]</a></td><td>$d[name]</td><td>$d[estFileDate]</td><td>$d[circuit_court]</td><td>$d[filing_status]</td><td>#$d[server_id]</td><td>#$d[server_ida]</td><td>#$d[server_idb]</td></tr>";
 }
 if ($list != ''){
 	echo "<b>Deadline Alert</b><table border='1'>$list</table>";
@@ -316,11 +316,11 @@ if ($list != ''){
 </td><td valign="top">
 <?
 // couriers
-$r=@mysql_query("select id, circuit_court, product_id from packet where process_status <> 'CANCELLED' and courierID = '' and estFileDate >= '$today' and fileDate = '0000-00-00' order by circuit_court");
+$r=@mysql_query("select packet.id, packet.circuit_court, packet.product_id, packet.product.name from packet, product where process_status <> 'CANCELLED' and courierID = '' and estFileDate >= '$today' and fileDate = '0000-00-00' and packet.product_id = product.id order by circuit_court");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	$list .= "<tr>
-<td><a target='_Blank' href='/details.php?packet=$d[id]'>$d[marker]</a></td>
-<td>".standardCourt($d[circuit_court])."</td>
+<td><a target='_Blank' href='/details.php?packet=$d[id]'>$d[id]</a></td>
+<td>$d[name]</td><td>".standardCourt($d[circuit_court])."</td>
 <td>".courierDate($d[id])."</td></tr>";
 }
 if ($list != ''){
@@ -349,12 +349,14 @@ if($count){
 $active = $active + $count;
 $xml .= "$count A, ";
 }
+/*
 $r=@mysql_query("SELECT id FROM packet WHERE process_status = 'ASSIGNED' AND (request_close = 'YES' OR request_closea = 'YES' OR request_closeb = 'YES' OR request_closec = 'YES' OR request_closed = 'YES' OR request_closee = 'YES')") or die(mysql_error());
 $count=mysql_num_rows($r);
 if($count){
 $active = $active + $count;
 $xml .= "$count Q, ";
 }
+*/
 $r=@mysql_query("select id, mail_status from packet where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') order by mail_status, id") or die(mysql_error());
 $count=mysql_num_rows($r);
 if($count){
