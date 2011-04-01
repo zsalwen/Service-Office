@@ -245,11 +245,11 @@ echo "</tr></table>";
 ?>
 <hr>
 Testing UpStream Packet Status
-<table><tr><td>
+<table><tr><td valign="top">
 
 <?
 // dispatch
-$r=@mysql_query("select id, package_id, circuit_court, uspsVerify, qualityControl from packet where process_status = 'READY' and package_id = '' order by circuit_court");
+$r=@mysql_query("select id, package_id, circuit_court, uspsVerify, qualityControl from packet where process_status = 'READY' and package_id = '' order by circuit_court") or die(mysql_error());
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	$optest = 1;
 	if(($d[uspsVerify] == '') || ($d[qualityControl] == '')){ $color='#FF0000'; $counter8a++;}else{ $color='#00FF00';$counter8b++;}
@@ -268,16 +268,8 @@ if ($list != ''){
 }
 ?>
 
-</td><td>
+</td><td valign="top">
 
-
-</td><td>
-
-
-</td><td>
-
-
-</td><td>
 <?
 // Deadline Watch
 $r=@mysql_query("select * from packet where process_status <> 'CANCELLED' and fileDate = '0000-00-00' AND estFileDate < '$today' AND estFileDate <> '0000-00-00' order by estFileDate, circuit_court");
