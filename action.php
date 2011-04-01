@@ -243,6 +243,49 @@ if ($list != ''){
 }
 echo "</tr></table>";
 ?>
+<hr>
+Testing UpStream Packet Status
+<table><tr><td>
+
+<?
+// dispatch
+$r=@mysql_query("select id, package_id, circuit_court, uspsVerify, qualityControl from ps_packets where process_status = 'READY' and package_id = '' order by circuit_court");
+while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+	$optest = 1;
+	if(($d[uspsVerify] == '') || ($d[qualityControl] == '')){ $color='#FF0000'; $counter8a++;}else{ $color='#00FF00';$counter8b++;}
+	$list .= "<li style='white-space: pre; background-color:$color'><a target='_Blank' href='/details.php?packet=$d[id]'>$d[circuit_court]</a></li>";
+}
+$total8 = $counter8a + $counter8b;
+if($counter8b > '0' && $total8 > '0'){
+	$complete = str_replace('1.00','100',str_replace('0.','',number_format($counter8b / $total8,2)));
+}
+if ($complete != ''){
+	$list .= "<li style='white-space: pre;'><b>$complete% confirmed</b></li>";
+}
+if ($list != ''){
+	echo "<td valign='top'><div class='title4'><b>Dispatch</b><ol>$list</ol></div></td>";
+	$list=''; 
+}
+?>
+
+</td><td>
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td><td>
+
+
+</td></tr></table>
+<hr>
+<center><small>da footer</small></center>
 <?
 mysql_close();
 $headers = apache_request_headers();
