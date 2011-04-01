@@ -352,7 +352,27 @@ if ($list != ''){
 
 <hr>
 Testing System Counters
+
 <?
+function isTransfered($file){
+ $r=@mysql_query("select packet_id, client_file from ps_packets where client_file = '$file'");
+ $d=mysql_fetch_array($r,MYSQL_ASSOC);
+ if($d[client_file]){
+  return $d[packet_id];
+ }
+}
+$webservice=0;
+$q = "Select distinct filenumber from defendants where packet=''  ";
+$r=@mysql_query($q);
+while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+if(isTransfered($d[filenumber]) < 1){
+$webservice = $webservice + 1;
+//$active++;
+}
+}
+if($webservice){
+echo  "<li>Awaiting Order: $webservice </li>";
+}
 $r=@mysql_query("SELECT client_file, case_no, id, date_received FROM packet WHERE status = 'NEW' and process_status <> 'CANCELLED' AND process_status <> 'DUPLICATE' AND process_status <> 'DAMAGED PDF'") or die(mysql_error());
 $count=mysql_num_rows($r);
 if($count){
@@ -392,33 +412,61 @@ $active = $active + $count;
 echo  "<li>Blackhole: $count </li>";
 }
 ?>
-
-<li>Total Active Files: <?=$active;?></li>
+<li>Current Volume: <?=$active;?></li>
+<li>Total Files: <?=$active+$webservice;?></li>
+<hr>
+Counter Break-Down
+<table>
+<tr><td valign="top">
+<div>Webservice</div>
 <?
-function isTransfered($file){
- $r=@mysql_query("select packet_id, client_file from ps_packets where client_file = '$file'");
- $d=mysql_fetch_array($r,MYSQL_ASSOC);
- if($d[client_file]){
-  return $d[packet_id];
- }
-}
-
-
-$webservice=0;
-$q = "Select distinct filenumber,create_date from defendants where packet=''  ";
+$q = "Select distinct filenumber from defendants where packet=''  ";
 $r=@mysql_query($q);
 while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 if(isTransfered($d[filenumber]) < 1){
-$webservice = $webservice + 1;
-//$active++;
+echo "<li>$d[filenumber]</li>";
 }
-}
-if($webservice){
-echo  "<li> [PRE: $webservice </li>";
 }
 ?>
-
-
+</td><td valign="top">
+<div>New Files</div>
+<?$r=@mysql_query("SELECT client_file, case_no, id, date_received FROM packet WHERE status = 'NEW' and process_status <> 'CANCELLED' AND process_status <> 'DUPLICATE' AND process_status <> 'DAMAGED PDF'") or die(mysql_error());
+while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+echo  "<li>$d[id]</li>";
+}?>
+</td><td valign="top">
+<div>Dispatch</div>
+<?
+$r=@mysql_query("select id, package_id from packet where process_status = 'READY' and package_id = ''") or die(mysql_error());
+while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+echo  "<li>$d[id]</li>";
+}
+?>
+</td><td valign="top">
+<div>Assigned</div>
+<?
+$r=@mysql_query("SELECT id from packet WHERE process_status = 'ASSIGNED'") or die(mysql_error());
+while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+echo  "<li>$d[id]</li>";
+}
+?>
+</td><td valign="top">
+<div>MailRoom</div>
+<?
+$r=@mysql_query("select id, mail_status from packet where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') order by mail_status, id") or die(mysql_error());
+while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+echo  "<li>$d[id]</li>";
+}
+?>
+</td><td valign="top">
+<div>Blackhole</div>
+<?
+$r=@mysql_query("SELECT id from packet where affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'DO NOT FILE' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' ") or die(mysql_error());
+while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+echo  "<li>$d[id]</li>";
+}
+?>
+</td></tr></table>
 
 <?
 mysql_close();
