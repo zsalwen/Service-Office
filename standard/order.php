@@ -1126,7 +1126,7 @@ if ($d92[server]){
 <input type="hidden" name="packet_id" value="<?=$d[packet_id]?>" />
 <tr>
 <? if ($_GET[packet]){?>
-<td align="center" width="25%">Client Status<br><select name="status"><option><?=$d[status]?></option>
+<td align="center" width="25%">***Client Status***<br><select name="status"><option><?=$d[status]?></option>
 <?
 $q1="SELECT DISTINCT status from standard_packets WHERE status <> ''";
 $r1=@mysql_query($q1) or die("Query: $q1<br>".mysql_error());
@@ -1135,6 +1135,8 @@ while ($d1=mysql_fetch_array($r1, MYSQL_ASSOC)){
 <option><?=$d1[status]?></option>
 <? } ?>
 <option value=""></option>
+<option value="IN PROGRESS">IN PROGRESS</option>
+<option value="CLOSED">CLOSED</option>
 </select></td>
 <? }?>
 <td align="center" width="25%">Service Status<br><select name="service_status"><option><?=$d[service_status]?></option>
@@ -1158,7 +1160,7 @@ while ($d1=mysql_fetch_array($r1, MYSQL_ASSOC)){
 <option>REOPENED</option>
 <option value=""></option>
 </select></td></tr><tr>
-<td align="center" width="25%">Process Status<br><select name="process_status"><option><?=$d[process_status]?></option>
+<td align="center" width="25%">***Process Status***<br><select name="process_status"><option><?=$d[process_status]?></option>
 <?
 $q2="SELECT DISTINCT process_status from standard_packets WHERE process_status <> ''";
 $r2=@mysql_query($q2) or die("Query: $q2<br>".mysql_error());
@@ -1167,6 +1169,8 @@ while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){
 <option><?=$d2[process_status]?></option>
 <? } ?>
 <option value=""></option>
+<option value="ASSIGNED"></option>
+<option value="ORDER COMPLETE"></option>
 </select></td>
 <td align="center" width="25%"><table><tr><td>Affidavit Status<br><select name="affidavit_status"><option><?=$d[affidavit_status]?></option>
 <?
