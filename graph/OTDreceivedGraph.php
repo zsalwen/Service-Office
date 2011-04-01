@@ -63,7 +63,7 @@ while ($year <= $curYear){
 			$white .= ','.$value2;
 		}
 		//this is the standard line (was BGW files)
-		$r=mysql_query("SELECT id FROM packet WHERE date_received LIKE '%$year-$i2%' AND product_id='8'");
+		$r=mysql_query("SELECT id FROM packet WHERE date_received LIKE '%$year-$i2%' AND product_id <> '1' AND product_id <> '2' AND product_id <> '3' AND product_id <> '8' ");
 		$value3=mysql_num_rows($r);
 		if ($value3 > 0){}else{
 			$value3='0';
@@ -74,7 +74,7 @@ while ($year <= $curYear){
 			$bgw .= ','.$value3;
 		}
 		//this is the mail only line (was OTHER files)
-		$r=mysql_query("SELECT id FROM packet WHERE date_received LIKE '%$year-$i2%' AND product_id = '4'");
+		$r=mysql_query("SELECT id FROM packet WHERE date_received LIKE '%$year-$i2%' AND product_id = '8'");
 		$value4=mysql_num_rows($r);
 		if ($value4 > 0){}else{
 			$value4='0';
