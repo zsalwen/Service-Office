@@ -217,7 +217,7 @@ return $data;
 
 function standardActiveList($id,$letter){ $_SESSION[active]++;
 	$data='<ol>';
-	$r=@mysql_query("select packet_id, avoidDOT, reopenDate, date_received, filing_status, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, dispatchDate, attorneys_id, estFileDate, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from standard_packets where server_id$letter='$id' and (process_status = 'Assigned' OR process_status = 'ASSIGNED') order by  packet_id") or die (mysql_error());
+	$r=@mysql_query("select packet_id, reopenDate, date_received, filing_status, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, dispatchDate, attorneys_id, estFileDate, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from standard_packets where server_id$letter='$id' and (process_status = 'Assigned' OR process_status = 'ASSIGNED') order by  packet_id") or die (mysql_error());
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
 		$_SESSION[active3]++;
 		$estHours=($d[estHours]*24)-date('G');
@@ -231,9 +231,6 @@ function standardActiveList($id,$letter){ $_SESSION[active]++;
 			$reopen='';
 		}
 		$reopen .= " <span style='background-color:#AAAAAA; color:FFFFFF;'>DISP:&nbsp;".justDate2($d[dispatchDate])."</span>";
-		if ($d[avoidDOT] != ''){
-			$reopen .= " <span style='background-color:#000000; color:FF0000; border: 3px solid red; font-weight:bold;'>AvoidDOT</span>";
-		}
 		if ($d)
 		$estFileDate=explode('-',$d[estFileDate]);
 		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
