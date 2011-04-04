@@ -13,8 +13,7 @@ if ($_POST[att_id]){
 }
 if ($_POST[submit] == "Save Settings"){
 	echo "<center>SAVED, <a href='http://staff.mdwestserve.com/attSettings.php'>Select Another Attorney</a></center>";
-	$q = "UPDATE attorneys SET
-							display_name='$_POST[display_name]',
+	$q = "UPDATE attorneys SET 
 							full_name='$_POST[full_name]',
 							address='$_POST[address]', 
 							invoice_to='$_POST[invoice_to]', 
@@ -51,7 +50,7 @@ $d = mysql_fetch_array($r, MYSQL_ASSOC);
     </tr>
 	<tr>
     	<td>Full Name</td>
-        <td><input disabled="disabled" name="full_name" size="100" value="<?=$d[full_name]?>"></td>
+        <td><input name="full_name" size="100" value="<?=$d[full_name]?>"></td>
     </tr>
 	<tr>
     	<td>Process Server Plaintiff</td>
