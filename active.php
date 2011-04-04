@@ -277,13 +277,13 @@ function getServers(){
 }
 function getServers2($letter){
 	$i=0;
-	$r=@mysql_query("SELECT DISTINCT server_id$letter from ps_packets WHERE process_status = 'ASSIGNED'");
+	$r=@mysql_query("SELECT DISTINCT server_id$letter from ps_packets WHERE process_status = 'ASSIGNED' AND server_id$letter <> ''");
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 		$list["$i"] = $d["server_id$letter"];
 		$exclude .= " AND server_id <> '".$d["server_id$letter"]."'";
 		$i++;
 	}
-	$r=@mysql_query("SELECT DISTINCT server_id$letter from standard_packets WHERE process_status = 'ASSIGNED'$exclude");
+	$r=@mysql_query("SELECT DISTINCT server_id$letter from standard_packets WHERE process_status = 'ASSIGNED' AND server_id$letter <> ''$exclude");
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 		$list["$i"] = $d["server_id$letter"];
 		$i++;
