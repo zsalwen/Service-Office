@@ -483,7 +483,7 @@ $r=@mysql_query($q) or die (mysql_error());?>
 //pull Evictions!
 echo "<tr><td colspan='6' align='center' style='text-spacing: 5px; background-color:99AAEE; font-weight:bold;'>EVICTIONS</td></tr>";
 if($_COOKIE[psdata][level] == "Operations"){
-$q="select eviction_id, mail_status from evictionPackets where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') and order by rush DESC, mail_status, eviction_id";
+$q="select eviction_id, mail_status from evictionPackets where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') order by rush DESC, mail_status, eviction_id";
 }else{
 $q="select eviction_id, mail_status from evictionPackets where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') and (server_id = '$me' OR server_ida = '$me' OR server_idb = '$me' OR server_idc = '$me' OR server_idd = '$me' OR server_ide = '$me' ) order by rush DESC, mail_status, eviction_id";
 }
