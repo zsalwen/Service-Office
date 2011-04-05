@@ -239,7 +239,7 @@ function scrnHeight(field){
 		<a style="font-size:10px; padding: 0px !important;" href="http://casesearch.courts.state.md.us/inquiry/processDisclaimer.jis" target="preview">Load Case Lookup</a><hr>
 <ol>
 <?
-$q="select process_status, client_file, packet_id, name1, name2, name3, name4, name5, name6, lossMit from ps_packets where case_no = '' and caseLookupFlag = '0' and filing_status <> 'FILED WITH COURT' and filing_status <> 'SEND TO CLIENT' and process_status <> 'DUPLICATE' and process_status <> 'DAMAGED PDF' AND attorneys_id <> '70' and (status = 'RECEIVED' or status = 'RECIEVED') ORDER BY packet_id";
+$q="select process_status, client_file, packet_id, name1, name2, name3, name4, name5, name6, lossMit, circuit_court from ps_packets where case_no = '' and caseLookupFlag = '0' and filing_status <> 'FILED WITH COURT' and filing_status <> 'SEND TO CLIENT' and process_status <> 'DUPLICATE' and process_status <> 'DAMAGED PDF' AND attorneys_id <> '70' and (status = 'RECEIVED' or status = 'RECIEVED') ORDER BY packet_id";
 $r=@mysql_query($q);
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){$i++;
 $FC = trim(getPage("http://data.mdwestserve.com/findFC.php?clientFile=".$d[client_file], 'MDWS File Copy for Packet'.$d[packet_id], '5', ''));
