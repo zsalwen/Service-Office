@@ -4,7 +4,7 @@ td{ font-size:20px; }
 </style>
 
 
-<div>Wizard style</div>
+<div><b>Instructions for Packet</b></div>
 <? if ($_GET[nameCount] && $_GET[addressCount] ){  ?>
 <script>
 function ChgText(myResponse,myInput)
@@ -149,3 +149,23 @@ $i=0;
 <input type="submit" value="Next">
 </form>
 <? } ?>
+
+
+
+
+
+
+
+<fieldset>
+<legend>Current Instructions</legend>
+<?
+$rSSA=@mysql_query("select * from instruction where packet_id = '$packet'");
+while($dSSA=mysql_fetch_array($rSSA,MYSQL_ASSOC)){
+if ($dSSA[server_id]){ 
+echo "<li><input type='checkbox'>".serverID($dSSA[server_id])." on ".nameID($dSSA[name_id])." at ".addressID($dSSA[address_id])."</li>";
+}else{
+echo "<li><input type='checkbox'>Awaiting Dispatch on ".nameID($dSSA[name_id])." at ".addressID($dSSA[address_id])."</li>";
+}
+}
+?>
+</fieldset>
