@@ -31,12 +31,12 @@ ChgText(city,'city<?=$i;?>');
 ChgText(state,'state<?=$i;?>');
 ChgText(zip,'zip<?=$i;?>');
 }
-function copyDown<?=$i;?>(street,city,state,zip)
+function copyDown<?=$i;?>()
 {
-
-alert(document.getElementById('address<?=$i;?>').value);
-
-
+var street = document.getElementById('address<?=$i;?>').value;
+var city = document.getElementById('city<?=$i;?>').value;
+var state = document.getElementById('state<?=$i;?>').value;
+var zip = document.getElementById('zip<?=$i;?>').value;
 ChgText(street,'address<?=$i+1;?>');
 ChgText(city,'city<?=$i+1;?>');
 ChgText(state,'state<?=$i+1;?>');
