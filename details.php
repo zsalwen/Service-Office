@@ -8,7 +8,7 @@ include 'edit.functions.php';
 mysql_connect();
 mysql_select_db('core');
 if ($_GET[packet] && $_GET[packet] < '20000'){
-die('This details page is for packet 20000 and above, please use the ev/otd/standard versions for legacy packets.');
+die('This details page is for packet 20000 and above, please check the sync table for new packet id.');
 }
 
 if($_GET[packet]){
@@ -31,7 +31,7 @@ die('Missing Packet Number');
 </tr>
 <tr>
 <td><iframe frameborder="0" name="pane1" id="pane1" style="width:100%; height:100%;"></iframe></td>
-<td valign="top" style="width:100px;" align="center"><font size="+2">Packet <?=$_GET[packet]?></font><br><? include 'details.menu.php';?></td>
+<td valign="top" style="width:150px;" align="center"><font size="+2">Packet <?=$_GET[packet]?></font><br><? include 'details.menu.php';?></td>
 <td><iframe frameborder="0" name="pane2" id="pane2" style="width:100%; height:100%;"></iframe></td>
 </tr>
 </table>
