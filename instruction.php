@@ -5,6 +5,7 @@ td{ font-size:20px; }
 
 
 <div>Wizard style</div>
+<? if ($_GET[nameCount] && $_GET[addressCount] ){  ?>
 <script>
 <?
 if ($_GET[nameCount] && $_GET[addressCount] ){ 
@@ -20,8 +21,10 @@ ChgText(city,'city<?=$i;?>');
 ChgText(state,'state<?=$i;?>');
 ChgText(zip,'zip<?=$i;?>');
 }
-<script>
 <? $i++;} ?>
+</script>
+<? } ?>
+
 
 <?
 mysql_connect();
