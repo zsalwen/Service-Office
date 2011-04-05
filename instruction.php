@@ -42,7 +42,11 @@ ChgText(city,'city<?=$i+1;?>');
 ChgText(state,'state<?=$i+1;?>');
 ChgText(zip,'zip<?=$i+1;?>');
 }
-
+function copyDown<?=$i;?>a()
+{
+var name= document.getElementById('name<?=$i;?>').value;
+ChgText(name,'name<?=$i+1;?>');
+}
 <? $i++;} ?>
 </script>
 <? } ?>
@@ -177,7 +181,7 @@ $i=0;
 <? while($i<$rows){ ?>
 <tr>
 <td><b>#<?=$i;?></b></td>
-<td>&darr;</td>
+<td><b onclick="copyDown<?=$i;?>a()">&darr;</b></td>
 <td><input size="50" id="name<?=$i;?>"  name="name<?=$i;?>" ></td>
 <td><input size="25" id="address<?=$i;?>" name="address<?=$i;?>"><input size="10" id="city<?=$i;?>" name="city<?=$i;?>"><input size="3" id="state<?=$i;?>" name="state<?=$i;?>"><input size="5" id="zip<?=$i;?>" name="zip<?=$i;?>"></td>
 <td><b onclick="copyDown<?=$i;?>()">&darr;</b></td>
