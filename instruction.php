@@ -135,14 +135,18 @@ $i=0;
 <table>
 <tr>
 <td>Position</td>
+<td>Copy</td>
 <td>Serve: Name</td>
 <td>At: Address</td>
+<td>Copy</td>
 </tr>
 <? while($i<$rows){ ?>
 <tr>
 <td><b>#<?=$i;?></b></td>
+<td>&darr;</td>
 <td><input size="50" id="name<?=$i;?>"  name="name<?=$i;?>" ></td>
 <td><input size="25" id="address<?=$i;?>" name="address<?=$i;?>"><input size="10" id="city<?=$i;?>" name="city<?=$i;?>"><input size="3" id="state<?=$i;?>" name="state<?=$i;?>"><input size="5" id="zip<?=$i;?>" name="zip<?=$i;?>"></td>
+<td>&darr;</td>
 </tr>
 <? $i++; }?>
 </table>
