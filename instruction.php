@@ -69,7 +69,7 @@ $i=0;
 ?>
 <tr>
 <? while($i<$rows){ ?>
-<td style="cursor:pointer; padding:0px; margin:0px;" onclick="ChgText('<?=$row['defendantfullname'];?>','name<?=$i;?>')"><?=$i;?></td>
+<td style="cursor:pointer; padding:0px; margin:0px;" onclick="ChgText('<?=$row['defendantfullname'];?>','name<?=$i;?>')"><b>#<?=$i;?></b></td>
 <? $i++;}?>
 
 <td><?=$row['defendantfullname'];?></td></tr></table></td> <td valign="top">
@@ -84,7 +84,7 @@ $i=0;
 
 <? while($i<$rows){ ?>
 
-<td style="cursor:pointer; padding:0px; margin:0px;" onclick="setAddress<?=$i;?>('<?=$row['defendantaddress1'];?> <?=$row['defendantaddress2'];?>','<?=$row['defendantcity'];?>','<?=$row['defendantstate'];?>','<?=$row['defendantzip'];?>')"><?=$i;?></td>
+<td style="cursor:pointer; padding:0px; margin:0px;" onclick="setAddress<?=$i;?>('<?=$row['defendantaddress1'];?> <?=$row['defendantaddress2'];?>','<?=$row['defendantcity'];?>','<?=$row['defendantstate'];?>','<?=$row['defendantzip'];?>')"><b>#<?=$i;?></b></td>
 
 <? $i++;}?>
 
@@ -141,9 +141,9 @@ $i=0;
 </tr>
 <? while($i<$rows){ ?>
 <tr>
-<td><?=$i;?></td>
+<td><b>#<?=$i;?></b></td>
 <td><input size="50" id="name<?=$i;?>"  name="name<?=$i;?>" ></td>
-<td><input size="50" id="address<?=$i;?>" name="address<?=$i;?>"><input size="50" id="city<?=$i;?>" name="city<?=$i;?>"><input size="50" id="state<?=$i;?>" name="state<?=$i;?>"><input size="50" id="zip<?=$i;?>" name="zip<?=$i;?>"></td>
+<td><input size="25" id="address<?=$i;?>" name="address<?=$i;?>"><input size="10" id="city<?=$i;?>" name="city<?=$i;?>"><input size="3" id="state<?=$i;?>" name="state<?=$i;?>"><input size="5" id="zip<?=$i;?>" name="zip<?=$i;?>"></td>
 </tr>
 <? $i++; }?>
 </table>
