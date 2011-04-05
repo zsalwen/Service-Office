@@ -63,7 +63,8 @@ echo "</table>";
 
 <? if (!$_GET[nameCount] && !$_GET[addressCount] ){ ?>
 <!-- Step 1 -->
-<form method="POST">
+<form method="GET">
+<input type="hidden" name="packet" value="<?=$_GET[packet]?>">
 <div>Step 1</div>
 <table>
 <tr>
