@@ -37,7 +37,7 @@ if ($d[company]){
  $sList .= "<option value='$d[id]'>$d[name]</option>" ;}
 } 
 
-// build name list
+/* build name list
 $q= "select distinct last from name order by last";
 $r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
 while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {
@@ -62,7 +62,7 @@ $aList .= "<option value='$d2[id]'>$d2[mailingAddress] $d2[city], $d2[state] $d2
 }
 $aList .= "</OPTGROUP>" ;
 }
-
+*/
 ?>
 <li>Add <a href="?packet=<?=$_GET[packet];?>&add=name">name</a> to database</li>
 <li>Add <a href="?packet=<?=$_GET[packet];?>&add=address">address</a> to database</li>
