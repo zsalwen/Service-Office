@@ -81,7 +81,7 @@ function searchForm2($packet,$def,$firstName,$lastName,$county){
 	$link .= "<input type='hidden' name='partytype' value=''>";
 	$link .= "<input type='hidden' name='site' value='CIVIL'>";
 	$link .= "<input type='hidden' name='courtSystem' value='C'>";
-	$link .= "<input type='hidden' name='countyName' value='".addslashes($county)."'>";
+	$link .= "<input type='hidden' name='countyName' value=\"".addslashes($county)."\">";
 	$link .= "<input type='hidden' name='filingStart' value='$start'>";
 	$link .= "<input type='hidden' name='filingEnd' value='$end'>";
 	$link .= "<input type='hidden' name='filingDate' value=''>";
