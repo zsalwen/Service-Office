@@ -142,8 +142,8 @@ $i=0;
 <? while($i<$rows){ ?>
 <tr>
 <td><?=$i;?></td>
-<td><input size="50" name="name<?=$i;?>"></td>
-<td><input size="50" name="address<?=$i;?>"><input size="50" name="city<?=$i;?>"><input size="50" name="state<?=$i;?>"><input size="50" name="zip<?=$i;?>"></td>
+<td><input size="50" id="name<?=$i;?>"  name="name<?=$i;?>" ></td>
+<td><input size="50" id="address<?=$i;?>" name="address<?=$i;?>"><input size="50" id="city<?=$i;?>" name="city<?=$i;?>"><input size="50" id="state<?=$i;?>" name="state<?=$i;?>"><input size="50" id="zip<?=$i;?>" name="zip<?=$i;?>"></td>
 </tr>
 <? $i++; }?>
 </table>
