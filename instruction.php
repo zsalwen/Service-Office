@@ -33,7 +33,8 @@ echo '</tr>';
 while ($row = @mysql_fetch_array($result,MYSQL_ASSOC)) {
 
 echo '<tr>';
-echo '<td valign="top">
+echo '<td valign="top">';
+?>
 <table>
 <?
 if ($_GET[nameCount] && $_GET[addressCount] ){ 
@@ -45,9 +46,8 @@ $i=0;
 <? while($i<$rows){ ?>
 <td style="cursor:pointer; padding:0px; margin:0px;" onclick="ChgText('<?=$row['defendantfullname'];?>','name<?=$i;?>')"><?=$i;?></td>
 <? }?>
-
-
-<td>'.$row['defendantfullname'].'</td></tr></table></td> <td valign="top">
+<?
+echo '<td>'.$row['defendantfullname'].'</td></tr></table></td> <td valign="top">
 <table>
 <tr>
 <td style="cursor:pointer; padding:0px; margin:0px;" onclick="setAddress1(\''.$row['defendantaddress1'].' '.$row['defendantaddress2'].'\',\''.$row['defendantcity'].'\',\''.$row['defendantstate'].'\',\''.$row['defendantzip'].'\')">1</td>
