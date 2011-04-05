@@ -34,6 +34,9 @@ $hours=number_format((time()-$received)/3600,0);
 
 <table border="1">
 <tr>
+<td><a href="http://staff.mdwestserve.com/sync.php?packet=<?=$packet?>" target="pane1"><img src="http://connect.stern.nyu.edu/zimbra/img/startup/ImgLeftArrow.gif" border="0"></a> Sync <a href="http://staff.mdwestserve.com/sync.php?packet=<?=$packet?>" target="pane2"><img src="http://connect.stern.nyu.edu/zimbra/img/startup/ImgRightArrow.gif" border="0"></a></td>
+</tr>
+<tr>
 <td><a href="http://staff.mdwestserve.com/notes.php?packet=<?=$packet?>" target="pane1"><img src="http://connect.stern.nyu.edu/zimbra/img/startup/ImgLeftArrow.gif" border="0"></a> Notes <a href="http://staff.mdwestserve.com/notes.php?packet=<?=$packet?>" target="pane2"><img src="http://connect.stern.nyu.edu/zimbra/img/startup/ImgRightArrow.gif" border="0"></a></td>
 </tr>
 <tr>
