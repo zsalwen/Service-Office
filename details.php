@@ -38,13 +38,20 @@ die('Missing Packet Number');
 
 
 <?
+// user settings (will go cookie)
+$openSvcDoc = 2;
+$openDE = 1;
+
+
+
 // here is the pane auto-loader
 if($d[status] == 'NEW'){
 $r=@mysql_query(" select url from attachment where packet_id = '$_GET[packet]' and description = 'Papers to Serve' ");
 $d=mysql_fetch_array($r,MYSQL_ASSOC);
 ?>
 <script>
-parent.frames['pane2'].location.href = '<?=$d[url]?>';
+parent.frames['pane<?=$openSvcDoc;?>'].location.href = '<?=$d[url]?>';
+parent.frames['pane<?=$openDE;?>'].location.href = 'instruction.php?packet=<?=$_GET[packet];?>';
 </script>
 <? } ?>
 
