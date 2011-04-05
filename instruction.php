@@ -5,8 +5,23 @@ td{ font-size:20px; }
 
 
 <div>Wizard style</div>
-
-
+<script>
+<?
+if ($_GET[nameCount] && $_GET[addressCount] ){ 
+$rows = $_GET[nameCount]*$_GET[addressCount] ;
+$i=0;
+}
+?>
+<? while($i<$rows){ ?>
+function setAddress<?=$i;?>(street,city,state,zip)
+{
+ChgText(street,'address<?=$i;?>');
+ChgText(city,'city<?=$i;?>');
+ChgText(state,'state<?=$i;?>');
+ChgText(zip,'zip<?=$i;?>');
+}
+<script>
+<? $i++;} ?>
 
 <?
 mysql_connect();
@@ -46,17 +61,26 @@ $i=0;
 <? while($i<$rows){ ?>
 <td style="cursor:pointer; padding:0px; margin:0px;" onclick="ChgText('<?=$row['defendantfullname'];?>','name<?=$i;?>')"><?=$i;?></td>
 <? $i++;}?>
-<?
-echo '<td>'.$row['defendantfullname'].'</td></tr></table></td> <td valign="top">
+
+<td><?=$row['defendantfullname'];?></td></tr></table></td> <td valign="top">
 <table>
 <tr>
-<td style="cursor:pointer; padding:0px; margin:0px;" onclick="setAddress1(\''.$row['defendantaddress1'].' '.$row['defendantaddress2'].'\',\''.$row['defendantcity'].'\',\''.$row['defendantstate'].'\',\''.$row['defendantzip'].'\')">1</td>
-<td style="cursor:pointer; padding:0px; margin:0px;" onclick="setAddress2(\''.$row['defendantaddress1'].' '.$row['defendantaddress2'].'\',\''.$row['defendantcity'].'\',\''.$row['defendantstate'].'\',\''.$row['defendantzip'].'\')">2</td>
-<td style="cursor:pointer; padding:0px; margin:0px;" onclick="setAddress3(\''.$row['defendantaddress1'].' '.$row['defendantaddress2'].'\',\''.$row['defendantcity'].'\',\''.$row['defendantstate'].'\',\''.$row['defendantzip'].'\')">3</td>
-<td style="cursor:pointer; padding:0px; margin:0px;" onclick="setAddress4(\''.$row['defendantaddress1'].' '.$row['defendantaddress2'].'\',\''.$row['defendantcity'].'\',\''.$row['defendantstate'].'\',\''.$row['defendantzip'].'\')">4</td>
-<td style="cursor:pointer; padding:0px; margin:0px;" onclick="setAddress5(\''.$row['defendantaddress1'].' '.$row['defendantaddress2'].'\',\''.$row['defendantcity'].'\',\''.$row['defendantstate'].'\',\''.$row['defendantzip'].'\')">5</td>
-<td style="cursor:pointer; padding:0px; margin:0px;" onclick="setAddress6(\''.$row['defendantaddress1'].' '.$row['defendantaddress2'].'\',\''.$row['defendantcity'].'\',\''.$row['defendantstate'].'\',\''.$row['defendantzip'].'\')">6</td>
-<td>'.$row['defendantaddress1'].'</td></tr></table></td>';
+<?
+if ($_GET[nameCount] && $_GET[addressCount] ){ 
+$rows = $_GET[nameCount]*$_GET[addressCount] ;
+$i=0;
+}
+?>
+
+<? while($i<$rows){ ?>
+
+<td style="cursor:pointer; padding:0px; margin:0px;" onclick="setAddress<?=$i;?>('<?=$row['defendantaddress1'];?> <?=$row['defendantaddress2'];?>','<?=$row['defendantcity'];?>','<?=$row['defendantstate'];?>','<?=$row['defendantzip'];?>')"><?=$i;?></td>
+
+<? $i++;}?>
+
+
+<?
+echo '<td>'.$row['defendantaddress1'].'</td></tr></table></td>';
 echo '<td valign="top">'.$row['defendantaddress2'].'</td> <td valign="top">'.$row['defendantcity'].'</td> <td valign="top">'.$row['defendantstate'].'</td> <td valign="top">'.$row['defendantzip'].'</td>';
 echo '<td valign="top">'.$row['status'].'</td> <td valign="top">'.$row['statusdate'].'</td> ';
 
@@ -101,13 +125,15 @@ $i=0;
 <form method="POST">
 <table>
 <tr>
+<td>Position</td>
 <td>Serve: Name</td>
 <td>At: Address</td>
 </tr>
 <? while($i<$rows){ ?>
 <tr>
+<td><?=$i;?></td>
 <td><input size="50" name="name<?=$i;?>"></td>
-<td><input size="50" address="address<?=$i;?>"></td>
+<td><input size="50" name="address<?=$i;?>"><input size="50" name="city<?=$i;?>"><input size="50" name="state<?=$i;?>"><input size="50" name="zip<?=$i;?>"></td>
 </tr>
 <? $i++; }?>
 </table>
