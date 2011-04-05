@@ -40,9 +40,11 @@ die('Missing Packet Number');
 <?
 // here is the pane auto-loader
 if($d[status] == 'NEW'){
+$r=@mysql_query(" select url from attachment where packet_id = '$id' and description = 'Papers to Serve' ");
+$d=mysql_fetch_array($r,MYSQL_ASSOC);
 ?>
 <script>
-parent.frames['pane2'].location.href = 'attachment.php?id=75896&open=1';
+parent.frames['pane2'].location.href = '<?=$d[url]?>';
 </script>
 <? } ?>
 
