@@ -100,7 +100,7 @@ function makePackage($array1,$array2,$array3,$package_id){
 
 ?>
 <form method="post">
-<div style="background-color:#FF0000; font-size:18px;">Estimated Close Date: <input name="estFileDate" value="<?=$_SESSION[estFileDate]?>"></div>
+<div style="background-color:#FF0000; font-size:18px;">Estimated Close Date (YYYY-MM-DD): <input name="estFileDate" value="<?=$_SESSION[estFileDate]?>"></div>
 <table width="100%"><tr><td valign="top">
 <table border="1" style="border-collapse:collapse" align="center" width="100%">
     <tr bgcolor="<?  echo row_color(2,'#ccccff','#99cccc'); ?>">

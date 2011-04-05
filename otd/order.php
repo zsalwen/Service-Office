@@ -220,7 +220,7 @@ function searchForm($packet,$def){
 	$start=date('Y');
 	$start="01/01/".($start-1);
 	$end=date('m/d/Y');
-	$q1="SELECT status, packetID, firstName, lastName, county, company from watchDog where packetID='$packet' AND defID='$def' LIMIT 0,1";
+	$q1="SELECT status, packetID, firstName, lastName, county, company from watchDog where packetID='$packet' AND defID='$def' AND status <> 'Search Complete' LIMIT 0,1";
 	$r1=@mysql_query($q1);
 	$d1=mysql_fetch_array($r1,MYSQL_ASSOC);
 	if ($d1[packetID] != ''){
