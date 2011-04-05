@@ -15,7 +15,6 @@ mysql_select_db('core');
 $r=@mysql_query("select client_file from packet where id = '$_GET[packet]' ");
 $d=mysql_fetch_array($r,MYSQL_ASSOC);
 
-
 $select_query = "Select create_id, create_date, update_id, update_date, filenumber,clientidentifier,defendantnumber, defendantfullname,defendantaddress1,defendantaddress2,defendantcity,defendantstate,defendantstateid, defendantzip, defendantrelationship,other,status,statusdate From defendants Where filenumber = '$d[client_file]'";
 $result = mysql_query($select_query);
 
@@ -26,27 +25,39 @@ exit;
 }
 else {
 
-echo '<table border="1">';
+echo '<table border="1" style="border-collapse:collapse; padding:0px; font-size:12px;" width="100%" >';
 echo '<tr>';
-echo '<td>Service contacts for '.$d[client_file].'</td> <td>Address</td> <td>City</td> <td>State</td> <td>Zip</td> <td>Status</td> <td>Status Date</td> ';
+echo '<td>Defendant Name</td> <td>Address1</td> <td>Address2</td> <td>City</td> <td>State</td> <td>Zip</td> <td>Status</td> <td>Date</td> ';
 echo '</tr>';
 
 while ($row = @mysql_fetch_array($result,MYSQL_ASSOC)) {
 
-
-$address = $row['defendantaddress1'].' '.$row['defendantaddress2'];   
-
-
 echo '<tr>';
 echo '<td valign="top">
 <table>
+<?
+if ($_GET[nameCount] && $_GET[addressCount] ){ 
+$rows = $_GET[nameCount]*$_GET[addressCount] ;
+$i=0;
+}
+?>
 <tr>
+<? while($i<$rows){ ?>
+<td style="cursor:pointer; padding:0px; margin:0px;" onclick="ChgText('<?=$row['defendantfullname'];?>','name<?=$i;?>')"><?=$i;?></td>
+<? }?>
+
 
 <td>'.$row['defendantfullname'].'</td></tr></table></td> <td valign="top">
 <table>
 <tr>
-<td>'.$row['defendantaddress1'].' '.$row['defendantaddress2'].'</td></tr></table></td>';
-echo '<td valign="top">'.$row['defendantcity'].'</td> <td valign="top">'.$row['defendantstate'].'</td> <td valign="top">'.$row['defendantzip'].'</td>';
+<td style="cursor:pointer; padding:0px; margin:0px;" onclick="setAddress1(\''.$row['defendantaddress1'].' '.$row['defendantaddress2'].'\',\''.$row['defendantcity'].'\',\''.$row['defendantstate'].'\',\''.$row['defendantzip'].'\')">1</td>
+<td style="cursor:pointer; padding:0px; margin:0px;" onclick="setAddress2(\''.$row['defendantaddress1'].' '.$row['defendantaddress2'].'\',\''.$row['defendantcity'].'\',\''.$row['defendantstate'].'\',\''.$row['defendantzip'].'\')">2</td>
+<td style="cursor:pointer; padding:0px; margin:0px;" onclick="setAddress3(\''.$row['defendantaddress1'].' '.$row['defendantaddress2'].'\',\''.$row['defendantcity'].'\',\''.$row['defendantstate'].'\',\''.$row['defendantzip'].'\')">3</td>
+<td style="cursor:pointer; padding:0px; margin:0px;" onclick="setAddress4(\''.$row['defendantaddress1'].' '.$row['defendantaddress2'].'\',\''.$row['defendantcity'].'\',\''.$row['defendantstate'].'\',\''.$row['defendantzip'].'\')">4</td>
+<td style="cursor:pointer; padding:0px; margin:0px;" onclick="setAddress5(\''.$row['defendantaddress1'].' '.$row['defendantaddress2'].'\',\''.$row['defendantcity'].'\',\''.$row['defendantstate'].'\',\''.$row['defendantzip'].'\')">5</td>
+<td style="cursor:pointer; padding:0px; margin:0px;" onclick="setAddress6(\''.$row['defendantaddress1'].' '.$row['defendantaddress2'].'\',\''.$row['defendantcity'].'\',\''.$row['defendantstate'].'\',\''.$row['defendantzip'].'\')">6</td>
+<td>'.$row['defendantaddress1'].'</td></tr></table></td>';
+echo '<td valign="top">'.$row['defendantaddress2'].'</td> <td valign="top">'.$row['defendantcity'].'</td> <td valign="top">'.$row['defendantstate'].'</td> <td valign="top">'.$row['defendantzip'].'</td>';
 echo '<td valign="top">'.$row['status'].'</td> <td valign="top">'.$row['statusdate'].'</td> ';
 
 
@@ -95,8 +106,8 @@ $i=0;
 </tr>
 <? while($i<$rows){ ?>
 <tr>
-<td><input name="name<?=$i;?>"></td>
-<td><input address="address<?=$i;?>"></td>
+<td><input size="50" name="name<?=$i;?>"></td>
+<td><input size="50" address="address<?=$i;?>"></td>
 </tr>
 <? $i++; }?>
 </table>
