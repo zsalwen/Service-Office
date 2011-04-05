@@ -22,7 +22,7 @@ $i=0;
 <? while($i<$rows){ ?>
 function setAddress<?=$i;?>(street,city,state,zip)
 {
-alert('test<?=i;?>');
+alert('test<?=$i;?>');
 ChgText(street,'address<?=$i;?>');
 ChgText(city,'city<?=$i;?>');
 ChgText(state,'state<?=$i;?>');
