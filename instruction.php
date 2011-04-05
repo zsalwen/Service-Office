@@ -33,6 +33,10 @@ ChgText(zip,'zip<?=$i;?>');
 }
 function copyDown<?=$i;?>(street,city,state,zip)
 {
+
+alert(document.getElementById('address<?=$i;?>').value);
+
+
 ChgText(street,'address<?=$i+1;?>');
 ChgText(city,'city<?=$i+1;?>');
 ChgText(state,'state<?=$i+1;?>');
@@ -176,7 +180,7 @@ $i=0;
 <td>&darr;</td>
 <td><input size="50" id="name<?=$i;?>"  name="name<?=$i;?>" ></td>
 <td><input size="25" id="address<?=$i;?>" name="address<?=$i;?>"><input size="10" id="city<?=$i;?>" name="city<?=$i;?>"><input size="3" id="state<?=$i;?>" name="state<?=$i;?>"><input size="5" id="zip<?=$i;?>" name="zip<?=$i;?>"></td>
-<td>&darr;</td>
+<td><b onclick="copyDown<?=$i;?>()">&darr;</b></td>
 </tr>
 <? $i++; }?>
 </table>
