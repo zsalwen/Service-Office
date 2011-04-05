@@ -58,16 +58,19 @@ if ($_POST[courier]){
 		if ($_POST[ev]){
 			foreach( $_POST[ev] as $key => $value){
 				@mysql_query("update evictionPackets set courierID = '$_POST[courier]' where eviction_id = '$key'");
+@mysql_query("update sync set status='automated rescan requested' where product = 'EV' and from_id = '$key' ");
 			}
 		}
 		if ($_POST[otd]){
 			foreach( $_POST[otd] as $key => $value){
 				@mysql_query("update ps_packets set courierID = '$_POST[courier]' where packet_id = '$key'");
+@mysql_query("update sync set status='automated rescan requested' where product = 'OTD' and from_id = '$key' ");
 			}
 		}
 		if ($_POST[s]){
 			foreach( $_POST[s] as $key => $value){
 				@mysql_query("update standard_packets set courierID = '$_POST[courier]' where packet_id = '$key'");
+@mysql_query("update sync set status='automated rescan requested' where product = 'STANDARD' and from_id = '$key' ");
 			}
 		}
 		echo "</div>";
