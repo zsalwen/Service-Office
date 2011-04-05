@@ -5,7 +5,7 @@ td{ font-size:20px; }
 
 
 <div><b>Instructions for Packet</b></div>
-<? if ($_GET[nameCount] && $_GET[addressCount] ){  ?>
+<? if (($_GET[nameCount] && $_GET[addressCount]) || $_GET[totalCount] ){  ?>
 <script>
 function ChgText(myResponse,myInput)
 {
