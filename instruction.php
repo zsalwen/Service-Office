@@ -2,6 +2,9 @@
 mysql_connect();
 mysql_select_db('core');
 
+$r=@mysql_query("select client_file from packet where id = '$_GET[packet]' ");
+$d=mysql_fetch_array($r,MYSQL_ASSOC);
+
 
 $select_query = "Select create_id, create_date, update_id, update_date, filenumber,clientidentifier,defendantnumber, defendantfullname,defendantaddress1,defendantaddress2,defendantcity,defendantstate,defendantstateid, defendantzip, defendantrelationship,other,status,statusdate From defendants Where filenumber = '$d[client_file]'";
 $result = mysql_query($select_query);
