@@ -74,14 +74,14 @@ $rows = $_GET[nameCount]*$_GET[addressCount] ;
 $i=0;
 }
 ?>
-<tr>
+<tr><td>
 <? while($i<$rows){ ?>
-<td style="cursor:pointer; padding:0px; margin:0px;" onclick="ChgText('<?=$row['defendantfullname'];?>','name<?=$i;?>')"><b>#<?=$i;?></b></td>
+<a style="cursor:pointer; padding:0px; margin:0px;" onclick="ChgText('<?=$row['defendantfullname'];?>','name<?=$i;?>')"><b>#<?=$i;?></b></a>
 <? $i++;}?>
 
 <td><?=$row['defendantfullname'];?></td></tr></table></td> <td valign="top">
 <table>
-<tr>
+<tr><td>
 <?
 if (($_GET[nameCount] && $_GET[addressCount]) || $_GET[totalCount] ){ 
 if($_GET[totalCount]){
@@ -95,7 +95,7 @@ $i=0;
 
 <? while($i<$rows){ ?>
 
-<td style="cursor:pointer; padding:0px; margin:0px;" onclick="setAddress<?=$i;?>('<?=$row['defendantaddress1'];?> <?=$row['defendantaddress2'];?>','<?=$row['defendantcity'];?>','<?=$row['defendantstate'];?>','<?=$row['defendantzip'];?>')"><b>#<?=$i;?></b></td>
+<a style="cursor:pointer; padding:0px; margin:0px;" onclick="setAddress<?=$i;?>('<?=$row['defendantaddress1'];?> <?=$row['defendantaddress2'];?>','<?=$row['defendantcity'];?>','<?=$row['defendantstate'];?>','<?=$row['defendantzip'];?>')"><b>#<?=$i;?></b></a>
 
 <? $i++;}?>
 
