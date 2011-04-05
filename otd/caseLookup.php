@@ -211,7 +211,7 @@ function searchForm($packet,$def,$name,$court){
 	}else{
 		$link = watchLink($packet,$def,$name,$court);
 	}
-	return $link;
+	return stripslashes($link);
 }
 
 $i=0;
