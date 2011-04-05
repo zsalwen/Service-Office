@@ -65,7 +65,7 @@ echo "</table>";
 <!-- Step 1 -->
 <form method="GET">
 <input type="hidden" name="packet" value="<?=$_GET[packet]?>">
-<div>Step 1</div>
+<div>Step 1 - Set Matrix Size</div>
 <table>
 <tr>
 <td>How many names would you like to enter?</td>
@@ -74,6 +74,31 @@ echo "</table>";
 <td>How many addresses would you like to enter?</td>
 <td><input name="addressCount"></td>
 </tr>
+</table>
+<input type="submit" value="Next">
+</form>
+<? } ?>
+
+
+
+<? if ($_GET[nameCount] && $_GET[addressCount] ){ 
+$rows = $_GET[nameCount]*$_GET[addressCount] ;
+$i=0;
+?>
+<!-- Step 2 -->
+<div>Step 2 - Fill Instruction Matrix</div>
+<form method="POST">
+<table>
+<tr>
+<td>Serve: Name</td>
+<td>At: Address</td>
+</tr>
+<? while($i<$rows){ ?>
+<tr>
+<td><input name="name<?=$i;?>"></td>
+<td><input address="address<?=$i;?>"></td>
+</tr>
+<? $i++; }?>
 </table>
 <input type="submit" value="Next">
 </form>
