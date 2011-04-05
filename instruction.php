@@ -31,6 +31,14 @@ ChgText(city,'city<?=$i;?>');
 ChgText(state,'state<?=$i;?>');
 ChgText(zip,'zip<?=$i;?>');
 }
+function copyDown<?=$i;?>(street,city,state,zip)
+{
+ChgText(street,'address<?=$i+1;?>');
+ChgText(city,'city<?=$i+1;?>');
+ChgText(state,'state<?=$i+1;?>');
+ChgText(zip,'zip<?=$i+1;?>');
+}
+
 <? $i++;} ?>
 </script>
 <? } ?>
