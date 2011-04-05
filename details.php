@@ -35,5 +35,17 @@ die('Missing Packet Number');
 <td><iframe frameborder="0" name="pane2" id="pane2" style="width:100%; height:100%;"></iframe></td>
 </tr>
 </table>
+
+
+<?
+// here is the pane auto-loader
+if($d[status] == 'NEW'){
+?>
+<script>
+parent.frames['pane2'].location.href = 'attachment.php?id=75896&open=1';
+</script>
+<? } ?>
+
+
 </body>
 </html>
