@@ -1,3 +1,13 @@
+<style>
+div{ font-size:25px; }
+td{ font-size:20px; }
+</style>
+
+
+<div>Wizard style</div>
+
+
+
 <?
 mysql_connect();
 mysql_select_db('core');
@@ -48,22 +58,22 @@ echo '</tr>';
 echo "</table>";
 ?>
 
-<style>
-div{ font-size:25px; }
-td{ font-size:20px; }
-</style>
 
 
-<div>Wizard style</div>
 
+<? if (!$_GET[nameCount] && !$_GET[addressCount] ){ ?>
+<!-- Step 1 -->
 <form method="POST">
+<div>Step 1</div>
 <table>
 <tr>
 <td>How many names would you like to enter?</td>
 <td><input name="nameCount"></td>
 </tr><tr>
-<td>How many names would you like to enter?</td>
+<td>How many addresses would you like to enter?</td>
 <td><input name="addressCount"></td>
 </tr>
 </table>
+<input type="submit" value="Next">
 </form>
+<? } ?>
