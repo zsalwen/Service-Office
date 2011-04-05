@@ -221,12 +221,12 @@ $instructionLink .= ".php?packet=".$d[packet_id];
 				//if file is a final or preliminary, instruct to include available envelope stuffings
 				$toAttorney=id2attorneyName($d[attorneys_id]);
 				$toCounty=county2envelope2($d[circuit_court]);
-				if ($d[lossMit] == 'FINAL'){
+				if ($d[lossMit] != 'FINAL'){
 					//if preliminary, instruct to include one envelope to client
 					$lossMit="Per Maryland law HB472, please include one of the provided GREEN, preprinted #10 envelopes addressed to '$toAttorney', with the service documents for each defendant.";
 				}else{
 					//if final, instruct to include two envelopes: one to court and one to client
-					$lossMit = "Per Maryland law HB472, two envelopes should be included with the service documents for each defendant (one GREEN envelope addressed to '$toAttorney', and one WHITE envelope addressed to '$toCounty').";
+					$lossMit = "Per Maryland law HB472, two envelopes should be included with the service documents for each defendant (one GREEN envelope addressed to '$toAttorney', and one GREEN envelope addressed to '$toCounty').";
 				}
 			}else{
 				//if file requires white BGW-style envelopes, then instruct to include envelope for attorney
