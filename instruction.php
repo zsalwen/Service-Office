@@ -7,6 +7,12 @@ td{ font-size:20px; }
 <div>Wizard style</div>
 <? if ($_GET[nameCount] && $_GET[addressCount] ){  ?>
 <script>
+function ChgText(myResponse,myInput)
+{
+var MyElement = document.getElementById(myInput);
+MyElement.value = myResponse;
+return true;
+}
 <?
 if ($_GET[nameCount] && $_GET[addressCount] ){ 
 $rows = $_GET[nameCount]*$_GET[addressCount] ;
