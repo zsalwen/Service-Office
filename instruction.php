@@ -45,7 +45,7 @@ $i=0;
 <tr>
 <? while($i<$rows){ ?>
 <td style="cursor:pointer; padding:0px; margin:0px;" onclick="ChgText('<?=$row['defendantfullname'];?>','name<?=$i;?>')"><?=$i;?></td>
-<? }?>
+<? $i++;}?>
 <?
 echo '<td>'.$row['defendantfullname'].'</td></tr></table></td> <td valign="top">
 <table>
