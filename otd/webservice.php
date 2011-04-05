@@ -11,9 +11,9 @@ if ($result == false) {
 	}
 else {
 		 
-	echo '<table border="1" style="border-collapse:collapse;" width="100%" >';
+	echo '<table border="1" style="border-collapse:collapse; padding:0px; font-size:12px;" width="100%" >';
 	echo '<tr>';
-	echo '<td>Defendant Full Name</td> <td>Address 1</td> <td>Address 2</td> <td>City</td> <td>State</td> <td>Zip</td> <td>Status</td> <td>Status Date</td> ';
+	echo '<td>Defendant Name</td> <td>Address1</td> <td>Address2</td> <td>City</td> <td>State</td> <td>Zip</td> <td>Status</td> <td>Date</td> ';
 	echo '</tr>';
 
 	while ($row = @mysql_fetch_array($result,MYSQL_ASSOC)) {
