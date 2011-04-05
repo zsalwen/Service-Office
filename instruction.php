@@ -14,8 +14,12 @@ MyElement.value = myResponse;
 return true;
 }
 <?
-if ($_GET[nameCount] && $_GET[addressCount] ){ 
+if (($_GET[nameCount] && $_GET[addressCount]) || $_GET[totalCount] ){ 
+if($_GET[totalCount]){
+$rows=$_GET[totalCount];
+}else{
 $rows = $_GET[nameCount]*$_GET[addressCount] ;
+}
 $i=0;
 }
 ?>
@@ -61,8 +65,12 @@ echo '<td valign="top">';
 ?>
 <table>
 <?
-if ($_GET[nameCount] && $_GET[addressCount] ){ 
+if (($_GET[nameCount] && $_GET[addressCount]) || $_GET[totalCount] ){ 
+if($_GET[totalCount]){
+$rows=$_GET[totalCount];
+}else{
 $rows = $_GET[nameCount]*$_GET[addressCount] ;
+}
 $i=0;
 }
 ?>
@@ -75,8 +83,12 @@ $i=0;
 <table>
 <tr>
 <?
-if ($_GET[nameCount] && $_GET[addressCount] ){ 
+if (($_GET[nameCount] && $_GET[addressCount]) || $_GET[totalCount] ){ 
+if($_GET[totalCount]){
+$rows=$_GET[totalCount];
+}else{
 $rows = $_GET[nameCount]*$_GET[addressCount] ;
+}
 $i=0;
 }
 ?>
@@ -105,7 +117,7 @@ echo "</table>";
 
 
 
-<? if (!$_GET[nameCount] && !$_GET[addressCount] ){ ?>
+<? if (!$_GET[nameCount] && !$_GET[addressCount] && !$_GET[totalCount] ){ ?>
 <!-- Step 1 -->
 <form method="GET">
 <input type="hidden" name="packet" value="<?=$_GET[packet]?>">
@@ -117,6 +129,12 @@ echo "</table>";
 </tr><tr>
 <td>How many addresses would you like to enter?</td>
 <td><input name="addressCount"></td>
+</tr><tr>
+<td>-OR-</td>
+<td></td>
+</tr><tr>
+<td>How many instructions would you like to enter?</td>
+<td><input name="totalCount"></td>
 </tr>
 </table>
 <input type="submit" value="Next">
@@ -125,8 +143,12 @@ echo "</table>";
 
 
 
-<? if ($_GET[nameCount] && $_GET[addressCount] ){ 
+<? if (($_GET[nameCount] && $_GET[addressCount]) || $_GET[totalCount] ){ 
+if($_GET[totalCount]){
+$rows=$_GET[totalCount];
+}else{
 $rows = $_GET[nameCount]*$_GET[addressCount] ;
+}
 $i=0;
 ?>
 <!-- Step 2 -->
