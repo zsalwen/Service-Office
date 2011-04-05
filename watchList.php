@@ -8,6 +8,33 @@ function id2attorney($id){
 	$d = mysql_fetch_array($r, MYSQL_ASSOC);
 	return $d['display_name'];
 }
+function countyList(){
+	return "<option value='' selected='selected'>Default All</option>
+	<option value='ALLEGANY COUNTY'>Allegany</option>
+	<option value='ANNE ARUNDEL COUNTY'>Anne Arundel</option>
+	<option value='BALTIMORE CITY'>Baltimore City</option>
+	<option value='BALTIMORE COUNTY'>Baltimore</option>
+	<option value='CALVERT COUNTY'>Calvert</option>
+	<option value='CAROLINE COUNTY'>Caroline</option>
+	<option value='CARROLL COUNTY'>Carroll</option>
+	<option value='CECIL COUNTY'>Cecil</option>
+	<option value='CHARLES COUNTY'>Charles</option>
+	<option value='DORCHESTER COUNTY'>Dorchester</option>
+	<option value='FREDERICK COUNTY'>Frederick</option>
+	<option value='GARRETT COUNTY'>Garrett</option>
+	<option value='HARFORD COUNTY'>Harford</option>
+	<option value='HOWARD COUNTY'>Howard</option>
+	<option value='KENT COUNTY'>Kent</option>
+	<option value='MONTGOMERY COUNTY'>Montgomery</option>
+	<option value='PRINCE GEORGE&#39;S COUNTY'>Prince George&#39;s</option>
+	<option value='QUEEN ANNE&#39;S COUNTY'>Queen Anne&#39;s</option>
+	<option value='SAINT MARY&#39;S COUNTY'>Saint Mary&#39;s</option>
+	<option value='SOMERSET COUNTY'>Somerset</option>
+	<option value='TALBOT COUNTY'>Talbot</option>
+	<option value='WASHINGTON COUNTY'>Washington</option>
+	<option value='WICOMICO COUNTY'>Wicomico</option>
+	<option value='WORCESTER COUNTY'>Worcester</option>";
+}
 
 function searchForm($packet,$def){
 	
@@ -99,7 +126,7 @@ $end=date('m/d/Y');
 		<td><input size="1" name="defID" value="def" onclick="value=''"></td>
 		<td><input size="15" name="firstName" value="first name" onclick="value=''"></td>
 		<td><input size="15" name="lastName" value="last name" onclick="value=''"></td>
-		<td><input size="20" name="county" value="county" onclick="value=''"></td>
+		<td><select name="county"><?=countyList()?></select></td>
 		<td><input size="1" name="company" value="N"></td>
 		<td></td>
 		<td></td>
