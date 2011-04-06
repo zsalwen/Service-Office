@@ -218,7 +218,8 @@ while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
 		}
 		$estFileDate=explode('-',$d[estFileDate]);
 		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-		$data .= "<li id='EV$d[eviction_id]' onmouseover=\"document.getElementById('EV$d[eviction_id]').style.textDecoration='blink'\" onmouseout=\"document.getElementById('EV$d[eviction_id]').style.textDecoration='none'\" title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'>".$mod."<a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>EV$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> ".abbrCounty(strtoupper($d[circuit_court]))." <em> <small>[".id2attorney($d[attorneys_id])."]</small></em><span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate2($d[dispatchDate])."</span><span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span></li>";
+		$js = "id='EV$d[eviction_id]' onmouseover=\"document.getElementById('EV$d[eviction_id]').style.textDecoration='blink'\" onmouseout=\"document.getElementById('EV$d[eviction_id]').style.textDecoration='none'\"";
+		$data .= "<li $js title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'>".$mod."<a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>EV$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> ".abbrCounty(strtoupper($d[circuit_court]))." <em> <small>[".id2attorney($d[attorneys_id])."]</small></em><span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate2($d[dispatchDate])."</span><span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span></li>";
 	}
 }
 $data.='</ol>';
