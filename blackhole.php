@@ -230,7 +230,8 @@ function evictionActiveList($id,$packet){ $_SESSION[active]++;
 					$case .= $evPrepExplode;
 				}
 			}
-			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'><a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>EV$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em>".$case."</li>";
+			$js="id='EV$d[eviction_id]' onmouseover=\"document.getElementById('EV$d[eviction_id]').style.textDecoration='blink'\" onmouseout=\"document.getElementById('EV$d[eviction_id]').style.textDecoration='none'\"";
+			$data .= "<li $js title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'><a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>EV$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em>".$case."</li>";
 		}
 	}
 	$data.='</ol>';
