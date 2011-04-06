@@ -183,13 +183,14 @@ function presaleActiveList($id,$letter){ $_SESSION[active]++;
 		if ($d[rush] != ''){
 			$reopen .= " <span style='background-color:#000000; color:FF00FF; border: 3px solid black; font-weight:bold;'>RUSH</span>";
 		}
-		$js = "id='OTD$d[packet_id]$letter' 
-		onmouseover=\"document.getElementById('OTD$d[packet_id]').style.textDecoration='blink'\" 
-		onmouseout=\"document.getElementById('OTD$d[packet_id]').style.textDecoration='none'\" ";
+		$js = "id='OTD$d[packet_id]$letter' ";
+		$mover="onmouseover=\"document.getElementById('OTD$d[packet_id]').style.textDecoration='blink', ";
+		$mout="onmouseout=\"document.getElementById('OTD$d[packet_id]').style.textDecoration='none', ";
 		foreach(range('a','e') as $alpha){
-			$js .= "onmouseover=\"document.getElementById('OTD$d[packet_id]$alpha').style.textDecoration='blink'\" 
-		onmouseout=\"document.getElementById('OTD$d[packet_id]$alpha').style.textDecoration='none'\" ";
+			$mover .= "onmouseover=\"document.getElementById('OTD$d[packet_id]$alpha').style.textDecoration='blink', ";
+			$mout .= "onmouseout=\"document.getElementById('OTD$d[packet_id]$alpha').style.textDecoration='none', ";
 		}
+		$js .= substr($mover,0,-2)."\"".substr($mout,0,-2)."\"";
 		if ($hours > $_SESSION[cap]){
 			$data .= "<li $js title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],$letter).";'>";
 			if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
@@ -248,13 +249,14 @@ function standardActiveList($id,$letter){ $_SESSION[active]++;
 		if ($d[rush] != ''){
 			$reopen .= " <span style='background-color:#000000; color:FF00FF; border: 3px solid black; font-weight:bold;'>RUSH</span>";
 		}
-		$js = "id='S$d[packet_id]$letter' 
-		onmouseover=\"document.getElementById('S$d[packet_id]').style.textDecoration='blink'\" 
-		onmouseout=\"document.getElementById('S$d[packet_id]').style.textDecoration='none'\" ";
+		$js = "id='S$d[packet_id]$letter' ";
+		$mover="onmouseover=\"document.getElementById('S$d[packet_id]').style.textDecoration='blink', ";
+		$mout="onmouseout=\"document.getElementById('S$d[packet_id]').style.textDecoration='none', ";
 		foreach(range('a','e') as $alpha){
-			$js .= "onmouseover=\"document.getElementById('S$d[packet_id]$alpha').style.textDecoration='blink'\" 
-		onmouseout=\"document.getElementById('S$d[packet_id]$alpha').style.textDecoration='none'\" ";
+			$mover .= "onmouseover=\"document.getElementById('S$d[packet_id]$alpha').style.textDecoration='blink', ";
+			$mout .= "onmouseout=\"document.getElementById('S$d[packet_id]$alpha').style.textDecoration='none', ";
 		}
+		$js .= substr($mover,0,-2)."\"".substr($mout,0,-2)."\"";
 		if ($hours > $_SESSION[cap]){
 			$data .= "<li $js title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],$letter).";'>";
 			if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
