@@ -473,7 +473,7 @@ if ($_POST[submit]){
 		if ($_POST[addressType] != $d[addressType]){
 			$searchAdd=$d[address1].", ".$d[city1].", ".$d[state1]." ".$d[zip1];
 			$searchAdd=strtoupper($searchAdd);
-			$reviseList=addressRevise($_POST[packet_id],$searchAd,$d[addressType],$_POST[addressType]);
+			$reviseList=addressRevise($_POST[packet_id],$searchAdd,$d[addressType],$_POST[addressType]);
 			$TYPE .= "<table><tr><td>History ID</td><td>Old Type</td><td>New Type</td></tr>".$reviseList;
 			//$TYPE .= "<h1>POST addressType: ".$_POST[addressType]."</h1><br><h1>DB addressType: ".$d[addressType]."</h1>";
 		}
