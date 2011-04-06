@@ -265,7 +265,7 @@ if ($_GET[packet]){
 ?>
 <style>
 body { padding:0px; margin:0px; margin-left:10px;}
-fieldset {width:350px; font-size:12px; padding-top:0px; padding-bottom:0px; background-color:#CCCCCC}
+fieldset {width:350px; font-size:12px; padding-top:0px; padding-bottom:0px; padding-right:0px; background-color:#CCCCCC}
 .note {width: 340px; padding-left:10px;}
 legend { border:solid 1px; padding:5px; background-color:#66CCFF; }
 ol { padding:0px;}
