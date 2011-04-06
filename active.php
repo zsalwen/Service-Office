@@ -155,6 +155,34 @@ function justDate2($dt){
 		return $date2[1]."-".$date2[2];
 	}
 }
+function inverseHex( $color ){
+	$color = trim($color);
+	$prependHash = FALSE;
+	if(strpos($color,'#')!==FALSE) {
+		$prependHash = TRUE;
+		$color = str_replace('#',NULL,$color);
+	}
+	switch($len=strlen($color)) {
+		case 3:
+		$color=preg_replace("/(.)(.)(.)/","\\1\\1\\2\\2\\3\\3",$color);
+		break;
+		case 6:
+		break;
+		default:
+		trigger_error("Invalid hex length ($len). Must be a minimum length of (3) or maxium of (6) characters", E_USER_ERROR);
+	}
+	if(!preg_match('/^[a-f0-9]{6}$/i',$color)) {
+		$color = htmlentities($color);
+		trigger_error( "Invalid hex string #$color", E_USER_ERROR );
+	}
+	$r = dechex(255-hexdec(substr($color,0,2)));
+	$r = (strlen($r)>1)?$r:'0'.$r;
+	$g = dechex(255-hexdec(substr($color,2,2)));
+	$g = (strlen($g)>1)?$g:'0'.$g;
+	$b = dechex(255-hexdec(substr($color,4,2)));
+	$b = (strlen($b)>1)?$b:'0'.$b;
+	return ($prependHash?'#':NULL).$r.$g.$b;
+}
 function presaleActiveList($id,$letter){ $_SESSION[active]++;
 	$data='<ol>';
 	$r=@mysql_query("select packet_id, avoidDOT, reopenDate, date_received, filing_status, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, dispatchDate, attorneys_id, estFileDate, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where server_id$letter='$id' and (process_status = 'Assigned' OR process_status = 'ASSIGNED') order by  packet_id");
@@ -183,16 +211,19 @@ function presaleActiveList($id,$letter){ $_SESSION[active]++;
 		if ($d[rush] != ''){
 			$reopen .= " <span style='background-color:#000000; color:FF00FF; border: 3px solid black; font-weight:bold;'>RUSH</span>";
 		}
+		$colorCode=colorCode($hours,$d[packet_id],$letter);
+		$bgColor=substr($colorCode,0,6);
+		$inverse=inverseHex($bgColor);
 		$js = "id='OTD$d[packet_id]$letter' ";
-		$mover="onmouseover=\"document.getElementById('OTD$d[packet_id]').style.textDecoration='blink', ";
-		$mout="onmouseout=\"document.getElementById('OTD$d[packet_id]').style.textDecoration='none', ";
+		$mover="onmouseover=\"document.getElementById('OTD$d[packet_id]').style.textDecoration='blink', document.getElementById('OTD$d[packet_id]').style.background-color='$inverse', ";
+		$mout="onmouseout=\"document.getElementById('OTD$d[packet_id]').style.textDecoration='none', document.getElementById('OTD$d[packet_id]').style.background-color='$bgColor', ";
 		foreach(range('a','e') as $alpha){
-			$mover .= "document.getElementById('OTD$d[packet_id]$alpha').style.textDecoration='blink', ";
-			$mout .= "document.getElementById('OTD$d[packet_id]$alpha').style.textDecoration='none', ";
+			$mover .= "document.getElementById('OTD$d[packet_id]$alpha').style.textDecoration='blink', document.getElementById('OTD$d[packet_id]$alpha').style.background-color='$inverse', ";
+			$mout .= "document.getElementById('OTD$d[packet_id]$alpha').style.textDecoration='none', document.getElementById('OTD$d[packet_id]$alpha').style.background-color='$bgColor', ";
 		}
 		$js .= substr($mover,0,-2)."\"".substr($mout,0,-2)."\"";
 		if ($hours > $_SESSION[cap]){
-			$data .= "<li $js title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],$letter).";'>";
+			$data .= "<li $js title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".$colorCode.";'>";
 			if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
 				$data .= "<a href='http://service.mdwestserve.com/wizard.php?jump=".$d[packet_id]."-1' target='_blank' style='background-color:#00FFFF;'><b>QC</b></a> ";
 			}
@@ -218,8 +249,11 @@ while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
 		}
 		$estFileDate=explode('-',$d[estFileDate]);
 		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-		$js = "id='EV$d[eviction_id]' onmouseover=\"document.getElementById('EV$d[eviction_id]').style.textDecoration='blink'\" onmouseout=\"document.getElementById('EV$d[eviction_id]').style.textDecoration='none'\"";
-		$data .= "<li $js title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'>".$mod."<a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>EV$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> ".abbrCounty(strtoupper($d[circuit_court]))." <em> <small>[".id2attorney($d[attorneys_id])."]</small></em><span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate2($d[dispatchDate])."</span><span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span></li>";
+		$colorCode=colorCode(stripHours($d[hours]),'','');
+		$bgColor=substr($colorCode,0,6);
+		$inverse=inverseHex($bgColor);
+		$js = "id='EV$d[eviction_id]' onmouseover=\"document.getElementById('EV$d[eviction_id]').style.textDecoration='blink', document.getElementById('EV$d[eviction_id]').style.background-color='$inverse'\" onmouseout=\"document.getElementById('EV$d[eviction_id]').style.textDecoration='none', document.getElementById('EV$d[eviction_id]').style.background-color='$bgColor'\"";
+		$data .= "<li $js title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".$colorCode.";'>".$mod."<a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>EV$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> ".abbrCounty(strtoupper($d[circuit_court]))." <em> <small>[".id2attorney($d[attorneys_id])."]</small></em><span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate2($d[dispatchDate])."</span><span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span></li>";
 	}
 }
 $data.='</ol>';
@@ -250,16 +284,19 @@ function standardActiveList($id,$letter){ $_SESSION[active]++;
 		if ($d[rush] != ''){
 			$reopen .= " <span style='background-color:#000000; color:FF00FF; border: 3px solid black; font-weight:bold;'>RUSH</span>";
 		}
+		$colorCode=colorCode($hours,$d[packet_id],$letter);
+		$bgColor=substr($colorCode,0,6);
+		$inverse=inverseHex($bgColor);
 		$js = "id='S$d[packet_id]$letter' ";
-		$mover="onmouseover=\"document.getElementById('S$d[packet_id]').style.textDecoration='blink', ";
-		$mout="onmouseout=\"document.getElementById('S$d[packet_id]').style.textDecoration='none', ";
+		$mover="onmouseover=\"document.getElementById('S$d[packet_id]').style.textDecoration='blink', document.getElementById('S$d[packet_id]').style.background-color='$inverse', ";
+		$mout="onmouseout=\"document.getElementById('S$d[packet_id]').style.textDecoration='none', document.getElementById('S$d[packet_id]').style.background-color='$bgColor', ";
 		foreach(range('a','e') as $alpha){
-			$mover .= "document.getElementById('S$d[packet_id]$alpha').style.textDecoration='blink', ";
-			$mout .= "document.getElementById('S$d[packet_id]$alpha').style.textDecoration='none', ";
+			$mover .= "document.getElementById('S$d[packet_id]$alpha').style.textDecoration='blink', document.getElementById('S$d[packet_id]$alpha').style.background-color='$inverse', ";
+			$mout .= "document.getElementById('S$d[packet_id]$alpha').style.textDecoration='none', document.getElementById('S$d[packet_id]$alpha').style.background-color='$bgColor', ";
 		}
 		$js .= substr($mover,0,-2)."\"".substr($mout,0,-2)."\"";
 		if ($hours > $_SESSION[cap]){
-			$data .= "<li $js title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],$letter).";'>";
+			$data .= "<li $js title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".$colorCode.";'>";
 			if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
 				$data .= "<a href='http://service.mdwestserve.com/wizard.php?jump=".$d[packet_id]."-1' target='_blank' style='background-color:#00FFFF;'><b>QC</b></a> ";
 			}
