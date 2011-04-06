@@ -215,11 +215,11 @@ function presaleActiveList($id,$letter){ $_SESSION[active]++;
 		$bgColor=substr($colorCode,0,6);
 		$inverse=inverseHex($bgColor);
 		$js = "id='OTD$d[packet_id]$letter' ";
-		$mover="onmouseover=\"document.getElementById('OTD$d[packet_id]').style.textDecoration='blink', document.getElementById('OTD$d[packet_id]').style.background-color='$inverse', ";
-		$mout="onmouseout=\"document.getElementById('OTD$d[packet_id]').style.textDecoration='none', document.getElementById('OTD$d[packet_id]').style.background-color='$bgColor', ";
+		$mover="onmouseover=\"document.getElementById('OTD$d[packet_id]').style.textDecoration='blink', document.getElementById('OTD$d[packet_id]').style.backgroundColor='$inverse', ";
+		$mout="onmouseout=\"document.getElementById('OTD$d[packet_id]').style.textDecoration='none', document.getElementById('OTD$d[packet_id]').style.backgroundColor='$bgColor', ";
 		foreach(range('a','e') as $alpha){
-			$mover .= "document.getElementById('OTD$d[packet_id]$alpha').style.textDecoration='blink', document.getElementById('OTD$d[packet_id]$alpha').style.background-color='$inverse', ";
-			$mout .= "document.getElementById('OTD$d[packet_id]$alpha').style.textDecoration='none', document.getElementById('OTD$d[packet_id]$alpha').style.background-color='$bgColor', ";
+			$mover .= "document.getElementById('OTD$d[packet_id]$alpha').style.textDecoration='blink', document.getElementById('OTD$d[packet_id]$alpha').style.backgroundColor='$inverse', ";
+			$mout .= "document.getElementById('OTD$d[packet_id]$alpha').style.textDecoration='none', document.getElementById('OTD$d[packet_id]$alpha').style.backgroundColor='$bgColor', ";
 		}
 		$js .= substr($mover,0,-2)."\"".substr($mout,0,-2)."\"";
 		if ($hours > $_SESSION[cap]){
@@ -252,7 +252,7 @@ while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
 		$colorCode=colorCode(stripHours($d[hours]),'','');
 		$bgColor=substr($colorCode,0,6);
 		$inverse=inverseHex($bgColor);
-		$js = "id='EV$d[eviction_id]' onmouseover=\"document.getElementById('EV$d[eviction_id]').style.textDecoration='blink', document.getElementById('EV$d[eviction_id]').style.background-color='$inverse'\" onmouseout=\"document.getElementById('EV$d[eviction_id]').style.textDecoration='none', document.getElementById('EV$d[eviction_id]').style.background-color='$bgColor'\"";
+		$js = "id='EV$d[eviction_id]' onmouseover=\"document.getElementById('EV$d[eviction_id]').style.textDecoration='blink', document.getElementById('EV$d[eviction_id]').style.backgroundColor='$inverse'\" onmouseout=\"document.getElementById('EV$d[eviction_id]').style.textDecoration='none', document.getElementById('EV$d[eviction_id]').style.backgroundColor='$bgColor'\"";
 		$data .= "<li $js title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".$colorCode.";'>".$mod."<a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>EV$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> ".abbrCounty(strtoupper($d[circuit_court]))." <em> <small>[".id2attorney($d[attorneys_id])."]</small></em><span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate2($d[dispatchDate])."</span><span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span></li>";
 	}
 }
@@ -288,11 +288,11 @@ function standardActiveList($id,$letter){ $_SESSION[active]++;
 		$bgColor=substr($colorCode,0,6);
 		$inverse=inverseHex($bgColor);
 		$js = "id='S$d[packet_id]$letter' ";
-		$mover="onmouseover=\"document.getElementById('S$d[packet_id]').style.textDecoration='blink', document.getElementById('S$d[packet_id]').style.background-color='$inverse', ";
-		$mout="onmouseout=\"document.getElementById('S$d[packet_id]').style.textDecoration='none', document.getElementById('S$d[packet_id]').style.background-color='$bgColor', ";
+		$mover="onmouseover=\"document.getElementById('S$d[packet_id]').style.textDecoration='blink', document.getElementById('S$d[packet_id]').style.backgroundColor='$inverse', ";
+		$mout="onmouseout=\"document.getElementById('S$d[packet_id]').style.textDecoration='none', document.getElementById('S$d[packet_id]').style.backgroundColor='$bgColor', ";
 		foreach(range('a','e') as $alpha){
-			$mover .= "document.getElementById('S$d[packet_id]$alpha').style.textDecoration='blink', document.getElementById('S$d[packet_id]$alpha').style.background-color='$inverse', ";
-			$mout .= "document.getElementById('S$d[packet_id]$alpha').style.textDecoration='none', document.getElementById('S$d[packet_id]$alpha').style.background-color='$bgColor', ";
+			$mover .= "document.getElementById('S$d[packet_id]$alpha').style.textDecoration='blink', document.getElementById('S$d[packet_id]$alpha').style.backgroundColor='$inverse', ";
+			$mout .= "document.getElementById('S$d[packet_id]$alpha').style.textDecoration='none', document.getElementById('S$d[packet_id]$alpha').style.backgroundColor='$bgColor', ";
 		}
 		$js .= substr($mover,0,-2)."\"".substr($mout,0,-2)."\"";
 		if ($hours > $_SESSION[cap]){
