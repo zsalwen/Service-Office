@@ -187,8 +187,8 @@ function presaleActiveList($id,$letter){ $_SESSION[active]++;
 		$mover="onmouseover=\"document.getElementById('OTD$d[packet_id]').style.textDecoration='blink', ";
 		$mout="onmouseout=\"document.getElementById('OTD$d[packet_id]').style.textDecoration='none', ";
 		foreach(range('a','e') as $alpha){
-			$mover .= "onmouseover=\"document.getElementById('OTD$d[packet_id]$alpha').style.textDecoration='blink', ";
-			$mout .= "onmouseout=\"document.getElementById('OTD$d[packet_id]$alpha').style.textDecoration='none', ";
+			$mover .= "document.getElementById('OTD$d[packet_id]$alpha').style.textDecoration='blink', ";
+			$mout .= "document.getElementById('OTD$d[packet_id]$alpha').style.textDecoration='none', ";
 		}
 		$js .= substr($mover,0,-2)."\"".substr($mout,0,-2)."\"";
 		if ($hours > $_SESSION[cap]){
@@ -253,8 +253,8 @@ function standardActiveList($id,$letter){ $_SESSION[active]++;
 		$mover="onmouseover=\"document.getElementById('S$d[packet_id]').style.textDecoration='blink', ";
 		$mout="onmouseout=\"document.getElementById('S$d[packet_id]').style.textDecoration='none', ";
 		foreach(range('a','e') as $alpha){
-			$mover .= "onmouseover=\"document.getElementById('S$d[packet_id]$alpha').style.textDecoration='blink', ";
-			$mout .= "onmouseout=\"document.getElementById('S$d[packet_id]$alpha').style.textDecoration='none', ";
+			$mover .= "document.getElementById('S$d[packet_id]$alpha').style.textDecoration='blink', ";
+			$mout .= "document.getElementById('S$d[packet_id]$alpha').style.textDecoration='none', ";
 		}
 		$js .= substr($mover,0,-2)."\"".substr($mout,0,-2)."\"";
 		if ($hours > $_SESSION[cap]){
