@@ -17,7 +17,8 @@ if ($_POST[submit] == "Save Settings"){
 							full_name='$_POST[full_name]',
 							address='$_POST[address]', 
 							invoice_to='$_POST[invoice_to]', 
-							statement_to='$_POST[statement_to]', 
+							statement_to='$_POST[statement_to]',
+							phone='$_POST[phone]',
 							ps_to='$_POST[ps_to]',
 							ps_to_alt='$_POST[ps_to_alt]',
 							ps_alt2='$_POST[ps_alt2]',
@@ -30,7 +31,7 @@ if ($_POST[submit] == "Save Settings"){
 }
 if ($_POST[submit2] == "ENTER"){
 	echo "<center>SAVED, <a href='http://staff.mdwestserve.com/attSettings.php'>Select Another Attorney</a></center>";
-	$q = "INSERT INTO attorneys (display_name, full_name, address, invoice_to, statement_to, ps_to, ps_to_alt, ps_alt2, ps_plaintiff, authSeller, payInstructions, upcoming_report_to) VALUES ('".strtoupper($_POST[display_name])."', '".strtoupper($_POST[full_name])."', '$_POST[address]', '$_POST[invoice_to]', '$_POST[statement_to]', '$_POST[ps_to]', '$_POST[ps_to_alt]', '$_POST[ps_alt2]', '$_POST[ps_plaintiff]', '$_POST[authSeller]', '".addslashes($_POST[payInstructions])."', '$_POST[upcoming_report_to]')";
+	$q = "INSERT INTO attorneys (display_name, full_name, address, invoice_to, statement_to, phone, ps_to, ps_to_alt, ps_alt2, ps_plaintiff, authSeller, payInstructions, upcoming_report_to) VALUES ('".strtoupper($_POST[display_name])."', '".strtoupper($_POST[full_name])."', '$_POST[address]', '$_POST[invoice_to]', '$_POST[statement_to]', '$_POST[phone]', '$_POST[ps_to]', '$_POST[ps_to_alt]', '$_POST[ps_alt2]', '$_POST[ps_plaintiff]', '$_POST[authSeller]', '".addslashes($_POST[payInstructions])."', '$_POST[upcoming_report_to]')";
 	$r = @mysql_query($q) or die(mysql_error());
 }
  if ($_POST[att_id] || $_GET[att_id]){
@@ -59,6 +60,10 @@ $d = mysql_fetch_array($r, MYSQL_ASSOC);
 	<tr>
     	<td>Address</td>
         <td><input name="address" size="100" value="<?=$d[address]?>"> Line Break with Hyphen <em>(3 Line Max)</em></td>
+    </tr>
+	<tr>
+    	<td>Phone</td>
+        <td><input name="phone" size="100" value="<?=$d[phone]?>"></td>
     </tr>
 	<tr>
 		<td>Person Authorized to Sell Property</td>
@@ -112,6 +117,10 @@ $d = mysql_fetch_array($r, MYSQL_ASSOC);
 	<tr>
     	<td>Address</td>
         <td><input name="address" size="100" value=""> Line Break with Hyphen <em>(3 Line Max)</em></td>
+    </tr>
+	<tr>
+    	<td>Phone</td>
+        <td><input name="phone" size="100" value=""></td>
     </tr>
 	<tr>
 		<td>Person Authorized to Sell Property</td>
