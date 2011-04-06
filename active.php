@@ -184,7 +184,7 @@ function presaleActiveList($id,$letter){ $_SESSION[active]++;
 			$reopen .= " <span style='background-color:#000000; color:FF00FF; border: 3px solid black; font-weight:bold;'>RUSH</span>";
 		}
 		if ($hours > $_SESSION[cap]){
-			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],$letter).";'>";
+			$data .= "<li id='OTD$d[packet_id]' onmouseover=\"document.getElementById('OTD$d[packet_id]').style.textDecoration='blink'\" onmouseout=\"document.getElementById('OTD$d[packet_id]').style.textDecoration='none'\" title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],$letter).";'>";
 			if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
 				$data .= "<a href='http://service.mdwestserve.com/wizard.php?jump=".$d[packet_id]."-1' target='_blank' style='background-color:#00FFFF;'><b>QC</b></a> ";
 			}
@@ -210,7 +210,7 @@ while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
 		}
 		$estFileDate=explode('-',$d[estFileDate]);
 		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-		$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'>".$mod."<a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>EV$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> ".abbrCounty(strtoupper($d[circuit_court]))." <em> <small>[".id2attorney($d[attorneys_id])."]</small></em><span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate2($d[dispatchDate])."</span><span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span></li>";
+		$data .= "<li id='EV$d[eviction_id]' onmouseover=\"document.getElementById('EV$d[eviction_id]').style.textDecoration='blink'\" onmouseout=\"document.getElementById('EV$d[eviction_id]').style.textDecoration='none'\" title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode(stripHours($d[hours]),'','').";'>".$mod."<a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>EV$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> ".abbrCounty(strtoupper($d[circuit_court]))." <em> <small>[".id2attorney($d[attorneys_id])."]</small></em><span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate2($d[dispatchDate])."</span><span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span></li>";
 	}
 }
 $data.='</ol>';
@@ -242,7 +242,7 @@ function standardActiveList($id,$letter){ $_SESSION[active]++;
 			$reopen .= " <span style='background-color:#000000; color:FF00FF; border: 3px solid black; font-weight:bold;'>RUSH</span>";
 		}
 		if ($hours > $_SESSION[cap]){
-			$data .= "<li title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],$letter).";'>";
+			$data .= "<li id='S$d[packet_id]' onmouseover=\"document.getElementById('S$d[packet_id]').style.textDecoration='blink'\" onmouseout=\"document.getElementById('S$d[packet_id]').style.textDecoration='none'\" title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".colorCode($hours,$d[packet_id],$letter).";'>";
 			if ($d[request_close] || $d[request_closea] || $d[request_closeb] || $d[request_closec] || $d[request_closed] || $d[request_closee]){
 				$data .= "<a href='http://service.mdwestserve.com/wizard.php?jump=".$d[packet_id]."-1' target='_blank' style='background-color:#00FFFF;'><b>QC</b></a> ";
 			}
