@@ -214,6 +214,9 @@ function presaleActiveList($id,$letter){ $_SESSION[active]++;
 		$colorCode=colorCode($hours,$d[packet_id],$letter);
 		$bgColor=substr($colorCode,0,6);
 		$inverse=inverseHex($bgColor);
+		if (strtolower($inverse) == 'ffffff'){
+			$inverse .= "', document.getElementById('OTD$d[packet_id]').style.color='black";
+		}
 		$js = "id='OTD$d[packet_id]$letter' ";
 		$mover="onmouseover=\"document.getElementById('OTD$d[packet_id]').style.textDecoration='blink', document.getElementById('OTD$d[packet_id]').style.backgroundColor='$inverse', ";
 		$mout="onmouseout=\"document.getElementById('OTD$d[packet_id]').style.textDecoration='none', document.getElementById('OTD$d[packet_id]').style.backgroundColor='$bgColor', ";
