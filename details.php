@@ -35,5 +35,31 @@ die('Missing Packet Number');
 <td><iframe frameborder="0" name="pane2" id="pane2" style="width:100%; height:100%;"></iframe></td>
 </tr>
 </table>
+
+
+<?
+// user settings (will go cookie)
+$openSvcDoc = 2;
+$openDE = 1;
+$DEorder = "data,names";
+
+
+
+// here is the pane auto-loader
+if($d[status] == 'NEW'){ // start new status
+$r=@mysql_query(" select url from attachment where packet_id = '$_GET[packet]' and description = 'Papers to Serve' ");
+$d=mysql_fetch_array($r,MYSQL_ASSOC);
+?>
+<script>
+parent.frames['pane<?=$openSvcDoc;?>'].location.href = '<?=$d[url]?>';
+<? if ($DEorder == "data,names"){ ?>
+parent.frames['pane<?=$openDE;?>'].location.href = 'edit.php?packet=<?=$_GET[packet];?>';
+<? }else{ ?>
+parent.frames['pane<?=$openDE;?>'].location.href = 'instruction.php?packet=<?=$_GET[packet];?>';
+<? } ?>
+</script>
+<? } // end new status ?>
+
+
 </body>
 </html>

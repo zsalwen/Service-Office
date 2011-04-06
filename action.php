@@ -418,7 +418,7 @@ echo  "<li>Blackhole: $count </li>";
 Counter Break-Down
 <table>
 <tr><td valign="top">
-<div>Webservice</div>
+<div>Webservice</div><ol>
 <?
 $q = "Select distinct filenumber from defendants where packet=''  ";
 $r=@mysql_query($q);
@@ -428,45 +428,45 @@ echo "<li>$d[filenumber]</li>";
 }
 }
 ?>
-</td><td valign="top">
-<div>New Files</div>
+</ol></td><td valign="top">
+<div>New Files</div><ol>
 <?$r=@mysql_query("SELECT client_file, case_no, id, date_received FROM packet WHERE status = 'NEW' and process_status <> 'CANCELLED' AND process_status <> 'DUPLICATE' AND process_status <> 'DAMAGED PDF'") or die(mysql_error());
 while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 echo  "<li>$d[id]</li>";
 }?>
-</td><td valign="top">
-<div>Dispatch</div>
+</ol></td><td valign="top">
+<div>Dispatch</div><ol>
 <?
 $r=@mysql_query("select id, package_id from packet where process_status = 'READY' and package_id = ''") or die(mysql_error());
 while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 echo  "<li>$d[id]</li>";
 }
 ?>
-</td><td valign="top">
-<div>Assigned</div>
+</ol></td><td valign="top">
+<div>Assigned</div><ol>
 <?
 $r=@mysql_query("SELECT id from packet WHERE process_status = 'ASSIGNED'") or die(mysql_error());
 while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 echo  "<li>$d[id]</li>";
 }
 ?>
-</td><td valign="top">
-<div>MailRoom</div>
+</ol></td><td valign="top">
+<div>MailRoom</div><ol>
 <?
 $r=@mysql_query("select id, mail_status from packet where (process_status = 'READY TO MAIL' OR mail_status='Printed Awaiting Postage') order by mail_status, id") or die(mysql_error());
 while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 echo  "<li>$d[id]</li>";
 }
 ?>
-</td><td valign="top">
-<div>Blackhole</div>
+</ol></td><td valign="top">
+<div>Blackhole</div><ol>
 <?
 $r=@mysql_query("SELECT id from packet where affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'DO NOT FILE' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' ") or die(mysql_error());
 while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 echo  "<li>$d[id]</li>";
 }
 ?>
-</td></tr></table>
+</ol></td></tr></table>
 
 <?
 mysql_close();
