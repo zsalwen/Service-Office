@@ -155,7 +155,7 @@ function justDate2($dt){
 		return $date2[1]."-".$date2[2];
 	}
 }
-function serverActiveList($id,$letter){ $_SESSION[active]++;
+function presaleActiveList($id,$letter){ $_SESSION[active]++;
 	$data='<ol>';
 	$r=@mysql_query("select packet_id, avoidDOT, reopenDate, date_received, filing_status, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, dispatchDate, attorneys_id, estFileDate, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where server_id$letter='$id' and (process_status = 'Assigned' OR process_status = 'ASSIGNED') order by  packet_id");
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
@@ -219,7 +219,7 @@ return $data;
 
 function standardActiveList($id,$letter){ $_SESSION[active]++;
 	$data='<ol>';
-	$r=@mysql_query("select packet_id, reopenDate, date_received, filing_status, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, dispatchDate, attorneys_id, estFileDate, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from standard_packets where server_id$letter='$id' and (process_status = 'Assigned' OR process_status = 'ASSIGNED') order by  packet_id") or die (mysql_error());
+	$r=@mysql_query("select packet_id, reopenDate, date_received, filing_status, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from standard_packets where server_id$letter='$id' and (process_status = 'Assigned' OR process_status = 'ASSIGNED') order by  packet_id") or die (mysql_error());
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
 		if ($letter == ''){
 			$_SESSION[active3]++;
@@ -234,7 +234,6 @@ function standardActiveList($id,$letter){ $_SESSION[active]++;
 			$hours=stripHours($d[hours]);
 			$reopen='';
 		}
-		$reopen .= " <span style='background-color:#AAAAAA; color:FFFFFF;'>DISP:&nbsp;".justDate2($d[dispatchDate])."</span>";
 		if ($d)
 		$estFileDate=explode('-',$d[estFileDate]);
 		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
@@ -355,47 +354,47 @@ if ($list != ''){
 $servers=getServers();
 $i=0;
 while ($i < count($servers)){
-	echo "<fieldset><legend>Slot 1: ".id2name($servers["$i"])." #".$servers["$i"]."</legend>".serverActiveList($servers["$i"],'').evictionActiveList($servers["$i"]).standardActiveList($servers["$i"],'')."</fieldset>";
+	echo "<fieldset><legend>Slot 1: ".id2name($servers["$i"])." #".$servers["$i"]."</legend>".presaleActiveList($servers["$i"],'').evictionActiveList($servers["$i"]).standardActiveList($servers["$i"],'')."</fieldset>";
 	$i++;
 }
 /*$q="SELECT DISTINCT server_id from ps_packets WHERE process_status = 'ASSIGNED'";
 $r=@mysql_query($q);
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-echo "<fieldset><legend>Slot 1: ".id2name($d[server_id])." #$d[server_id]</legend>".serverActiveList($d[server_id],'')."</fieldset>";
+echo "<fieldset><legend>Slot 1: ".id2name($d[server_id])." #$d[server_id]</legend>".presaleActiveList($d[server_id],'')."</fieldset>";
 }*/
 ?></td><td valign='top'><?
 $serversa=getServers2('a');
 $i=0;
 while ($i < count($serversa)){
-	echo "<fieldset><legend>Slot 2: ".id2name($serversa["$i"])." #".$serversa["$i"]."</legend>".serverActiveList($serversa["$i"],'a').standardActiveList($serversa["$i"],'a')."</fieldset>";
+	echo "<fieldset><legend>Slot 2: ".id2name($serversa["$i"])." #".$serversa["$i"]."</legend>".presaleActiveList($serversa["$i"],'a').standardActiveList($serversa["$i"],'a')."</fieldset>";
 	$i++;
 }
 ?></td><td valign='top'><?
 $serversb=getServers2('b');
 $i=0;
 while ($i < count($serversb)){
-	echo "<fieldset><legend>Slot 3: ".id2name($serversb["$i"])." #".$serversb["$i"]."</legend>".serverActiveList($serversb["$i"],'b').standardActiveList($serversb["$i"],'b')."</fieldset>";
+	echo "<fieldset><legend>Slot 3: ".id2name($serversb["$i"])." #".$serversb["$i"]."</legend>".presaleActiveList($serversb["$i"],'b').standardActiveList($serversb["$i"],'b')."</fieldset>";
 	$i++;
 }
 ?></td><td valign='top'><?
 $serversc=getServers2('c');
 $i=0;
 while ($i < count($serversc)){
-	echo "<fieldset><legend>Slot 4: ".id2name($serversc["$i"])." #".$serversc["$i"]."</legend>".serverActiveList($serversc["$i"],'c').standardActiveList($serversc["$i"],'c')."</fieldset>";
+	echo "<fieldset><legend>Slot 4: ".id2name($serversc["$i"])." #".$serversc["$i"]."</legend>".presaleActiveList($serversc["$i"],'c').standardActiveList($serversc["$i"],'c')."</fieldset>";
 	$i++;
 }
 ?></td><td valign='top'><?
 $serversd=getServers2('d');
 $i=0;
 while ($i < count($serversd)){
-	echo "<fieldset><legend>Slot 5: ".id2name($serversd["$i"])." #".$serversd["$i"]."</legend>".serverActiveList($serversd["$i"],'d').standardActiveList($serversd["$i"],'d')."</fieldset>";
+	echo "<fieldset><legend>Slot 5: ".id2name($serversd["$i"])." #".$serversd["$i"]."</legend>".presaleActiveList($serversd["$i"],'d').standardActiveList($serversd["$i"],'d')."</fieldset>";
 	$i++;
 }
 ?></td><td valign='top'><?
 $serverse=getServers2('e');
 $i=0;
 while ($i < count($serverse)){
-	echo "<fieldset><legend>Slot 6: ".id2name($serverse["$i"])." #".$serverse["$i"]."</legend>".serverActiveList($serverse["$i"],'e').standardActiveList($serverse["$i"],'e')."</fieldset>";
+	echo "<fieldset><legend>Slot 6: ".id2name($serverse["$i"])." #".$serverse["$i"]."</legend>".presaleActiveList($serverse["$i"],'e').standardActiveList($serverse["$i"],'e')."</fieldset>";
 	$i++;
 }
 ?></td></tr></table>
