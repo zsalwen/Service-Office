@@ -85,14 +85,29 @@ function colorCode2($hours){
 	if ($hours > 48){ return "00FF00; color:000000 !important;"; }
 }
 
-function withCourier($packet){
-	$q="SELECT * from docuTrack WHERE packet='$packet' and document='OUT WITH COURIER' ORDER BY trackID DESC LIMIT 0,1";
+function withCourier($packet,$prefix){
+	$search=$prefix.$packet
+	$q="SELECT * from docuTrack WHERE packet='$search' and document='OUT WITH COURIER' ORDER BY trackID DESC LIMIT 0,1";
 	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
 	if ($d[packet]){
 		$document="<div class='note' style='background-color:#ffFF00;'><small>".$d[binder]." OUT WITH COURIER by ".$d[location]."</small></div>";
 	}
 	return $document;
+}
+
+function prepExplode($packet,$idType,$table){
+	$q="SELECT timeline FROM $table WHERE $idType='$packet' LIMIT 0,1";
+	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
+	$d=mysql_fetch_array($r,MYSQL_ASSOC);
+	$timeline=explode('<br>',$d[timeline]);
+	for($i = 0; $i < count($timeline); $i++){
+		if (strpos($timeline[$i], "Prepared Affidavits for Filing")){
+				$timeList = "<br><div class='note' style='background-color:#6699CC;'><small>$timeline[$i]";
+		}
+	}
+	$timeList .= "</small></div>";
+	return $timeList;
 }
 
 function inverseHex( $color ){
@@ -122,21 +137,6 @@ function inverseHex( $color ){
 	$b = dechex(255-hexdec(substr($color,4,2)));
 	$b = (strlen($b)>1)?$b:'0'.$b;
 	return ($prependHash?'#':NULL).$r.$g.$b;
-}
-
-function prepExplode($packet){
-	$q="SELECT timeline FROM ps_packets WHERE packet_id='$packet'";
-	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
-	while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-		$timeline=explode('<br>',$d[timeline]);
-		for($i = 0; $i < count($timeline); $i++){
-			if (strpos($timeline[$i], "Prepared Affidavits for Filing")){
-					$timeList = "<br><div class='note' style='background-color:#6699CC;'><small>$timeline[$i]";
-			}
-		}
-	}
-	$timeList .= "</small></div>";
-	return $timeList;
 }
 
 function presaleActiveList($id,$letter,$packet){ $_SESSION[active]++;
@@ -173,11 +173,11 @@ function presaleActiveList($id,$letter,$packet){ $_SESSION[active]++;
 			$estFileDate=explode('-',$d[estFileDate]);
 			$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
 			$case .= "&nbsp;<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)."; border: 1px solid black;'>FILE: $estFileDate</span>";
-			$withCourier=withCourier($d[packet_id]);
+			$withCourier=withCourier($d[packet_id],'');
 			if($withCourier != ''){
 				$case.=$withCourier;
 			}else{
-				$prepExplode = prepExplode($d[packet_id]);
+				$prepExplode = prepExplode($d[packet_id],'packet_id','ps_packets');
 				if ($prepExplode != ''){
 					$case .= $prepExplode;
 				}
@@ -205,36 +205,6 @@ function presaleActiveList($id,$letter,$packet){ $_SESSION[active]++;
 }
 
 //begin evictionPackets functions:******************************************************
-function evPrepExplode($eviction){
-	$q="SELECT timeline FROM evictionPackets WHERE eviction_id='$eviction'";
-	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
-	while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-		$timeline=explode('<br>',$d[timeline]);
-		for($i = 0; $i < count($timeline); $i++){
-			if (strpos($timeline[$i], "Prepared Affidavits for Filing")){
-				if ($timeList != ''){
-					$timeList .= "<br>$timeline[$i]";
-				}else{
-					$timeList = "<br><div class='note' style='background-color:#6699CC;'><small>$timeline[$i]";
-				}
-			}
-		}
-	}
-	$timeList .= "</small></div>";
-	return $timeList;
-}
-
-function evWithCourier($eviction){
-	$eviction_id="EV".$eviction;
-	$q="SELECT * from docuTrack WHERE packet='$eviction_id' and document='OUT WITH COURIER'";
-	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
-	$d=mysql_fetch_array($r,MYSQL_ASSOC);
-	if ($d){
-		$document="<div class='note' style='background-color:#ffFF00;'><small>".$d[binder]." OUT WITH COURIER by ".$d[location]."</small></div>";
-	}
-	return $document;
-}
-
 function evictionActiveList($id,$packet){ $_SESSION[active]++;
 	$data='<ol>';
 	if ($packet != '0' && $packet != ''){
@@ -256,11 +226,11 @@ function evictionActiveList($id,$packet){ $_SESSION[active]++;
 			$estFileDate=explode('-',$d[estFileDate]);
 			$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
 			$case .= "&nbsp;<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)."; border: 1px solid black;'>FILE: $estFileDate</span>";
-			$evWithCourier=evWithCourier($d[eviction_id]);
+			$evWithCourier=withCourier($d[eviction_id],'EV');
 			if($evWithCourier != ''){
 				$case.=$evWithCourier;
 			}else{
-				$evPrepExplode = evPrepExplode($d[eviction_id]);
+				$evPrepExplode = prepExplode($d[eviction_id],'eviction_id','evictionPackets');
 				if ($evPrepExplode != ''){
 					$case .= $evPrepExplode;
 				}
