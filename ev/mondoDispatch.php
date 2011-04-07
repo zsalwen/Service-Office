@@ -25,28 +25,6 @@ function checkPay($packet,$product){
 		@mysql_query("INSERT INTO ps_pay (packetID,product) VALUES ('$packet','$product')");
 	}
 }
-
-if ($_COOKIE[psdata][level] != "Operations"){
-			$event = 'packages.php';
-			$email = $_COOKIE[psdata][email];
-			$q1="INSERT into ps_security (event, email, entry_time) VALUES ('$event', '$email', NOW())";
-			//@mysql_query($q1) or die(mysql_error());
-			header('Location: home.php');
-}
-
-if ($_POST[submit]){
-	if (!$_POST[package][contractor] || !$_POST[server_id]){
-		echo '<script>alert("Please make sure that you have entered a contractor rate and selected a server.")</script>';
-	}elseif($_POST[estFileDate] == '' || $_POST[estFileDate] == '0000-00-00'){
-		echo '<script>alert("Please enter an Estimated Close Date.")</script>';
-	}else{
-
-function dispatchTimeline($pkg){
-	$r=@mysql_query("select eviction_id from evictionPackets where package_id = '$pkg'");
-	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-		timeline($d[eviction_id],$_COOKIE[psdata][name]." Dispatched Order, Deadline: $_SESSION[estFileDate]");
-	}
-}
 function packageFile($package_id, $file_id, $contractor_rate, $contractor_ratea){
 	timeline($file_id,$_COOKIE[psdata][name]." Packaged Order");
 	$q = "UPDATE evictionPackets, ps_pay SET 
@@ -69,16 +47,28 @@ function makePackage($array1,$array2,$array3,$package_id){
 		packageFile($package_id,$id,$array2[0],$array3[0]);
 		//echo "$id ";
 	}
-}	
+}
+if ($_COOKIE[psdata][level] != "Operations"){
+			$event = 'packages.php';
+			$email = $_COOKIE[psdata][email];
+			$q1="INSERT into ps_security (event, email, entry_time) VALUES ('$event', '$email', NOW())";
+			//@mysql_query($q1) or die(mysql_error());
+			header('Location: http://staff.mdwestserve.com');
+}
 
+if ($_POST[submit]){
+	if (!$_POST[package][contractor] || !$_POST[server_id]){
+		echo '<script>alert("Please make sure that you have entered a contractor rate and selected a server.")</script>';
+	}elseif($_POST[estFileDate] == '' || $_POST[estFileDate] == '0000-00-00'){
+		echo '<script>alert("Please enter an Estimated Close Date.")</script>';
+	}else{
+		$q1 = "INSERT into evictionPackages (set_date, assign_date) values (NOW(), NOW()) ";
+		$r1=@mysql_query($q1) or die("Query: $q1<br>".mysql_error());
+		$packageID = mysql_insert_id();	
+		makePackage($_POST[package]['id'],$_POST[package]['contractor'],$_POST[package]['contractora'],$packageID);
+		hardLog('Created package '.$packageID,'user');
 
-	$q1 = "INSERT into evictionPackages (set_date, assign_date) values (NOW(), NOW()) ";
-	$r1=@mysql_query($q1) or die("Query: $q1<br>".mysql_error());
-	$packageID = mysql_insert_id();	
-	makePackage($_POST[package]['id'],$_POST[package]['contractor'],$_POST[package]['contractora'],$packageID);
-	hardLog('Created package '.$packageID,'user');
-
-	//monitor('Your package "' .$_POST[name]. '" has been created.');
+		//monitor('Your package "' .$_POST[name]. '" has been created.');
 		foreach ($_POST[package]['id'] as $value){
 			$q="SELECT address1 from evictionPackets WHERE eviction_id='$value'";
 			$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
