@@ -16,7 +16,7 @@ if ($_GET[bypass]){
 	$r2=@mysql_query("SELECT * from occNotices where packet_id='$_GET[packet]'");
 	$d2=mysql_fetch_array($r2,MYSQL_ASSOC);
 	$today=date('F jS, Y',strtotime($d2[sendDate]));
-	$address=strtoupper("$d[address], $d[city], $d[state] $d[zip]");
+	$address=strtoupper("$d2[address], $d2[city], $d2[state] $d2[zip]");
 }else{
 	$today=date('F jS, Y');
 }
