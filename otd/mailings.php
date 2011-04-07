@@ -51,11 +51,11 @@ if ($msg != ''){
 				</tr>
 				<tr>
 					<td>ADDRESS</td>
-					<td><input name='address' value='<?=$d2[address]?>'>
+					<td><input name='address' size='80' value='<?=$d2[address]?>'>
 				</tr>
 				<tr>
 					<td>CSZ</td>
-					<td><input name="city" value="<?=$d2[city]?>"><input name="state" value="<?=$d2[state]?>"><input name="zip" value="<?=$d2[zip]?>"></td>
+					<td><input name="city" size='40' value="<?=$d2[city]?>"><input size='3' name="state" value="<?=$d2[state]?>"><input size='8' name="zip" value="<?=$d2[zip]?>"></td>
 				</tr>
 				<tr>
 					<td colspan='2' align='center'><input type='submit' name='submit' value='UPDATE'></td>
