@@ -65,7 +65,7 @@ if ($_GET[delete]){
 		$email = $_COOKIE[psdata][email];
 		$q1="INSERT into ps_security (event, email, entry_time) VALUES ('$event', '$email', NOW())";
 		//@mysql_query($q1) or die(mysql_error());
-		header('Location: home.php');
+		header('Location: http://staff.mdwestserve.com');
 	}
 }
 $id = $_GET[admin];

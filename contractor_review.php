@@ -4,7 +4,7 @@ if ($_COOKIE[psdata][level] != "Dispatch"){
 	if ($_COOKIE[psdata][level] == "SysOp" || $_COOKIE[psdata][level] == "Administrator" || $_COOKIE[psdata][level] == "Operations"){
 	
 	}else{
-	header('Location: home.php');
+	header('Location: http://staff.mdwestserve.com');
 		$event = 'contractor_review.php';
 		$email = $_COOKIE[psdata][email];
 		$q1="INSERT into ps_security (event, email, entry_time) VALUES ('$event', '$email', NOW())";
