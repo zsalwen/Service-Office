@@ -8,13 +8,15 @@ if ($_GET[mailerID]){
 }
 $r=@mysql_query("select * from ps_packets where packet_id='$_GET[packet]'");
 $d=mysql_fetch_array($r,MYSQL_ASSOC);
+$address=strtoupper("$d[address1], $d[city1], $d[state1] $d[zip1]");
 if (!$_GET[bypass]){
 	@mysql_query("INSERT INTO occNotices (requirements, packet_id, sendDate, clientFile, caseNo, mailerID, county, attorneysID, address, city, state, zip, bill, requestDate ) values ('7-105.9(b)', '$_GET[packet]', NOW(), '$d[client_file]', '$d[case_no]', '$mailerID', '$d[circuit_court]', '$d[attorneys_id]', '$d[address1]', '$d[city1]', '$d[state1]', '$d[zip1]', '5.00', NOW() )");
 }
 if ($_GET[bypass]){
-	$r2=@mysql_query("SELECT sendDate from occNotices where packet_id='$_GET[packet]'");
+	$r2=@mysql_query("SELECT * from occNotices where packet_id='$_GET[packet]'");
 	$d2=mysql_fetch_array($r2,MYSQL_ASSOC);
 	$today=date('F jS, Y',strtotime($d2[sendDate]));
+	$address=strtoupper("$d[address], $d[city], $d[state] $d[zip]");
 }else{
 	$today=date('F jS, Y');
 }
@@ -31,7 +33,7 @@ ob_start();
 <center style="font-size: 14px; font-weight:bold;">IMPORTANT NOTICE</center><br><br>
 <div style="font-size: 14px; text-indent: 30px; font-weight:bold;">
 A FORECLOSURE ACTION HAS BEEN FILED AGAINST THE PROPERTY LOCATED AT
-<?=strtoupper($d[address1])?>, <?=strtoupper($d[city1])?>, <?=strtoupper($d[state1])?> <?=strtoupper($d[zip1])?> IN THE CIRCUIT COURT FOR <?=strtoupper($d[circuit_court])?>. THIS NOTICE IS BEING SENT TO YOU AS A PERSON WHO LIVES IN THIS PROPERTY.<br><br>
+<?=$address?> IN THE CIRCUIT COURT FOR <?=strtoupper($d[circuit_court])?>. THIS NOTICE IS BEING SENT TO YOU AS A PERSON WHO LIVES IN THIS PROPERTY.<br><br>
 </div>
 <div style="font-size: 14px; text-indent: 30px; font-weight:bold;">
 A FORECLOSURE SALE OF THE PROPERTY MAY OCCUR AT ANY TIME AFTER 45

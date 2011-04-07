@@ -31,8 +31,8 @@ $header="<td colspan='2' align='center' style='font-size:20px;'>CIRCUIT COURT OF
 			if ($d['name4']){$header .= strtoupper($d['name4']).'<br>';}
 			if ($d['name5']){$header .= strtoupper($d['name5']).'<br>';}
 			if ($d['name6']){$header .= strtoupper($d['name6']).'<br>';}
-			$header .=strtoupper($d['address1']).'<br>';
-			$header .=strtoupper($d['city1']).', '.strtoupper($d['state1']).' '.$d['zip1'].'<br>';
+			$header .=strtoupper($d2['address']).'<br>';
+			$header .=strtoupper($d2['city']).', '.strtoupper($d2['state']).' '.$d2['zip'].'<br>';
 			$header .= "<small>_________________________<br /><em>Defendant</em></small></td>
 				<td align='right' valign='top' style='width:100px;' nowrap='nowrap'><div style='font-size:24px; border:solid 1px #666666; text-align:center;'>Case Number<br />".str_replace(0,'&Oslash;',$d[case_no])."</div>";
 $cord=$d[packet_id]."-OCC-".$d2[mailerID]."%";
@@ -60,8 +60,8 @@ following respective dates:<br><br></td>
 </tr><tr>
 <td colspan="2" style="font-weight:bold; padding-left:40px;">
 ALL OCCUPANTS<br>
-<?=strtoupper($d[address1]);?><br>
-<?=strtoupper($d[city1]).', '.strtoupper($d[state1]).' '.$d[zip1];?><br>
+<?=strtoupper($d2[address]);?><br>
+<?=strtoupper($d2[city]).', '.strtoupper($d2[state]).' '.$d2[zip];?><br>
 MAILED <?=$sendDate?><br><br>
 </td></tr><tr><td colspan="2" style="text-indent:40px;">
 I solemnly affirm under the penalty of perjury to the best of my knowledge, information

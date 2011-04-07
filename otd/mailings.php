@@ -1,6 +1,10 @@
 <?
 include 'common.php';
 $OTD=$_GET[OTD];
+if ($_POST[submit]){
+	@mysql_query("UPDATE occNotices SET address='$_POST[address]', city='$_POST[city]', state='$_POST[state]', zip='$_POST[zip]' WHERE packet_id='$OTD'");
+	echo "<h2>UPDATE OCCUPANT NOTICE</h2>";
+}
 $r=@mysql_query("SELECT attorneys_id, uspsVerify, qualityControl FROM ps_packets WHERE packet_id='$OTD' LIMIT 0,1");
 $d=mysql_fetch_array($r,MYSQL_ASSOC);
 $r2=@mysql_query("SELECT * FROM occNotices WHERE packet_id='$OTD' LIMIT 0,1");
@@ -37,6 +41,28 @@ if ($msg != ''){
 	<? if ($d2[packet_id]){ ?>
 	<tr>
 		<td align='center'><a href='http://staff.mdwestserve.com/otd/multOccupant.php?packet=<?=$_GET[OTD]?>'>Re-Print Occupant Notice and Affidavits</a> | <a href='http://staff.mdwestserve.com/otd/envelopeMaster.php?OTD=<?=$_GET[OTD]?>'>Re-Print Occupant Notice Envelope</a></td>
+	</tr>
+	<tr>
+		<td align='center'>
+			<form style='display:inline;' method='post'>
+			<table align='center'>
+				<tr>
+					<td colspan='2' align='center'>OCCUPANT NOTICE INFO</td>
+				</tr>
+				<tr>
+					<td>ADDRESS</td>
+					<td><input name='address' value='<?=$d2[address]?>'>
+				</tr>
+				<tr>
+					<td>CSZ</td>
+					<td><input name="city" value="<?=$d2[city]?>"><input name="state" value="<?=$d2[state]?>"><input name="zip" value="<?=$d2[zip]?>"></td>
+				</tr>
+				<tr>
+					<td colspan='2' align='center'><input type='submit' name='submit' value='UPDATE'></td>
+				</tr>
+			</table>
+			</form>
+		</td>
 	</tr>
 	<? } ?>
 	<tr>
