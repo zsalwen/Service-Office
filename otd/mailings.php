@@ -2,7 +2,7 @@
 include 'common.php';
 $OTD=$_GET[OTD];
 if ($_POST[submit]){
-	@mysql_query("UPDATE occNotices SET address='$_POST[address]', city='$_POST[city]', state='$_POST[state]', zip='$_POST[zip]' WHERE packet_id='$OTD'");
+	@mysql_query("UPDATE occNotices SET address='$_POST[address]', city='$_POST[city]', state='$_POST[state]', zip='$_POST[zip]', sendDate='$_POST[sendDate]' WHERE packet_id='$OTD'");
 	echo "<h2>UPDATE OCCUPANT NOTICE</h2>";
 }
 $r=@mysql_query("SELECT attorneys_id, uspsVerify, qualityControl FROM ps_packets WHERE packet_id='$OTD' LIMIT 0,1");
@@ -56,6 +56,10 @@ if ($msg != ''){
 				<tr>
 					<td>CSZ</td>
 					<td><input name="city" size='40' value="<?=$d2[city]?>"><input size='3' name="state" value="<?=$d2[state]?>"><input size='8' name="zip" value="<?=$d2[zip]?>"></td>
+				</tr>
+				<tr>
+					<td>SEND DATE</td>
+					<td><input name='sendDate' size='80' value='<?=$d2[sendDate]?>'>
 				</tr>
 				<tr>
 					<td colspan='2' align='center'><input type='submit' name='submit' value='UPDATE'></td>
