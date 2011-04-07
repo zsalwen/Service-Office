@@ -98,7 +98,7 @@ if ($_COOKIE[psdata][level] != "Operations"){
 			$email = $_COOKIE[psdata][email];
 			$q1="INSERT into ps_security (event, email, entry_time) VALUES ('$event', '$email', NOW())";
 			//@mysql_query($q1) or die(mysql_error());
-			header('Location: home.php');
+			header('Location: http://staff.mdwestserve.com');
 }
 
 if ($_POST[submit]){
@@ -257,7 +257,7 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {$i++;
 					$list .= "<a target='_Blank' href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=".$d["address1$letter"]."&city=".$d["city1$letter"]."&state=".$d["state1$letter"]."&miles=20' title='".$d["address1$letter"].", ".$d["city1$letter"].", ".$d["state1$letter"]." ".$d["zip1$letter"]."'>Service: ".$d["address1$letter"].", ".$d["city1$letter"].", ".$d["state1$letter"]." ".$d["zip1$letter"]." <b>[".getCounty($d["zip1$letter"])."]</b></a>".bwaRate($d["zip1$letter"])."<br>";
 				}
 			}
-			if ($list == ''){
+			if ($list == '' || $d[attorneys_id] == 1){
 				$list .= "<a target='_Blank' href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=$d[address1]&city=$d[city1]&state=$d[state1]&miles=20' title='$d[address1], $d[city1], $d[state1], $d[zip1]'>Serve &amp; Post: $d[address1], $d[city1], $d[state1] $d[zip1] <b>[".getCounty($d[zip1])."]</b></a>".bwaRate($d[zip1]);
 			}else{
 				$list .= "<a target='_Blank' href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=$d[address1]&city=$d[city1]&state=$d[state1]&miles=20' title='$d[address1], $d[city1], $d[state1], $d[zip1]'>Posting: $d[address1], $d[city1], $d[state1] $d[zip1] <b>[".getCounty($d[zip1])."]</b></a>".bwaRate($d[zip1]);
