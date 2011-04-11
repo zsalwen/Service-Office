@@ -126,7 +126,7 @@ function dupList($string,$packet){
 		$r=@mysql_query("select * from ps_packets where client_file LIKE '%$string%' and packet_id <> '$packet'");
 		$data="<div style='font-size:12px; background-color:#FF0000; border:solid 1px #ffff00;'>Possible Duplicates:";
 		while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-			$data .= " <a href='order.php?packet=$d[packet_id]' target='_blank'>[$d[packet_id]]</a>";
+			$data .= " <a href='order.php?packet=$d[packet_id]&otd=1' target='_blank'>[$d[packet_id]]</a>";
 		}
 		$data .= "</div>";
 	}else{

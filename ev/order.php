@@ -44,6 +44,20 @@ function dupCheck($string){
 	return $return;
 }
 
+function dupList($string,$packet){
+	if ($string){
+		$r=@mysql_query("select * from evictionPackets where client_file LIKE '%$string%' and eviction_id <> '$packet'");
+		$data="<div style='font-size:12px; background-color:#FF0000; border:solid 1px #ffff00;'>Possible Duplicates:";
+		while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+			$data .= " <a href='order.php?packet=$d[eviction_id]&otd=1' target='_blank'>[$d[eviction_id]]</a>";
+		}
+		$data .= "</div>";
+	}else{
+		$data="<div style='font-size:12px; background-color:#FF0000; border:solid 1px #ffff00;'>Unable to Determine Possible Duplicates</div>";
+	}
+	return $data;
+}
+
 function stripHours($date){
 	$hours = explode(':',$date);
 	return $hours[0];
@@ -708,7 +722,7 @@ while ($d5=mysql_fetch_array($r5, MYSQL_ASSOC)){
 </FIELDSET>
 <?
 if ($dupCheck == "class='duplicate'"){
-	echo "<br><a href='http://staff.mdwestserve.com/search.php?q=".$d[client_file]."&field=client_file' target='_blank'>Check Possible Duplicates</a>";
+	echo dupList($d[client_file],$d[eviction_id]);
 }
 ?>
 </td>
