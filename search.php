@@ -182,7 +182,7 @@ function systemLookup2($field, $query){
 		$query2=$query;
 	}else{
 		//field=address
-		$q2="address1 like '%$query%' OR address1a like '%$query%' OR address1b like '%$query%' OR address1c like '%$query%' OR address1d like '%$query%' OR address1e like '%$query%'";
+		$q2="address1 like '%$query%'";
 		$query2=$query;
 	}
 	$r2=@mysql_query("select * from evictionPackets where ".$q2);
