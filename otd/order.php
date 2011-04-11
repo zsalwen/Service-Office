@@ -1811,7 +1811,7 @@ foreach(range('a','e') as $letter){
 	$rfm='/data/service/orders/'.$getFolder.'/RequestforMediation.pdf';
 	if ($d[status] == 'NEW' && $d[process_status] != 'CANCELLED' && $d[process_status] != 'DUPLICATE' && $d[process_status] != 'DAMAGED PDF' && $d[process_status] != 'DUPLICATE/DIFF-PDF' && $d[attorneys_id] == 70 && file_exists($rfm) && ($d[prevOTD] == '' || $d[prevOTD] != $d[otd])){
 		$src= "http://staff.mdwestserve.com/temp/rfmMerge.php?packet=$d[packet_id]";
-	}elseif($d[status]=="NEW" || $_GET[otd] == '1'){
+	}elseif(($d[status]=="NEW") || ($_GET[otd] == 1)){
 		$src=str_replace('portal//var/www/dataFiles/service/orders/','PS_PACKETS/',$d[otd]);
 		$src=str_replace('data/service/orders/','PS_PACKETS/',$src);
 		$src=str_replace('portal/','',$src);
