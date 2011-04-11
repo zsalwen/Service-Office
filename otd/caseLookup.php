@@ -10,9 +10,9 @@ function wdLink($packet){
 
 function wdCounty($county){
 	if($county == 'PRINCE GEORGES'){
-		$return="PRINCE GEORGE'S COUNTY";
+		$return="PRINCE GEORGE&#39;S COUNTY";
 	}elseif($county == 'QUEEN ANNES'){
-		$return="QUEEN ANNE'S COUNTY";
+		$return="QUEEN ANNE&#39;S COUNTY";
 	}elseif($county == 'ST MARYS'){
 		$return="SAINT MARY&#39;S COUNTY";
 	}elseif($county == 'BALTIMORE CITY'){
