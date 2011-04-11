@@ -10,7 +10,7 @@ function isActive($str){
 	if ($str != "checked"){
 		return 0;
 	}else{
-		return $str;
+		return 1;
 	}
 }
 if ($_POST[courierID]){
