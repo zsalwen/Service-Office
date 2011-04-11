@@ -546,7 +546,7 @@ $today = date('Y-m-d');
 <div style='background-color:#FF0000;' align="center">
 Courier: <select name="courier">
 <?
-$CCr=@mysql_query("select * from courier WHERE isActive='1' order by name DESC");
+$CCr=@mysql_query("select * from courier WHERE isActive='1' order by name ASC");
 while($CCd=mysql_fetch_array($CCr,MYSQL_ASSOC)){
 if ($CCd[phone]){
 	$phone="-".$CCd[phone];
