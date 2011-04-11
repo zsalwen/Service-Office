@@ -341,72 +341,41 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {$i++;
         <td><?=str_replace(' ','&nbsp;',$d[circuit_court]) ?></td>
         <td align="center"><?=EVdefTotal($d[eviction_id]);?></td>
 		<td></td>
-        <td nowrap="nowrap"><? echo "<a target='_Blank' href='http://mdwestserve.com/ps/dispatcher.php?aptsut=&address=$d[address1]&city=$d[city1]&state=$d[state1]&miles=20' title='$d[address1], $d[city1], $d[state1], $d[zip1]'>Serve &amp; Post: $d[address1], $d[city1], $d[state1] $d[zip1]</a>"; ?></td>
+        <td nowrap="nowrap"><? echo "<a target='_Blank' href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=$d[address1]&city=$d[city1]&state=$d[state1]&miles=20' title='$d[address1], $d[city1], $d[state1], $d[zip1]'>Serve &amp; Post: $d[address1], $d[city1], $d[state1] $d[zip1]</a>"; ?></td>
             <td><?=strtoupper($d[processor_notes])?></td>
 	</tr>
 <?  
+} 
+$q2= "select * from ps_users where contract = 'YES'";
+$r2=@mysql_query($q2) or die("Query: $q2<br>".mysql_error());
+while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)) {
+	$sList .= "<option value='$d2[id]'>";
+	if ($d2[company]){
+		$sList .= $d2[company].', '.$d2[name];
+	}else{
+		$sList .=  $d2[name];
+	}
+	$sList .= "</option>";
 } 
 ?>
 </table>
 <table width="100%" class="noprint">
 	<tr bgcolor="<?=row_color($i,'#99cccc','#ccccff')?>">
         <td class="ppd" align="left">Service Rate: <input size="3" name="package[contractor][]"/><br>
-		Server: <select name="server_id"><option value=''>Select Server</option>
-
-        </select></td>
+		Server: <select name="server_id"><option value=''>Select Server</option><?=$sList?></select></td>
         <td class="ppd" align="left">Service Rate "a": <input size="3" name="package[contractora][]"/><br>
-		Server "a": <select name="server_ida"><option value=''>Select Server 'A'</option>
-<?
-$q2= "select * from ps_users where contract = 'YES'";
-$r2=@mysql_query($q2) or die("Query: $q2<br>".mysql_error());
-while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)) {
-?>
-<option value="<?=$d2[id]?>"><? if ($d2[company]){echo $d2[company].', '.$d2[name] ;}else{echo $d2[name] ;}?></option>
-<?        } ?>
-        </select></td>
+		Server "A": <select name="server_ida"><option value=''>Select Server 'A'</option><?=$sList?></select></td>
     	<td class="ppd">Service Rate "b": <input size="3" name="package[contractorb][]" /><br>
-		Server "b": <select name="server_idb"><option value=''>Select Server 'B'</option>
-<?
-$q2= "select * from ps_users where contract = 'YES'";
-$r2=@mysql_query($q2) or die("Query: $q2<br>".mysql_error());
-while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)) {
-?>
-<option value="<?=$d2[id]?>"><? if ($d2[company]){echo $d2[company].', '.$d2[name] ;}else{echo $d2[name] ;}?></option>
-<?        } ?>
-        </select></td><td></td></tr><tr bgcolor="<?=row_color($i,'#99cccc','#ccccff')?>">
+		Server "B": <select name="server_idb"><option value=''>Select Server 'B'</option><?=$sList?></select></td><td></td></tr><tr bgcolor="<?=row_color($i,'#99cccc','#ccccff')?>">
 		<td class="ppd">Service Rate "c": <input size="3" name="package[contractorc][]" /><br>
-		Server "c": <select name="server_idc"><option value=''>Select Server 'C'</option>
-<?
-$q2= "select * from ps_users where contract = 'YES'";
-$r2=@mysql_query($q2) or die("Query: $q2<br>".mysql_error());
-while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)) {
-?>
-<option value="<?=$d2[id]?>"><? if ($d2[company]){echo $d2[company].', '.$d2[name] ;}else{echo $d2[name] ;}?></option>
-<?        } ?>
-        </select></td>
+		Server "C": <select name="server_idc"><option value=''>Select Server 'C'</option><?=$sList?></select></td>
 		<td class="ppd">Service Rate "d": <input size="3" name="package[contractord][]" /><br>
-		Server "d": <select name="server_idd"><option value=''>Select Server 'D'</option>
-<?
-$q2= "select * from ps_users where contract = 'YES'";
-$r2=@mysql_query($q2) or die("Query: $q2<br>".mysql_error());
-while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)) {
-?>
-<option value="<?=$d2[id]?>"><? if ($d2[company]){echo $d2[company].', '.$d2[name] ;}else{echo $d2[name] ;}?></option>
-<?        } ?>
-        </select></td>
+		Server "D": <select name="server_idd"><option value=''>Select Server 'D'</option><?=$sList?></select></td>
 		<td class="ppd">Service Rate "e": <input size="3" name="package[contractore][]" /><br>
-		Server "e": <select name="server_ide"><option value=''>Select Server 'E'</option>
-<?
-$q2= "select * from ps_users where contract = 'YES'";
-$r2=@mysql_query($q2) or die("Query: $q2<br>".mysql_error());
-while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)) {
-?>
-<option value="<?=$d2[id]?>"><? if ($d2[company]){echo $d2[company].', '.$d2[name] ;}else{echo $d2[name] ;}?></option>
-<?        } ?>
-        </select></td>
+		Server "E": <select name="server_ide"><option value=''>Select Server 'E'</option><?=$sList?></select></td>
         <td class="ppp"><input type="submit" name="submit" value="Package Files" /></td>
     </tr>
 </form>
 </table></td></tr></table>
-<script>document.title='Pre-Sale Dispatch and Packaging'</script>
+<script>document.title='Dispatch and Packaging'</script>
 <? include 'footer.php' ; ?>
