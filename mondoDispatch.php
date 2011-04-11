@@ -340,9 +340,9 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {$i++;
 		<td><?=$d[case_no] ?></td>
         <td><?=str_replace(' ','&nbsp;',$d[circuit_court]) ?></td>
         <td align="center"><?=EVdefTotal($d[eviction_id]);?></td>
-		<td></td>
         <td nowrap="nowrap"><? echo "<a target='_Blank' href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=$d[address1]&city=$d[city1]&state=$d[state1]&miles=20' title='$d[address1], $d[city1], $d[state1], $d[zip1]'>Serve &amp; Post: $d[address1], $d[city1], $d[state1] $d[zip1]</a>"; ?></td>
-            <td><?=strtoupper($d[processor_notes])?></td>
+        <td></td>
+		<td><?=strtoupper($d[processor_notes])?></td>
 	</tr>
 <?  
 } 
