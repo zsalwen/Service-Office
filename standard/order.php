@@ -712,7 +712,11 @@ $received=strtotime($d[date_received]);
 $deadline=$received+2592000;// now 30 days 
 //$deadline=$received+432000;// was 5 days 
 $deadline=date('F jS',$deadline);
-$estFileDate=fileDate($d[estFileDate]);
+if ($d[estFileDate] != '0000-00-00'){
+	$estFileDate=fileDate($d[estFileDate]);
+}else{
+	$estFileDate="<span style='text-decoration:blink;'>??/??/??</span>";
+}
 $days=number_format((time()-$received)/86400,0);
 $hours=number_format((time()-$received)/3600,0);
 $estHours=($d[estHours]*24)-date('G');
