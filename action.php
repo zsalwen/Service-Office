@@ -415,7 +415,7 @@ $lastMo=date('Y-m-d', strtotime('-1 month'));
 $r=@mysql_query("SELECT id FROM packet WHERE date_received >= '$lastMo'") or die(mysql_error());
 $count=mysql_num_rows($r);
 ?>
-<li>Current Volume: <?=$active;?></li>
+<li>Current Volume: <?=$count;?></li>
 <li>Total Files: <?=$active+$webservice;?></li>
 <hr>
 Counter Break-Down
