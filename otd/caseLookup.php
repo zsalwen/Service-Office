@@ -13,6 +13,8 @@ function wdCounty($county){
 		$return="PRINCE GEORGE'S COUNTY";
 	}elseif($county == 'QUEEN ANNES'){
 		$return="QUEEN ANNE'S COUNTY";
+	}elseif($county == 'ST MARYS'){
+		$return="SAINT MARY&#39;S COUNTY";
 	}elseif($county == 'BALTIMORE CITY'){
 		$return=$county;
 	}else{
