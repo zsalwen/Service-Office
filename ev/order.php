@@ -751,7 +751,7 @@ if ($dupCheck == "class='duplicate'"){
 </table>
 </FIELDSET>
 <?
-$q5="SELECT DISTINCT serverID from evictionHistory WHERE eviction_id='$d[eviction_id]' LIMIT 0,1";
+$q5="SELECT DISTINCT serverID from evictionHistory WHERE eviction_id='$d[eviction_id]'";
 $r5=@mysql_query($q5) or die(mysql_error());
 $i=0;
 $data5=mysql_num_rows($r5);
