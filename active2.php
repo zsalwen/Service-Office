@@ -302,12 +302,13 @@ return $data;
 
 function standardActiveList($id,$letter){ $_SESSION[active]++;
 	$data='<ol>';
-	$r=@mysql_query("select packet_id, reopenDate, date_received, filing_status, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from standard_packets where server_id$letter='$id' and (process_status = 'Assigned' OR process_status = 'ASSIGNED') order by  packet_id") or die (mysql_error());
+	$r=@mysql_query("select packet_id, reopenDate, date_received, filing_status, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours, DATEDIFF(SUBSTR(estFileDate,date_received,0,10)) as totalHours from standard_packets where server_id$letter='$id' and (process_status = 'Assigned' OR process_status = 'ASSIGNED') order by  packet_id") or die (mysql_error());
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
 		if ($letter == ''){
 			$_SESSION[active3]++;
 		}
 		$estHours=($d[estHours]*24)-date('G');
+		$totalHours=($d[totalHours]*24);
 		if ($d[filing_status] == 'REOPENED'){
 			$hours=$d[reopenHours]*24;
 			$reopenDate=explode('-',$d[reopenDate]);
@@ -320,7 +321,7 @@ function standardActiveList($id,$letter){ $_SESSION[active]++;
 		if ($d)
 		$estFileDate=explode('-',$d[estFileDate]);
 		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-		$reopen .= " <span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE:&nbsp;".$estFileDate."</span>";
+		$reopen .= " <span title='$estHours Hours Remaining' style='background-color:".colorCode3($totalHours,$estHours)." border: 1px solid black;'>FILE:&nbsp;".$estFileDate."</span>";
 		if ($d[rush] != ''){
 			$reopen .= " <span style='background-color:#000000; color:FF00FF; border: 3px solid black; font-weight:bold;'>RUSH</span>";
 		}
