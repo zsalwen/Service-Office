@@ -84,7 +84,7 @@ echo "<table width='100%'><tr>
 
 // data entry
 $list='';
-$r=@mysql_query("SELECT client_file, case_no, packet_id, date_received, affidavit_status, process_status, server_id, attorneys_id, estFileDate FROM standard_packets WHERE service_status = 'IN PROGRESS' AND process_status <> 'ORDER COMPLETE' order by packet_id");
+$r=@mysql_query("SELECT client_file, case_no, packet_id, date_received, affidavit_status, process_status, server_id, attorneys_id, estFileDate FROM standard_packets WHERE service_status = 'IN PROGRESS' AND process_status <> 'ORDER COMPLETE' AND process_status <> 'CANCELLED' AND process_status <> 'PURGE QUEUE' order by packet_id");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	$optest = 1;
 	$blink="";
