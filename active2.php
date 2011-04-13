@@ -273,7 +273,7 @@ function presaleActiveList($id,$letter){ $_SESSION[active]++;
 //begin evictionPackets functions:******************************************************
 function evictionActiveList($id){ $_SESSION[active]++;
 $data='<ol>';
-$r=@mysql_query("select eviction_id, date_received, request_close, affidavit_status, service_status, circuit_court, dispatchDate, attorneys_id, estFileDate, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF(estFileDate, CURDATE()) as estHours from evictionPackets, DATEDIFF(estFileDate,SUBSTR(date_received,0,10)) as totalHours where server_id='$id' and (process_status = 'Assigned' OR process_status = 'ASSIGNED') order by  eviction_id");
+$r=@mysql_query("select eviction_id, date_received, request_close, affidavit_status, service_status, circuit_court, dispatchDate, attorneys_id, estFileDate, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF(estFileDate, CURDATE()) as estHours, DATEDIFF(estFileDate,SUBSTR(date_received,0,10)) as totalHours from evictionPackets where server_id='$id' and (process_status = 'Assigned' OR process_status = 'ASSIGNED') order by  eviction_id");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
 	$estHours=($d[estHours]*24)-date('G');
 	$totalHours=($d[totalHours]*24);
