@@ -366,23 +366,38 @@ $case_no=trim($_POST[case_no]);
 // here is where we will automate the address check
 ?><script>window.open('supernova.php?packet=<?=$_POST[packet_id];?>&close=1',   'supernova',   'width=600, height=800'); </script><?
 }
-if (isset($_POST[server1])){
-@mysql_query("UPDATE standard_packets SET server_id='$_POST[server1]' WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
-}
-if (isset($_POST[server1a])){
-@mysql_query("UPDATE standard_packets SET server_ida='$_POST[server1a]' WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
-}
-if (isset($_POST[server1b])){
-@mysql_query("UPDATE standard_packets SET server_idb='$_POST[server1b]' WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
-}
-if (isset($_POST[server1c])){
-@mysql_query("UPDATE standard_packets SET server_idc='$_POST[server1c]' WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
-}
-if (isset($_POST[server1d])){
-@mysql_query("UPDATE standard_packets SET server_idd='$_POST[server1d]' WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
-}
-if (isset($_POST[server1e])){
-@mysql_query("UPDATE standard_packets SET server_ide='$_POST[server1e]' WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
+$r=@mysql_query("SELECT server_id, server_ida, server_idb, server_idc, server_idd, server_ide, dispatchDate, estFileDate FROM standard_packets WHERE packet_id='$_POST[packet_id]'");
+$d=mysql_fetch_array($r,MYSQL_ASSOC);
+//if estFileDate has not been set, do not allow setting server.
+if ($d[estFileDate] == '0000-00-00' && $_POST[estFileDate] == '0000-00-00'){
+	echo "<script>alert('SERVERS CANNOT BE SET WITHOUT EST. CLOSE DATE')</script>";
+}else{
+	if ($d[server_id] == ''){$unset++;}
+	foreach(range('a','e') as $letter){
+		if ($d["server_id$letter"] == ''){$unset++;}
+	}
+	if (isset($_POST[server1])){$newServe++;
+		@mysql_query("UPDATE standard_packets SET server_id='$_POST[server1]' WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
+	}
+	if (isset($_POST[server1a])){$newServe++;
+		@mysql_query("UPDATE standard_packets SET server_ida='$_POST[server1a]' WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
+	}
+	if (isset($_POST[server1b])){$newServe++;
+		@mysql_query("UPDATE standard_packets SET server_idb='$_POST[server1b]' WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
+	}
+	if (isset($_POST[server1c])){$newServe++;
+		@mysql_query("UPDATE standard_packets SET server_idc='$_POST[server1c]' WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
+	}
+	if (isset($_POST[server1d])){$newServe++;
+		@mysql_query("UPDATE standard_packets SET server_idd='$_POST[server1d]' WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
+	}
+	if (isset($_POST[server1e])){$newServe++;
+		@mysql_query("UPDATE standard_packets SET server_ide='$_POST[server1e]' WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
+	}
+	//SET DISPATCHDATE
+	if ($d[dispatchDate] == '0000-00-00 00:00:00' && $newServe > 0 && $unset == 6){
+		@mysql_query("UPDATE standard_packets SET dispatchDate=NOW() WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
+	}
 }
 $r=mysql_query("SELECT name1, name2, name3, name4, name5, name6 from standard_packets WHERE packet_id='$_POST[packet_id]'");
 $d=mysql_fetch_array($r, MYSQL_ASSOC) or die(mysql_error());
