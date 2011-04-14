@@ -84,7 +84,7 @@ echo "<table width='100%'><tr>
 
 // data entry
 $list='';
-$r=@mysql_query("SELECT client_file, case_no, packet_id, date_received, affidavit_status, process_status, server_id, attorneys_id, estFileDate FROM standard_packets WHERE service_status = 'IN PROGRESS' AND process_status <> 'ORDER COMPLETE' AND process_status <> 'CANCELLED' AND process_status <> 'PURGE QUEUE' order by packet_id");
+$r=@mysql_query("SELECT client_file, case_no, packet_id, date_received, affidavit_status, process_status, server_id, attorneys_id, estFileDate, circuit_court FROM standard_packets WHERE service_status = 'IN PROGRESS' AND process_status <> 'ORDER COMPLETE' AND process_status <> 'CANCELLED' AND process_status <> 'PURGE QUEUE' order by packet_id");
 while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	$optest = 1;
 	$blink="";
@@ -94,6 +94,9 @@ while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 		$blink=" <span style='text-decoration:blink; color:red;'><b>PAST DEADLINE: $d[estFileDate]</b></span>";
 	}else{
 		$blink=" [File: $d[estFileDate]]";
+	}
+	if ($d[circuit_court] == ''){
+		$blink=" <span style='text-decoration:blink; color:red;'><b>NO COURT SET</b></span>";
 	}
 	$list .= "<li><a target='_Blank' href='/standard/order.php?packet=$d[packet_id]'>S$d[packet_id]".$blink."$d[process_status]<br>".id2attorney($d[attorneys_id])." - ".id2name($d[server_id])."<br>($d[affidavit_status])</a></li>";
 }
