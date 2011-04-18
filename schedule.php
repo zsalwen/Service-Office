@@ -478,7 +478,7 @@ background-color:#cccccc;
 		}
 legend	{
 margin:0px;
-//padding:5px;
+//padding:0px;
 border:ridge 4px  #006666;
 background-color:#ffffFF;
 font-size:13px;
@@ -531,8 +531,8 @@ b
 		}
 div 
 		{
-		font-size:12px;
-		border:solid 1px #000;
+		font-size:11px;
+		border:solid 0px #000;
 		border-bottom:0px;
 		}
 </style>
