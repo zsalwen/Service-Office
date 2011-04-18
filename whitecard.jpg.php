@@ -5,10 +5,10 @@ $white = imagecolorallocate( $canvas, 255, 255, 255 );
 $black = imagecolorallocate( $canvas, 0, 0, 0 );
 $font = "/fonts/verdana.ttf";
 $size = "12";
-$total = number_format($_GET[cost]+2.8+2.3,2);
+$total = number_format($_GET[cost]+2.85+2.3,2);
 if (!$_GET[noCost]){
 imageTTFText( $canvas, $size, 270, 195, 85, $black, $font, '$'.$_GET[cost] );
-imageTTFText( $canvas, $size, 270, 170, 85, $black, $font, '$2.80' );
+imageTTFText( $canvas, $size, 270, 170, 85, $black, $font, '$2.85' );
 imageTTFText( $canvas, $size, 270, 145, 85, $black, $font, '$2.30' );
 imageTTFText( $canvas, $size, 270, 120, 85, $black, $font, '$'.$total );
 }
