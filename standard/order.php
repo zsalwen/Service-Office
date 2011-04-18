@@ -4,14 +4,58 @@ include 'common.php';
 ?>
 <script>
 function automation() {
-  window.opener.location.href = window.opener.location.href;
-  //window.open('write_update.php','update','width=1,height=1,toolbar=no,location=no')
-  if (window.opener.progressWindow)
-		
- {
-    window.opener.progressWindow.close()
-  }
-  window.close();
+	window.opener.location.href = window.opener.location.href;
+	//window.open('write_update.php','update','width=1,height=1,toolbar=no,location=no')
+	if (window.opener.progressWindow){
+		window.opener.progressWindow.close()
+	}
+	window.close();
+}
+function isDateStamp(str){
+	var result;
+	var patt1=new RegExp("[0-9]");
+	var patt2=new RegExp("-");
+	var i=0;
+	if (str.length != 10){
+		return false;
+	}else{
+		while(i < str.length){
+		  if (i == 4 || i == 7){
+			if (!patt2.test(str.charAt(i))){
+				  result=false;
+				}
+		  }else{
+			  if (!patt1.test(str.charAt(i))){
+				  result=false;
+			  }
+		  }
+		  i++;
+		}
+		if (result != false){
+		  return true;
+		}else{
+		  return false;
+		}
+	}
+}
+function prompter(packetID,serverID,serverIDa,serverIDb,serverIDc,serverIDd,serverIDe){
+	var reply = prompt("SERVERS CANNOT BE SET WITHOUT EST. CLOSE DATE, PLEASE ENTER NOW (YYYY-MM-DD)", "")
+	if (reply == null || reply == "" || !isDateStamp(reply)){
+		alert("That is not a valid date")
+		window.location="http://staff.mdwestserve.com/standard/order.php?packet="+packetID;
+	}else{
+		window.location="http://staff.mdwestserve.com/standard/tlEntry.php?packet="+packetID+"&newDate="+reply+"&server_id"+serverID+"&server_ida"+serverIDa+"&server_idb"+serverIDb+"&server_idc"+serverIDc+"&server_idd"+serverIDd+"&server_ide"+serverIDe,"S Timeline Entry";
+	}
+}
+function prompter2(packetID,newDate,oldDate){
+	var reply = prompt("Please enter your reason for updating the Est. Close Date", "")
+	if (reply == null){
+		alert("That is not a valid reason")
+		window.location="http://staff.mdwestserve.com/standard/order.php?packet="+packetID;
+	}
+	else{
+		window.location="http://staff.mdwestserve.com/standard/tlEntry.php?packet="+packetID+"&entry="+reply+"&newDate="+newDate+"&oldDate="+oldDate,"S Timeline Entry";
+	}
 }
 </script>
 <?
@@ -218,6 +262,18 @@ function colorCode2($hours,$status){
 	}
 }
 
+function id2email($id){
+	$q=@mysql_query("SELECT email from ps_users where id='$id' LIMIT 0,1") or die(mysql_error());
+	$d=mysql_fetch_array($q, MYSQL_ASSOC);
+	return $d[email];
+}
+
+function id2company($id){
+	$q=@mysql_query("SELECT company from ps_users where id='$id' LIMIT 0,1") or die(mysql_error());
+	$d=mysql_fetch_array($q, MYSQL_ASSOC);
+	return strtoupper($d[company]);
+}
+
 if ($_POST[reopen]){
 	$r13=@mysql_query("select processor_notes, fileDate from standard_packets where packet_id = '$_GET[packet]'");
 	$d13=mysql_fetch_array($r13,MYSQL_ASSOC);
@@ -237,7 +293,6 @@ if ($_POST[sendToClient]){
 
 if ($_POST[submit]){
 if ($_GET[packet]){
-timeline($_GET[packet],$_COOKIE[psdata][name]." Updated Order");
 $q=@mysql_query("SELECT * from standard_packets WHERE packet_id='$_POST[packet_id]'") or die (mysql_error());
 $d=mysql_fetch_array($q, MYSQL_ASSOC);
 $case_no=trim($_POST[case_no]);
@@ -300,7 +355,6 @@ $q = "UPDATE standard_packets SET process_status='$_POST[process_status]',
 	circuit_court='".strtoupper($_POST[circuit_court])."'
 	WHERE packet_id='$_POST[packet_id]'";
 	mysql_query($q) or die(mysql_error());
-	timeline($_POST[packet_id],$_COOKIE[psdata][name]." Updated Service Details");
 
 //error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($q)."] \n", 3, '/logs/debug.log'); 
 
@@ -366,33 +420,86 @@ $case_no=trim($_POST[case_no]);
 // here is where we will automate the address check
 ?><script>window.open('supernova.php?packet=<?=$_POST[packet_id];?>&close=1',   'supernova',   'width=600, height=800'); </script><?
 }
-$r=@mysql_query("SELECT server_id, server_ida, server_idb, server_idc, server_idd, server_ide, dispatchDate, estFileDate FROM standard_packets WHERE packet_id='$_POST[packet_id]'");
+$r=@mysql_query("SELECT server_id, server_ida, server_idb, server_idc, server_idd, server_ide, dispatchDate, estFileDate, packet_id, client_file FROM standard_packets WHERE packet_id='$_POST[packet_id]'");
 $d=mysql_fetch_array($r,MYSQL_ASSOC);
 //if estFileDate has not been set, do not allow setting server.
 if ($d[estFileDate] == '0000-00-00' && $_POST[estFileDate] == '0000-00-00'){
-	echo "<script>alert('SERVERS CANNOT BE SET WITHOUT EST. CLOSE DATE')</script>";
+	$request=1;
+}elseif($_POST[estFileDate] != $d[estFileDate] && $_POST[estFileDate] != ''){
+	$oldFileDate=$d[estFileDate];
+	$request=2;
 }else{
 	if ($d[server_id] == ''){$unset++;}
 	foreach(range('a','e') as $letter){
 		if ($d["server_id$letter"] == ''){$unset++;}
 	}
+	$timeline='';
+	$dispDate=date('F jS, Y');
+	$to = "Service Updates <mdwestserve@gmail.com>";
+	$subject = "Dispatched Service for S$d[packet_id] ($d[client_file])";
+	$headers  = "MIME-Version: 1.0 \n";
+	$headers .= "Content-type: text/html; charset=iso-8859-1 \n";
+	$headers .= "From: ".$_COOKIE[psdata][name]." <".$_COOKIE[psdata][email]."> \n";
+	$body="Service for Packet $d[packet_id] (<strong>$d[client_file]</strong>) has been dispatched by ".$_COOKIE[psdata][name].", today $dispDate.<br><b>Please understand that this email is sent as confirmation of a process service file sent from our office today.  If you do not reply to the contrary--stating files have not been received--within 24 hours, you will be held responsible for any delays not made known to our office.</b><br>".$_COOKIE[psdata][name]."<br>MDWestServe<br>service@mdwestserve.com<br>(410) 828-4568<br>".time()."<br>".md5(time());
 	if (isset($_POST[server1])){$newServe++;
 		@mysql_query("UPDATE standard_packets SET server_id='$_POST[server1]' WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
+		if ($_POST[server1] != $d[server_id]){
+			$serverID=$_POST[server1];
+			$id2name=id2name($serverID);
+			if ($id2name == ''){
+				$id2name="[BLANK]";
+			}
+			$id2company=id2company($serverID);
+			if (trim($id2company) == ''){
+				$id2company=$id2name;
+			}
+			$timeline = $_COOKIE[psdata][name]." Updated Order, Set $id2name as Server";
+			if (($_POST[process_status] == 'ASSIGNED') && ($serverID != '')){
+				//if file is currently assigned, send email to server(s) updating them about dispatch.
+				$sdCount[$serverID]++;
+				$subject2 = $subject." To [$id2company]";
+				$headers2 = $headers."Cc: Service Updates <".id2email($d[server_id])."> \n";
+				$headers3 .= $headers2;
+				mail($to,$subject2,$body,$headers2);
+			}
+		}
 	}
-	if (isset($_POST[server1a])){$newServe++;
-		@mysql_query("UPDATE standard_packets SET server_ida='$_POST[server1a]' WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
+	foreach(range('a','e') as $letter){
+		if (isset($_POST["server1$letter"])){$newServe++;
+			@mysql_query("UPDATE standard_packets SET server_id$letter='".$_POST["server1$letter"]."' WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
+			if ($_POST["server1$letter"] != $d["server_id$letter"]){
+				$serverID='';
+				$serverID=$_POST["server1$letter"];
+				$id2name='';
+				$id2name=id2name($serverID);
+				if ($id2name == ''){
+					$id2name="[BLANK]";
+				}
+				$id2company='';
+				$id2company=id2company($serverID);
+				if (trim($id2company) == ''){
+					$id2company=$id2name;
+				}
+				if (($_POST[process_status] == 'ASSIGNED') && ($serverID != '') && ($sdCount[$serverID] < 1)){
+					//if file is currently assigned, send email to server(s) updating them about dispatch.
+					$sdCount[$serverID]++;
+					$subject2 = $subject." To [$id2company]";
+					$headers2 = $headers."Cc: Service Updates <".id2email($serverID)."> \n";
+					$headers3 .= $headers2;
+					mail($to,$subject2,$body,$headers2);
+				}
+				if (trim($timeline) != ''){
+					$timeline .= ", Set $id2name as Server ".strtoupper($letter);
+				}else{
+					$timeline = $_COOKIE[psdata][name]." Updated Order, Set $id2name as Server ".strtoupper($letter);
+				}
+			}
+		}
 	}
-	if (isset($_POST[server1b])){$newServe++;
-		@mysql_query("UPDATE standard_packets SET server_idb='$_POST[server1b]' WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
-	}
-	if (isset($_POST[server1c])){$newServe++;
-		@mysql_query("UPDATE standard_packets SET server_idc='$_POST[server1c]' WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
-	}
-	if (isset($_POST[server1d])){$newServe++;
-		@mysql_query("UPDATE standard_packets SET server_idd='$_POST[server1d]' WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
-	}
-	if (isset($_POST[server1e])){$newServe++;
-		@mysql_query("UPDATE standard_packets SET server_ide='$_POST[server1e]' WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
+	if ($_GET[packet] && $timeline == ''){
+		timeline($_GET[packet],$_COOKIE[psdata][name]." Updated Order");
+	}elseif (trim($timeline) != ''){
+		timeline($_POST[packet_id],$timeline);
 	}
 	//SET DISPATCHDATE
 	if ($d[dispatchDate] == '0000-00-00 00:00:00' && $newServe > 0 && $unset == 6){
@@ -425,9 +532,7 @@ state1d='$_POST[stated]',
 zip1d='$_POST[zipd]',
 address1e='$_POST[addresse]',
 city1e='$_POST[citye]',
-     
-	 
-	         state1e='$_POST[statee]',
+state1e='$_POST[statee]',
 zip1e='$_POST[zipe]'
 WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
 }
@@ -571,12 +676,15 @@ state6e='$_POST[statee]',
 zip6e='$_POST[zipe]'
 WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
 }
-
-if ($_GET[packet]){
-header ('Location: order.php?packet='.$_GET[packet]);
+if ($_GET[packet] && $request == 1){
+	echo "<script>prompter('$_POST[packet_id]','$_POST[server1]','$_POST[server1a]','$_POST[server1b]','$_POST[server1c]','$_POST[server1d]','$_POST[server1e]');</script>";
+elseif ($_GET[packet] && $request == 2){
+	echo "<script>prompter2('$_POST[packet_id]','$_POST[estFileDate]','$oldFileDate');</script>";
+}elseif ($_GET[packet]){
+	header ('Location: order.php?packet='.$_GET[packet]);
 }else{
 if ($_GET[start]){
-header ('Location: order.php?start='.$_GET[start]);
+	header ('Location: order.php?start='.$_GET[start]);
 }else{
 ?><script>window.location.href='order.php';</script><? }
 }
