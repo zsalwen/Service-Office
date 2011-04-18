@@ -101,10 +101,10 @@ if ($_GET[oldDate]){
 	$headers .= "Content-type: text/html; charset=iso-8859-1 \n";
 	$headers .= "From: ".$_COOKIE[psdata][name]." <".$_COOKIE[psdata][email]."> \n";
 	$body="Service for Packet $d[packet_id] (<strong>$d[client_file]</strong>) has been dispatched by ".$_COOKIE[psdata][name].", today $dispDate.<br><b>Please understand that this email is sent as confirmation of a process service file sent from our office today.  If you do not reply to the contrary--stating files have not been received--within 24 hours, you will be held responsible for any delays not made known to our office.</b><br>".$_COOKIE[psdata][name]."<br>MDWestServe<br>service@mdwestserve.com<br>(410) 828-4568<br>".time()."<br>".md5(time());
-	if (isset($_POST[server_id])){
-		@mysql_query("UPDATE standard_packets SET server_id='$_POST[server_id]' WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
-		if ($_POST[server_id] != $d[server_id]){
-			$serverID=$_POST[server_id];
+	if (isset($_GET[server_id])){
+		@mysql_query("UPDATE standard_packets SET server_id='$_GET[server_id]' WHERE packet_id='$_GET[packet_id]'") or die(mysql_error());
+		if ($_GET[server_id] != $d[server_id]){
+			$serverID=$_GET[server_id];
 			$id2name=id2name($serverID);
 			if ($id2name == ''){
 				$id2name="[BLANK]";
@@ -114,7 +114,7 @@ if ($_GET[oldDate]){
 				$id2company=$id2name;
 			}
 			$timeline = $_COOKIE[psdata][name]." Dispatched Order, Set $id2name as Server";
-			if (($_POST[process_status] == 'ASSIGNED') && ($serverID != '')){
+			if (($_GET[process_status] == 'ASSIGNED') && ($serverID != '')){
 				//if file is currently assigned, send email to server(s) updating them about dispatch.
 				$sdCount[$serverID]++;
 				$subject2 = $subject." To [$id2company]";
@@ -125,11 +125,11 @@ if ($_GET[oldDate]){
 		}
 	}
 	foreach(range('a','e') as $letter){
-		if (isset($_POST["server_id$letter"])){
-			@mysql_query("UPDATE standard_packets SET server_id$letter='".$_POST["server_id$letter"]."' WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
-			if ($_POST["server_id$letter"] != $d["server_id$letter"]){
+		if (isset($_GET["server_id$letter"])){
+			@mysql_query("UPDATE standard_packets SET server_id$letter='".$_GET["server_id$letter"]."' WHERE packet_id='$_GET[packet_id]'") or die(mysql_error());
+			if ($_GET["server_id$letter"] != $d["server_id$letter"]){
 				$serverID='';
-				$serverID=$_POST["server_id$letter"];
+				$serverID=$_GET["server_id$letter"];
 				$id2name='';
 				$id2name=id2name($serverID);
 				if ($id2name == ''){
@@ -140,7 +140,7 @@ if ($_GET[oldDate]){
 				if (trim($id2company) == ''){
 					$id2company=$id2name;
 				}
-				if (($_POST[process_status] == 'ASSIGNED') && ($serverID != '') && ($sdCount[$serverID] < 1)){
+				if (($_GET[process_status] == 'ASSIGNED') && ($serverID != '') && ($sdCount[$serverID] < 1)){
 					//if file is currently assigned, send email to server(s) updating them about dispatch.
 					$sdCount[$serverID]++;
 					$subject2 = $subject." To [$id2company]";
