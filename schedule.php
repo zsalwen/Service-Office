@@ -503,6 +503,7 @@ a
 		width:200px;
 		border:solid 1px #999999;
 		padding:2px;
+		font-weight:bold;
 		}
 a.otd
 		{
@@ -510,6 +511,7 @@ a.otd
 		border:solid 1px #999999;
 		padding:2px;
 		background-color:#FFFF00;
+		font-weight:bold;
 		}
 a.ev
 		{
@@ -517,6 +519,7 @@ a.ev
 		border:solid 1px #999999;
 		padding:2px;
 		background-color:#00FFFF;
+		font-weight:bold;
 		}
 a.s
 		{
@@ -524,6 +527,7 @@ a.s
 		border:solid 1px #999999;
 		padding:2px;
 		background-color:#FF0000;
+		font-weight:bold;
 		}
 b
 		{
