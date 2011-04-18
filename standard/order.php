@@ -40,11 +40,11 @@ function isDateStamp(str){
 }
 function prompter(packetID,serverID,serverIDa,serverIDb,serverIDc,serverIDd,serverIDe){
 	var reply = prompt("SERVERS CANNOT BE SET WITHOUT EST. CLOSE DATE, PLEASE ENTER NOW (YYYY-MM-DD)", "")
-	if (reply == null || reply == "" || !isDateStamp(reply)){
+	if (reply == null || reply == "" || !isDateStamp(reply) || reply == '0000-00-00'){
 		alert("That is not a valid date")
 		window.location="http://staff.mdwestserve.com/standard/order.php?packet="+packetID;
 	}else{
-		window.location="http://staff.mdwestserve.com/standard/tlEntry.php?packet="+packetID+"&newDate="+reply+"&server_id"+serverID+"&server_ida"+serverIDa+"&server_idb"+serverIDb+"&server_idc"+serverIDc+"&server_idd"+serverIDd+"&server_ide"+serverIDe,"S Timeline Entry";
+		window.location="http://staff.mdwestserve.com/standard/tlEntry.php?packet="+packetID+"&newDate="+reply+"&server_id="+serverID+"&server_ida="+serverIDa+"&server_idb="+serverIDb+"&server_idc="+serverIDc+"&server_idd="+serverIDd+"&server_ide="+serverIDe,"S Timeline Entry";
 	}
 }
 function prompter2(packetID,newDate,oldDate){
