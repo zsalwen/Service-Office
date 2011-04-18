@@ -65,19 +65,19 @@ class postage{
 	
 	function cost(){
 		if ($this->weight >  0){ $result = .88;}
-		if ($this->weight >  1){ $result = 1.05;}
-		if ($this->weight >  2){ $result = 1.22;}
-		if ($this->weight >  3){ $result = 1.39;}
-		if ($this->weight >  4){ $result = 1.56;}
-		if ($this->weight >  5){ $result = 1.73;}
-		if ($this->weight >  6){ $result = 1.90;}
-		if ($this->weight >  7){ $result = 2.07;}
-		if ($this->weight >  8){ $result = 2.24;}
-		if ($this->weight >  9){ $result = 2.41;}
-		if ($this->weight > 10){ $result = 2.58;}
-		if ($this->weight > 11){ $result = 2.75;}
-		if ($this->weight > 12){ $result = 2.92;}
-		if ($this->weight > 13){ $result = 4.90;} // priority rate
+		if ($this->weight >  1){ $result = 1.08;}
+		if ($this->weight >  2){ $result = 1.28;}
+		if ($this->weight >  3){ $result = 1.48;}
+		if ($this->weight >  4){ $result = 1.68;}
+		if ($this->weight >  5){ $result = 1.88;}
+		if ($this->weight >  6){ $result = 2.08;}
+		if ($this->weight >  7){ $result = 2.28;}
+		if ($this->weight >  8){ $result = 2.48;}
+		if ($this->weight >  9){ $result = 2.68;}
+		if ($this->weight > 10){ $result = 2.88;}
+		if ($this->weight > 11){ $result = 3.08;}
+		if ($this->weight > 12){ $result = 3.28;}
+		if ($this->weight > 13){ $result = 4.95;} // priority rate
 		//error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [b] [".$pages."] [".$this->weight."] \n", 3, '/logs/debug.log');
 
 	return number_format($result,2).' ('.$this->weight.')';
