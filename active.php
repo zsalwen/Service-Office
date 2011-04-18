@@ -339,8 +339,10 @@ function getServers(){
 		$list["$i"] = $d[server_id];
 		$i++;
 	}
-	ksort($list);
-	return $list;
+	if ($list != ''){
+		ksort($list);
+		return $list;
+	}
 }
 function getServers2($letter){
 	$i=0;
@@ -355,8 +357,10 @@ function getServers2($letter){
 		$list["$i"] = $d["server_id$letter"];
 		$i++;
 	}
-	ksort($list);
-	return $list;
+	if ($list != ''){
+		ksort($list);
+		return $list;
+	}
 }
 ?>
 <table>

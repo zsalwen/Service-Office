@@ -267,8 +267,10 @@ function getServers($packet){
 		$list["$i"] = $d[server_id];
 		$i++;
 	}
-	ksort($list);
-	return $list;
+	if ($list != ''){
+		ksort($list);
+		return $list;
+	}
 }
 $pkt='';
 if ($_GET[packet]){
