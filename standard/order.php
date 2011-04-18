@@ -678,7 +678,7 @@ WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
 }
 if ($_GET[packet] && $request == 1){
 	echo "<script>prompter('$_POST[packet_id]','$_POST[server1]','$_POST[server1a]','$_POST[server1b]','$_POST[server1c]','$_POST[server1d]','$_POST[server1e]');</script>";
-elseif ($_GET[packet] && $request == 2){
+}elseif ($_GET[packet] && $request == 2){
 	echo "<script>prompter2('$_POST[packet_id]','$_POST[estFileDate]','$oldFileDate');</script>";
 }elseif ($_GET[packet]){
 	header ('Location: order.php?packet='.$_GET[packet]);
