@@ -70,12 +70,12 @@ function id2name($id){
 return $d[name];
 }
 //looking for $_GET[packet], $_GET[entry], $_GET[newDate], and $_GET[oldDate]
-$q="SELECT * FROM standardPackets WHERE packet_id='".$_GET[packet]."' LIMIT 0,1";
+$q="SELECT * FROM standard_packets WHERE packet_id='".$_GET[packet]."' LIMIT 0,1";
 $r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 $d=mysql_fetch_array($r,MYSQL_ASSOC);
 if ($_GET[oldDate]){
 	//update packet
-	@mysql_query("UPDATE standardPackets SET estFileDate='".$_GET[newDate]."' WHERE packet_id='".$_GET[packet]."'");
+	@mysql_query("UPDATE standard_packets SET estFileDate='".$_GET[newDate]."' WHERE packet_id='".$_GET[packet]."'");
 	//generate email
 	$entry=strtoupper($_GET[entry]);
 	$to = "Service Updates <mdwestserve@gmail.com>";
@@ -92,7 +92,7 @@ if ($_GET[oldDate]){
 	timeline($_GET[packet],$_COOKIE[psdata][name]." Updated Est. Close from $_GET[oldDate] to $_GET[newDate]: $entry");
 }else{
 	//set estFileDate, timeline "dispatched", set servers
-	@mysql_query("UPDATE standardPackets SET estFileDate='".$_GET[newDate]."' WHERE packet_id='".$_GET[packet]."'");
+	@mysql_query("UPDATE standard_packets SET estFileDate='".$_GET[newDate]."' WHERE packet_id='".$_GET[packet]."'");
 	$timeline='';
 	$dispDate=date('F jS, Y');
 	$to = "Service Updates <mdwestserve@gmail.com>";
