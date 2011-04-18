@@ -223,25 +223,27 @@ function standardCourt($str){
 }
 function getCounties($today){
 	$i=0;
-	$r=@mysql_query("select DISTINCT circuit_court from ps_packets where estFileDate = '$today' and status <> 'CANCELLED' and service_status <> 'MAIL ONLY' order by circuit_court ");
+	$r=@mysql_query("select DISTINCT circuit_court from ps_packets where estFileDate = '$today' AND fileDate='0000-00-00' and status <> 'CANCELLED' and service_status <> 'MAIL ONLY' order by circuit_court ");
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 		$list["$i"] = $d[circuit_court];
 		$exclude .= " AND circuit_court <> '$d[circuit_court]'";
 		$i++;
 	}
-	$r=@mysql_query("select DISTINCT circuit_court from evictionPackets where estFileDate = '$today' and status <> 'CANCELLED' and case_no <> ''$exclude order by circuit_court");
+	$r=@mysql_query("select DISTINCT circuit_court from evictionPackets where estFileDate = '$today' AND fileDate='0000-00-00' and status <> 'CANCELLED' and case_no <> ''$exclude order by circuit_court");
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 		$list["$i"] = $d[circuit_court];
 		$exclude .= " AND circuit_court <> '$d[circuit_court]'";
 		$i++;
 	}
-	$r=@mysql_query("select DISTINCT circuit_court from standard_packets where estFileDate = '$today' and status <> 'CANCELLED' and case_no <> ''$exclude order by circuit_court  ");
+	$r=@mysql_query("select DISTINCT circuit_court from standard_packets where estFileDate = '$today' AND fileDate='0000-00-00' and status <> 'CANCELLED' and case_no <> ''$exclude order by circuit_court  ");
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 		$list["$i"] = $d[circuit_court];
 		$i++;
 	}
-	sort($list);
-	return $list;
+	if ($list != ''){
+		sort($list);
+		return $list;
+	}
 }
 function OTDFill($today,$court){
 	$x=@mysql_query("select packet_id, date_received, case_no, fileDate, service_status, process_status, filing_status, attorneys_id, server_id, rush from ps_packets where estFileDate = '$today' AND circuit_court = '$court' and status <> 'CANCELLED' and fileDate = '0000-00-00' and service_status <> 'MAIL ONLY' AND case_no <> ''");
@@ -455,8 +457,10 @@ function getEstFile($yesterday){
 		$list["$i"] = $d[estFileDate];
 		$i++;
 	}
-	ksort($list);
-	return $list;
+	if ($list != ''){
+		ksort($list);
+		return $list;
+	}
 }
 
 hardLog('Post-Service Schedule','user');
@@ -477,6 +481,7 @@ margin:0px;
 //padding:5px;
 border:ridge 4px  #006666;
 background-color:#ffffFF;
+font-size:13px;
 		} 
 h2	{
 margin:0px;
