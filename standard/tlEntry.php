@@ -102,7 +102,7 @@ if ($_GET[oldDate]){
 	$headers .= "From: ".$_COOKIE[psdata][name]." <".$_COOKIE[psdata][email]."> \n";
 	$body="Service for Packet $d[packet_id] (<strong>$d[client_file]</strong>) has been dispatched by ".$_COOKIE[psdata][name].", today $dispDate.<br><b>Please understand that this email is sent as confirmation of a process service file sent from our office today.  If you do not reply to the contrary--stating files have not been received--within 24 hours, you will be held responsible for any delays not made known to our office.</b><br>".$_COOKIE[psdata][name]."<br>MDWestServe<br>service@mdwestserve.com<br>(410) 828-4568<br>".time()."<br>".md5(time());
 	if ($_GET[server_id] != ''){
-		@mysql_query("UPDATE standard_packets SET server_id='$_GET[server_id]' WHERE packet_id='$_GET[packet_id]'") or die(mysql_error());
+		@mysql_query("UPDATE standard_packets SET server_id='$_GET[server_id]' WHERE packet_id='$_GET[packet]'") or die(mysql_error());
 		if ($_GET[server_id] != $d[server_id]){
 			$serverID=$_GET[server_id];
 			$id2name=id2name($serverID);
@@ -126,8 +126,7 @@ if ($_GET[oldDate]){
 	}
 	foreach(range('a','e') as $letter){
 		if ($_GET["server_id$letter"] != ''){
-			@mysql_query("UPDATE standard_packets SET server_id$letter='".$_GET["server_id$letter"]."' WHERE packet_id='$_GET[packet_id]'") or die(mysql_error());
-			echo "<script>alert('UPDATE standard_packets SET server_id$letter=".$_GET["server_id$letter"]." WHERE packet_id=$_GET[packet_id]')</script>";
+			@mysql_query("UPDATE standard_packets SET server_id$letter='".$_GET["server_id$letter"]."' WHERE packet_id='$_GET[packet]'") or die(mysql_error());
 			if ($_GET["server_id$letter"] != $d["server_id$letter"]){
 				$serverID='';
 				$serverID=$_GET["server_id$letter"];
