@@ -38,8 +38,8 @@ function isDateStamp(str){
 		}
 	}
 }
-function prompter(packetID,serverID,serverIDa,serverIDb,serverIDc,serverIDd,serverIDe){
-	var reply = prompt("SERVERS CANNOT BE SET WITHOUT EST. CLOSE DATE, PLEASE ENTER NOW (YYYY-MM-DD)", "")
+function prompter(packetID,deadline,serverID,serverIDa,serverIDb,serverIDc,serverIDd,serverIDe){
+	var reply = prompt("SERVERS CANNOT BE SET WITHOUT EST. CLOSE DATE, PLEASE ENTER NOW (YYYY-MM-DD)", deadline)
 	if (reply == null || reply == "" || !isDateStamp(reply) || reply == '0000-00-00'){
 		alert("That is not a valid date")
 		window.location="http://staff.mdwestserve.com/standard/order.php?packet="+packetID;
@@ -675,7 +675,9 @@ zip6e='$_POST[zipe]'
 WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
 }
 if ($_GET[packet] && $request == 1){
-	echo "<script>prompter('$_POST[packet_id]','$_POST[server1]','$_POST[server1a]','$_POST[server1b]','$_POST[server1c]','$_POST[server1d]','$_POST[server1e]');</script>";
+	$deadline=time()+432000;
+	$deadline=date('Y-m-d',$deadline);
+	echo "<script>prompter('$_POST[packet_id]','$deadline','$_POST[server1]','$_POST[server1a]','$_POST[server1b]','$_POST[server1c]','$_POST[server1d]','$_POST[server1e]');</script>";
 }elseif ($_GET[packet] && $request == 2){
 	echo "<script>prompter2('$_POST[packet_id]','$_POST[estFileDate]','$oldFileDate');</script>";
 }elseif ($_GET[packet]){
