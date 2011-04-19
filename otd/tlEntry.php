@@ -53,7 +53,9 @@ function hardLog($str,$type){
 		error_log(date('h:iA n/j/y')." ".$_COOKIE[psdata][name]." ".$_SERVER["REMOTE_ADDR"]." ".trim($str)."\n", 3, $log);
 	}
 }
+echo "1!";
 if ($_GET[reopen]){
+	echo "2!";
 	$r13=@mysql_query("select processor_notes, fileDate from ps_packets where packet_id = '$_GET[packet]' LIMIT 0,1");
 	$d13=mysql_fetch_array($r13,MYSQL_ASSOC);
 	$oldNote = $d13[processor_notes];
@@ -62,7 +64,8 @@ if ($_GET[reopen]){
 	$today=date('Y-m-d');
 	$q="UPDATE ps_packets SET processor_notes='".dbIN($newNote)."', filing_status='REOPENED', affidavit_status='IN PROGRESS', affidavit_status2='REOPENED', process_status='ASSIGNED', reopenDate='$today', fileDate='0000-00-00', estFileDate='$_GET[deadline]', request_close='', request_closea='', request_closeb='', request_closec='', request_closed='', request_closee='' WHERE packet_id='".$_GET[packet]."'";
 	/*@mysql_query($q) or die ("Query: $q<br>".mysql_error());
-	timeline($_GET[packet],$_COOKIE[psdata][name]." Reopened for Additional Service, Deadline: $_GET[deadline]");*/
+	timeline($_GET[packet],$_COOKIE[psdata][name]." Reopened for Additional Service, Deadline: $_GET[deadline]");
+	echo "<script>window.location='order.php?packet=$_GET[packet]';</script>";*/
 	echo $q."<br>";
 	echo $_COOKIE[psdata][name]." Reopened for Additional Service, Deadline: $_GET[deadline]";
 }else{
