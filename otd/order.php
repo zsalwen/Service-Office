@@ -54,9 +54,9 @@ function prompter2(packetID,deadline){
 	var reply = prompt("PLEASE ENTER THE NEW EST. CLOSE DATE FOR REOPENED SERVICE", deadline)
 	if (reply == null || reply == "" || !isDateStamp(reply) || reply == '0000-00-00'){
 		alert("That is not a valid date")
-		window.location="http://staff.mdwestserve.com/standard/order.php?packet="+packetID;
+		window.location="http://staff.mdwestserve.com/otd/order.php?packet="+packetID;
 	}else{
-		window.location="http://staff.mdwestserve.com/standard/tlEntry.php?packet="+packetID+"&newDate="+reply+"&deadline="+deadline+"&reopen=1","S Timeline Entry";
+		window.location="http://staff.mdwestserve.com/otd/tlEntry.php?packet="+packetID+"&newDate="+reply+"&deadline="+deadline+"&reopen=1","OTD Timeline Entry";
 	}
 }
 function ChgText(myResponse,myInput)
