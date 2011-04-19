@@ -458,7 +458,7 @@ function getEstFile($yesterday){
 		$i++;
 	}
 	if ($list != ''){
-		ksort($list);
+		sort($list);
 		return $list;
 	}
 }
