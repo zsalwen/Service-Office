@@ -194,7 +194,7 @@ function presaleActiveList($id,$letter,$packet){ $_SESSION[active]++;
 			$mover="onmouseover=\"document.getElementById('OTD$d[packet_id]').style.textDecoration='blink', document.getElementById('OTD$d[packet_id]').style.backgroundColor='$inverse', ";
 			$mout="onmouseout=\"document.getElementById('OTD$d[packet_id]').style.textDecoration='none', document.getElementById('OTD$d[packet_id]').style.backgroundColor='$bgColor', ";
 			foreach(range('a','e') as $alpha){
-				if ($d["address$alpha"]){
+				if ($d["address1$alpha"]){
 					$mover .= "document.getElementById('OTD$d[packet_id]$alpha').style.textDecoration='blink', document.getElementById('OTD$d[packet_id]$alpha').style.backgroundColor='".str_replace("OTD$d[packet_id]","OTD$d[packet_id]$alpha",$inverse)."', ";
 					$mout .= "document.getElementById('OTD$d[packet_id]$alpha').style.textDecoration='none', document.getElementById('OTD$d[packet_id]$alpha').style.backgroundColor='".str_replace("OTD$d[packet_id]","OTD$d[packet_id]$alpha",$bgColor)."', ";
 				}
