@@ -53,10 +53,21 @@ function hardLog($str,$type){
 		error_log(date('h:iA n/j/y')." ".$_COOKIE[psdata][name]." ".$_SERVER["REMOTE_ADDR"]." ".trim($str)."\n", 3, $log);
 	}
 }
-//looking for $_GET[packet], $_GET[entry], $_GET[newDate], and $_GET[oldDate]
-$q="SELECT packet_id, client_file FROM ps_packets WHERE packet_id='".$_GET[packet]."'";
-$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
-$d=mysql_fetch_array($r,MYSQL_ASSOC);
+if ($_GET[reopen]){
+	$r13=@mysql_query("select processor_notes, fileDate from ps_packets where packet_id = '$_GET[packet]' LIMIT 0,1");
+	$d13=mysql_fetch_array($r13,MYSQL_ASSOC);
+	$oldNote = $d13[processor_notes];
+	$note="<b>REOPEN:</b> file originally closed out on ".$d13[fileDate];
+	$newNote = "<li>From ".$_COOKIE[psdata][name]." on ".date('m/d/y g:ia').": \"".$note."\"</li>".$oldNote;
+	$today=date('Y-m-d');
+	$q="UPDATE ps_packets SET processor_notes='".dbIN($newNote)."', filing_status='REOPENED', affidavit_status='IN PROGRESS', affidavit_status2='REOPENED', process_status='ASSIGNED', reopenDate='$today', fileDate='0000-00-00', estFileDate='$_GET[deadline]', request_close='', request_closea='', request_closeb='', request_closec='', request_closed='', request_closee='' WHERE packet_id='".$_GET[packet]."'";
+	@mysql_query($q) or die ("Query: $q<br>".mysql_error());
+	timeline($_GET[packet],$_COOKIE[psdata][name]." Reopened for Additional Service, Deadline: $_GET[deadline]");
+}else{
+	//looking for $_GET[packet], $_GET[entry], $_GET[newDate], and $_GET[oldDate]
+	$q="SELECT packet_id, client_file FROM ps_packets WHERE packet_id='".$_GET[packet]."'";
+	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
+	$d=mysql_fetch_array($r,MYSQL_ASSOC);
 	//update packet
 	@mysql_query("UPDATE ps_packets SET estFileDate='".$_GET[newDate]."' WHERE packet_id='".$_GET[packet]."'");
 	//generate email
@@ -73,5 +84,6 @@ $d=mysql_fetch_array($r,MYSQL_ASSOC);
 	mail($to,$subject,$body,$headers);
 	//make timeline entry
 	timeline($_GET[packet],$_COOKIE[psdata][name]." Updated Est. Close from $_GET[oldDate] to $_GET[newDate]: $entry");
-echo "<script>window.location='order.php?packet=$_GET[packet]';</script>";
+	echo "<script>window.location='order.php?packet=$_GET[packet]';</script>";
+}
 ?>

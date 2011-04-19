@@ -23,6 +23,42 @@ function prompter(packetID,newDate,oldDate){
 		window.location="http://staff.mdwestserve.com/otd/tlEntry.php?packet="+packetID+"&entry="+reply+"&newDate="+newDate+"&oldDate="+oldDate,"OTD Timeline Entry";
 	}
 }
+function isDateStamp(str){
+	var result;
+	var patt1=new RegExp("[0-9]");
+	var patt2=new RegExp("-");
+	var i=0;
+	if (str.length != 10){
+		return false;
+	}else{
+		while(i < str.length){
+		  if (i == 4 || i == 7){
+			if (!patt2.test(str.charAt(i))){
+				  result=false;
+				}
+		  }else{
+			  if (!patt1.test(str.charAt(i))){
+				  result=false;
+			  }
+		  }
+		  i++;
+		}
+		if (result != false){
+		  return true;
+		}else{
+		  return false;
+		}
+	}
+}
+function prompter2(packetID,deadline){
+	var reply = prompt("PLEASE ENTER THE NEW EST. CLOSE DATE FOR REOPENED SERVICE", deadline)
+	if (reply == null || reply == "" || !isDateStamp(reply) || reply == '0000-00-00'){
+		alert("That is not a valid date")
+		window.location="http://staff.mdwestserve.com/standard/order.php?packet="+packetID;
+	}else{
+		window.location="http://staff.mdwestserve.com/standard/tlEntry.php?packet="+packetID+"&newDate="+reply+"&deadline="+deadline+"&reopen=1","S Timeline Entry";
+	}
+}
 function ChgText(myResponse,myInput)
 {
     var MyElement = document.getElementById(myInput);
@@ -427,17 +463,9 @@ function colorCode2($hours,$status){
 $id=$_COOKIE[psdata][user_id];
 
 if ($_POST[reopen]){
-	$r13=@mysql_query("select processor_notes, fileDate from ps_packets where packet_id = '$_GET[packet]' LIMIT 0,1");
-	$d13=mysql_fetch_array($r13,MYSQL_ASSOC);
-	$oldNote = $d13[processor_notes];
-	$note="file originally closed out on ".$d13[fileDate];
-	$newNote = "<li>From ".$_COOKIE[psdata][name]." on ".date('m/d/y g:ia').": \"".$note."\"</li>".$oldNote;
-	$today=date('Y-m-d');
 	$deadline=time()+432000;
 	$deadline=date('Y-m-d',$deadline);
-	$q="UPDATE ps_packets SET processor_notes='".dbIN($newNote)."', filing_status='REOPENED', affidavit_status='IN PROGRESS', affidavit_status2='REOPENED', process_status='ASSIGNED', reopenDate='$today', fileDate='0000-00-00', estFileDate='$deadline', request_close='', request_closea='', request_closeb='', request_closec='', request_closed='', request_closee='' WHERE packet_id='".$_GET[packet]."'";
-	@mysql_query($q) or die ("Query: $q<br>".mysql_error());
-	timeline($_GET[packet],$_COOKIE[psdata][name]." Reopened File for Additional Service");
+	echo "<script>prompter2('$_POST[packet_id]','$deadline');</script>";
 }
 
 if ($_POST[sendToClient]){
