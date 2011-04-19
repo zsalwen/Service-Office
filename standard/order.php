@@ -421,7 +421,7 @@ $case_no=trim($_POST[case_no]);
 $r=@mysql_query("SELECT server_id, server_ida, server_idb, server_idc, server_idd, server_ide, dispatchDate, estFileDate, packet_id, client_file FROM standard_packets WHERE packet_id='$_POST[packet_id]'");
 $d=mysql_fetch_array($r,MYSQL_ASSOC);
 //if estFileDate has not been set, do not allow setting server.
-if ($d[estFileDate] == '0000-00-00' && $_POST[estFileDate] == '0000-00-00' && (isset($_POST[server1]) || isset($_POST[server1a]) || isset($_POST[server1b]) || isset($_POST[server1c]) || isset($_POST[server1d]) || isset($_POST[server1e]))){
+if ($d[estFileDate] == '0000-00-00' && $_POST[estFileDate] == '0000-00-00' && (($_POST[server1] != $d[server_id]) || ($_POST[server1a] != $d[server_ida]) || ($_POST[server1b] != $d[server_idb]) || ($_POST[server1c] != $d[server_idc]) || ($_POST[server1d] != $d[server_idd]) || ($_POST[server1e] != $d[server_ide]))){
 	$request=1;
 }elseif($_POST[estFileDate] != $d[estFileDate] && $_POST[estFileDate] != ''){
 	$oldFileDate=$d[estFileDate];
