@@ -60,11 +60,15 @@ if ($_GET[reopen]){
 	$d13=mysql_fetch_array($r13,MYSQL_ASSOC);
 	echo "3a!";
 	$oldNote = $d13[processor_notes];
+	echo "3b!";
 	$note="<b>REOPEN:</b> file originally closed out on ".$d13[fileDate];
-	$newNote = "<li>From ".$_COOKIE[psdata][name]." on ".date('m/d/y g:ia').": \"".$note."\"</li>".$oldNote;
-	$today=date('Y-m-d');
-	$q="UPDATE ps_packets SET processor_notes='".dbIN($newNote)."', filing_status='REOPENED', affidavit_status='IN PROGRESS', affidavit_status2='REOPENED', process_status='ASSIGNED', reopenDate='$today', fileDate='0000-00-00', estFileDate='$_GET[deadline]', request_close='', request_closea='', request_closeb='', request_closec='', request_closed='', request_closee='' WHERE packet_id='".$_GET[packet]."'";
 	echo "3c!";
+	$newNote = "<li>From ".$_COOKIE[psdata][name]." on ".date('m/d/y g:ia').": \"".$note."\"</li>".$oldNote;
+	echo "3d!";
+	$today=date('Y-m-d');
+	echo "3e!";
+	$q="UPDATE ps_packets SET processor_notes='".dbIN($newNote)."', filing_status='REOPENED', affidavit_status='IN PROGRESS', affidavit_status2='REOPENED', process_status='ASSIGNED', reopenDate='$today', fileDate='0000-00-00', estFileDate='$_GET[deadline]', request_close='', request_closea='', request_closeb='', request_closec='', request_closed='', request_closee='' WHERE packet_id='".$_GET[packet]."'";
+	echo "3f!";
 	/*@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 	timeline($_GET[packet],$_COOKIE[psdata][name]." Reopened for Additional Service, Deadline: $_GET[deadline]");
 	echo "<script>window.location='order.php?packet=$_GET[packet]';</script>";*/
