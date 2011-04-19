@@ -63,11 +63,14 @@ if ($_GET[reopen]){
 	$newNote = "<li>From ".$_COOKIE[psdata][name]." on ".date('m/d/y g:ia').": \"".$note."\"</li>".$oldNote;
 	$today=date('Y-m-d');
 	$q="UPDATE ps_packets SET processor_notes='".dbIN($newNote)."', filing_status='REOPENED', affidavit_status='IN PROGRESS', affidavit_status2='REOPENED', process_status='ASSIGNED', reopenDate='$today', fileDate='0000-00-00', estFileDate='$_GET[deadline]', request_close='', request_closea='', request_closeb='', request_closec='', request_closed='', request_closee='' WHERE packet_id='".$_GET[packet]."'";
+	echo "3!";
 	/*@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 	timeline($_GET[packet],$_COOKIE[psdata][name]." Reopened for Additional Service, Deadline: $_GET[deadline]");
 	echo "<script>window.location='order.php?packet=$_GET[packet]';</script>";*/
+	echo "4!";
 	echo $q."<br>";
 	echo $_COOKIE[psdata][name]." Reopened for Additional Service, Deadline: $_GET[deadline]";
+	echo "5!";
 }else{
 	//looking for $_GET[packet], $_GET[entry], $_GET[newDate], and $_GET[oldDate]
 	$q="SELECT packet_id, client_file FROM ps_packets WHERE packet_id='".$_GET[packet]."'";
