@@ -92,7 +92,7 @@ function withCourier($packet,$prefix){
 	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
 	if ($d[packet]){
-		$document="<div class='note' style='background-color:#ffFF00;'><small>".$d[binder]." OUT WITH COURIER by ".$d[location]."</small></div>";
+		$document="<div class='note' style='background-color:#ffFF00; color:000000;'><small>".$d[binder]." OUT WITH COURIER by ".$d[location]."</small></div>";
 	}
 	return $document;
 }
@@ -146,7 +146,7 @@ function presaleActiveList($id,$letter,$packet){ $_SESSION[active]++;
 	if ($packet != '0' && $packet != ''){
 		$pkt=" AND packet_id < '$packet'";
 	}
-	$r=@mysql_query("select packet_id, avoidDOT, affidavit_status, service_status, filing_status, circuit_court, attorneys_id, estFileDate, case_no, caseLookupFlag, reopenDate, affidavit_status2, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where server_id$letter='$id' and affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT'$pkt order by packet_id");
+	$r=@mysql_query("select packet_id, address1, address1a, address1b, address1c, address1d, address1e, avoidDOT, affidavit_status, service_status, filing_status, circuit_court, attorneys_id, estFileDate, case_no, caseLookupFlag, reopenDate, affidavit_status2, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where server_id$letter='$id' and affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT'$pkt order by packet_id");
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
 		$estHours=($d[estHours]*24)-date('G');
 		if ($d[affidavit_status2] == 'REOPENED'){
@@ -194,8 +194,10 @@ function presaleActiveList($id,$letter,$packet){ $_SESSION[active]++;
 			$mover="onmouseover=\"document.getElementById('OTD$d[packet_id]').style.textDecoration='blink', document.getElementById('OTD$d[packet_id]').style.backgroundColor='$inverse', ";
 			$mout="onmouseout=\"document.getElementById('OTD$d[packet_id]').style.textDecoration='none', document.getElementById('OTD$d[packet_id]').style.backgroundColor='$bgColor', ";
 			foreach(range('a','e') as $alpha){
-				$mover .= "document.getElementById('OTD$d[packet_id]$alpha').style.textDecoration='blink', document.getElementById('OTD$d[packet_id]$alpha').style.backgroundColor='".str_replace("OTD$d[packet_id]","OTD$d[packet_id]$alpha",$inverse)."', ";
-				$mout .= "document.getElementById('OTD$d[packet_id]$alpha').style.textDecoration='none', document.getElementById('OTD$d[packet_id]$alpha').style.backgroundColor='".str_replace("OTD$d[packet_id]","OTD$d[packet_id]$alpha",$bgColor)."', ";
+				if ($d["address$alpha"]){
+					$mover .= "document.getElementById('OTD$d[packet_id]$alpha').style.textDecoration='blink', document.getElementById('OTD$d[packet_id]$alpha').style.backgroundColor='".str_replace("OTD$d[packet_id]","OTD$d[packet_id]$alpha",$inverse)."', ";
+					$mout .= "document.getElementById('OTD$d[packet_id]$alpha').style.textDecoration='none', document.getElementById('OTD$d[packet_id]$alpha').style.backgroundColor='".str_replace("OTD$d[packet_id]","OTD$d[packet_id]$alpha",$bgColor)."', ";
+				}
 			}
 			$js .= substr($mover,0,-2)."\"".substr($mout,0,-2)."\"";
 			$data .= "<li $js title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".$colorCode.";'><a href='http://staff.mdwestserve.com/otd/order.php?packet=$d[packet_id]' target='_Blank'>OTD$d[packet_id]</a>: <strong>".$hours."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em>".$case."</li>";

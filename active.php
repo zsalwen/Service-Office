@@ -186,7 +186,7 @@ function inverseHex( $color ){
 }
 function presaleActiveList($id,$letter){ $_SESSION[active]++;
 	$data='<ol>';
-	$r=@mysql_query("select packet_id, avoidDOT, reopenDate, date_received, filing_status, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, dispatchDate, attorneys_id, estFileDate, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where server_id$letter='$id' and (process_status = 'Assigned' OR process_status = 'ASSIGNED') order by  packet_id");
+	$r=@mysql_query("select packet_id, address1, address1a, address1b, address1c, address1d, address1e, avoidDOT, reopenDate, date_received, filing_status, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, dispatchDate, attorneys_id, estFileDate, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where server_id$letter='$id' and (process_status = 'Assigned' OR process_status = 'ASSIGNED') order by  packet_id");
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
 		if ($letter == ''){
 			$_SESSION[active3]++;
@@ -223,8 +223,10 @@ function presaleActiveList($id,$letter){ $_SESSION[active]++;
 		$mover="onmouseover=\"document.getElementById('OTD$d[packet_id]').style.textDecoration='blink', document.getElementById('OTD$d[packet_id]').style.backgroundColor='$inverse', ";
 		$mout="onmouseout=\"document.getElementById('OTD$d[packet_id]').style.textDecoration='none', document.getElementById('OTD$d[packet_id]').style.backgroundColor='$bgColor', ";
 		foreach(range('a','e') as $alpha){
-			$mover .= "document.getElementById('OTD$d[packet_id]$alpha').style.textDecoration='blink', document.getElementById('OTD$d[packet_id]$alpha').style.backgroundColor='".str_replace("OTD$d[packet_id]","OTD$d[packet_id]$alpha",$inverse)."', ";
-			$mout .= "document.getElementById('OTD$d[packet_id]$alpha').style.textDecoration='none', document.getElementById('OTD$d[packet_id]$alpha').style.backgroundColor='".str_replace("OTD$d[packet_id]","OTD$d[packet_id]$alpha",$bgColor)."', ";
+			if ($d["address$alpha"]){
+				$mover .= "document.getElementById('OTD$d[packet_id]$alpha').style.textDecoration='blink', document.getElementById('OTD$d[packet_id]$alpha').style.backgroundColor='".str_replace("OTD$d[packet_id]","OTD$d[packet_id]$alpha",$inverse)."', ";
+				$mout .= "document.getElementById('OTD$d[packet_id]$alpha').style.textDecoration='none', document.getElementById('OTD$d[packet_id]$alpha').style.backgroundColor='".str_replace("OTD$d[packet_id]","OTD$d[packet_id]$alpha",$bgColor)."', ";
+			}
 		}
 		$js .= substr($mover,0,-2)."\"".substr($mout,0,-2)."\"";
 		if ($hours > $_SESSION[cap]){
@@ -271,7 +273,7 @@ return $data;
 
 function standardActiveList($id,$letter){ $_SESSION[active]++;
 	$data='<ol>';
-	$r=@mysql_query("select packet_id, reopenDate, date_received, filing_status, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from standard_packets where server_id$letter='$id' and (process_status = 'Assigned' OR process_status = 'ASSIGNED') order by  packet_id") or die (mysql_error());
+	$r=@mysql_query("select packet_id, address1, address1a, address1b, address1c, address1d, address1e, reopenDate, date_received, filing_status, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from standard_packets where server_id$letter='$id' and (process_status = 'Assigned' OR process_status = 'ASSIGNED') order by  packet_id") or die (mysql_error());
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
 		if ($letter == ''){
 			$_SESSION[active3]++;
@@ -304,8 +306,10 @@ function standardActiveList($id,$letter){ $_SESSION[active]++;
 		$mover="onmouseover=\"document.getElementById('S$d[packet_id]').style.textDecoration='blink', document.getElementById('S$d[packet_id]').style.backgroundColor='$inverse', ";
 		$mout="onmouseout=\"document.getElementById('S$d[packet_id]').style.textDecoration='none', document.getElementById('S$d[packet_id]').style.backgroundColor='$bgColor', ";
 		foreach(range('a','e') as $alpha){
-			$mover .= "document.getElementById('S$d[packet_id]$alpha').style.textDecoration='blink', document.getElementById('S$d[packet_id]$alpha').style.backgroundColor='".str_replace("S$d[packet_id]","S$d[packet_id]$alpha",$inverse)."', ";
-			$mout .= "document.getElementById('S$d[packet_id]$alpha').style.textDecoration='none', document.getElementById('S$d[packet_id]$alpha').style.backgroundColor='".str_replace("S$d[packet_id]","S$d[packet_id]$alpha",$bgColor)."', ";
+			if ($d["address$alpha"]){
+				$mover .= "document.getElementById('S$d[packet_id]$alpha').style.textDecoration='blink', document.getElementById('S$d[packet_id]$alpha').style.backgroundColor='".str_replace("S$d[packet_id]","S$d[packet_id]$alpha",$inverse)."', ";
+				$mout .= "document.getElementById('S$d[packet_id]$alpha').style.textDecoration='none', document.getElementById('S$d[packet_id]$alpha').style.backgroundColor='".str_replace("S$d[packet_id]","S$d[packet_id]$alpha",$bgColor)."', ";
+			}
 		}
 		$js .= substr($mover,0,-2)."\"".substr($mout,0,-2)."\"";
 		if ($hours > $_SESSION[cap]){
