@@ -1,4 +1,4 @@
-otd<? include 'common.php';
+<? include 'common.php';
 	//include 'menu.php';
 function outOfState($packet_id){
 	$q="SELECT state1, state1a, state1b, state1c, state1d, state1e from ps_packets WHERE packet_id = '$packet_id' LIMIT 0,1";
