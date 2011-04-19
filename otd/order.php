@@ -56,7 +56,7 @@ function prompter2(packetID,deadline){
 		alert("That is not a valid date")
 		window.location="http://staff.mdwestserve.com/otd/order.php?packet="+packetID;
 	}else{
-		window.location="http://staff.mdwestserve.com/otd/tlEntry.php?packet="+packetID+"&deadline="+deadline+"&reopen=1","OTD Timeline Entry";
+		window.location="http://staff.mdwestserve.com/otd/tlEntry.php?packet="+packetID+"&deadline="+reply+"&reopen=1","OTD Timeline Entry";
 	}
 }
 function ChgText(myResponse,myInput)
