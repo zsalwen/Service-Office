@@ -121,6 +121,13 @@ function printStatus($str){
 	}
 }
 
+function getCounty($zip){
+	$q= "select county from zip_code where zip_code = '$zip' LIMIT 0,1";
+	$r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
+	$d=mysql_fetch_array($r, MYSQL_ASSOC); 
+	return strtoupper($d[county]);
+}
+
 $q= "select * from ps_users where id = '$id'";
 $r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
 $d=mysql_fetch_array($r, MYSQL_ASSOC); 
@@ -186,19 +193,50 @@ $d=mysql_fetch_array($r, MYSQL_ASSOC);
     	<td><strong>Previous Serves:</strong></td>
     </tr>
     <?
+	$i=0;
 	$q2="SELECT DISTINCT packet_id, city1, state1, zip1, ps_pay.contractor_rate from ps_packets, ps_pay WHERE server_id='$_GET[admin]' AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD'";
 	$r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
 	$exclude=" AND server_id <> '$_GET[admin]'";
 	while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){
-		echo "<tr><td><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$$d2[contractor_rate]</b></td></tr>";
+		$county=getCounty($d2[zip1]);
+		if (isset($countyList["$county"])){
+			$countyList["$county"] .= "<li><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$$d2[contractor_rate]</b></li>";
+		}else{$i++;
+			$countyList["$county"] = "<li><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$$d2[contractor_rate]</b></li>";
+			$countyNames["$i"]=$county;
+		}
+		//echo "<tr><td><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$$d2[contractor_rate]</b></td></tr>";
 	}
 	foreach(range('a','e') as $letter){
 		$q2="SELECT DISTINCT packet_id, city1$letter, state1$letter, zip1$letter, ps_pay.contractor_rate$letter from ps_packets, ps_pay WHERE server_id$letter='$_GET[admin]'$exclude AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD'";
 		$r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
 		while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){
-			echo "<tr><td><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"]).", ".$d2["zip1$letter"]." - <b>$".$d2["contractor_rate$letter"]."</b></td></tr>";
+			$county=getCounty($d2[zip1]);
+			if (isset($countyList["$county"])){
+				$countyList["$county"] .= "<li><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"]).", ".$d2["zip1$letter"]." - <b>$".$d2["contractor_rate$letter"]."</b></li>";
+			}else{$i++;
+				$countyList["$county"] = "<li<a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"]).", ".$d2["zip1$letter"]." - <b>$".$d2["contractor_rate$letter"]."</b></li>";
+				$countyNames["$i"]=$county;
+			}
+			//echo "<tr><td><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"]).", ".$d2["zip1$letter"]." - <b>$".$d2["contractor_rate$letter"]."</b></td></tr>";
 		}
 		$exclude .= " AND server_id$letter <> '$_GET[admin]'";
-	} ?>
+	} 
+	if (isset($countyNames)){
+		if (count($countyNames) != count($countyList)){
+			echo "<script>alert('MISMATCH!  countyNames: ".count($countyNames)." | countyList: ".count($countyList)."')</script>";
+		}else{
+			sort($countyNames);
+			$i=-1;
+			$count=count($countyList)-1;
+			while ($i < $count){$i++;
+				$name=$countyNames["$i"];
+				echo "<fieldset><legend>$name</legend>";
+				echo $countyList["$name"];
+				echo "</fieldset>";
+			}
+		}
+	}
+	?>
 </table></td></tr></table>
 <? include 'footer.php';?>
