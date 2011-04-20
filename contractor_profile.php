@@ -201,9 +201,10 @@ $d=mysql_fetch_array($r, MYSQL_ASSOC);
 		$county=getCounty($d2[zip1]);
 		if (isset($countyList["$county"])){
 			$countyList["$county"] .= "<li><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$$d2[contractor_rate]</b></li>";
-		}else{$i++;
+		}else{
 			$countyList["$county"] = "<li><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$$d2[contractor_rate]</b></li>";
 			$countyNames["$i"]=$county;
+			$i++;
 		}
 		//echo "<tr><td><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$$d2[contractor_rate]</b></td></tr>";
 	}
@@ -211,12 +212,13 @@ $d=mysql_fetch_array($r, MYSQL_ASSOC);
 		$q2="SELECT DISTINCT packet_id, city1$letter, state1$letter, zip1$letter, ps_pay.contractor_rate$letter from ps_packets, ps_pay WHERE server_id$letter='$_GET[admin]'$exclude AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD'";
 		$r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
 		while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){
-			$county=getCounty($d2[zip1]);
+			$county=getCounty($d2["zip1$letter"]);
 			if (isset($countyList["$county"])){
 				$countyList["$county"] .= "<li><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"]).", ".$d2["zip1$letter"]." - <b>$".$d2["contractor_rate$letter"]."</b></li>";
-			}else{$i++;
+			}else{
 				$countyList["$county"] = "<li<a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"]).", ".$d2["zip1$letter"]." - <b>$".$d2["contractor_rate$letter"]."</b></li>";
 				$countyNames["$i"]=$county;
+				$i++;
 			}
 			//echo "<tr><td><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"]).", ".$d2["zip1$letter"]." - <b>$".$d2["contractor_rate$letter"]."</b></td></tr>";
 		}
