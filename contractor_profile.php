@@ -122,6 +122,11 @@ function printStatus($str){
 }
 
 function getCounty($zip){
+	//make sure zip is only 5 digits
+	if (strpos($zip,'-') !== false){
+		$zip=explode('-',$zip);
+		$zip=$zip[0];
+	}
 	$q= "select county from zip_code where zip_code = '$zip' LIMIT 0,1";
 	$r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
 	$d=mysql_fetch_array($r, MYSQL_ASSOC); 
