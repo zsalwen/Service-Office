@@ -199,11 +199,11 @@ $d=mysql_fetch_array($r, MYSQL_ASSOC);
     </tr>
     <?
 	$i=0;
-	$q2="SELECT DISTINCT packet_id, city1, state1, zip1, ps_pay.contractor_rate from ps_packets, ps_pay WHERE server_id='$_GET[admin]' AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD'";
+	$q2="SELECT DISTINCT packet_id, circuit_court, city1, state1, zip1, ps_pay.contractor_rate from ps_packets, ps_pay WHERE server_id='$_GET[admin]' AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD'";
 	$r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
 	$exclude=" AND server_id <> '$_GET[admin]'";
 	while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){
-		$county=getCounty($d2[zip1]);
+		$county=strtoupper($d2[circuit_court]);
 		if (isset($countyList["$county"])){
 			$countyList["$county"] .= "<li id='".$county.$d2[packet_id]."'><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$$d2[contractor_rate]</b></li>";
 		}else{
