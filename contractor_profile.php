@@ -201,7 +201,7 @@ $d=mysql_fetch_array($r, MYSQL_ASSOC);
 	$i=0;
 	$q2="SELECT DISTINCT packet_id, city1, state1, zip1, ps_pay.contractor_rate from ps_packets, ps_pay WHERE server_id='$_GET[admin]' AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD'";
 	$r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
-	$exclude=" AND server_id <> '$_GET[admin]'";
+	//$exclude=" AND server_id <> '$_GET[admin]'";
 	while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){
 		$county=getCounty($d2[zip1]);
 		if (isset($countyList["$county"])){
@@ -227,7 +227,7 @@ $d=mysql_fetch_array($r, MYSQL_ASSOC);
 			}
 			//echo "<tr><td><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"]).", ".$d2["zip1$letter"]." - <b>$".$d2["contractor_rate$letter"]."</b></td></tr>";
 		}
-		$exclude .= " AND server_id$letter <> '$_GET[admin]'";
+		//$exclude .= " AND server_id$letter <> '$_GET[admin]'";
 	} 
 	if (isset($countyNames)){
 		if (count($countyNames) != count($countyList)){
@@ -238,9 +238,9 @@ $d=mysql_fetch_array($r, MYSQL_ASSOC);
 			$count=count($countyList)-1;
 			while ($i < $count){$i++;
 				$name=$countyNames["$i"];
-				echo "<fieldset><legend>$name</legend>";
+				echo "<tr><td><fieldset><legend>$name</legend>";
 				echo $countyList["$name"];
-				echo "</fieldset>";
+				echo "</fieldset></td></tr>";
 			}
 		}
 	}
