@@ -188,45 +188,17 @@ $d=mysql_fetch_array($r, MYSQL_ASSOC);
     <?
 	$q2="SELECT DISTINCT packet_id, city1, state1, zip1, ps_pay.contractor_rate from ps_packets, ps_pay WHERE server_id='$_GET[admin]' AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD'";
 	$r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
-	while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){?>
-	<tr>
-    	<td><a href="/otd/order.php?packet=<?=$d2[packet_id]?>" target="_blank">(<?=$d2[packet_id]?>)</a><?=strtoupper($d2[city1])?>, <?=strtoupper($d2[state1])?>, <?=$d2[zip1]?> - <b>$<?=$d2[contractor_rate]?></b></td>
-    </tr>
-	<? }
-	$q2="SELECT DISTINCT packet_id, city1a, state1a, zip1a, ps_pay.contractor_ratea from ps_packets, ps_pay WHERE server_ida='$_GET[admin]' AND server_id <> '$_GET[admin]' AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD'";
-	$r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
-	while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){?>
-	<tr>
-    	<td><a href="/otd/order.php?packet=<?=$d2[packet_id]?>" target="_blank">(<?=$d2[packet_id]?>)</a> <?=strtoupper($d2[city1a])?>, <?=strtoupper($d2[state1a])?>, <?=$d2[zip1a]?> - <b>$<?=$d2[contractor_ratea]?></b></td>
-    </tr>
-	<? } 
-	$q2="SELECT DISTINCT packet_id, city1b, state1b, zip1b, ps_pay.contractor_rateb from ps_packets, ps_pay WHERE server_idb='$_GET[admin]' AND server_id <> '$_GET[admin]' AND server_ida <> '$_GET[admin]' AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD'";
-	$r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
-	while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){?>
-	<tr>
-    	<td><a href="/otd/order.php?packet=<?=$d2[packet_id]?>" target="_blank">(<?=$d2[packet_id]?>)</a> <?=strtoupper($d2[city1b])?>, <?=strtoupper($d2[state1b])?>, <?=$d2[zip1b]?> - <b>$<?=$d2[contractor_rateb]?></b></td>
-    </tr>
-	<? }
-	$q2="SELECT DISTINCT packet_id, city1c, state1c, zip1c, ps_pay.contractor_ratec from ps_packets, ps_pay WHERE server_idc='$_GET[admin]' AND server_id <> '$_GET[admin]' AND server_ida <> '$_GET[admin]' AND server_idb <> '$_GET[admin]' AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD'";
-	$r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
-	while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){?>
-	<tr>
-    	<td><a href="/otd/order.php?packet=<?=$d2[packet_id]?>" target="_blank">(<?=$d2[packet_id]?>)</a> <?=strtoupper($d2[city1c])?>, <?=strtoupper($d2[state1c])?>, <?=$d2[zip1c]?> - <b>$<?=$d2[contractor_ratec]?></b></td>
-    </tr>
-	<? }
-	$q2="SELECT DISTINCT packet_id, city1d, state1d, zip1d, ps_pay.contractor_rated from ps_packets, ps_pay WHERE server_idd='$_GET[admin]' AND server_id <> '$_GET[admin]' AND server_ida <> '$_GET[admin]' AND server_idb <> '$_GET[admin]' AND server_idc <> '$_GET[admin]' AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD'";
-	$r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
-	while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){?>
-	<tr>
-    	<td><a href="/otd/order.php?packet=<?=$d2[packet_id]?>" target="_blank">(<?=$d2[packet_id]?>)</a> <?=strtoupper($d2[city1d])?>, <?=strtoupper($d2[state1d])?>, <?=$d2[zip1d]?> - <b>$<?=$d2[contractor_rated]?></b></td>
-    </tr>
-	<? }
-	$q2="SELECT DISTINCT packet_id, city1e, state1e, zip1e, ps_pay.contractor_ratee from ps_packets, ps_pay WHERE server_ide='$_GET[admin]' AND server_id <> '$_GET[admin]' AND server_ida <> '$_GET[admin]' AND server_idb <> '$_GET[admin]' AND server_idc <> '$_GET[admin]' AND server_idd <> '$_GET[admin]' AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD'";
-	$r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
-	while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){?>
-	<tr>
-    	<td><a href="/otd/order.php?packet=<?=$d2[packet_id]?>" target="_blank">(<?=$d2[packet_id]?>)</a> <?=strtoupper($d2[city1e])?>, <?=strtoupper($d2[state1e])?>, <?=$d2[zip1e]?> - <b>$<?=$d2[contractor_ratee]?></b></td>
-    </tr>
-	<? } ?>
+	$exclude=" AND server_id <> '$_GET[admin]'";
+	while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){
+		echo "<tr><td><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$$d2[contractor_ratea]</b></td></tr>";
+	}
+	foreach(range('a','e') as $letter){
+		$q2="SELECT DISTINCT packet_id, city1$letter, state1$letter, zip1$letter, ps_pay.contractor_rate$letter from ps_packets, ps_pay WHERE server_id$letter='$_GET[admin]'$exclude AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD'";
+		$r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
+		while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){
+			echo "<tr><td><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"]).", ".$d2["zip1$letter"]." - <b>$".$d2["contractor_rate$letter"]."</b></td></tr>";
+		}
+		$exclude .= " AND server_id$letter <> '$_GET[admin]'";
+	} ?>
 </table></td></tr></table>
 <? include 'footer.php';?>
