@@ -204,6 +204,9 @@ $d=mysql_fetch_array($r, MYSQL_ASSOC);
 	$exclude=" AND server_id <> '$_GET[admin]'";
 	while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){
 		$county=strtoupper($d2[circuit_court]);
+		if ($county == "ST MARYS"){
+			$county="SAINT MARYS";
+		}
 		if (isset($countyList["$county"])){
 			$countyList["$county"] .= "<li id='".$county.$d2[packet_id]."'><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$$d2[contractor_rate]</b></li>";
 		}else{
