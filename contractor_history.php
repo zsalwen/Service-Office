@@ -25,9 +25,9 @@ if ($_GET[city]){
 		$city=explode($explode,$search);
 		$city1=$city[0];
 		$city2=$city[1];
-		$q="SELECT packet_id, city1, city1a, city1b, city1c, city1d, city1e, server_id, server_ida, server_idb, server_idc, server_idd, server_ide, contractor_rate, contractor_ratea, contractor_rateb, contractor_ratec, contractor_rated, contractor_ratee FROM ps_packets, ps_pay WHERE (city1 LIKE '%$city1%' OR city1a LIKE '%$city1%' OR city1b LIKE '%$city1%' OR city1c LIKE '%$city1%' OR city1d LIKE '%$city1%' OR city1e LIKE '%$city1%' OR city1 LIKE '%$city2%' OR city1a LIKE '%$city2%' OR city1b LIKE '%$city2%' OR city1c LIKE '%$city2%' OR city1d LIKE '%$city2%' OR city1e LIKE '%$city2%') AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD'";
+		$q="SELECT * FROM ps_packets, ps_pay WHERE (city1 LIKE '%$city1%' OR city1a LIKE '%$city1%' OR city1b LIKE '%$city1%' OR city1c LIKE '%$city1%' OR city1d LIKE '%$city1%' OR city1e LIKE '%$city1%' OR city1 LIKE '%$city2%' OR city1a LIKE '%$city2%' OR city1b LIKE '%$city2%' OR city1c LIKE '%$city2%' OR city1d LIKE '%$city2%' OR city1e LIKE '%$city2%') AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD'";
 	}else{
-		$q="SELECT packet_id, city1, city1a, city1b, city1c, city1d, city1e, server_id, server_ida, server_idb, server_idc, server_idd, server_ide, contractor_rate, contractor_ratea, contractor_rateb, contractor_ratec, contractor_rated, contractor_ratee FROM ps_packets, ps_pay WHERE (city1 LIKE '%$search%' OR city1a LIKE '%$search%' OR city1b LIKE '%$search%' OR city1c LIKE '%$search%' OR city1d LIKE '%$search%' OR city1e LIKE '%$search%') AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD'";
+		$q="SELECT * FROM ps_packets, ps_pay WHERE (city1 LIKE '%$search%' OR city1a LIKE '%$search%' OR city1b LIKE '%$search%' OR city1c LIKE '%$search%' OR city1d LIKE '%$search%' OR city1e LIKE '%$search%') AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD'";
 	}
 }elseif($_GET[zip]){
 	$search=$_GET[zip];
@@ -38,7 +38,7 @@ if ($_GET[city]){
 		$zip=$zip[0];
 	}
 	$field="zip1";
-	$q="SELECT packet_id, zip1, zip1a, zip1b, zip1c, zip1d, zip1e, server_id, server_ida, server_idb, server_idc, server_idd, server_ide, contractor_rate, contractor_ratea, contractor_rateb, contractor_ratec, contractor_rated, contractor_ratee FROM ps_packets, ps_pay WHERE (zip1='$search' OR zip1a='$search' OR zip1b='$search' OR zip1c='$search' OR zip1d='$search' OR zip1e='$search') AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD'";
+	$q="SELECT * FROM ps_packets, ps_pay WHERE (zip1='$search' OR zip1a='$search' OR zip1b='$search' OR zip1c='$search' OR zip1d='$search' OR zip1e='$search') AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD'";
 }
 echo "<table align='center'><tr><td align='center'>PREVIOUS SERVES IN $search, $county COUNTY</td></tr>";
 $r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
