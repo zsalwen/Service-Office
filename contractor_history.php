@@ -1,0 +1,57 @@
+<? include 'common.php';
+function zip2county($zip){
+	//make sure zip is only 5 digits
+	if (strpos($zip,'-') !== false){
+		$zip=explode('-',$zip);
+		$zip=$zip[0];
+	}
+	$q= "select county from zip_code where zip_code = '$zip' LIMIT 0,1";
+	$r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
+	$d=mysql_fetch_array($r, MYSQL_ASSOC); 
+	return strtoupper($d[county]);
+}
+if ($_GET[city]){
+	$search=strtoupper($_GET[city]);
+	$field="city1";
+	$county=zip2county($_GET[zip]);
+	if (strpos($search,'AKA')){
+		$explode='AKA';
+	}elseif(strpos($search,'A/K/A')){
+		$explode='A/K/A';
+	}elseif(strpos($search,'ARTA')){
+		$explode='ARTA';
+	}
+	if ($explode){
+		$city=explode($explode,$search);
+		$city1=$city[0];
+		$city2=$city[1];
+		$q="SELECT packet_id, city1, city1a, city1b, city1c, city1d, city1e, server_id, server_ida, server_idb, server_idc, server_idd, server_ide, contractor_rate, contractor_ratea, contractor_rateb, contractor_ratec, contractor_rated, contractor_ratee FROM ps_packets, ps_pay WHERE (city1 LIKE '%$city1%' OR city1a LIKE '%$city1%' OR city1b LIKE '%$city1%' OR city1c LIKE '%$city1%' OR city1d LIKE '%$city1%' OR city1e LIKE '%$city1%' OR city1 LIKE '%$city2%' OR city1a LIKE '%$city2%' OR city1b LIKE '%$city2%' OR city1c LIKE '%$city2%' OR city1d LIKE '%$city2%' OR city1e LIKE '%$city2%') AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD'";
+	}else{
+		$q="SELECT packet_id, city1, city1a, city1b, city1c, city1d, city1e, server_id, server_ida, server_idb, server_idc, server_idd, server_ide, contractor_rate, contractor_ratea, contractor_rateb, contractor_ratec, contractor_rated, contractor_ratee FROM ps_packets, ps_pay WHERE (city1 LIKE '%$search%' OR city1a LIKE '%$search%' OR city1b LIKE '%$search%' OR city1c LIKE '%$search%' OR city1d LIKE '%$search%' OR city1e LIKE '%$search%') AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD'";
+	}
+}elseif($_GET[zip]){
+	$search=$_GET[zip];
+	$county=zip2county($_GET[zip]);
+	//make sure zip is only 5 digits
+	if (strpos($zip,'-') !== false){
+		$zip=explode('-',$zip);
+		$zip=$zip[0];
+	}
+	$field="zip1";
+	$q="SELECT packet_id, zip1, zip1a, zip1b, zip1c, zip1d, zip1e, server_id, server_ida, server_idb, server_idc, server_idd, server_ide, contractor_rate, contractor_ratea, contractor_rateb, contractor_ratec, contractor_rated, contractor_ratee FROM ps_packets, ps_pay WHERE (zip1='$search' OR zip1a='$search' OR zip1b='$search' OR zip1c='$search' OR zip1d='$search' OR zip1e='$search') AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD'";
+}
+echo "<table align='center'><tr><td align='center'>PREVIOUS SERVES IN $search, $county COUNTY</td></tr>";
+$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
+while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+	if ((strpos($d["$field"],$search) !== false) || (strpos($search,$d["$field"]) !== false)){
+		echo "<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>($d[packet_id])</a>".id2name($d[server_id]).": ".strtoupper($d[city1]).", ".strtoupper($d[state1]).", $d[zip1] - <b>$$d[contractor_rate]</b></td></tr>";
+	}
+	foreach(range('a','e') as $letter){
+		$var=$field.$letter;
+		if ((strpos($d["$var"],$search) !== false) || (strpos($search,$d["$var"]) !== false)){
+			echo "<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>($d[packet_id])</a>".id2name($d["server_id$letter"]).": ".strtoupper($d["city1$letter"]).", ".strtoupper($d["state1$letter"]).", ".$d["zip1$letter"]." - <b>".$$d["contractor_rate$letter"]."</b></td></tr>";
+		}
+	}
+}
+echo "</table>";
+?>
