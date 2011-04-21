@@ -1,7 +1,4 @@
 <style>
-td { font-variant:small-caps; }
-
-
 p {border-style:solid; border-width:thick; border-collapse:collapse;}
 </style>
 		<table width="80%" align="center" bgcolor="#FFFFFF" >
