@@ -3,12 +3,12 @@
 $_SESSION[estFileDate] = $_POST[estFileDate];
 
 function bwaRate($zip){
-	mysql_select_db ('core');
+	/*mysql_select_db ('core');
 	$r=@mysql_query("select * from bwa where zip = '$zip'");
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
 	if ($d[rateTypeA]){
 		return '[BWA-A'.trim($d[rateTypeA]).']';
-	}
+	}*/
 }
 function defTotal($packet_id){
 	mysql_select_db ('core');
@@ -312,13 +312,13 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {$i++;
 			$list='';
 			foreach (range('a','e') as $letter){
 				if ($d["address1$letter"]){
-					$list .= "<a target='_Blank' href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=".$d["address1$letter"]."&city=".$d["city1$letter"]."&state=".$d["state1$letter"]."&miles=20' title='".$d["address1$letter"].", ".$d["city1$letter"].", ".$d["state1$letter"]." ".$d["zip1$letter"]."'>Service: ".$d["address1$letter"].", ".$d["city1$letter"].", ".$d["state1$letter"]." ".$d["zip1$letter"]." <b>[".getCounty($d["zip1$letter"])."]</b></a>".bwaRate($d["zip1$letter"])."<br>";
+					$list .= "<a target='_Blank' href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=".$d["address1$letter"]."&city=".$d["city1$letter"]."&state=".$d["state1$letter"]."&miles=20' title='".$d["address1$letter"].", ".$d["city1$letter"].", ".$d["state1$letter"]." ".$d["zip1$letter"]."'><img src='http://staff.mdwestserve.com/small-usps-logo.jpg' border='0'></a>Service: ".$d["address1$letter"].", <a title='Click to Search For Previous Contractor Rates' target='_blank' href='contractor_history.php?city=".$d["city1$letter"]."&zip=".$d["zip1$letter"]."'>".$d["city1$letter"]."</a>, ".$d["state1$letter"]." <a title='Click to Search For Previous Contractor Rates' target='_blank' href='contractor_history.php?zip=".$d["zip1$letter"]."'>".$d["zip1$letter"]."</a> <b>[".getCounty($d["zip1$letter"])."]</b>".bwaRate($d["zip1$letter"])."<br>";
 				}
 			}
 			if ($list == '' || $d[attorneys_id] == 1){
-				$list .= "<a target='_Blank' href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=$d[address1]&city=$d[city1]&state=$d[state1]&miles=20' title='$d[address1], $d[city1], $d[state1], $d[zip1]'>Serve &amp; Post: $d[address1], $d[city1], $d[state1] $d[zip1] <b>[".getCounty($d[zip1])."]</b></a>".bwaRate($d[zip1]);
+				$list .= "<a target='_Blank' href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=$d[address1]&city=$d[city1]&state=$d[state1]&miles=20' title='$d[address1], $d[city1], $d[state1], $d[zip1]'><img src='http://staff.mdwestserve.com/small-usps-logo.jpg' border='0'></a>Serve &amp; Post: $d[address1], <a title='Click to Search For Previous Contractor Rates' target='_blank' href='contractor_history.php?city=$d[city1]&zip=$d[zip1]'>$d[city1]</a>, $d[state1] <a title='Click to Search For Previous Contractor Rates' target='_blank' href='contractor_history.php?zip=$d[zip1]'>$d[zip1]</a> <b>[".getCounty($d[zip1])."]</b>".bwaRate($d[zip1]);
 			}else{
-				$list .= "<a target='_Blank' href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=$d[address1]&city=$d[city1]&state=$d[state1]&miles=20' title='$d[address1], $d[city1], $d[state1], $d[zip1]'>Posting: $d[address1], $d[city1], $d[state1] $d[zip1] <b>[".getCounty($d[zip1])."]</b></a>".bwaRate($d[zip1]);
+				$list .= "<a target='_Blank' href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=$d[address1]&city=$d[city1]&state=$d[state1]&miles=20' title='$d[address1], $d[city1], $d[state1], $d[zip1]'><img src='http://staff.mdwestserve.com/small-usps-logo.jpg' border='0'></a>Posting: $d[address1], <a title='Click to Search For Previous Contractor Rates' target='_blank' href='contractor_history.php?city=$d[city1]&zip=$d[zip1]'>$d[city1]</a>, $d[state1] <a title='Click to Search For Previous Contractor Rates' target='_blank' href='contractor_history.php?zip=$d[zip1]'>$d[zip1]</a> <b>[".getCounty($d[zip1])."]</b>".bwaRate($d[zip1]);
 			}
 			echo $list;
 			?></td>
@@ -340,7 +340,7 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {$i++;
 		<td><?=$d[case_no] ?></td>
         <td><?=str_replace(' ','&nbsp;',$d[circuit_court]) ?></td>
         <td align="center"><?=EVdefTotal($d[eviction_id]);?></td>
-        <td nowrap="nowrap"><? echo "<a target='_Blank' href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=$d[address1]&city=$d[city1]&state=$d[state1]&miles=20' title='$d[address1], $d[city1], $d[state1], $d[zip1]'>Serve &amp; Post: $d[address1], $d[city1], $d[state1] $d[zip1]</a>"; ?></td>
+        <td nowrap="nowrap"><? echo "<a target='_Blank' href='http://staff.mdwestserve.com/dispatcher.php?aptsut=&address=$d[address1]&city=$d[city1]&state=$d[state1]&miles=20' title='$d[address1], $d[city1], $d[state1], $d[zip1]'><img src='http://staff.mdwestserve.com/small-usps-logo.jpg' border='0'></a>Serve &amp; Post: $d[address1], <a target='_blank' href='contractor_history.php?city=$d[city1]&zip=$d[zip1]'>$d[city1]</a>, $d[state1] <a target='_blank' href='contractor_history.php?zip=$d[zip1]'>$d[zip1]</a>"; ?></td>
         <td></td>
 		<td><?=strtoupper($d[processor_notes])?></td>
 	</tr>
