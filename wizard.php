@@ -33,7 +33,8 @@ $attorney = mysql_fetch_array($r,MYSQL_ASSOC) or die(mysql_error());
 
 // modify data
 function ucPrep($str){
-return ucwords(strtolower($str));
+return $str;
+//return ucwords(strtolower($str));
 }
 
 if($packet[name1]){
