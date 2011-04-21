@@ -44,12 +44,12 @@ echo "<table align='center'><tr><td align='center'>PREVIOUS SERVES IN $search, $
 $r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	if ((strpos($d["$field"],$search) !== false) || (strpos($search,$d["$field"]) !== false)){
-		echo "<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>($d[packet_id])</a>"
-		 if($d[server_id] != '' && $d[contractor_rate] != ''){
+		echo "<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>($d[packet_id])</a>";
+		if($d[server_id] != '' && $d[contractor_rate] != ''){
 			echo id2name($d[server_id]).": ".strtoupper($d[city1]).", ".strtoupper($d[state1]).", $d[zip1] - <b>$$d[contractor_rate]</b></td></tr>";
-		 }else{
+		}else{
 			echo "<b>INCOMPLETE RATE INFO</b></td></tr>";
-		 }
+		}
 		 
 	}
 	foreach(range('a','e') as $letter){
