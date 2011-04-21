@@ -43,12 +43,12 @@ if ($_GET[city]){
 echo "<table align='center'><tr><td align='center'>PREVIOUS SERVES IN $search, $county COUNTY</td></tr>";
 $r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-	if ((strpos($d["$field"],$search) !== false) || (strpos($search,$d["$field"]) !== false)){
+	if (((strpos($d["$field"],$search) !== false) || (strpos($search,$d["$field"]) !== false)) && $d[server_id] != '' && $d[contractor_rate] != ''){
 		echo "<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>($d[packet_id])</a>".id2name($d[server_id]).": ".strtoupper($d[city1]).", ".strtoupper($d[state1]).", $d[zip1] - <b>$$d[contractor_rate]</b></td></tr>";
 	}
 	foreach(range('a','e') as $letter){
 		$var=$field.$letter;
-		if ((strpos($d["$var"],$search) !== false) || (strpos($search,$d["$var"]) !== false)){
+		if (((strpos($d["$var"],$search) !== false) || (strpos($search,$d["$var"]) !== false)) && $d["server_id$letter"] != '' && $d["contractor_rate$letter"] != ''){
 			echo "<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>($d[packet_id])</a>".id2name($d["server_id$letter"]).": ".strtoupper($d["city1$letter"]).", ".strtoupper($d["state1$letter"]).", ".$d["zip1$letter"]." - <b>".$$d["contractor_rate$letter"]."</b></td></tr>";
 		}
 	}
