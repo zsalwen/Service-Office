@@ -208,9 +208,9 @@ $d=mysql_fetch_array($r, MYSQL_ASSOC);
 			$county="SAINT MARYS";
 		}
 		if (isset($countyList["$county"])){
-			$countyList["$county"] .= "<li id='".$county.$d2[packet_id]."'><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$$d2[contractor_rate]</b></li>";
+			$countyList["$county"] .= "<li id='".$county.$d2[packet_id]."'><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$".$d2[contractor_rate]."</b></li>";
 		}else{
-			$countyList["$county"] = "<li id='".$county.$d2[packet_id]."'><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$$d2[contractor_rate]</b></li>";
+			$countyList["$county"] = "<li id='".$county.$d2[packet_id]."'><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$".$d2[contractor_rate]."</b></li>";
 			$countyNames["$i"]=$county;
 			$i++;
 		}
