@@ -222,9 +222,9 @@ $d=mysql_fetch_array($r, MYSQL_ASSOC);
 		while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){
 			$county=getCounty($d2["zip1$letter"]);
 			if (isset($countyList["$county"])){
-				$countyList["$county"] .= "<li id='".$county.$d2[packet_id]."'><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"]).", ".$d2["zip1$letter"]." - <b>$".$d2["contractor_rate$letter"]."</b></li>";
+				$countyList["$county"] .= "<li id='".$county.$d2[packet_id].$letter."'><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"]).", ".$d2["zip1$letter"]." - <b>$".$d2["contractor_rate$letter"]."</b></li>";
 			}else{
-				$countyList["$county"] = "<li id='".$county.$d2[packet_id]."'><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"]).", ".$d2["zip1$letter"]." - <b>$".$d2["contractor_rate$letter"]."</b></li>";
+				$countyList["$county"] = "<li id='".$county.$d2[packet_id].$letter."'><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"]).", ".$d2["zip1$letter"]." - <b>$".$d2["contractor_rate$letter"]."</b></li>";
 				$countyNames["$i"]=$county;
 				$i++;
 			}
