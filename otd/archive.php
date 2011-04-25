@@ -1302,8 +1302,8 @@ while ($d12=mysql_fetch_array($r12, MYSQL_ASSOC)) {
 
 <?
 	if($d[status]=="NEW" || $_GET[otd] == '1'){ 
-		$src=str_replace('portal//var/www/dataFiles/service/orders/','ps_export/',$d[otd]);
-		$src=str_replace('data/service/orders/','ps_export/',$src);
+		$src=str_replace('portal//var/www/dataFiles/service/orders/','PS_PACKETS/',$d[otd]);
+		$src=str_replace('data/service/orders/','PS_PACKETS/',$src);
 		$src=str_replace('portal/','',$src);
 		//$src=str_replace('mdwestserve.com','alpha.mdwestserve.com',$src);
 		/*if (!$src){
