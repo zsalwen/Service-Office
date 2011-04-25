@@ -57,7 +57,7 @@ while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 		if ((strpos($d["$var"],$search) !== false) || (strpos($search,$d["$var"]) !== false)){
 			echo "<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>($d[packet_id])</a>";
 			if($d["server_id$letter"] != '' && $d["contractor_rate$letter"] != ''){
-				echo id2name($d["server_id$letter"]).": ".strtoupper($d["city1$letter"]).", ".strtoupper($d["state1$letter"]).", ".$d["zip1$letter"]." - <b>".$$d["contractor_rate$letter"]."</b></td></tr>";
+				echo id2name($d["server_id$letter"]).": ".strtoupper($d["city1$letter"]).", ".strtoupper($d["state1$letter"]).", ".$d["zip1$letter"]." - <b>$".$d["contractor_rate$letter"]."</b></td></tr>";
 			}else{
 				echo "<b>INCOMPLETE RATE INFO</b></td></tr>";
 			}
