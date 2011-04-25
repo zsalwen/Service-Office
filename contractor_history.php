@@ -40,26 +40,24 @@ if ($_GET[city]){
 	$field="zip1";
 	$q="SELECT * FROM ps_packets, ps_pay WHERE (zip1='$search' OR zip1a='$search' OR zip1b='$search' OR zip1c='$search' OR zip1d='$search' OR zip1e='$search') AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD'";
 }
-echo "<table align='center'><tr><td align='center'>PREVIOUS SERVES IN $search, $county COUNTY</td></tr>";
+echo "<table align='center' border='1' style='border-collapse:collapse;'><tr><td align='center' colspan='3'>PREVIOUS SERVES IN $search, $county COUNTY</td></tr>";
 $r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 	if ((strpos($d["$field"],$search) !== false) || (strpos($search,$d["$field"]) !== false)){
-		echo "<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>($d[packet_id])</a>";
 		if($d[server_id] != '' && $d[contractor_rate] != ''){
-			echo id2name($d[server_id]).": ".strtoupper($d[city1]).", ".strtoupper($d[state1]).", $d[zip1] - <b>$$d[contractor_rate]</b></td></tr>";
+			echo "<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>($d[packet_id])</a></td><td>".id2name($d[server_id]).": ".strtoupper($d[city1]).", ".strtoupper($d[state1]).", $d[zip1]</td><td><b>$$d[contractor_rate]</b></td></tr>";
 		}else{
-			echo "<b>INCOMPLETE RATE INFO</b></td></tr>";
+			echo "<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>($d[packet_id])</a></td><td colspan='2'><b>INCOMPLETE RATE INFO</b></td></tr>";
 		}
 		 
 	}
 	foreach(range('a','e') as $letter){
 		$var=$field.$letter;
 		if ((strpos($d["$var"],$search) !== false) || (strpos($search,$d["$var"]) !== false)){
-			echo "<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>($d[packet_id])</a>";
 			if($d["server_id$letter"] != '' && $d["contractor_rate$letter"] != ''){
-				echo id2name($d["server_id$letter"]).": ".strtoupper($d["city1$letter"]).", ".strtoupper($d["state1$letter"]).", ".$d["zip1$letter"]." - <b>$".$d["contractor_rate$letter"]."</b></td></tr>";
+				echo "<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>($d[packet_id])</a></td><td>".id2name($d["server_id$letter"]).": ".strtoupper($d["city1$letter"]).", ".strtoupper($d["state1$letter"]).", ".$d["zip1$letter"]."</td><td><b>$".$d["contractor_rate$letter"]."</b></td></tr>";
 			}else{
-				echo "<b>INCOMPLETE RATE INFO</b></td></tr>";
+				echo "<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>($d[packet_id])</a></td><td colspan='2'><b>INCOMPLETE RATE INFO</b></td></tr>";
 			}
 		}
 	}
