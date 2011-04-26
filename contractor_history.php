@@ -86,9 +86,7 @@ if (isset($zipList)){
 		$count=count($serverList)-1;
 		while ($i < $count){$i++;
 			$name=$zipList["$i"];
-			echo "<tr><td><fieldset><legend>$name</legend>";
-			echo $serverList["$name"];
-			echo "</fieldset></td></tr>";
+			echo $serverList["$name"]."</td></tr>";
 		}
 	}
 }
