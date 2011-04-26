@@ -48,9 +48,9 @@ while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 		if($d[server_id] != '' && $d[contractor_rate] != ''){
 			$zip=$d[zip1];
 			if (isset($serverList[$zip])){
-				$serverList[$zip] .= "<li><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]-".id2name($d[server_id]).": <b>$$d[contractor_rate]</a></b></li>";
+				$serverList[$zip] .= "<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td>".id2name($d[server_id])."</td><td><b>$$d[contractor_rate]</b></td></tr>";
 			}else{
-				$serverList[$zip] = "<tr><td>$zip</td><td><li><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a>".id2name($d[server_id]).": <b>$$d[contractor_rate]</b></li>";
+				$serverList[$zip] = "<tr><td><fieldset><legend>$zip</legend><table><tr><td><li><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td>".id2name($d[server_id])."</td><td><b>$$d[contractor_rate]</b></td></tr>";
 				$zipList[$i] = $zip;
 				$i++;
 			}
@@ -65,9 +65,9 @@ while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 			if($d["server_id$letter"] != '' && $d["contractor_rate$letter"] != ''){
 				$zip=$d["zip1$letter"];
 				if (isset($serverList[$zip])){
-					$serverList[$zip] .= "<li><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a>".id2name($d["server_id$letter"]).": <b>$".$d["contractor_rate$letter"]."</b></li>";
+					$serverList[$zip] .= "<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a>".id2name($d["server_id$letter"]).": <b>$".$d["contractor_rate$letter"]."</b></td></tr>";
 				}else{
-					$serverList[$zip] = "<tr><td>$zip</td><td><li><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a>".id2name($d["server_id$letter"]).": <b>$".$d["contractor_rate$letter"]."</b></li>";
+					$serverList[$zip] = "<tr><td><fieldset><legend>$zip</legend><table><tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td>".id2name($d["server_id$letter"])."</td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
 					$zipList[$i] = $zip;
 					$i++;
 				}
@@ -86,7 +86,7 @@ if (isset($zipList)){
 		$count=count($serverList)-1;
 		while ($i < $count){$i++;
 			$name=$zipList["$i"];
-			echo $serverList["$name"]."</td></tr>";
+			echo $serverList["$name"]."</table></fieldset></td></tr>";
 		}
 	}
 }
