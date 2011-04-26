@@ -241,7 +241,7 @@ printAD($_GET[id],'75.94.82.44');
 }
 
 // spell checker
-if($d[LiveAffidavit]){
+/*if($d[LiveAffidavit]){
 $pspell_link = pspell_new("en");
 echo "<div>Spell Checker<ol>";
 $word = explode(" ", strip_tags(stripslashes($d[LiveAffidavit])));
@@ -254,7 +254,7 @@ $strip = htmlspecialchars($v);
    };
 };
 echo "</ol></div>";
-}
+}*/
 /*
 $q1 = "UPDATE schedule_items set adProofed='".$_COOKIE[psdata][name]." on ".date('r')."' WHERE schedule_id = '$_GET[id]'";
 $r1 = @mysql_query ($q1) or die(mysql_error());
