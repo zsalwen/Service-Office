@@ -65,7 +65,7 @@ while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 			if($d["server_id$letter"] != '' && $d["contractor_rate$letter"] != ''){
 				$zip=$d["zip1$letter"];
 				if (isset($serverList[$zip])){
-					$serverList[$zip] .= "<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a>".id2name($d["server_id$letter"]).": <b>$".$d["contractor_rate$letter"]."</b></td></tr>";
+					$serverList[$zip] .= "<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td>".id2name($d["server_id$letter"])."</td><td><b>$".$d["contractor_rate$letter"]."</b></td></tr>";
 				}else{
 					$serverList[$zip] = "<tr><td><fieldset><legend>$zip</legend><table><tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td>".id2name($d["server_id$letter"])."</td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
 					$zipList[$i] = $zip;
