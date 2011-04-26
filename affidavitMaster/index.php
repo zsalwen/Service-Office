@@ -79,8 +79,8 @@ if (trim($error) == '1'){
 echo "<div>".$command."</div>";
 echo "<div>".$error2."</div>";
 echo "<div>".$result."</div>";
-//header('Location: '.$id.'.pdf');
-echo "<script>window.open('$id.pdf','test')</script>";
+header('Location: '.$id.'.pdf');
+//echo "<script>window.open('$id.pdf','test')</script>";
 }
 
 /*
