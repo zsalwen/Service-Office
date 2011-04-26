@@ -301,7 +301,7 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {$i++;
 ?>
     <tr style='background-color:<? if(addTotal($d[packet_id]) == 1 && $d[avoidDOT] == 'checked'){ echo "#000000; color: #FFFFFF; font-weight:bold;"; }elseif (outOfState($d[packet_id]) > 0){ echo row_color(2,'#009999','#00FFFF');}else{ echo row_color($i,'#FFFFFF','#cccccc'); }?>;'>
 		<td nowrap="nowrap">
-		<? if(($d[uspsVerify] != '') && ($d[qualityControl] != '')){ ?><input type="checkbox" name="package[otd][<?=$d[packet_id]?>]" value="<?=$d[packet_id]?>" /><? } ?>&nbsp;<a href="order.php?packet=<?=$d[packet_id]?>" target="_blank" style="text-decoration:none">OTD<?=$d[packet_id]?>)</a></td>
+		<? if(($d[uspsVerify] != '') && ($d[qualityControl] != '')){ ?><input type="checkbox" name="package[otd][<?=$d[packet_id]?>]" value="<?=$d[packet_id]?>" /><? } ?>&nbsp;<a href="otd/order.php?packet=<?=$d[packet_id]?>" target="_blank" style="text-decoration:none">OTD<?=$d[packet_id]?>)</a></td>
         <td><?=id2attorney($d[attorneys_id])?></td>
         <td><?=substr($d[date_received],0,10)?></td>
         <td><?=$d[client_file] ?></td>
@@ -333,7 +333,7 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {$i++;
 ?>
     <tr bgcolor="<? echo row_color($i,'#FFFFFF','#cccccc'); ?>">
 		<td nowrap="nowrap">
-		<? if(($d[uspsVerify] != '') && ($d[qualityControl] != '') && ($d[caseVerify] != '')){ ?><input type="checkbox" name="package[ev][<?=$d[eviction_id]?>]" value="<?=$d[eviction_id]?>" /><? } ?>&nbsp;<a href="order.php?packet=<?=$d[eviction_id]?>" target="_blank" style="text-decoration:none">EV<?=$d[eviction_id]?>)</a></td>
+		<? if(($d[uspsVerify] != '') && ($d[qualityControl] != '') && ($d[caseVerify] != '')){ ?><input type="checkbox" name="package[ev][<?=$d[eviction_id]?>]" value="<?=$d[eviction_id]?>" /><? } ?>&nbsp;<a href="ev/order.php?packet=<?=$d[eviction_id]?>" target="_blank" style="text-decoration:none">EV<?=$d[eviction_id]?>)</a></td>
         <td><?=id2attorney($d[attorneys_id])?></td>
         <td><?=substr($d[date_received],0,10)?></td>
         <td><?=$d[client_file] ?></td>
