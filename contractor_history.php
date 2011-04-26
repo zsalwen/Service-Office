@@ -50,7 +50,7 @@ while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 			if (isset($serverList[$zip])){
 				$serverList[$zip] .= "<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td>".id2name($d[server_id])."</td><td><b>$$d[contractor_rate]</b></td></tr>";
 			}else{
-				$serverList[$zip] = "<tr><td><fieldset><legend>$zip</legend><table><tr><td><li><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td>".id2name($d[server_id])."</td><td><b>$$d[contractor_rate]</b></td></tr>";
+				$serverList[$zip] = "<tr><td><fieldset><legend>$zip</legend><table><tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td>".id2name($d[server_id])."</td><td><b>$$d[contractor_rate]</b></td></tr>";
 				$zipList[$i] = $zip;
 				$i++;
 			}
