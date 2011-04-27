@@ -1095,7 +1095,7 @@ Request Close<br>
 </table>
 <? if (webservice($d[client_file]) && ($d[attorneys_id] == 1)){
 		echo "<table align='center'><tr><td>";
-		include "http://staff.mdwestserve.com/otd/webservice.php?fileNumber=$d[client_file]";
+		include "http://staff.mdwestserve.com/ev/webservice.php?fileNumber=$d[client_file]";
 		echo "</td></tr></table>";
 	}
 ?>
