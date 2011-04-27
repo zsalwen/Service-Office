@@ -14,6 +14,19 @@ function prompter(packetID,newDate,oldDate){
 		window.location="http://staff.mdwestserve.com/ev/tlEntry.php?packet="+packetID+"&entry="+reply+"&newDate="+newDate+"&oldDate="+oldDate,"EV Timeline Entry";
 	}
 }
+function ChgText(myResponse,myInput)
+{
+    var MyElement = document.getElementById(myInput);
+    MyElement.value = myResponse;
+    return true;
+}
+function setAddress1(street,city,state,zip)
+{
+ChgText(street,'address');
+ChgText(city,'city');
+ChgText(state,'state');
+ChgText(zip,'zip');
+}
 </script>
 <?
 if ($_GET[packet]){

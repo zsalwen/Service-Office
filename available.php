@@ -147,15 +147,10 @@ function evDef($court){
 }
 
 function evAdd($court){
-	$r = mysql_query("SELECT address1, address1a, address1b, address1c, address1d, address1e FROM evictionPackets WHERE circuit_court = '$court' AND process_status='READY' and server_id < '1'") or die(mysql_error());
+	$r = mysql_query("SELECT address1 FROM evictionPackets WHERE circuit_court = '$court' AND process_status='READY' and server_id < '1'") or die(mysql_error());
 	$total=0;
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-	if ($d['address1']){	$total++; }
-	if ($d['address1a']){	$total++; }
-	if ($d['address1b']){	$total++; }
-	if ($d['address1c']){	$total++; }
-	if ($d['address1d']){	$total++; }
-	if ($d['address1e']){	$total++; }
+		if ($d['address1']){	$total++; }
 	}
 	return $total;
 }
@@ -180,15 +175,10 @@ function evDef2($court){
 }
 
 function evAdd2($court){
-	$r = mysql_query("SELECT address1, address1a, address1b, address1c, address1d, address1e FROM evictionPackets WHERE circuit_court = '$court' AND process_status='READY' AND caseLookupFlag <> '1' AND case_no='' and server_id < '1'") or die(mysql_error());
+	$r = mysql_query("SELECT address1 FROM evictionPackets WHERE circuit_court = '$court' AND process_status='READY' AND caseLookupFlag <> '1' AND case_no='' and server_id < '1'") or die(mysql_error());
 	$total=0;
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-	if ($d['address1']){	$total++; }
-	if ($d['address1a']){	$total++; }
-	if ($d['address1b']){	$total++; }
-	if ($d['address1c']){	$total++; }
-	if ($d['address1d']){	$total++; }
-	if ($d['address1e']){	$total++; }
+		if ($d['address1']){	$total++; }
 	}
 	return $total;
 }

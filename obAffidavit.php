@@ -342,7 +342,7 @@ error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($_GET[p
 		<tr cellpadding='0' cellspacing='0'><?=$header?><IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=<?=$cord?>&width=300&height=40'><center>File Number: <?=$d1[client_file]?><br />[PAGE]</center></td></tr>
 		<tr cellpadding='0' cellspacing='0'>
 			<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="left" valign="top"><center><u><b><?=$amended?>Affidavit of Attempted Delivery<? if ($iID && !$iIDa && !$iIDb && !$iIDc && !$iIDd && !$iIDe){ echo " and Posting";}?></b></u></center>
-			<center>font size='4'><b><?=$result?></font></b></center>
+			<center font size='4'><b><?=$result?></font></b></center>
 			<font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it (the "Papers") in the above-captioned case by:</font><br>
 			<div style='padding-left:20px;'><?=stripslashes($historye)?></div>
 			<font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct, to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.<br>
