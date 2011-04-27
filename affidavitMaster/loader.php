@@ -75,6 +75,7 @@ function pullProof($id){
         $r = @mysql_query ($q) or die(mysql_error());
         $d = mysql_fetch_array($r, MYSQL_ASSOC);
 		@mysql_query("update ps_packets set LiveAffidavit = '".addslashes($html)."' where packet_id = '$id'") or die(mysql_error());
+		echo addslashes($html);
 		htmlDiff($old, $html, $id);
 	}
     return $html;
@@ -113,7 +114,7 @@ $last_line = system('rm -f '.$id.'.html', $retval);
 if ($_GET['id']){
 	//loadAD($_GET['id']);
 	buildProof($_GET['id']);
-	header('Location: index.php?id='.$_GET[id]);
+	//header('Location: index.php?id='.$_GET[id]);
 }else{
 	echo "missing packet id?";
 }
