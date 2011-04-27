@@ -11,17 +11,17 @@ p {border-style:solid; border-width:thick; border-collapse:collapse;}
 		<tr><td class='a' style='width:600px;'>[altPlaintiff]<br><small>_____________________<br /><em>Plaintiff</em></small><br /><br />v.<br /><br />[defendant]<br><small>_____________________<br /><em>Defendant</em></small></td>
 
 				<td align='right' valign='top' style='width:200px' nowrap='nowrap'><div style='font-size:24px; border:solid 1px #666666; text-align:center;'>Case Number<br />[caseNumber]&nbsp;</div><center>File Number: [clientFile]</center></td></tr>		<tr>
-			<td colspan="2" align="center" style="font-weight:bold; text-decoration:underline" height="30px" valign="top"><font size='+2'>Affidavit of Non-Service</font></td>
+			<td colspan="2" align="center" style="font-weight:bold; text-decoration:underline" height="30px" valign="top"><font size='+2'>Affidavit of Due Diligence</font></td>
 		</tr>
 		<tr>
 			<td colspan="2" align="center" style="font-weight:bold; font-size:20px;" height="30px" valign="top"></td>
 
 		</tr>
 		<tr>
-			<td colspan="2" align="left">I, [serverName], did attempt to serve the [papers], in the above-captioned case:<br></td>
+			<td colspan="2" align="left">I, [serverName], did, in the above-captioned case:<br></td>
 		</tr>
 		<tr>
-			<td colspan="2" style="font-weight:bold; padding-left:20px;"><div style='font-weight:300'><u>Describe with particularity the good faith efforts to serve [name1]:</u></div>
+			<td colspan="2" style="font-weight:bold; padding-left:20px;"><div style='font-weight:300'><u>Describe with particularity the good faith efforts upon [name1]:</u></div>
 				<br><br>[attempt1] <br><br><br>
 				[attempt2]<br><br><br>
 				[attempt3] <br><br></td>
