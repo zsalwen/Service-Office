@@ -14,7 +14,7 @@ if ($result == false) {
 	}
 else {
 		 
-	echo '<table border="1" style="border-collapse:collapse; padding:0px; font-size:12px;" width="100%" >';
+	echo '<table border="1" style="border-collapse:collapse; padding:0px; font-size:12px;" width="900px" >';
 	echo '<tr>';
 	echo '<td>Defendant Name</td> <td>Address1</td> <td>Address2</td> <td>City</td> <td>State</td> <td>Zip</td> <td>Status</td> <td>Date</td> ';
 	echo '</tr>';
