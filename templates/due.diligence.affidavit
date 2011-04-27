@@ -21,7 +21,7 @@ p {border-style:solid; border-width:thick; border-collapse:collapse;}
 			<td colspan="2" align="left">I, [serverName], did, in the above-captioned case:<br></td>
 		</tr>
 		<tr>
-			<td colspan="2" style="font-weight:bold; padding-left:20px;"><div style='font-weight:300'><u>Describe with particularity the good faith efforts upon [name1]:</u></div>
+			<td colspan="2" style="font-weight:bold; padding-left:20px;"><div style='font-weight:300'><u>Describe with particularity the good faith efforts upon [who]:</u></div>
 				<br><br>[attempt1] <br><br><br>
 				[attempt2]<br><br><br>
 				[attempt3] <br><br></td>
