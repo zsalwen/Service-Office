@@ -48,7 +48,7 @@ function htmlDiff($old, $new, $id){
 
 
 function pullProof($id){ 
-	$url = "http://service.mdwestserve.com/obAffidavit.php?packet=$id&def=ALL!";
+	$url = "http://service.mdwestserve.com/obAffidavit.php?packet=$id&def=ALL!&level=".$_COOKIE[psdata][level]."&user_id=".$_COOKIE[psdata][user_id];
 	//$url=urlencode($url);
 	error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($id)."] [Attempting to load] [".trim($url)."] \n", 3, '/logs/fail.log');
 	$timeout=5;
