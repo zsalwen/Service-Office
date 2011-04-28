@@ -25,7 +25,7 @@ $r=@mysql_query("select * from overallGraph order by id desc limit 0,30");
 <td>30 Day Volume</td>
 </tr>
 <?
-while(){
+while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 ?>
 <tr>
 <td><?=$d[date]?></td>
