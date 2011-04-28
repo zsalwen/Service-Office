@@ -10,24 +10,24 @@ table { border-collapse: collapse; }
 </style>
 <table border="1" width="100%">
 <tr>
-<td bgcolor="AFEEEE">Date</td>
-<td bgcolor="AFEEEE">Received to Dispatch</td>
-<td bgcolor="AFEEEE">Dispatch to Close</td>
-<td bgcolor="5DFC0A">Webservice Queue</td>
-<td bgcolor="FF8000">New OTD</td>
-<td bgcolor="FF8000">Active OTD</td>
-<td bgcolor="FF8000">Quality Control OTD</td>
-<td bgcolor="FF8000">Mailroom OTD</td>
-<td bgcolor="FF8000">Blackhole OTD</td>
-<td bgcolor="FBEC5D">New EV</td>
-<td bgcolor="FBEC5D">Active EV</td>
-<td bgcolor="FBEC5D">Blankhole EV</td>
-<td bgcolor="EE8262">New S</td>
-<td bgcolor="EE8262">Active S</td>
-<td bgcolor="EE8262">In Progress S</td>
-<td bgcolor="8EE5EE">Watchdog Active</td>
-<td bgcolor="8EE5EE">Watchdog Blackhole</td>
-<td bgcolor="5DFC0A">30 Day Volume</td>
+<td bgcolor="AFEEEE"><b>Date</b></td>
+<td bgcolor="AFEEEE"><b>Received to Dispatch</b></td>
+<td bgcolor="AFEEEE"><b>Dispatch to Close</b></td>
+<td bgcolor="5DFC0A"><b>Webservice Queue</b></td>
+<td bgcolor="FF8000"><b>New OTD</b></td>
+<td bgcolor="FF8000"><b>Active OTD</b></td>
+<td bgcolor="FF8000"><b>Quality Control OTD</b></td>
+<td bgcolor="FF8000"><b>Mailroom OTD</b></td>
+<td bgcolor="FF8000"><b>Blackhole OTD</b></td>
+<td bgcolor="FBEC5D"><b>New EV</b></td>
+<td bgcolor="FBEC5D"><b>Active EV</b></td>
+<td bgcolor="FBEC5D"><b>Blankhole EV</b></td>
+<td bgcolor="EE8262"><b>New S</b></td>
+<td bgcolor="EE8262"><b>Active S</b></td>
+<td bgcolor="EE8262"><b>In Progress S</b></td>
+<td bgcolor="8EE5EE"><b>Watchdog Active</b></td>
+<td bgcolor="8EE5EE"><b>Watchdog Blackhole</b></td>
+<td bgcolor="5DFC0A"><b>30 Day Volume</b></td>
 </tr>
 <?
 while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
