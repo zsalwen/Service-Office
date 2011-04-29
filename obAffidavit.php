@@ -307,21 +307,27 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 		}else{
 			$type = 'non';
 		}
-		// hard code
-		$header="<tr cellpadding='0' cellspacing='0'><td cellpadding='0' cellspacing='0' colspan='2' align='center' style='font-variant:small-caps; padding-top:0px; padding-bottom:0px;'><font size='6'>State of Maryland</font><br>
-		<font size='5'>Circuit Court for ".$court."</font></td></tr>
-			<tr cellpadding='0' cellspacing='0'><td cellpadding='0' cellspacing='0' class='a' width='75%' style='padding-top:0px; padding-bottom:0px;'><font size='2'>".$plaintiff."<br /><small>_____________________<br /><em>Plaintiff</em></small><br /><br />v.<br /><br />";
-				if ($d1[onAffidavit1]=='checked'){$header .= strtoupper($d1['name1']).'<br />';}
-				if ($d1['name2'] && $d1[onAffidavit2]=='checked'){$header .= strtoupper($d1['name2']).'<br />';}
-				if ($d1['name3'] && $d1[onAffidavit3]=='checked'){$header .= strtoupper($d1['name3']).'<br />';}
-				if ($d1['name4'] && $d1[onAffidavit4]=='checked'){$header .= strtoupper($d1['name4']).'<br />';}
-				if ($d1['name5'] && $d1[onAffidavit5]=='checked'){$header .= strtoupper($d1['name5']).'<br />';}
-				if ($d1['name6'] && $d1[onAffidavit6]=='checked'){$header .= strtoupper($d1['name6']).'<br />';}
-				$header .=strtoupper($d1['address1']).'<br />';
-				$header .=strtoupper($d1['city1']).', '.strtoupper($d1['state1']).' '.$d1['zip1'].'<br />';
-				$header .= "<small>_____________________<br /><em>Defendant</em></small></font></td>
-					<td cellpadding='0' cellspacing='0' align='right' width='25%' valign='top' style='padding-left:200px; padding-top:0px; padding-bottom:0px;' nowrap='nowrap'><div style='border:solid 1px #666666;'><center><font size='5'>Case Number<br />&nbsp;".str_replace(0,'&Oslash;',$d1[case_no])."</font></center></div><IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=[CORD]&width=300&height=40'><center>File Number: $d1[client_file]<br>[PAGE]</center></td></tr>";
-
+		// hard code header 
+		$header="<tr cellpadding='0' cellspacing='0'><td cellpadding='0' cellspacing='0' colspan='2' align='center' style='font-variant:small-caps; padding-top:0px; padding-bottom:0px;'><font size='5'>State of Maryland</font><br>
+		<font size='4'>Circuit Court for ".$court."</font></td></tr>
+			<tr cellpadding='0' cellspacing='0'><td cellpadding='0' cellspacing='0' class='a' width='75%' style='padding-top:0px; padding-bottom:0px;'><font size='1'>".$plaintiff."<br /><small>_____________________<br /><em>Plaintiff</em></small><br /><br />v.<br /><br />";
+		if ($d1[onAffidavit1]=='checked'){$header .= strtoupper($d1['name1']).'<br />';}
+		if ($d1['name2'] && $d1[onAffidavit2]=='checked'){$header .= strtoupper($d1['name2']).'<br />';}
+		if ($d1['name3'] && $d1[onAffidavit3]=='checked'){$header .= strtoupper($d1['name3']).'<br />';}
+		if ($d1['name4'] && $d1[onAffidavit4]=='checked'){$header .= strtoupper($d1['name4']).'<br />';}
+		if ($d1['name5'] && $d1[onAffidavit5]=='checked'){$header .= strtoupper($d1['name5']).'<br />';}
+		if ($d1['name6'] && $d1[onAffidavit6]=='checked'){$header .= strtoupper($d1['name6']).'<br />';}
+		$header .=strtoupper($d1['address1']).'<br />';
+		$header .=strtoupper($d1['city1']).', '.strtoupper($d1['state1']).' '.$d1['zip1'].'<br />';
+		$header .= "<small>_____________________<br /><em>Defendant</em></small></font></td>
+			<td cellpadding='0' cellspacing='0' align='right' width='25%' valign='top' style='padding-left:200px; padding-top:0px; padding-bottom:0px;' nowrap='nowrap'><div style='border:solid 1px #666666;'><center><font size='4'>Case Number<br />&nbsp;".str_replace(0,'&Oslash;',$d1[case_no])."</font></center></div><IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=[CORD]&width=300&height=40'><center>File Number: $d1[client_file]<br>[PAGE]</center></td></tr>";
+		
+		//hard code footer
+		$footer="<tr cellpadding='0' cellspacing='0'>
+						<td cellpadding='0' cellspacing='0' style='padding-top:0px; padding-bottom:0px;' valign='top'><font size='2'>____________________________________<br />Notary Public<br><br><br>SEAL</font></td>
+						<td cellpadding='0' cellspacing='0' style='padding-top:0px; padding-bottom:0px;' valign='top'><font size='2'>________________________<u>DATE:</u>________<br>[INFO]</font></td> 
+					</tr>";
+		
 		if ($type == "non"){
 			$article = "14-209(b)";
 			$result = "MAILING AND POSTING";
@@ -390,27 +396,16 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 				if ($iIDe){
 				$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iIDe' AND packetID='$packet'");
 				$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
-				$serverName=$d5[name];
-				$serverID=$hiID;
-				$serverAdd=$d5[address];
-				$serverCity=$d5[city];
-				$serverState=$d5[state];
-				$serverZip=$d5[zip];
-				$serverPhone=$d5[phone];
+				$info="$d5[name]<br>$d5[address]<br>$d5[city], $d5[state] $d5[zip]<br>$d5[phone]<br>$_SERVER[REMOTE_ADDR]";
 				if (!$d5){
-				$q3="SELECT * from ps_users where id = '$iIDe'";
-				$r3=@mysql_query($q3) or die(mysql_error());
-				$d3=mysql_fetch_array($r3, MYSQL_ASSOC);
-				$serverName=$d3[name];
-				$serverAdd=$d3[address];
-				$serverCity=$d3[city];
-				$serverState=$d3[state];
-				$serverZip=$d3[zip];
-				$serverPhone=$d3[phone];
+					$q3="SELECT * from ps_users where id = '$iIDe'";
+					$r3=@mysql_query($q3) or die(mysql_error());
+					$d3=mysql_fetch_array($r3, MYSQL_ASSOC);
+					$info="$d3[name]<br>$d3[address]<br>$d3[city], $d3[state] $d3[zip]<br>$d3[phone]<br>$_SERVER[REMOTE_ADDR]";
 				}
-					$historye = "";
-					$historye = "<u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:<br>I, $serverName, made the following efforts:</u>
-							<b>".$attemptse."</b>";
+				$historye = "";
+				$historye = "<u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:<br>I, $serverName, made the following efforts:</u>
+						<b>".$attemptse."</b>";
 				$cord=$d1[packet_id]."-".$def."-".$serverID."%";
 				?>
 					<table style='border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="80%" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){ echo $dim;}?>>
@@ -423,10 +418,7 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 						<font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct, to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.<br>
 						I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</font><br /></td>
 					</tr>
-					<tr cellpadding='0' cellspacing='0'>
-						<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-						<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?><br><?=$_SERVER[REMOTE_ADDR]?></font></td> 
-					</tr>
+					<?=str_replace('[INFO]',$info,$footer);?>
 				</table>
 				<? }
 				$pagee["$def"] = ob_get_clean();
@@ -438,23 +430,12 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 				<?
 				$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iIDd' AND packetID='$packet'");
 				$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
-				$serverName=$d5[name];
-				$serverID=$iIDd;
-				$serverAdd=$d5[address];
-				$serverCity=$d5[city];
-				$serverState=$d5[state];
-				$serverZip=$d5[zip];
-				$serverPhone=$d5[phone];
+				$info="$d5[name]<br>$d5[address]<br>$d5[city], $d5[state] $d5[zip]<br>$d5[phone]<br>$_SERVER[REMOTE_ADDR]";
 				if (!$d5){
-				$q3="SELECT * from ps_users where id = '$iIDd'";
-				$r3=@mysql_query($q3) or die(mysql_error());
-				$d3=mysql_fetch_array($r3, MYSQL_ASSOC);
-				$serverName=$d3[name];
-				$serverAdd=$d3[address];
-				$serverCity=$d3[city];
-				$serverState=$d3[state];
-				$serverZip=$d3[zip];
-				$serverPhone=$d3[phone];
+					$q3="SELECT * from ps_users where id = '$iIDd'";
+					$r3=@mysql_query($q3) or die(mysql_error());
+					$d3=mysql_fetch_array($r3, MYSQL_ASSOC);
+					$info="$d3[name]<br>$d3[address]<br>$d3[city], $d3[state] $d3[zip]<br>$d3[phone]<br>$_SERVER[REMOTE_ADDR]";
 				}
 					$historyd = "";
 					$historyd = "<u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:<br>I, $serverName, made the following efforts:</u>
@@ -469,10 +450,7 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 						<font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct, to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.<br>
 						I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</font><br></td></tr>
 					</tr>
-					<tr cellpadding='0' cellspacing='0'>
-						<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-						<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></font></td> 
-					</tr>
+					<?=str_replace('[INFO]',$info,$footer);?>
 				</table>
 				<? } 
 				$paged["$def"] = ob_get_clean();
@@ -484,23 +462,12 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 				<?
 				$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iIDc' AND packetID='$packet'");
 				$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
-				$serverName=$d5[name];
-				$serverID=$iIDc;
-				$serverAdd=$d5[address];
-				$serverCity=$d5[city];
-				$serverState=$d5[state];
-				$serverZip=$d5[zip];
-				$serverPhone=$d5[phone];
+				$info="$d5[name]<br>$d5[address]<br>$d5[city], $d5[state] $d5[zip]<br>$d5[phone]<br>$_SERVER[REMOTE_ADDR]";
 				if (!$d5){
-				$q3="SELECT * from ps_users where id = '$iIDc'";
-				$r3=@mysql_query($q3) or die(mysql_error());
-				$d3=mysql_fetch_array($r3, MYSQL_ASSOC);
-				$serverName=$d3[name];
-				$serverAdd=$d3[address];
-				$serverCity=$d3[city];
-				$serverState=$d3[state];
-				$serverZip=$d3[zip];
-				$serverPhone=$d3[phone];
+					$q3="SELECT * from ps_users where id = '$iIDc'";
+					$r3=@mysql_query($q3) or die(mysql_error());
+					$d3=mysql_fetch_array($r3, MYSQL_ASSOC);
+					$info="$d3[name]<br>$d3[address]<br>$d3[city], $d3[state] $d3[zip]<br>$d3[phone]<br>$_SERVER[REMOTE_ADDR]";
 				}
 					$historyc = "";
 					$historyc = "<u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:<br>I, $serverName, made the following efforts:</u>
@@ -515,10 +482,7 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 						<font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct, to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.<br>
 						I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</font><br></td>
 					</tr>
-					<tr cellpadding='0' cellspacing='0'>
-						<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-						<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></font></td> 
-					</tr>
+					<?=str_replace('[INFO]',$info,$footer);?>
 				</table>
 				<? 
 				}
@@ -531,23 +495,12 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 				<?
 				$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iIDb' AND packetID='$packet'");
 				$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
-				$serverName=$d5[name];
-				$serverID=$iIDb;
-				$serverAdd=$d5[address];
-				$serverCity=$d5[city];
-				$serverState=$d5[state];
-				$serverZip=$d5[zip];
-				$serverPhone=$d5[phone];
+				$info="$d5[name]<br>$d5[address]<br>$d5[city], $d5[state] $d5[zip]<br>$d5[phone]<br>$_SERVER[REMOTE_ADDR]";
 				if (!$d5){
-				$q3="SELECT * from ps_users where id = '$iIDb'";
-				$r3=@mysql_query($q3) or die(mysql_error());
-				$d3=mysql_fetch_array($r3, MYSQL_ASSOC);
-				$serverName=$d3[name];
-				$serverAdd=$d3[address];
-				$serverCity=$d3[city];
-				$serverState=$d3[state];
-				$serverZip=$d3[zip];
-				$serverPhone=$d3[phone];
+					$q3="SELECT * from ps_users where id = '$iIDb'";
+					$r3=@mysql_query($q3) or die(mysql_error());
+					$d3=mysql_fetch_array($r3, MYSQL_ASSOC);
+					$info="$d3[name]<br>$d3[address]<br>$d3[city], $d3[state] $d3[zip]<br>$d3[phone]<br>$_SERVER[REMOTE_ADDR]";
 				}
 				$historyb = "";
 				$historyb = "<u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:<br>I, $serverName, made the following efforts:</u>
@@ -562,10 +515,7 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 						<font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct, to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.<br>
 						I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</font><br></td>
 					</tr>
-					<tr cellpadding='0' cellspacing='0'>
-						<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-						<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></font></td> 
-					</tr>
+					<?=str_replace('[INFO]',$info,$footer);?>
 				</table>
 				<? 
 				}
@@ -578,23 +528,12 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 				<?
 				$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iIDa' AND packetID='$packet'");
 				$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
-				$serverName=$d5[name];
-				$serverID=$iIDa;
-				$serverAdd=$d5[address];
-				$serverCity=$d5[city];
-				$serverState=$d5[state];
-				$serverZip=$d5[zip];
-				$serverPhone=$d5[phone];
+				$info="$d5[name]<br>$d5[address]<br>$d5[city], $d5[state] $d5[zip]<br>$d5[phone]<br>$_SERVER[REMOTE_ADDR]";
 				if (!$d5){
-				$q3="SELECT * from ps_users where id = '$iIDa'";
-				$r3=@mysql_query($q3) or die(mysql_error());
-				$d3=mysql_fetch_array($r3, MYSQL_ASSOC);
-				$serverName=$d3[name];
-				$serverAdd=$d3[address];
-				$serverCity=$d3[city];
-				$serverState=$d3[state];
-				$serverZip=$d3[zip];
-				$serverPhone=$d3[phone];
+					$q3="SELECT * from ps_users where id = '$iIDa'";
+					$r3=@mysql_query($q3) or die(mysql_error());
+					$d3=mysql_fetch_array($r3, MYSQL_ASSOC);
+					$info="$d3[name]<br>$d3[address]<br>$d3[city], $d3[state] $d3[zip]<br>$d3[phone]<br>$_SERVER[REMOTE_ADDR]";
 				}
 					$historya = "";
 					$historya = "<u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:<br>I, $serverName, made the following efforts:</u>
@@ -609,10 +548,7 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 						<font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct, to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.<br>
 						I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</font><br /></td>
 					</tr>
-					<tr cellpadding='0' cellspacing='0'>
-						<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>____________________________________<br />+Notary Public+<br /><br /><br />SEAL</font></td>
-						<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></font></td> 
-					</tr>
+					<?=str_replace('[INFO]',$info,$footer);?>
 				</table>
 				<? 
 				} 
@@ -626,23 +562,12 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 				 <? 
 				$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iID' AND packetID='$packet'");
 				$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
-				$serverName=$d5[name];
-				$serverID=$iID;
-				$serverAdd=$d5[address];
-				$serverCity=$d5[city];
-				$serverState=$d5[state];
-				$serverZip=$d5[zip];
-				$serverPhone=$d5[phone];
+				$info="$d5[name]<br>$d5[address]<br>$d5[city], $d5[state] $d5[zip]<br>$d5[phone]<br>$_SERVER[REMOTE_ADDR]";
 				if (!$d5){
-				$q3="SELECT * from ps_users where id = '$iID'";
-				$r3=@mysql_query($q3) or die(mysql_error());
-				$d3=mysql_fetch_array($r3, MYSQL_ASSOC);
-				$serverName=$d3[name];
-				$serverAdd=$d3[address];
-				$serverCity=$d3[city];
-				$serverState=$d3[state];
-				$serverZip=$d3[zip];
-				$serverPhone=$d3[phone];
+					$q3="SELECT * from ps_users where id = '$iID'";
+					$r3=@mysql_query($q3) or die(mysql_error());
+					$d3=mysql_fetch_array($r3, MYSQL_ASSOC);
+					$info="$d3[name]<br>$d3[address]<br>$d3[city], $d3[state] $d3[zip]<br>$d3[phone]<br>$_SERVER[REMOTE_ADDR]";
 				}
 				$cord=$d1[packet_id]."-".$def."-".$serverID."%";
 				echo str_replace('[CORD]',$cord,$header);
@@ -659,10 +584,7 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 					<font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.<br>
 					I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</font><br /></td>
 					</tr>
-					<tr cellpadding='0' cellspacing='0'>
-						<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>____________________________________<br />+Notary Public+<br /><br /><br />SEAL</font></td>
-						<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></font></td> 
-					</tr>
+					<?=str_replace('[INFO]',$info,$footer);?>
 				</table>
 				<? }
 				 }
@@ -677,23 +599,12 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 				<?
 				$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iiID' AND packetID='$packet'");
 				$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
-				$serverName=$d5[name];
-				$serverID=$iiID;
-				$serverAdd=$d5[address];
-				$serverCity=$d5[city];
-				$serverState=$d5[state];
-				$serverZip=$d5[zip];
-				$serverPhone=$d5[phone];
+				$info="$d5[name]<br>$d5[address]<br>$d5[city], $d5[state] $d5[zip]<br>$d5[phone]<br>$_SERVER[REMOTE_ADDR]";
 				if (!$d5){
-				$q3="SELECT * from ps_users where id = '$iiID'";
-				$r3=@mysql_query($q3) or die(mysql_error());
-				$d3=mysql_fetch_array($r3, MYSQL_ASSOC);
-				$serverName=$d3[name];
-				$serverAdd=$d3[address];
-				$serverCity=$d3[city];
-				$serverState=$d3[state];
-				$serverZip=$d3[zip];
-				$serverPhone=$d3[phone];
+					$q3="SELECT * from ps_users where id = '$iiID'";
+					$r3=@mysql_query($q3) or die(mysql_error());
+					$d3=mysql_fetch_array($r3, MYSQL_ASSOC);
+					$info="$d3[name]<br>$d3[address]<br>$d3[city], $d3[state] $d3[zip]<br>$d3[phone]<br>$_SERVER[REMOTE_ADDR]";
 				}
 				$cord=$d1[packet_id]."-".$def."-".$serverID."%";
 				echo str_replace('[CORD]',$cord,$header);
@@ -706,10 +617,7 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 					<div style='padding-left:20px;'><?=stripslashes(str_replace('[SERVERNAME]',$serverName,$history2))?></div>
 					<font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct to the best of my knowledge, information and belief.<br>I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action.</font><br /></td>
 					</tr>
-					<tr cellpadding='0' cellspacing='0'>
-						<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-						<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></font></td> 
-					</tr>
+					<?=str_replace('[INFO]',$info,$footer);?>
 				</table>
 				<? } 
 				 $pageII["$def"] = ob_get_clean();
@@ -720,23 +628,12 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 				<?
 				$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iiiID' AND packetID='$packet'");
 				$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
-				$serverName=$d5[name];
-				$serverID=$iiiID;
-				$serverAdd=$d5[address];
-				$serverCity=$d5[city];
-				$serverState=$d5[state];
-				$serverZip=$d5[zip];
-				$serverPhone=$d5[phone];
+				$info="$d5[name]<br>$d5[address]<br>$d5[city], $d5[state] $d5[zip]<br>$d5[phone]<br>$_SERVER[REMOTE_ADDR]";
 				if (!$d5){
-				$q3="SELECT * from ps_users where id = '$iiiID'";
-				$r3=@mysql_query($q3) or die(mysql_error());
-				$d3=mysql_fetch_array($r3, MYSQL_ASSOC);
-				$serverName=$d3[name];
-				$serverAdd=$d3[address];
-				$serverCity=$d3[city];
-				$serverState=$d3[state];
-				$serverZip=$d3[zip];
-				$serverPhone=$d3[phone];
+					$q3="SELECT * from ps_users where id = '$iiiID'";
+					$r3=@mysql_query($q3) or die(mysql_error());
+					$d3=mysql_fetch_array($r3, MYSQL_ASSOC);
+					$info="$d3[name]<br>$d3[address]<br>$d3[city], $d3[state] $d3[zip]<br>$d3[phone]<br>$_SERVER[REMOTE_ADDR]";
 				}
 				$cord=$d1[packet_id]."-".$def."-".$serverID."%";
 				echo str_replace('[CORD]',$cord,$header); ?>
@@ -748,10 +645,7 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 					<font size='2' <? if($noMail == 1 && !$_GET[mail]){ echo 'class="dim"';}?>>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct to the best of my knowledge, information and belief.  And that I mailed the above papers under section 14-209(b) to <?=strtoupper($d1["name$def"])?>.<br>
 					I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action.</font><br /></td>
 					</tr>
-					<tr  cellpadding='0' cellspacing='0' <? if($noMail == 1 && !$_GET[mail]){ echo 'class="dim"';}?>>
-						<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-						<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></font></td> 
-					</tr>
+					<?=str_replace('[INFO]',$info,$footer);?>
 					<tr>
 						<td colspan="2" style="padding-left:20px"><?=stripslashes($history4)?></td>
 					</tr>
@@ -772,23 +666,12 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 				<?
 				$r5=@mysql_query("SELECT * from ps_signatory where serverID='$deliveryID' AND packetID='$packet'");
 				$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
-				$serverName=$d5[name];
-				$serverID=$deliveryID;
-				$serverAdd=$d5[address];
-				$serverCity=$d5[city];
-				$serverState=$d5[state];
-				$serverZip=$d5[zip];
-				$serverPhone=$d5[phone];
+				$info="$d5[name]<br>$d5[address]<br>$d5[city], $d5[state] $d5[zip]<br>$d5[phone]<br>$_SERVER[REMOTE_ADDR]";
 				if (!$d5){
-				$q3="SELECT * from ps_users where id = '$deliveryID'";
-				$r3=@mysql_query($q3) or die(mysql_error());
-				$d3=mysql_fetch_array($r3, MYSQL_ASSOC);
-				$serverName=$d3[name];
-				$serverAdd=$d3[address];
-				$serverCity=$d3[city];
-				$serverState=$d3[state];
-				$serverZip=$d3[zip];
-				$serverPhone=$d3[phone];
+					$q3="SELECT * from ps_users where id = '$deliveryID'";
+					$r3=@mysql_query($q3) or die(mysql_error());
+					$d3=mysql_fetch_array($r3, MYSQL_ASSOC);
+					$info="$d3[name]<br>$d3[address]<br>$d3[city], $d3[state] $d3[zip]<br>$d3[phone]<br>$_SERVER[REMOTE_ADDR]";
 				}
 				$cord=$d1[packet_id]."-".$def."-".$serverID."%";
 				if ($residentDesc){
@@ -803,10 +686,7 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 						<font size='2'>I solemnly affirm under the penalties of perjury that the contents of <? if ($type == 'non'){ ?>section (i) of <? }?>this <?=strtolower($amended)?>affidavit are true and correct to the best of my knowledge, information and belief<? if (($type == 'pd' && $nondef == '1') || ($type == 'pd' && $d1[packet_id] >= "10000") || strtotime($d1[reopenDate]) >= strtotime('2010-05-01')){?>, and that I served<? if (($type == 'pd' && $nondef == '1') && (strpos($delivery,"USUAL PLACE OF ABODE") || strpos($delivery,"RESIDENTIAL PROPERTY"))){ ?> at the usual place of abode<? } ?> the <?=$addlDocs?> and other papers to <? if ($resident){ echo strtoupper($resident);}else{ echo '[PERSON SERVED]';}?>, <? if ($residentDesc){echo $desc;}else{ echo '[RELATION TO DEFENDANT]';}?><? if ($serveAddress){ echo ', at '.$serveAddress;}?><? }elseif($type == 'pd' && $nondef != '1'){?>, and that I served the <?=$addlDocs?> and other papers to <?=strtoupper($d1["name$def"])?><? if ($serveAddress){ echo ', at '.strtoupper($serveAddress);}?><? } ?>.<br>
 						I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action.</font><br /></td>
 					</tr>
-					<tr cellpadding='0' cellspacing='0'>
-						<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>____________________________________<br />Notary Public<br /><br /><br />SEAL</font></td>
-						<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" valign="top"><font size='2'>________________________<u>DATE:</u>________<br /><?=$serverName?><br /><?=$serverAdd?><br /><?=$serverCity?>, <?=$serverState?> <?=$serverZip?><br /><?=$serverPhone?><br><?=$_SERVER[REMOTE_ADDR]?></font></td> 
-					</tr>
+					<?=str_replace('[INFO]',$info,$footer);?>
 				</table>
 				<? 
 				$pagePD["$def"] = ob_get_clean();
