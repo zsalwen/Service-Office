@@ -575,7 +575,7 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 					<table style='border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="780px" align="center" bgcolor="#FFFFFF" <?=$dim?>>
 						<?=str_replace('[CORD]',$cord,$header);?>
 						<tr cellpadding='0' cellspacing='0'>
-							<td colspan="2" align="left" style="font-weight:bold; text-decoration:underline" height="30px" valign="top"><center><b><u><?=$amended?>Affidavit of Attempted Delivery<? if ($iID==$iiID){ echo " and Posting";} ?></u></b></center>
+							<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="left" valign="top"><center><b><u><?=$amended?>Affidavit of Attempted Delivery<? if ($iID==$iiID){ echo " and Posting";} ?></u></b></center>
 							<center><font size='4'><b><?=$result?></b></font></center>
 							<font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it in the above-captioned case<?=$lossMit?> (the "Papers"), I, <?=$serverName?>, do hereby affirm that the contents of the following <?=strtolower($amended)?>affidavit are true and correct, based on my personal knowledge:</font><br>
 							<div style='padding-left:20px;'><?=stripslashes(str_replace('[SERVERNAME]',$serverName,$history))?></div>
