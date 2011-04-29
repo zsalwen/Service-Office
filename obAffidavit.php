@@ -33,6 +33,17 @@ function county2envelope2($county){
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
 	return $d[to1];
 }
+function attorneyCustomLang($att,$str){
+	$r=@mysql_query("SELECT * FROM ps_str_replace where attorneys_id = '$att'");
+	while ($d=mysql_fetch_array($r, MYSQL_ASSOC)){
+		if ($d['str_search'] && $d['str_replace'] && $str && $att){
+			$str = str_replace($d['str_search'], strtoupper($d['str_replace']), $str);
+			$str = str_replace(strtoupper($d['str_search']), strtoupper($d['str_replace']), $str);
+			//echo "<script>alert('Replacing ".strtoupper($d['str_search'])." with ".strtoupper($d['str_replace']).".');< /script>";
+		}
+	}
+	return $str;
+}
 ?>
 <style>
 .dim {
