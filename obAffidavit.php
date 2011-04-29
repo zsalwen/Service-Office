@@ -318,7 +318,7 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 		$header .=strtoupper($d1['address1']).'<br />';
 		$header .=strtoupper($d1['city1']).', '.strtoupper($d1['state1']).' '.$d1['zip1'].'<br />';
 		$header .= "<small>_____________________<br /><em>Defendant</em></small></font></td>
-			<td cellpadding='0' cellspacing='0' align='right' width='25%' valign='top' style='padding-left:200px; padding-top:0px; padding-bottom:0px;' nowrap='nowrap'><div style='border:solid 1px #666666; width:300px;'><center><font size='4'>Case Number<br />&nbsp;".str_replace(0,'&Oslash;',$d1[case_no])."</font></center></div><IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=[CORD]&width=300&height=40'><center>File Number: $d1[client_file]<br>[PAGE]</center></td></tr>";
+			<td cellpadding='0' cellspacing='0' align='right' width='25%' valign='top' style='padding-left:200px; padding-top:0px; padding-bottom:0px;' nowrap='nowrap'><div style='border:solid 1px #666666; width:300px;'><center><font size='4'>Case Number<br />&nbsp;".str_replace(0,'&Oslash;',$d1[case_no])."</font></center></div><IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=[CORD]&width=300&height=40' width='300' height='40'><center>File Number: $d1[client_file]<br>[PAGE]</center></td></tr>";
 		
 		//hard code footer
 		$footer="<tr cellpadding='0' cellspacing='0'>
@@ -394,6 +394,7 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 				if ($iIDe){
 					$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iIDe' AND packetID='$packet'");
 					$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
+					$serverID=$hiID;
 					$serverName=$d5[name];
 					$info="$d5[name]<br>$d5[address]<br>$d5[city], $d5[state] $d5[zip]<br>$d5[phone]<br>$_SERVER[REMOTE_ADDR]";
 					if (!$d5){
@@ -426,6 +427,7 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 				if ($iIDd){
 					$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iIDd' AND packetID='$packet'");
 					$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
+					$serverID=$iIDd;
 					$serverName=$d5[name];
 					$info="$d5[name]<br>$d5[address]<br>$d5[city], $d5[state] $d5[zip]<br>$d5[phone]<br>$_SERVER[REMOTE_ADDR]";
 					if (!$d5){
@@ -457,6 +459,7 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 				if ($iIDc){
 					$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iIDc' AND packetID='$packet'");
 					$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
+					$serverID=$iIDc;
 					$serverName=$d5[name];
 					$info="$d5[name]<br>$d5[address]<br>$d5[city], $d5[state] $d5[zip]<br>$d5[phone]<br>$_SERVER[REMOTE_ADDR]";
 					if (!$d5){
@@ -489,6 +492,7 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 				if ($iIDb){
 					$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iIDb' AND packetID='$packet'");
 					$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
+					$serverID=$iIDb;
 					$serverName=$d5[name];
 					$info="$d5[name]<br>$d5[address]<br>$d5[city], $d5[state] $d5[zip]<br>$d5[phone]<br>$_SERVER[REMOTE_ADDR]";
 					if (!$d5){
@@ -521,6 +525,7 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 				if ($iIDa){
 					$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iIDa' AND packetID='$packet'");
 					$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
+					$serverID=$iIDa;
 					$serverName=$d5[name];
 					$info="$d5[name]<br>$d5[address]<br>$d5[city], $d5[state] $d5[zip]<br>$d5[phone]<br>$_SERVER[REMOTE_ADDR]";
 					if (!$d5){
@@ -554,6 +559,7 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 				if ($iID != $iIDa){
 					$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iID' AND packetID='$packet'");
 					$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
+					$serverID=$iID;
 					$serverName=$d5[name];
 					$info="$d5[name]<br>$d5[address]<br>$d5[city], $d5[state] $d5[zip]<br>$d5[phone]<br>$_SERVER[REMOTE_ADDR]";
 					if (!$d5){
@@ -585,6 +591,7 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 					if ($iID != $iiID){
 						$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iiID' AND packetID='$packet'");
 						$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
+						$serverID=$iiID;
 						$serverName=$d5[name];
 						$info="$d5[name]<br>$d5[address]<br>$d5[city], $d5[state] $d5[zip]<br>$d5[phone]<br>$_SERVER[REMOTE_ADDR]";
 						if (!$d5){
@@ -613,6 +620,7 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 				if($iiiID){
 					$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iiiID' AND packetID='$packet'");
 					$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
+					$serverID=$iiiID;
 					$serverName=$d5[name];
 					$info="$d5[name]<br>$d5[address]<br>$d5[city], $d5[state] $d5[zip]<br>$d5[phone]<br>$_SERVER[REMOTE_ADDR]";
 					if (!$d5){
@@ -650,6 +658,7 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 				ob_start();
 				$r5=@mysql_query("SELECT * from ps_signatory where serverID='$deliveryID' AND packetID='$packet'");
 				$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
+				$serverID=$deliveryID;
 				$serverName=$d5[name];
 				$info="$d5[name]<br>$d5[address]<br>$d5[city], $d5[state] $d5[zip]<br>$d5[phone]<br>$_SERVER[REMOTE_ADDR]";
 				if (!$d5){
