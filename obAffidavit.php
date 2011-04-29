@@ -71,8 +71,6 @@ function attorneyCustomLang($att,$str){
 td { font-variant:small-caps; font-size:12px;}
 td.a {font-size:14px;}
 td.b {font-size:24px;}
-table { page-break-after:always;}
-p {border-style:solid; border-width:thick; border-collapse:collapse;}
 </style>
 <?
 /*
