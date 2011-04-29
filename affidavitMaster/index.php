@@ -53,6 +53,18 @@ function explodePrint($str){
 			$implode .= $explode["$i"];
 		}
 	}
+	$explode=explode('</table>',$implode);
+	$count=count($explode)-1;
+	$i=-1;
+	while ($i < $count){$i++;
+		if ($i == $count){
+			$implode .= $explode["$i"];
+		}elseif($i > 0){
+			$implode .= "<br>".$explode["$i"];
+		}else{
+			$implode .= $explode["$i"];
+		}
+	}
 	return $implode;
 }
 function pdfAD($id){
