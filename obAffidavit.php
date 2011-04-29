@@ -320,7 +320,7 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 		$header .=strtoupper($d1['address1']).'<br />';
 		$header .=strtoupper($d1['city1']).', '.strtoupper($d1['state1']).' '.$d1['zip1'].'<br />';
 		$header .= "<small>_____________________<br /><em>Defendant</em></small></font></td>
-			<td cellpadding='0' cellspacing='0' align='right' width='25%' valign='top' style='padding-left:200px; padding-top:0px; padding-bottom:0px;' nowrap='nowrap'><div style='border:solid 1px #666666;'><center><font size='4'>Case Number<br />&nbsp;".str_replace(0,'&Oslash;',$d1[case_no])."</font></center></div><IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=[CORD]&width=300&height=40'><center>File Number: $d1[client_file]<br>[PAGE]</center></td></tr>";
+			<td cellpadding='0' cellspacing='0' align='right' width='25%' valign='top' style='padding-left:200px; padding-top:0px; padding-bottom:0px;' nowrap='nowrap'><div style='border:solid 1px #666666; width:300px;'><center><font size='4'>Case Number<br />&nbsp;".str_replace(0,'&Oslash;',$d1[case_no])."</font></center></div><IMG SRC='http://staff.mdwestserve.com/barcode.php?barcode=[CORD]&width=300&height=40'><center>File Number: $d1[client_file]<br>[PAGE]</center></td></tr>";
 		
 		//hard code footer
 		$footer="<tr cellpadding='0' cellspacing='0'>
@@ -332,14 +332,14 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 			$article = "14-209(b)";
 			$result = "MAILING AND POSTING";
 			if ($attempts != ''){
-					$history = "<u><font size='2'>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:<br>I, [SERVERNAME], made the following efforts:</font></u>
-					<b>".$attempts."</b>";
-				}elseif($attemptsa != ''){
-					$history = "<u><font-size='2'>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:<br>I, [SERVERNAME], made the following efforts:</font></u>
-					<b>".$attemptsa."</b>";
-					$iID=$iIDa;
-				}
-				$history2 = "<u><font-size='2'>Include the date of the posting and a description of the location of the posting on the property:<br>I, [SERVERNAME], posted the Papers to the property in the following manner:</font></u><b>".$posting."</b>";
+				$history = "<u><font size='2'>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:<br>I, [SERVERNAME], made the following efforts:</font></u>
+				<b>".$attempts."</b>";
+			}elseif($attemptsa != ''){
+				$history = "<u><font-size='2'>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:<br>I, [SERVERNAME], made the following efforts:</font></u>
+				<b>".$attemptsa."</b>";
+				$iID=$iIDa;
+			}
+			$history2 = "<u><font-size='2'>Include the date of the posting and a description of the location of the posting on the property:<br>I, [SERVERNAME], posted the Papers to the property in the following manner:</font></u><b>".$posting."</b>";
 			if ($mailing == ''){
 				$history3 = "<div class='dim' style='font-weight:300'><u><font size='2'>State the date on which the required papers were mailed by first-class and certified mail, return receipt requested, and the name and address of the addressee:</font></u>
 					<center><font size='36 px'>AWAITING MAILING<br>DO NOT FILE</font></center></div>";
@@ -353,7 +353,7 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 					<b>".$mailing."</b>";
 				}
 			}
-				$history4 = "<u>If available, the original certified mail return receipt shall be attached to the affidavit.</u><div style='height:50px; width:550px; border:double 4px; color:#666'>Affix original certified mail return receipt here.</div>";
+			$history4 = "<u>If available, the original certified mail return receipt shall be attached to the affidavit.</u><div style='height:50px; width:550px; border:double 4px; color:#666'>Affix original certified mail return receipt here.</div>";
 		}
 		if ($type == "pd"){
 			$article = "14-209(a)";
@@ -394,162 +394,159 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 				//Multiple servers' attemps begin here
 				//6th server
 				if ($iIDe){
-				$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iIDe' AND packetID='$packet'");
-				$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
-				$info="$d5[name]<br>$d5[address]<br>$d5[city], $d5[state] $d5[zip]<br>$d5[phone]<br>$_SERVER[REMOTE_ADDR]";
-				if (!$d5){
-					$q3="SELECT * from ps_users where id = '$iIDe'";
-					$r3=@mysql_query($q3) or die(mysql_error());
-					$d3=mysql_fetch_array($r3, MYSQL_ASSOC);
-					$info="$d3[name]<br>$d3[address]<br>$d3[city], $d3[state] $d3[zip]<br>$d3[phone]<br>$_SERVER[REMOTE_ADDR]";
-				}
-				$historye = "";
-				$historye = "<u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:<br>I, $serverName, made the following efforts:</u>
-						<b>".$attemptse."</b>";
-				$cord=$d1[packet_id]."-".$def."-".$serverID."%";
-				?>
-					<table style='border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="80%" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){ echo $dim;}?>>
-					<? echo str_replace('[CORD]',$cord,$header); ?>
-					<tr cellpadding='0' cellspacing='0'>
-						<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="left" valign="top"><center><u><b><?=$amended?>Affidavit of Attempted Delivery<? if ($iID && !$iIDa && !$iIDb && !$iIDc && !$iIDd && !$iIDe){ echo " and Posting";}?></b></u></center>
-						<center font size='4'><b><?=$result?></font></b></center>
-						<font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it in the above-captioned case<?=$lossMit?> (the "Papers"), I, <?=$serverName?>, do hereby affirm that the contents of the following <?=strtolower($amended)?>affidavit are true and correct, based on my personal knowledge:</font><br>
-						<div style='padding-left:20px;'><?=stripslashes($historye)?></div>
-						<font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct, to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.<br>
-						I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</font><br /></td>
-					</tr>
-					<?=str_replace('[INFO]',$info,$footer);?>
-				</table>
+					$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iIDe' AND packetID='$packet'");
+					$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
+					$serverName=$d5[name];
+					$info="$d5[name]<br>$d5[address]<br>$d5[city], $d5[state] $d5[zip]<br>$d5[phone]<br>$_SERVER[REMOTE_ADDR]";
+					if (!$d5){
+						$r3=@mysql_query("SELECT * from ps_users where id = '$iIDe'") or die(mysql_error());
+						$d3=mysql_fetch_array($r3, MYSQL_ASSOC);
+						$serverName=$d3[name];
+						$info="$d3[name]<br>$d3[address]<br>$d3[city], $d3[state] $d3[zip]<br>$d3[phone]<br>$_SERVER[REMOTE_ADDR]";
+					}
+					$historye = "";
+					$historye = "<u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:<br>I, $serverName, made the following efforts:</u>
+							<b>".$attemptse."</b>";
+					$cord=$d1[packet_id]."-".$def."-".$serverID."%";
+					?>
+						<table style='border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="80%" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){ echo $dim;}?>>
+						<?=str_replace('[CORD]',$cord,$header); ?>
+						<tr cellpadding='0' cellspacing='0'>
+							<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="left" valign="top"><center><u><b><?=$amended?>Affidavit of Attempted Delivery<? if ($iID && !$iIDa && !$iIDb && !$iIDc && !$iIDd && !$iIDe){ echo " and Posting";}?></b></u></center>
+							<center font size='4'><b><?=$result?></font></b></center>
+							<font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it in the above-captioned case<?=$lossMit?> (the "Papers"), I, <?=$serverName?>, do hereby affirm that the contents of the following <?=strtolower($amended)?>affidavit are true and correct, based on my personal knowledge:</font><br>
+							<div style='padding-left:20px;'><?=stripslashes($historye)?></div>
+							<font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct, to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.<br>
+							I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</font><br /></td>
+						</tr>
+						<?=str_replace('[INFO]',$info,$footer);?>
+					</table>
 				<? }
 				$pagee["$def"] = ob_get_clean();
 				ob_start();
 				//5th server
 				if ($iIDd){
-				 ?>
+					$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iIDd' AND packetID='$packet'");
+					$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
+					$serverName=$d5[name];
+					$info="$d5[name]<br>$d5[address]<br>$d5[city], $d5[state] $d5[zip]<br>$d5[phone]<br>$_SERVER[REMOTE_ADDR]";
+					if (!$d5){
+						$r3=@mysql_query("SELECT * from ps_users where id = '$iIDd'") or die(mysql_error());
+						$d3=mysql_fetch_array($r3, MYSQL_ASSOC);
+						$serverName=$d3[name];
+						$info="$d3[name]<br>$d3[address]<br>$d3[city], $d3[state] $d3[zip]<br>$d3[phone]<br>$_SERVER[REMOTE_ADDR]";
+					}
+						$historyd = "";
+						$historyd = "<u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:<br>I, $serverName, made the following efforts:</u>
+								<b>".$attemptsd."</b>";
+					$cord=$d1[packet_id]."-".$def."-".$serverID."%"; ?>
 					<table style='border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="80%" cellpadding="0" cellspacing="0" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
-				<?
-				$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iIDd' AND packetID='$packet'");
-				$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
-				$info="$d5[name]<br>$d5[address]<br>$d5[city], $d5[state] $d5[zip]<br>$d5[phone]<br>$_SERVER[REMOTE_ADDR]";
-				if (!$d5){
-					$q3="SELECT * from ps_users where id = '$iIDd'";
-					$r3=@mysql_query($q3) or die(mysql_error());
-					$d3=mysql_fetch_array($r3, MYSQL_ASSOC);
-					$info="$d3[name]<br>$d3[address]<br>$d3[city], $d3[state] $d3[zip]<br>$d3[phone]<br>$_SERVER[REMOTE_ADDR]";
-				}
-					$historyd = "";
-					$historyd = "<u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:<br>I, $serverName, made the following efforts:</u>
-							<b>".$attemptsd."</b>";
-				$cord=$d1[packet_id]."-".$def."-".$serverID."%";
-				echo str_replace('[CORD]',$cord,$header); ?>
-					<tr cellpadding='0' cellspacing='0'>
-						<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="left" valign="top"><center><u><b><?=$amended?>Affidavit of Attempted Delivery</b></u></center>
-						<center><font size='4'><b><?=$result?></b></font></center>
-						<font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it in the above-captioned case<?=$lossMit?> (the "Papers"), I, <?=$serverName?>, do hereby affirm that the contents of the following <?=strtolower($amended)?>affidavit are true and correct, based on my personal knowledge:</font><br>
-						<div style='padding-left:20px;'><?=stripslashes($historyd)?></div>
-						<font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct, to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.<br>
-						I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</font><br></td></tr>
-					</tr>
-					<?=str_replace('[INFO]',$info,$footer);?>
-				</table>
+						<?=str_replace('[CORD]',$cord,$header); ?>
+						<tr cellpadding='0' cellspacing='0'>
+							<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="left" valign="top"><center><u><b><?=$amended?>Affidavit of Attempted Delivery</b></u></center>
+							<center><font size='4'><b><?=$result?></b></font></center>
+							<font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it in the above-captioned case<?=$lossMit?> (the "Papers"), I, <?=$serverName?>, do hereby affirm that the contents of the following <?=strtolower($amended)?>affidavit are true and correct, based on my personal knowledge:</font><br>
+							<div style='padding-left:20px;'><?=stripslashes($historyd)?></div>
+							<font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct, to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.<br>
+							I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</font><br></td></tr>
+						</tr>
+						<?=str_replace('[INFO]',$info,$footer);?>
+					</table>
 				<? } 
 				$paged["$def"] = ob_get_clean();
 				ob_start();
 				//4th server
 				if ($iIDc){
-				?>
+					$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iIDc' AND packetID='$packet'");
+					$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
+					$serverName=$d5[name];
+					$info="$d5[name]<br>$d5[address]<br>$d5[city], $d5[state] $d5[zip]<br>$d5[phone]<br>$_SERVER[REMOTE_ADDR]";
+					if (!$d5){
+						$r3=@mysql_query("SELECT * from ps_users where id = '$iIDc'") or die(mysql_error());
+						$d3=mysql_fetch_array($r3, MYSQL_ASSOC);
+						$serverName=$d3[name];
+						$info="$d3[name]<br>$d3[address]<br>$d3[city], $d3[state] $d3[zip]<br>$d3[phone]<br>$_SERVER[REMOTE_ADDR]";
+					}
+						$historyc = "";
+						$historyc = "<u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:<br>I, $serverName, made the following efforts:</u>
+								<b>".$attemptsc."</b>";
+					$cord=$d1[packet_id]."-".$def."-".$serverID."%"; ?>
 					<table style='border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="80%" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
-				<?
-				$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iIDc' AND packetID='$packet'");
-				$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
-				$info="$d5[name]<br>$d5[address]<br>$d5[city], $d5[state] $d5[zip]<br>$d5[phone]<br>$_SERVER[REMOTE_ADDR]";
-				if (!$d5){
-					$q3="SELECT * from ps_users where id = '$iIDc'";
-					$r3=@mysql_query($q3) or die(mysql_error());
-					$d3=mysql_fetch_array($r3, MYSQL_ASSOC);
-					$info="$d3[name]<br>$d3[address]<br>$d3[city], $d3[state] $d3[zip]<br>$d3[phone]<br>$_SERVER[REMOTE_ADDR]";
-				}
-					$historyc = "";
-					$historyc = "<u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:<br>I, $serverName, made the following efforts:</u>
-							<b>".$attemptsc."</b>";
-				$cord=$d1[packet_id]."-".$def."-".$serverID."%";
-				echo str_replace('[CORD]',$cord,$header); ?>
-					<tr cellpadding='0' cellspacing='0'>
-						<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="left" valign="top"><center><b><u><?=$amended?>Affidavit of Attempted Delivery</u></b></center>
-						<center><font size='4'><b><?=$result?></b></font></center>
-						<font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it in the above-captioned case<?=$lossMit?> (the "Papers"), I, <?=$serverName?>, do hereby affirm that the contents of the following <?=strtolower($amended)?>affidavit are true and correct, based on my personal knowledge:</font><br>
-						<div style='padding-left:20px;'><?=stripslashes($historyc)?></div>
-						<font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct, to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.<br>
-						I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</font><br></td>
-					</tr>
-					<?=str_replace('[INFO]',$info,$footer);?>
-				</table>
+						<?=str_replace('[CORD]',$cord,$header); ?>
+						<tr cellpadding='0' cellspacing='0'>
+							<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="left" valign="top"><center><b><u><?=$amended?>Affidavit of Attempted Delivery</u></b></center>
+							<center><font size='4'><b><?=$result?></b></font></center>
+							<font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it in the above-captioned case<?=$lossMit?> (the "Papers"), I, <?=$serverName?>, do hereby affirm that the contents of the following <?=strtolower($amended)?>affidavit are true and correct, based on my personal knowledge:</font><br>
+							<div style='padding-left:20px;'><?=stripslashes($historyc)?></div>
+							<font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct, to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.<br>
+							I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</font><br></td>
+						</tr>
+						<?=str_replace('[INFO]',$info,$footer);?>
+					</table>
 				<? 
 				}
 				$pagec["$def"] = ob_get_clean();
 				ob_start();
 				//3rd server
 				if ($iIDb){
-				?>
+					$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iIDb' AND packetID='$packet'");
+					$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
+					$serverName=$d5[name];
+					$info="$d5[name]<br>$d5[address]<br>$d5[city], $d5[state] $d5[zip]<br>$d5[phone]<br>$_SERVER[REMOTE_ADDR]";
+					if (!$d5){
+						$r3=@mysql_query("SELECT * from ps_users where id = '$iIDb'") or die(mysql_error());
+						$d3=mysql_fetch_array($r3, MYSQL_ASSOC);
+						$serverName=$d3[name];
+						$info="$d3[name]<br>$d3[address]<br>$d3[city], $d3[state] $d3[zip]<br>$d3[phone]<br>$_SERVER[REMOTE_ADDR]";
+					}
+					$historyb = "";
+					$historyb = "<u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:<br>I, $serverName, made the following efforts:</u>
+							<b>".$attemptsb."</b>";
+					$cord=$d1[packet_id]."-".$def."-".$serverID."%"; ?>
 					<table style='border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="80%" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
-				<?
-				$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iIDb' AND packetID='$packet'");
-				$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
-				$info="$d5[name]<br>$d5[address]<br>$d5[city], $d5[state] $d5[zip]<br>$d5[phone]<br>$_SERVER[REMOTE_ADDR]";
-				if (!$d5){
-					$q3="SELECT * from ps_users where id = '$iIDb'";
-					$r3=@mysql_query($q3) or die(mysql_error());
-					$d3=mysql_fetch_array($r3, MYSQL_ASSOC);
-					$info="$d3[name]<br>$d3[address]<br>$d3[city], $d3[state] $d3[zip]<br>$d3[phone]<br>$_SERVER[REMOTE_ADDR]";
-				}
-				$historyb = "";
-				$historyb = "<u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:<br>I, $serverName, made the following efforts:</u>
-						<b>".$attemptsb."</b>";
-				$cord=$d1[packet_id]."-".$def."-".$serverID."%";
-				echo str_replace('[CORD]',$cord,$header); ?>
-					<tr cellpadding='0' cellspacing='0'>
-						<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="left" valign="top"><center><b><u><?=$amended?>Affidavit of Attempted Delivery</u></b></center>
-						<center><font size='4'><b><?=$result?></b></font></center>
-						<font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it in the above-captioned case<?=$lossMit?> (the "Papers"), I, <?=$serverName?>, do hereby affirm that the contents of the following <?=strtolower($amended)?>affidavit are true and correct, based on my personal knowledge:</font><br>
-						<div style='padding-left:20px;'><?=stripslashes($historyb)?></div>
-						<font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct, to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.<br>
-						I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</font><br></td>
-					</tr>
-					<?=str_replace('[INFO]',$info,$footer);?>
-				</table>
+						<?=str_replace('[CORD]',$cord,$header); ?>
+						<tr cellpadding='0' cellspacing='0'>
+							<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="left" valign="top"><center><b><u><?=$amended?>Affidavit of Attempted Delivery</u></b></center>
+							<center><font size='4'><b><?=$result?></b></font></center>
+							<font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it in the above-captioned case<?=$lossMit?> (the "Papers"), I, <?=$serverName?>, do hereby affirm that the contents of the following <?=strtolower($amended)?>affidavit are true and correct, based on my personal knowledge:</font><br>
+							<div style='padding-left:20px;'><?=stripslashes($historyb)?></div>
+							<font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct, to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.<br>
+							I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</font><br></td>
+						</tr>
+						<?=str_replace('[INFO]',$info,$footer);?>
+					</table>
 				<? 
 				}
 				$pageb["$def"] = ob_get_clean();
 				ob_start();
 				//2nd server
 				if ($iIDa){
-				?>
+					$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iIDa' AND packetID='$packet'");
+					$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
+					$serverName=$d5[name];
+					$info="$d5[name]<br>$d5[address]<br>$d5[city], $d5[state] $d5[zip]<br>$d5[phone]<br>$_SERVER[REMOTE_ADDR]";
+					if (!$d5){
+						$r3=@mysql_query("SELECT * from ps_users where id = '$iIDa'") or die(mysql_error());
+						$d3=mysql_fetch_array($r3, MYSQL_ASSOC);
+						$serverName=$d3[name];
+						$info="$d3[name]<br>$d3[address]<br>$d3[city], $d3[state] $d3[zip]<br>$d3[phone]<br>$_SERVER[REMOTE_ADDR]";
+					}
+						$historya = "";
+						$historya = "<u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:<br>I, $serverName, made the following efforts:</u>
+								<b>".$attemptsa."</b>";
+					$cord=$d1[packet_id]."-".$def."-".$serverID."%"; ?>
 					<table style='border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="80%" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
-				<?
-				$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iIDa' AND packetID='$packet'");
-				$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
-				$info="$d5[name]<br>$d5[address]<br>$d5[city], $d5[state] $d5[zip]<br>$d5[phone]<br>$_SERVER[REMOTE_ADDR]";
-				if (!$d5){
-					$q3="SELECT * from ps_users where id = '$iIDa'";
-					$r3=@mysql_query($q3) or die(mysql_error());
-					$d3=mysql_fetch_array($r3, MYSQL_ASSOC);
-					$info="$d3[name]<br>$d3[address]<br>$d3[city], $d3[state] $d3[zip]<br>$d3[phone]<br>$_SERVER[REMOTE_ADDR]";
-				}
-					$historya = "";
-					$historya = "<u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:<br>I, $serverName, made the following efforts:</u>
-							<b>".$attemptsa."</b>";
-				$cord=$d1[packet_id]."-".$def."-".$serverID."%";
-				echo str_replace('[CORD]',$cord,$header); ?>
-					<tr cellpadding='0' cellspacing='0'>
-						<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="left" valign="top"><center><b><u><?=$amended?>Affidavit of Attempted Delivery</u></b></center>
-						<center><font size='4'><b><?=$result?></b></font></center>
-						<font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it in the above-captioned case<?=$lossMit?> (the "Papers"), I, <?=$serverName?>, do hereby affirm that the contents of the following <?=strtolower($amended)?>affidavit are true and correct, based on my personal knowledge:</font><br>
-						<div style='padding-left:20px;'><?=stripslashes($historya)?></div>
-						<font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct, to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.<br>
-						I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</font><br /></td>
-					</tr>
-					<?=str_replace('[INFO]',$info,$footer);?>
-				</table>
+						<?=str_replace('[CORD]',$cord,$header); ?>
+						<tr cellpadding='0' cellspacing='0'>
+							<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="left" valign="top"><center><b><u><?=$amended?>Affidavit of Attempted Delivery</u></b></center>
+							<center><font size='4'><b><?=$result?></b></font></center>
+							<font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it in the above-captioned case<?=$lossMit?> (the "Papers"), I, <?=$serverName?>, do hereby affirm that the contents of the following <?=strtolower($amended)?>affidavit are true and correct, based on my personal knowledge:</font><br>
+							<div style='padding-left:20px;'><?=stripslashes($historya)?></div>
+							<font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct, to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.<br>
+							I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</font><br /></td>
+						</tr>
+						<?=str_replace('[INFO]',$info,$footer);?>
+					</table>
 				<? 
 				} 
 				$pagea["$def"] = ob_get_clean();
@@ -557,99 +554,91 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 				//1st server, or servera if non-Burson
 				//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 				if ($iID != $iIDa){
-				?>
+					$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iID' AND packetID='$packet'");
+					$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
+					$serverName=$d5[name];
+					$info="$d5[name]<br>$d5[address]<br>$d5[city], $d5[state] $d5[zip]<br>$d5[phone]<br>$_SERVER[REMOTE_ADDR]";
+					if (!$d5){
+						$r3=@mysql_query("SELECT * from ps_users where id = '$iID'") or die(mysql_error());
+						$d3=mysql_fetch_array($r3, MYSQL_ASSOC);
+						$serverName=$d3[name];
+						$info="$d3[name]<br>$d3[address]<br>$d3[city], $d3[state] $d3[zip]<br>$d3[phone]<br>$_SERVER[REMOTE_ADDR]";
+					}
+					$cord=$d1[packet_id]."-".$def."-".$serverID."%"; ?>
 					<table style='border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="80%" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
-				 <? 
-				$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iID' AND packetID='$packet'");
-				$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
-				$info="$d5[name]<br>$d5[address]<br>$d5[city], $d5[state] $d5[zip]<br>$d5[phone]<br>$_SERVER[REMOTE_ADDR]";
-				if (!$d5){
-					$q3="SELECT * from ps_users where id = '$iID'";
-					$r3=@mysql_query($q3) or die(mysql_error());
-					$d3=mysql_fetch_array($r3, MYSQL_ASSOC);
-					$info="$d3[name]<br>$d3[address]<br>$d3[city], $d3[state] $d3[zip]<br>$d3[phone]<br>$_SERVER[REMOTE_ADDR]";
-				}
-				$cord=$d1[packet_id]."-".$def."-".$serverID."%";
-				echo str_replace('[CORD]',$cord,$header);
-				?>
-					<tr cellpadding='0' cellspacing='0'>
-						<td colspan="2" align="center" style="font-weight:bold; text-decoration:underline" height="30px" valign="top"><center><b><u><?=$amended?>Affidavit of Attempted Delivery<? if ($iID==$iiID){ echo " and Posting";} ?></u></b></center>
-						<center><font size='4'><b><?=$result?></b></font></center>
-						<font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it in the above-captioned case<?=$lossMit?> (the "Papers"), I, <?=$serverName?>, do hereby affirm that the contents of the following <?=strtolower($amended)?>affidavit are true and correct, based on my personal knowledge:</font><br>
-						<div style='padding-left:20px;'><?=stripslashes(str_replace('[SERVERNAME]',$serverName,$history))?></div>
-				<?
-				if ($iID == $iiID){
-				}else{
-				?>        
-					<font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.<br>
-					I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</font><br /></td>
-					</tr>
-					<?=str_replace('[INFO]',$info,$footer);?>
-				</table>
-				<? }
+						<?=str_replace('[CORD]',$cord,$header);?>
+						<tr cellpadding='0' cellspacing='0'>
+							<td colspan="2" align="center" style="font-weight:bold; text-decoration:underline" height="30px" valign="top"><center><b><u><?=$amended?>Affidavit of Attempted Delivery<? if ($iID==$iiID){ echo " and Posting";} ?></u></b></center>
+							<center><font size='4'><b><?=$result?></b></font></center>
+							<font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it in the above-captioned case<?=$lossMit?> (the "Papers"), I, <?=$serverName?>, do hereby affirm that the contents of the following <?=strtolower($amended)?>affidavit are true and correct, based on my personal knowledge:</font><br>
+							<div style='padding-left:20px;'><?=stripslashes(str_replace('[SERVERNAME]',$serverName,$history))?></div>
+					<? if ($iID != $iiID){ ?>        
+						<font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct to the best of my knowledge, information and belief<? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?>, and that I did attempt service as set forth above<? }?><? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?>, and that I served the <?=$addlDocs?> and all other papers filed with it to [PERSON SERVED]<? }?>.<br>
+						I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action<? if ($type != 'non' && $d1[attorneys_id] == "1"){ ?> and that I served [PERSON SERVED], [RELATION TO DEFENDANT]<? }?><? if ($type == 'non' && $d1[attorneys_id] == "1"){ ?> and that I did attempt service as set forth above<? }?>.</font><br /></td>
+						</tr>
+						<?=str_replace('[INFO]',$info,$footer);?>
+					</table>
+					<? }
 				 }
 				$pageI["$def"] = ob_get_clean();
 				ob_start();
 				 //Multiple servers' attempts end here
 				if($posting){
-				if ($iID==$iiID){
-				}else{
-				?>
-					<table style='border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="80%" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
-				<?
-				$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iiID' AND packetID='$packet'");
-				$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
-				$info="$d5[name]<br>$d5[address]<br>$d5[city], $d5[state] $d5[zip]<br>$d5[phone]<br>$_SERVER[REMOTE_ADDR]";
-				if (!$d5){
-					$q3="SELECT * from ps_users where id = '$iiID'";
-					$r3=@mysql_query($q3) or die(mysql_error());
-					$d3=mysql_fetch_array($r3, MYSQL_ASSOC);
-					$info="$d3[name]<br>$d3[address]<br>$d3[city], $d3[state] $d3[zip]<br>$d3[phone]<br>$_SERVER[REMOTE_ADDR]";
-				}
-				$cord=$d1[packet_id]."-".$def."-".$serverID."%";
-				echo str_replace('[CORD]',$cord,$header);
-				?> 
-					<tr cellpadding='0' cellspacing='0'>
-						<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="left" valign="top"><center><b><u><?=$amended?>Affidavit of Posting</u></b></center>
-						<center><font size='4'><b><?=$result?></b></font></center>
-						<font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it in the above-captioned case<?=$lossMit?> (the "Papers"), I, <?=$serverName?>, do hereby affirm that the contents of the following <?=strtolower($amended)?>affidavit are true and correct, based on my personal knowledge:</font><br>
-					<? } ?>
-					<div style='padding-left:20px;'><?=stripslashes(str_replace('[SERVERNAME]',$serverName,$history2))?></div>
-					<font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct to the best of my knowledge, information and belief.<br>I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action.</font><br /></td>
-					</tr>
-					<?=str_replace('[INFO]',$info,$footer);?>
-				</table>
+					if ($iID != $iiID){
+						$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iiID' AND packetID='$packet'");
+						$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
+						$serverName=$d5[name];
+						$info="$d5[name]<br>$d5[address]<br>$d5[city], $d5[state] $d5[zip]<br>$d5[phone]<br>$_SERVER[REMOTE_ADDR]";
+						if (!$d5){
+							$r3=@mysql_query("SELECT * from ps_users where id = '$iiID'") or die(mysql_error());
+							$d3=mysql_fetch_array($r3, MYSQL_ASSOC);
+							$serverName=$d3[name];
+							$info="$d3[name]<br>$d3[address]<br>$d3[city], $d3[state] $d3[zip]<br>$d3[phone]<br>$_SERVER[REMOTE_ADDR]";
+						}
+						$cord=$d1[packet_id]."-".$def."-".$serverID."%"; ?>
+						<table style='border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="80%" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
+							<?=str_replace('[CORD]',$cord,$header);?>
+							<tr cellpadding='0' cellspacing='0'>
+								<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="left" valign="top"><center><b><u><?=$amended?>Affidavit of Posting</u></b></center>
+								<center><font size='4'><b><?=$result?></b></font></center>
+								<font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it in the above-captioned case<?=$lossMit?> (the "Papers"), I, <?=$serverName?>, do hereby affirm that the contents of the following <?=strtolower($amended)?>affidavit are true and correct, based on my personal knowledge:</font><br>
+						<? } ?>
+						<div style='padding-left:20px;'><?=stripslashes(str_replace('[SERVERNAME]',$serverName,$history2))?></div>
+						<font size='2'>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct to the best of my knowledge, information and belief.<br>I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action.</font><br /></td>
+						</tr>
+						<?=str_replace('[INFO]',$info,$footer);?>
+					</table>
 				<? } 
-				 $pageII["$def"] = ob_get_clean();
-				 $postingID["$def"] = $iiID;
-				 ob_start();
-				  if($iiiID){ ?>
+				$pageII["$def"] = ob_get_clean();
+				$postingID["$def"] = $iiID;
+				ob_start();
+				if($iiiID){
+					$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iiiID' AND packetID='$packet'");
+					$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
+					$serverName=$d5[name];
+					$info="$d5[name]<br>$d5[address]<br>$d5[city], $d5[state] $d5[zip]<br>$d5[phone]<br>$_SERVER[REMOTE_ADDR]";
+					if (!$d5){
+						$r3=@mysql_query("SELECT * from ps_users where id = '$iiiID'") or die(mysql_error());
+						$d3=mysql_fetch_array($r3, MYSQL_ASSOC);
+						$serverName=$d3[name];
+						$info="$d3[name]<br>$d3[address]<br>$d3[city], $d3[state] $d3[zip]<br>$d3[phone]<br>$_SERVER[REMOTE_ADDR]";
+					}
+					$cord=$d1[packet_id]."-".$def."-".$serverID."%"; ?>
 					<table style='border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="80%" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
-				<?
-				$r5=@mysql_query("SELECT * from ps_signatory where serverID='$iiiID' AND packetID='$packet'");
-				$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
-				$info="$d5[name]<br>$d5[address]<br>$d5[city], $d5[state] $d5[zip]<br>$d5[phone]<br>$_SERVER[REMOTE_ADDR]";
-				if (!$d5){
-					$q3="SELECT * from ps_users where id = '$iiiID'";
-					$r3=@mysql_query($q3) or die(mysql_error());
-					$d3=mysql_fetch_array($r3, MYSQL_ASSOC);
-					$info="$d3[name]<br>$d3[address]<br>$d3[city], $d3[state] $d3[zip]<br>$d3[phone]<br>$_SERVER[REMOTE_ADDR]";
-				}
-				$cord=$d1[packet_id]."-".$def."-".$serverID."%";
-				echo str_replace('[CORD]',$cord,$header); ?>
-					<tr cellpadding='0' cellspacing='0'>
-						<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="left" valign="top"><center><b><u><?=$amended?>Affidavit of Mailing</u></b></center>
-						<center><font size='4'><b><?=$result?></b></font></center>
-						<font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it in the above-captioned case<?=$lossMit?> (the "Papers"), I, <?=$serverName?>, do hereby affirm that the contents of the following <?=strtolower($amended)?>affidavit are true and correct, based on my personal knowledge:</font><br>
-						<div style='padding-left:20px;'><?=stripslashes($history3)?></div>    
-					<font size='2' <? if($noMail == 1 && !$_GET[mail]){ echo 'class="dim"';}?>>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct to the best of my knowledge, information and belief.  And that I mailed the above papers under section 14-209(b) to <?=strtoupper($d1["name$def"])?>.<br>
-					I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action.</font><br /></td>
-					</tr>
-					<?=str_replace('[INFO]',$info,$footer);?>
-					<tr>
-						<td colspan="2" style="padding-left:20px"><?=stripslashes($history4)?></td>
-					</tr>
-				</table>
+						<?=str_replace('[CORD]',$cord,$header); ?>
+						<tr cellpadding='0' cellspacing='0'>
+							<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="left" valign="top"><center><b><u><?=$amended?>Affidavit of Mailing</u></b></center>
+							<center><font size='4'><b><?=$result?></b></font></center>
+							<font size='2'>Pursuant to Maryland Real Property Article 7-105.1 and Maryland Rules of Procedure <?=$article?> <?=$result?> a copy of the <?=$addlDocs?> and all other papers filed with it in the above-captioned case<?=$lossMit?> (the "Papers"), I, <?=$serverName?>, do hereby affirm that the contents of the following <?=strtolower($amended)?>affidavit are true and correct, based on my personal knowledge:</font><br>
+							<div style='padding-left:20px;'><?=stripslashes($history3)?></div>    
+						<font size='2' <? if($noMail == 1 && !$_GET[mail]){ echo 'class="dim"';}?>>I solemnly affirm under the penalties of perjury that the contents of this <?=strtolower($amended)?>affidavit are true and correct to the best of my knowledge, information and belief.  And that I mailed the above papers under section 14-209(b) to <?=strtoupper($d1["name$def"])?>.<br>
+						I, <?=$serverName?>, certify that I am over eighteen years old and not a party to this action.</font><br /></td>
+						</tr>
+						<?=str_replace('[INFO]',$info,$footer);?>
+						<tr>
+							<td colspan="2" style="padding-left:20px"><?=stripslashes($history4)?></td>
+						</tr>
+					</table>
 				<? }
 				 $pageIII["$def"] = ob_get_clean();
 				//------------------------------------------------------------------------------------------------------------------
@@ -661,23 +650,22 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 				//------------------------------------------------------------------------------------------------------------------
 			}elseif($type == "pd"){ 
 				ob_start();
-				?>
-				<table style='border-collapse:collapse; border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="80%" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
-				<?
 				$r5=@mysql_query("SELECT * from ps_signatory where serverID='$deliveryID' AND packetID='$packet'");
 				$d5=mysql_fetch_array($r5, MYSQL_ASSOC);
+				$serverName=$d5[name];
 				$info="$d5[name]<br>$d5[address]<br>$d5[city], $d5[state] $d5[zip]<br>$d5[phone]<br>$_SERVER[REMOTE_ADDR]";
 				if (!$d5){
-					$q3="SELECT * from ps_users where id = '$deliveryID'";
-					$r3=@mysql_query($q3) or die(mysql_error());
+					$r3=@mysql_query("SELECT * from ps_users where id = '$deliveryID'") or die(mysql_error());
 					$d3=mysql_fetch_array($r3, MYSQL_ASSOC);
+					$serverName=$d3[name];
 					$info="$d3[name]<br>$d3[address]<br>$d3[city], $d3[state] $d3[zip]<br>$d3[phone]<br>$_SERVER[REMOTE_ADDR]";
 				}
 				$cord=$d1[packet_id]."-".$def."-".$serverID."%";
 				if ($residentDesc){
 					$desc=strtoupper(str_replace('CO-A BORROWER IN THE ABOVE-REFERENCED CASE', 'A BORROWER IN THE ABOVE-REFERENCED CASE', str_replace('BORROWER','A BORROWER IN THE ABOVE-REFERENCED CASE', attorneyCustomLang($d1[attorneys_id],strtoupper($residentDesc)))));
-				}
-				echo str_replace('[CORD]',$cord,$header); ?>
+				} ?>
+				<table style='border-collapse:collapse; border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="80%" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
+					<?=str_replace('[CORD]',$cord,$header); ?>
 					<tr cellpadding='0' cellspacing='0'>
 						<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="left" valign="top"><center><b><u><?=$amended?>Affidavit of Personal Delivery</u></b></center>
 						<center><font size='3'><b><?=$result?></b></font></center>
