@@ -53,19 +53,7 @@ function explodePrint($str){
 			$implode .= $explode["$i"];
 		}
 	}
-	$explode2=explode('</table>',$implode);
-	$count=count($explode2)-1;
-	$i=-1;
-	while ($i < $count){$i++;
-		if ($i == $count){
-			$implode2 .= $explode2["$i"];
-		}elseif($i > 0){
-			$implode2 .= "<br>".$explode2["$i"];
-		}else{
-			$implode2 .= $explode2["$i"];
-		}
-	}
-	return $implode2;
+	return $implode;
 }
 function pdfAD($id){
 $r=@mysql_query("select LiveAffidavit from ps_packets where packet_id = '$id'");
