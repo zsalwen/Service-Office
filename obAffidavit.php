@@ -351,7 +351,7 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 					<b>".$mailing."</b>";
 				}
 			}
-			$history4 = "<u>If available, the original certified mail return receipt shall be attached to the affidavit.</u><div style='height:50px; width:550px; border:double 4px; color:#666'>Affix original certified mail return receipt here.</div>";
+			$history4 = "<u>If available, the original certified mail return receipt shall be attached to the affidavit.</u><div height='100%' style='width:550px; border:double 4px; color:#666'>Affix original certified mail return receipt here.</div>";
 		}
 		if ($type == "pd"){
 			$article = "14-209(a)";
@@ -408,7 +408,7 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 							<b>".$attemptse."</b>";
 					$cord=$d1[packet_id]."-".$def."-".$serverID."%";
 					?>
-						<table style='border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="100%" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){ echo $dim;}?>>
+						<table style='border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="750px" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){ echo $dim;}?>>
 						<?=str_replace('[CORD]',$cord,$header); ?>
 						<tr cellpadding='0' cellspacing='0'>
 							<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="left" valign="top"><center><u><b><?=$amended?>Affidavit of Attempted Delivery<? if ($iID && !$iIDa && !$iIDb && !$iIDc && !$iIDd && !$iIDe){ echo " and Posting";}?></b></u></center>
@@ -440,7 +440,7 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 						$historyd = "<u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:<br>I, $serverName, made the following efforts:</u>
 								<b>".$attemptsd."</b>";
 					$cord=$d1[packet_id]."-".$def."-".$serverID."%"; ?>
-					<table style='border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="100%" cellpadding="0" cellspacing="0" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
+					<table style='border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="750px" cellpadding="0" cellspacing="0" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
 						<?=str_replace('[CORD]',$cord,$header); ?>
 						<tr cellpadding='0' cellspacing='0'>
 							<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="left" valign="top"><center><u><b><?=$amended?>Affidavit of Attempted Delivery</b></u></center>
@@ -472,7 +472,7 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 						$historyc = "<u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:<br>I, $serverName, made the following efforts:</u>
 								<b>".$attemptsc."</b>";
 					$cord=$d1[packet_id]."-".$def."-".$serverID."%"; ?>
-					<table style='border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="100%" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
+					<table style='border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="750px" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
 						<?=str_replace('[CORD]',$cord,$header); ?>
 						<tr cellpadding='0' cellspacing='0'>
 							<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="left" valign="top"><center><b><u><?=$amended?>Affidavit of Attempted Delivery</u></b></center>
@@ -505,7 +505,7 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 					$historyb = "<u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:<br>I, $serverName, made the following efforts:</u>
 							<b>".$attemptsb."</b>";
 					$cord=$d1[packet_id]."-".$def."-".$serverID."%"; ?>
-					<table style='border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="100%" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
+					<table style='border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="750px" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
 						<?=str_replace('[CORD]',$cord,$header); ?>
 						<tr cellpadding='0' cellspacing='0'>
 							<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="left" valign="top"><center><b><u><?=$amended?>Affidavit of Attempted Delivery</u></b></center>
@@ -538,7 +538,7 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 						$historya = "<u>Describe with particularity the good faith efforts to serve the mortgagor or grantor, ".$d1["name$def"].",  by personal delivery:<br>I, $serverName, made the following efforts:</u>
 								<b>".$attemptsa."</b>";
 					$cord=$d1[packet_id]."-".$def."-".$serverID."%"; ?>
-					<table style='border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="100%" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
+					<table style='border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="750px" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
 						<?=str_replace('[CORD]',$cord,$header); ?>
 						<tr cellpadding='0' cellspacing='0'>
 							<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="left" valign="top"><center><b><u><?=$amended?>Affidavit of Attempted Delivery</u></b></center>
@@ -569,7 +569,7 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 						$info="$d3[name]<br>$d3[address]<br>$d3[city], $d3[state] $d3[zip]<br>$d3[phone]<br>$_SERVER[REMOTE_ADDR]";
 					}
 					$cord=$d1[packet_id]."-".$def."-".$serverID."%"; ?>
-					<table style='border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="100%" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
+					<table style='border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="750px" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
 						<?=str_replace('[CORD]',$cord,$header);?>
 						<tr cellpadding='0' cellspacing='0'>
 							<td colspan="2" align="center" style="font-weight:bold; text-decoration:underline" height="30px" valign="top"><center><b><u><?=$amended?>Affidavit of Attempted Delivery<? if ($iID==$iiID){ echo " and Posting";} ?></u></b></center>
@@ -601,7 +601,7 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 							$info="$d3[name]<br>$d3[address]<br>$d3[city], $d3[state] $d3[zip]<br>$d3[phone]<br>$_SERVER[REMOTE_ADDR]";
 						}
 						$cord=$d1[packet_id]."-".$def."-".$serverID."%"; ?>
-						<table style='border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="100%" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
+						<table style='border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="750px" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
 							<?=str_replace('[CORD]',$cord,$header);?>
 							<tr cellpadding='0' cellspacing='0'>
 								<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="left" valign="top"><center><b><u><?=$amended?>Affidavit of Posting</u></b></center>
@@ -630,7 +630,7 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 						$info="$d3[name]<br>$d3[address]<br>$d3[city], $d3[state] $d3[zip]<br>$d3[phone]<br>$_SERVER[REMOTE_ADDR]";
 					}
 					$cord=$d1[packet_id]."-".$def."-".$serverID."%"; ?>
-					<table style='border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="100%" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
+					<table style='border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="750px" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
 						<?=str_replace('[CORD]',$cord,$header); ?>
 						<tr cellpadding='0' cellspacing='0'>
 							<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="left" valign="top"><center><b><u><?=$amended?>Affidavit of Mailing</u></b></center>
@@ -671,7 +671,7 @@ function makeAffidavit($p,$defendant,$level,$user_id){
 				if ($residentDesc){
 					$desc=strtoupper(str_replace('CO-A BORROWER IN THE ABOVE-REFERENCED CASE', 'A BORROWER IN THE ABOVE-REFERENCED CASE', str_replace('BORROWER','A BORROWER IN THE ABOVE-REFERENCED CASE', attorneyCustomLang($d1[attorneys_id],strtoupper($residentDesc)))));
 				} ?>
-				<table style='border-collapse:collapse; border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="100%" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
+				<table style='border-collapse:collapse; border-collapse:collapse; page-break-after:always; padding:0px;' cellpadding="0" cellspacing="0" width="750px" align="center" bgcolor="#FFFFFF" <? if (strtoupper($d1[affidavit_status]) != "SERVICE CONFIRMED"){echo $dim;}?>>
 					<?=str_replace('[CORD]',$cord,$header); ?>
 					<tr cellpadding='0' cellspacing='0'>
 						<td cellpadding='0' cellspacing='0' style="padding-top:0px; padding-bottom:0px;" colspan="2" align="left" valign="top"><center><b><u><?=$amended?>Affidavit of Personal Delivery</u></b></center>
