@@ -26,16 +26,16 @@ else {
 	echo '<td valign="top"> 
 	<table style="padding:0px; margin:0px;">
 		<tr>
-			<td class="action" style="cursor:pointer; padding:0px; margin:0px;" onclick="ChgText(\''.$row['defendantfullname'].'\',\'name1\')"><b>1</b></td>
-			<td class="action" style="cursor:pointer; padding:0px; margin:0px;" onclick="ChgText(\''.$row['defendantfullname'].'\',\'name2\')"><b>2</b></td>
-			<td class="action" style="cursor:pointer; padding:0px; margin:0px;" onclick="ChgText(\''.$row['defendantfullname'].'\',\'name3\')"><b>3</b></td>
-			<td class="action" style="cursor:pointer; padding:0px; margin:0px;" onclick="ChgText(\''.$row['defendantfullname'].'\',\'name4\')"><b>4</b></td>
-			<td class="action" style="cursor:pointer; padding:0px; margin:0px;" onclick="ChgText(\''.$row['defendantfullname'].'\',\'name5\')"><b>5</b></td>
-			<td class="action" style="cursor:pointer; padding:0px; margin:0px;" onclick="ChgText(\''.$row['defendantfullname'].'\',\'name6\')"><b>6</b></td>
+			<td class="action" style="cursor:pointer; padding:0px; margin:0px;" onclick="ChgText(\''.$row['defendantfullname'].'\',\'name1\')">1</td>
+			<td class="action" style="cursor:pointer; padding:0px; margin:0px;" onclick="ChgText(\''.$row['defendantfullname'].'\',\'name2\')">2</td>
+			<td class="action" style="cursor:pointer; padding:0px; margin:0px;" onclick="ChgText(\''.$row['defendantfullname'].'\',\'name3\')">3</td>
+			<td class="action" style="cursor:pointer; padding:0px; margin:0px;" onclick="ChgText(\''.$row['defendantfullname'].'\',\'name4\')">4</td>
+			<td class="action" style="cursor:pointer; padding:0px; margin:0px;" onclick="ChgText(\''.$row['defendantfullname'].'\',\'name5\')">5</td>
+			<td class="action" style="cursor:pointer; padding:0px; margin:0px;" onclick="ChgText(\''.$row['defendantfullname'].'\',\'name6\')">6</td>
 	<td>'.$row['defendantfullname'].'</td></tr></table></td> <td valign="top">
 	<table style="padding:0px; margin:0px;">
 		<tr>
-			<td class="action" style="cursor:pointer; padding:0px; margin:0px;" onclick="setAddress1(\''.$row['defendantaddress1'].' '.$row['defendantaddress2'].'\',\''.$row['defendantcity'].'\',\''.$row['defendantstate'].'\',\''.$row['defendantzip'].'\')"><b>1</b></td>
+			<td class="action" style="cursor:pointer; padding:0px; margin:0px;" onclick="setAddress1(\''.$row['defendantaddress1'].' '.$row['defendantaddress2'].'\',\''.$row['defendantcity'].'\',\''.$row['defendantstate'].'\',\''.$row['defendantzip'].'\')">1</td>
 	<td>'.$row['defendantaddress1'].'</td></tr></table></td>';
 	echo '<td valign="top">'.$row['defendantaddress2'].'</td> <td valign="top">'.$row['defendantcity'].'</td> <td valign="top">'.$row['defendantstate'].'</td>  <td valign="top">'.$row['defendantzip'].'</td>';
 	echo '<td valign="top">'.$row['status'].'</td> <td valign="top">'.$row['statusdate'].'</td> ';
