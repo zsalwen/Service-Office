@@ -24,7 +24,7 @@ else {
 
 	echo '<tr>';
 	echo '<td valign="top"> 
-	<table>
+	<table style="padding:0px; margin:0px;">
 		<tr>
 			<td class="action" style="cursor:pointer; padding:0px; margin:0px;" onclick="ChgText(\''.$row['defendantfullname'].'\',\'name1\')"><b>1</b></td>
 			<td class="action" style="cursor:pointer; padding:0px; margin:0px;" onclick="ChgText(\''.$row['defendantfullname'].'\',\'name2\')"><b>2</b></td>
@@ -33,7 +33,7 @@ else {
 			<td class="action" style="cursor:pointer; padding:0px; margin:0px;" onclick="ChgText(\''.$row['defendantfullname'].'\',\'name5\')"><b>5</b></td>
 			<td class="action" style="cursor:pointer; padding:0px; margin:0px;" onclick="ChgText(\''.$row['defendantfullname'].'\',\'name6\')"><b>6</b></td>
 	<td>'.$row['defendantfullname'].'</td></tr></table></td> <td valign="top">
-	<table>
+	<table style="padding:0px; margin:0px;">
 		<tr>
 			<td class="action" style="cursor:pointer; padding:0px; margin:0px;" onclick="setAddress1(\''.$row['defendantaddress1'].' '.$row['defendantaddress2'].'\',\''.$row['defendantcity'].'\',\''.$row['defendantstate'].'\',\''.$row['defendantzip'].'\')"><b>1</b></td>
 	<td>'.$row['defendantaddress1'].'</td></tr></table></td>';
