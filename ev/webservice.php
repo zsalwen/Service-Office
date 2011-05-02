@@ -3,7 +3,7 @@ mysql_connect();
 mysql_select_db('core');
 echo "<style>
 td {padding:0px; font-size:14px;}
-td.action {width:10px; height:10px; background-color:yellow}
+td.action {width:15px; height:10px; background-color:yellow}
 td.action:hover {color:red; background-color:black;}
 </style>";
 $select_query = "Select create_id, create_date, update_id, update_date, filenumber,clientidentifier,defendantnumber, defendantfullname,defendantaddress1,defendantaddress2,defendantcity,defendantstate,defendantstateid, defendantzip, defendantrelationship,other,status,statusdate From defendants  Where filenumber = '$_GET[fileNumber]'";
