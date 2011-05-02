@@ -135,7 +135,7 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {$i++;
         <td class="ppd" align="left">Service Rate: <input size="3" name="package[contractor][<?=$d[eviction_id]?>]"/><br>
 		Server: <select name="server_id"><option value=''>Select Server</option>
 <?
-$q2= "select * from ps_users where contract = 'YES'";
+$q2= "select * from ps_users where contract = 'YES' ORDER BY id ASC";
 $r2=@mysql_query($q2) or die("Query: $q2<br>".mysql_error());
 while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)) {
 ?>

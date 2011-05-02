@@ -346,7 +346,7 @@ while ($d=mysql_fetch_array($r, MYSQL_ASSOC)) {$i++;
 	</tr>
 <?  
 } 
-$q2= "select * from ps_users where contract = 'YES'";
+$q2= "select * from ps_users where contract = 'YES' ORDER BY id ASC";
 $r2=@mysql_query($q2) or die("Query: $q2<br>".mysql_error());
 while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)) {
 	$sList .= "<option value='$d2[id]'>";
