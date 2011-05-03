@@ -82,12 +82,11 @@ function colorCode2($hours){
 	if ($hours <= -24){ return "000000; color:FFFFFF !important;"; }
 	if ($hours > -24 && $hours <= 0){ return "FF0000; color:000000 !important;"; }
 	if ($hours > 0 && $hours <= 24){ return "FFFF00; color:000000 !important;"; }
-	if ($hours > 24 && $hours <= 48){ return "CCFF00; color:000000 !important;"; }
 	if ($hours > 48){ return "00FF00; color:000000 !important;"; }
 }
 
 function withCourier($packet,$prefix){
-	$search=$prefix.$packet;
+	$search=$prefix.$packet
 	$q="SELECT * from docuTrack WHERE packet='$search' and document='OUT WITH COURIER' ORDER BY trackID DESC LIMIT 0,1";
 	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
@@ -252,6 +251,70 @@ function evictionActiveList($id,$packet){ $_SESSION[active]++;
 	$data.='</ol>';
 	return $data;
 }
+//begin standard_packets functions:******************************************************
+function standardActiveList($id,$letter,$packet){ $_SESSION[active]++;
+	$data='<ol>';
+	$pkt='';
+	if ($packet != '0' && $packet != ''){
+		$pkt=" AND packet_id < '$packet'";
+	}
+	$r=@mysql_query("select packet_id, address1, address1a, address1b, address1c, address1d, address1e, affidavit_status, service_status, filing_status, circuit_court, attorneys_id, estFileDate, case_no, caseLookupFlag, reopenDate, affidavit_status2, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from standard_packets where server_id$letter='$id' and service_status = 'SERVICE COMPLETE' and fileDate <> '0000-00-00'$pkt order by packet_id");
+	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
+		$estHours=($d[estHours]*24)-date('G');
+		if ($d[affidavit_status2] == 'REOPENED'){
+			$hours=$d[reopenHours]*24;
+		}else{
+			$hours=stripHours($d[hours]);
+		}
+		if ($hours > $_SESSION[cap]){
+			if ($d[case_no] == '' && $d[caseLookupFlag] != '0'){
+				$case="<span style='background-color:#FFFFFF; color:000000;'><small>NO CASE!</small></span>";
+			}else{
+				$case='';
+			}
+			if ($d[affidavit_status2] == 'REOPENED'){
+				$reopenDate=explode('-',$d[reopenDate]);
+				$reopenDate=$reopenDate[1].'-'.$reopenDate[2];
+				$case .= "-<span style='background-color:#FFFFFF; color:#000000 !important;'><small>REOPENED $reopenDate</small></span>";
+			}
+			if ($d[rush] != ''){
+				$case .= "-<span style='background-color:#000000; color:FF0000; border: 3px solid black; font-weight:bold;'>RUSH</span>";
+			}
+			$estFileDate=explode('-',$d[estFileDate]);
+			$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
+			$case .= "&nbsp;<span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)."; border: 1px solid black;'>FILE: $estFileDate</span>";
+			$withCourier=withCourier($d[packet_id],'S');
+			if($withCourier != ''){
+				$case.=$withCourier;
+			}else{
+				$prepExplode = prepExplode($d[packet_id],'packet_id','standard_packets');
+				if ($prepExplode != ''){
+					$case .= $prepExplode;
+				}
+			}
+			$colorCode=colorCode($hours,$d[packet_id],$letter);
+			$bgColor=substr($colorCode,0,6);
+			$inverse=inverseHex($bgColor);
+			if (strtolower($inverse) == 'ffffff'){
+				$inverse .= "', document.getElementById('S$d[packet_id]').style.color='000000";
+				$bgColor .= "', document.getElementById('S$d[packet_id]').style.color='FFFFFF";
+			}
+			$js = "id='S$d[packet_id]$letter' ";
+			$mover="onmouseover=\"document.getElementById('S$d[packet_id]').style.textDecoration='blink', document.getElementById('S$d[packet_id]').style.backgroundColor='$inverse', ";
+			$mout="onmouseout=\"document.getElementById('S$d[packet_id]').style.textDecoration='none', document.getElementById('S$d[packet_id]').style.backgroundColor='$bgColor', ";
+			foreach(range('a','e') as $alpha){
+				if ($d["address1$alpha"]){
+					$mover .= "document.getElementById('S$d[packet_id]$alpha').style.textDecoration='blink', document.getElementById('S$d[packet_id]$alpha').style.backgroundColor='".str_replace("S$d[packet_id]","S$d[packet_id]$alpha",$inverse)."', ";
+					$mout .= "document.getElementById('S$d[packet_id]$alpha').style.textDecoration='none', document.getElementById('S$d[packet_id]$alpha').style.backgroundColor='".str_replace("S$d[packet_id]","S$d[packet_id]$alpha",$bgColor)."', ";
+				}
+			}
+			$js .= substr($mover,0,-2)."\"".substr($mout,0,-2)."\"";
+			$data .= "<li $js title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".$colorCode.";'><a href='http://staff.mdwestserve.com/S/order.php?packet=$d[packet_id]' target='_Blank'>S$d[packet_id]</a>: <strong>".$hours."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em>".$case."</li>";
+		}
+	}
+	$data.='</ol>';
+	return $data;
+}
 function getServers($packet){
 	$i=0;
 	if ($packet != ''){
@@ -267,12 +330,35 @@ function getServers($packet){
 	$r=@mysql_query("SELECT DISTINCT server_id from evictionPackets where   affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY'$pkt2$exclude");
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 		$list["$i"] = $d[server_id];
+		$exclude .= " AND server_id <> '$d[server_id]'";
 		$i++;
 	}
-	if ($list != ''){
-		ksort($list);
-		return $list;
+	$r=@mysql_query("SELECT DISTINCT server_id from standard_packets where affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY'$pkt$exclude");
+	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+		$list["$i"] = $d[server_id];
+		$i++;
 	}
+	ksort($list);
+	return $list;
+}
+function getServers2($packet,$letter){
+	$i=0;
+	if ($packet != ''){
+		$pkt=" AND packet_id <= '$_GET[packet]'";
+	}
+	$r=@mysql_query("SELECT DISTINCT server_id from ps_packets where affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY'$pkt");
+	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+		$list["$i"] = $d[server_id];
+		$exclude .= " AND server_id <> '$d[server_id]'";
+		$i++;
+	}
+	$r=@mysql_query("SELECT DISTINCT server_id from standard_packets where affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY'$pkt$exclude");
+	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+		$list["$i"] = $d[server_id];
+		$i++;
+	}
+	ksort($list);
+	return $list;
 }
 $pkt='';
 if ($_GET[packet]){
@@ -300,7 +386,7 @@ background-color:#6699CC; background-repeat: no-repeat; }
 $i=0;
 $servers=getServers($_GET[packet]);
 while ($i < count($servers)){
-	echo "<fieldset><legend>Slot 1: ".id2name($servers["$i"])." #".$servers["$i"]."</legend>".presaleActiveList($servers["$i"],'',$_GET[packet]).evictionActiveList($servers["$i"],$_GET[packet])."</fieldset>";
+	echo "<fieldset><legend>Slot 1: ".id2name($servers["$i"])." #".$servers["$i"]."</legend>".presaleActiveList($servers["$i"],'',$_GET[packet]).evictionActiveList($servers["$i"],$_GET[packet]).standardActiveList($servers["$i"],'',$_GET[packet])."</fieldset>";
 	$i++;
 }
 /*$q="SELECT DISTINCT server_id from ps_packets where affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY'$pkt";
@@ -309,34 +395,34 @@ while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 echo "<fieldset><legend>Slot 1: ".id2name($d[server_id])." #$d[server_id]</legend>".presaleActiveList($d[server_id],'',$_GET[packet])."</fieldset>";
 }*/
 ?></td><td valign='top'><?
-$q="SELECT DISTINCT server_ida from ps_packets where  affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY'$pkt and server_ida <> ''";
-$r=@mysql_query($q);
-while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-echo "<fieldset><legend>Slot 2: ".id2name($d[server_ida])." #$d[server_ida]</legend>".presaleActiveList($d[server_ida],'a',$_GET[packet])."</fieldset>";
+$serversa=getServers2($_GET[packet],'a');
+while ($i < count($serversa)){
+	echo "<fieldset><legend>Slot 2: ".id2name($serversa["$i"])." #".$serversa["$i"]."</legend>".presaleActiveList($serversa["$i"],'a',$_GET[packet]).standardActiveList($serversa["$i"],'a',$_GET[packet])."</fieldset>";
+	$i++;
 }
 ?></td><td valign='top'><?
-$q="SELECT DISTINCT server_idb from ps_packets where  affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY'$pkt and server_idb <> ''";
-$r=@mysql_query($q);
-while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-echo "<fieldset><legend>Slot 3: ".id2name($d[server_idb])." #$d[server_idb]</legend>".presaleActiveList($d[server_idb],'b',$_GET[packet])."</fieldset>";
+$serversb=getServers2($_GET[packet],'b');
+while ($i < count($serversb)){
+	echo "<fieldset><legend>Slot 3: ".id2name($serversb["$i"])." #".$serversb["$i"]."</legend>".presaleActiveList($serversb["$i"],'b',$_GET[packet]).standardActiveList($serversb["$i"],'b',$_GET[packet])."</fieldset>";
+	$i++;
 }
 ?></td><td valign='top'><?
-$q="SELECT DISTINCT server_idc from ps_packets where  affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY'$pkt and server_idc <> ''";
-$r=@mysql_query($q);
-while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-echo "<fieldset><legend>Slot 4: ".id2name($d[server_idc])." #$d[server_idc]</legend>".presaleActiveList($d[server_idc],'c',$_GET[packet])."</fieldset>";
+$serversc=getServers2($_GET[packet],'c');
+while ($i < count($serversc)){
+	echo "<fieldset><legend>Slot 4: ".id2name($serversc["$i"])." #".$serversc["$i"]."</legend>".presaleActiveList($serversc["$i"],'c',$_GET[packet]).standardActiveList($serversc["$i"],'c',$_GET[packet])."</fieldset>";
+	$i++;
 }
 ?></td><td valign='top'><?
-$q="SELECT DISTINCT server_idd from ps_packets where  affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY'$pkt  and server_idd <> ''";
-$r=@mysql_query($q);
-while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-echo "<fieldset><legend>Slot 5: ".id2name($d[server_idd])." #$d[server_idd]</legend>".presaleActiveList($d[server_idd],'d',$_GET[packet])."</fieldset>";
+$serversd=getServers2($_GET[packet],'d');
+while ($i < count($serversd)){
+	echo "<fieldset><legend>Slot 5: ".id2name($serversd["$i"])." #".$serversd["$i"]."</legend>".presaleActiveList($serversd["$i"],'d',$_GET[packet]).standardActiveList($serversd["$i"],'d',$_GET[packet])."</fieldset>";
+	$i++;
 }
 ?></td><td valign='top'><?
-$q="SELECT DISTINCT server_ide from ps_packets where  affidavit_status = 'SERVICE CONFIRMED' and   filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY'$pkt and server_ide <> ''";
-$r=@mysql_query($q);
-while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-echo "<fieldset><legend>Slot 6: ".id2name($d[server_ide])." #$d[server_ide]</legend>".presaleActiveList($d[server_ide],'e',$_GET[packet])."</fieldset>";
+$serverse=getServers2($_GET[packet],'e');
+while ($i < count($serverse)){
+	echo "<fieldset><legend>Slot 6: ".id2name($serverse["$i"])." #".$serverse["$i"]."</legend>".presaleActiveList($serverse["$i"],'e',$_GET[packet]).standardActiveList($serverse["$i"],'e',$_GET[packet])."</fieldset>";
+	$i++;
 }
 ?></td></tr></table>
 </td></tr><tr><td>
