@@ -396,30 +396,35 @@ while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 echo "<fieldset><legend>Slot 1: ".id2name($d[server_id])." #$d[server_id]</legend>".presaleActiveList($d[server_id],'',$_GET[packet])."</fieldset>";
 }*/
 ?></td><td valign='top'><?
+$i=0;
 $serversa=getServers2($_GET[packet],'a');
 while ($i < count($serversa)){
 	echo "<fieldset><legend>Slot 2: ".id2name($serversa["$i"])." #".$serversa["$i"]."</legend>".presaleActiveList($serversa["$i"],'a',$_GET[packet]).standardActiveList($serversa["$i"],'a',$_GET[packet])."</fieldset>";
 	$i++;
 }
 ?></td><td valign='top'><?
+$i=0;
 $serversb=getServers2($_GET[packet],'b');
 while ($i < count($serversb)){
 	echo "<fieldset><legend>Slot 3: ".id2name($serversb["$i"])." #".$serversb["$i"]."</legend>".presaleActiveList($serversb["$i"],'b',$_GET[packet]).standardActiveList($serversb["$i"],'b',$_GET[packet])."</fieldset>";
 	$i++;
 }
 ?></td><td valign='top'><?
+$i=0;
 $serversc=getServers2($_GET[packet],'c');
 while ($i < count($serversc)){
 	echo "<fieldset><legend>Slot 4: ".id2name($serversc["$i"])." #".$serversc["$i"]."</legend>".presaleActiveList($serversc["$i"],'c',$_GET[packet]).standardActiveList($serversc["$i"],'c',$_GET[packet])."</fieldset>";
 	$i++;
 }
 ?></td><td valign='top'><?
+$i=0;
 $serversd=getServers2($_GET[packet],'d');
 while ($i < count($serversd)){
 	echo "<fieldset><legend>Slot 5: ".id2name($serversd["$i"])." #".$serversd["$i"]."</legend>".presaleActiveList($serversd["$i"],'d',$_GET[packet]).standardActiveList($serversd["$i"],'d',$_GET[packet])."</fieldset>";
 	$i++;
 }
 ?></td><td valign='top'><?
+$i=0;
 $serverse=getServers2($_GET[packet],'e');
 while ($i < count($serverse)){
 	echo "<fieldset><legend>Slot 6: ".id2name($serverse["$i"])." #".$serverse["$i"]."</legend>".presaleActiveList($serverse["$i"],'e',$_GET[packet]).standardActiveList($serverse["$i"],'e',$_GET[packet])."</fieldset>";
