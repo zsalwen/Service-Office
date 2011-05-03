@@ -95,7 +95,7 @@ function pullProof($id){
 		$myFile = "$id.html";
 		$fullPath=$path."/".$myFile;
 		$fh = fopen($fullPath, 'w') or die("can't open file");
-		$la=explodePrint(trim($html));
+		$la=trim($html);
 		fwrite($fh, $la);
 		fclose($fh);
 		@mysql_query("update ps_packets set LiveAffidavit = '$fullPath' where packet_id = '$id'") or die(mysql_error());
