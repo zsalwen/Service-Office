@@ -352,7 +352,8 @@ function getServers2($packet,$letter){
 		$exclude .= " AND server_id <> '$d[server_id]'";
 		$i++;
 	}
-	$r=@mysql_query("SELECT DISTINCT server_id from standard_packets where service_status = 'SERVICE COMPLETED' AND fileDate='0000-00-00".$pkt.$exclude);
+	$q="SELECT DISTINCT server_id from standard_packets where service_status = 'SERVICE COMPLETED' AND fileDate='0000-00-00".$pkt.$exclude;
+	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 		$list["$i"] = $d[server_id];
 		$i++;
