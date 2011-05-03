@@ -74,13 +74,9 @@ function pullProof($id){
     curl_setopt ($curl, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt ($curl, CURLOPT_SSL_VERIFYPEER, 0);
     $html = curl_exec ($curl);
-	if(curl_errno($ch))
-{
+	if(curl_errno($ch)){
 		error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($id)."] [Curl Error] [".curl_error($ch)."] \n", 3, '/logs/fail.log');
-}
-	
-	
-    curl_close ($curl);
+	}
 	if(!$html){
 		error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($id)."] [Failed to load url] [".trim($url)."] \n", 3, '/logs/fail.log');
 	}else{
@@ -88,8 +84,47 @@ function pullProof($id){
         $q = "SELECT LiveAffidavit, attorneys_id FROM ps_packets WHERE packet_id = '$_GET[id]'";		
         $r = @mysql_query ($q) or die(mysql_error());
         $d = mysql_fetch_array($r, MYSQL_ASSOC);
-		@mysql_query("update ps_packets set LiveAffidavit = '".addslashes($html)."' where packet_id = '$id'") or die(mysql_error());
-		htmlDiff($old, $html, $id);
+		if (trim($d[LiveAffidavit]) != ''){
+			if (file_exists(trim($d[LiveAffidavit]))){
+				//retrieve html for diff
+				curl_setopt ($curl, CURLOPT_URL, trim($d[LiveAffidavit]));
+				$old = curl_exec ($curl);
+				curl_close ($curl);
+				//delete old html file
+				system('rm -f '.trim($d[LiveAffidavit]), $retval);
+			}else{
+				curl_close ($curl);
+			}
+		}else{
+			curl_close ($curl);
+		}
+		$dir='/data/service/affidavits/';
+		$year=date('Y');
+		$month=date('m');
+		$day=date('d');
+		$path=$dir.$year.'/'.$month.'/'.$day;
+		if(!file_exists($dir.$year)){
+			//create year folder, with appropriate permissions
+			mkdir ($dir.$year,0777);
+		}
+		if(!file_exists($dir.$year.'/'.$month)){
+			//create month folder, with appropriate permissions
+			mkdir ($dir.$year.'/'.$month,0777);
+		}
+		if(!file_exists($path)){
+			//create day folder, with appropriate permissions
+			mkdir ($path,0777);
+		}
+		$myFile = "$id.html";
+		$fullPath=$path."/".$myFile
+		$fh = fopen($fullPath, 'w') or die("can't open file");
+		$la=explodePrint(trim($html));
+		fwrite($fh, $la);
+		fclose($fh);
+		@mysql_query("update ps_packets set LiveAffidavit = '$fullPath' where packet_id = '$id'") or die(mysql_error());
+		if ($old){
+			htmlDiff($old, $html, $id);
+		}
 	}
     return $html;
 }

@@ -1,33 +1,34 @@
 <?
 mysql_connect();
 mysql_select_db('core');
-/*
-function addNote($id,$note){
-$q1 = "SELECT notes FROM schedule_items WHERE schedule_id = '$id'";
-$r1 = @mysql_query ($q1) or die(mysql_error());
-$d1 = mysql_fetch_array($r1, MYSQL_ASSOC);
-$notes = "<li>".date('g:iA n/j/y').' '.$_COOKIE[psdata][name].': '.$note."</li>".$d1[notes];
-if ($_COOKIE[psdata][name]){
-$user = $_COOKIE[psdata][name];
-}else{
-$user = 'Server A.I.';
+function getFolder($otd){
+	$path=explode("/",$otd);
+	$count=(count($path)-2);
+	$i=-1;
+	while ($i < $count){$i++;
+		if ($path["$count"] != ''){
+			$folder .= "/".$path["$count"];
+		}
+	}
+	return $folder;
 }
-error_log("[".date('g:iA n/j/y').'] ['.$user.'] ['.$id.'] ['.$note."]\n", 3, '/logs/notes.log');
-$notes = addslashes($notes);
-$q1 = "UPDATE schedule_items set notes='$notes' WHERE schedule_id = '$id'";
-$r1 = @mysql_query ($q1) or die(mysql_error());
+function getPage($url, $referer, $timeout, $header){
+	if(!isset($timeout))
+        $timeout=30;
+    $curl = curl_init();
+    if(strstr($referer,"://")){
+        curl_setopt ($curl, CURLOPT_REFERER, $referer);
+    }
+    curl_setopt ($curl, CURLOPT_URL, $url);
+    curl_setopt ($curl, CURLOPT_TIMEOUT, $timeout);
+    curl_setopt ($curl, CURLOPT_USERAGENT, sprintf("Mozilla/%d.0",rand(4,5)));
+    curl_setopt ($curl, CURLOPT_HEADER, (int)$header);
+    curl_setopt ($curl, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt ($curl, CURLOPT_SSL_VERIFYPEER, 0);
+    $html = curl_exec ($curl);
+    curl_close ($curl);
+    return $html;
 }
-function docAD($id){
-$r=@mysql_query("select LiveAdHTML from schedule_items where schedule_id = '$id'");
-$d=mysql_fetch_array($r,MYSQL_ASSOC);
-$myFile = "$id.html";
-$fh = fopen($myFile, 'w') or die("can't open file");
-fwrite($fh, $d[LiveAdHTML]);
-fclose($fh);
-$error = system('python DocumentConverter.py /gitbox/Service-Office/'.$id.'.html /gitbox/Service-Office/'.$id.'.doc',$result);
-header('Location: '.$id.'.doc');
-}
-*/
 function my_exec($cmd, $input='')
          {$proc=proc_open($cmd, array(0=>array('pipe', 'r'), 1=>array('pipe', 'w'), 2=>array('pipe', 'w')), $pipes);
           fwrite($pipes[0], $input);fclose($pipes[0]);
@@ -56,96 +57,83 @@ function explodePrint($str){
 	return $implode;
 }
 function pdfAD($id){
-$r=@mysql_query("select LiveAffidavit from ps_packets where packet_id = '$id'");
-$d=mysql_fetch_array($r,MYSQL_ASSOC);
-$myFile = "$id.html";
-$fh = fopen($myFile, 'w') or die("can't open file");
-$la=explodePrint(trim($d[LiveAffidavit]));
-fwrite($fh, $la);
-fclose($fh);
-$command = 'python DocumentConverter.py /gitbox/Service-Office/affidavitMaster/'.$id.'.html /gitbox/Service-Office/affidavitMaster/'.$id.'.pdf';
-$error=my_exec($command);
-if (is_array($error)){
-	foreach($error as $value => $key){
-		$error2 .= "<li>$value :: $key</li>";
+	$r=@mysql_query("select LiveAffidavit from ps_packets where packet_id = '$id' LIMIT 0,1");
+	$d=mysql_fetch_array($r,MYSQL_ASSOC);
+	$myFile = "$id.html";
+	$fh = fopen($myFile, 'w') or die("can't open file");
+	$url=trim($d[LiveAffidavit]);
+	$folder=getFolder($url);
+	$html=getPage($url,"Packet $id HTML",'5','');
+	$la=explodePrint($html);
+	fwrite($fh, $la);
+	fclose($fh);
+	$command = 'python DocumentConverter.py $url $folder/'.$id.'.pdf';
+	$error=my_exec($command);
+	if (is_array($error)){
+		foreach($error as $value => $key){
+			$error2 .= "<li>$value :: $key</li>";
+		}
+	}else{
+		$error2=$error;
 	}
-}else{
-	$error2=$error;
-}
-//$error = system($command,$result);
-if (trim($error) == '1'){
-	@mysql_query("INSERT INTO attachment (path,status) values ('/gitbox/Service-Office/affidavitMaster/".$id.".pdf','PDF Error - ".$_SERVER['HTTP_HOST']."')");
-}
-echo "<div>".$command."</div>";
-echo "<div>".$error2."</div>";
-echo "<div>".$result."</div>";
-header('Location: '.$id.'.pdf');
-//echo "<script>window.open('$id.pdf','test')</script>";
+	//$error = system($command,$result);
+	/*if (trim($error) == '1'){
+		@mysql_query("INSERT INTO attachment (path,status) values ('/gitbox/Service-Office/affidavitMaster/".$id.".pdf','PDF Error - ".$_SERVER['HTTP_HOST']."')");
+	}*/
+	echo "<div>".$command."</div>";
+	echo "<div>".$error2."</div>";
+	echo "<div>".$result."</div>";
+	header('Location: '.$id.'.pdf');
+	//echo "<script>window.open('$id.pdf','test')</script>";
 }
 
-/*
-if($_GET['doc']){
-docAD($_GET[id]);
-}
-*/
 if($_GET['pdf']){
-pdfAD($_GET[id]);
+	pdfAD($_GET[id]);
 }
 
 function printAD($id,$ip){
-$r=@mysql_query("select LiveAffidavit from ps_packets where packet_id = '$id'");
-$d=mysql_fetch_array($r,MYSQL_ASSOC);
-$myFile = "$id.html";
-$fh = fopen($myFile, 'w') or die("can't open file");
-fwrite($fh, $d[LiveAffidavit]);
-fclose($fh);
-passthru('/usr/local/bin/html2ps '.$id.'.html > '.$id.'.pcl');
-$file = $id.'.pcl';
-$remote_file = $id.'.pcl';
+	$r=@mysql_query("select LiveAffidavit from ps_packets where packet_id = '$id'");
+	$d=mysql_fetch_array($r,MYSQL_ASSOC);
+	$myFile = "$id.html";
+	$fh = fopen($myFile, 'w') or die("can't open file");
+	fwrite($fh, $d[LiveAffidavit]);
+	fclose($fh);
+	passthru('/usr/local/bin/html2ps '.$id.'.html > '.$id.'.pcl');
+	$file = $id.'.pcl';
+	$remote_file = $id.'.pcl';
 
+	if ($conn_id = ftp_connect($ip)) {
+	//echo "Current directory is now: " . ftp_pwd($conn_id) . "\n";
+	} else {
+	//echo "Couldn't change directory\n";
+	mail('insidenothing@gmail.com','Affidavit Master: PRINTER FAILED TO CONNECT','Couldn\'t connect');
+	error_log(date('r')." Affidavit Master: $ip WARNING: Couldn't connect. \n", 3, '/logs/printer.log');
+	return 'fail';
+	}
 
+	$login_result = ftp_login($conn_id, 'alpha', 'beta');
 
-
-if ($conn_id = ftp_connect($ip)) {
-//echo "Current directory is now: " . ftp_pwd($conn_id) . "\n";
-} else {
-//echo "Couldn't change directory\n";
-mail('insidenothing@gmail.com','Affidavit Master: PRINTER FAILED TO CONNECT','Couldn\'t connect');
-error_log(date('r')." Affidavit Master: $ip WARNING: Couldn't connect. \n", 3, '/logs/printer.log');
-return 'fail';
-}
-
-
-
-
-
-$login_result = ftp_login($conn_id, 'alpha', 'beta');
-
-
-
-
-
-ftp_pasv($conn_id, true);
-if (ftp_chdir($conn_id, "PORT1")) {
-//echo "Current directory is now: " . ftp_pwd($conn_id) . "\n";
-} else {
-//echo "Couldn't change directory\n";
-mail('insidenothing@gmail.com','Affidavit Master: PRINTER CHDIR','Couldn\'t change directory');
-error_log(date('r')." Affidavit Master: $ip WARNING: Couldn't change ftp directory - $id. \n", 3, '/logs/printer.log');
-}
-if (ftp_put($conn_id, $remote_file, $file, FTP_BINARY)) {
-//echo "successfully uploaded $file\n";
-$last_line = system('rm -f '.$id.'.pcl', $retval);
-$last_line = system('rm -f '.$id.'.rtf', $retval);
-$last_line = system('rm -f '.$id.'.html', $retval);
-error_log(date('r')." $ip NOTICE: Burson edited ad $id printed successfully. \n", 3, '/logs/printer.log');
-} else {
-//echo "There was a problem while uploading $file\n";
-mail('insidenothing@gmail.com','Affidavit Master: AI Break: FTP PUT','There was a problem while uploading '.$file);
-error_log(date('r')." Affidavit Master: $ip ERROR: There was a problem while uploading - $id. \n", 3, '/logs/printer.log');
-return 'fail';
-}
-ftp_close($conn_id);
+	ftp_pasv($conn_id, true);
+	if (ftp_chdir($conn_id, "PORT1")) {
+	//echo "Current directory is now: " . ftp_pwd($conn_id) . "\n";
+	} else {
+	//echo "Couldn't change directory\n";
+	mail('insidenothing@gmail.com','Affidavit Master: PRINTER CHDIR','Couldn\'t change directory');
+	error_log(date('r')." Affidavit Master: $ip WARNING: Couldn't change ftp directory - $id. \n", 3, '/logs/printer.log');
+	}
+	if (ftp_put($conn_id, $remote_file, $file, FTP_BINARY)) {
+	//echo "successfully uploaded $file\n";
+	$last_line = system('rm -f '.$id.'.pcl', $retval);
+	$last_line = system('rm -f '.$id.'.rtf', $retval);
+	$last_line = system('rm -f '.$id.'.html', $retval);
+	error_log(date('r')." $ip NOTICE: Burson edited ad $id printed successfully. \n", 3, '/logs/printer.log');
+	} else {
+	//echo "There was a problem while uploading $file\n";
+	mail('insidenothing@gmail.com','Affidavit Master: AI Break: FTP PUT','There was a problem while uploading '.$file);
+	error_log(date('r')." Affidavit Master: $ip ERROR: There was a problem while uploading - $id. \n", 3, '/logs/printer.log');
+	return 'fail';
+	}
+	ftp_close($conn_id);
 }
 
 if ($_GET[id]){
@@ -166,7 +154,6 @@ $user = $_COOKIE[psdata][user_id];
         ?>
 <script language="JavaScript" type="text/javascript" src="wysiwyg.js"></script>
 <? if ($_GET[edit] && !$saved ){
-//addNote($_GET[id],"DPTC: edit ad");
 ?>
 <form method="post">
 <center>
@@ -191,47 +178,17 @@ a { text-decoration:none; color:#000; }
 <td <?=$mouseover;?> valign="center" align="center"><a href="?id=<?=$_GET[id];?>&edit=Edit Ad">Edit</a></td>
 <td <?=$mouseover2;?> valign="center" align="center"><a href="?id=<?=$_GET[id];?>&print=1">Autoprint</a></td>
 <td <?=$mouseover2;?> valign="center" align="center"><a href="loader.php?id=<?=$_GET[id];?>">Reload From History Items</a></td>
-<!--
-<td <?=$mouseover2;?> valign="center" align="center"><a href="?id=<?=$_GET[id];?>&doc=1" target="_Blank">Open .doc</a></td>
--->
 <td <?=$mouseover2;?> valign="center" align="center"><a href="?id=<?=$_GET[id];?>&pdf=1" target="_Blank">Open .pdf</a></td>
-<!--
-<td <?=$mouseover3;?> valign="center" align="center"><a href="bursonSendToPublisher.php?auction=<?=$_GET[id];?>" target="_Blank">Send To Paper</a></td>
-<td <?=$mouseover3;?> valign="center" align="center"><a href="SendToClient.php?auction=<?=$_GET[id];?>" target="_Blank">Send To Client</a></td>
-<td <?=$mouseover3;?> valign="center" align="center"><a href="bursonSendCorrectToPublisher.php?auction=<?=$_GET[id];?>" target="_Blank">Send Correction To Paper</a></td>
-<td <?=$mouseover3;?> valign="center" align="center"><a href="SendCorrectToClient.php?auction=<?=$_GET[id];?>" target="_Blank">Send Correction To Client</a></td>
--->
 </tr>
 </table>
-<?
-/*
-$q = "SELECT dept_email FROM papers WHERE paper_name = '$d[paper]'";
-$r = @mysql_query ($q) or die(mysql_error());
-$paper = mysql_fetch_array($r, MYSQL_ASSOC);
-$q = "SELECT sendAdTo FROM attorneys WHERE attorneys_id = '$d[attorneys_id]'";
-$r = @mysql_query ($q) or die(mysql_error());
-$attorney = mysql_fetch_array($r, MYSQL_ASSOC);
-*/
 
-
-?>
-<!--
-<table height="30px" width="100%" border="0" cellpadding="0" cellspacing="0">
-<tr>
-<td valign="center" align="center">Staff From: <?=$_COOKIE[psdata][email];?></td>
-<td valign="center" align="center">Publisher To: <?=$paper[dept_email];?></td>
-<td valign="center" align="center">Staff Cc: hwa.archive@gmail.com</td>
-<td valign="center" align="center">Client To: <?=$attorney[sendAdTo];?></td>
-</tr>
-</table>
--->
 </div>
 <center><div style="border:solid 1px #ccc; width:900px;"><?=stripslashes($d[LiveAffidavit])?></div></center>
 <? } ?>
 </div>
 
 <? }else{
-echo "missing auction id?";
+echo "missing id?";
 }
 
 if($_GET['print']){
@@ -239,24 +196,4 @@ if($_GET['print']){
 printAD($_GET[id],'75.94.82.44');
 //}
 }
-
-// spell checker
-/*if($d[LiveAffidavit]){
-$pspell_link = pspell_new("en");
-echo "<div>Spell Checker<ol>";
-$word = explode(" ", strip_tags(stripslashes($d[LiveAffidavit])));
-foreach($word as $k => $v) {
-   if (pspell_check($pspell_link, $v)) {
-      //echo "spelled right";
-   } else {
-$strip = htmlspecialchars($v);
-      echo "<li>Sorry, (<b>$strip</b>), wrong spelling";
-   };
-};
-echo "</ol></div>";
-}*/
-/*
-$q1 = "UPDATE schedule_items set adProofed='".$_COOKIE[psdata][name]." on ".date('r')."' WHERE schedule_id = '$_GET[id]'";
-$r1 = @mysql_query ($q1) or die(mysql_error());
-*/
  ?>
