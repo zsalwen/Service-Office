@@ -154,10 +154,13 @@ $user = $_COOKIE[psdata][user_id];
         ?>
 <script language="JavaScript" type="text/javascript" src="wysiwyg.js"></script>
 <? if ($_GET[edit] && !$saved ){
+	$url=trim($d[LiveAffidavit]);
+	$folder=getFolder($url);
+	$html=getPage($url,"Packet $id HTML",'5','');
 ?>
 <form method="post">
 <center>
-<textarea id="whiteboard" rows="30" cols="100" name="whiteboard"><?=stripslashes($d[LiveAffidavit])?></textarea>
+<textarea id="whiteboard" rows="30" cols="100" name="whiteboard"><?=stripslashes($html)?></textarea>
 <script language="JavaScript">
 generate_wysiwyg('whiteboard');
 </script> <br>
