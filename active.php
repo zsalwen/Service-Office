@@ -338,7 +338,7 @@ function getServers(){
 		$exclude .= " AND server_id <> '$d[server_id]'";
 		$i++;
 	}
-	$r=@mysql_query("SELECT DISTINCT server_id from standard_packets WHERE process_status = 'ASSIGNED'$exclude");
+	$r=@mysql_query("SELECT DISTINCT server_id from standard_packets WHERE (process_status = 'ASSIGNED' OR process_status='Assigned') AND service_status <> 'SERVICE COMPLETE'$exclude");
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 		$list["$i"] = $d[server_id];
 		$i++;
