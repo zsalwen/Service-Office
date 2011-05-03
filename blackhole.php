@@ -309,7 +309,7 @@ function standardActiveList($id,$letter,$packet){ $_SESSION[active]++;
 				}
 			}
 			$js .= substr($mover,0,-2)."\"".substr($mout,0,-2)."\"";
-			$data .= "<li $js title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".$colorCode.";'><a href='http://staff.mdwestserve.com/S/order.php?packet=$d[packet_id]' target='_Blank'>S$d[packet_id]</a>: <strong>".$hours."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em>".$case."</li>";
+			$data .= "<li $js title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".$colorCode.";'><a href='http://staff.mdwestserve.com/standard/order.php?packet=$d[packet_id]' target='_Blank'>S$d[packet_id]</a>: <strong>".$hours."</strong> $d[circuit_court] <em> <small>[".id2attorney($d[attorneys_id])."]</small></em>".$case."</li>";
 		}
 	}
 	$data.='</ol>';
@@ -333,7 +333,7 @@ function getServers($packet){
 		$exclude .= " AND server_id <> '$d[server_id]'";
 		$i++;
 	}
-	$r=@mysql_query("SELECT DISTINCT server_id from standard_packets where affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY'$pkt$exclude");
+	$r=@mysql_query("SELECT DISTINCT server_id from standard_packets where affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY' AND fileDate <> '0000-00-00'$pkt$exclude");
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 		$list["$i"] = $d[server_id];
 		$i++;
@@ -352,7 +352,7 @@ function getServers2($packet,$letter){
 		$exclude .= " AND server_id <> '$d[server_id]'";
 		$i++;
 	}
-	$r=@mysql_query("SELECT DISTINCT server_id from standard_packets where affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY'$pkt$exclude");
+	$r=@mysql_query("SELECT DISTINCT server_id from standard_packets where affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY' AND fileDate <> '0000-00-00$pkt$exclude");
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 		$list["$i"] = $d[server_id];
 		$i++;
