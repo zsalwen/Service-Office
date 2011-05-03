@@ -273,7 +273,7 @@ return $data;
 
 function standardActiveList($id,$letter){ $_SESSION[active]++;
 	$data='<ol>';
-	$r=@mysql_query("select packet_id, address1, address1a, address1b, address1c, address1d, address1e, reopenDate, date_received, filing_status, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from standard_packets where server_id$letter='$id' and (process_status = 'Assigned' OR process_status = 'ASSIGNED' AND service_status <> 'SERVICE COMPLTE') order by  packet_id") or die (mysql_error());
+	$r=@mysql_query("select packet_id, address1, address1a, address1b, address1c, address1d, address1e, reopenDate, date_received, filing_status, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from standard_packets where server_id$letter='$id' and (process_status = 'Assigned' OR process_status = 'ASSIGNED') AND service_status <> 'SERVICE COMPLTE' order by  packet_id") or die (mysql_error());
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
 		if ($letter == ''){
 			$_SESSION[active3]++;
