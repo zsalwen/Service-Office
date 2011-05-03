@@ -155,7 +155,8 @@ $user = $_COOKIE[psdata][user_id];
 <script language="JavaScript" type="text/javascript" src="wysiwyg.js"></script>
 <? if ($_GET[edit] && !$saved ){
 	$url=trim($d[LiveAffidavit]);
-	$html=fopen($url,'r');
+	$folder=getFolder($url);
+	$html=getPage($url,"Packet $id HTML",'5','');
 ?>
 <form method="post">
 <center>
