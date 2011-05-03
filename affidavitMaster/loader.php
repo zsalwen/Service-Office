@@ -38,29 +38,6 @@ function htmlDiff($old, $new, $id){
 		return $ret;
 }
 
-
-
-
-
-
-
-
-/*function addBRs($str){
-	$explode=explode('</table>',$str);
-	$count=count($explode)-1;
-	$i=-1;
-	while ($i < $count){$i++;
-		if ($i == $count){
-			$implode .= $explode["$i"];
-		}elseif($i > 0){
-			$implode .= "<br>".$explode["$i"];
-		}else{
-			$implode .= $explode["$i"];
-		}
-	}
-	return $implode;
-}*/
-
 function pullProof($id){ 
 	$url = "http://staff.mdwestserve.com/obAffidavit.php?packet=$id&def=ALL!&level=".$_COOKIE[psdata][level]."&user_id=".$_COOKIE[psdata][user_id];
 	//$url=urlencode($url);
