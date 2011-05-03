@@ -346,13 +346,13 @@ function getServers2($packet,$letter){
 	if ($packet != ''){
 		$pkt=" AND packet_id <= '$_GET[packet]'";
 	}
-	$r=@mysql_query("SELECT DISTINCT server_id$letter from ps_packets where affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY'$pkt");
+	$r=@mysql_query("SELECT DISTINCT server_id$letter from ps_packets where affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY' AND server_id$letter <> ''$pkt");
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 		$list["$i"] = $d[server_id];
 		$exclude .= " AND server_id$letter <> '$d[server_id]'";
 		$i++;
 	}
-	$q="SELECT DISTINCT server_id$letter from standard_packets where service_status = 'SERVICE COMPLETED' AND fileDate='0000-00-00'".$pkt.$exclude;
+	$q="SELECT DISTINCT server_id$letter from standard_packets where service_status = 'SERVICE COMPLETED' AND fileDate='0000-00-00' AND server_id$letter <> ''".$pkt.$exclude;
 	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 		$list["$i"] = $d[server_id];
