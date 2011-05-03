@@ -116,7 +116,7 @@ function pullProof($id){
 			mkdir ($path,0777);
 		}
 		$myFile = "$id.html";
-		$fullPath=$path."/".$myFile
+		$fullPath=$path."/".$myFile;
 		$fh = fopen($fullPath, 'w') or die("can't open file");
 		$la=explodePrint(trim($html));
 		fwrite($fh, $la);
