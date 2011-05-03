@@ -186,7 +186,7 @@ a { text-decoration:none; color:#000; }
 </table>
 
 </div>
-<center><div style="border:solid 1px #ccc; width:900px;"><?=stripslashes($d[LiveAffidavit])?></div></center>
+<center><div style="border:solid 1px #ccc; width:900px;"><?=stripslashes($html)?></div></center>
 <? } ?>
 </div>
 
