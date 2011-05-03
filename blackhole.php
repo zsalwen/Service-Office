@@ -86,7 +86,7 @@ function colorCode2($hours){
 }
 
 function withCourier($packet,$prefix){
-	$search=$prefix.$packet
+	$search=$prefix.$packet;
 	$q="SELECT * from docuTrack WHERE packet='$search' and document='OUT WITH COURIER' ORDER BY trackID DESC LIMIT 0,1";
 	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
