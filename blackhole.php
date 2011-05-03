@@ -352,7 +352,7 @@ function getServers2($packet,$letter){
 		$exclude .= " AND server_id <> '$d[server_id]'";
 		$i++;
 	}
-	$r=@mysql_query("SELECT DISTINCT server_id from standard_packets where affidavit_status = 'SERVICE CONFIRMED' and filing_status <> 'FILED WITH COURT' AND filing_status <> 'FILED WITH COURT - FBS' AND status <> 'CANCELLED' AND filing_status <> 'FILED BY CLIENT' AND filing_status <> 'REQUESTED-DO NOT FILE!' AND filing_status <> 'SEND TO CLIENT' AND status <> 'DUPLICATE' AND status <> 'FILE COPY' AND service_status <> 'MAIL ONLY' AND fileDate='0000-00-00$pkt$exclude");
+	$r=@mysql_query("SELECT DISTINCT server_id from standard_packets where service_status = 'SERVICE COMPLETED' AND fileDate='0000-00-00$pkt$exclude");
 	while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 		$list["$i"] = $d[server_id];
 		$i++;
