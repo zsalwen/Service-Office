@@ -61,6 +61,7 @@ function pdfAD($id){
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
 	$myFile = trim($d[LiveAffidavit]);
 	$folder=getFolder($myFile);
+	$folder2=str_replace('/data/service/affidavits/','http://mdwestserve.com/aM/',$folder);
 	/*$fh = fopen($myFile, 'w') or die("can't open file");
 	$html=getPage($url,"Packet $id HTML",'5','');
 	$la=explodePrint($html);
@@ -82,8 +83,8 @@ function pdfAD($id){
 	echo "<div>".$command."</div>";
 	echo "<div>".$error2."</div>";
 	echo "<div>".$result."</div>";
-	//header('Location: '.$folder.'/'.$id.'.pdf');
-	echo "<script>window.open('$folder/$id.pdf','test')</script>";
+	//header('Location: '.$folder2.'/'.$id.'.pdf');
+	echo "<script>window.open('$folder2/$id.pdf','test')</script>";
 }
 
 if($_GET['pdf']){
