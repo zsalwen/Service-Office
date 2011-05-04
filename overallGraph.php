@@ -56,3 +56,5 @@ while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 }
 mysql_close();
 ?>
+</table>
+<center><b>high,current,low</b></center>
