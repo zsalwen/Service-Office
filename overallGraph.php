@@ -93,17 +93,17 @@ mysql_close();
           dataTable.addColumn('number');
 
 
-
+<?
 $array = explode(',',$array['2011-05-04'][dispatch]);
 $high = $array[0];
 $current = $array[1];
 $low = $array[2];
+?>
 
 
-
-          dataTable.setValue(0, 0, $high);
-          dataTable.setValue(0, 1, $current);
-          dataTable.setValue(0, 2, $low);
+          dataTable.setValue(0, 0, <?=$high;?>);
+          dataTable.setValue(0, 1, <?=$current;?>);
+          dataTable.setValue(0, 2, <?=$low;?>);
 
 
 
