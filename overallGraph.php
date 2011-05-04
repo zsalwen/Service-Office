@@ -151,7 +151,7 @@ mysql_close();
 <table border="1" width="100%">
 <tr>
 <td><?=makeChart('Received to Dispatch','chart1');?></td>
-<td><? //makeChart('Dispatch to Close','chart2'); ?></td>
+<td></td>
 </tr>
 </table>
 
