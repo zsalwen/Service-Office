@@ -52,7 +52,7 @@ if (strpos(strtoupper($d[to1]),'SHAPIRO & BURSON') !== false){
 	$link="<a href='http://staff.mdwestserve.com/otd/stuffPacket.2.php?id=$d[envID]&sb=1' target='_blank'>GREEN</a>|<a href='http://staff.mdwestserve.com/otd/stuffPacket.bgw.php?id=$d[envID]' target='_blank'>WHITE</a>";
 }
 ?>
-	<form method='post'><input type='hidden' name='edit' value='<?=$d[envID]?>'><tr><td><?=$d[envID]?></td><td><?=stripslashes($d[to1])?></td><td><?=stripslashes($d[to2])?></td><td><?=stripslashes($d[to3])?></td><td><?=stripslashes($d[addressType])?><? if ($d[addressType] == 'CLIENT'){ echo "-".getClient($d[envID]); }?></td><td><input style='background-color:pink; height:25px;' type='submit' name='edit2' value='[edit]'></td><td><?=$link?></td></tr></form>
+	<form method='post'><input type='hidden' name='edit' value='<?=$d[envID]?>'><tr style='font-size:11px;'><td><?=$d[envID]?></td><td><?=stripslashes($d[to1])?></td><td><?=stripslashes($d[to2])?></td><td><?=stripslashes($d[to3])?></td><td><?=stripslashes($d[addressType])?><? if ($d[addressType] == 'CLIENT'){ echo "-".getClient($d[envID]); }?></td><td><input style='background-color:pink; height:25px;' type='submit' name='edit2' value='[edit]'></td><td><?=$link?></td></tr></form>
 <?}
 echo "</table>";
 error_log("[".date('h:iA n/j/y')."] ".$_COOKIE[psdata][name]." Viewing Envelope Recipients \n",3,"/logs/user.log");
