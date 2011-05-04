@@ -2,7 +2,7 @@
 $last_line = system('rm -f *.html', $retval); // clear all html for debugging
 mysql_connect();
 mysql_select_db('core');
-
+ini_set("memory_limit","50M");
 
 
 
