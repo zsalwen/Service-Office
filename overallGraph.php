@@ -16,11 +16,13 @@ table { border-collapse: collapse; }
 <td bgcolor="AFEEEE"><b>Dispatch to Close</b></td>
 <td bgcolor="5DFC0A"><b>Webservice Queue</b></td>
 <td bgcolor="FF8000"><b>New OTD</b></td>
+<td bgcolor="FF8000"><b>Dispatch OTD</b></td>
 <td bgcolor="FF8000"><b>Active OTD</b></td>
 <td bgcolor="FF8000"><b>Quality Control OTD</b></td>
 <td bgcolor="FF8000"><b>Mailroom OTD</b></td>
 <td bgcolor="FF8000"><b>Blackhole OTD</b></td>
 <td bgcolor="FBEC5D"><b>New EV</b></td>
+<td bgcolor="FBEC5D"><b>Dispatch EV</b></td>
 <td bgcolor="FBEC5D"><b>Active EV</b></td>
 <td bgcolor="FBEC5D"><b>Blankhole EV</b></td>
 <td bgcolor="EE8262"><b>New S</b></td>
@@ -39,11 +41,13 @@ while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 <td bgcolor="AFEEEE"><?=$d[closed]?></td>
 <td bgcolor="5DFC0A"><?=$d[pre]?></td>
 <td bgcolor="FF8000"><?=$d[otdN]?></td>
+<td bgcolor="FF8000"><?=$d[otdD]?></td>
 <td bgcolor="FF8000"><?=$d[otdA]?></td>
 <td bgcolor="FF8000"><?=$d[otdQ]?></td>
 <td bgcolor="FF8000"><?=$d[otdM]?></td>
 <td bgcolor="FF8000"><?=$d[otdB]?></td>
 <td bgcolor="FBEC5D"><?=$d[evN]?></td>
+<td bgcolor="FBEC5D"><?=$d[evD]?></td>
 <td bgcolor="FBEC5D"><?=$d[evA]?></td>
 <td bgcolor="FBEC5D"><?=$d[evB]?></td>
 <td bgcolor="EE8262"><?=$d[sN]?></td>
