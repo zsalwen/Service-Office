@@ -72,7 +72,6 @@ mysql_close();
 </table>
 <center><b>high,current,low</b></center>
 <? function makeChart($name,$id,$i){ ?>
-<div id="<?=$name;?>"></div>
 <script type="text/javascript">
       var queryString = '';
       var dataUrl = '';
@@ -147,7 +146,7 @@ mysql_close();
 
       google.load("visualization", "<?=$i;?>", {packages:["imagechart"]});
       google.setOnLoadCallback(onLoadCallback<?=$i;?>);
-alert('<?=name;?>:<?=$id;?>');
+
     </script>
 <? } ?>
 
@@ -158,8 +157,8 @@ alert('<?=name;?>:<?=$id;?>');
 
 <table border="1" width="100%">
 <tr>
-<td><?=makeChart('Received to Dispatch','chart1',1);?></td>
-<td><?=makeChart('Dispatch to Close','chart2',2);?></td>
+<td><div id="chart1"></div><?=makeChart('Received to Dispatch','chart1',1);?></td>
+<td><div id="chart2"></div><?=makeChart('Dispatch to Close','chart2',2);?></td>
 </tr>
 </table>
 
