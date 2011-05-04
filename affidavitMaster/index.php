@@ -193,7 +193,9 @@ $id=$_GET[id];
 <textarea id="whiteboard" rows="30" cols="100" name="whiteboard"><?=stripslashes($html)?></textarea>
 <script language="javascript1.2">
    // attach the editor to all textareas of your page.
-   WYSIWYG.attach('all');
+   WYSIWYG.attach('whiteboard');
+   var mysettings = new WYSIWYG.Settings();
+   WYSIWYG.attach('whiteboard', mysettings);
    mysettings.DefaultStyle = "http://staff.mdwestserve.com/obstyle.css"; 
 </script> <br>
 <input style="font-size:24px; color:#006666;" name="submit" type="submit" value="Save Ad"></center>
