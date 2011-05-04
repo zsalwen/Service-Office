@@ -91,7 +91,7 @@ if($_GET['pdf']){
 }
 
 function printAD($id,$ip){
-	$r=@mysql_query("select LiveAffidavit from ps_packets where packet_id = '$id'");
+	$r=@mysql_query("select LiveAffidavit from ps_packets where packet_id = '$id' LIMIT 0,1");
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
 	$myFile = "$id.html";
 	$fh = fopen($myFile, 'w') or die("can't open file");
@@ -142,12 +142,40 @@ if ($_GET[id]){
 <?
         if ($_POST[whiteboard]){
             $whiteboard = addslashes($_POST[whiteboard]);
-$user = $_COOKIE[psdata][user_id];
-            $q = "update ps_packets set LiveAffidavit='$whiteboard' WHERE packet_id = '$_GET[id]'";
-            $r = @mysql_query ($q) or die(mysql_error());
+			$user = $_COOKIE[psdata][user_id];
+            /*$q = "update ps_packets set LiveAffidavit='$whiteboard' WHERE packet_id = '$_GET[id]'";
+            $r = @mysql_query ($q) or die(mysql_error());*/
+			$r=@mysql_query("select LiveAffidavit from ps_packets where packet_id = '$id' LIMIT 0,1");
+			$d=mysql_fetch_array($r,MYSQL_ASSOC);
+			if (trim($d[LiveAffidavit]) != ''){
+				system('rm -f '.trim($d[LiveAffidavit]), $retval);
+			}
+			$dir='/data/service/affidavits/';
+			$year=date('Y');
+			$month=date('m');
+			$day=date('d');
+			$path=$dir.$year.'/'.$month.'/'.$day;
+			if(!file_exists($dir.$year)){
+				//create year folder, with appropriate permissions
+				mkdir ($dir.$year,0777);
+			}
+			if(!file_exists($dir.$year.'/'.$month)){
+				//create month folder, with appropriate permissions
+				mkdir ($dir.$year.'/'.$month,0777);
+			}
+			if(!file_exists($path)){
+				//create day folder, with appropriate permissions
+				mkdir ($path,0777);
+			}
+			$myFile = "$id.html";
+			$fullPath=$path."/".$myFile;
+			$fh = fopen($fullPath, 'w') or die("can't open file");
+			fwrite($fh, $whiteboard);
+			fclose($fh);
+			@mysql_query("update ps_packets set LiveAffidavit = '$fullPath' where packet_id = '$id'") or die(mysql_error());
             $saved = 1;
         }
-        $q = "SELECT LiveAffidavit, attorneys_id FROM ps_packets WHERE packet_id = '$_GET[id]'";
+        $q = "SELECT LiveAffidavit, attorneys_id FROM ps_packets WHERE packet_id = '$_GET[id]' LIMIT 0,1";
         $r = @mysql_query ($q) or die(mysql_error());
         $d = mysql_fetch_array($r, MYSQL_ASSOC);
 		$url=str_replace('/data/service/affidavits/','http://mdwestserve.com/aM/',trim($d[LiveAffidavit]));
