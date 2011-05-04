@@ -45,7 +45,7 @@ function attorneyCustomLang($att,$str){
 	return $str;
 }
 ?>
-<link href="http://staff.mdwestserve.com/obstyle.css" rel="stylesheet" type="text/css" />
+<link href='http://staff.mdwestserve.com/obstyle.css' rel='stylesheet' type='text/css' />
 <?
 /*
 if ($_GET[server]){

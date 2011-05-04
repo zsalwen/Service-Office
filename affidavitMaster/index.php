@@ -143,6 +143,9 @@ $id=$_GET[id];
 <?
         if ($_POST[whiteboard]){
             $whiteboard = addslashes($_POST[whiteboard]);
+			if (strpos($whiteboard,"'http://staff.mdwestserve.com/obstyle.css'") !== true){
+				$whiteboard="<link href='http://staff.mdwestserve.com/obstyle.css' rel='stylesheet' type='text/css' />".$whiteboard;
+			}
 			$user = $_COOKIE[psdata][user_id];
             /*$q = "update ps_packets set LiveAffidavit='$whiteboard' WHERE packet_id = '$_GET[id]'";
             $r = @mysql_query ($q) or die(mysql_error());*/
