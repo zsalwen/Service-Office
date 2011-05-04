@@ -60,8 +60,8 @@ function pdfAD($id){
 	$r=@mysql_query("select LiveAffidavit from ps_packets where packet_id = '$id' LIMIT 0,1");
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
 	$myFile = trim($d[LiveAffidavit]);
-	/*$fh = fopen($myFile, 'w') or die("can't open file");
 	$folder=getFolder($myFile);
+	/*$fh = fopen($myFile, 'w') or die("can't open file");
 	$html=getPage($url,"Packet $id HTML",'5','');
 	$la=explodePrint($html);
 	fwrite($fh, $la);
