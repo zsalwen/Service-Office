@@ -82,7 +82,7 @@ function pdfAD($id){
 	echo "<div>".$command."</div>";
 	echo "<div>".$error2."</div>";
 	echo "<div>".$result."</div>";
-	header('Location: $folder/'.$id.'.pdf');
+	header('Location: '.$folder.'/'.$id.'.pdf');
 	//echo "<script>window.open('$id.pdf','test')</script>";
 }
 
