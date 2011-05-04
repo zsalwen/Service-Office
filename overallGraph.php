@@ -3,6 +3,7 @@ mysql_connect();
 mysql_select_db('core');
 $r=@mysql_query("select * from overallGraph order by id desc limit 0,30");
 ?>
+   <script language="javascript" src="http://www.google.com/jsapi"></script>
 <style>
 body { padding:0px; margin:0px; }
 td { text-align:center; padding:2px; }
@@ -60,13 +61,13 @@ mysql_close();
 <center><b>high,current,low</b></center>
 <hr>
 
-  <head>
-   <title> Service Volume </title>
-   <script language="javascript" src="http://www.google.com/jsapi"></script>
-   </head>
-   <body>
 
-   <div id="chart"></div>
+
+
+<? function makeChart($name,$id){ ?>
+
+
+   <div id="<?=$id?>"></div>
 
    <script type="text/javascript">
       var queryString = '';
@@ -111,7 +112,7 @@ mysql_close();
       }
 
       function draw(dataTable) {
-        var vis = new google.visualization.ImageChart(document.getElementById('chart'));
+        var vis = new google.visualization.ImageChart(document.getElementById('<?=$id?>'));
         var options = {
           chf: 'bg,s,C2BDDD',
           chxl: '',
@@ -127,7 +128,7 @@ mysql_close();
           chd: 'e:rq4q6d80fEfpaj,WHtUp43NuyhclT,TQO2bziQmifNGZ',
           chdl: 'High+Value|Current+Value|Low+Value',
           chdlp: 't',
-          chtt: 'Service+Volume'
+          chtt: '<?=$name?>'
         };
         vis.draw(dataTable, options);
       }
@@ -144,5 +145,14 @@ mysql_close();
       google.setOnLoadCallback(onLoadCallback);
 
     </script>
-  </body>
+
+<? } ?>
+
+<table>
+<tr>
+<td><?=makeChart('Received to Dispatch','chart1');?></td>
+<td><?=makeChart('Dispatch to Close','chart2');?></td>
+</tr>
+</table>
+
 
