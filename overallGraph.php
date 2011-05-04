@@ -124,7 +124,7 @@ mysql_close();
         }
       }
 
-      function draw(dataTable) {
+      function draw<?=$i;?>(dataTable) {
         var vis = new google.visualization.ImageChart(document.getElementById('<?=$id?>'));
         var options = {
           chf: 'bg,s,C2BDDD',
@@ -151,7 +151,7 @@ mysql_close();
           alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
           return;
         }
-        draw(response.getDataTable());
+        draw<?=$i;?>(response.getDataTable());
       }
 
       google.load("visualization", "<?=$i;?>", {packages:["imagechart"]});
