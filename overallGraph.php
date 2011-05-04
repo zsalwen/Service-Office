@@ -120,7 +120,7 @@ mysql_close();
           dataTable.setValue(6, 1, 58.291845810651964);
           dataTable.setValue(6, 2, 10);
 
-          draw(dataTable);
+          draw<?=$i;?>(dataTable);
         }
       }
 
