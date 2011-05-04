@@ -39,8 +39,8 @@ table { border-collapse: collapse; }
 </tr>
 <?
 while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-$array['$d[date]'][dispatch]=$d[dispatch];
-$array['$d[date]'][closed]=$d[closed];
+$array[$d[date]][dispatch]=$d[dispatch];
+$array[$d[date]][closed]=$d[closed];
 ?>
 <tr>
 <td bgcolor="AFEEEE"><?=$d[date]?></td>
