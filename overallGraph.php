@@ -76,7 +76,7 @@ mysql_close();
  <div id="chart1"></div>
  <div id="chart2"></div>
 
-<? function makeChart($name,$id){ ?>
+<? function makeChart($name,$id,$i){ ?>
 
 
   
@@ -85,7 +85,7 @@ mysql_close();
       var queryString = '';
       var dataUrl = '';
 
-      function onLoadCallback() {
+      function onLoadCallback<?=$i;?>() {
         if (dataUrl.length > 0) {
           var query = new google.visualization.Query(dataUrl);
           query.setQuery(queryString);
@@ -154,7 +154,7 @@ mysql_close();
       }
 
       google.load("visualization", "1", {packages:["imagechart"]});
-      google.setOnLoadCallback(onLoadCallback);
+      google.setOnLoadCallback<?=$i;?>(onLoadCallback);
 alert('<?=name;?>:<?=$id;?>');
     </script>
 
@@ -162,8 +162,8 @@ alert('<?=name;?>:<?=$id;?>');
 
 <table border="1" width="100%">
 <tr>
-<td><?=makeChart('Received to Dispatch','chart1');?></td>
-<td><?=makeChart('Dispatch to Close','chart2');?></td>
+<td><?=makeChart('Received to Dispatch','chart1',1);?></td>
+<td><?=makeChart('Dispatch to Close','chart2',2);?></td>
 </tr>
 </table>
 
