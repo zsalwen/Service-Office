@@ -183,7 +183,7 @@ $id=$_GET[id];
         $r = @mysql_query ($q) or die(mysql_error());
         $d = mysql_fetch_array($r, MYSQL_ASSOC);
 		$url=str_replace('/data/service/affidavits/','http://mdwestserve.com/aM/',trim($d[LiveAffidavit]));
-		$html=getPage($url,"Packet $_GET[id] HTML",'5','');
+		$html=str_replace("<link href='http://staff.mdwestserve.com/obstyle.css' rel='stylesheet' type='text/css' />",'',getPage($url,"Packet $_GET[id] HTML",'5',''));
         ?>
 <script language="JavaScript" type="text/javascript" src="wysiwyg.js"></script>
 <? if ($_GET[edit] && !$saved ){ ?>
