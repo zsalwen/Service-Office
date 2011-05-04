@@ -158,7 +158,7 @@ $user = $_COOKIE[psdata][user_id];
 <? if ($_GET[edit] && !$saved ){ ?>
 <form method="post">
 <center>
-<textarea id="whiteboard" style="width:70%;height:80%" name="whiteboard"><?=stripslashes($html)?></textarea>
+<textarea id="whiteboard" rows="30" cols="100" name="whiteboard"><?=stripslashes($html)?></textarea>
 <script language="JavaScript">
 generate_wysiwyg('whiteboard');
 </script> <br>
