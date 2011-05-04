@@ -72,9 +72,10 @@ mysql_close();
 </table>
 <center><b>high,current,low</b></center>
 <hr>
-
- <div id="chart1"></div>
- <div id="chart2"></div>
+<div id="chart1"></div>
+<hr>
+<div id="chart2"></div>
+<hr>
 
 <? function makeChart($name,$id,$i){ ?>
 
