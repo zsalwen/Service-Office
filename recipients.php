@@ -2,6 +2,7 @@
 table,tr,td,form,input{padding:0px;}
 input{font-size:12px;}
 tr:hover{background-color:FFFFDD;}
+a:hover{background-color:555555;}
 </style>
 <?
 include 'common.php';
@@ -45,13 +46,13 @@ $r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
 while($d=mysql_fetch_array($r,MYSQL_ASSOC)){ 
 if (strpos(strtoupper($d[to1]),'SHAPIRO & BURSON') !== false){
 	//only display green envelope links for Burson
-	$link="<a href='http://staff.mdwestserve.com/otd/stuffPacket.2.php?id=$d[envID]&sb=1' target='_blank'>GREEN</a>";
+	$link="<a href='http://staff.mdwestserve.com/otd/stuffPacket.2.php?id=$d[envID]&sb=1' target='_blank' style='background-color:black;color:00FF00; font-weight:bold;'>GREEN</a>";
 }elseif($d[addressType] == 'CLIENT' || (strpos(strtoupper($d[to1]),'FOR ANNE ARUNDEL COUNTY') !== false) || (strpos(strtoupper($d[to1]),'FOR BALTIMORE CITY') !== false) || (strpos(strtoupper($d[to1]),'FOR DORCHESTER COUNTY') !== false)){
 	//only display white envelope links for other clients, dorchester, baltimore city, and anne arundel
 	$link="<a href='http://staff.mdwestserve.com/otd/stuffPacket.bgw.php?id=$d[envID]' target='_blank' style='background-color:black;color:white; font-weight:bold;'>WHITE</a>";
 }else{
 	//display both links for all else
-	$link="<a href='http://staff.mdwestserve.com/otd/stuffPacket.2.php?id=$d[envID]&sb=1' target='_blank' style='background-color:black;color:green; font-weight:bold;'>GREEN</a>|<a href='http://staff.mdwestserve.com/otd/stuffPacket.bgw.php?id=$d[envID]' target='_blank'>WHITE</a>";
+	$link="<a href='http://staff.mdwestserve.com/otd/stuffPacket.2.php?id=$d[envID]&sb=1' target='_blank' style='background-color:black;color:00FF00; font-weight:bold;'>GREEN</a>|<a href='http://staff.mdwestserve.com/otd/stuffPacket.bgw.php?id=$d[envID]' target='_blank' style='background-color:black;color:white; font-weight:bold;'>WHITE</a>";
 }
 ?>
 	<form method='post'><input type='hidden' name='edit' value='<?=$d[envID]?>'><tr style='font-size:12px;'><td><?=$d[envID]?></td><td><?=stripslashes($d[to1])?></td><td><?=stripslashes($d[to2])?></td><td><?=stripslashes($d[to3])?></td><td><?=stripslashes($d[addressType])?><? if ($d[addressType] == 'CLIENT'){ echo "-".getClient($d[envID]); }?></td><td><input style='background-color:pink; height:25px;' type='submit' name='edit2' value='[edit]'></td><td><?=$link?></td></tr></form>
