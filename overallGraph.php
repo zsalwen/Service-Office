@@ -74,7 +74,7 @@ mysql_close();
 ?>
 </table>
 <center><b>high,current,low</b></center>
-<? function makeChart($name,$id,$i){ ?>
+<? function makeChart($name,$id,$i,$array){ ?>
 <script type="text/javascript">
       var queryString = '';
       var dataUrl = '';
@@ -92,9 +92,21 @@ mysql_close();
           dataTable.addColumn('number');
           dataTable.addColumn('number');
 
-          dataTable.setValue(0, 0, 68.00);
-          dataTable.setValue(0, 1, 34.00);
-          dataTable.setValue(0, 2, 30.00);
+
+
+$array = explode(',',$array['2011-05-04'][dispatch]);
+$high = $array[0];
+$current = $array[1];
+$low = $array[2];
+
+
+
+          dataTable.setValue(0, 0, $high);
+          dataTable.setValue(0, 1, $current);
+          dataTable.setValue(0, 2, $low);
+
+
+
 /*
           dataTable.setValue(1, 0, 88.00);
           dataTable.setValue(1, 1, 70.00);
@@ -164,13 +176,13 @@ mysql_close();
 
 
 <hr>
-<?=$array['2011-05-04'][dispatch];?>/<?=$array['2011-05-04'][close];?>
+<?=$array['2011-05-04'][dispatch];?>/<?=$array['2011-05-04'][closed];?>
 <hr>
 
 <table border="1" width="100%">
 <tr>
-<td><div id="chart1"></div><?=makeChart('Received to Dispatch','chart1',1);?></td>
-<td><div id="chart2"></div><?=makeChart('Dispatch to Close','chart2',2);?></td>
+<td><div id="chart1"></div><?=makeChart('Received to Dispatch','chart1',1,$array);?></td>
+<td><div id="chart2"></div><?=makeChart('Dispatch to Close','chart2',2,$array);?></td>
 </tr>
 </table>
 
