@@ -2,6 +2,7 @@
 mysql_connect();
 mysql_select_db('core');
 $r=@mysql_query("select * from overallGraph order by id desc limit 0,30");
+$array=array();
 ?>
    <script language="javascript" src="http://www.google.com/jsapi"></script>
 <style>
@@ -38,6 +39,8 @@ table { border-collapse: collapse; }
 </tr>
 <?
 while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+$array[$d[date]][dispatch]=$d[dispatch];
+$array[$d[date]][closed]=$d[closed];
 ?>
 <tr>
 <td bgcolor="AFEEEE"><?=$d[date]?></td>
@@ -71,72 +74,82 @@ mysql_close();
 ?>
 </table>
 <center><b>high,current,low</b></center>
-<hr>
-
-
-
-
-<? function makeChart($name,$id){ ?>
-
-
-   <div id="<?=$id?>"></div>
-
-   <script type="text/javascript">
+<? function makeChart($name,$id,$i,$array){ ?>
+<script type="text/javascript">
       var queryString = '';
       var dataUrl = '';
 
-      function onLoadCallback() {
+      function onLoadCallback<?=$i;?>() {
         if (dataUrl.length > 0) {
           var query = new google.visualization.Query(dataUrl);
           query.setQuery(queryString);
           query.send(handleQueryResponse);
         } else {
           var dataTable = new google.visualization.DataTable();
-          dataTable.addRows(7);
+          dataTable.addRows(1);
 
           dataTable.addColumn('number');
           dataTable.addColumn('number');
           dataTable.addColumn('number');
-          dataTable.setValue(0, 0, 68.24072192621668);
-          dataTable.setValue(0, 1, 34.56596279744238);
-          dataTable.setValue(0, 2, 30.098);
-          dataTable.setValue(1, 0, 88.56959906724578);
-          dataTable.setValue(1, 1, 70.82607732878787);
-          dataTable.setValue(1, 2, 23.223);
-          dataTable.setValue(2, 0, 91.36680313467521);
-          dataTable.setValue(2, 1, 65.46853881413088);
-          dataTable.setValue(2, 2, 43.467);
-          dataTable.setValue(3, 0, 95.05014894731983);
-          dataTable.setValue(3, 1, 86.29010404393469);
-          dataTable.setValue(3, 2, 53.548);
-          dataTable.setValue(4, 0, 48.556824963465665);
-          dataTable.setValue(4, 1, 73.13114860769234);
-          dataTable.setValue(4, 2, 60.24);
-          dataTable.setValue(5, 0, 49.45816933251623);
-          dataTable.setValue(5, 1, 52.25935572937881);
-          dataTable.setValue(5, 2, 48.786);
-          dataTable.setValue(6, 0, 41.50393106825148);
-          dataTable.setValue(6, 1, 58.291845810651964);
-          dataTable.setValue(6, 2, 10);
 
-          draw(dataTable);
+
+<?
+$array = explode(',',$array['2011-05-04'][dispatch]);
+$high = $array[0];
+$current = $array[1];
+$low = $array[2];
+?>
+
+
+          dataTable.setValue(0, 0, <?=$high;?>);
+          dataTable.setValue(0, 1, <?=$current;?>);
+          dataTable.setValue(0, 2, <?=$low;?>);
+
+
+
+/*
+          dataTable.setValue(1, 0, 88.00);
+          dataTable.setValue(1, 1, 70.00);
+          dataTable.setValue(1, 2, 23.00);
+
+          dataTable.setValue(2, 0, 91.00);
+          dataTable.setValue(2, 1, 65.00);
+          dataTable.setValue(2, 2, 43.00);
+
+          dataTable.setValue(3, 0, 95.00);
+          dataTable.setValue(3, 1, 86.00);
+          dataTable.setValue(3, 2, 53.00);
+
+          dataTable.setValue(4, 0, 48.00);
+          dataTable.setValue(4, 1, 73.00);
+          dataTable.setValue(4, 2, 60.00);
+
+          dataTable.setValue(5, 0, 49.00);
+          dataTable.setValue(5, 1, 52.00);
+          dataTable.setValue(5, 2, 48.00);
+
+          dataTable.setValue(6, 0, 41.00);
+          dataTable.setValue(6, 1, 58.00);
+          dataTable.setValue(6, 2, 10.00);
+*/
+          draw<?=$i;?>(dataTable);
         }
       }
 
-      function draw(dataTable) {
+      function draw<?=$i;?>(dataTable) {
         var vis = new google.visualization.ImageChart(document.getElementById('<?=$id?>'));
         var options = {
           chf: 'bg,s,C2BDDD',
           chxl: '',
           chxp: '',
-          chxr: '0,0,90',
+          chxr: '0,0,1',
           chxs: '0,676767,10.5,0,l,676767',
           chxtc: '',
           chxt: 'y',
           chbh: 'a',
           chs: '300x225',
           cht: 'bvs',
-          chco: 'FF0000,00FF00,3072F3',
+          chco: 'FF0000,3072F3,00FF00',
           chd: 'e:rq4q6d80fEfpaj,WHtUp43NuyhclT,TQO2bziQmifNGZ',
           chdl: 'High+Value|Current+Value|Low+Value',
           chdlp: 't',
@@ -150,20 +163,26 @@ mysql_close();
           alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
           return;
         }
-        draw(response.getDataTable());
+        draw<?=$i;?>(response.getDataTable());
       }
 
-      google.load("visualization", "1", {packages:["imagechart"]});
-      google.setOnLoadCallback(onLoadCallback);
-alert('<?=name;?>:<?=$id;?>');
-    </script>
+      google.load("visualization", "<?=$i;?>", {packages:["imagechart"]});
+      google.setOnLoadCallback(onLoadCallback<?=$i;?>);
 
+    </script>
 <? } ?>
+
+
+
+
+<hr>
+<?=$array['2011-05-04'][dispatch];?>/<?=$array['2011-05-04'][closed];?>
+<hr>
 
 <table border="1" width="100%">
 <tr>
-<td><?=makeChart('Received to Dispatch','chart1');?></td>
-<td><?=makeChart('Dispatch to Close','chart2');?></td>
+<td><div id="chart1"></div><?=makeChart('Received to Dispatch','chart1',1,$array);?></td>
+<td><div id="chart2"></div><?=makeChart('Dispatch to Close','chart2',2,$array);?></td>
 </tr>
 </table>
 
