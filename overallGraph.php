@@ -6,7 +6,7 @@ $r=@mysql_query("select * from overallGraph order by id desc limit 0,30");
    <script language="javascript" src="http://www.google.com/jsapi"></script>
 <style>
 body { padding:0px; margin:0px; }
-td { text-align:center; padding:2px; }
+td { text-align:center; padding:0px; }
 table { border-collapse: collapse; }
 </style>
 <table border="1" width="100%">
