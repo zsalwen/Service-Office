@@ -16,7 +16,7 @@ function atDropDown($addressType){
 	$list .= "<option>CLIENT</option><option>COURT</option><option>LENDER</option></select>";
 	return $list;
 }
-echo "<table align='center' style='border-collapse:collapse;' border='1'><tr><td>ID</td><td>Recipient</td><td>Address Line 1</td><td>Address Line 2</td><td>Address Type</td><td></td></tr>";
+echo "<table align='center' style='border-collapse:collapse;' border='1'><tr><td>ID</td><td>Recipient</td><td>Address Line 1</td><td>Address Line 2</td><td>Address Type</td><td colspan='2'></td></tr>";
 if ($_POST[submit]){
 	@mysql_query("INSERT INTO envelopeImage (to1, to2, to3, addressType) VALUES ('".addslashes($_POST[to1])."','".addslashes($_POST[to2])."','".addslashes($_POST[to3])."', '".addslashes($_POST[addressType])."')");
 	echo "<center><h2>ENTRY CREATED</h2></center>";
@@ -29,9 +29,9 @@ if ($_POST[edit]){
 	$q1="SELECT * FROM envelopeImage WHERE envID='$_POST[edit]'";
 	$r1=@mysql_query($q1) or die ("Query: $q1<br>".mysql_error());
 	$d1=mysql_fetch_array($r1,MYSQL_ASSOC);
-	echo "<form method='post' name='form1'><input type='hidden' name='envID' value='$_POST[edit]'><tr><td>$envID</td><td><input style='background-color:#CCEEFF;' name='to1' value='".stripslashes($d1[to1])."' size='65' maxlength='250'></td><td><input style='background-color:#CCEEFF;' name='to2' value='".stripslashes($d1[to2])."' size='45' maxlength='250'></td><td><input style='background-color:#CCEEFF;' name='to3' value='".stripslashes($d1[to3])."' size='35' maxlength='250'></td><td>".atDropDown($d1[addressType])."</td><td><input type='submit' name='submit2' value='GO'></td></tr></form>";
+	echo "<form method='post' name='form1'><input type='hidden' name='envID' value='$_POST[edit]'><tr><td>$envID</td><td><input style='background-color:#CCEEFF;' name='to1' value='".stripslashes($d1[to1])."' size='65' maxlength='250'></td><td><input style='background-color:#CCEEFF;' name='to2' value='".stripslashes($d1[to2])."' size='45' maxlength='250'></td><td><input style='background-color:#CCEEFF;' name='to3' value='".stripslashes($d1[to3])."' size='35' maxlength='250'></td><td>".atDropDown($d1[addressType])."</td><td colspan='2'><input type='submit' name='submit2' value='GO'></td></tr></form>";
 }else{
-	echo "<form method='post' name='form1'><tr><td></td><td><input style='background-color:#CCEEFF;' name='to1' size='65'></td><td><input style='background-color:#CCEEFF;' name='to2' size='45'></td><td><input style='background-color:#CCEEFF;' name='to3' size='35'></td><td>".atDropDown('')."</td><td><input type='submit' name='submit' value='GO'></td></tr></form>";
+	echo "<form method='post' name='form1'><tr><td></td><td><input style='background-color:#CCEEFF;' name='to1' size='60'></td><td><input style='background-color:#CCEEFF;' name='to2' size='45'></td><td><input style='background-color:#CCEEFF;' name='to3' size='35'></td><td>".atDropDown('')."</td><td colspan='2'><input type='submit' name='submit' value='GO'></td></tr></form>";
 }
 echo "<script>form1.to1.focus()</script>";
 if ($_POST[edit]){
