@@ -2,6 +2,7 @@
 mysql_connect();
 mysql_select_db('core');
 $r=@mysql_query("select * from overallGraph order by id desc limit 0,30");
+$array=array();
 ?>
    <script language="javascript" src="http://www.google.com/jsapi"></script>
 <style>
@@ -38,6 +39,8 @@ table { border-collapse: collapse; }
 </tr>
 <?
 while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+$array['$d[date]'][dispatch]=$d[dispatch];
+$array['$d[date]'][closed]=$d[closed];
 ?>
 <tr>
 <td bgcolor="AFEEEE"><?=$d[date]?></td>
@@ -160,6 +163,8 @@ mysql_close();
 
 
 
+<hr>
+<?=$array['2011-05-04'][dispatch];?>/<?=$array['2011-05-04'][close];?>
 <hr>
 
 <table border="1" width="100%">
