@@ -66,7 +66,7 @@ function pdfAD($id){
 	$la=explodePrint($html);
 	fwrite($fh, $la);
 	fclose($fh);*/
-	$command = 'python DocumentConverter.py $myFile $folder/'.$id.'.pdf';
+	$command = 'python DocumentConverter.py '.$myFile.' '.$folder.'/'.$id.'.pdf';
 	$error=my_exec($command);
 	if (is_array($error)){
 		foreach($error as $value => $key){
