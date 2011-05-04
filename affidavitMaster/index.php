@@ -136,6 +136,7 @@ function printAD($id,$ip){
 }
 
 if ($_GET[id]){
+$id=$_GET[id];
 ?>
 
 <div style="background-color:#FFFFFF;">
