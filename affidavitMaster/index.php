@@ -152,9 +152,9 @@ $id=$_GET[id];
 			if (strpos($whiteboard,'src="/barcode.php') !== false){
 				$whiteboard=str_replace('src="/barcode.php','src="http://staff.mdwestserve.com/barcode.php',$whiteboard);
 			}
-			//and replaces &Oslash; with Ø, which is not recognized by the PDF converter
-			if (strpos($whiteboard,'Ø') !== false){
-				$whiteboard=str_replace('Ø','&Oslash;',$whiteboard);
+			//and replaces &Oslash; with Ã˜, which is not recognized by the PDF converter
+			if (strpos($whiteboard,'Ã˜') !== false){
+				$whiteboard=str_replace('Ã˜','&Oslash;',$whiteboard);
 			}
 			$user = $_COOKIE[psdata][user_id];
             /*$q = "update ps_packets set LiveAffidavit='$whiteboard' WHERE packet_id = '$_GET[id]'";
