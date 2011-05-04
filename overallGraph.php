@@ -154,7 +154,7 @@ mysql_close();
       }
 
       google.load("visualization", "1", {packages:["imagechart"]});
-      google.setOnLoadCallback<?=$i;?>(onLoadCallback);
+      google.setOnLoadCallback(onLoadCallback<?=$i;?>);
 alert('<?=name;?>:<?=$id;?>');
     </script>
 
