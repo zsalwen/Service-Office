@@ -71,18 +71,9 @@ mysql_close();
 ?>
 </table>
 <center><b>high,current,low</b></center>
-<hr>
-<div id="chart1"></div>
-<hr>
-<div id="chart2"></div>
-<hr>
-
 <? function makeChart($name,$id,$i){ ?>
-
-
-  
-
-   <script type="text/javascript">
+<div id="<?=$name;?>"></div>
+<script type="text/javascript">
       var queryString = '';
       var dataUrl = '';
 
@@ -158,8 +149,12 @@ mysql_close();
       google.setOnLoadCallback(onLoadCallback<?=$i;?>);
 alert('<?=name;?>:<?=$id;?>');
     </script>
-
 <? } ?>
+
+
+
+
+<hr>
 
 <table border="1" width="100%">
 <tr>
