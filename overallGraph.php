@@ -142,7 +142,7 @@ $low = $array[2];
           chf: 'bg,s,C2BDDD',
           chxl: '',
           chxp: '',
-          chxr: '0,0,90',
+          chxr: '0,0,1',
           chxs: '0,676767,10.5,0,l,676767',
           chxtc: '',
           chxt: 'y',
