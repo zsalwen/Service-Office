@@ -60,12 +60,12 @@ function pdfAD($id){
 	$r=@mysql_query("select LiveAffidavit from ps_packets where packet_id = '$id' LIMIT 0,1");
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
 	$myFile = trim($d[LiveAffidavit]);
-	$fh = fopen($myFile, 'w') or die("can't open file");
+	/*$fh = fopen($myFile, 'w') or die("can't open file");
 	$folder=getFolder($myFile);
 	$html=getPage($url,"Packet $id HTML",'5','');
 	$la=explodePrint($html);
 	fwrite($fh, $la);
-	fclose($fh);
+	fclose($fh);*/
 	$command = 'python DocumentConverter.py $myFile $folder/'.$id.'.pdf';
 	$error=my_exec($command);
 	if (is_array($error)){
