@@ -6,8 +6,8 @@ function getFolder($otd){
 	$count=(count($path)-2);
 	$i=-1;
 	while ($i < $count){$i++;
-		if ($path["$count"] != ''){
-			$folder .= "/".$path["$count"];
+		if ($path["$i"] != ''){
+			$folder .= "/".$path["$i"];
 		}
 	}
 	return $folder;
