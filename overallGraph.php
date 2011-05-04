@@ -73,13 +73,13 @@ mysql_close();
 <center><b>high,current,low</b></center>
 <hr>
 
-
-
+ <div id="chart1"></div>
+ <div id="chart2"></div>
 
 <? function makeChart($name,$id){ ?>
 
 
-   <div id="<?=$id?>"></div>
+  
 
    <script type="text/javascript">
       var queryString = '';
