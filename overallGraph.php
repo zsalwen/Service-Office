@@ -155,7 +155,7 @@ mysql_close();
 
       google.load("visualization", "1", {packages:["imagechart"]});
       google.setOnLoadCallback(onLoadCallback);
-
+alert('<?=name;?>:<?=$id;?>');
     </script>
 
 <? } ?>
@@ -163,7 +163,7 @@ mysql_close();
 <table border="1" width="100%">
 <tr>
 <td><?=makeChart('Received to Dispatch','chart1');?></td>
-<td></td>
+<td><?=makeChart('Dispatch to Close','chart2');?></td>
 </tr>
 </table>
 
