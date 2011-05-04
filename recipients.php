@@ -32,7 +32,7 @@ if ($_POST[edit]){
 	$d1=mysql_fetch_array($r1,MYSQL_ASSOC);
 	echo "<form method='post' name='form1'><input type='hidden' name='envID' value='$_POST[edit]'><tr><td>$envID</td><td><input style='background-color:#CCEEFF;' name='to1' value='".stripslashes($d1[to1])."' size='65' maxlength='250'></td><td><input style='background-color:#CCEEFF;' name='to2' value='".stripslashes($d1[to2])."' size='45' maxlength='250'></td><td><input style='background-color:#CCEEFF;' name='to3' value='".stripslashes($d1[to3])."' size='35' maxlength='250'></td><td>".atDropDown($d1[addressType])."</td><td colspan='2'><input type='submit' name='submit2' value='GO'></td></tr></form>";
 }else{
-	echo "<form method='post' name='form1'><tr><td></td><td><input style='background-color:#CCEEFF;' name='to1' size='60'></td><td><input style='background-color:#CCEEFF;' name='to2' size='45'></td><td><input style='background-color:#CCEEFF;' name='to3' size='35'></td><td>".atDropDown('')."</td><td colspan='2'><input type='submit' name='submit' value='GO'></td></tr></form>";
+	echo "<form method='post' name='form1'><tr><td></td><td><input style='background-color:#CCEEFF;' name='to1' size='65'></td><td><input style='background-color:#CCEEFF;' name='to2' size='45'></td><td><input style='background-color:#CCEEFF;' name='to3' size='35'></td><td>".atDropDown('')."</td><td colspan='2'><input type='submit' name='submit' value='GO'></td></tr></form>";
 }
 echo "<script>form1.to1.focus()</script>";
 if ($_POST[edit]){
