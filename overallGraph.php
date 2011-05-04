@@ -154,7 +154,7 @@ mysql_close();
         draw(response.getDataTable());
       }
 
-      google.load("visualization", "1", {packages:["imagechart"]});
+      google.load("visualization", "<?=$i;?>", {packages:["imagechart"]});
       google.setOnLoadCallback(onLoadCallback<?=$i;?>);
 alert('<?=name;?>:<?=$id;?>');
     </script>
