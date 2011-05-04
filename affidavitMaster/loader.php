@@ -58,7 +58,7 @@ function pullProof($id){
 		error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($id)."] [Failed to load url] [".trim($url)."] \n", 3, '/logs/fail.log');
 	}else{
 		//error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($id)."] [Return following html] [".trim($html)."] \n", 3, '/logs/fail.log');
-        $q = "SELECT LiveAffidavit, attorneys_id FROM ps_packets WHERE packet_id = '$_GET[id]'";		
+        $q = "SELECT LiveAffidavit, attorneys_id FROM ps_packets WHERE packet_id = '$_GET[id]'";
         $r = @mysql_query ($q) or die(mysql_error());
         $d = mysql_fetch_array($r, MYSQL_ASSOC);
 		if (trim($d[LiveAffidavit]) != ''){
@@ -100,9 +100,9 @@ function pullProof($id){
 		fwrite($fh, $la);
 		fclose($fh);
 		@mysql_query("update ps_packets set LiveAffidavit = '$fullPath' where packet_id = '$id'") or die(mysql_error());
-		if ($old){
+		/*if ($old){
 			htmlDiff($old, $html, $id);
-		}
+		}*/
 	}
     return $html;
 }
