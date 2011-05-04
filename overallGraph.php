@@ -31,8 +31,9 @@ table { border-collapse: collapse; }
 <td bgcolor="EE8262"><b>Active S</b></td>
 <td bgcolor="EE8262"><b>In Progress S</b></td>
 <td bgcolor="EE8262"><b>S</b></td>
-<td bgcolor="8EE5EE"><b>Watchdog Active</b></td>
-<td bgcolor="8EE5EE"><b>Watchdog Blackhole</b></td>
+<td bgcolor="8EE5EE"><b>Missing Case Number</b></td>
+<td bgcolor="8EE5EE"><b>Watchdog Searching</b></td>
+<td bgcolor="8EE5EE"><b>Watchdog Found</b></td>
 <td bgcolor="5DFC0A"><b>30 Day Volume</b></td>
 </tr>
 <?
@@ -61,6 +62,7 @@ while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 <td bgcolor="EE8262"><?=$d[s]?></td>
 <td bgcolor="8EE5EE"><?=$d[wa]?></td>
 <td bgcolor="8EE5EE"><?=$d[wb]?></td>
+<td bgcolor="8EE5EE"><?=$d[wc]?></td>
 <td bgcolor="5DFC0A"><?=$d[vol]?></td>
 </tr>
 <?
