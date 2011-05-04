@@ -6,7 +6,7 @@ $r=@mysql_query("select * from overallGraph order by id desc limit 0,30");
    <script language="javascript" src="http://www.google.com/jsapi"></script>
 <style>
 body { padding:0px; margin:0px; }
-td { text-align:center; padding:2px; }
+td { text-align:center; padding:0px; }
 table { border-collapse: collapse; }
 </style>
 <table border="1" width="100%">
@@ -24,10 +24,13 @@ table { border-collapse: collapse; }
 <td bgcolor="FBEC5D"><b>New EV</b></td>
 <td bgcolor="FBEC5D"><b>Dispatch EV</b></td>
 <td bgcolor="FBEC5D"><b>Active EV</b></td>
-<td bgcolor="FBEC5D"><b>Blankhole EV</b></td>
+<td bgcolor="FBEC5D"><b>Quality Control EV</b></td>
+<td bgcolor="FBEC5D"><b>Mailroom EV</b></td>
+<td bgcolor="FBEC5D"><b>Blackhole EV</b></td>
 <td bgcolor="EE8262"><b>New S</b></td>
 <td bgcolor="EE8262"><b>Active S</b></td>
 <td bgcolor="EE8262"><b>In Progress S</b></td>
+<td bgcolor="EE8262"><b>S</b></td>
 <td bgcolor="8EE5EE"><b>Watchdog Active</b></td>
 <td bgcolor="8EE5EE"><b>Watchdog Blackhole</b></td>
 <td bgcolor="5DFC0A"><b>30 Day Volume</b></td>
@@ -49,10 +52,13 @@ while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 <td bgcolor="FBEC5D"><?=$d[evN]?></td>
 <td bgcolor="FBEC5D"><?=$d[evD]?></td>
 <td bgcolor="FBEC5D"><?=$d[evA]?></td>
+<td bgcolor="FBEC5D"><?=$d[evQ]?></td>
+<td bgcolor="FBEC5D"><?=$d[evM]?></td>
 <td bgcolor="FBEC5D"><?=$d[evB]?></td>
 <td bgcolor="EE8262"><?=$d[sN]?></td>
 <td bgcolor="EE8262"><?=$d[sA]?></td>
 <td bgcolor="EE8262"><?=$d[sI]?></td>
+<td bgcolor="EE8262"><?=$d[s]?></td>
 <td bgcolor="8EE5EE"><?=$d[wa]?></td>
 <td bgcolor="8EE5EE"><?=$d[wb]?></td>
 <td bgcolor="5DFC0A"><?=$d[vol]?></td>
