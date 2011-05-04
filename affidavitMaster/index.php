@@ -151,12 +151,11 @@ $user = $_COOKIE[psdata][user_id];
         $q = "SELECT LiveAffidavit, attorneys_id FROM ps_packets WHERE packet_id = '$_GET[id]'";
         $r = @mysql_query ($q) or die(mysql_error());
         $d = mysql_fetch_array($r, MYSQL_ASSOC);
+		$url=str_replace('/data/service/affidavits/','http://mdwestserve.com/aM/',trim($d[LiveAffidavit]));
+		$html=getPage($url,"Packet $_GET[id] HTML",'5','');
         ?>
 <script language="JavaScript" type="text/javascript" src="wysiwyg.js"></script>
-<? if ($_GET[edit] && !$saved ){
-	$url=str_replace('/data/service/affidavits/','http://mdwestserve.com/aM/',trim($d[LiveAffidavit]));
-	$html=getPage($url,"Packet $id HTML",'5','');
-?>
+<? if ($_GET[edit] && !$saved ){ ?>
 <form method="post">
 <center>
 <textarea id="whiteboard" rows="30" cols="100" name="whiteboard"><?=stripslashes($html)?></textarea>
