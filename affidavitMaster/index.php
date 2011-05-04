@@ -59,15 +59,14 @@ function explodePrint($str){
 function pdfAD($id){
 	$r=@mysql_query("select LiveAffidavit from ps_packets where packet_id = '$id' LIMIT 0,1");
 	$d=mysql_fetch_array($r,MYSQL_ASSOC);
-	$myFile = "$id.html";
+	$myFile = trim($d[LiveAffidavit]);
 	$fh = fopen($myFile, 'w') or die("can't open file");
-	$url=trim($d[LiveAffidavit]);
-	$folder=getFolder($url);
+	$folder=getFolder($myFile);
 	$html=getPage($url,"Packet $id HTML",'5','');
 	$la=explodePrint($html);
 	fwrite($fh, $la);
 	fclose($fh);
-	$command = 'python DocumentConverter.py $url $folder/'.$id.'.pdf';
+	$command = 'python DocumentConverter.py $myFile $folder/'.$id.'.pdf';
 	$error=my_exec($command);
 	if (is_array($error)){
 		foreach($error as $value => $key){
@@ -83,7 +82,7 @@ function pdfAD($id){
 	echo "<div>".$command."</div>";
 	echo "<div>".$error2."</div>";
 	echo "<div>".$result."</div>";
-	header('Location: '.$id.'.pdf');
+	header('Location: $folder/'.$id.'.pdf');
 	//echo "<script>window.open('$id.pdf','test')</script>";
 }
 
