@@ -183,14 +183,14 @@ $id=$_GET[id];
         $r = @mysql_query ($q) or die(mysql_error());
         $d = mysql_fetch_array($r, MYSQL_ASSOC);
 		$url=str_replace('/data/service/affidavits/','http://mdwestserve.com/aM/',trim($d[LiveAffidavit]));
-		$html=str_replace("<link href='http://staff.mdwestserve.com/obstyle.css' rel='stylesheet' type='text/css' />",'',getPage($url,"Packet $_GET[id] HTML",'5',''));
+		$html=getPage($url,"Packet $_GET[id] HTML",'5','');
         ?>
 <script language="JavaScript" type="text/javascript" src="wysiwyg.js"></script>
 <script language="JavaScript" type="text/javascript" src="scripts/wysiwyg-settings.js"></script>
 <? if ($_GET[edit] && !$saved ){ ?>
 <form method="post">
 <center>
-<textarea id="whiteboard" rows="30" cols="100" name="whiteboard"><?=stripslashes($html)?></textarea>
+<textarea id="whiteboard" rows="30" cols="100" name="whiteboard"><?=stripslashes(str_replace("<link href='http://staff.mdwestserve.com/obstyle.css' rel='stylesheet' type='text/css' />",'',$html));?></textarea>
 <script language="javascript1.2">
    // attach the editor to all textareas of your page.
    var mysettings = new WYSIWYG.Settings();
