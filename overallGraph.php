@@ -83,33 +83,40 @@ mysql_close();
           query.send(handleQueryResponse);
         } else {
           var dataTable = new google.visualization.DataTable();
-          dataTable.addRows(7);
+          dataTable.addRows(1);
 
           dataTable.addColumn('number');
           dataTable.addColumn('number');
           dataTable.addColumn('number');
-          dataTable.setValue(0, 0, 68.24072192621668);
-          dataTable.setValue(0, 1, 34.56596279744238);
-          dataTable.setValue(0, 2, 30.098);
-          dataTable.setValue(1, 0, 88.56959906724578);
-          dataTable.setValue(1, 1, 70.82607732878787);
-          dataTable.setValue(1, 2, 23.223);
-          dataTable.setValue(2, 0, 91.36680313467521);
-          dataTable.setValue(2, 1, 65.46853881413088);
-          dataTable.setValue(2, 2, 43.467);
-          dataTable.setValue(3, 0, 95.05014894731983);
-          dataTable.setValue(3, 1, 86.29010404393469);
-          dataTable.setValue(3, 2, 53.548);
-          dataTable.setValue(4, 0, 48.556824963465665);
-          dataTable.setValue(4, 1, 73.13114860769234);
-          dataTable.setValue(4, 2, 60.24);
-          dataTable.setValue(5, 0, 49.45816933251623);
-          dataTable.setValue(5, 1, 52.25935572937881);
-          dataTable.setValue(5, 2, 48.786);
-          dataTable.setValue(6, 0, 41.50393106825148);
-          dataTable.setValue(6, 1, 58.291845810651964);
-          dataTable.setValue(6, 2, 10);
 
+          dataTable.setValue(0, 0, 68.00);
+          dataTable.setValue(0, 1, 34.00);
+          dataTable.setValue(0, 2, 30.00);
+/*
+          dataTable.setValue(1, 0, 88.00);
+          dataTable.setValue(1, 1, 70.00);
+          dataTable.setValue(1, 2, 23.00);
+
+          dataTable.setValue(2, 0, 91.00);
+          dataTable.setValue(2, 1, 65.00);
+          dataTable.setValue(2, 2, 43.00);
+
+          dataTable.setValue(3, 0, 95.00);
+          dataTable.setValue(3, 1, 86.00);
+          dataTable.setValue(3, 2, 53.00);
+
+          dataTable.setValue(4, 0, 48.00);
+          dataTable.setValue(4, 1, 73.00);
+          dataTable.setValue(4, 2, 60.00);
+
+          dataTable.setValue(5, 0, 49.00);
+          dataTable.setValue(5, 1, 52.00);
+          dataTable.setValue(5, 2, 48.00);
+
+          dataTable.setValue(6, 0, 41.00);
+          dataTable.setValue(6, 1, 58.00);
+          dataTable.setValue(6, 2, 10.00);
+*/
           draw<?=$i;?>(dataTable);
         }
       }
@@ -127,7 +134,7 @@ mysql_close();
           chbh: 'a',
           chs: '300x225',
           cht: 'bvs',
-          chco: 'FF0000,00FF00,3072F3',
+          chco: 'FF0000,3072F3,00FF00',
           chd: 'e:rq4q6d80fEfpaj,WHtUp43NuyhclT,TQO2bziQmifNGZ',
           chdl: 'High+Value|Current+Value|Low+Value',
           chdlp: 't',
