@@ -1,6 +1,7 @@
 <style>
 table,tr,td,form,input{padding:0px;}
 input{font-size:12px;}
+tr:hover{background-color:FFFFDD;}
 </style>
 <?
 include 'common.php';
@@ -30,9 +31,9 @@ if ($_POST[edit]){
 	$q1="SELECT * FROM envelopeImage WHERE envID='$_POST[edit]'";
 	$r1=@mysql_query($q1) or die ("Query: $q1<br>".mysql_error());
 	$d1=mysql_fetch_array($r1,MYSQL_ASSOC);
-	echo "<form method='post' name='form1'><input type='hidden' name='envID' value='$_POST[edit]'><tr><td>$envID</td><td><input style='background-color:#CCEEFF;' name='to1' value='".stripslashes($d1[to1])."' size='65' maxlength='250'></td><td><input style='background-color:#CCEEFF;' name='to2' value='".stripslashes($d1[to2])."' size='45' maxlength='250'></td><td><input style='background-color:#CCEEFF;' name='to3' value='".stripslashes($d1[to3])."' size='35' maxlength='250'></td><td>".atDropDown($d1[addressType])."</td><td colspan='2'><input type='submit' name='submit2' value='GO'></td></tr></form>";
+	echo "<form method='post' name='form1'><input type='hidden' name='envID' value='$_POST[edit]'><tr><td>$envID</td><td><input style='background-color:#CCEEFF;' name='to1' value='".stripslashes($d1[to1])."' size='70' maxlength='250'></td><td><input style='background-color:#CCEEFF;' name='to2' value='".stripslashes($d1[to2])."' size='45' maxlength='250'></td><td><input style='background-color:#CCEEFF;' name='to3' value='".stripslashes($d1[to3])."' size='35' maxlength='250'></td><td>".atDropDown($d1[addressType])."</td><td colspan='2'><input type='submit' name='submit2' value='GO'></td></tr></form>";
 }else{
-	echo "<form method='post' name='form1'><tr><td></td><td><input style='background-color:#CCEEFF;' name='to1' size='65'></td><td><input style='background-color:#CCEEFF;' name='to2' size='45'></td><td><input style='background-color:#CCEEFF;' name='to3' size='35'></td><td>".atDropDown('')."</td><td colspan='2'><input type='submit' name='submit' value='GO'></td></tr></form>";
+	echo "<form method='post' name='form1'><tr><td></td><td><input style='background-color:#CCEEFF;' name='to1' size='70'></td><td><input style='background-color:#CCEEFF;' name='to2' size='45'></td><td><input style='background-color:#CCEEFF;' name='to3' size='35'></td><td>".atDropDown('')."</td><td colspan='2'><input type='submit' name='submit' value='GO'></td></tr></form>";
 }
 echo "<script>form1.to1.focus()</script>";
 if ($_POST[edit]){
@@ -47,10 +48,10 @@ if (strpos(strtoupper($d[to1]),'SHAPIRO & BURSON') !== false){
 	$link="<a href='http://staff.mdwestserve.com/otd/stuffPacket.2.php?id=$d[envID]&sb=1' target='_blank'>GREEN</a>";
 }elseif($d[addressType] == 'CLIENT' || (strpos(strtoupper($d[to1]),'FOR ANNE ARUNDEL COUNTY') !== false) || (strpos(strtoupper($d[to1]),'FOR BALTIMORE CITY') !== false) || (strpos(strtoupper($d[to1]),'FOR DORCHESTER COUNTY') !== false)){
 	//only display white envelope links for other clients, dorchester, baltimore city, and anne arundel
-	$link="<a href='http://staff.mdwestserve.com/otd/stuffPacket.bgw.php?id=$d[envID]' target='_blank'>WHITE</a>";
+	$link="<a href='http://staff.mdwestserve.com/otd/stuffPacket.bgw.php?id=$d[envID]' target='_blank' style='background-color:black;color:white; font-weight:bold;'>WHITE</a>";
 }else{
 	//display both links for all else
-	$link="<a href='http://staff.mdwestserve.com/otd/stuffPacket.2.php?id=$d[envID]&sb=1' target='_blank'>GREEN</a>|<a href='http://staff.mdwestserve.com/otd/stuffPacket.bgw.php?id=$d[envID]' target='_blank'>WHITE</a>";
+	$link="<a href='http://staff.mdwestserve.com/otd/stuffPacket.2.php?id=$d[envID]&sb=1' target='_blank' style='background-color:black;color:green; font-weight:bold;'>GREEN</a>|<a href='http://staff.mdwestserve.com/otd/stuffPacket.bgw.php?id=$d[envID]' target='_blank'>WHITE</a>";
 }
 ?>
 	<form method='post'><input type='hidden' name='edit' value='<?=$d[envID]?>'><tr style='font-size:12px;'><td><?=$d[envID]?></td><td><?=stripslashes($d[to1])?></td><td><?=stripslashes($d[to2])?></td><td><?=stripslashes($d[to3])?></td><td><?=stripslashes($d[addressType])?><? if ($d[addressType] == 'CLIENT'){ echo "-".getClient($d[envID]); }?></td><td><input style='background-color:pink; height:25px;' type='submit' name='edit2' value='[edit]'></td><td><?=$link?></td></tr></form>
