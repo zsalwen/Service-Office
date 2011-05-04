@@ -40,8 +40,8 @@ var WYSIWYG = {
 		this.CSSFile = "styles/wysiwyg.css";		
 		
 		// Default WYSIWYG width and height (use px or %)
-		this.Width = "500px";
-		this.Height = "200px";
+		this.Width = "800px";
+		this.Height = "650px";
 		
 		// Default stylesheet of the WYSIWYG editor window
 		this.DefaultStyle = "font-family: Arial; font-size: 12px; background-color: #FFFFFF";
@@ -50,8 +50,8 @@ var WYSIWYG = {
 		this.DisabledStyle = "font-family: Arial; font-size: 12px; background-color: #EEEEEE";
 				
 		// Width + Height of the preview window
-		this.PreviewWidth = 500;
-		this.PreviewHeight = 400;
+		this.PreviewWidth = 800;
+		this.PreviewHeight = 650;
 		
 		// Confirmation message if you strip any HTML added by word
 		this.RemoveFormatConfMessage = "Clean HTML inserted by MS Word ?";

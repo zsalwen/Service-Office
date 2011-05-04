@@ -186,6 +186,7 @@ $id=$_GET[id];
 		$html=str_replace("<link href='http://staff.mdwestserve.com/obstyle.css' rel='stylesheet' type='text/css' />",'',getPage($url,"Packet $_GET[id] HTML",'5',''));
         ?>
 <script language="JavaScript" type="text/javascript" src="wysiwyg.js"></script>
+<script language="JavaScript" type="text/javascript" src="scripts/wysiwyg-settings.js"></script>
 <? if ($_GET[edit] && !$saved ){ ?>
 <form method="post">
 <center>
@@ -193,9 +194,7 @@ $id=$_GET[id];
 <script language="javascript1.2">
    // attach the editor to all textareas of your page.
    WYSIWYG.attach('all');
-  
-   // attach the editor to the textarea with the identifier 'textarea1'.
-   WYSIWYG.attach('whiteboard');
+   mysettings.DefaultStyle = "http://staff.mdwestserve.com/obstyle.css"; 
 </script> <br>
 <input style="font-size:24px; color:#006666;" name="submit" type="submit" value="Save Ad"></center>
 </form>
