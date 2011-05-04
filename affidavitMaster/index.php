@@ -154,8 +154,7 @@ $user = $_COOKIE[psdata][user_id];
         ?>
 <script language="JavaScript" type="text/javascript" src="wysiwyg.js"></script>
 <? if ($_GET[edit] && !$saved ){
-	$url=trim($d[LiveAffidavit]);
-	$folder=getFolder($url);
+	$url=str_replace('/data/service/affidavits/','http://mdwestserve.com/aM/',trim($d[LiveAffidavit]));
 	$html=getPage($url,"Packet $id HTML",'5','');
 ?>
 <form method="post">

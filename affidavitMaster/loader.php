@@ -64,7 +64,8 @@ function pullProof($id){
 		if (trim($d[LiveAffidavit]) != ''){
 			if (file_exists(trim($d[LiveAffidavit]))){
 				//retrieve html for diff
-				curl_setopt ($curl, CURLOPT_URL, trim($d[LiveAffidavit]));
+				$url2=str_replace('/data/service/affidavits/','http://mdwestserve.com/aM/',trim($d[LiveAffidavit]));
+				curl_setopt ($curl, CURLOPT_URL, $url2);
 				$old = curl_exec ($curl);
 				curl_close ($curl);
 				//delete old html file
