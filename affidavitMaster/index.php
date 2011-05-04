@@ -190,8 +190,12 @@ $id=$_GET[id];
 <form method="post">
 <center>
 <textarea id="whiteboard" rows="30" cols="100" name="whiteboard"><?=stripslashes($html)?></textarea>
-<script language="JavaScript">
-generate_wysiwyg('whiteboard');
+<script language="javascript1.2">
+   // attach the editor to all textareas of your page.
+   WYSIWYG.attach('all');
+  
+   // attach the editor to the textarea with the identifier 'textarea1'.
+   WYSIWYG.attach('whiteboard');
 </script> <br>
 <input style="font-size:24px; color:#006666;" name="submit" type="submit" value="Save Ad"></center>
 </form>
