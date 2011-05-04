@@ -83,8 +83,8 @@ function pdfAD($id){
 	echo "<div>".$command."</div>";
 	echo "<div>".$error2."</div>";
 	echo "<div>".$result."</div>";
-	//header('Location: '.$folder2.'/'.$id.'.pdf');
-	echo "<script>window.open('$folder2/$id.pdf','test')</script>";
+	header('Location: '.$folder2.'/'.$id.'.pdf');
+	//echo "<script>window.open('$folder2/$id.pdf','test')</script>";
 }
 
 if($_GET['pdf']){
@@ -143,9 +143,18 @@ $id=$_GET[id];
 <div style="background-color:#FFFFFF;">
 <?
         if ($_POST[whiteboard]){
-            $whiteboard = addslashes($_POST[whiteboard]);
+            $whiteboard = explodePrint($_POST[whiteboard]);
+			//for some reason wysiwyg wipes out any style tags
 			if (strpos($whiteboard,"'http://staff.mdwestserve.com/obstyle.css'") !== true){
-				$whiteboard="<link href='http://staff.mdwestserve.com/obstyle.css' rel='stylesheet' type='text/css' />".str_replace('prevstyle','style',$_POST[whiteboard]);
+				$whiteboard="<link href='http://staff.mdwestserve.com/obstyle.css' rel='stylesheet' type='text/css' />".str_replace('prevstyle','style',$whiteboard);
+			}
+			//also it replaces full link path with relative ones
+			if (strpos($whiteboard,'src="/barcode.php') !== false){
+				$whiteboard=str_replace('src="/barcode.php','src="http://staff.mdwestserve.com/barcode.php',$whiteboard);
+			}
+			//and replaces &Oslash; with Ø, which is not recognized by the PDF converter
+			if (strpos($whiteboard,'Ø') !== false){
+				$whiteboard=str_replace('Ø','&Oslash;',$whiteboard);
 			}
 			$user = $_COOKIE[psdata][user_id];
             /*$q = "update ps_packets set LiveAffidavit='$whiteboard' WHERE packet_id = '$_GET[id]'";
