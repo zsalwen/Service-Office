@@ -381,9 +381,9 @@ while ($d66=mysql_fetch_array($r66,MYSQL_ASSOC)){
 	if ($d66[rush] != ''){
 		$reopen .= "-<span style='background-color:#000000; color:FF00FF; border: 3px solid black; font-weight:bold;'>RUSH</span>";
 	}
-	$estFileDate=explode('-',$d[estFileDate]);
+	$estFileDate=explode('-',$d66[estFileDate]);
 	$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-	$list .= "<li style='background-color:".colorCode($hours,$d66[packet_id],'').";'><a href='http://staff.mdwestserve.com/otd/order.php?packet=$d66[packet_id]' target='_Blank'>OTD$d66[packet_id]</a>: <strong>".stripHours($d[hours])."</strong> ".abbrCounty(strtoupper($d[circuit_court]))." <em> <small>[".id2attorney($d[attorneys_id])."]</small></em><span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate2($d[dispatchDate])."</span><span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span> $d66[affidavit_status2]";
+	$list .= "<li style='background-color:".colorCode($hours,$d66[packet_id],'').";'><a href='http://staff.mdwestserve.com/otd/order.php?packet=$d66[packet_id]' target='_Blank'>OTD$d66[packet_id]</a>: <strong>".stripHours($d66[hours])."</strong> ".abbrCounty(strtoupper($d66[circuit_court]))." <em> <small>[".id2attorney($d66[attorneys_id])."]</small></em><span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate2($d66[dispatchDate])."</span><span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span> $d66[affidavit_status2]";
 	if ($d66[server_id]){ $list .= '('.id2server($d66[server_id]).')';}
 	if ($d66[server_ida]){ $list .= '('.id2server($d66[server_ida]).')';}
 	if ($d66[server_idb]){ $list .= '('.id2server($d66[server_idb]).')';}
@@ -396,32 +396,32 @@ while ($d66=mysql_fetch_array($r66,MYSQL_ASSOC)){
 $r67=@mysql_query(" eviction_id, date_received, request_close, affidavit_status, service_status, circuit_court, dispatchDate, attorneys_id, estFileDate, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF(estFileDate, CURDATE()) as estHours from evictionPackets where affidavit_status2 <> '' order by eviction_id");
 while ($d67=mysql_fetch_array($r67,MYSQL_ASSOC)){
 	$hours=stripHours($d67[hours]);
-	$estFileDate=explode('-',$d[estFileDate]);
+	$estFileDate=explode('-',$d67[estFileDate]);
 	$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-	$list .= "<li style='background-color:".colorCode($hours,$d67[packet_id],'').";'><a href='http://staff.mdwestserve.com/ev/order.php?packet=$d67[eviction_id]' target='_Blank'>EV$d67[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> ".abbrCounty(strtoupper($d[circuit_court]))." <em> <small>[".id2attorney($d[attorneys_id])."]</small></em><span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate2($d[dispatchDate])."</span><span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span> $d67[affidavit_status2]";
+	$list .= "<li style='background-color:".colorCode($hours,$d67[packet_id],'').";'><a href='http://staff.mdwestserve.com/ev/order.php?packet=$d67[eviction_id]' target='_Blank'>EV$d67[eviction_id]</a>: <strong>".stripHours($d67[hours])."</strong> ".abbrCounty(strtoupper($d67[circuit_court]))." <em> <small>[".id2attorney($d67[attorneys_id])."]</small></em><span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate2($d67[dispatchDate])."</span><span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span> $d67[affidavit_status2]";
 	if ($d67[server_id]){ $list .= '('.id2server($d67[server_id]).')';}
 	$list .="</li>";
 }
 
-$r66=@mysql_query("select packet_id, address1, address1a, address1b, address1c, address1d, address1e, reopenDate, date_received, filing_status, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from standard_packets where affidavit_status2 <> '' order by packet_id"); 
-while ($d66=mysql_fetch_array($r66,MYSQL_ASSOC)){
-	if ($d66[affidavit_status2] == 'REOPENED'){
-		$hours=$d66[reopenHours]*24;
+$r68=@mysql_query("select packet_id, address1, address1a, address1b, address1c, address1d, address1e, reopenDate, date_received, filing_status, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from standard_packets where affidavit_status2 <> '' order by packet_id"); 
+while ($d68=mysql_fetch_array($r68,MYSQL_ASSOC)){
+	if ($d68[affidavit_status2] == 'REOPENED'){
+		$hours=$d68[reopenHours]*24;
 	}else{
-		$hours=stripHours($d66[hours]);
+		$hours=stripHours($d68[hours]);
 	}
-	if ($d66[rush] != ''){
+	if ($d68[rush] != ''){
 		$reopen .= "-<span style='background-color:#000000; color:FF00FF; border: 3px solid black; font-weight:bold;'>RUSH</span>";
 	}
-	$estFileDate=explode('-',$d[estFileDate]);
+	$estFileDate=explode('-',$d68[estFileDate]);
 	$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
-	$list .= "<li style='background-color:".colorCode($hours,$d66[packet_id],'').";'><a href='http://staff.mdwestserve.com/standard/order.php?packet=$d66[packet_id]' target='_Blank'>S$d66[packet_id]</a>: <strong>".stripHours($d[hours])."</strong> ".abbrCounty(strtoupper($d[circuit_court]))." <em> <small>[".id2attorney($d[attorneys_id])."]</small></em><span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate2($d[dispatchDate])."</span><span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span> $d66[affidavit_status2]";
-	if ($d66[server_id]){ $list .= '('.id2server($d66[server_id]).')';}
-	if ($d66[server_ida]){ $list .= '('.id2server($d66[server_ida]).')';}
-	if ($d66[server_idb]){ $list .= '('.id2server($d66[server_idb]).')';}
-	if ($d66[server_idc]){ $list .= '('.id2server($d66[server_idc]).')';}
-	if ($d66[server_idd]){ $list .= '('.id2server($d66[server_idd]).')';}
-	if ($d66[server_ide]){ $list .= '('.id2server($d66[server_ide]).')';}
+	$list .= "<li style='background-color:".colorCode($hours,$d68[packet_id],'').";'><a href='http://staff.mdwestserve.com/standard/order.php?packet=$d68[packet_id]' target='_Blank'>S$d68[packet_id]</a>: <strong>".stripHours($d68[hours])."</strong> ".abbrCounty(strtoupper($d68[circuit_court]))." <em> <small>[".id2attorney($d68[attorneys_id])."]</small></em><span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate2($d68[dispatchDate])."</span><span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span> $d68[affidavit_status2]";
+	if ($d68[server_id]){ $list .= '('.id2server($d68[server_id]).')';}
+	if ($d68[server_ida]){ $list .= '('.id2server($d68[server_ida]).')';}
+	if ($d68[server_idb]){ $list .= '('.id2server($d68[server_idb]).')';}
+	if ($d68[server_idc]){ $list .= '('.id2server($d68[server_idc]).')';}
+	if ($d68[server_idd]){ $list .= '('.id2server($d68[server_idd]).')';}
+	if ($d68[server_ide]){ $list .= '('.id2server($d68[server_ide]).')';}
 	$list .= "$reopen</li>";
 }
 
