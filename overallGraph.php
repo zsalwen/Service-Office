@@ -2,7 +2,8 @@
 mysql_connect();
 mysql_select_db('core');
 $r=@mysql_query("select * from overallGraph order by id desc limit 0,30");
-$array=array();
+$array1=array();
+$array2=array();
 ?>
    <script language="javascript" src="http://www.google.com/jsapi"></script>
 <style>
@@ -39,8 +40,8 @@ table { border-collapse: collapse; }
 </tr>
 <?
 while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-$array[$d[date]][dispatch]=$d[dispatch];
-$array[$d[date]][closed]=$d[closed];
+$array1[$d[date]]=$d[dispatch];
+$array2[$d[date]]=$d[closed];
 ?>
 <tr>
 <td bgcolor="AFEEEE"><?=$d[date]?></td>
@@ -74,7 +75,7 @@ mysql_close();
 ?>
 </table>
 <center><b>high,current,low</b></center>
-<? function makeChart($name,$id,$i,$array){ ?>
+<? function makeChart($name,$id,$i,$array){ $topHigh = 0; ?>
 <script type="text/javascript">
       var queryString = '';
       var dataUrl = '';
@@ -94,10 +95,22 @@ mysql_close();
 
 
 <?
-$array = explode(',',$array['2011-05-04'][dispatch]);
-$high = $array[0];
-$current = $array[1];
-$low = $array[2];
+
+$array = explode(',',$array['2011-05-05']);
+
+$z = $array[0];
+$y = $array[1];
+$x = $array[2];
+$high = ($z - $x) - ($y - $x);
+$current = $y - $x;
+$low = $z;
+
+$top = $z+$y+$z;
+
+if ($top > $topHigh){
+$topHigh = $top;
+}
+
 ?>
 
 
@@ -142,7 +155,7 @@ $low = $array[2];
           chf: 'bg,s,C2BDDD',
           chxl: '',
           chxp: '',
-          chxr: '0,0,1',
+          chxr: '0,0,<?=$topHigh;?>',
           chxs: '0,676767,10.5,0,l,676767',
           chxtc: '',
           chxt: 'y',
@@ -176,13 +189,13 @@ $low = $array[2];
 
 
 <hr>
-<?=$array['2011-05-04'][dispatch];?>/<?=$array['2011-05-04'][closed];?>
+<?=$array1['2011-05-05'];?>/<?=$array2['2011-05-05'];?>
 <hr>
 
 <table border="1" width="100%">
 <tr>
-<td><div id="chart1"></div><?=makeChart('Received to Dispatch','chart1',1,$array);?></td>
-<td><div id="chart2"></div><?=makeChart('Dispatch to Close','chart2',2,$array);?></td>
+<td><div id="chart1"></div><?=makeChart('Received to Dispatch','chart1',1,$array1);?></td>
+<td><div id="chart2"></div><?=makeChart('Dispatch to Close','chart2',2,$array2);?></td>
 </tr>
 </table>
 
