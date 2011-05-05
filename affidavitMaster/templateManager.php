@@ -54,7 +54,6 @@ if($_GET[create]){
 	}
 }
 if($_GET[affidavit] || $_POST[affidavit]){
-	echo "<h1>1!</h1>";
 	if ($_POST[whiteboard]){
 		//save whiteboard to file
 		$whiteboard = $_POST[whiteboard];
@@ -66,9 +65,7 @@ if($_GET[affidavit] || $_POST[affidavit]){
 		$saved=1;
 	}
 	if ($_GET[edit] && !$saved){
-		echo "<h1>2!</h1>";
-		$url="/data/service/templates/".$_GET[affidavit];
-		echo "<h1>$url</h1>";
+		$url="http://mdwestserve.com/templates/".$_GET[affidavit];
 		$html=getPage($url,$_GET[affidavit],'5','');
 		?>
 		<script language="JavaScript" type="text/javascript" src="wysiwyg.js"></script>
@@ -83,9 +80,7 @@ if($_GET[affidavit] || $_POST[affidavit]){
 		<input style="font-size:24px; color:#006666;" name="submit" type="submit" value="Save Ad"></center>
 		</form>
 		<?
-	}else{ 
-	echo "<h1>3!</h1>";
-	?>
+	}else{ ?>
 		<div align="right">
 		<form><input type="hidden" name="affidavit" value="<?=$_GET[name]?>"><input name="edit" value="Edit Template" style="font-size:24px; color:#006666;" type="submit"></form></div>
 		<div><?=stripslashes($whiteboard)?></div>
