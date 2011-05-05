@@ -109,9 +109,9 @@ $low = ($z - $x) - ($y - $x);
 
 alert('High: <?=$z;?> | <?=$high;?> Current: <?=$y;?> | <?=$current;?> Low: <?=$x;?> | <?=$low;?>');
 
-          dataTable.setValue(0, 0, <?=$high;?>);
+          dataTable.setValue(0, 0, <?=$low;?>);
           dataTable.setValue(0, 1, <?=$current;?>);
-          dataTable.setValue(0, 2, <?=$low;?>);
+          dataTable.setValue(0, 2, <?=$high;?>);
 
 
 
@@ -159,7 +159,7 @@ alert('High: <?=$z;?> | <?=$high;?> Current: <?=$y;?> | <?=$current;?> Low: <?=$
           cht: 'bvs',
           chco: 'FF0000,3072F3,00FF00',
           chd: 'e:rq4q6d80fEfpaj,WHtUp43NuyhclT,TQO2bziQmifNGZ',
-          chdl: 'High+Value|Current+Value|Low+Value',
+          chdl: 'Low+Value|Current+Value|High+Value',
           chdlp: 't',
           chtt: '<?=$name?>'
         };
