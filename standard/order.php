@@ -1340,7 +1340,7 @@ while ($d4=mysql_fetch_array($r4, MYSQL_ASSOC)){
 <?
 
 
-$directory = '/gitbox/Service-Office/templates';
+$directory = '/data/service/templates';
 
 
     // create an array to hold directory list

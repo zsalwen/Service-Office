@@ -11,7 +11,7 @@ if($_GET['id']){
 $r=@mysql_query("select * from affidavits where id = '$_GET[id]'");
 $affidavit = mysql_fetch_array($r,MYSQL_ASSOC) or die(mysql_error());
 
-$filename = "/gitbox/Service-Office/templates/".$affidavit[affidavit];
+$filename = "/data/service/templates/".$affidavit[affidavit];
 $handle = fopen($filename, "rb");
 $template .= fread($handle, filesize($filename));
 

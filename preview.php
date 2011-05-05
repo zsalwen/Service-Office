@@ -3,7 +3,7 @@
 <?
 
 
-$directory = '/gitbox/Service-Office/templates';
+$directory = '/data/service/templates';
 
 
     // create an array to hold directory list
@@ -35,7 +35,7 @@ $directory = '/gitbox/Service-Office/templates';
 ?>
 </select><input type="submit"></form>
 <?
-$filename = "/gitbox/Service-Office/templates/".$_GET[template];
+$filename = "/data/service/templates/".$_GET[template];
 $handle = fopen($filename, "rb");
 $template .= fread($handle, filesize($filename));
 $cord="TEMPLATE%";
