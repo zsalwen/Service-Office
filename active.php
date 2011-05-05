@@ -371,7 +371,7 @@ function getServers2($letter){
 <tr><td valign="top">
 
 <? 
-$r66=@mysql_query("select packet_id, address1, address1a, address1b, address1c, address1d, address1e, avoidDOT, reopenDate, date_received, filing_status, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, dispatchDate, attorneys_id, estFileDate, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where affidavit_status2 <> '' order by packet_id"); 
+$r66=@mysql_query("select packet_id, address1, address1a, address1b, address1c, address1d, address1e, avoidDOT, reopenDate, date_received, filing_status, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, dispatchDate, attorneys_id, estFileDate, rush, server_id, server_ida, server_idb, server_idc, server_idd, server_ide, affidavit_status2, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from ps_packets where affidavit_status2 <> '' order by packet_id"); 
 while ($d66=mysql_fetch_array($r66,MYSQL_ASSOC)){
 	if ($d66[affidavit_status2] == 'REOPENED'){
 		$hours=$d66[reopenHours]*24;
@@ -393,7 +393,7 @@ while ($d66=mysql_fetch_array($r66,MYSQL_ASSOC)){
 	$list .= "$reopen</li>";
 }
 
-$r67=@mysql_query(" eviction_id, date_received, request_close, affidavit_status, service_status, circuit_court, dispatchDate, attorneys_id, estFileDate, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF(estFileDate, CURDATE()) as estHours from evictionPackets where affidavit_status2 <> '' order by eviction_id");
+$r67=@mysql_query(" eviction_id, date_received, request_close, affidavit_status, service_status, circuit_court, dispatchDate, attorneys_id, estFileDate, server_id, affidavit_status2, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF(estFileDate, CURDATE()) as estHours from evictionPackets where affidavit_status2 <> '' order by eviction_id");
 while ($d67=mysql_fetch_array($r67,MYSQL_ASSOC)){
 	$hours=stripHours($d67[hours]);
 	$estFileDate=explode('-',$d67[estFileDate]);
@@ -403,7 +403,7 @@ while ($d67=mysql_fetch_array($r67,MYSQL_ASSOC)){
 	$list .="</li>";
 }
 
-$r68=@mysql_query("select packet_id, address1, address1a, address1b, address1c, address1d, address1e, reopenDate, date_received, filing_status, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, rush, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from standard_packets where affidavit_status2 <> '' order by packet_id"); 
+$r68=@mysql_query("select packet_id, address1, address1a, address1b, address1c, address1d, address1e, reopenDate, date_received, filing_status, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, rush, server_id, server_ida, server_idb, server_idc, server_idd, server_ide, affidavit_status2, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from standard_packets where affidavit_status2 <> '' order by packet_id"); 
 while ($d68=mysql_fetch_array($r68,MYSQL_ASSOC)){
 	if ($d68[affidavit_status2] == 'REOPENED'){
 		$hours=$d68[reopenHours]*24;
