@@ -82,13 +82,13 @@ if($_GET[affidavit] || $_POST[affidavit]){
 		<?
 	}else{ ?>
 		<div align="right">
-		<form><input type="hidden" name="affidavit" value="<?=$_GET[name]?>"><input name="edit" value="Edit Template" style="font-size:24px; color:#006666;" type="submit"></form></div>
-		<div><?=stripslashes($whiteboard)?></div>
+		<form><center><input type="hidden" name="affidavit" value="<?=$_GET[name]?>"><input name="edit" value="Edit Template" style="font-size:24px; color:#006666;" type="submit"></form></div>
+		<div style='width:800px;'><?=stripslashes($whiteboard)?></div>
 		<hr>
-		<p align=right><a href="templateManager.php">RETURN TO TEMPLATE LIST</a></p>
+		<p align=right><a href="templateManager.php">RETURN TO TEMPLATE LIST</a></p></center>
 <?	}
 }elseif(!$_GET[create]){ ?>
-	<form><table><tr><td>SELECT TEMPLATE TO EDIT <select name="affidavit"><?
+	<center><form><table><tr><td>SELECT TEMPLATE TO EDIT <select name="affidavit"><?
 	$directory = '/data/service/templates';
     $results = array();
     $handler = opendir($directory);
@@ -99,7 +99,7 @@ if($_GET[affidavit] || $_POST[affidavit]){
     }
     closedir($handler); 
 	?>
-	</select> <input type='submit' value='GO!' name='edit'> OR <a href="templateManager.php?create=1">Create New Template</a></td></tr></table></form>
+	</select> <input type='submit' value='GO!' name='edit'> OR <a href="templateManager.php?create=1">Create New Template</a></td></tr></table></form></center>
 <?
 }
 ?>
