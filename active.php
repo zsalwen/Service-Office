@@ -202,13 +202,12 @@ function presaleActiveList($id,$letter){ $_SESSION[active]++;
 			$reopen='';
 		}
 		$reopen .= " <span style='background-color:#AAAAAA; color:FFFFFF; border: 1px solid black;'>DISP:&nbsp;".justDate2($d[dispatchDate])."</span>";
-		if ($d[avoidDOT] != ''){
-			$reopen .= " <span style='background-color:#000000; color:FF0000; border: 3px solid red; font-weight:bold;'>AvoidDOT</span>";
-		}
-		if ($d)
 		$estFileDate=explode('-',$d[estFileDate]);
 		$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
 		$reopen .= " <span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE:&nbsp;".$estFileDate."</span>";
+		if ($d[avoidDOT] != ''){
+			$reopen .= " <span style='background-color:#000000; color:FF0000; border: 3px solid red; font-weight:bold;'>AvoidDOT</span>";
+		}
 		if ($d[rush] != ''){
 			$reopen .= " <span style='background-color:#000000; color:FF00FF; border: 3px solid black; font-weight:bold;'>RUSH</span>";
 		}
