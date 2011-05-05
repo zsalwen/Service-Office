@@ -13,11 +13,6 @@ function prompter(){
 	}
 }
 </script>
-<script language="JavaScript" type="text/javascript" src="affidavitMaster/wysiwyg.js"></script>
-<script language="javascript1.2">
-   // attach the editor to all textareas of your page.
-   WYSIWYG.attach('whiteboard');
-</script>
 <?
 if($_GET[create]){
 	if (!$_GET[name]){
@@ -26,6 +21,11 @@ if($_GET[create]){
 		$name=str_replace(' ','.',$_GET[name]);
 		//display blank whiteboard with template name above, save to new file on submit
 		?>
+		<script language="JavaScript" type="text/javascript" src="affidavitMaster/wysiwyg.js"></script>
+		<script language="javascript1.2">
+		   // attach the editor to all textareas of your page.
+		   WYSIWYG.attach('whiteboard');
+		</script>
 		<form method="post">
 		<input type="hidden" name="affidavit" value="<?=$name?>">
 		<center><h1><?=$name?></h1>
@@ -50,6 +50,11 @@ if($_GET[affidavit] || $_POST[affidavit]){
 		$url="/data/service/templates/".$_GET[affidavit];
 		$html=getPage($url,$_GET[affidavit],'5','');
 		?>
+		<script language="JavaScript" type="text/javascript" src="affidavitMaster/wysiwyg.js"></script>
+		<script language="javascript1.2">
+		   // attach the editor to all textareas of your page.
+		   WYSIWYG.attach('whiteboard');
+		</script>
 		<form method="post">
 		<input type="hidden" name="affidavit" value="<?=$_GET[affidavit]?>">
 		<center><h1><?=$_GET[affidavit]?></h1>
