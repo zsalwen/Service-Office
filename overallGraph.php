@@ -107,7 +107,7 @@ $low = $z;
 ?>
 
 alert('High: <?=$z;?> | <?=$high;?>');
-alert('Current: <?=$4;?> | <?=$current;?>');
+alert('Current: <?=$y;?> | <?=$current;?>');
 alert('Low: <?=$x;?> | <?=$low;?>');
 
           dataTable.setValue(0, 0, <?=$high;?>);
