@@ -65,7 +65,7 @@ if($_GET[affidavit] || $_POST[affidavit]){
 		$saved=1;
 	}
 	if ($_GET[edit] && !$saved){
-		$url="http://mdwestserve.com/templates/".$_GET[affidavit];
+		$url="http://mdwestserve.com/aT/".$_GET[affidavit];
 		$html=getPage($url,$_GET[affidavit],'5','');
 		?>
 		<script language="JavaScript" type="text/javascript" src="wysiwyg.js"></script>
