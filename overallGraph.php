@@ -104,13 +104,6 @@ $x = $array[2];
 $high = ($z - $x) - ($y - $x);
 $current = $y - $x;
 $low = $z;
-
-$top = $z+$y+$z;
-
-if ($top > $topHigh){
-$topHigh = $top;
-}
-
 ?>
 
 
@@ -155,7 +148,7 @@ $topHigh = $top;
           chf: 'bg,s,C2BDDD',
           chxl: '',
           chxp: '',
-          chxr: '0,0,<?=$topHigh;?>',
+          chxr: '0,0,<?=$x;?>',
           chxs: '0,676767,10.5,0,l,676767',
           chxtc: '',
           chxt: 'y',
