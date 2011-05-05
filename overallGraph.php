@@ -101,14 +101,13 @@ $array = explode(',',$array['2011-05-05']);
 $z = $array[0]; // high
 $y = $array[1]; // current
 $x = $array[2]; // low
-$high = ($z - $x) - ($y - $x); 
+
+$high = $z
 $current = $y - $x;
-$low = $z;
+$low = ($z - $x) - ($y - $x); 
 ?>
 
-alert('High: <?=$z;?> | <?=$high;?>');
-alert('Current: <?=$y;?> | <?=$current;?>');
-alert('Low: <?=$x;?> | <?=$low;?>');
+alert('High: <?=$z;?> | <?=$high;?> Current: <?=$y;?> | <?=$current;?> Low: <?=$x;?> | <?=$low;?>');
 
           dataTable.setValue(0, 0, <?=$high;?>);
           dataTable.setValue(0, 1, <?=$current;?>);
