@@ -194,8 +194,8 @@ $topHigh = $top;
 
 <table border="1" width="100%">
 <tr>
-<td><div id="chart1"></div><?=makeChart('Received to Dispatch','chart1',1,$array);?></td>
-<td><div id="chart2"></div><?=makeChart('Dispatch to Close','chart2',2,$array);?></td>
+<td><div id="chart1"></div><?=makeChart('Received to Dispatch','chart1',1,$array1);?></td>
+<td><div id="chart2"></div><?=makeChart('Dispatch to Close','chart2',2,$array2);?></td>
 </tr>
 </table>
 
