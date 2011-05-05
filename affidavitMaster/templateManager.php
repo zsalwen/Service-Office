@@ -24,10 +24,10 @@ function prompter(){
 	var reply = prompt("Please enter a name for the new template, using only alphanumeric characters, and replacing spaces with decimals", "")
 	if (reply == null){
 		alert("That is not a valid reason")
-		window.location="http://staff.mdwestserve.com/templateManager.php";
+		window.location="http://staff.mdwestserve.com/affidavitMaster/templateManager.php";
 	}
 	else{
-		window.location="http://staff.mdwestserve.com/templateManager.php?create=1&name="+reply;
+		window.location="http://staff.mdwestserve.com/affidavitMaster/templateManager.php?create=1&name="+reply;
 	}
 }
 </script>
