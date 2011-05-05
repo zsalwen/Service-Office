@@ -198,6 +198,17 @@ $low = ($z - $x) - ($y - $x);
 <? } ?>
 
 
+
+<table border="1" width="100%">
+<tr>
+<td><div id="chart1"></div><?=makeChart('Received to Dispatch','chart1',1,$array1);?></td>
+<td><div id="chart2"></div><?=makeChart('Dispatch to Close','chart2',2,$array2);?></td>
+<td><div id="chart3"></div><?=makeChart('OTD Quality Control','chart3',3,$array3);?></td>
+</tr>
+</table>
+
+
+
 <pre>
 <?php
 print_r ($array1);
@@ -213,14 +224,3 @@ print_r ($array2);
 print_r ($array3);
 ?>
 </pre>
-
-
-<table border="1" width="100%">
-<tr>
-<td><div id="chart1"></div><?=makeChart('Received to Dispatch','chart1',1,$array1);?></td>
-<td><div id="chart2"></div><?=makeChart('Dispatch to Close','chart2',2,$array2);?></td>
-<td><div id="chart3"></div><?=makeChart('OTD Quality Control','chart3',3,$array3);?></td>
-</tr>
-</table>
-
-
