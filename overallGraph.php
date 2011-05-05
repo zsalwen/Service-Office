@@ -74,7 +74,7 @@ mysql_close();
 ?>
 </table>
 <center><b>high,current,low</b></center>
-<? function makeChart($name,$id,$i,$array){ ?>
+<? function makeChart($name,$id,$i,$array){ $topHigh = 0; ?>
 <script type="text/javascript">
       var queryString = '';
       var dataUrl = '';
@@ -94,10 +94,22 @@ mysql_close();
 
 
 <?
+
 $array = explode(',',$array['2011-05-04'][dispatch]);
-$high = $array[0];
-$current = $array[1];
-$low = $array[2];
+
+$z = $array[0];
+$y = $array[1];
+$x = $array[2];
+$high = ($z - $x) - ($y - $x);
+$current = $y - $x;
+$low = $z;
+
+$top = $z+$y+$z;
+
+if ($top > $topHigh){
+$topHigh = $top;
+}
+
 ?>
 
 
@@ -142,7 +154,7 @@ $low = $array[2];
           chf: 'bg,s,C2BDDD',
           chxl: '',
           chxp: '',
-          chxr: '0,0,1',
+          chxr: '0,0,<?=$topHigh;?>',
           chxs: '0,676767,10.5,0,l,676767',
           chxtc: '',
           chxt: 'y',
