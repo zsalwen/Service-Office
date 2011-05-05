@@ -98,9 +98,8 @@ if($_GET[affidavit] || $_POST[affidavit]){
 		}
     }
     closedir($handler); 
-	echo "<option>NEW TEMPLATE</option>";
 	?>
-	</select> <input type='submit' value='GO!' name='edit'></td></tr></table></form>
+	</select> <input type='submit' value='GO!' name='edit'> OR <a href="templateManager.php?create=1">Create New Template</a></td></tr></table></form>
 <?
 }
 ?>
