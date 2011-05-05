@@ -201,7 +201,7 @@ function presaleActiveList($id,$letter){ $_SESSION[active]++;
 			$hours=stripHours($d[hours]);
 			$reopen='';
 		}
-		$reopen .= " <span style='background-color:#AAAAAA; color:FFFFFF;'>DISP:&nbsp;".justDate2($d[dispatchDate])."</span>";
+		$reopen .= " <span style='background-color:#AAAAAA; color:FFFFFF; border: 1px solid black;'>DISP:&nbsp;".justDate2($d[dispatchDate])."</span>";
 		if ($d[avoidDOT] != ''){
 			$reopen .= " <span style='background-color:#000000; color:FF0000; border: 3px solid red; font-weight:bold;'>AvoidDOT</span>";
 		}
@@ -264,7 +264,7 @@ while ($d=mysql_fetch_array($r,MYSQL_ASSOC)){ $_SESSION[active2]++;
 			$bgColor .= "', document.getElementById('EV$d[eviction_id]').style.color='FFFFFF";
 		}
 		$js = "id='EV$d[eviction_id]' onmouseover=\"document.getElementById('EV$d[eviction_id]').style.textDecoration='blink', document.getElementById('EV$d[eviction_id]').style.backgroundColor='$inverse'\" onmouseout=\"document.getElementById('EV$d[eviction_id]').style.textDecoration='none', document.getElementById('EV$d[eviction_id]').style.backgroundColor='$bgColor'\"";
-		$data .= "<li $js title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".$colorCode.";'>".$mod."<a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>EV$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> ".abbrCounty(strtoupper($d[circuit_court]))." <em> <small>[".id2attorney($d[attorneys_id])."]</small></em><span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate2($d[dispatchDate])."</span><span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span></li>";
+		$data .= "<li $js title='Affidavit: $d[affidavit_status] Service Status: $d[service_status]' style='background-color:".$colorCode.";'>".$mod."<a href='http://staff.mdwestserve.com/ev/order.php?packet=$d[eviction_id]' target='_Blank'>EV$d[eviction_id]</a>: <strong>".stripHours($d[hours])."</strong> ".abbrCounty(strtoupper($d[circuit_court]))." <em> <small>[".id2attorney($d[attorneys_id])."]</small></em><span style='background-color:#AAAAAA; color:FFFFFF; border: 1px solid black;'>DISP: ".justDate2($d[dispatchDate])."</span><span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span></li>";
 	}
 }
 $data.='</ol>';
@@ -390,7 +390,7 @@ while ($d66=mysql_fetch_array($r66,MYSQL_ASSOC)){
 	if ($d66[server_idc]){ $list .= '('.id2server($d66[server_idc]).')';}
 	if ($d66[server_idd]){ $list .= '('.id2server($d66[server_idd]).')';}
 	if ($d66[server_ide]){ $list .= '('.id2server($d66[server_ide]).')';}
-	$list .= "$reopen <span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate2($d66[dispatchDate])."</span><span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span></li>";
+	$list .= "$reopen <span style='background-color:#AAAAAA; color:FFFFFF; border: 1px solid black;'>DISP: ".justDate2($d66[dispatchDate])."</span><span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span></li>";
 }
 
 $r67=@mysql_query(" eviction_id, date_received, request_close, affidavit_status, service_status, circuit_court, dispatchDate, attorneys_id, estFileDate, server_id, affidavit_status2, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF(estFileDate, CURDATE()) as estHours from evictionPackets where affidavit_status2 <> '' order by eviction_id");
@@ -400,7 +400,7 @@ while ($d67=mysql_fetch_array($r67,MYSQL_ASSOC)){
 	$estFileDate=$estFileDate[1].'-'.$estFileDate[2];
 	$list .= "<li style='background-color:".colorCode($hours,$d67[packet_id],'').";'><a href='http://staff.mdwestserve.com/ev/order.php?packet=$d67[eviction_id]' target='_Blank'>EV$d67[eviction_id]</a>: <strong>".stripHours($d67[hours])."</strong> ".abbrCounty(strtoupper($d67[circuit_court]))." <em> <small>[".id2attorney($d67[attorneys_id])."]</small></em> $d67[affidavit_status2]";
 	if ($d67[server_id]){ $list .= '('.id2server($d67[server_id]).')';}
-	$list .=" <span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate2($d67[dispatchDate])."</span><span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span></li>";
+	$list .=" <span style='background-color:#AAAAAA; color:FFFFFF; border: 1px solid black;'>DISP: ".justDate2($d67[dispatchDate])."</span><span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span></li>";
 }
 
 $r68=@mysql_query("select packet_id, address1, address1a, address1b, address1c, address1d, address1e, reopenDate, date_received, filing_status, request_close, request_closea, request_closeb, request_closec, request_closed, request_closee, affidavit_status, service_status, circuit_court, attorneys_id, estFileDate, rush, server_id, server_ida, server_idb, server_idc, server_idd, server_ide, affidavit_status2, TIMEDIFF( NOW(), date_received) as hours, DATEDIFF( CURDATE(), reopenDate) as reopenHours, DATEDIFF(estFileDate, CURDATE()) as estHours from standard_packets where affidavit_status2 <> '' order by packet_id"); 
@@ -422,7 +422,7 @@ while ($d68=mysql_fetch_array($r68,MYSQL_ASSOC)){
 	if ($d68[server_idc]){ $list .= '('.id2server($d68[server_idc]).')';}
 	if ($d68[server_idd]){ $list .= '('.id2server($d68[server_idd]).')';}
 	if ($d68[server_ide]){ $list .= '('.id2server($d68[server_ide]).')';}
-	$list .= "$reopen <span style='background-color:#AAAAAA; color:FFFFFF;'>DISP: ".justDate2($d68[dispatchDate])."</span><span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span></li>";
+	$list .= "$reopen <span style='background-color:#AAAAAA; color:FFFFFF; border: 1px solid black;'>DISP: ".justDate2($d68[dispatchDate])."</span><span title='$estHours Hours Remaining' style='background-color:".colorCode2($estHours)." border: 1px solid black;'>FILE: $estFileDate</span></li>";
 }
 
 if ($list != ''){
