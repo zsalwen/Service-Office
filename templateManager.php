@@ -80,7 +80,7 @@ if($_GET[affidavit] || $_POST[affidavit]){
     closedir($handler); 
 	echo "<option>NEW TEMPLATE</option>";
 	?>
-	</select> <input type='submit' value='GO!' name='submit'></td></tr></table></form>
+	</select> <input type='submit' value='GO!' name='edit'></td></tr></table></form>
 <?
 }
 ?>
