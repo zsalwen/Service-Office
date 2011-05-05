@@ -1,5 +1,23 @@
 <?
-include 'common.php';
+mysql_connect();
+mysql_select_db('core');
+function getPage($url, $referer, $timeout, $header){
+	if(!isset($timeout))
+        $timeout=30;
+    $curl = curl_init();
+    if(strstr($referer,"://")){
+        curl_setopt ($curl, CURLOPT_REFERER, $referer);
+    }
+    curl_setopt ($curl, CURLOPT_URL, $url);
+    curl_setopt ($curl, CURLOPT_TIMEOUT, $timeout);
+    curl_setopt ($curl, CURLOPT_USERAGENT, sprintf("Mozilla/%d.0",rand(4,5)));
+    curl_setopt ($curl, CURLOPT_HEADER, (int)$header);
+    curl_setopt ($curl, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt ($curl, CURLOPT_SSL_VERIFYPEER, 0);
+    $html = curl_exec ($curl);
+    curl_close ($curl);
+    return $html;
+}
 ?>
 <script>
 function prompter(){
@@ -50,6 +68,7 @@ if($_GET[affidavit] || $_POST[affidavit]){
 	if ($_GET[edit] && !$saved){
 		echo "<h1>2!</h1>";
 		$url="/data/service/templates/".$_GET[affidavit];
+		echo "<h1>$url</h1>";
 		$html=getPage($url,$_GET[affidavit],'5','');
 		?>
 		<script language="JavaScript" type="text/javascript" src="wysiwyg.js"></script>
