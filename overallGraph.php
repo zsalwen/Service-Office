@@ -98,14 +98,17 @@ mysql_close();
 
 $array = explode(',',$array['2011-05-05']);
 
-$z = $array[0];
-$y = $array[1];
-$x = $array[2];
-$high = ($z - $x) - ($y - $x);
+$z = $array[0]; // high
+$y = $array[1]; // current
+$x = $array[2]; // low
+$high = ($z - $x) - ($y - $x); 
 $current = $y - $x;
 $low = $z;
 ?>
 
+alert('High: <?=$z;?> | <?=$high;?>');
+alert('Current: <?=$4;?> | <?=$current;?>');
+alert('Low: <?=$x;?> | <?=$low;?>');
 
           dataTable.setValue(0, 0, <?=$high;?>);
           dataTable.setValue(0, 1, <?=$current;?>);
