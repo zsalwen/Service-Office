@@ -98,25 +98,20 @@ mysql_close();
 
 $array = explode(',',$array['2011-05-05']);
 
-$z = $array[0];
-$y = $array[1];
-$x = $array[2];
-$high = ($z - $x) - ($y - $x);
+$z = $array[0]; // high
+$y = $array[1]; // current
+$x = $array[2]; // low
+
+$high = $z;
 $current = $y - $x;
-$low = $z;
-
-$top = $z+$y+$z;
-
-if ($top > $topHigh){
-$topHigh = $top;
-}
-
+$low = ($z - $x) - ($y - $x); 
 ?>
 
+alert('High: <?=$z;?> | <?=$high;?> Current: <?=$y;?> | <?=$current;?> Low: <?=$x;?> | <?=$low;?>');
 
-          dataTable.setValue(0, 0, <?=$high;?>);
+          dataTable.setValue(0, 0, <?=$low;?>);
           dataTable.setValue(0, 1, <?=$current;?>);
-          dataTable.setValue(0, 2, <?=$low;?>);
+          dataTable.setValue(0, 2, <?=$high;?>);
 
 
 
@@ -155,7 +150,7 @@ $topHigh = $top;
           chf: 'bg,s,C2BDDD',
           chxl: '',
           chxp: '',
-          chxr: '0,0,<?=$topHigh;?>',
+          chxr: '0,0,<?=$z;?>',
           chxs: '0,676767,10.5,0,l,676767',
           chxtc: '',
           chxt: 'y',
@@ -164,7 +159,7 @@ $topHigh = $top;
           cht: 'bvs',
           chco: 'FF0000,3072F3,00FF00',
           chd: 'e:rq4q6d80fEfpaj,WHtUp43NuyhclT,TQO2bziQmifNGZ',
-          chdl: 'High+Value|Current+Value|Low+Value',
+          chdl: 'Low+Value|Current+Value|High+Value',
           chdlp: 't',
           chtt: '<?=$name?>'
         };
