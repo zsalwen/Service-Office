@@ -64,7 +64,7 @@ $directory = '/data/service/templates';
     closedir($handler);
 ?></select>
 </td>
-		<td>Template Used - <a href="templateManager.php" target="_blank">Template Manager</a></td>
+		<td>Template Used - <a href="affidavitMaster/templateManager.php" target="_blank">Template Manager</a></td>
 	</tr>
 	<tr>
 		<td>product</td>

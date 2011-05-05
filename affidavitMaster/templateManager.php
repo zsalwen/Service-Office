@@ -21,7 +21,7 @@ if($_GET[create]){
 		$name=str_replace(' ','.',$_GET[name]);
 		//display blank whiteboard with template name above, save to new file on submit
 		?>
-		<script language="JavaScript" type="text/javascript" src="affidavitMaster/wysiwyg.js"></script>
+		<script language="JavaScript" type="text/javascript" src="wysiwyg.js"></script>
 		<script language="javascript1.2">
 		   // attach the editor to all textareas of your page.
 		   WYSIWYG.attach('whiteboard');
@@ -50,7 +50,7 @@ if($_GET[affidavit] || $_POST[affidavit]){
 		$url="/data/service/templates/".$_GET[affidavit];
 		$html=getPage($url,$_GET[affidavit],'5','');
 		?>
-		<script language="JavaScript" type="text/javascript" src="affidavitMaster/wysiwyg.js"></script>
+		<script language="JavaScript" type="text/javascript" src="wysiwyg.js"></script>
 		<script language="javascript1.2">
 		   // attach the editor to all textareas of your page.
 		   WYSIWYG.attach('whiteboard');
