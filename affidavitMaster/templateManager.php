@@ -36,6 +36,7 @@ if($_GET[create]){
 	}
 }
 if($_GET[affidavit] || $_POST[affidavit]){
+	echo "<h1>1!</h1>";
 	if ($_POST[whiteboard]){
 		//save whiteboard to file
 		$whiteboard = $_POST[whiteboard];
@@ -47,6 +48,7 @@ if($_GET[affidavit] || $_POST[affidavit]){
 		$saved=1;
 	}
 	if ($_GET[edit] && !$saved){
+		echo "<h1>2!</h1>";
 		$url="/data/service/templates/".$_GET[affidavit];
 		$html=getPage($url,$_GET[affidavit],'5','');
 		?>
@@ -62,13 +64,15 @@ if($_GET[affidavit] || $_POST[affidavit]){
 		<input style="font-size:24px; color:#006666;" name="submit" type="submit" value="Save Ad"></center>
 		</form>
 		<?
-	}else{ ?>
+	}else{ 
+	echo "<h1>3!</h1>";
+	?>
 		<div align="right">
 		<form><input type="hidden" name="affidavit" value="<?=$_GET[name]?>"><input name="edit" value="Edit Template" style="font-size:24px; color:#006666;" type="submit"></form></div>
 		<div><?=stripslashes($whiteboard)?></div>
 <?	}
 }else{ ?>
-	<form><table><tr><td>SELECT TEMPLATE TO EDIT <select name="affidavit" onchange="form.submit()"><?
+	<form><table><tr><td>SELECT TEMPLATE TO EDIT <select name="affidavit"><?
 	$directory = '/data/service/templates';
     $results = array();
     $handler = opendir($directory);
