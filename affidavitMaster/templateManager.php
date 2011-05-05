@@ -87,7 +87,7 @@ if($_GET[affidavit] || $_POST[affidavit]){
 		<hr>
 		<p align=right><a href="templateManager.php">RETURN TO TEMPLATE LIST</a></p>
 <?	}
-}else{ ?>
+}elseif(!$_GET[create]){ ?>
 	<form><table><tr><td>SELECT TEMPLATE TO EDIT <select name="affidavit"><?
 	$directory = '/data/service/templates';
     $results = array();
