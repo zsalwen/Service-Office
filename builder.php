@@ -54,7 +54,7 @@ $d=mysql_fetch_array($r,MYSQL_ASSOC);
 		<td>affidavit</td>
 		<td>n/a</td>
 		<td><select name="affidavit"><? if($d[affidavit]){ ?><option><?=stripslashes($d[affidavit])?></option><? }?><?
-$directory = '/gitbox/Service-Office/templates';
+$directory = '/data/service/templates';
     $results = array();
     $handler = opendir($directory);
     while ($file = readdir($handler)) {
@@ -64,7 +64,7 @@ $directory = '/gitbox/Service-Office/templates';
     closedir($handler);
 ?></select>
 </td>
-		<td>Template Used</td>
+		<td>Template Used - <a href="templateManager.php" target="_blank">Template Manager</a></td>
 	</tr>
 	<tr>
 		<td>product</td>
