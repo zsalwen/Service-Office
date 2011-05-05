@@ -198,11 +198,22 @@ $low = ($z - $x) - ($y - $x);
 <? } ?>
 
 
+<pre>
+<?php
+print_r ($array1);
+?>
+</pre>
+<pre>
+<?php
+print_r ($array2);
+?>
+</pre>
+<pre>
+<?php
+print_r ($array3);
+?>
+</pre>
 
-
-<hr>
-<?=$array1['2011-05-05'];?>/<?=$array2['2011-05-05'];?>
-<hr>
 
 <table border="1" width="100%">
 <tr>
