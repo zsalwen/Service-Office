@@ -102,7 +102,7 @@ $z = $array[0]; // high
 $y = $array[1]; // current
 $x = $array[2]; // low
 
-$high = $z
+$high = $z;
 $current = $y - $x;
 $low = ($z - $x) - ($y - $x); 
 ?>
