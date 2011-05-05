@@ -42,6 +42,7 @@ table { border-collapse: collapse; }
 while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 $array1[$d[date]]=$d[dispatch];
 $array2[$d[date]]=$d[closed];
+$array3[$d[date]]=$d[otdQ];
 ?>
 <tr>
 <td bgcolor="AFEEEE"><?=$d[date]?></td>
@@ -107,7 +108,6 @@ $current = $y - $x;
 $low = ($z - $x) - ($y - $x); 
 ?>
 
-alert('High: <?=$z;?> | <?=$high;?> Current: <?=$y;?> | <?=$current;?> Low: <?=$x;?> | <?=$low;?>');
 
           dataTable.setValue(0, 0, <?=$low;?>);
           dataTable.setValue(0, 1, <?=$current;?>);
@@ -191,6 +191,7 @@ alert('High: <?=$z;?> | <?=$high;?> Current: <?=$y;?> | <?=$current;?> Low: <?=$
 <tr>
 <td><div id="chart1"></div><?=makeChart('Received to Dispatch','chart1',1,$array1);?></td>
 <td><div id="chart2"></div><?=makeChart('Dispatch to Close','chart2',2,$array2);?></td>
+<td><div id="chart3"></div><?=makeChart('OTD Quality Control','chart3',3,$array3);?></td>
 </tr>
 </table>
 
