@@ -330,7 +330,7 @@ a:visited{color:6600AA;}
 			$exclude .= " AND server_id$letter <> '$_GET[admin]'";
 		}
 		if (isset($list)){
-			rsort($list,SORT_NUMERIC);
+			ksort($list);
 			foreach($list as $value){
 				echo $value;
 			}
