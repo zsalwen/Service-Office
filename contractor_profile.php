@@ -330,7 +330,7 @@ a:visited{color:6600AA;}
 			$exclude .= " AND server_id$letter <> '$_GET[admin]'";
 		}
 		if (isset($list)){
-			rsort($list);
+			rsort($list,SORT_NUMERIC);
 			foreach($list as $value){
 				echo $value;
 			}
@@ -382,11 +382,11 @@ a:visited{color:6600AA;}
 		}
 		
 		if (isset($bigList)){
-			if ($evList && $sList){
+			if ($list2 && $list3){
 				echo "<tr><td><strong><a href='#ev'>Jump to Evictions</a> | <a href='#s'>Jump to Standard Packets</a></strong></td></tr>";
-			}elseif($sList){
+			}elseif($list3){
 				echo "<tr><td><strong><a href='#s'>Jump to Standard Packets</a></strong></td></tr>";
-			}elseif($evList){
+			}elseif($list2){
 				echo "<tr><td><strong><a href='#ev'>Jump to Evictions</a></strong></td></tr>";
 			}
 			echo $bigList;
