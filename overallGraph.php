@@ -76,7 +76,7 @@ mysql_close();
 ?>
 </table>
 <center><b>high,current,low</b></center>
-<? function makeChart($name,$id,$i,$array){ $topHigh = 0; ?>
+<? function makeChart($name,$id,$i,$array){ $graphHigh = 0; $graphLow = 0; ?>
 <script type="text/javascript">
       var queryString = '';
       var dataUrl = '';
@@ -107,6 +107,10 @@ $high = $z;
 $current = $y - $x;
 $low = ($z - $x) - ($y - $x); 
 
+if( $z > $graphHigh ){ $graphHigh = $z; }
+if( $x < $graphLow ){ $graphLow = $x; }
+
+
 ?>
 
 
@@ -125,6 +129,8 @@ $x = $sub[2]; // low
 $high = $z;
 $current = $y - $x;
 $low = ($z - $x) - ($y - $x); 
+if( $z > $graphHigh ){ $graphHigh = $z; }
+if( $x < $graphLow ){ $graphLow = $x; }
 
 ?>
 
@@ -141,6 +147,8 @@ $x = $sub[2]; // low
 $high = $z;
 $current = $y - $x;
 $low = ($z - $x) - ($y - $x); 
+if( $z > $graphHigh ){ $graphHigh = $z; }
+if( $x < $graphLow ){ $graphLow = $x; }
 
 ?>
 
@@ -179,7 +187,7 @@ $low = ($z - $x) - ($y - $x);
           chf: 'bg,s,C2BDDD',
           chxl: '',
           chxp: '',
-          chxr: '0,0,10',
+          chxr: '0,<?=$graphLow;?>,<?=$graphHigh;?>',
           chxs: '0,676767,10.5,0,l,676767',
           chxtc: '',
           chxt: 'y',
@@ -188,7 +196,7 @@ $low = ($z - $x) - ($y - $x);
           cht: 'bvs',
           chco: 'FF0000,3072F3,00FF00',
           chd: 'e:rq4q6d80fEfpaj,WHtUp43NuyhclT,TQO2bziQmifNGZ',
-          chdl: 'Low+Value|Current+Value|High+Value',
+          chdl: 'Low|Current|High',
           chdlp: 't',
           chtt: '<?=$name?>'
         };
