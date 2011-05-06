@@ -196,9 +196,9 @@ table {padding: 0px;}
 <a href="http://staff.mdwestserve.com/otd/ps_write_invoice.php?id=<?=$data[packet_id];?>" target="_Blank">PS Write Invoice</a>
 ----------->
 <? if ($_GET[qc]){ ?>
-<center><div style="border:1px solid;font-size:18px;"><?=id2attorney($data[attorneys_id])?><?=stripslashes(getPayInstructions($data[attorneys_id],'<br>'));?><? if ($data[rush] != ''){ echo "<br><b style='background-color:red;'>RUSH SERVICE--: $120 IN-STATE, $170 OUT-OF-STATE</b>"; } ?></div></center>
+<center><div style="border:1px solid;font-size:18px;"><?=id2attorney($data[attorneys_id])?><?=stripslashes(getPayInstructions($data[attorneys_id],'<br>'));?><? if ($data[rush] != ''){ echo "<br><b style='background-color:red;'>RUSH SERVICE--: EXTRA $50 CHARGE PER DEFENDANT, PER ADDRESS</b>"; } ?></div></center>
 <? }elseif(stripslashes(getPayInstructions($data[attorneys_id],'')) != ''){ ?>
-<center><div style="border:1px solid;font-size:22px; width:1000px;"><?=id2attorney($data[attorneys_id])?><?=stripslashes(getPayInstructions($data[attorneys_id],'<br>'));?><? if ($data[rush] != ''){ echo "<br><b style='background-color:red;'>RUSH SERVICE--: $120 IN-STATE, $170 OUT-OF-STATE</b>"; } ?></div></center>
+<center><div style="border:1px solid;font-size:22px; width:1000px;"><?=id2attorney($data[attorneys_id])?><?=stripslashes(getPayInstructions($data[attorneys_id],'<br>'));?><? if ($data[rush] != ''){ echo "<br><b style='background-color:red;'>RUSH SERVICE--: EXTRA $50 CHARGE PER DEFENDANT, PER ADDRESS</b>"; } ?></div></center>
 <? } 
 $r1=mysql_query("SELECT * FROM gasRates ORDER BY id DESC LIMIT 0,1");
 $d1=mysql_fetch_array($r1,MYSQL_ASSOC);
