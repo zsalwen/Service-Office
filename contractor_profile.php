@@ -334,8 +334,8 @@ a:visited{color:6600AA;}
 				echo "<script>alert('MISMATCH!  packetList: ".count($packetList)." | list: ".count($list)."')</script>";
 				echo "<hr><table><tr><td>packetList</td><td>list</td></tr><tr><td>";
 				$i2=-1;
-				while ($i2 < count($packetList)){
-					echo $packetList["$i"];
+				foreach($packetList as $value){
+					echo $value;
 				}
 				echo "</td><td>";
 				foreach($list as $value){
