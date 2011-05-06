@@ -72,7 +72,7 @@ while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 if (isset($zipList)){
 	if (isset($serverList)){
 		ksort($serverList);
-		foreach($serverList as $key => $value){
+		foreach($serverList as $value){
 			echo $value."</table></fieldset></td></tr>";
 		}
 	}
