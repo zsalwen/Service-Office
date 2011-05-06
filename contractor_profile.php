@@ -221,7 +221,6 @@ a:visited{color:6600AA;}
 				$countyNames["$i"]=$county;
 				$i++;
 			}
-			//echo "<tr><td><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$$d2[contractor_rate]</b></td></tr>";
 		}
 		foreach(range('a','e') as $letter){
 			$q2="SELECT packet_id, city1$letter, state1$letter, zip1$letter, ps_pay.contractor_rate$letter from ps_packets, ps_pay WHERE server_id$letter='$_GET[admin]' AND address1$letter <> ''$exclude AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD' ORDER BY packet_id DESC";
@@ -235,14 +234,67 @@ a:visited{color:6600AA;}
 					$countyNames["$i"]=$county;
 					$i++;
 				}
-				//echo "<tr><td><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"]).", ".$d2["zip1$letter"]." - <b>$".$d2["contractor_rate$letter"]."</b></td></tr>";
 			}
 			$exclude .= " AND server_id$letter <> '$_GET[admin]'";
-		} 
+		}
+		//evictions
+		$q2="SELECT eviction_id, circuit_court, city1, state1, zip1, ps_pay.contractor_rate from evictionPackets, ps_pay WHERE server_id='$_GET[admin]' AND address1 <> '' AND evictionPackets.eviction_id=ps_pay.packetID AND ps_pay.product='EV' ORDER BY eviction_id DESC";
+		$r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
+		$exclude=" AND server_id <> '$_GET[admin]'";
+		while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){$i2++;
+			$county=strtoupper($d2[circuit_court]);
+			if ($county == "ST MARYS"){
+				$county="SAINT MARYS";
+			}
+			if (isset($countyList["$county"])){
+				$countyList["$county"] .= "<li id='".$i2.$county.$d2[eviction_id]."'><a href='/ev/order.php?packet=$d2[eviction_id]' target='_blank'>(EV$d2[eviction_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$".$d2[contractor_rate]."</b></li>";
+			}else{
+				$countyList["$county"] = "<li id='".$i2.$county.$d2[eviction_id]."'><a href='/ev/order.php?packet=$d2[eviction_id]' target='_blank'>(EV$d2[eviction_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$".$d2[contractor_rate]."</b></li>";
+				$countyNames["$i"]=$county;
+				$i++;
+			}
+		}
+		//standards
+		$q2="SELECT packet_id, circuit_court, city1, state1, zip1, ps_pay.contractor_rate from standard_packets, ps_pay WHERE server_id='$_GET[admin]' AND address1 <> '' AND standard_packets.packet_id=ps_pay.packetID AND ps_pay.product='S' ORDER BY packet_id DESC";
+		$r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
+		$exclude=" AND server_id <> '$_GET[admin]'";
+		while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){$i2++;
+			if ($d2[circuit_court] != ''){
+				$county=strtoupper($d2[circuit_court]);
+			}else{
+				$county=getCounty($d2["zip1"]);
+			}
+			if ($county == "ST MARYS"){
+				$county="SAINT MARYS";
+			}
+			if (isset($countyList["$county"])){
+				$countyList["$county"] .= "<li id='".$i2.$county.$d2[packet_id]."'><a href='/standard/order.php?packet=$d2[packet_id]' target='_blank'>(S$d2[packet_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$".$d2[contractor_rate]."</b></li>";
+			}else{
+				$countyList["$county"] = "<li id='".$i2.$county.$d2[packet_id]."'><a href='/standard/order.php?packet=$d2[packet_id]' target='_blank'>(S$d2[packet_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$".$d2[contractor_rate]."</b></li>";
+				$countyNames["$i"]=$county;
+				$i++;
+			}
+		}
+		foreach(range('a','e') as $letter){
+			$q2="SELECT packet_id, city1$letter, state1$letter, zip1$letter, ps_pay.contractor_rate$letter from standard_packets, ps_pay WHERE server_id$letter='$_GET[admin]' AND address1$letter <> ''$exclude AND standard_packets.packet_id=ps_pay.packetID AND ps_pay.product='S' ORDER BY packet_id DESC";
+			$r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
+			while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){$i2++;
+				$county=getCounty($d2["zip1$letter"]);
+				if (isset($countyList["$county"])){
+					$countyList["$county"] .= "<li id='".$i2.$county.$d2[packet_id].$letter."'><a href='/standard/order.php?packet=$d2[packet_id]' target='_blank'>(S$d2[packet_id])</a> ".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"]).", ".$d2["zip1$letter"]." - <b>$".$d2["contractor_rate$letter"]."</b></li>";
+				}else{
+					$countyList["$county"] = "<li id='".$i2.$county.$d2[packet_id].$letter."'><a href='/standard/order.php?packet=$d2[packet_id]' target='_blank'>(S$d2[packet_id])</a> ".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"]).", ".$d2["zip1$letter"]." - <b>$".$d2["contractor_rate$letter"]."</b></li>";
+					$countyNames["$i"]=$county;
+					$i++;
+				}
+			}
+			$exclude .= " AND server_id$letter <> '$_GET[admin]'";
+		}
 		if (isset($countyNames)){
 			if (count($countyNames) != count($countyList)){
 				echo "<script>alert('MISMATCH!  countyNames: ".count($countyNames)." | countyList: ".count($countyList)."')</script>";
 			}else{
+				echo "<tr><td><a name='standard' style='font-weight:bold;'>STANDARD</a></td></tr>";
 				sort($countyNames);
 				$i=-1;
 				$count=count($countyList)-1;
@@ -262,7 +314,7 @@ a:visited{color:6600AA;}
 		while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){$i++;
 			$packet=$d2[packet_id];
 			$packetList[$i]=$packet;
-			$list[$packet] = "<tr><td><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$$d2[contractor_rate]</b></td></tr>";
+			$list[$packet] = "<tr><td><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>(OTD$d2[packet_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$$d2[contractor_rate]</b></td></tr>";
 		}
 		foreach(range('a','e') as $letter){
 			$q2="SELECT DISTINCT packet_id, city1$letter, state1$letter, zip1$letter, ps_pay.contractor_rate$letter from ps_packets, ps_pay WHERE server_id$letter='$_GET[admin]'$exclude AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD' ORDER BY packet_id DESC";
@@ -270,26 +322,100 @@ a:visited{color:6600AA;}
 			while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){
 				$packet=$d2[packet_id];
 				if (isset($list[$packet])){
-					$list[$packet] .= "<tr><td><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"]).", ".$d2["zip1$letter"]." - <b>$".$d2["contractor_rate$letter"]."</b></td></tr>";
+					$list[$packet] .= "<tr><td><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>(OTD$d2[packet_id])</a> ".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"]).", ".$d2["zip1$letter"]." - <b>$".$d2["contractor_rate$letter"]."</b></td></tr>";
 				}else{$i++;
 					$packetList[$i]=$packet;
-					$list[$packet] = "<tr><td><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"]).", ".$d2["zip1$letter"]." - <b>$".$d2["contractor_rate$letter"]."</b></td></tr>";
+					$list[$packet] = "<tr><td><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>(OTD$d2[packet_id])</a> ".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"]).", ".$d2["zip1$letter"]." - <b>$".$d2["contractor_rate$letter"]."</b></td></tr>";
 				}
 			}
 			$exclude .= " AND server_id$letter <> '$_GET[admin]'";
 		}
 		if (isset($packetList)){
 			if (count($packetList) != count($list)){
-				echo "<script>alert('MISMATCH!  countyNames: ".count($packetList)." | countyList: ".count($list)."')</script>";
+				echo "<script>alert('MISMATCH!  packetList: ".count($packetList)." | list: ".count($list)."')</script>";
 			}else{
 				rsort($packetList);
 				$i=-1;
 				$count=count($list)-1;
 				while ($i < $count){$i++;
 					$name=$packetList["$i"];
-					echo $list["$name"];
+					$bigList .= $list["$name"];
 				}
 			}
+		}
+		//evictions
+		$i=-1;
+		$q2="SELECT DISTINCT eviction_id, city1, state1, zip1, ps_pay.contractor_rate from evictionPackets, ps_pay WHERE server_id='$_GET[admin]' AND evictionPackets.eviction_id=ps_pay.packetID AND ps_pay.product='EV' ORDER BY eviction_id DESC";
+		$r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
+		$exclude=" AND server_id <> '$_GET[admin]'";
+		while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){$i++;
+			$packet=$d2[eviction_id];
+			$evList[$i]=$packet;
+			$list2[$packet] = "<tr><td><a href='/ev/order.php?packet=$d2[eviction_id]' target='_blank'>(EV$d2[eviction_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$$d2[contractor_rate]</b></td></tr>";
+		}
+		if (isset($evList)){
+			if (count($evList) != count($list2)){
+				echo "<script>alert('MISMATCH!  evList: ".count($evList)." | list2: ".count($list2)."')</script>";
+			}else{
+				$bigList .= "<tr><td align='center'><a name='ev'>EVICTION PACKETS</a></td></tr>";
+				rsort($evList);
+				$i=-1;
+				$count=count($list2)-1;
+				while ($i < $count){$i++;
+					$name=$evList["$i"];
+					$bigList .= $list2["$name"];
+				}
+			}
+		}
+		
+		//standards
+		$i=-1;
+		$q2="SELECT DISTINCT packet_id, city1, state1, zip1, ps_pay.contractor_rate from standard_packets, ps_pay WHERE server_id='$_GET[admin]' AND standard_packets.packet_id=ps_pay.packetID AND ps_pay.product='S' ORDER BY packet_id DESC";
+		$r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
+		$exclude=" AND server_id <> '$_GET[admin]'";
+		while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){$i++;
+			$packet=$d2[packet_id];
+			$sList[$i]=$packet;
+			$list3[$packet] = "<tr><td><a href='/standard/order.php?packet=$d2[packet_id]' target='_blank'>(S$d2[packet_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$$d2[contractor_rate]</b></td></tr>";
+		}
+		foreach(range('a','e') as $letter){
+			$q2="SELECT DISTINCT packet_id, city1$letter, state1$letter, zip1$letter, ps_pay.contractor_rate$letter from standard_packets, ps_pay WHERE server_id$letter='$_GET[admin]'$exclude AND standard_packets.packet_id=ps_pay.packetID AND ps_pay.product='S' ORDER BY packet_id DESC";
+			$r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
+			while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){
+				$packet=$d2[packet_id];
+				if (isset($list3[$packet])){
+					$list3[$packet] .= "<tr><td><a href='/standard/order.php?packet=$d2[packet_id]' target='_blank'>(S$d2[packet_id])</a> ".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"]).", ".$d2["zip1$letter"]." - <b>$".$d2["contractor_rate$letter"]."</b></td></tr>";
+				}else{$i++;
+					$sList[$i]=$packet;
+					$list3[$packet] = "<tr><td><a href='/standard/order.php?packet=$d2[packet_id]' target='_blank'>(S$d2[packet_id])</a> ".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"]).", ".$d2["zip1$letter"]." - <b>$".$d2["contractor_rate$letter"]."</b></td></tr>";
+				}
+			}
+			$exclude .= " AND server_id$letter <> '$_GET[admin]'";
+		}
+		if (isset($sList)){
+			if (count($sList) != count($list3)){
+				echo "<script>alert('MISMATCH!  sList: ".count($sList)." | list3: ".count($list3)."')</script>";
+			}else{
+				$bigList .= "<tr><td align='center'><a name='s'>STANDARD PACKETS</a></td></tr>";
+				rsort($sList);
+				$i=-1;
+				$count=count($list3)-1;
+				while ($i < $count){$i++;
+					$name=$sList["$i"];
+					$bigList .= $list3["$name"];
+				}
+			}
+		}
+		
+		if (isset($bigList)){
+			if ($evList && $sList){
+				echo "<tr><td><strong><a href='#ev'>Jump to Evictions</a> | <a href='#s'>Jump to Standard Packets</a></strong></td></tr>";
+			}elseif($sList){
+				echo "<tr><td><strong><a href='#s'>Jump to Standard Packets</a></strong></td></tr>";
+			}elseif($evList){
+				echo "<tr><td><strong><a href='#ev'>Jump to Evictions</a></strong></td></tr>";
+			}
+			echo $bigList;
 		}
 	}
 	?>
