@@ -137,6 +137,11 @@ $q= "select * from ps_users where id = '$id'";
 $r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
 $d=mysql_fetch_array($r, MYSQL_ASSOC); 
 ?>
+<style>
+a{color:FF0000;}
+a:hover{color:6600AA}
+a:visited{color:888888;}
+</style>
 <table align="center" width="100%"><tr><td valign="top">
         	<table border="1" align="center" style="border-collapse:collapse" width="100%">
             	<form method="post"><tr>
@@ -195,10 +200,10 @@ $d=mysql_fetch_array($r, MYSQL_ASSOC);
 			<tr><td bgcolor="#FFCC33" colspan="4"><?=$d[whois]?></td></tr></table>
 </td><td valign="top" bgcolor="#CCFFFF" colspan="2"><table width="100%">
 	<tr>
-    	<td><strong>Previous Serves: By <a href="contractor_profile.php?admin=<?=$_GET[admin]?>&serves=county">County</a> OR By <a href="contractor_profile.php?admin=<?=$_GET[admin]?>&serves=ordered">Packet #</a></strong></td>
+    	<td><strong>Previous Serves: Order <a href="contractor_profile.php?admin=<?=$_GET[admin]?>&serves=county">By County</a> OR <a href="contractor_profile.php?admin=<?=$_GET[admin]?>&serves=ordered">By Packet #</a></strong></td>
     </tr>
     <?
-	if ($_GET[county]){
+	if ($_GET[serves] == 'county'){
 		$i=0;
 		$i2=0;
 		$q2="SELECT packet_id, circuit_court, city1, state1, zip1, ps_pay.contractor_rate from ps_packets, ps_pay WHERE server_id='$_GET[admin]' AND address1 <> '' AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD' ORDER BY packet_id DESC";
