@@ -88,7 +88,7 @@ $current = $y - $x;
 $low = ($z - $x) - ($y - $x); 
 if( $z > $_SESSION[graphHigh] ){ $_SESSION[graphHigh] = $z; }
 if( $x < $_SESSION[graphLow] ){ $_SESSION[graphLow] = $x; }
-return = "
+return "
 
           dataTable.setValue($i, 0, $low);
           dataTable.setValue($i, 1, $current);
