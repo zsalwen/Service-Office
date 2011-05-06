@@ -56,8 +56,9 @@ if ($_GET[city] || $_GET[zip]){
 				}
 			}
 		}
-		foreach(range('a','e') as $letter){
+		foreach(range('a','e') as $letter){$i++;
 			$var=$field.$letter;
+			echo "SEARCHING VAR $var :: SEARCH $search":
 			if ((strpos($d["$var"],$search) !== false) || (strpos($search,$d["$var"]) !== false)){
 				if($d["server_id$letter"] != '' && $d["contractor_rate$letter"] != ''){
 					$zip=$d["zip1$letter"];
