@@ -330,7 +330,7 @@ a:visited{color:6600AA;}
 			$exclude .= " AND server_id$letter <> '$_GET[admin]'";
 		}
 		if (isset($list)){
-			ksort($list);
+			krsort($list);
 			foreach($list as $value){
 				echo $value;
 			}
@@ -345,7 +345,7 @@ a:visited{color:6600AA;}
 			$list2[$packet] = "<tr><td><a href='/ev/order.php?packet=$d2[eviction_id]' target='_blank'>(EV$d2[eviction_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$$d2[contractor_rate]</b></td></tr>";
 		}
 		if (isset($list2)){
-			rsort($list2);
+			krsort($list2);
 			foreach($list2 as $value){
 				echo $value;
 			}
@@ -375,7 +375,7 @@ a:visited{color:6600AA;}
 			$exclude .= " AND server_id$letter <> '$_GET[admin]'";
 		}
 		if (isset($list3)){
-			rsort($list3);
+			krsort($list3);
 			foreach($list3 as $value){
 				echo $value;
 			}
