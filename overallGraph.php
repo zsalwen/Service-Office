@@ -88,11 +88,13 @@ $current = $y - $x;
 $low = ($z - $x) - ($y - $x); 
 if( $z > $_SESSION[graphHigh] ){ $_SESSION[graphHigh] = $z; }
 if( $x < $_SESSION[graphLow] ){ $_SESSION[graphLow] = $x; }
-?>
-          dataTable.setValue(<?=$i?>, 0, <?=$low;?>);
-          dataTable.setValue(<?=$i?>, 1, <?=$current;?>);
-          dataTable.setValue(<?=$i?>, 2, <?=$high;?>);
-<?
+return = "
+
+          dataTable.setValue($i, 0, $low);
+          dataTable.setValue($i, 1, $current);
+          dataTable.setValue($i, 2, $high);
+
+";
 }
 function makeChart($name,$id,$i,$array,$days){ 
 $_SESSION[graphHigh] = 0; 
