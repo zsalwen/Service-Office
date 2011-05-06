@@ -204,7 +204,6 @@ a:visited{color:6600AA;}
     </tr>
     <?
 	if ($_GET[serves] == 'county'){
-		$i=0;
 		$i2=0;
 		$q2="SELECT packet_id, circuit_court, city1, state1, zip1, ps_pay.contractor_rate from ps_packets, ps_pay WHERE server_id='$_GET[admin]' AND address1 <> '' AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD' ORDER BY packet_id DESC";
 		$r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
@@ -218,8 +217,6 @@ a:visited{color:6600AA;}
 				$countyList["$county"] .= "<li id='".$i2.$county.$d2[packet_id]."'><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>(OTD$d2[packet_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$".$d2[contractor_rate]."</b></li>";
 			}else{
 				$countyList["$county"] = "<li id='".$i2.$county.$d2[packet_id]."'><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>(OTD$d2[packet_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$".$d2[contractor_rate]."</b></li>";
-				$countyNames["$i"]=$county;
-				$i++;
 			}
 		}
 		foreach(range('a','e') as $letter){
@@ -231,8 +228,6 @@ a:visited{color:6600AA;}
 					$countyList["$county"] .= "<li id='".$i2.$county.$d2[packet_id].$letter."'><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>(OTD$d2[packet_id])</a> ".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"]).", ".$d2["zip1$letter"]." - <b>$".$d2["contractor_rate$letter"]."</b></li>";
 				}else{
 					$countyList["$county"] = "<li id='".$i2.$county.$d2[packet_id].$letter."'><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>(OTD$d2[packet_id])</a> ".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"]).", ".$d2["zip1$letter"]." - <b>$".$d2["contractor_rate$letter"]."</b></li>";
-					$countyNames["$i"]=$county;
-					$i++;
 				}
 			}
 			$exclude .= " AND server_id$letter <> '$_GET[admin]'";
@@ -250,8 +245,6 @@ a:visited{color:6600AA;}
 				$countyList["$county"] .= "<li id='".$i2.$county.$d2[eviction_id]."'><a href='/ev/order.php?packet=$d2[eviction_id]' target='_blank'>(EV$d2[eviction_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$".$d2[contractor_rate]."</b></li>";
 			}else{
 				$countyList["$county"] = "<li id='".$i2.$county.$d2[eviction_id]."'><a href='/ev/order.php?packet=$d2[eviction_id]' target='_blank'>(EV$d2[eviction_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$".$d2[contractor_rate]."</b></li>";
-				$countyNames["$i"]=$county;
-				$i++;
 			}
 		}
 		//standards
@@ -271,8 +264,6 @@ a:visited{color:6600AA;}
 				$countyList["$county"] .= "<li id='".$i2.$county.$d2[packet_id]."'><a href='/standard/order.php?packet=$d2[packet_id]' target='_blank'>(S$d2[packet_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$".$d2[contractor_rate]."</b></li>";
 			}else{
 				$countyList["$county"] = "<li id='".$i2.$county.$d2[packet_id]."'><a href='/standard/order.php?packet=$d2[packet_id]' target='_blank'>(S$d2[packet_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$".$d2[contractor_rate]."</b></li>";
-				$countyNames["$i"]=$county;
-				$i++;
 			}
 		}
 		foreach(range('a','e') as $letter){
@@ -284,22 +275,16 @@ a:visited{color:6600AA;}
 					$countyList["$county"] .= "<li id='".$i2.$county.$d2[packet_id].$letter."'><a href='/standard/order.php?packet=$d2[packet_id]' target='_blank'>(S$d2[packet_id])</a> ".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"]).", ".$d2["zip1$letter"]." - <b>$".$d2["contractor_rate$letter"]."</b></li>";
 				}else{
 					$countyList["$county"] = "<li id='".$i2.$county.$d2[packet_id].$letter."'><a href='/standard/order.php?packet=$d2[packet_id]' target='_blank'>(S$d2[packet_id])</a> ".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"]).", ".$d2["zip1$letter"]." - <b>$".$d2["contractor_rate$letter"]."</b></li>";
-					$countyNames["$i"]=$county;
-					$i++;
 				}
 			}
 			$exclude .= " AND server_id$letter <> '$_GET[admin]'";
 		}
-		if (isset($countyNames)){
-			if (count($countyNames) != count($countyList)){
-				echo "<script>alert('MISMATCH!  countyNames: ".count($countyNames)." | countyList: ".count($countyList)."')</script>";
-			}else{
-				ksort($countyList);
-				foreach($countyList as $key => $value){
-					echo "<tr><td><fieldset><legend>$key</legend>";
-					echo $value;
-					echo "</fieldset></td></tr>";
-				}
+		if (isset($countyList)){
+			ksort($countyList);
+			foreach($countyList as $key => $value){
+				echo "<tr><td><fieldset><legend>$key</legend>";
+				echo $value;
+				echo "</fieldset></td></tr>";
 			}
 		}
 	}else{

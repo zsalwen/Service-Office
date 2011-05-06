@@ -20,6 +20,8 @@ if ($_GET[city]){
 		$explode='A/K/A';
 	}elseif(strpos($search,'ARTA')){
 		$explode='ARTA';
+	}elseif(strpos($search,'A/R/T/A')){
+		$explode='A/R/T/A';
 	}
 	if ($explode){
 		$city=explode($explode,$search);
@@ -40,7 +42,6 @@ if ($_GET[city]){
 	$field="zip1";
 	$q="SELECT * FROM ps_packets, ps_pay WHERE (zip1='$search' OR zip1a='$search' OR zip1b='$search' OR zip1c='$search' OR zip1d='$search' OR zip1e='$search') AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD' ORDER BY packet_id DESC";
 }
-$i=0;
 echo "<table align='center' border='1' style='border-collapse:collapse;'><tr><td align='center' colspan='3'>PREVIOUS SERVES IN $search, $county COUNTY</td></tr>";
 $r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
@@ -51,13 +52,8 @@ while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 				$serverList[$zip] .= "<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td>".id2name($d[server_id])."</td><td><b>$$d[contractor_rate]</b></td></tr>";
 			}else{
 				$serverList[$zip] = "<tr><td><fieldset><legend>$zip</legend><table><tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td>".id2name($d[server_id])."</td><td><b>$$d[contractor_rate]</b></td></tr>";
-				$zipList[$i] = $zip;
-				$i++;
 			}
-		}else{
-			//echo "<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>($d[packet_id])</a></td><td colspan='2'><b>INCOMPLETE RATE INFO</b></td></tr>";
 		}
-		 
 	}
 	foreach(range('a','e') as $letter){
 		$var=$field.$letter;
@@ -68,25 +64,16 @@ while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 					$serverList[$zip] .= "<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td>".id2name($d["server_id$letter"])."</td><td><b>$".$d["contractor_rate$letter"]."</b></td></tr>";
 				}else{
 					$serverList[$zip] = "<tr><td><fieldset><legend>$zip</legend><table><tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td>".id2name($d["server_id$letter"])."</td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
-					$zipList[$i] = $zip;
-					$i++;
 				}
-			}else{
-				//echo "<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>($d[packet_id])</a></td><td colspan='2'><b>INCOMPLETE RATE INFO</b></td></tr>";
 			}
 		}
 	}
 }
 if (isset($zipList)){
-	if (count($zipList) != count($serverList)){
-		echo "<script>alert('MISMATCH!  zipList: ".count($zipList)." | serverList: ".count($serverList)."')</script>";
-	}else{
-		sort($zipList);
-		$i=-1;
-		$count=count($serverList)-1;
-		while ($i < $count){$i++;
-			$name=$zipList["$i"];
-			echo $serverList["$name"]."</table></fieldset></td></tr>";
+	if (isset($serverList)){
+		ksort($serverList);
+		foreach($serverList as $key => $value){
+			echo $value."</table></fieldset></td></tr>";
 		}
 	}
 }
