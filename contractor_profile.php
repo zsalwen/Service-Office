@@ -329,27 +329,10 @@ a:visited{color:6600AA;}
 			}
 			$exclude .= " AND server_id$letter <> '$_GET[admin]'";
 		}
-		if (isset($packetList)){
-			if (count($packetList) != count($list)){
-				echo "<script>alert('MISMATCH!  packetList: ".count($packetList)." | list: ".count($list)."')</script>";
-				echo "<hr><table><tr><td>packetList</td><td>list</td></tr><tr><td>";
-				$i2=-1;
-				foreach($packetList as $value){
-					echo $value."<br>";
-				}
-				echo "</td><td>";
-				foreach($list as $value){
-					echo $value."<br>";
-				}
-				echo "</td></tr></table>";
-			}else{
-				rsort($packetList);
-				$i2=-1;
-				$count=count($list)-1;
-				while ($i2 < $count){$i2++;
-					$name=$packetList["$i2"];
-					$bigList .= $list["$name"];
-				}
+		if (isset($list)){
+			rsort($list);
+			foreach($list as $value){
+				echo $list;
 			}
 		}
 		//evictions
@@ -361,18 +344,10 @@ a:visited{color:6600AA;}
 			$evList[$i]=$packet;
 			$list2[$packet] = "<tr><td><a href='/ev/order.php?packet=$d2[eviction_id]' target='_blank'>(EV$d2[eviction_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$$d2[contractor_rate]</b></td></tr>";
 		}
-		if (isset($evList)){
-			if (count($evList) != count($list2)){
-				echo "<script>alert('MISMATCH!  evList: ".count($evList)." | list2: ".count($list2)."')</script>";
-			}else{
-				$bigList .= "<tr><td align='center'><a name='ev'>EVICTION PACKETS</a></td></tr>";
-				rsort($evList);
-				$i2=-1;
-				$count=count($list2)-1;
-				while ($i2 < $count){$i2++;
-					$name=$evList["$i2"];
-					$bigList .= $list2["$name"];
-				}
+		if (isset($list2)){
+			rsort($list2);
+			foreach($list2 as $value){
+				echo $list2;
 			}
 		}
 		
@@ -399,18 +374,10 @@ a:visited{color:6600AA;}
 			}
 			$exclude .= " AND server_id$letter <> '$_GET[admin]'";
 		}
-		if (isset($sList)){
-			if (count($sList) != count($list3)){
-				echo "<script>alert('MISMATCH!  sList: ".count($sList)." | list3: ".count($list3)."')</script>";
-			}else{
-				$bigList .= "<tr><td align='center'><a name='s'>STANDARD PACKETS</a></td></tr>";
-				rsort($sList);
-				$i2=-1;
-				$count=count($list3)-1;
-				while ($i2 < $count){$i2++;
-					$name=$sList["$i2"];
-					$bigList .= $list3["$name"];
-				}
+		if (isset($list3)){
+			rsort($list3);
+			foreach($list3 as $value){
+				echo $list3;
 			}
 		}
 		
