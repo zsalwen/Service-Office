@@ -294,7 +294,7 @@ a:visited{color:6600AA;}
 			if (count($countyNames) != count($countyList)){
 				echo "<script>alert('MISMATCH!  countyNames: ".count($countyNames)." | countyList: ".count($countyList)."')</script>";
 			}else{
-				sort($countyList);
+				asort($countyList);
 				foreach($countyList as $key => $value){
 					echo "<tr><td><fieldset><legend>$key</legend>";
 					echo $value;
