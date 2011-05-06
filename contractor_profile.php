@@ -294,13 +294,10 @@ a:visited{color:6600AA;}
 			if (count($countyNames) != count($countyList)){
 				echo "<script>alert('MISMATCH!  countyNames: ".count($countyNames)." | countyList: ".count($countyList)."')</script>";
 			}else{
-				sort($countyNames);
-				$i=-1;
-				$count=count($countyList)-1;
-				while ($i < $count){$i++;
-					$name=$countyNames["$i"];
-					echo "<tr><td><fieldset><legend>$name</legend>";
-					echo $countyList["$name"];
+				sort($countyList);
+				foreach($countyList as $key => $value){
+					echo "<tr><td><fieldset><legend>$key</legend>";
+					echo $value
 					echo "</fieldset></td></tr>";
 				}
 			}
@@ -310,9 +307,8 @@ a:visited{color:6600AA;}
 		$q2="SELECT DISTINCT packet_id, city1, state1, zip1, ps_pay.contractor_rate from ps_packets, ps_pay WHERE server_id='$_GET[admin]' AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD' ORDER BY packet_id DESC";
 		$r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
 		$exclude=" AND server_id <> '$_GET[admin]'";
-		while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){$i++;
+		while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){
 			$packet=$d2[packet_id];
-			$packetList[$i]=$packet;
 			$list[$packet] = "<tr><td><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>(OTD$d2[packet_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$$d2[contractor_rate]</b></td></tr>";
 		}
 		foreach(range('a','e') as $letter){
@@ -322,8 +318,7 @@ a:visited{color:6600AA;}
 				$packet=$d2[packet_id];
 				if (isset($list[$packet])){
 					$list[$packet] .= "<tr><td><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>(OTD$d2[packet_id])</a> ".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"]).", ".$d2["zip1$letter"]." - <b>$".$d2["contractor_rate$letter"]."</b></td></tr>";
-				}else{$i++;
-					$packetList[$i]=$packet;
+				}else{
 					$list[$packet] = "<tr><td><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>(OTD$d2[packet_id])</a> ".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"]).", ".$d2["zip1$letter"]." - <b>$".$d2["contractor_rate$letter"]."</b></td></tr>";
 				}
 			}
@@ -339,9 +334,8 @@ a:visited{color:6600AA;}
 		$q2="SELECT DISTINCT eviction_id, city1, state1, zip1, ps_pay.contractor_rate from evictionPackets, ps_pay WHERE server_id='$_GET[admin]' AND evictionPackets.eviction_id=ps_pay.packetID AND ps_pay.product='EV' ORDER BY eviction_id DESC";
 		$r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
 		$exclude=" AND server_id <> '$_GET[admin]'";
-		while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){$i++;
+		while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){
 			$packet=$d2[eviction_id];
-			$evList[$i]=$packet;
 			$list2[$packet] = "<tr><td><a href='/ev/order.php?packet=$d2[eviction_id]' target='_blank'>(EV$d2[eviction_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$$d2[contractor_rate]</b></td></tr>";
 		}
 		if (isset($list2)){
@@ -355,9 +349,8 @@ a:visited{color:6600AA;}
 		$q2="SELECT DISTINCT packet_id, city1, state1, zip1, ps_pay.contractor_rate from standard_packets, ps_pay WHERE server_id='$_GET[admin]' AND standard_packets.packet_id=ps_pay.packetID AND ps_pay.product='S' ORDER BY packet_id DESC";
 		$r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
 		$exclude=" AND server_id <> '$_GET[admin]'";
-		while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){$i++;
+		while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){
 			$packet=$d2[packet_id];
-			$sList[$i]=$packet;
 			$list3[$packet] = "<tr><td><a href='/standard/order.php?packet=$d2[packet_id]' target='_blank'>(S$d2[packet_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$$d2[contractor_rate]</b></td></tr>";
 		}
 		foreach(range('a','e') as $letter){
@@ -367,8 +360,7 @@ a:visited{color:6600AA;}
 				$packet=$d2[packet_id];
 				if (isset($list3[$packet])){
 					$list3[$packet] .= "<tr><td><a href='/standard/order.php?packet=$d2[packet_id]' target='_blank'>(S$d2[packet_id])</a> ".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"]).", ".$d2["zip1$letter"]." - <b>$".$d2["contractor_rate$letter"]."</b></td></tr>";
-				}else{$i++;
-					$sList[$i]=$packet;
+				}else{
 					$list3[$packet] = "<tr><td><a href='/standard/order.php?packet=$d2[packet_id]' target='_blank'>(S$d2[packet_id])</a> ".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"]).", ".$d2["zip1$letter"]." - <b>$".$d2["contractor_rate$letter"]."</b></td></tr>";
 				}
 			}
@@ -380,17 +372,14 @@ a:visited{color:6600AA;}
 				echo $value;
 			}
 		}
-		
-		if (isset($bigList)){
-			if ($list2 && $list3){
-				echo "<tr><td><strong><a href='#ev'>Jump to Evictions</a> | <a href='#s'>Jump to Standard Packets</a></strong></td></tr>";
-			}elseif($list3){
-				echo "<tr><td><strong><a href='#s'>Jump to Standard Packets</a></strong></td></tr>";
-			}elseif($list2){
-				echo "<tr><td><strong><a href='#ev'>Jump to Evictions</a></strong></td></tr>";
-			}
-			echo $bigList;
+		if ($list2 && $list3){
+			echo "<tr><td><strong><a href='#ev'>Jump to Evictions</a> | <a href='#s'>Jump to Standard Packets</a></strong></td></tr>";
+		}elseif($list3){
+			echo "<tr><td><strong><a href='#s'>Jump to Standard Packets</a></strong></td></tr>";
+		}elseif($list2){
+			echo "<tr><td><strong><a href='#ev'>Jump to Evictions</a></strong></td></tr>";
 		}
+		echo $bigList;
 	}
 	?>
 </table></td></tr></table>
