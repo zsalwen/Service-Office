@@ -276,7 +276,7 @@ a:visited{color:6600AA;}
 			$exclude .= " AND server_id$letter <> '$_GET[admin]'";
 		}
 		if ($list != ''){
-			sort($list);
+			ksort($list);
 			$count=count($list);
 			$i=0;
 			while ($i < $count){
