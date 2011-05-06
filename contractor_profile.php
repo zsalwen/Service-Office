@@ -297,7 +297,7 @@ a:visited{color:6600AA;}
 				sort($countyList);
 				foreach($countyList as $key => $value){
 					echo "<tr><td><fieldset><legend>$key</legend>";
-					echo $value
+					echo $value;
 					echo "</fieldset></td></tr>";
 				}
 			}
@@ -327,7 +327,7 @@ a:visited{color:6600AA;}
 		if (isset($list)){
 			krsort($list);
 			foreach($list as $value){
-				echo $value;
+				$bigList .= $value;
 			}
 		}
 		//evictions
@@ -341,7 +341,7 @@ a:visited{color:6600AA;}
 		if (isset($list2)){
 			krsort($list2);
 			foreach($list2 as $value){
-				echo $value;
+				$bigList .= $value;
 			}
 		}
 		
@@ -369,17 +369,19 @@ a:visited{color:6600AA;}
 		if (isset($list3)){
 			krsort($list3);
 			foreach($list3 as $value){
-				echo $value;
+				$bigList .= $value;
 			}
 		}
-		if ($list2 && $list3){
-			echo "<tr><td><strong><a href='#ev'>Jump to Evictions</a> | <a href='#s'>Jump to Standard Packets</a></strong></td></tr>";
-		}elseif($list3){
-			echo "<tr><td><strong><a href='#s'>Jump to Standard Packets</a></strong></td></tr>";
-		}elseif($list2){
-			echo "<tr><td><strong><a href='#ev'>Jump to Evictions</a></strong></td></tr>";
+		if (isset($bigList)){
+			if ($list2 && $list3){
+				echo "<tr><td><strong><a href='#ev'>Jump to Evictions</a> | <a href='#s'>Jump to Standard Packets</a></strong></td></tr>";
+			}elseif($list3){
+				echo "<tr><td><strong><a href='#s'>Jump to Standard Packets</a></strong></td></tr>";
+			}elseif($list2){
+				echo "<tr><td><strong><a href='#ev'>Jump to Evictions</a></strong></td></tr>";
+			}
+			echo $bigList;
 		}
-		echo $bigList;
 	}
 	?>
 </table></td></tr></table>
