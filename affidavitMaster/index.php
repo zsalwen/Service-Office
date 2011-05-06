@@ -29,17 +29,17 @@ function getPage($url, $referer, $timeout, $header){
     curl_close ($curl);
     return $html;
 }
-function my_exec($cmd, $input='')
-         {$proc=proc_open($cmd, array(0=>array('pipe', 'r'), 1=>array('pipe', 'w'), 2=>array('pipe', 'w')), $pipes);
-          fwrite($pipes[0], $input);fclose($pipes[0]);
-          $stdout=stream_get_contents($pipes[1]);fclose($pipes[1]);
-          $stderr=stream_get_contents($pipes[2]);fclose($pipes[2]);
-          $rtn=proc_close($proc);
-          return array('stdout'=>$stdout,
-                       'stderr'=>$stderr,
-                       'return'=>$rtn
-                      );
-         }
+function my_exec($cmd, $input=''){
+	$proc=proc_open($cmd, array(0=>array('pipe', 'r'), 1=>array('pipe', 'w'), 2=>array('pipe', 'w')), $pipes);
+	fwrite($pipes[0], $input);fclose($pipes[0]);
+	$stdout=stream_get_contents($pipes[1]);fclose($pipes[1]);
+	$stderr=stream_get_contents($pipes[2]);fclose($pipes[2]);
+	$rtn=proc_close($proc);
+	return array('stdout'=>$stdout,
+			   'stderr'=>$stderr,
+			   'return'=>$rtn
+			  );
+}
 //var_export(my_exec('echo -e $(</dev/stdin) | wc -l', 'h\\nel\\nlo')); 
 function explodePrint($str){
 	$explode=explode('page-break-after:always; ',$str);
@@ -62,11 +62,6 @@ function pdfAD($id){
 	$myFile = trim($d[LiveAffidavit]);
 	$folder=getFolder($myFile);
 	$folder2=str_replace('/data/service/affidavits/','http://mdwestserve.com/aM/',$folder);
-	/*$fh = fopen($myFile, 'w') or die("can't open file");
-	$html=getPage($url,"Packet $id HTML",'5','');
-	$la=explodePrint($html);
-	fwrite($fh, $la);
-	fclose($fh);*/
 	$command = 'python DocumentConverter.py '.$myFile.' '.$folder.'/'.$id.'.pdf';
 	$error=my_exec($command);
 	if (is_array($error)){
@@ -76,10 +71,6 @@ function pdfAD($id){
 	}else{
 		$error2=$error;
 	}
-	//$error = system($command,$result);
-	/*if (trim($error) == '1'){
-		@mysql_query("INSERT INTO attachment (path,status) values ('/gitbox/Service-Office/affidavitMaster/".$id.".pdf','PDF Error - ".$_SERVER['HTTP_HOST']."')");
-	}*/
 	echo "<div>".$command."</div>";
 	echo "<div>".$error2."</div>";
 	echo "<div>".$result."</div>";
