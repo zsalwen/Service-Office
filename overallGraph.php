@@ -179,7 +179,7 @@ $low = ($z - $x) - ($y - $x);
           chf: 'bg,s,C2BDDD',
           chxl: '',
           chxp: '',
-          chxr: '0,<?=$x-1;?>,<?=$z;?>',
+          chxr: '0,0,10',
           chxs: '0,676767,10.5,0,l,676767',
           chxtc: '',
           chxt: 'y',
