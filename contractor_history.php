@@ -42,40 +42,44 @@ if ($_GET[city]){
 	$field="zip1";
 	$q="SELECT * FROM ps_packets, ps_pay WHERE (zip1='$search' OR zip1a='$search' OR zip1b='$search' OR zip1c='$search' OR zip1d='$search' OR zip1e='$search') AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD' ORDER BY packet_id DESC";
 }
-echo "<table align='center' border='1' style='border-collapse:collapse;'><tr><td align='center' colspan='3'>PREVIOUS SERVES IN $search, $county COUNTY</td></tr>";
-$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
-while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-	if ((strpos($d["$field"],$search) !== false) || (strpos($search,$d["$field"]) !== false)){
-		if($d[server_id] != '' && $d[contractor_rate] != ''){
-			$zip=$d[zip1];
-			if (isset($serverList[$zip])){
-				$serverList[$zip] .= "<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td>".id2name($d[server_id])."</td><td><b>$$d[contractor_rate]</b></td></tr>";
-			}else{
-				$serverList[$zip] = "<tr><td><fieldset><legend>$zip</legend><table><tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td>".id2name($d[server_id])."</td><td><b>$$d[contractor_rate]</b></td></tr>";
+if ($_GET[city] || $_GET[zip]){
+	echo "<table align='center' border='1' style='border-collapse:collapse;'><tr><td align='center' colspan='3'>PREVIOUS SERVES IN $search, $county COUNTY</td></tr>";
+	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
+	while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+		if ((strpos($d["$field"],$search) !== false) || (strpos($search,$d["$field"]) !== false)){
+			if($d[server_id] != '' && $d[contractor_rate] != ''){
+				$zip=$d[zip1];
+				if (isset($serverList[$zip])){
+					$serverList[$zip] .= "<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td>".id2name($d[server_id])."</td><td><b>$$d[contractor_rate]</b></td></tr>";
+				}else{
+					$serverList[$zip] = "<tr><td><fieldset><legend>$zip</legend><table><tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td>".id2name($d[server_id])."</td><td><b>$$d[contractor_rate]</b></td></tr>";
+				}
 			}
 		}
-	}
-	foreach(range('a','e') as $letter){
-		$var=$field.$letter;
-		if ((strpos($d["$var"],$search) !== false) || (strpos($search,$d["$var"]) !== false)){
-			if($d["server_id$letter"] != '' && $d["contractor_rate$letter"] != ''){
-				$zip=$d["zip1$letter"];
-				if (isset($serverList[$zip])){
-					$serverList[$zip] .= "<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td>".id2name($d["server_id$letter"])."</td><td><b>$".$d["contractor_rate$letter"]."</b></td></tr>";
-				}else{
-					$serverList[$zip] = "<tr><td><fieldset><legend>$zip</legend><table><tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td>".id2name($d["server_id$letter"])."</td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
+		foreach(range('a','e') as $letter){
+			$var=$field.$letter;
+			if ((strpos($d["$var"],$search) !== false) || (strpos($search,$d["$var"]) !== false)){
+				if($d["server_id$letter"] != '' && $d["contractor_rate$letter"] != ''){
+					$zip=$d["zip1$letter"];
+					if (isset($serverList[$zip])){
+						$serverList[$zip] .= "<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td>".id2name($d["server_id$letter"])."</td><td><b>$".$d["contractor_rate$letter"]."</b></td></tr>";
+					}else{
+						$serverList[$zip] = "<tr><td><fieldset><legend>$zip</legend><table><tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td>".id2name($d["server_id$letter"])."</td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
+					}
 				}
 			}
 		}
 	}
-}
-if (isset($zipList)){
-	if (isset($serverList)){
-		ksort($serverList);
-		foreach($serverList as $value){
-			echo $value."</table></fieldset></td></tr>";
+	if (isset($zipList)){
+		if (isset($serverList)){
+			ksort($serverList);
+			foreach($serverList as $value){
+				echo $value."</table></fieldset></td></tr>";
+			}
 		}
 	}
+	echo "</table>";
+}else{
+	echo "<h1>YOU MUST SUPPLY A CITY OR ZIP CODE</h1>";
 }
-echo "</table>";
 ?>
