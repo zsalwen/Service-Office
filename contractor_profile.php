@@ -332,7 +332,7 @@ a:visited{color:6600AA;}
 		if (isset($list)){
 			rsort($list);
 			foreach($list as $value){
-				echo $list;
+				echo $value;
 			}
 		}
 		//evictions
@@ -347,7 +347,7 @@ a:visited{color:6600AA;}
 		if (isset($list2)){
 			rsort($list2);
 			foreach($list2 as $value){
-				echo $list2;
+				echo $value;
 			}
 		}
 		
@@ -377,7 +377,7 @@ a:visited{color:6600AA;}
 		if (isset($list3)){
 			rsort($list3);
 			foreach($list3 as $value){
-				echo $list3;
+				echo $value;
 			}
 		}
 		
