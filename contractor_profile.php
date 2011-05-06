@@ -326,6 +326,7 @@ a:visited{color:6600AA;}
 		}
 		if (isset($list)){
 			krsort($list);
+			$bigList .= "<tr><td align='center' id='otd' style='font-weight:bold; border:1px solid black;'>PRESALE</td></tr>";
 			foreach($list as $value){
 				$bigList .= $value;
 			}
@@ -340,7 +341,7 @@ a:visited{color:6600AA;}
 		}
 		if (isset($list2)){
 			krsort($list2);
-			$bigList .= "<tr><td align='center' id='ev' style='font-weight:bold;'>EVICTIONS</td></tr>";
+			$bigList .= "<tr><td align='center' id='ev' style='font-weight:bold; border:1px solid black;'>EVICTIONS</td></tr>";
 			foreach($list2 as $value){
 				$bigList .= $value;
 			}
@@ -369,7 +370,7 @@ a:visited{color:6600AA;}
 		}
 		if (isset($list3)){
 			krsort($list3);
-			$bigList .= "<tr><td align='center' id='s' style='font-weight:bold;'>STANDARD PACKETS</td></tr>";
+			$bigList .= "<tr><td align='center' id='s' style='font-weight:bold; border:1px solid black;'>STANDARD PACKETS</td></tr>";
 			foreach($list3 as $value){
 				$bigList .= $value;
 			}
