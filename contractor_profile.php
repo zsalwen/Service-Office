@@ -139,8 +139,8 @@ $d=mysql_fetch_array($r, MYSQL_ASSOC);
 ?>
 <style>
 a{color:FF0000;}
-a:hover{color:6600AA}
-a:visited{color:888888;}
+a:hover{color:888888;}
+a:visited{color:6600AA;}
 </style>
 <table align="center" width="100%"><tr><td valign="top">
         	<table border="1" align="center" style="border-collapse:collapse" width="100%">
