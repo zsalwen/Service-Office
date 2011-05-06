@@ -117,16 +117,12 @@ $_SESSION[graphLow] = 0;
 
 
 <?
-
-
-
-
 $i=0;
 while($i<$days){
 buildSub($array[date("Y-m-d", mktime(0, 0, 0, date("m"),date("d")-$i,date("Y")))],$i);
 $i++;
 }
-
+?>
 
 
 /*
