@@ -335,11 +335,11 @@ a:visited{color:6600AA;}
 				echo "<hr><table><tr><td>packetList</td><td>list</td></tr><tr><td>";
 				$i2=-1;
 				foreach($packetList as $value){
-					echo $value;
+					echo $value."<br>";
 				}
 				echo "</td><td>";
 				foreach($list as $value){
-					echo $value;
+					echo $value."<br>";
 				}
 				echo "</td></tr></table>";
 			}else{
