@@ -97,11 +97,11 @@ mysql_close();
 
 <?
 
-$array = explode(',',$array['2011-05-05']);
+$array1 = explode(',',$array['2011-05-05']);
 
-$z = $array[0]; // high
-$y = $array[1]; // current
-$x = $array[2]; // low
+$z = $array1[0]; // high
+$y = $array1[1]; // current
+$x = $array1[2]; // low
 
 $high = $z;
 $current = $y - $x;
@@ -118,10 +118,10 @@ $low = ($z - $x) - ($y - $x);
 
 <?
 
-$array = explode(',',$array['2011-05-04']);
-$z = $array[0]; // high
-$y = $array[1]; // current
-$x = $array[2]; // low
+$array2 = explode(',',$array['2011-05-04']);
+$z = $array2[0]; // high
+$y = $array2[1]; // current
+$x = $array2[2]; // low
 $high = $z;
 $current = $y - $x;
 $low = ($z - $x) - ($y - $x); 
