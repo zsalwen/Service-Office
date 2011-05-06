@@ -88,7 +88,7 @@ mysql_close();
           query.send(handleQueryResponse);
         } else {
           var dataTable = new google.visualization.DataTable();
-          dataTable.addRows(2);
+          dataTable.addRows(3);
 
           dataTable.addColumn('number');
           dataTable.addColumn('number');
@@ -97,11 +97,11 @@ mysql_close();
 
 <?
 
-$array1 = explode(',',$array['2011-05-05']);
+$sub = explode(',',$array['2011-05-06']);
 
-$z = $array1[0]; // high
-$y = $array1[1]; // current
-$x = $array1[2]; // low
+$z = $sub[0]; // high
+$y = $sub[1]; // current
+$x = $sub[2]; // low
 
 $high = $z;
 $current = $y - $x;
@@ -118,10 +118,10 @@ $low = ($z - $x) - ($y - $x);
 
 <?
 
-$array2 = explode(',',$array['2011-05-04']);
-$z = $array2[0]; // high
-$y = $array2[1]; // current
-$x = $array2[2]; // low
+$sub = explode(',',$array['2011-05-05']);
+$z = $sub[0]; // high
+$y = $sub[1]; // current
+$x = $sub[2]; // low
 $high = $z;
 $current = $y - $x;
 $low = ($z - $x) - ($y - $x); 
@@ -132,14 +132,26 @@ $low = ($z - $x) - ($y - $x);
           dataTable.setValue(1, 1, <?=$current;?>);
           dataTable.setValue(1, 2, <?=$high;?>);
 
+<?
 
+$sub = explode(',',$array['2011-05-04']);
+$z = $sub[0]; // high
+$y = $sub[1]; // current
+$x = $sub[2]; // low
+$high = $z;
+$current = $y - $x;
+$low = ($z - $x) - ($y - $x); 
+
+?>
+
+          dataTable.setValue(2, 0, <?=$low;?>);
+          dataTable.setValue(2, 1, <?=$current;?>);
+          dataTable.setValue(2, 2, <?=$high;?>);
 
 
 /*
 
-          dataTable.setValue(2, 0, 91.00);
-          dataTable.setValue(2, 1, 65.00);
-          dataTable.setValue(2, 2, 43.00);
+     
 
           dataTable.setValue(3, 0, 95.00);
           dataTable.setValue(3, 1, 86.00);
