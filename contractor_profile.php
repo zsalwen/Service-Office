@@ -332,6 +332,16 @@ a:visited{color:6600AA;}
 		if (isset($packetList)){
 			if (count($packetList) != count($list)){
 				echo "<script>alert('MISMATCH!  packetList: ".count($packetList)." | list: ".count($list)."')</script>";
+				echo "<hr><table><tr><td>packetList</td><td>list</td></tr><tr><td>";
+				$i2=-1;
+				while ($i2 < count($packetList)){
+					echo $packetList["$i"];
+				}
+				echo "</td><td>";
+				foreach($list as $value){
+					echo $value;
+				}
+				echo "</td></tr></table>";
 			}else{
 				rsort($packetList);
 				$i2=-1;
