@@ -340,6 +340,7 @@ a:visited{color:6600AA;}
 		}
 		if (isset($list2)){
 			krsort($list2);
+			$bigList .= "<tr><td align='center' id='ev' style='font-weight:bold;'>EVICTIONS</td></tr>";
 			foreach($list2 as $value){
 				$bigList .= $value;
 			}
@@ -368,6 +369,7 @@ a:visited{color:6600AA;}
 		}
 		if (isset($list3)){
 			krsort($list3);
+			$bigList .= "<tr><td align='center' id='s' style='font-weight:bold;'>STANDARD PACKETS</td></tr>";
 			foreach($list3 as $value){
 				$bigList .= $value;
 			}
