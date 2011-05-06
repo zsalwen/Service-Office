@@ -215,9 +215,9 @@ a:visited{color:6600AA;}
 				$county="SAINT MARYS";
 			}
 			if (isset($countyList["$county"])){
-				$countyList["$county"] .= "<li id='".$i2.$county.$d2[packet_id]."'><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$".$d2[contractor_rate]."</b></li>";
+				$countyList["$county"] .= "<li id='".$i2.$county.$d2[packet_id]."'><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>(OTD$d2[packet_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$".$d2[contractor_rate]."</b></li>";
 			}else{
-				$countyList["$county"] = "<li id='".$i2.$county.$d2[packet_id]."'><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$".$d2[contractor_rate]."</b></li>";
+				$countyList["$county"] = "<li id='".$i2.$county.$d2[packet_id]."'><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>(OTD$d2[packet_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$".$d2[contractor_rate]."</b></li>";
 				$countyNames["$i"]=$county;
 				$i++;
 			}
@@ -228,9 +228,9 @@ a:visited{color:6600AA;}
 			while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){$i2++;
 				$county=getCounty($d2["zip1$letter"]);
 				if (isset($countyList["$county"])){
-					$countyList["$county"] .= "<li id='".$i2.$county.$d2[packet_id].$letter."'><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"]).", ".$d2["zip1$letter"]." - <b>$".$d2["contractor_rate$letter"]."</b></li>";
+					$countyList["$county"] .= "<li id='".$i2.$county.$d2[packet_id].$letter."'><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>(OTD$d2[packet_id])</a> ".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"]).", ".$d2["zip1$letter"]." - <b>$".$d2["contractor_rate$letter"]."</b></li>";
 				}else{
-					$countyList["$county"] = "<li id='".$i2.$county.$d2[packet_id].$letter."'><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>($d2[packet_id])</a> ".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"]).", ".$d2["zip1$letter"]." - <b>$".$d2["contractor_rate$letter"]."</b></li>";
+					$countyList["$county"] = "<li id='".$i2.$county.$d2[packet_id].$letter."'><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>(OTD$d2[packet_id])</a> ".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"]).", ".$d2["zip1$letter"]." - <b>$".$d2["contractor_rate$letter"]."</b></li>";
 					$countyNames["$i"]=$county;
 					$i++;
 				}
@@ -294,7 +294,6 @@ a:visited{color:6600AA;}
 			if (count($countyNames) != count($countyList)){
 				echo "<script>alert('MISMATCH!  countyNames: ".count($countyNames)." | countyList: ".count($countyList)."')</script>";
 			}else{
-				echo "<tr><td><a name='standard' style='font-weight:bold;'>STANDARD</a></td></tr>";
 				sort($countyNames);
 				$i=-1;
 				$count=count($countyList)-1;
@@ -335,16 +334,15 @@ a:visited{color:6600AA;}
 				echo "<script>alert('MISMATCH!  packetList: ".count($packetList)." | list: ".count($list)."')</script>";
 			}else{
 				rsort($packetList);
-				$i=-1;
+				$i2=-1;
 				$count=count($list)-1;
-				while ($i < $count){$i++;
-					$name=$packetList["$i"];
+				while ($i2 < $count){$i2++;
+					$name=$packetList["$i2"];
 					$bigList .= $list["$name"];
 				}
 			}
 		}
 		//evictions
-		$i=-1;
 		$q2="SELECT DISTINCT eviction_id, city1, state1, zip1, ps_pay.contractor_rate from evictionPackets, ps_pay WHERE server_id='$_GET[admin]' AND evictionPackets.eviction_id=ps_pay.packetID AND ps_pay.product='EV' ORDER BY eviction_id DESC";
 		$r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
 		$exclude=" AND server_id <> '$_GET[admin]'";
@@ -359,17 +357,16 @@ a:visited{color:6600AA;}
 			}else{
 				$bigList .= "<tr><td align='center'><a name='ev'>EVICTION PACKETS</a></td></tr>";
 				rsort($evList);
-				$i=-1;
+				$i2=-1;
 				$count=count($list2)-1;
-				while ($i < $count){$i++;
-					$name=$evList["$i"];
+				while ($i2 < $count){$i2++;
+					$name=$evList["$i2"];
 					$bigList .= $list2["$name"];
 				}
 			}
 		}
 		
 		//standards
-		$i=-1;
 		$q2="SELECT DISTINCT packet_id, city1, state1, zip1, ps_pay.contractor_rate from standard_packets, ps_pay WHERE server_id='$_GET[admin]' AND standard_packets.packet_id=ps_pay.packetID AND ps_pay.product='S' ORDER BY packet_id DESC";
 		$r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
 		$exclude=" AND server_id <> '$_GET[admin]'";
@@ -398,10 +395,10 @@ a:visited{color:6600AA;}
 			}else{
 				$bigList .= "<tr><td align='center'><a name='s'>STANDARD PACKETS</a></td></tr>";
 				rsort($sList);
-				$i=-1;
+				$i2=-1;
 				$count=count($list3)-1;
-				while ($i < $count){$i++;
-					$name=$sList["$i"];
+				while ($i2 < $count){$i2++;
+					$name=$sList["$i2"];
 					$bigList .= $list3["$name"];
 				}
 			}
