@@ -1,4 +1,5 @@
 <?
+session_start();
 mysql_connect();
 mysql_select_db('core');
 $r=@mysql_query("select * from overallGraph order by id desc limit 0,30");
@@ -76,7 +77,7 @@ mysql_close();
 ?>
 </table>
 <center><b>high,current,low</b></center>
-<? function makeChart($name,$id,$i,$array){ $graphHigh = 0; $graphLow = 0; ?>
+<? function makeChart($name,$id,$i,$array,$days){ $_SESSION[graphHigh] = 0; $_SESSION[graphLow] = 0; ?>
 <script type="text/javascript">
       var queryString = '';
       var dataUrl = '';
@@ -88,7 +89,7 @@ mysql_close();
           query.send(handleQueryResponse);
         } else {
           var dataTable = new google.visualization.DataTable();
-          dataTable.addRows(3);
+          dataTable.addRows(<?=$days;?>);
 
           dataTable.addColumn('number');
           dataTable.addColumn('number');
@@ -97,64 +98,30 @@ mysql_close();
 
 <?
 
-$sub = explode(',',$array['2011-05-06']);
-
+function buildSub($sub,$i){
+$sub = explode(',',$sub);
 $z = $sub[0]; // high
 $y = $sub[1]; // current
 $x = $sub[2]; // low
-
 $high = $z;
 $current = $y - $x;
 $low = ($z - $x) - ($y - $x); 
-
-if( $z > $graphHigh ){ $graphHigh = $z; }
-if( $x < $graphLow ){ $graphLow = $x; }
-
-
+if( $z > $_SESSION[graphHigh] ){ $_SESSION[graphHigh] = $z; }
+if( $x < $_SESSION[graphLow] ){ $_SESSION[graphLow] = $x; }
 ?>
-
-
-          dataTable.setValue(0, 0, <?=$low;?>);
-          dataTable.setValue(0, 1, <?=$current;?>);
-          dataTable.setValue(0, 2, <?=$high;?>);
-
-
-
+          dataTable.setValue(<?=$i?>, 0, <?=$low;?>);
+          dataTable.setValue(<?=$i?>, 1, <?=$current;?>);
+          dataTable.setValue(<?=$i?>, 2, <?=$high;?>);
 <?
+}
 
-$sub = explode(',',$array['2011-05-05']);
-$z = $sub[0]; // high
-$y = $sub[1]; // current
-$x = $sub[2]; // low
-$high = $z;
-$current = $y - $x;
-$low = ($z - $x) - ($y - $x); 
-if( $z > $graphHigh ){ $graphHigh = $z; }
-if( $x < $graphLow ){ $graphLow = $x; }
 
-?>
+$i=0;
+while($i<$days){
+buildSub($array[date("Y-m-d", mktime(0, 0, 0, date("m"),date("d")-$i,date("Y")))],$i);
+$i++;
+}
 
-          dataTable.setValue(1, 0, <?=$low;?>);
-          dataTable.setValue(1, 1, <?=$current;?>);
-          dataTable.setValue(1, 2, <?=$high;?>);
-
-<?
-
-$sub = explode(',',$array['2011-05-04']);
-$z = $sub[0]; // high
-$y = $sub[1]; // current
-$x = $sub[2]; // low
-$high = $z;
-$current = $y - $x;
-$low = ($z - $x) - ($y - $x); 
-if( $z > $graphHigh ){ $graphHigh = $z; }
-if( $x < $graphLow ){ $graphLow = $x; }
-
-?>
-
-          dataTable.setValue(2, 0, <?=$low;?>);
-          dataTable.setValue(2, 1, <?=$current;?>);
-          dataTable.setValue(2, 2, <?=$high;?>);
 
 
 /*
