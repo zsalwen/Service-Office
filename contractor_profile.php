@@ -282,7 +282,7 @@ a:visited{color:6600AA;}
 			if (count($packetList) != count($list)){
 				echo "<script>alert('MISMATCH!  countyNames: ".count($packetList)." | countyList: ".count($list)."')</script>";
 			}else{
-				sort($packetList);
+				rsort($packetList);
 				$i=-1;
 				$count=count($list)-1;
 				while ($i < $count){$i++;
