@@ -305,7 +305,7 @@ a:visited{color:6600AA;}
 			ksort($countyList);
 			$i=-1;
 			$count=count($countyList);
-			echo "<table align='center'>";
+			echo "<tr><td align='center'><table align='center'>";
 			foreach($countyList as $key => $value){$i++;
 				echo makeAnchor($i,$key);
 				if($i == $count && (($i%2 === 0) || ($i%3 === 0))){
