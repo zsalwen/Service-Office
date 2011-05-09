@@ -17,7 +17,7 @@ function zip2county($zip){
 		$html=getPage($url,"Zip Code Lookup",'5','');
 		$explode=explode("<P><B>AREA</B></TD></TR>",$html);
 		$explode=explode(" VALIGN=TOP><P>",$explode[1]);
-		$return=explode("</TD>",$explode[2]);
+		$return=explode("</TD>",$explode[3]);
 		return $return[0];
 	}
 }
