@@ -109,7 +109,7 @@ if ($_GET[city]){
 					if (isset($serverList[$server])){
 						$serverList[$zip] .= "<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</b></td></tr>";
 					}else{
-						$serverList[$server] = "<tr><td><fieldset><legend>$zip</legend><table><tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
+						$serverList[$server] = "<table><tr><td><fieldset><legend>$zip</legend><table><tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
 					}
 				}
 			}
@@ -119,7 +119,7 @@ if ($_GET[city]){
 	if (isset($serverList)){
 		ksort($serverList);
 		foreach($serverList as $key => $value){
-			echo "<fieldset><legend>".id2name($key)."</legend>$value</fieldset></td></tr>";
+			echo "<tr><td><fieldset><legend>".id2name($key)."</legend>$value</fieldset></td></tr>";
 		}
 	}
 	echo "</table>";
