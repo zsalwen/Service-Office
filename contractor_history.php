@@ -58,7 +58,7 @@ if ($_GET[city] || $_GET[zip]){
 	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 	while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 		if ((strpos($d["$field"],$search) !== false) || (strpos($search,$d["$field"]) !== false)){
-			if($d[server_id] != '' && $d[contractor_rate] != ''  && $d[contractor_rate] !== 0){
+			if($d[server_id] != '' && $d[contractor_rate] != ''  && $d[contractor_rate] != '0'){
 				$zip=$d[zip1];
 				if (isset($serverList[$zip])){
 					$serverList[$zip] .= "<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td>".id2name($d[server_id])."</td><td><b>$$d[contractor_rate]</b></td></tr>";
@@ -70,7 +70,7 @@ if ($_GET[city] || $_GET[zip]){
 		foreach(range('a','e') as $letter){$i++;
 			$var=$field.$letter;
 			if ((strpos($d["$var"],$search) !== false) || (strpos($search,$d["$var"]) !== false)){
-				if($d["server_id$letter"] != '' && $d["contractor_rate$letter"] != '' && $d["contractor_rate$letter"] !== 0){
+				if($d["server_id$letter"] != '' && $d["contractor_rate$letter"] != '' && $d["contractor_rate$letter"] != '0'){
 					$zip=$d["zip1$letter"];
 					if (isset($serverList[$zip])){
 						$serverList[$zip] .= "<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td>".id2name($d["server_id$letter"])."</td><td><b>$".$d["contractor_rate$letter"]."</b></td></tr>";
