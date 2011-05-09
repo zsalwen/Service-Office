@@ -94,9 +94,9 @@ if ($_GET[city]){
 		if ((strpos($d["$field"],$search) !== false) || (strpos($search,$d["$field"]) !== false)){
 			if($d[server_id] != '' && $d[contractor_rate] != ''  && $d[contractor_rate] != '0'){
 				if (isset($serverList[$server])){
-					$serverList[$server] .= "<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
+					$serverList[$server] .= "<tr bgcolor='".row_color($i,'#333333','#FFFFFF')."'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
 				}else{
-					$serverList[$server] = "<table><tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
+					$serverList[$server] = "<table style='border: 1px solid black; border-collapse:collapse;' border='1'><tr bgcolor='".row_color($i,'#333333','#FFFFFF')."'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
 				}
 			}
 		}
@@ -107,9 +107,9 @@ if ($_GET[city]){
 				if($d["server_id$letter"] != '' && $d["contractor_rate$letter"] != '' && $d["contractor_rate$letter"] != '0'){
 					$zip=$d["zip1$letter"];
 					if (isset($serverList[$server])){
-						$serverList[$zip] .= "<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</b></td></tr>";
+						$serverList[$zip] .= "<tr bgcolor='".row_color($i,'#333333','#FFFFFF')."'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</b></td></tr>";
 					}else{
-						$serverList[$server] = "<table><tr><td><fieldset><legend>$zip</legend><table><tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
+						$serverList[$server] = "<table style='border: 1px solid black; border-collapse:collapse;' border='1'><tr bgcolor='".row_color($i,'#333333','#FFFFFF')."'><td><fieldset><legend>$zip</legend><table><tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
 					}
 				}
 			}
