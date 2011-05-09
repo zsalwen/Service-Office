@@ -313,7 +313,7 @@ a:visited{color:6600AA;}
 				}
 				$list .= "<tr><td><fieldset><legend id='$key'>$key</legend>$value</fieldset></td></tr>";
 			}
-			echo "</table>";
+			echo "</table></td></tr>";
 		}
 		echo $list;
 	}else{
