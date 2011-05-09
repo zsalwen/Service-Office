@@ -146,7 +146,7 @@ function getCounty($zip){
 function makeAnchor($i,$key){
 	if ( $i%3 === 0){
 		return "<tr><td><a href='#$key'>Jump to $key</a></td>";
-    }elseif ( $i%2 === 0) {
+    }elseif ( $i%3 === 1) {
         return "<td><a href='#$key'>Jump to $key</a></td>";
     } else {
         return "<td><a href='#$key'>Jump to $key</a></td></tr>";
