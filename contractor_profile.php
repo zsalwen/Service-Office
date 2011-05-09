@@ -144,9 +144,9 @@ function getCounty($zip){
 }
 
 function makeAnchor($i,$key){
-	if ( $i%3 ){
+	if ( $i%3 === 0){
 		return "<tr><td><a href='#$key'>Jump to $key</a></td>";
-    }elseif ( $i%2 ) {
+    }elseif ( $i%2 === 0) {
         return "<td><a href='#$key'>Jump to $key</a></td>";
     } else {
         return "<td><a href='#$key'>Jump to $key</a></td></tr>";
@@ -308,7 +308,7 @@ a:visited{color:6600AA;}
 			echo "<table align='center'>";
 			foreach($countyList as $key => $value){$i++;
 				echo makeAnchor($i,$key);
-				if($i == $count && ($i%2 || $i%3)){
+				if($i == $count && (($i%2 === 0) || ($i%3 === 0))){
 					echo "</tr>";
 				}
 				$list .= "<tr><td><fieldset><legend id='$key'>$key</legend>$value</fieldset></td></tr>";
