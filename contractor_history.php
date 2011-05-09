@@ -22,6 +22,21 @@ function zip2county($zip){
 	}
 }
 
+function row_color2($str,$bg1,$bg2){
+	$i=0;
+	$explode=explode("bgcolor='[color]",$str);
+	$count=count($explode)-1;
+	$return=$explode[0];
+	while ($i < $count){$i++;
+		if ( $i%2 ) {
+			$return .= "bgcolor='$bg1".$explode[$i];
+		} else {
+			 $return .= "bgcolor='$bg2".$explode[$i];
+		}
+	}
+	return $return;
+}
+
 if ($_GET[city]){
 	$search=strtoupper($_GET[city]);
 	$field="city1";
@@ -89,16 +104,16 @@ if ($_GET[city]){
 	$i=0;
 	$field="zip1";
 	$q="SELECT * FROM ps_packets, ps_pay WHERE (zip1='$search' OR zip1a='$search' OR zip1b='$search' OR zip1c='$search' OR zip1d='$search' OR zip1e='$search') AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD' ORDER BY packet_id DESC";
-	echo "<table align='center' border='1' style='border-collapse:collapse;'><tr><td align='center' colspan='3'>PREVIOUS SERVES IN $search, $county COUNTY</td></tr>";
+	echo "<table align='center' border='1' style='border-collapse:collapse;'><tr><td align='center' colspan='3'>PREVIOUS SERVES IN<br><b>$search</b>, <b>$county</b> COUNTY</td></tr>";
 	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 	while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 		$server=$d[server_id];
 		if ((strpos($d["$field"],$search) !== false) || (strpos($search,$d["$field"]) !== false)){
 			if($d[server_id] != '' && $d[contractor_rate] != ''  && $d[contractor_rate] != '0'){$i++;
 				if (isset($serverList[$server])){
-					$serverList[$server] .= "<tr bgcolor='".row_color($i,'#CCCCCC','#FFFFFF')."'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
+					$serverList[$server] .= "<tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
 				}else{
-					$serverList[$server] = "<table style='border: 1px solid black; border-collapse:collapse;' border='1'><tr bgcolor='".row_color($i,'#CCCCCC','#FFFFFF')."'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
+					$serverList[$server] = "<table style='border: 1px solid black; border-collapse:collapse;' border='1'><tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
 				}
 			}
 		}
@@ -109,9 +124,9 @@ if ($_GET[city]){
 				if($d["server_id$letter"] != '' && $d["contractor_rate$letter"] != '' && $d["contractor_rate$letter"] != '0'){$i++;
 					$zip=$d["zip1$letter"];
 					if (isset($serverList[$server])){
-						$serverList[$server] .= "<tr bgcolor='".row_color($i,'#CCCCCC','#FFFFFF')."'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</b></td></tr>";
+						$serverList[$server] .= "<tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</b></td></tr>";
 					}else{
-						$serverList[$server] = "<table style='border: 1px solid black; border-collapse:collapse;' border='1'><tr bgcolor='".row_color($i,'#CCCCCC','#FFFFFF')."'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
+						$serverList[$server] = "<table style='border: 1px solid black; border-collapse:collapse;' border='1'><tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
 					}
 				}
 			}
@@ -121,7 +136,7 @@ if ($_GET[city]){
 	if (isset($serverList)){
 		ksort($serverList);
 		foreach($serverList as $key => $value){
-			echo "<tr><td><fieldset><legend>".id2name($key)."</legend>$value</table></fieldset></td></tr>";
+			echo "<tr><td align='center' style='font-weight:bold;'>".id2name($key)."</td></tr>".row_color2($value,"#FFFFFF","#CCCCCC")."</table></fieldset></td></tr>";
 		}
 	}
 	echo "</table>";
