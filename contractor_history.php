@@ -133,9 +133,10 @@ if ($_GET[city]){
 		}
 	}
 	if (isset($serverList)){
+		$i=0;
 		ksort($serverList);
-		foreach($serverList as $key => $value){
-			echo "<tr><td align='center' style='font-weight:bold;'>".id2name($key)."</td></tr><tr><td>".row_color2($value,"#FFFFFF","#CCCCCC")."</table></td></tr>";
+		foreach($serverList as $key => $value){$i++;
+			echo "<tr><td align='center' style='font-weight:bold;'>".id2name($key)."</td></tr><tr bgcolor='".row_color($i,"#FF0000","#FFFF00")."'><td align='center'>".row_color2($value,"#FFFFFF","#CCCCCC")."</table></td></tr>";
 		}
 	}
 	echo "</table>";
