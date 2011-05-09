@@ -21,6 +21,7 @@ function zip2county($zip){
 		return strtoupper($return[0]);
 	}
 }
+
 if ($_GET[city]){
 	$search=strtoupper($_GET[city]);
 	$field="city1";
@@ -42,18 +43,6 @@ if ($_GET[city]){
 	}else{
 		$q="SELECT * FROM ps_packets, ps_pay WHERE (city1 LIKE '%$search%' OR city1a LIKE '%$search%' OR city1b LIKE '%$search%' OR city1c LIKE '%$search%' OR city1d LIKE '%$search%' OR city1e LIKE '%$search%') AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD' ORDER BY packet_id DESC";
 	}
-}elseif($_GET[zip]){
-	$search=$_GET[zip];
-	$county=zip2county($_GET[zip]);
-	//make sure zip is only 5 digits
-	if (strpos($zip,'-') !== false){
-		$zip=explode('-',$zip);
-		$zip=$zip[0];
-	}
-	$field="zip1";
-	$q="SELECT * FROM ps_packets, ps_pay WHERE (zip1='$search' OR zip1a='$search' OR zip1b='$search' OR zip1c='$search' OR zip1d='$search' OR zip1e='$search') AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD' ORDER BY packet_id DESC";
-}
-if ($_GET[city] || $_GET[zip]){
 	echo "<table align='center' border='1' style='border-collapse:collapse;'><tr><td align='center' colspan='3'>PREVIOUS SERVES IN $search, $county COUNTY</td></tr>";
 	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 	while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
@@ -85,6 +74,51 @@ if ($_GET[city] || $_GET[zip]){
 		ksort($serverList);
 		foreach($serverList as $value){
 			echo $value."</table></fieldset></td></tr>";
+		}
+	}
+	echo "</table>";
+}elseif($_GET[zip]){
+	$search=$_GET[zip];
+	$county=zip2county($_GET[zip]);
+	//make sure zip is only 5 digits
+	if (strpos($zip,'-') !== false){
+		$zip=explode('-',$zip);
+		$zip=$zip[0];
+	}
+	$field="zip1";
+	$q="SELECT * FROM ps_packets, ps_pay WHERE (zip1='$search' OR zip1a='$search' OR zip1b='$search' OR zip1c='$search' OR zip1d='$search' OR zip1e='$search') AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD' ORDER BY packet_id DESC";
+	echo "<table align='center' border='1' style='border-collapse:collapse;'><tr><td align='center' colspan='3'>PREVIOUS SERVES IN $search, $county COUNTY</td></tr>";
+	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
+	while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
+		$server=$d[server_id];
+		if ((strpos($d["$field"],$search) !== false) || (strpos($search,$d["$field"]) !== false)){
+			if($d[server_id] != '' && $d[contractor_rate] != ''  && $d[contractor_rate] != '0'){
+					$serverList[$server] .= "<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
+				}else{
+					$serverList[$server] = "<table><tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
+				}
+			}
+		}
+		foreach(range('a','e') as $letter){$i++;
+			$var=$field.$letter;
+			$server=$d["server_id$letter"];
+			if ((strpos($d["$var"],$search) !== false) || (strpos($search,$d["$var"]) !== false)){
+				if($d["server_id$letter"] != '' && $d["contractor_rate$letter"] != '' && $d["contractor_rate$letter"] != '0'){
+					$zip=$d["zip1$letter"];
+					if (isset($serverList[$server])){
+						$serverList[$zip] .= "<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</b></td></tr>";
+					}else{
+						$serverList[$server] = "<tr><td><fieldset><legend>$zip</legend><table><tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
+					}
+				}
+			}
+		}
+	}
+	echo "<tr><td colspan='3' align='center'>$_GET[$zip]</td></tr>";
+	if (isset($serverList)){
+		ksort($serverList);
+		foreach($serverList as $key => $value){
+			echo "<fieldset><legend>".id2name($key)."</legend>$value</fieldset></td></tr>";
 		}
 	}
 	echo "</table>";
