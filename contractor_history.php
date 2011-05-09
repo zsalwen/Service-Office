@@ -119,7 +119,7 @@ if ($_GET[city]){
 	if (isset($serverList)){
 		ksort($serverList);
 		foreach($serverList as $key => $value){
-			echo "<tr><td><fieldset><legend>".id2name($key)."</legend>$value</fieldset></td></tr>";
+			echo "<tr><td><fieldset><legend>".id2name($key)."</legend>$value</table></fieldset></td></tr>";
 		}
 	}
 	echo "</table>";
