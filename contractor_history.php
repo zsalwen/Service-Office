@@ -43,6 +43,7 @@ if ($_GET[city]){
 	}else{
 		$q="SELECT * FROM ps_packets, ps_pay WHERE (city1 LIKE '%$search%' OR city1a LIKE '%$search%' OR city1b LIKE '%$search%' OR city1c LIKE '%$search%' OR city1d LIKE '%$search%' OR city1e LIKE '%$search%') AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD' ORDER BY packet_id DESC";
 	}
+	$i=0;
 	echo "<table align='center' border='1' style='border-collapse:collapse;'><tr><td align='center' colspan='3'>PREVIOUS SERVES IN $search, $county COUNTY</td></tr>";
 	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 	while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
@@ -85,6 +86,7 @@ if ($_GET[city]){
 		$zip=explode('-',$zip);
 		$zip=$zip[0];
 	}
+	$i=0;
 	$field="zip1";
 	$q="SELECT * FROM ps_packets, ps_pay WHERE (zip1='$search' OR zip1a='$search' OR zip1b='$search' OR zip1c='$search' OR zip1d='$search' OR zip1e='$search') AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD' ORDER BY packet_id DESC";
 	echo "<table align='center' border='1' style='border-collapse:collapse;'><tr><td align='center' colspan='3'>PREVIOUS SERVES IN $search, $county COUNTY</td></tr>";
@@ -92,24 +94,24 @@ if ($_GET[city]){
 	while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 		$server=$d[server_id];
 		if ((strpos($d["$field"],$search) !== false) || (strpos($search,$d["$field"]) !== false)){
-			if($d[server_id] != '' && $d[contractor_rate] != ''  && $d[contractor_rate] != '0'){
+			if($d[server_id] != '' && $d[contractor_rate] != ''  && $d[contractor_rate] != '0'){$i++;
 				if (isset($serverList[$server])){
-					$serverList[$server] .= "<tr bgcolor='".row_color($i,'#333333','#FFFFFF')."'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
+					$serverList[$server] .= "<tr bgcolor='".row_color($i,'#CCCCCC','#FFFFFF')."'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
 				}else{
-					$serverList[$server] = "<table style='border: 1px solid black; border-collapse:collapse;' border='1'><tr bgcolor='".row_color($i,'#333333','#FFFFFF')."'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
+					$serverList[$server] = "<table style='border: 1px solid black; border-collapse:collapse;' border='1'><tr bgcolor='".row_color($i,'#CCCCCC','#FFFFFF')."'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
 				}
 			}
 		}
-		foreach(range('a','e') as $letter){$i++;
+		foreach(range('a','e') as $letter){
 			$var=$field.$letter;
 			$server=$d["server_id$letter"];
 			if ((strpos($d["$var"],$search) !== false) || (strpos($search,$d["$var"]) !== false)){
-				if($d["server_id$letter"] != '' && $d["contractor_rate$letter"] != '' && $d["contractor_rate$letter"] != '0'){
+				if($d["server_id$letter"] != '' && $d["contractor_rate$letter"] != '' && $d["contractor_rate$letter"] != '0'){$i++;
 					$zip=$d["zip1$letter"];
 					if (isset($serverList[$server])){
-						$serverList[$zip] .= "<tr bgcolor='".row_color($i,'#333333','#FFFFFF')."'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</b></td></tr>";
+						$serverList[$zip] .= "<tr bgcolor='".row_color($i,'#CCCCCC','#FFFFFF')."'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</b></td></tr>";
 					}else{
-						$serverList[$server] = "<table style='border: 1px solid black; border-collapse:collapse;' border='1'><tr bgcolor='".row_color($i,'#333333','#FFFFFF')."'><td><fieldset><legend>$zip</legend><table><tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
+						$serverList[$server] = "<table style='border: 1px solid black; border-collapse:collapse;' border='1'><tr bgcolor='".row_color($i,'#CCCCCC','#FFFFFF')."'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
 					}
 				}
 			}
