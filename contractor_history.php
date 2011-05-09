@@ -109,7 +109,7 @@ if ($_GET[city]){
 				if($d["server_id$letter"] != '' && $d["contractor_rate$letter"] != '' && $d["contractor_rate$letter"] != '0'){$i++;
 					$zip=$d["zip1$letter"];
 					if (isset($serverList[$server])){
-						$serverList[$zip] .= "<tr bgcolor='".row_color($i,'#CCCCCC','#FFFFFF')."'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</b></td></tr>";
+						$serverList[$server] .= "<tr bgcolor='".row_color($i,'#CCCCCC','#FFFFFF')."'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</b></td></tr>";
 					}else{
 						$serverList[$server] = "<table style='border: 1px solid black; border-collapse:collapse;' border='1'><tr bgcolor='".row_color($i,'#CCCCCC','#FFFFFF')."'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
 					}
