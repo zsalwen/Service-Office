@@ -222,6 +222,8 @@ a:visited{color:6600AA;}
 			$county=strtoupper($d2[circuit_court]);
 			if ($county == "ST MARYS"){
 				$county="SAINT MARYS";
+			}elseif($county == "PRINCE GEORGE'S"){
+				$county="PRINCE GEORGES";
 			}
 			if (isset($countyList["$county"])){
 				$countyList["$county"] .= "<li id='".$i2.$county.$d2[packet_id]."'><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>(OTD$d2[packet_id])</a> ".strtoupper($d2[city1]).", ".strtoupper($d2[state1]).", $d2[zip1] - <b>$".$d2[contractor_rate]."</b></li>";
@@ -292,11 +294,11 @@ a:visited{color:6600AA;}
 		if (isset($countyList)){
 			ksort($countyList);
 			foreach($countyList as $key => $value){
-				echo "<tr><td><fieldset><legend>$key</legend>";
-				echo $value;
-				echo "</fieldset></td></tr>";
+				echo "<tr><td><strong><a href='#$key'>Jump to $key</a></strong></td></tr>";
+				$list .= "<tr><td><fieldset><legend id='$key'>$key</legend>$value</fieldset></td></tr>";
 			}
 		}
+		echo $list;
 	}else{
 		$i=-1;
 		$q2="SELECT DISTINCT packet_id, city1, state1, zip1, ps_pay.contractor_rate from ps_packets, ps_pay WHERE server_id='$_GET[admin]' AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD' ORDER BY packet_id DESC";
