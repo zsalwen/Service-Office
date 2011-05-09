@@ -132,11 +132,10 @@ if ($_GET[city]){
 			}
 		}
 	}
-	echo "<tr><td colspan='3' align='center'>$_GET[$zip]</td></tr>";
 	if (isset($serverList)){
 		ksort($serverList);
 		foreach($serverList as $key => $value){
-			echo "<tr><td align='center' style='font-weight:bold;'>".id2name($key)."</td></tr>".row_color2($value,"#FFFFFF","#CCCCCC")."</table></fieldset></td></tr>";
+			echo "<tr><td align='center' style='font-weight:bold;'>".id2name($key)."</td></tr><tr><td>".row_color2($value,"#FFFFFF","#CCCCCC")."</table></td></tr>";
 		}
 	}
 	echo "</table>";
