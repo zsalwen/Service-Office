@@ -143,6 +143,14 @@ function getCounty($zip){
 	}
 }
 
+function makeAnchor($i,$key){
+    if ( $i%2 ) {
+        return "<tr><td><a href='#$key'>Jump to $key</a>";
+    } else {
+        return "| <a href='#$key'>Jump to $key</a></td></tr>";;
+    }
+}
+
 $q= "select * from ps_users where id = '$id'";
 $r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
 $d=mysql_fetch_array($r, MYSQL_ASSOC); 
@@ -293,8 +301,13 @@ a:visited{color:6600AA;}
 		}
 		if (isset($countyList)){
 			ksort($countyList);
-			foreach($countyList as $key => $value){
-				echo "<tr><td><strong><a href='#$key'>Jump to $key</a></strong></td></tr>";
+			$i=0;
+			$count=count($countyList);
+			foreach($countyList as $key => $value){$i++;
+				echo makeAnchor($i,$key);
+				if($i == $count && $i%2){
+					echo "</td></tr>";
+				}
 				$list .= "<tr><td><fieldset><legend id='$key'>$key</legend>$value</fieldset></td></tr>";
 			}
 		}
