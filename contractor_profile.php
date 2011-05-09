@@ -130,7 +130,17 @@ function getCounty($zip){
 	$q= "select county from zip_code where zip_code = '$zip' LIMIT 0,1";
 	$r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
 	$d=mysql_fetch_array($r, MYSQL_ASSOC); 
-	return strtoupper($d[county]);
+	if ($d[county]){
+		return strtoupper($d[county]);
+	}else{
+		//curl getzips.com for appropriate info
+		$url="http://www.getzips.com/CGI-BIN/ziplook.exe?What=1&Zip=$zip&Submit=Look+It+Up";
+		$html=getPage($url,"Zip Code Lookup",'5','');
+		$explode=explode("<P><B>AREA</B></TD></TR>",$html);
+		$explode=explode(" VALIGN=TOP><P>",$explode[1]);
+		$return=explode("</TD>",$explode[2]);
+		return $return[0];
+	}
 }
 
 $q= "select * from ps_users where id = '$id'";
