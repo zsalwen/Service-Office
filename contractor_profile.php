@@ -139,7 +139,7 @@ function getCounty($zip){
 		$explode=explode("<P><B>AREA</B></TD></TR>",$html);
 		$explode=explode(" VALIGN=TOP><P>",$explode[1]);
 		$return=explode("</TD>",$explode[3]);
-		return $return[0];
+		return strtoupper($return[0]);
 	}
 }
 
