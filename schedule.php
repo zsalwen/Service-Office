@@ -258,7 +258,7 @@ function OTDFill($today,$court){
 		}
 
 		if ($getCourier == ' !!!MISSING!!! '){
-			echo "border: 3px double yellow;'";
+			echo "border: 5px double yellow;'";
 		}else{
 			echo "'";
 		}
@@ -266,7 +266,7 @@ function OTDFill($today,$court){
 	?>
 	<input type="checkbox" name="otd[<?=$dx[packet_id]?>]">
 		<a class="otd" href="/otd/order.php?packet=<?=$dx[packet_id]?>" target="_Blank">OTD<?=$dx[packet_id]?></a>
-		<? if ($dx[rush] != ''){ echo "<b style='background-color:#FFBB00; color:000000; font-weight:bold; font-size:16px;'>RUSH</b>";} ?>
+		<? if ($dx[rush] != ''){ echo "<b style='background-color:#FFBB00; color:000000; font-weight:bold; font-size:16px; text-decoration:blink;'>RUSH</b>";} ?>
 		<b style='color:#990000;'><?=strtoupper($dx[case_no]);?></b> <b style='color:#003377;'><?=getServer($dx[packet_id]);?></b>
 		<b style='color:#330077;'><?=$getCourier;?></b> <?=isActive($dx[service_status])?> 
 		<? 	if ($dx[fileDate] != "0000-00-00"){ echo "<b style='color:#009900;'>FILE CLOSED ON ".$dx[fileDate]."</b>"; }
@@ -293,13 +293,13 @@ function OTDmissing($today,$court){
 		}
 
 		if ($getCourier == ' !!!MISSING!!! '){
-			$missingList[0] .= "text-decoration: blink;'";
+			$missingList[0] .=  "border: 5px double yellow;'";
 		}else{
 			$missingList[0] .= "'";
 		}
 		$missingList[0] .= "><input type='checkbox' name='otd[".$dx[packet_id]."]'>";
 		if ($dx[rush] != ''){
-			$missingList[0] .=  "<b style='background-color:#FFBB00; color:000000; font-weight:bold; font-size:16px;'>RUSH</b>";
+			$missingList[0] .=  "<b style='background-color:#FFBB00; color:000000; font-weight:bold; font-size:16px; text-decoration:blink;'>RUSH</b>";
 		}
 		$missingList[0] .= "<a class='otd' href='/otd/order.php?packet=".$dx[packet_id]."' target='_Blank'>OTD".$dx[packet_id]."</a>
 		<b style='color:#003377;'>".getServer($dx[packet_id])."</b>
@@ -327,7 +327,7 @@ function OTDmissing($today,$court){
 	return $missingList;
 }
 function EVfill ($today,$court){
-	$x=@mysql_query("select eviction_id, date_received, case_no, fileDate, service_status, process_status, filing_status, attorneys_id, server_id from evictionPackets where estFileDate = '$today' AND circuit_court = '$court' and status <> 'CANCELLED' and case_no <> '' and fileDate = '0000-00-00'");
+	$x=@mysql_query("select eviction_id, date_received, case_no, fileDate, service_status, process_status, filing_status, attorneys_id, server_id, rush from evictionPackets where estFileDate = '$today' AND circuit_court = '$court' and status <> 'CANCELLED' and case_no <> '' and fileDate = '0000-00-00'");
 	//$count=mysql_num_rows($x);
 	while ($dx=mysql_fetch_array($x,MYSQL_ASSOC)){
 	?><div    
@@ -342,7 +342,7 @@ function EVfill ($today,$court){
 	}
 
 	if (trim($getEVCourier) == '!!!MISSING!!!'){
-		$missingList .= "text-decoration: blink;";
+		$missingList .= "border: 5px double yellow;";
 	}
 	if ($missingList != ''){
 		echo "style='$missingList'";
@@ -350,6 +350,7 @@ function EVfill ($today,$court){
 ?>
 	><input type="checkbox" name="ev[<?=$dx[eviction_id]?>]">
 		<a class="ev" href="/ev/order.php?packet=<?=$dx[eviction_id]?>" target="_Blank">EV<?=$dx[eviction_id]?></a> 
+		<? if ($dx[rush] != ''){ echo "<b style='background-color:#FFBB00; color:000000; font-weight:bold; font-size:16px; text-decoration:blink;'>RUSH</b>";} ?>
 		<b style='color:#990000;'><?=strtoupper($dx[case_no]);?></b> 
 		<b style='color:#003377;'><?=getEVServer($dx[eviction_id]);?></b> 
 		<b style='color:#330077;'><?=$getEVCourier;?></b> 
@@ -364,7 +365,7 @@ function EVfill ($today,$court){
 	}
 }
 function Sfill($today,$court){
-	$x=@mysql_query("select packet_id, date_received, case_no, fileDate, service_status, process_status, filing_status, attorneys_id, server_id from standard_packets where estFileDate = '$today' AND circuit_court = '$court' and status <> 'CANCELLED' and fileDate = '0000-00-00'");
+	$x=@mysql_query("select packet_id, date_received, case_no, fileDate, service_status, process_status, filing_status, attorneys_id, server_id, rush from standard_packets where estFileDate = '$today' AND circuit_court = '$court' and status <> 'CANCELLED' and fileDate = '0000-00-00'");
 	//$count=mysql_num_rows($x);
 	while ($dx=mysql_fetch_array($x,MYSQL_ASSOC)){
 	?><div    
@@ -378,14 +379,15 @@ function Sfill($today,$court){
 		$missingList .=  "background-color:#ccFFcc;";
 	}
 	if (trim($getSCourier) == '!!!MISSING!!!'){
-		$missingList .= "text-decoration: blink;";
+		$missingList .= "border: 5px double yellow;";
 	}
 	if ($missingList != ''){
 		echo "style='$missingList'";
 	}
 	?>
 	><input type="checkbox" name="s[<?=$dx[packet_id]?>]">
-		<a class="s" href="/standard/order.php?packet=<?=$dx[packet_id]?>" target="_Blank">S<?=$dx[packet_id]?></a> 
+		<a class="s" href="/standard/order.php?packet=<?=$dx[packet_id]?>" target="_Blank">S<?=$dx[packet_id]?></a>
+		<? if ($dx[rush] != ''){ echo "<b style='background-color:#FFBB00; color:000000; font-weight:bold; font-size:16px; text-decoration:blink;'>RUSH</b>";} ?>		
 		<b style='color:#990000;'><?=strtoupper($dx[case_no]);?></b> 
 		<b style='color:#003377;'><?=getSServer($dx[packet_id]);?></b> 
 		<b style='color:#330077;'><?=$getSCourier;?></b> 
