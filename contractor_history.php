@@ -108,35 +108,48 @@ if ($_GET[city]){
 	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 	while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 		$server=$d[server_id];
+		$rate=$d[contractor_rate];
 		if ((strpos($d["$field"],$search) !== false) || (strpos($search,$d["$field"]) !== false)){
 			if($d[server_id] != '' && $d[contractor_rate] != ''  && $d[contractor_rate] != '0'){$i++;
 				if (isset($serverList[$server])){
-					$serverList[$server] .= "<tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
+					if (isset($serverList[$server][$rate])){
+						$serverList[$server][$rate] .= "<tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td></td></tr>";
+					}else{
+						$serverList[$server][$rate] = "<table style='border: 1px solid black; border-collapse:collapse;' border='1'><tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
+					}
 				}else{
-					$serverList[$server] = "<table style='border: 1px solid black; border-collapse:collapse;' border='1'><tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
+					$serverList[$server][$rate] = "<table style='border: 1px solid black; border-collapse:collapse;' border='1'><tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
 				}
 			}
 		}
 		foreach(range('a','e') as $letter){
 			$var=$field.$letter;
 			$server=$d["server_id$letter"];
+			$rate=$d["contractor_rate$letter"];
 			if ((strpos($d["$var"],$search) !== false) || (strpos($search,$d["$var"]) !== false)){
 				if($d["server_id$letter"] != '' && $d["contractor_rate$letter"] != '' && $d["contractor_rate$letter"] != '0'){$i++;
 					$zip=$d["zip1$letter"];
 					if (isset($serverList[$server])){
-						$serverList[$server] .= "<tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</b></td></tr>";
+						if (isset($serverList[$server][$rate])){
+							$serverList[$server] .= "<tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td></td></tr>";
+						}else{
+							$serverList[$server][$rate] = "<table style='border: 1px solid black; border-collapse:collapse;' border='1'><tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
+						}
 					}else{
-						$serverList[$server] = "<table style='border: 1px solid black; border-collapse:collapse;' border='1'><tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
+						$serverList[$server][$rate] = "<table style='border: 1px solid black; border-collapse:collapse;' border='1'><tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
 					}
 				}
 			}
 		}
 	}
 	if (isset($serverList)){
-		$i=0;
 		ksort($serverList);
-		foreach($serverList as $key => $value){$i++;
-			echo "<tr bgcolor='#FFFF00'><td align='center' style='font-weight:bold;'>".id2name($key)."</td></tr><tr bgcolor='#FF0000'><td align='center'>".row_color2($value,"#FFFFFF","#CCCCCC")."</table></td></tr>";
+		foreach($serverList as $v1){
+			echo "<tr bgcolor='#FFFF00'><td align='center' style='font-weight:bold;'>".id2name($key)."</td></tr><tr bgcolor='#FF0000'><td align='center'><table><tr>";
+			foreach($v1 as $key => $value){
+				echo "<td>".row_color2($value,"#FFFFFF","#CCCCCC")."</table></td>";
+			}
+			echo "</tr></table></td></tr>";
 		}
 	}
 	echo "</table>";
