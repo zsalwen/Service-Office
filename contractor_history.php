@@ -75,15 +75,15 @@ if ($_GET[city]){
 							<tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td></td></tr>";
 						}else{
 							//start rate list
-							$serverList[$zip][$server][$rate] = "<table><tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
+							$serverList[$zip][$server][$rate] = "<table style='border: 1px solid black; border-collapse:collapse;' border='1'><tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
 						}
 					}else{
 						//start server list
-						$serverList[$zip][$server][$rate] = "<table><tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
+						$serverList[$zip][$server][$rate] = "<table style='border: 1px solid black; border-collapse:collapse;' border='1'><tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
 					}
 				}else{
 					//start zip list
-					$serverList[$zip][$server][$rate] = "<table><tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
+					$serverList[$zip][$server][$rate] = "<table style='border: 1px solid black; border-collapse:collapse;' border='1'><tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
 				}
 			}
 		}
@@ -102,15 +102,15 @@ if ($_GET[city]){
 								<tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td></td></tr>";
 							}else{
 								//start rate list
-								$serverList[$zip][$server][$rate] = "<table><tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
+								$serverList[$zip][$server][$rate] = "<table style='border: 1px solid black; border-collapse:collapse;' border='1'><tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
 							}
 						}else{
 							//start server list
-							$serverList[$zip][$server][$rate] = "<table><tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
+							$serverList[$zip][$server][$rate] = "<table style='border: 1px solid black; border-collapse:collapse;' border='1'><tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
 						}
 					}else{
 						//start zip list
-						$serverList[$zip][$server][$rate] = "<table><tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
+						$serverList[$zip][$server][$rate] = "<table style='border: 1px solid black; border-collapse:collapse;' border='1'><tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
 					}
 				}
 			}
