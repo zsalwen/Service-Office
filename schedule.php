@@ -258,7 +258,7 @@ function OTDFill($today,$court){
 		}
 
 		if ($getCourier == ' !!!MISSING!!! '){
-			echo "text-decoration: blink;'";
+			echo "border: 3px double yellow;'";
 		}else{
 			echo "'";
 		}
