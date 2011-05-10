@@ -64,11 +64,25 @@ if ($_GET[city]){
 	while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 		if ((strpos($d["$field"],$search) !== false) || (strpos($search,$d["$field"]) !== false)){
 			if($d[server_id] != '' && $d[contractor_rate] != ''  && $d[contractor_rate] != '0'){
+				$server=$d[server_id];
+				$rate=$d[contractor_rate];
 				$zip=$d[zip1];
 				if (isset($serverList[$zip])){
-					$serverList[$zip] .= "<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td>".id2name($d[server_id])."</td><td><b>$$d[contractor_rate]</b></td></tr>";
+					if (isset($serverList[$zip][$server)){
+						if (isset($serverList[$zip][$server][$rate])){
+							//continue rate list
+							$serverList[$zip][$server][$rate] = $serverList[$zip][$server][$rate]."<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td></td></tr>";
+						}else{
+							//start rate list
+							$serverList[$zip][$server][$rate] = "<table><tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
+						}
+					}else{
+						//start server list
+						$serverList[$zip][$server][$rate] = "<table><tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
+					}
 				}else{
-					$serverList[$zip] = "<tr><td><fieldset><legend>$zip</legend><table><tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td>".id2name($d[server_id])."</td><td><b>$$d[contractor_rate]</b></td></tr>";
+					//start zip list
+					$serverList[$zip][$server][$rate] = "<table><tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
 				}
 			}
 		}
@@ -77,10 +91,24 @@ if ($_GET[city]){
 			if ((strpos($d["$var"],$search) !== false) || (strpos($search,$d["$var"]) !== false)){
 				if($d["server_id$letter"] != '' && $d["contractor_rate$letter"] != '' && $d["contractor_rate$letter"] != '0'){
 					$zip=$d["zip1$letter"];
+					$server=$d["server_id$letter"];
+					$rate=$d["contractor_rate$letter"];
 					if (isset($serverList[$zip])){
-						$serverList[$zip] .= "<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td>".id2name($d["server_id$letter"])."</td><td><b>$".$d["contractor_rate$letter"]."</b></td></tr>";
+						if (isset($serverList[$zip][$server)){
+							if (isset($serverList[$zip][$server][$rate])){
+								//continue rate list
+								$serverList[$zip][$server][$rate] = $serverList[$zip][$server][$rate]."<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td></td></tr>";
+							}else{
+								//start rate list
+								$serverList[$zip][$server][$rate] = "<table><tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
+							}
+						}else{
+							//start server list
+							$serverList[$zip][$server][$rate] = "<table><tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
+						}
 					}else{
-						$serverList[$zip] = "<tr><td><fieldset><legend>$zip</legend><table><tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td>".id2name($d["server_id$letter"])."</td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
+						//start zip list
+						$serverList[$zip][$server][$rate] = "<table><tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
 					}
 				}
 			}
@@ -88,8 +116,22 @@ if ($_GET[city]){
 	}
 	if (isset($serverList)){
 		ksort($serverList);
-		foreach($serverList as $value){
-			echo $value."</table></fieldset></td></tr>";
+		foreach($serverList as $k1 => $v1){
+			//zips
+			echo "<tr><td align='center'><fieldset><legend>$v1</legend>";
+			ksort($v2);
+			foreach ($v1 as $k2 => $v2){
+				//servers
+				echo "<table><tr><td align='center'>".id2name($k2)."</td></tr><tr><td>";
+				krsort($v3);
+				foreach ($v2 as $k3 => $v3){
+					//rates
+					echo $v3."</table>";
+				}
+				echo "</td></tr></table>";
+			}
+			echo "</fieldset></td></tr>";
+			//echo $v1."</table></fieldset></td></tr>";
 		}
 	}
 	echo "</table>";
