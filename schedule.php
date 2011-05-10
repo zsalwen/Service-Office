@@ -266,7 +266,7 @@ function OTDFill($today,$court){
 	?>
 	<input type="checkbox" name="otd[<?=$dx[packet_id]?>]">
 		<a class="otd" href="/otd/order.php?packet=<?=$dx[packet_id]?>" target="_Blank">OTD<?=$dx[packet_id]?></a>
-		<? if ($d[rush] != ""){ echo "<b style='background-color:#FFBB00; color:000000; font-weight:bold;'>RUSH</b>";} ?>
+		<? if ($dx[rush] != ''){ echo "<b style='background-color:#FFBB00; color:000000; font-weight:bold;'>RUSH</b>";} ?>
 		<b style='color:#990000;'><?=strtoupper($dx[case_no]);?></b> <b style='color:#003377;'><?=getServer($dx[packet_id]);?></b>
 		<b style='color:#330077;'><?=$getCourier;?></b> <?=isActive($dx[service_status])?> 
 		<? 	if ($dx[fileDate] != "0000-00-00"){ echo "<b style='color:#009900;'>FILE CLOSED ON ".$dx[fileDate]."</b>"; }
@@ -297,8 +297,11 @@ function OTDmissing($today,$court){
 		}else{
 			$missingList[0] .= "'";
 		}
-		$missingList[0] .= "><input type='checkbox' name='otd[".$dx[packet_id]."]'>
-		<a class='otd' href='/otd/order.php?packet=".$dx[packet_id]."' target='_Blank'>OTD".$dx[packet_id]."</a>
+		$missingList[0] .= "><input type='checkbox' name='otd[".$dx[packet_id]."]'>";
+		if ($dx[rush] != ''){
+			$missingList[0] .=  "<b style='background-color:#FFBB00; color:000000; font-weight:bold;'>RUSH</b>";
+		}
+		$missingList[0] .= "<a class='otd' href='/otd/order.php?packet=".$dx[packet_id]."' target='_Blank'>OTD".$dx[packet_id]."</a>
 		<b style='color:#003377;'>".getServer($dx[packet_id])."</b>
 		<b style='color:#330077;'>".getCourier($dx[packet_id])."</b> ".isActive($dx[service_status])." ".isActive($dx[process_status]);
 		if ($dx[fileDate] != "0000-00-00"){
