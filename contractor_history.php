@@ -108,7 +108,7 @@ if ($_GET[city]){
 	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 	while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 		$server=$d[server_id];
-		$rate=$d[contractor_rate];
+		$rate=trim($d[contractor_rate]);
 		if ((strpos($d["$field"],$search) !== false) || (strpos($search,$d["$field"]) !== false)){
 			if($d[server_id] != '' && $d[contractor_rate] != ''  && $d[contractor_rate] != '0'){$i++;
 				if (isset($serverList[$server])){
@@ -125,10 +125,9 @@ if ($_GET[city]){
 		foreach(range('a','e') as $letter){
 			$var=$field.$letter;
 			$server=$d["server_id$letter"];
-			$rate=$d["contractor_rate$letter"];
+			$rate=trim($d["contractor_rate$letter"]);
 			if ((strpos($d["$var"],$search) !== false) || (strpos($search,$d["$var"]) !== false)){
 				if($d["server_id$letter"] != '' && $d["contractor_rate$letter"] != '' && $d["contractor_rate$letter"] != '0'){$i++;
-					$zip=$d["zip1$letter"];
 					if (isset($serverList[$server])){
 						if (isset($serverList[$server][$rate])){
 							$serverList[$server][$rate] = $serverList[$server][$rate]."<tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td></td></tr>";
@@ -145,7 +144,8 @@ if ($_GET[city]){
 	if (isset($serverList)){
 		ksort($serverList);
 		foreach($serverList as $key => $v1){
-			echo "<tr bgcolor='#FFFF00'><td align='center' style='font-weight:bold;'>".id2name($key)."</td></tr><tr bgcolor='#FF0000'><td align='center'><table><tr>";
+			echo "<tr bgcolor='#FFFF00'><td align='center' style='font-weight:bold;'>".id2name($key)."</td></tr><tr bgcolor='#FF0000'><td align='center' style='padding-left:0px; padding-right:0px;'><table><tr>";
+			sort($v1);
 			foreach($v1 as $key => $value){
 				echo "<td valign='top'>".row_color2($value,"#FFFFFF","#CCCCCC")."</table></td>";
 			}
