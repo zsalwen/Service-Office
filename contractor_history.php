@@ -72,18 +72,18 @@ if ($_GET[city]){
 						if (isset($serverList[$zip][$server][$rate])){
 							//continue rate list
 							$serverList[$zip][$server][$rate] = $serverList[$zip][$server][$rate]."
-							<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td></td></tr>";
+							<tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td></td></tr>";
 						}else{
 							//start rate list
-							$serverList[$zip][$server][$rate] = "<table><tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
+							$serverList[$zip][$server][$rate] = "<table><tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
 						}
 					}else{
 						//start server list
-						$serverList[$zip][$server][$rate] = "<table><tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
+						$serverList[$zip][$server][$rate] = "<table><tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
 					}
 				}else{
 					//start zip list
-					$serverList[$zip][$server][$rate] = "<table><tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
+					$serverList[$zip][$server][$rate] = "<table><tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
 				}
 			}
 		}
@@ -99,18 +99,18 @@ if ($_GET[city]){
 							if (isset($serverList[$zip][$server][$rate])){
 								//continue rate list
 								$serverList[$zip][$server][$rate] = $serverList[$zip][$server][$rate]."
-								<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td></td></tr>";
+								<tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td></td></tr>";
 							}else{
 								//start rate list
-								$serverList[$zip][$server][$rate] = "<table><tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
+								$serverList[$zip][$server][$rate] = "<table><tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
 							}
 						}else{
 							//start server list
-							$serverList[$zip][$server][$rate] = "<table><tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
+							$serverList[$zip][$server][$rate] = "<table><tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
 						}
 					}else{
 						//start zip list
-						$serverList[$zip][$server][$rate] = "<table><tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
+						$serverList[$zip][$server][$rate] = "<table><tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
 					}
 				}
 			}
@@ -128,11 +128,11 @@ if ($_GET[city]){
 				krsort($v2);
 				$count=count($v2);
 				echo "<table>
-				<tr><td align='center' colspan='$count'>".id2name($k2)."</td></tr><tr>";
+				<tr bgcolor='#FFFF00'><td align='center' colspan='$count' style='font-weight:bold;'>".id2name($k2)."</td></tr><tr bgcolor='#FF0000'>";
 				krsort($v3);
 				foreach ($v2 as $k3 => $v3){
 					//rates
-					echo "<td valign='top'>".$v3."</table></td>";
+					echo "<td valign='top' style='padding-left:0px; padding-right:0px;'>".row_color2($v3,"#FFFFFF","#CCCCCC")."</table></td>";
 				}
 				echo "</tr></table>";
 			}
@@ -190,11 +190,11 @@ if ($_GET[city]){
 	}
 	if (isset($serverList)){
 		ksort($serverList);
-		foreach($serverList as $key => $v1){
-			echo "<tr bgcolor='#FFFF00'><td align='center' style='font-weight:bold;'>".id2name($key)."</td></tr><tr bgcolor='#FF0000'><td align='center'><table><tr>";
+		foreach($serverList as $k1 => $v1){
+			echo "<tr bgcolor='#FFFF00'><td align='center' style='font-weight:bold;'>".id2name($k1)."</td></tr><tr bgcolor='#FF0000'><td align='center'><table><tr>";
 			krsort($v1);
-			foreach($v1 as $key => $value){
-				echo "<td valign='top' style='padding-left:0px; padding-right:0px;'>".row_color2($value,"#FFFFFF","#CCCCCC")."</table></td>";
+			foreach($v1 as $k2 => $v2){
+				echo "<td valign='top' style='padding-left:0px; padding-right:0px;'>".row_color2($v2,"#FFFFFF","#CCCCCC")."</table></td>";
 			}
 			echo "</tr></table></td></tr>";
 		}
