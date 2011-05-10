@@ -259,6 +259,7 @@ function OTDFill($today,$court){
 
 		if ($getCourier == ' !!!MISSING!!! '){
 			echo "border: 5px double yellow;'";
+			$courier=" font-size:15px;";
 		}else{
 			echo "'";
 		}
@@ -268,7 +269,7 @@ function OTDFill($today,$court){
 		<a class="otd" href="/otd/order.php?packet=<?=$dx[packet_id]?>" target="_Blank">OTD<?=$dx[packet_id]?></a>
 		<? if ($dx[rush] != ''){ echo "<b style='background-color:#FFBB00; color:000000; font-weight:bold; font-size:16px; text-decoration:blink;'>RUSH</b>";} ?>
 		<b style='color:#990000;'><?=strtoupper($dx[case_no]);?></b> <b style='color:#003377;'><?=getServer($dx[packet_id]);?></b>
-		<b style='color:#330077;'><?=$getCourier;?></b> <?=isActive($dx[service_status])?> 
+		<b style='color:#330077;<?=$courier?>'><?=$getCourier;?></b> <?=isActive($dx[service_status])?> 
 		<? 	if ($dx[fileDate] != "0000-00-00"){ echo "<b style='color:#009900;'>FILE CLOSED ON ".$dx[fileDate]."</b>"; }
 			elseif($dx[filing_status] == "PREP TO FILE" && !withCourier($dx[packet_id]) && !clientFile($dx[attorneys_id]) && !serverFile($dx[server_id]) ){ echo "<b style='color:#00cc00;'>Ready for courier.</b>"; }
 			elseif($dx[filing_status] == "PREP TO FILE" && !withCourier($dx[packet_id]) && !clientFile($dx[attorneys_id]) && serverFile($dx[server_id]) ){ echo "<b style='color:#00cc00;'>Ready to send to server to file.</b>"; }
@@ -294,6 +295,7 @@ function OTDmissing($today,$court){
 
 		if ($getCourier == ' !!!MISSING!!! '){
 			$missingList[0] .=  "border: 5px double yellow;'";
+			$courier=" font-size:15px;";
 		}else{
 			$missingList[0] .= "'";
 		}
@@ -303,7 +305,7 @@ function OTDmissing($today,$court){
 		}
 		$missingList[0] .= "<a class='otd' href='/otd/order.php?packet=".$dx[packet_id]."' target='_Blank'>OTD".$dx[packet_id]."</a>
 		<b style='color:#003377;'>".getServer($dx[packet_id])."</b>
-		<b style='color:#330077;'>".getCourier($dx[packet_id])."</b> ".isActive($dx[service_status])." ".isActive($dx[process_status]);
+		<b style='color:#330077;$courier'>".getCourier($dx[packet_id])."</b> ".isActive($dx[service_status])." ".isActive($dx[process_status]);
 		if ($dx[fileDate] != "0000-00-00"){
 			$missingList[0] .= "<b style='color:#009900;'>FILE CLOSED ON ".$dx[fileDate]."</b>";
 		}
@@ -343,6 +345,7 @@ function EVfill ($today,$court){
 
 	if (trim($getEVCourier) == '!!!MISSING!!!'){
 		$missingList .= "border: 5px double yellow;";
+		$courier=" font-size:15px;";
 	}
 	if ($missingList != ''){
 		echo "style='$missingList'";
@@ -353,7 +356,7 @@ function EVfill ($today,$court){
 		<? if ($dx[rush] != ''){ echo "<b style='background-color:#FFBB00; color:000000; font-weight:bold; font-size:16px; text-decoration:blink;'>RUSH</b>";} ?>
 		<b style='color:#990000;'><?=strtoupper($dx[case_no]);?></b> 
 		<b style='color:#003377;'><?=getEVServer($dx[eviction_id]);?></b> 
-		<b style='color:#330077;'><?=$getEVCourier;?></b> 
+		<b style='color:#330077;<?=$courier?>'><?=$getEVCourier;?></b> 
 		<?=isActive($dx[service_status])?> 
 		<? 	if ($dx[fileDate] != "0000-00-00"){ echo "<b style='color:#009900;'>FILE CLOSED ON ".$dx[fileDate]."</b>"; }
 		elseif($dx[filing_status] == "PREP TO FILE" && !EVwithCourier($dx[eviction_id]) && !clientFile($dx[attorneys_id]) && !serverFile($dx[server_id]) ){ echo "<b style='color:#00cc00;'>Ready for courier.</b>"; }
@@ -380,6 +383,7 @@ function Sfill($today,$court){
 	}
 	if (trim($getSCourier) == '!!!MISSING!!!'){
 		$missingList .= "border: 5px double yellow;";
+		$courier=" font-size:15px;";
 	}
 	if ($missingList != ''){
 		echo "style='$missingList'";
@@ -390,7 +394,7 @@ function Sfill($today,$court){
 		<? if ($dx[rush] != ''){ echo "<b style='background-color:#FFBB00; color:000000; font-weight:bold; font-size:16px; text-decoration:blink;'>RUSH</b>";} ?>		
 		<b style='color:#990000;'><?=strtoupper($dx[case_no]);?></b> 
 		<b style='color:#003377;'><?=getSServer($dx[packet_id]);?></b> 
-		<b style='color:#330077;'><?=$getSCourier;?></b> 
+		<b style='color:#330077;<?=$courier?>'><?=$getSCourier;?></b> 
 		<?=isActive($dx[service_status])?> 
 	<? 	if ($dx[fileDate] != "0000-00-00"){ echo "<b style='color:#009900;'>FILE CLOSED ON ".$dx[fileDate]."</b>"; }
 		elseif($dx[filing_status] == "PREP TO FILE" && !SwithCourier($dx[packet_id]) && !clientFile($dx[attorneys_id]) && !serverFile($dx[server_id]) ){ echo "<b style='color:#00cc00;'>Ready for courier.</b>"; }
