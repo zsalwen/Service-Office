@@ -71,7 +71,8 @@ if ($_GET[city]){
 					if (isset($serverList[$zip][$server])){
 						if (isset($serverList[$zip][$server][$rate])){
 							//continue rate list
-							$serverList[$zip][$server][$rate] = $serverList[$zip][$server][$rate]."<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td></td></tr>";
+							$serverList[$zip][$server][$rate] = $serverList[$zip][$server][$rate]."
+							<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td></td></tr>";
 						}else{
 							//start rate list
 							$serverList[$zip][$server][$rate] = "<table><tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
@@ -97,7 +98,8 @@ if ($_GET[city]){
 						if (isset($serverList[$zip][$server])){
 							if (isset($serverList[$zip][$server][$rate])){
 								//continue rate list
-								$serverList[$zip][$server][$rate] = $serverList[$zip][$server][$rate]."<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td></td></tr>";
+								$serverList[$zip][$server][$rate] = $serverList[$zip][$server][$rate]."
+								<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td></td></tr>";
 							}else{
 								//start rate list
 								$serverList[$zip][$server][$rate] = "<table><tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
@@ -118,20 +120,23 @@ if ($_GET[city]){
 		ksort($serverList);
 		foreach($serverList as $k1 => $v1){
 			//zips
-			echo "<tr><td align='center'><fieldset><legend>$v1</legend>";
-			ksort($v2);
+			echo "<tr><td align='center'><fieldset>
+			<legend>$k1</legend>";
+			ksort($v1);
 			foreach ($v1 as $k2 => $v2){
 				//servers
-				echo "<table><tr><td align='center'>".id2name($k2)."</td></tr><tr><td>";
+				krsort($v2);
+				$count=count($v2);
+				echo "<table>
+				<tr><td align='center' colspan='$count'>".id2name($k2)."</td></tr><tr>";
 				krsort($v3);
 				foreach ($v2 as $k3 => $v3){
 					//rates
-					echo $v3."</table>";
+					echo "<td valign='top'>".$v3."</table></td>";
 				}
-				echo "</td></tr></table>";
+				echo "</tr></table>";
 			}
 			echo "</fieldset></td></tr>";
-			//echo $v1."</table></fieldset></td></tr>";
 		}
 	}
 	echo "</table>";
