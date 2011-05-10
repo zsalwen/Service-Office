@@ -68,7 +68,7 @@ if ($_GET[city]){
 				$rate=$d[contractor_rate];
 				$zip=$d[zip1];
 				if (isset($serverList[$zip])){
-					if (isset($serverList[$zip][$server)){
+					if (isset($serverList[$zip][$server])){
 						if (isset($serverList[$zip][$server][$rate])){
 							//continue rate list
 							$serverList[$zip][$server][$rate] = $serverList[$zip][$server][$rate]."<tr><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td></td></tr>";
