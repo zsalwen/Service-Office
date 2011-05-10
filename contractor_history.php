@@ -120,23 +120,30 @@ if ($_GET[city]){
 		ksort($serverList);
 		foreach($serverList as $k1 => $v1){
 			//zips
-			echo "<tr><td align='center'><fieldset>
+			echo "
+			<tr><td align='center'><fieldset style='padding:0px;'>
 			<legend>$k1</legend>";
 			ksort($v1);
 			foreach ($v1 as $k2 => $v2){
 				//servers
 				krsort($v2);
 				$count=count($v2);
-				echo "<table>
-				<tr bgcolor='#FFFF00'><td align='center' colspan='$count' style='font-weight:bold;'>".id2name($k2)."</td></tr><tr bgcolor='#FF0000'>";
+				echo "
+				<table>
+				<tr bgcolor='#FFFF00'><td align='center' colspan='$count' style='font-weight:bold;'>".id2name($k2)."</td></tr><tr bgcolor='#FF0000'>
+				";
 				krsort($v3);
 				foreach ($v2 as $k3 => $v3){
 					//rates
-					echo "<td valign='top' style='padding-left:0px; padding-right:0px;'>".row_color2($v3,"#FFFFFF","#CCCCCC")."</table></td>";
+					echo "<td valign='top' style='padding-left:0px; padding-right:0px;'>
+					".row_color2($v3,"#FFFFFF","#CCCCCC")."
+					</table></td>";
 				}
-				echo "</tr></table>";
+				echo "
+				</tr></table>";
 			}
-			echo "</fieldset></td></tr>";
+			echo "
+			</fieldset></td></tr>";
 		}
 	}
 	echo "</table>";
