@@ -110,7 +110,7 @@ if ($_GET[city]){
 				krsort($v2);
 				$count2=count($v2);
 				echo "
-				<td><table align='center'>
+				<td valign='top'><table align='center'>
 				<tr bgcolor='#FFFF00'><td align='center' colspan='$count2' style='font-weight:bold;'>".id2name($k2)."</td></tr><tr bgcolor='#FF0000'>
 				";
 				foreach ($v2 as $k3 => $v3){
