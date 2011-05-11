@@ -184,6 +184,7 @@ $d=mysql_fetch_array($r, MYSQL_ASSOC);
 a{color:FF0000;}
 a:hover{color:888888;}
 a:visited{color:6600AA;}
+table, tr, td, fieldset, legend{padding:0px;}
 </style>
 <table align="center" width="100%"><tr><td valign="top">
         	<table border="1" align="center" style="border-collapse:collapse" width="100%">
@@ -367,7 +368,7 @@ a:visited{color:6600AA;}
 				$list .= "<tr><td>
 				<fieldset>
 				<legend id='$k1'>$k1</legend>
-				<div>";
+				<table align='center'><tr><td valign='top'>";
 				ksort($v1);
 				foreach($v1 as $k2 => $v2){
 					//zip
@@ -393,7 +394,7 @@ a:visited{color:6600AA;}
 					</tr>
 					</table>";
 				}
-				"</div>
+				"</td></tr></table>
 				</fieldset>
 				</td></tr>";
 			}
