@@ -100,17 +100,18 @@ if ($_GET[city]){
 		ksort($serverList);
 		foreach($serverList as $k1 => $v1){
 			//zips
+			$count=count($v1);
 			echo "
-			<tr><td align='center'><fieldset style='padding:0px;'>
-			<legend>$k1</legend><table><tr><td>";
+			<tr><td align='center' colspan='$count'><fieldset style='padding:0px;'>
+			<legend>$k1</legend><table><tr>";
 			ksort($v1);
 			foreach ($v1 as $k2 => $v2){
 				//servers
 				krsort($v2);
-				$count=count($v2);
+				$count2=count($v2);
 				echo "
-				<table align='center'>
-				<tr bgcolor='#FFFF00'><td align='center' colspan='$count' style='font-weight:bold;'>".id2name($k2)."</td></tr><tr bgcolor='#FF0000'>
+				<td><table align='center'>
+				<tr bgcolor='#FFFF00'><td align='center' colspan='$count2' style='font-weight:bold;'>".id2name($k2)."</td></tr><tr bgcolor='#FF0000'>
 				";
 				foreach ($v2 as $k3 => $v3){
 					//rates
@@ -121,7 +122,7 @@ if ($_GET[city]){
 					</table></td>";
 				}
 				echo "
-				</tr></table>";
+				</tr></table></td>";
 			}
 			echo "
 			</td></tr></table></fieldset></td></tr>";
