@@ -365,19 +365,21 @@ table, tr, td, fieldset, legend{padding:0px;}
 				if($i == $count && (($i%3 === 1) || ($i%3 === 0))){
 					echo "</tr>";
 				}
-				$list .= "<tr><td>
+				$count2=count($v1);
+				$list .= "<tr><td colspan='$count2'>
 				<fieldset>
 				<legend id='$k1'>$k1</legend>
-				<table align='center'><tr><td valign='top'>";
+				<table align='center'><tr>";
 				ksort($v1);
 				foreach($v1 as $k2 => $v2){
 					//zip
 					krsort($v2);
-					$count2=count($v2);
+					$count3=count($v2);
 					$list .= "
+					<td valign='top'>
 					<table align='center'>
 					<tr bgcolor='#FFFF00'>
-					<td align='center' colspan='$count2' style='font-weight:bold;'>$k2</td>
+					<td align='center' colspan='$count3' style='font-weight:bold;'>$k2</td>
 					</tr>
 					<tr bgcolor='#FF0000'>
 					";
@@ -392,9 +394,10 @@ table, tr, td, fieldset, legend{padding:0px;}
 					}
 					$list .= "
 					</tr>
-					</table>";
+					</table>
+					</td>";
 				}
-				"</td></tr></table>
+				"</tr></table>
 				</fieldset>
 				</td></tr>";
 			}
