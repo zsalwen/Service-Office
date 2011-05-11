@@ -166,17 +166,13 @@ function makeAnchor($i,$key){
 	if ( $i%3 === 0){
 		return "<tr>
 		<td>
-		<a href='#$key'>Jump to $key</a>
-		</td>";
+		<a href='#$key'>Jump to $key</a></td>";
     }elseif ( $i%3 === 1) {
         return "<td>
-		<a href='#$key'>Jump to $key</a>
-		</td>";
+		<a href='#$key'>Jump to $key</a></td>";
     } else {
         return "<td>
-		<a href='#$key'>Jump to $key</a>
-		</td>
-		</tr>";
+		<a href='#$key'>Jump to $key</a></td></tr>";
     }
 }
 
@@ -361,7 +357,7 @@ a:visited{color:6600AA;}
 		if (isset($countyList)){
 			ksort($countyList);
 			$i=-1;
-			$count=count($countyList);
+			$count=count($countyList)-1;
 			echo "<tr>
 			<td align='center'>
 			<table align='center'>";
