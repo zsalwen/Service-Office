@@ -341,7 +341,7 @@ a:visited{color:6600AA;}
 				if($i == $count && (($i%2 === 0) || ($i%3 === 0))){
 					echo "</tr>";
 				}
-				$list .= "<tr><td>
+				$list .= "<tr><td colspan='3'>
 				<fieldset><legend id='$k1'>$k1</legend><table align='center'><tr>";
 				ksort($v1);
 				foreach($v1 as $k2 => $v2){
