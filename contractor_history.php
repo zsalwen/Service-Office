@@ -36,7 +36,11 @@ function row_color2($str,$bg1,$bg2){
 	}
 	return $return;
 }
-
+?>
+<style>
+table,tr,td,fieldset{padding:0px;}
+</style>
+<?
 if ($_GET[city]){
 	$search=strtoupper($_GET[city]);
 	$field="city1";
