@@ -348,26 +348,26 @@ a:visited{color:6600AA;}
 					//zip
 					krsort($v2);
 					$count2=count($v2);
-					echo "
+					$list .= "
 					<td><table align='center'>
 					<tr bgcolor='#FFFF00'><td align='center' colspan='$count2' style='font-weight:bold;'>$k2</td></tr><tr bgcolor='#FF0000'>
 					";
 					foreach($v2 as $k3 => $v3){
 						//rate
 						//krsort($v3);
-						echo "<td valign='top' style='padding-left:0px; padding-right:0px;' align='center'>
+						$list .= "<td valign='top' style='padding-left:0px; padding-right:0px;' align='center'>
 						<table style='border: 1px solid black; border-collapse:collapse;' border='1' align='center'>
 						".row_color2($v3,"#FFFFFF","#CCCCCC")."
 						</table></td>";
 					}
-					echo "
+					$list .= "
 					</td></tr>
 					</table></td>";
 				}
 				"</table></fieldset>
 				</td></tr>";
 			}
-			echo "</table></td></tr>";
+			$list .= "</table></td></tr>";
 		}
 		echo $list;
 	}else{
