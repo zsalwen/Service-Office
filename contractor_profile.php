@@ -164,11 +164,14 @@ function getCounty($zip){
 
 function makeAnchor($i,$key){
 	if ( $i%3 === 0){
-		return "<tr><td><a href='#$key'>Jump to $key</a></td>";
+		return "<tr><td>
+		<a href='#$key'>Jump to $key</a></td>";
     }elseif ( $i%3 === 1) {
-        return "<td><a href='#$key'>Jump to $key</a></td>";
+        return "<td>
+		<a href='#$key'>Jump to $key</a></td>";
     } else {
-        return "<td><a href='#$key'>Jump to $key</a></td></tr>";
+        return "<td>
+		<a href='#$key'>Jump to $key</a></td></tr>";
     }
 }
 
@@ -360,20 +363,20 @@ a:visited{color:6600AA;}
 			foreach($countyList as $k1 => $v1){$i++;
 				//county
 				echo makeAnchor($i,$k1);
-				if($i == $count && (($i%2 === 0) || ($i%3 === 0))){
+				if($i == $count && (($i%3 === 1) || ($i%3 === 0))){
 					echo "</tr>";
 				}
 				$list .= "<tr><td>
 				<fieldset>
 				<legend id='$k1'>$k1</legend>
-				<table align='center'><tr>";
+				<table align='center'><tr><td valign='top'>";
 				ksort($v1);
 				foreach($v1 as $k2 => $v2){
 					//zip
 					krsort($v2);
 					$count2=count($v2);
 					$list .= "
-					<td valign='top'>
+					
 					<table align='center'>
 					<tr bgcolor='#FFFF00'>
 					<td align='center' colspan='$count2' style='font-weight:bold;'>$k2</td>
@@ -387,13 +390,14 @@ a:visited{color:6600AA;}
 						<table style='border: 1px solid black; border-collapse:collapse;' border='1' align='center'>
 						".row_color2($v3,"#FFFFFF","#CCCCCC")."
 						</table>
-						</td>";
+						";
 					}
 					$list .= "
-					</tr>
+					</td></tr>
 					</table></td>";
 				}
-				"</tr></table></fieldset>
+				"</tr></table>
+				</fieldset>
 				</td></tr>";
 			}
 			$list .= "</table></td></tr>";
