@@ -361,10 +361,10 @@ a:visited{color:6600AA;}
 						</table></td>";
 					}
 					$list .= "
-					</td></tr>
+					</tr>
 					</table></td>";
 				}
-				"</table></fieldset>
+				"</tr></table></fieldset>
 				</td></tr>";
 			}
 			$list .= "</table></td></tr>";
