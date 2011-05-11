@@ -315,11 +315,7 @@ a:visited{color:6600AA;}
 		$r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
 		$exclude=" AND server_id <> '$_GET[admin]'";
 		while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){$i2++;
-			if ($d2[circuit_court] != ''){
-				$county=strtoupper($d2[circuit_court]);
-			}else{
-				$county=getCounty($d2["zip1"]);
-			}
+			$county=getCounty($d2["zip1"]);
 			if ($county == "ST MARYS"){
 				$county="SAINT MARYS";
 			}
