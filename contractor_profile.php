@@ -71,6 +71,14 @@ function row_color2($str,$bg1,$bg2){
 	return $return;
 }
 
+function justZip($zip){
+	if (strpos($zip,'-') !== false){
+		$zip=explode('-',$zip);
+		$zip=$zip[0];
+	}
+	return $zip;
+}
+
 if ($_GET[delete]){
 	@mysql_query("UPDATE ps_users SET level='DELETED' where id = '$_GET[delete]'");
 	if ($_COOKIE[psdata][level] != "Operations"){
@@ -259,7 +267,7 @@ table, tr, td, fieldset, legend{padding:0px;}
 			}elseif($county == "PRINCE GEORGE'S"){
 				$county="PRINCE GEORGES";
 			}
-			$zip=$d2[zip1];
+			$zip=justZip($d2[zip1]);
 			$rate=$d2[contractor_rate];
 			if (isset($countyList[$county][$zip][$rate])){
 				$countyList[$county][$zip][$rate] = $countyList[$county][$zip][$rate]."<tr bgcolor='[color]'><td>
@@ -276,7 +284,7 @@ table, tr, td, fieldset, legend{padding:0px;}
 			$r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
 			while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){$i2++;
 				$county=getCounty($d2["zip1$letter"]);
-				$zip=$d2["zip1$letter"];
+				$zip=justZip($d2["zip1$letter"]);
 				$rate=$d2["contractor_rate$letter"];
 				if (isset($countyList[$county][$zip][$rate])){
 					$countyList[$county][$zip][$rate] = $countyList[$county][$zip][$rate]."<tr bgcolor='[color]'><td>
@@ -296,7 +304,7 @@ table, tr, td, fieldset, legend{padding:0px;}
 		$exclude=" AND server_id <> '$_GET[admin]'";
 		while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){$i2++;
 			$county=strtoupper($d2[circuit_court]);
-			$zip=$d2[zip1];
+			$zip=justZip($d2[zip1]);
 			$rate=$d2[contractor_rate];
 			if ($county == "ST MARYS"){
 				$county="SAINT MARYS";
@@ -320,7 +328,7 @@ table, tr, td, fieldset, legend{padding:0px;}
 			if ($county == "ST MARYS"){
 				$county="SAINT MARYS";
 			}
-			$zip=$d2[zip1];
+			$zip=justZip($d2[zip1]);
 			$rate=$d2[contractor_rate];
 			if (isset($countyList[$county][$zip][$rate])){
 				$countyList[$county][$zip][$rate] = $countyList[$county][$zip][$rate]."<tr bgcolor='[color]'><td>
@@ -337,7 +345,7 @@ table, tr, td, fieldset, legend{padding:0px;}
 			$r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
 			while ($d2=mysql_fetch_array($r2, MYSQL_ASSOC)){$i2++;
 				$county=getCounty($d2["zip1$letter"]);
-				$zip=$d2["zip1$letter"];
+				$zip=justZip($d2["zip1$letter"]);
 				$rate=$d2["contractor_rate$letter"];
 				if (isset($countyList[$county][$zip][$rate])){
 					$countyList[$county][$zip][$rate] = $countyList[$county][$zip][$rate]."<tr bgcolor='[color]'><td>
