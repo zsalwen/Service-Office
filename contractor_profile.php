@@ -257,9 +257,13 @@ a:visited{color:6600AA;}
 			$zip=$d2[zip1];
 			$rate=$d2[contractor_rate];
 			if (isset($countyList[$county][$zip][$rate])){
-				$countyList[$county][$zip][$rate] = $countyList[$county][$zip][$rate]."<tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>(OTD$d2[packet_id])</a></td><td>".strtoupper($d2[city1]).", ".strtoupper($d2[state1])."</td><td></td></tr>";
+				$countyList[$county][$zip][$rate] = $countyList[$county][$zip][$rate]."<tr bgcolor='[color]'><td>
+				<a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>(OTD$d2[packet_id])</a>
+				</td><td>".strtoupper($d2[city1]).", ".strtoupper($d2[state1])."</td><td></td></tr>";
 			}else{
-				$countyList[$county][$zip][$rate] = "<tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>(OTD$d2[packet_id])</a></td><td>".strtoupper($d2[city1]).", ".strtoupper($d2[state1])."</td><td>$rate</td></tr>";
+				$countyList[$county][$zip][$rate] = "<tr bgcolor='[color]'><td>
+				<a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>(OTD$d2[packet_id])</a>
+				</td><td>".strtoupper($d2[city1]).", ".strtoupper($d2[state1])."</td><td>$rate</td></tr>";
 			}
 		}
 		foreach(range('a','e') as $letter){
@@ -270,9 +274,13 @@ a:visited{color:6600AA;}
 				$zip=$d2["zip1$letter"];
 				$rate=$d2["contractor_rate$letter"];
 				if (isset($countyList[$county][$zip][$rate])){
-					$countyList[$county][$zip][$rate] = $countyList[$county][$zip][$rate]."<tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>(OTD$d2[packet_id])</a></td><td>".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"])."</td><td></td></tr>";
+					$countyList[$county][$zip][$rate] = $countyList[$county][$zip][$rate]."<tr bgcolor='[color]'><td>
+					<a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>(OTD$d2[packet_id])</a>
+					</td><td>".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"])."</td><td></td></tr>";
 				}else{
-					$countyList[$county][$zip][$rate] = "<tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>(OTD$d2[packet_id])</a></td><td>".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"])."</td><td>$rate</td></tr>";
+					$countyList[$county][$zip][$rate] = "<tr bgcolor='[color]'><td>
+					<a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>(OTD$d2[packet_id])</a>
+					</td><td>".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"])."</td><td>$rate</td></tr>";
 				}
 			}
 			$exclude .= " AND server_id$letter <> '$_GET[admin]'";
@@ -289,9 +297,13 @@ a:visited{color:6600AA;}
 				$county="SAINT MARYS";
 			}
 			if (isset($countyList[$county][$zip][$rate])){
-				$countyList[$county][$zip][$rate] = $countyList[$county][$zip][$rate]."<tr bgcolor='[color]'><td><a href='/ev/order.php?packet=$d2[eviction_id]' target='_blank'>(EV$d2[eviction_id])</a></td><td>".strtoupper($d2[city1]).", ".strtoupper($d2[state1])."</td><td></td></tr>";
+				$countyList[$county][$zip][$rate] = $countyList[$county][$zip][$rate]."<tr bgcolor='[color]'><td>
+				<a href='/ev/order.php?packet=$d2[eviction_id]' target='_blank'>(EV$d2[eviction_id])</a>
+				</td><td>".strtoupper($d2[city1]).", ".strtoupper($d2[state1])."</td><td></td></tr>";
 			}else{
-				$countyList[$county][$zip][$rate] = "<tr bgcolor='[color]'><td><a href='/ev/order.php?packet=$d2[eviction_id]' target='_blank'>(EV$d2[eviction_id])</a></td><td>".strtoupper($d2[city1]).", ".strtoupper($d2[state1])."</td><td>$rate</td></tr>";
+				$countyList[$county][$zip][$rate] = "<tr bgcolor='[color]'><td>
+				<a href='/ev/order.php?packet=$d2[eviction_id]' target='_blank'>(EV$d2[eviction_id])</a>
+				</td><td>".strtoupper($d2[city1]).", ".strtoupper($d2[state1])."</td><td>$rate</td></tr>";
 			}
 		}
 		//standards
@@ -310,9 +322,13 @@ a:visited{color:6600AA;}
 			$zip=$d2[zip1];
 			$rate=$d2[contractor_rate];
 			if (isset($countyList[$county][$zip][$rate])){
-				$countyList[$county][$zip][$rate] = $countyList[$county][$zip][$rate]."<tr bgcolor='[color]'><td><a href='/standard/order.php?packet=$d2[packet_id]' target='_blank'>(S$d2[packet_id])</a></td><td>".strtoupper($d2[city1]).", ".strtoupper($d2[state1])."</td><td></td></tr>";
+				$countyList[$county][$zip][$rate] = $countyList[$county][$zip][$rate]."<tr bgcolor='[color]'><td>
+				<a href='/standard/order.php?packet=$d2[packet_id]' target='_blank'>(S$d2[packet_id])</a>
+				</td><td>".strtoupper($d2[city1]).", ".strtoupper($d2[state1])."</td><td></td></tr>";
 			}else{
-				$countyList[$county][$zip][$rate] = "<tr bgcolor='[color]'><td><a href='/standard/order.php?packet=$d2[packet_id]' target='_blank'>(S$d2[packet_id])</a></td><td>".strtoupper($d2[city1]).", ".strtoupper($d2[state1])."</td><td>$rate</td></tr>";
+				$countyList[$county][$zip][$rate] = "<tr bgcolor='[color]'><td>
+				<a href='/standard/order.php?packet=$d2[packet_id]' target='_blank'>(S$d2[packet_id])</a>
+				</td><td>".strtoupper($d2[city1]).", ".strtoupper($d2[state1])."</td><td>$rate</td></tr>";
 			}
 		}
 		foreach(range('a','e') as $letter){
@@ -323,9 +339,13 @@ a:visited{color:6600AA;}
 				$zip=$d2["zip1$letter"];
 				$rate=$d2["contractor_rate$letter"];
 				if (isset($countyList[$county][$zip][$rate])){
-					$countyList[$county][$zip][$rate] = $countyList[$county][$zip][$rate]."<tr bgcolor='[color]'><td><a href='/standard/order.php?packet=$d2[packet_id]' target='_blank'>(S$d2[packet_id])</a></td><td>".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"])."</td><td></td></tr>";
+					$countyList[$county][$zip][$rate] = $countyList[$county][$zip][$rate]."<tr bgcolor='[color]'><td>
+					<a href='/standard/order.php?packet=$d2[packet_id]' target='_blank'>(S$d2[packet_id])</a>
+					</td><td>".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"])."</td><td></td></tr>";
 				}else{
-					$countyList[$county][$zip][$rate] = "<tr bgcolor='[color]'><td><a href='/standard/order.php?packet=$d2[packet_id]' target='_blank'>(S$d2[packet_id])</a></td><td>".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"])."</td><td>$rate</td></tr>";
+					$countyList[$county][$zip][$rate] = "<tr bgcolor='[color]'><td>
+					<a href='/standard/order.php?packet=$d2[packet_id]' target='_blank'>(S$d2[packet_id])</a>
+					</td><td>".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"])."</td><td>$rate</td></tr>";
 				}
 			}
 			$exclude .= " AND server_id$letter <> '$_GET[admin]'";
@@ -334,23 +354,31 @@ a:visited{color:6600AA;}
 			ksort($countyList);
 			$i=-1;
 			$count=count($countyList);
-			echo "<tr><td align='center'><table align='center'>";
+			echo "<tr>
+			<td align='center'>
+			<table align='center'>";
 			foreach($countyList as $k1 => $v1){$i++;
 				//county
 				echo makeAnchor($i,$k1);
 				if($i == $count && (($i%2 === 0) || ($i%3 === 0))){
 					echo "</tr>";
 				}
-				$list .= "<tr><td colspan='3'>
-				<fieldset><legend id='$k1'>$k1</legend><table align='center'><tr>";
+				$list .= "<tr><td>
+				<fieldset>
+				<legend id='$k1'>$k1</legend>
+				<table align='center'><tr>";
 				ksort($v1);
 				foreach($v1 as $k2 => $v2){
 					//zip
 					krsort($v2);
 					$count2=count($v2);
 					$list .= "
-					<td><table align='center'>
-					<tr bgcolor='#FFFF00'><td align='center' colspan='$count2' style='font-weight:bold;'>$k2</td></tr><tr bgcolor='#FF0000'>
+					<td valign='top'>
+					<table align='center'>
+					<tr bgcolor='#FFFF00'>
+					<td align='center' colspan='$count2' style='font-weight:bold;'>$k2</td>
+					</tr>
+					<tr bgcolor='#FF0000'>
 					";
 					foreach($v2 as $k3 => $v3){
 						//rate
@@ -358,7 +386,8 @@ a:visited{color:6600AA;}
 						$list .= "<td valign='top' style='padding-left:0px; padding-right:0px;' align='center'>
 						<table style='border: 1px solid black; border-collapse:collapse;' border='1' align='center'>
 						".row_color2($v3,"#FFFFFF","#CCCCCC")."
-						</table></td>";
+						</table>
+						</td>";
 					}
 					$list .= "
 					</tr>
