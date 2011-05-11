@@ -267,7 +267,7 @@ a:visited{color:6600AA;}
 			}else{
 				$countyList[$county][$zip][$rate] = "<tr bgcolor='[color]'><td>
 				<a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>(OTD$d2[packet_id])</a>
-				</td><td>".strtoupper($d2[city1]).", ".strtoupper($d2[state1])."</td><td>$rate</td></tr>";
+				</td><td>".strtoupper($d2[city1]).", ".strtoupper($d2[state1])."</td><td>$".$rate."</td></tr>";
 			}
 		}
 		foreach(range('a','e') as $letter){
@@ -284,7 +284,7 @@ a:visited{color:6600AA;}
 				}else{
 					$countyList[$county][$zip][$rate] = "<tr bgcolor='[color]'><td>
 					<a href='/otd/order.php?packet=$d2[packet_id]' target='_blank'>(OTD$d2[packet_id])</a>
-					</td><td>".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"])."</td><td>$rate</td></tr>";
+					</td><td>".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"])."</td><td>$".$rate."</td></tr>";
 				}
 			}
 			$exclude .= " AND server_id$letter <> '$_GET[admin]'";
@@ -307,7 +307,7 @@ a:visited{color:6600AA;}
 			}else{
 				$countyList[$county][$zip][$rate] = "<tr bgcolor='[color]'><td>
 				<a href='/ev/order.php?packet=$d2[eviction_id]' target='_blank'>(EV$d2[eviction_id])</a>
-				</td><td>".strtoupper($d2[city1]).", ".strtoupper($d2[state1])."</td><td>$rate</td></tr>";
+				</td><td>".strtoupper($d2[city1]).", ".strtoupper($d2[state1])."</td><td>$".$rate."</td></tr>";
 			}
 		}
 		//standards
@@ -328,7 +328,7 @@ a:visited{color:6600AA;}
 			}else{
 				$countyList[$county][$zip][$rate] = "<tr bgcolor='[color]'><td>
 				<a href='/standard/order.php?packet=$d2[packet_id]' target='_blank'>(S$d2[packet_id])</a>
-				</td><td>".strtoupper($d2[city1]).", ".strtoupper($d2[state1])."</td><td>$rate</td></tr>";
+				</td><td>".strtoupper($d2[city1]).", ".strtoupper($d2[state1])."</td><td>$".$rate."</td></tr>";
 			}
 		}
 		foreach(range('a','e') as $letter){
@@ -345,7 +345,7 @@ a:visited{color:6600AA;}
 				}else{
 					$countyList[$county][$zip][$rate] = "<tr bgcolor='[color]'><td>
 					<a href='/standard/order.php?packet=$d2[packet_id]' target='_blank'>(S$d2[packet_id])</a>
-					</td><td>".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"])."</td><td>$rate</td></tr>";
+					</td><td>".strtoupper($d2["city1$letter"]).", ".strtoupper($d2["state1$letter"])."</td><td>$".$rate."</td></tr>";
 				}
 			}
 			$exclude .= " AND server_id$letter <> '$_GET[admin]'";
@@ -374,7 +374,6 @@ a:visited{color:6600AA;}
 					krsort($v2);
 					$count2=count($v2);
 					$list .= "
-					
 					<table align='center'>
 					<tr bgcolor='#FFFF00'>
 					<td align='center' colspan='$count2' style='font-weight:bold;'>$k2</td>
@@ -388,10 +387,10 @@ a:visited{color:6600AA;}
 						<table style='border: 1px solid black; border-collapse:collapse;' border='1' align='center'>
 						".row_color2($v3,"#FFFFFF","#CCCCCC")."
 						</table>
-						";
+						</td>";
 					}
 					$list .= "
-					</td></tr>
+					</tr>
 					</table></td>";
 				}
 				"</tr></table>
