@@ -64,7 +64,7 @@ function dayTotal($punch_date,$user_id){
 	}
 	$return=$totalHours.':'.$totalMins;
 	return $return;
-}z
+}
 function noteTotal($user_id,$pay_start,$pay_end){
 	$i=0;
 	$q = "SELECT * FROM MDWestServeTimeClock WHERE user_id = '$user_id' AND punch_date >= '$pay_start' AND punch_date <= '$pay_end' ORDER BY punch_date, punch_time";
