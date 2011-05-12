@@ -384,7 +384,7 @@ table, tr, td, fieldset, legend{padding:0px;}
 					$count3=count($v2);
 					$list .= "
 					<td valign='top'>
-					<table align='center'>
+					<table align='center' border='1'>
 					<tr bgcolor='#FFFF00'>
 					<td align='center' colspan='$count3' style='font-weight:bold;'>$k2</td>
 					</tr>
