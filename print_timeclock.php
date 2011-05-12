@@ -87,7 +87,7 @@ function card($user_id,$pay_start,$pay_end,$name){
 			}
 			if ($mins == 60){
 				$mins=$mins-60;
-				$hours=$hours+1;
+				//$hours=$hours+1;
 			}
 			$totalMins=$totalMins+$mins;
 			//$mins=number_format($rough/60,0);
