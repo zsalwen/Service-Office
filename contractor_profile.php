@@ -374,7 +374,7 @@ table, tr, td, fieldset, legend{padding:0px;}
 					echo "</tr>";
 				}
 				$count2=count($v1);
-				$list .= "<tr><td>
+				$list .= "<tr><td colspan='3'>
 				<div style='width:100%; background-color:FF9900; font-size:22px; text-align:center; font-weight:bold; font-variant:small-caps;' id='$k1'>$k1</div>
 				<table><tr>";
 				ksort($v1);
@@ -393,11 +393,14 @@ table, tr, td, fieldset, legend{padding:0px;}
 					foreach($v2 as $k3 => $v3){
 						//rate
 						//krsort($v3);
-						$list .= "<td valign='top' style='padding-left:0px; padding-right:0px;' align='center'>
+						$list .= "
+						
+						<td></td>";
+						/*$list .= "<td valign='top' style='padding-left:0px; padding-right:0px;' align='center'>
 						<table style='border: 1px solid black; border-collapse:collapse;' border='1' align='center'>
 						".row_color2($v3,"#FFFFFF","#CCCCCC")."
 						</table>
-						</td>";
+						</td>";*/
 					}
 					$list .= "
 					</tr>
