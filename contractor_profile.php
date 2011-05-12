@@ -375,7 +375,6 @@ table, tr, td, fieldset, legend{padding:0px;}
 				}
 				$count2=count($v1);
 				$list .= "<tr><td colspan='$count2'>
-				<fieldset>
 				<div style='width:100%; background-color:FF9900; font-size:22px; text-align:center; font-weight:bold; font-variant:small-caps;' id='$k1'>$k1</div>
 				<table><tr>";
 				ksort($v1);
