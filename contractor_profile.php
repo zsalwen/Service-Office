@@ -374,7 +374,8 @@ table, tr, td, fieldset, legend{padding:0px;}
 					echo "</tr>";
 				}
 				$count2=count($v1);
-				$list .= "</table><table align='center' border='1'><tr><td>
+				echo "</table>";
+				$list .= "<table align='center' border='1'><tr><td>
 				<table align='left'><tr><td colspan='$count2'>
 				<div style='background-color:FF9900; font-size:22px; padding-left:20px; font-weight:bold; font-variant:small-caps;' id='$k1'>$k1</div>
 				</td></tr><tr>";
@@ -410,7 +411,12 @@ table, tr, td, fieldset, legend{padding:0px;}
 			}
 			$list .= "</table></td></tr>";
 		}
-		echo $list;
+		echo "
+		
+		
+		
+		
+		".$list;
 	}else{
 		$i=-1;
 		$q2="SELECT DISTINCT packet_id, city1, state1, zip1, ps_pay.contractor_rate from ps_packets, ps_pay WHERE server_id='$_GET[admin]' AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD' ORDER BY packet_id DESC";
