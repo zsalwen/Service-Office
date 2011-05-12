@@ -63,7 +63,7 @@ if($_GET[affidavit] || $_POST[affidavit]){
 			$myFile = "$_GET[affidavit]";
 		}
 		$fullPath="/data/service/templates/".$myFile;
-		$fh = fopen($fullPath, 'w') or die("can't open file");
+		$fh = fopen($fullPath, 'w') or die("can't open file: [$fullPath]");
 		fwrite($fh, $whiteboard);
 		fclose($fh);
 		$saved=1;
