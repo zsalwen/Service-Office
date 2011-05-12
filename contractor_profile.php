@@ -374,7 +374,7 @@ table, tr, td, fieldset, legend{padding:0px;}
 					echo "</tr>";
 				}
 				$count2=count($v1);
-				$list .= "</table><table align='center'><tr><td>
+				$list .= "</table><table align='center' border='1'><tr><td>
 				<table align='left'><tr><td colspan='$count2'>
 				<div style='background-color:FF9900; font-size:22px; padding-left:20px; font-weight:bold; font-variant:small-caps;' id='$k1'>$k1</div>
 				</td></tr><tr>";
