@@ -66,7 +66,10 @@ if($_GET[affidavit] || $_POST[affidavit]){
 		$fh = fopen($fullPath, 'w') or die("can't open file: [$fullPath]");
 		fwrite($fh, $whiteboard);
 		fclose($fh);
-		system('rsync -az /data/service/templates mdws2.mdwestserve.com:/data/service/templates',$retval);
+		$last_line=system('rsync -az /data/service/templates mdws2.mdwestserve.com:/data/service/templates',$retval);
+		if ($retval || $last_line){
+			echo "<h1>RET: $retval<br>LAST: $last_line</h1>";
+		}
 		$saved=1;
 	}
 	if ($_GET[edit] && !$saved){
