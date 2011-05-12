@@ -365,14 +365,16 @@ table, tr, td, fieldset, legend{padding:0px;}
 			$count=count($countyList)-1;
 			echo "<tr>
 			<td align='center'>
-			<table align='center'>";
+			<table align='center'><tr><td>";
 			foreach($countyList as $k1 => $v1){$i++;
 				//county
+				echo "<table>";
 				echo "
 				".makeAnchor($i,$k1);
 				if($i == $count && (($i%3 === 1) || ($i%3 === 0))){
 					echo "</tr>";
 				}
+				echo "</table></td></tr>";
 				$count2=count($v1);
 				$list .= "<tr><td colspan='3'>
 				<div style='width:100%; background-color:FF9900; font-size:22px; text-align:center; font-weight:bold; font-variant:small-caps;' id='$k1'>$k1</div>
