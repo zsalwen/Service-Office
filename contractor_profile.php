@@ -405,7 +405,7 @@ table, tr, td, fieldset, legend{padding:0px;}
 					</table>
 					</td>";
 				}
-				"</tr></table>
+				"</tr></table><br>
 				";
 			}
 			$list .= "</td></tr>";
