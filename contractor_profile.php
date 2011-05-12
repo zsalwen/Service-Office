@@ -377,24 +377,31 @@ table, tr, td, fieldset, legend{padding:0px;}
 				$list .= "<tr><td colspan='$count2'>
 				<fieldset>
 				<legend id='$k1'>$k1</legend>
-				<div style='background-color:#FF0000;'>";
+				<div>";
 				ksort($v1);
 				foreach($v1 as $k2 => $v2){
 					//zip
 					krsort($v2);
 					$count3=count($v2);
 					$list .= "
-					<span align='center' colspan='$count3' style='font-weight:bold; text-align:center; width:100%; background-color:#FFFF00;'>$k2</span>
+					<table align='center'>
+					<tr bgcolor='#FFFF00'>
+					<td align='center' colspan='$count3' style='font-weight:bold;'>$k2</td>
+					</tr>
+					<tr bgcolor='#FF0000'>
 					";
 					foreach($v2 as $k3 => $v3){
 						//rate
 						//krsort($v3);
-						$list .= "
+						$list .= "<td valign='top' style='padding-left:0px; padding-right:0px;' align='center'>
 						<table style='border: 1px solid black; border-collapse:collapse;' border='1' align='center'>
 						".row_color2($v3,"#FFFFFF","#CCCCCC")."
 						</table>
-						";
+						</td>";
 					}
+					$list .= "
+					</tr>
+					</table>";
 				}
 				"</div>
 				</fieldset>
