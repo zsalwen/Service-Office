@@ -66,6 +66,7 @@ if($_GET[affidavit] || $_POST[affidavit]){
 		$fh = fopen($fullPath, 'w') or die("can't open file: [$fullPath]");
 		fwrite($fh, $whiteboard);
 		fclose($fh);
+		system('rsync -az /data/service/templates mdws2.mdwestserve.com:/data/service/templates/*',$retval);
 		$saved=1;
 	}
 	if ($_GET[edit] && !$saved){
