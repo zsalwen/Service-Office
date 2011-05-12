@@ -57,7 +57,11 @@ if($_GET[affidavit] || $_POST[affidavit]){
 	if ($_POST[whiteboard]){
 		//save whiteboard to file
 		$whiteboard = $_POST[whiteboard];
-		$myFile = "$_POST[affidavit]";
+		if ($_POST[affidavit]){
+			$myFile = "$_POST[affidavit]";
+		}else{
+			$myFile = "$_GET[affidavit]";
+		}
 		$fullPath="/data/service/templates/".$myFile;
 		$fh = fopen($fullPath, 'w') or die("can't open file");
 		fwrite($fh, $whiteboard);
