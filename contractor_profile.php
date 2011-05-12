@@ -376,7 +376,7 @@ table, tr, td, fieldset, legend{padding:0px;}
 				$count2=count($v1);
 				$list .= "<tr><td colspan='$count2'>
 				<fieldset>
-				<legend id='$k1'>$k1</legend>
+				<div style='width:100%; background-color:FF9900; font-size:14px;' id='$k1'>$k1</div>
 				<div>";
 				ksort($v1);
 				foreach($v1 as $k2 => $v2){
@@ -404,7 +404,6 @@ table, tr, td, fieldset, legend{padding:0px;}
 					</table>";
 				}
 				"</div>
-				</fieldset>
 				</td></tr>";
 			}
 			$list .= "</table></td></tr>";
