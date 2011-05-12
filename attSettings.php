@@ -111,6 +111,10 @@ $d = mysql_fetch_array($r, MYSQL_ASSOC);
         <td><input name="display_name" size="100" value=""></td>
     </tr>
 	<tr>
+    	<td>Full Name</td>
+        <td><input name="full_name" size="100" value=""></td>
+    </tr>
+	<tr>
     	<td>Process Server Plaintiff</td>
         <td><input name="ps_plaintiff" size="100" value=""> Seperate with Hyphen <em>(ALL CAPS)</em></td>
     </tr>
