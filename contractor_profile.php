@@ -410,7 +410,7 @@ table, tr, td, fieldset, legend{padding:0px;}
 			}
 			$list .= "</table></td></tr>";
 		}
-		echo "</table><table align='left' border='1'>
+		echo "</table><table align='left'>
 		
 		
 		
