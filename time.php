@@ -62,7 +62,12 @@ function dayTotal($punch_date,$user_id){
 	while ($totalMins >= 60){
 		$totalMins=$totalMins-60;
 	}
-	$return=$totalHours.':'.$totalMins;
+	if ($totalHours > 0){
+		$return="<b>$totalHours hours</b> ";
+	}
+	if ($totalMins > 0){
+		$return .= "<b>$totalMins mins</b>";
+	}
 	return $return;
 }
 function noteTotal($user_id,$pay_start,$pay_end){
@@ -102,7 +107,7 @@ function card($user_id,$pay_start,$pay_end,$name){
 			$hours=floor($rough/3600);
 			$mins=number_format($rough/60,0);
 			if ($d[punch_id] == $d1[punch_id]){
-				$disp="<br><i>DAY'S TOTAL: ".dayTotal($d[punch_date],$user_id)."</i>";
+				$disp=dayTotal($d[punch_date],$_COOKIE[psdata][user_id]);
 			}else{
 				$disp="";
 			}
@@ -124,13 +129,14 @@ function card($user_id,$pay_start,$pay_end,$name){
 		}else{
 			$hours = '';
 			$mins = '';
+			$disp='';
 		}
 	?>
 		<tr>
 			<td style="text-align:center; border-top:solid; border-top-width:1px;"><?=$i?></td>
 			<td style="text-align:left; border-top:solid; border-top-width:1px; padding-left:50px;" width="40%"><?=$d[punch_date_f];?></td>
 			<td style="text-align:center; border-top:solid; border-top-width:1px;" width="30%"><?=$d[punch_time_f];?></td>
-			<td style="text-align:left; border-top:solid; border-top-width:1px;font-variant:small-caps" width="30%"><?=strtoupper($d[action]);?> <?=$hours.' '.$mins;?></td>
+			<td style="text-align:left; border-top:solid; border-top-width:1px;font-variant:small-caps" width="30%"><?=strtoupper($d[action]);?> <?=$disp;?></td>
 		</tr>
 	<? }
 	while ($totalMins >= 60){
