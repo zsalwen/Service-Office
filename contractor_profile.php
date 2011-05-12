@@ -376,14 +376,15 @@ table, tr, td, fieldset, legend{padding:0px;}
 				$count2=count($v1);
 				$list .= "<tr><td colspan='$count2'>
 				<fieldset>
-				<div style='width:100%; background-color:FF9900; font-size:16px; text-align:center; font-weight:bold; height:30px;' id='$k1'>$k1</div>
-				<div>";
+				<div style='width:100%; background-color:FF9900; font-size:22px; text-align:center; font-weight:bold; font-variant:small-caps;' id='$k1'>$k1</div>
+				<table><tr>";
 				ksort($v1);
 				foreach($v1 as $k2 => $v2){
 					//zip
 					krsort($v2);
 					$count3=count($v2);
 					$list .= "
+					<td valign='top'>
 					<table align='center'>
 					<tr bgcolor='#FFFF00'>
 					<td align='center' colspan='$count3' style='font-weight:bold;'>$k2</td>
@@ -401,9 +402,10 @@ table, tr, td, fieldset, legend{padding:0px;}
 					}
 					$list .= "
 					</tr>
-					</table>";
+					</table>
+					</td>";
 				}
-				"</div>
+				"</tr></table>
 				</td></tr>";
 			}
 			$list .= "</table></td></tr>";
