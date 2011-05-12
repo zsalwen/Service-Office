@@ -364,7 +364,7 @@ table, tr, td, fieldset, legend{padding:0px;}
 			$i=-1;
 			$count=count($countyList)-1;
 			echo "<tr>
-			<td align='center'>
+			<td align='left'>
 			<table align='center'>";
 			foreach($countyList as $k1 => $v1){$i++;
 				//county
@@ -376,7 +376,7 @@ table, tr, td, fieldset, legend{padding:0px;}
 				$count2=count($v1);
 				$list .= "</table><table align='center'><tr><td colspan='3'>
 				<div style='width:100%; background-color:FF9900; font-size:22px; text-align:center; font-weight:bold; font-variant:small-caps;' id='$k1'>$k1</div>
-				<table><tr>";
+				<table align='left'><tr>";
 				ksort($v1);
 				foreach($v1 as $k2 => $v2){
 					//zip
@@ -393,14 +393,11 @@ table, tr, td, fieldset, legend{padding:0px;}
 					foreach($v2 as $k3 => $v3){
 						//rate
 						//krsort($v3);
-						$list .= "
-						
-						<td></td>";
-						/*$list .= "<td valign='top' style='padding-left:0px; padding-right:0px;' align='center'>
+						$list .= "<td valign='top' style='padding-left:0px; padding-right:0px;' align='center'>
 						<table style='border: 1px solid black; border-collapse:collapse;' border='1' align='center'>
 						".row_color2($v3,"#FFFFFF","#CCCCCC")."
 						</table>
-						</td>";*/
+						</td>";
 					}
 					$list .= "
 					</tr>
