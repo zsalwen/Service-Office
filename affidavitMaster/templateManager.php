@@ -87,7 +87,7 @@ if($_GET[affidavit] || $_POST[affidavit]){
 		<?
 	}else{ ?>
 		<div align="right">
-		<form><center><input type="hidden" name="affidavit" value="<?=$_GET[name]?>"><input name="edit" value="Edit Template" style="font-size:24px; color:#006666;" type="submit"></form></div>
+		<form method='get'><center><input type="hidden" name="affidavit" value="<?=$_GET[name]?>"><input name="edit" value="Edit Template" style="font-size:24px; color:#006666;" type="submit"></form></div>
 		<div style='width:800px;'><?=stripslashes($whiteboard)?></div>
 		<hr>
 		<p align=right><a href="templateManager.php">RETURN TO TEMPLATE LIST</a></p></center>
