@@ -377,7 +377,7 @@ table, tr, td, fieldset, legend{padding:0px;}
 				$list .= "</table><table align='center'><tr><td>
 				<table align='left'><tr><td colspan='$count2'>
 				<div style='background-color:FF9900; font-size:22px; padding-left:20px; font-weight:bold; font-variant:small-caps;' id='$k1'>$k1</div>
-				</td></tr><tr><td>";
+				</td></tr><tr>";
 				ksort($v1);
 				foreach($v1 as $k2 => $v2){
 					//zip
