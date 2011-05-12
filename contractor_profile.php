@@ -364,8 +364,8 @@ table, tr, td, fieldset, legend{padding:0px;}
 			$i=-1;
 			$count=count($countyList)-1;
 			echo "<tr>
-			<td align='left'>
-			<table align='center'>";
+			<td>
+			<table>";
 			foreach($countyList as $k1 => $v1){$i++;
 				//county
 				echo "
