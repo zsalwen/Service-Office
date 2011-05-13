@@ -67,7 +67,7 @@ if($_GET[affidavit] || $_POST[affidavit]){
 		$fh = fopen($fullPath, 'w') or die("can't open file: [$fullPath]");
 		fwrite($fh, $whiteboard);
 		fclose($fh);
-		$cmd="sudo rsync -z /data/service/templates/* mdws2.mdwestserve.com:/data/service/templates;"
+		$cmd="sudo rsync -z /data/service/templates/* mdws2.mdwestserve.com:/data/service/templates;";
 		$cmd2="ssh mdws2.mdwestserve.com ssh 10.0.0.2 chown root:root /data/service/templates &;
 		ssh mdws2.mdwestserve.com ssh 10.0.0.2 chmod 777 /data/service/templates &;";
 		$last_line = system($cmd,$retval);
