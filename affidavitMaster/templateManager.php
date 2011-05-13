@@ -67,17 +67,17 @@ if($_GET[affidavit] || $_POST[affidavit]){
 		$fh = fopen($fullPath, 'w') or die("can't open file: [$fullPath]");
 		fwrite($fh, $whiteboard);
 		fclose($fh);
-		$cmd="sudo rsync -z /data/service/templates/* mdws2.mdwestserve.com:/data/service/templates;";
-		$cmd2="ssh root@mdws2.mdwestserve.com ssh root@10.0.0.2 chown -R root:root /data/service/templates&;
-		ssh root@mdws2.mdwestserve.com ssh root@10.0.0.2 chmod -R 777 /data/service/templates&;";
+		$cmd="/data/service/syncTemplates.sh";
 		$last_line = system($cmd,$retval);
 		if ($retval || $last_line){
 			echo "<h3>CMD: $cmd<br>RET: $retval<br>LAST: $last_line</h3>";
 		}
-		$last_line2 = system($cmd2,$retval2);
+		/*$cmd2="ssh root@mdws2.mdwestserve.com ssh root@10.0.0.2 chown -R root:root /data/service/templates&;
+		ssh root@mdws2.mdwestserve.com ssh root@10.0.0.2 chmod -R 777 /data/service/templates&;";*/
+		/*$last_line2 = system($cmd2,$retval2);
 		if ($retval2 || $last_line2){
 			echo "<h3>CMD: $cmd2<br>RET: $retval2<br>LAST: $last_line2</h3>";
-		}
+		}*/
 		$saved=1;
 	}
 	if ($_GET[edit] && !$saved){
