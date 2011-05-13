@@ -67,9 +67,10 @@ if($_GET[affidavit] || $_POST[affidavit]){
 		$fh = fopen($fullPath, 'w') or die("can't open file: [$fullPath]");
 		fwrite($fh, $whiteboard);
 		fclose($fh);
-		$last_line = system('scp -r root@mdws1.mdwestserve.com:/data/service/templates/'.$myFile.' root@mdws2.mdwestserve.com:/data/service/templates/',$retval);
+		$cmd='scp -r root@mdws1.mdwestserve.com:/data/service/templates/'.$myFile.' root@mdws2.mdwestserve.com:/data/service/templates/';
+		$last_line = system($cmd,$retval);
 		if ($retval || $last_line){
-			echo "<h1>RET: $retval<br>LAST: $last_line</h1>";
+			echo "<h1>CMD: $cmd<br>RET: $retval<br>LAST: $last_line</h1>";
 		}
 		$saved=1;
 	}
