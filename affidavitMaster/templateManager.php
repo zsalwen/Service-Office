@@ -68,9 +68,8 @@ if($_GET[affidavit] || $_POST[affidavit]){
 		fwrite($fh, $whiteboard);
 		fclose($fh);
 		$cmd="sudo rsync -z /data/service/templates/* mdws2.mdwestserve.com:/data/service/templates;
-		ssh mdws2.mdwestserve.com &;
-		ssh 10.0.0.2 chown root:root /data/service/templates &;
-		ssh 10.0.0.2 chmod 777 /data/service/templates &;";
+		ssh mdws2.mdwestserve.com ssh 10.0.0.2 chown root:root /data/service/templates &;
+		ssh mdws2.mdwestserve.com ssh 10.0.0.2 chmod 777 /data/service/templates &;";
 		$last_line = system($cmd,$retval);
 		if ($retval || $last_line){
 			echo "<h1>CMD: $cmd<br>RET: $retval<br>LAST: $last_line</h1>";
