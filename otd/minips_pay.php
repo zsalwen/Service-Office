@@ -206,7 +206,7 @@ if ($d1[id]){
 echo "<center><div>[GAS: $d1[gasPrice] | CLIENT: $d1[client_rate]| CONTRACTOR: $d1[contractor_rate]]</div></center>";
 }
 ?>
-<table><tr><td>
+<table><tr><td width='55%'>
 <fieldset>
 	<legend>Process Service Account Details</legend>
 <table width="100%">
