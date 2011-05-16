@@ -396,7 +396,8 @@ function serviceSheet($packet){
 	<? }
 	} 
 	if (trim($d[accountingNotes]) != ''){
-		echo "<table width='100%' align='center' border='1' style='border-collapse:collapse;'><tr><td align='center'><b>ACCOUNTING NOTES</b><br>".strtoupper(stripslashes($d[accountingNotes]))."</td></tr></table>";
+		echo "<table width='100%' align='center' border='1' style='border-collapse:collapse;'><tr><td align='center'><b>ACCOUNTING NOTES</b><br>".strtoupper(stripslashes($d[accountingNotes]))."</td></tr>
+		<tr><td align='center'><small>$d[name1]-$d[address1], $d[city1] $d[zip1]</small></td></tr></table>";
 	}
 	?>
 	</td></tr></table>
