@@ -114,7 +114,7 @@ if($_GET[affidavit] || $_POST[affidavit]){
             $list[$file] = "<option>$file</option>";
 		}
     }
-	sort ($list);
+	ksort ($list);
 	foreach ($list as $key => $value){
 		echo $value;
 	}
