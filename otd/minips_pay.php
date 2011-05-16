@@ -180,8 +180,8 @@ fieldset { background-color:#FFFFFF;  border:solid 1px #000000;}
 .altset { background-color:#FFFFFF;  border:solid 1px #000000;}
 .altset2 { background-color:#FFFFFF;  border:solid 1px #000000;}
 legend, input, select { padding:0px; background-color:#FFFFCC; border:solid 1px #000000;}
-td { font-variant:small-caps }
-table {padding: 0px;}
+td { font-variant:small-caps; padding:0px; }
+body, table {padding:0px;}
 .P {background-color:green;}
 .F {background-color:green;}
 .R {background-color:red;}

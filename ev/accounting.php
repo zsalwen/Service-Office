@@ -144,7 +144,8 @@ fieldset { background-color:#FFFFFF;  border:solid 1px #000000;}
 .altset { background-color:#FFFFFF;  border:solid 1px #000000;}
 .altset2 { background-color:#FFFFFF;  border:solid 1px #000000;}
 legend, input, select { padding:0px; background-color:#FFFFCC; border:solid 1px #000000;}
-td { font-variant:small-caps }
+td { font-variant:small-caps; padding:0px; }
+body, table {padding:0px;}
 </style>
 <form id="acc" name="acc" method="post">
 <input type="hidden" name="id" value="<?=$_GET[id]?>" />
