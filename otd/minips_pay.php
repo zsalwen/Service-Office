@@ -270,7 +270,13 @@ if ($list != ''){
 ?>
 
 </fieldset>    
-
+</td><td rowspan='3' valign='top'>
+<? if ($data[attorneys_id] == 1){ ?>
+<fieldset>
+<legend>Invoice Header</legend>
+<center><div style='font-weight:bold; text-align:left;'><?=strtoupper($data[name1])?><br><?=strtoupper($data[address1])?><br><?=strtoupper($data[city1])?>, <?=strtoupper($data[state1])?> <?=strtoupper($data[zip1])?></div></center>
+</fieldset>
+<? } ?>
 </td></tr><tr><td valign="top">
 <fieldset>
 	<legend>Client Accounting Details</legend>
@@ -340,14 +346,7 @@ if ($list != ''){
 	</tr>
 </table>
 
-</fieldset>    
-</td><td rowspan='3' valign='top'>
-<? if ($data[attorneys_id] == 1){ ?>
-<fieldset>
-<legend>Invoice Header</legend>
-<center><div style='font-weight:bold; text-align:left;'><?=strtoupper($data[name1])?><br><?=strtoupper($data[address1])?><br><?=strtoupper($data[city1])?>, <?=strtoupper($data[state1])?> <?=strtoupper($data[zip1])?></div></center>
 </fieldset>
-<? } ?>
 </td></tr><tr><td>
 <fieldset>
 <legend>Occupant Notices</legend>
