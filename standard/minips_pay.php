@@ -246,7 +246,7 @@ if ($d1[id]){
 <? if ($data[attorneys_id] == 1){ ?>
 <fieldset>
 <legend>Invoice Header</legend>
-<center><div style='font-weight:bold; text-align:left;'><?=strtoupper($data[name1])?><br><?=strtoupper($data[address1])?><br><?=strtoupper($data[city1])?>, <?=strtoupper($data[state1])?> <?=strtoupper($data[zip1])?></div></center>
+<div style='text-align:left;'><?=strtoupper($data[name1])?><br><?=strtoupper($data[address1])?><br><?=strtoupper($data[city1])?>, <?=strtoupper($data[state1])?> <?=strtoupper($data[zip1])?></div>
 </fieldset>
 <? } ?>
 </td></tr><tr><td valign="top">

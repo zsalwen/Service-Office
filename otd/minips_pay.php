@@ -176,9 +176,9 @@ document.title = "Accounting #<?=$data[packet_id];?>";
 </script>
 <body bgcolor="#99CCFF">
 <style>
-fieldset { background-color:#FFFFFF;  border:solid 1px #000000;}
-.altset { background-color:#FFFFFF;  border:solid 1px #000000;}
-.altset2 { background-color:#FFFFFF;  border:solid 1px #000000;}
+fieldset { background-color:#FFFFFF;  border:solid 1px #000000; padding:0px;}
+.altset { background-color:#FFFFFF;  border:solid 1px #000000; padding:0px;}
+.altset2 { background-color:#FFFFFF;  border:solid 1px #000000; padding:0px;}
 legend, input, select { padding:0px; background-color:#FFFFCC; border:solid 1px #000000;}
 td { font-variant:small-caps; padding:0px; }
 body, table {padding:0px;}
@@ -274,7 +274,7 @@ if ($list != ''){
 <? if ($data[attorneys_id] == 1){ ?>
 <fieldset>
 <legend>Invoice Header</legend>
-<center><div style='font-weight:bold; text-align:left;'><?=strtoupper($data[name1])?><br><?=strtoupper($data[address1])?><br><?=strtoupper($data[city1])?>, <?=strtoupper($data[state1])?> <?=strtoupper($data[zip1])?></div></center>
+<div style='text-align:left;'><?=strtoupper($data[name1])?><br><?=strtoupper($data[address1])?><br><?=strtoupper($data[city1])?>, <?=strtoupper($data[state1])?> <?=strtoupper($data[zip1])?></div>
 </fieldset>
 <? } ?>
 </td></tr><tr><td valign="top">
