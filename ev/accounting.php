@@ -263,6 +263,13 @@ if ($list != ''){
 </table>
 
 </fieldset>    
+</td><td rowspan='3'>
+<? if ($data[attorneys_id] == 1){ ?>
+<fieldset>
+<legend>Invoice Header</legend>
+<center><div style='font-weight:bold; text-align:left;'><?=strtoupper($d[name1])?><br><?=strtoupper($d[address1])?><br><?=strtoupper($d[city1])?>, <?=strtoupper($d[state1])?> <?=strtoupper($d[zip1])?></div></center>
+</fieldset>
+<? } ?>
 </td></tr><tr><td>
 <fieldset>
 <legend>Occupant Notices</legend>
@@ -281,7 +288,7 @@ if ($notices != ''){
 ?>
 </table>
 </fieldset>
-</td></tr><td><tr>
+</td></tr><tr><td colspan='3'>
 
 
 <table><tr>

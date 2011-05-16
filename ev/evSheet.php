@@ -376,9 +376,11 @@ function evSheet($eviction){
 			<td><?=$d[circuit_court]?></td>
 			<td><?=$d[case_no]?></td>
 		</tr>
-		<tr>
+		<? if ($d[attorneys_id] == 1){?>
+		<tr style='border-top: 1px solid black;'>
 			<td align='center' colspan=5' style='font-weight:bold;'><small><?=strtoupper($d[name1])?> - <?=strtoupper($d[address1])?>, <?=strtoupper($d[city1])?>, <?=strtoupper($d[state1])?> <?=strtoupper($d[zip1])?></small></td>
 		</tr>
+		<? } ?>
 	</table>
 	</fieldset>
 	</td></tr></table>
