@@ -377,7 +377,7 @@ function evSheet($eviction){
 			<td><?=$d[case_no]?></td>
 		</tr>
 		<tr>
-			<td align='center' colspan=5'><small><?=strtoupper($d[name1])?>-<?=strtoupper($d[address1])?>, <?=strtoupper($d[city1])?>, <?=strtoupper($d[state1])?> <?=strtoupper($d[zip1])?></small></td>
+			<td align='center' colspan=5' style='font-weight:bold;'><small><?=strtoupper($d[name1])?>-<?=strtoupper($d[address1])?>, <?=strtoupper($d[city1])?>, <?=strtoupper($d[state1])?> <?=strtoupper($d[zip1])?></small></td>
 		</tr>
 	</table>
 	</fieldset>
