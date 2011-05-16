@@ -408,12 +408,12 @@ function serviceSheet($packet){
 			<td><?=$d[circuit_court]?></td>
 			<td><?=$d[case_no]?></td>
 		</tr>
-		<? if ($d[attorneys_id] == 1){?>
-		<tr>
-			<td align='center' colspan=5' style='font-weight:bold; border-top:1px solid black;'><small><?=strtoupper($d[name1])?> - <?=strtoupper($d[address1])?>, <?=strtoupper($d[city1])?>, <?=strtoupper($d[state1])?> <?=strtoupper($d[zip1])?></small></td>
-		</tr>
-		<? } ?>
 	</table>
+	<? if ($d[attorneys_id] == 1){?>
+		<table width="100%" align="center" cellspacing="0" border="1"><tr>
+			<td align='center' colspan=5' style='font-weight:bold; border-top:1px solid black;'><small><?=strtoupper($d[name1])?> - <?=strtoupper($d[address1])?>, <?=strtoupper($d[city1])?>, <?=strtoupper($d[state1])?> <?=strtoupper($d[zip1])?></small></td>
+		</tr></table>
+	<? } ?>
 	</td></tr></table>
 <?
 	$html = ob_get_clean();
