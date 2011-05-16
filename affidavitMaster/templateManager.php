@@ -111,9 +111,13 @@ if($_GET[affidavit] || $_POST[affidavit]){
     $handler = opendir($directory);
     while ($file = readdir($handler)) {
         if ($file != '.' && $file != '..' && $file != 'CVS'){
-            echo "<option>$file</option>";
+            $list[$file] = "<option>$file</option>";
 		}
     }
+	sort ($list);
+	foreach ($list as $key => $value){
+		echo $value;
+	}
     closedir($handler); 
 	?>
 	</select> <input type='submit' value='GO!' name='edit'> OR <a href="templateManager.php?create=1">Create New Template</a></td></tr></table></form></center>
