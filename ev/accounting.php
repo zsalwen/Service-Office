@@ -263,11 +263,11 @@ if ($list != ''){
 </table>
 
 </fieldset>    
-</td><td rowspan='3'>
+</td><td rowspan='3' valign='top'>
 <? if ($data[attorneys_id] == 1){ ?>
 <fieldset>
 <legend>Invoice Header</legend>
-<center><div style='font-weight:bold; text-align:left;'><?=strtoupper($d[name1])?><br><?=strtoupper($d[address1])?><br><?=strtoupper($d[city1])?>, <?=strtoupper($d[state1])?> <?=strtoupper($d[zip1])?></div></center>
+<center><div style='font-weight:bold; text-align:left;'><?=strtoupper($data[name1])?><br><?=strtoupper($data[address1])?><br><?=strtoupper($data[city1])?>, <?=strtoupper($data[state1])?> <?=strtoupper($data[zip1])?></div></center>
 </fieldset>
 <? } ?>
 </td></tr><tr><td>
@@ -288,7 +288,7 @@ if ($notices != ''){
 ?>
 </table>
 </fieldset>
-</td></tr><tr><td colspan='3'>
+</td></tr><tr><td colspan='2'>
 
 
 <table><tr>
