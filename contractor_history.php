@@ -66,35 +66,39 @@ if ($_GET[city]){
 	echo "<table align='center' border='1' style='border-collapse:collapse;'><tr><td align='center' colspan='3'>PREVIOUS SERVES IN $search, IN THE COUNTY OF $county</td></tr>";
 	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 	while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
-		if ((strpos($d["$field"],$search) !== false) || (strpos($search,$d["$field"]) !== false)){
-			if($d[server_id] != '' && $d[contractor_rate] != ''  && $d[contractor_rate] != '0'){
-				$server=$d[server_id];
-				$rate=$d[contractor_rate];
-				$zip=$d[zip1];
-				if (isset($serverList[$zip][$server][$rate])){
-					//continue rate list
-					$serverList[$zip][$server][$rate] = $serverList[$zip][$server][$rate]."
-					<tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td></td></tr>";
-				}else{
-					//start rate list
-					$serverList[$zip][$server][$rate] = "<tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
-				}
-			}
-		}
-		foreach(range('a','e') as $letter){$i++;
-			$var=$field.$letter;
-			if ((strpos($d["$var"],$search) !== false) || (strpos($search,$d["$var"]) !== false)){
-				if($d["server_id$letter"] != '' && $d["contractor_rate$letter"] != '' && $d["contractor_rate$letter"] != '0'){
-					$zip=$d["zip1$letter"];
-					$server=$d["server_id$letter"];
-					$rate=$d["contractor_rate$letter"];
+		if ($d["$field"] != ''){
+			if ((strpos($d["$field"],$search) !== false) || (strpos($search,$d["$field"]) !== false)){
+				if($d[server_id] != '' && $d[contractor_rate] != ''  && $d[contractor_rate] != '0'){
+					$server=$d[server_id];
+					$rate=$d[contractor_rate];
+					$zip=$d[zip1];
 					if (isset($serverList[$zip][$server][$rate])){
 						//continue rate list
 						$serverList[$zip][$server][$rate] = $serverList[$zip][$server][$rate]."
 						<tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td></td></tr>";
 					}else{
 						//start rate list
-						$serverList[$zip][$server][$rate] = "<tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
+						$serverList[$zip][$server][$rate] = "<tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
+					}
+				}
+			}
+		}
+		foreach(range('a','e') as $letter){$i++;
+			$var=$field.$letter;
+			if ($d["$var"] != ''){
+				if ((strpos($d["$var"],$search) !== false) || (strpos($search,$d["$var"]) !== false)){
+					if($d["server_id$letter"] != '' && $d["contractor_rate$letter"] != '' && $d["contractor_rate$letter"] != '0'){
+						$zip=$d["zip1$letter"];
+						$server=$d["server_id$letter"];
+						$rate=$d["contractor_rate$letter"];
+						if (isset($serverList[$zip][$server][$rate])){
+							//continue rate list
+							$serverList[$zip][$server][$rate] = $serverList[$zip][$server][$rate]."
+							<tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td></td></tr>";
+						}else{
+							//start rate list
+							$serverList[$zip][$server][$rate] = "<tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
+						}
 					}
 				}
 			}
