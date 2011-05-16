@@ -67,12 +67,12 @@ if($_GET[affidavit] || $_POST[affidavit]){
 		$fh = fopen($fullPath, 'w') or die("can't open file: [$fullPath]");
 		fwrite($fh, $whiteboard);
 		fclose($fh);
-		$cmd="/data/service/syncTemplates.sh";
+		/*$cmd="/data/service/syncTemplates.sh";
 		//$cmd='ssh root@mdws2.mdwestserve.com ssh root@10.0.0.2 /root/templates.sh';
 		$last_line = system($cmd,$retval);
-		//if ($retval || $last_line){
+		if ($retval || $last_line){
 			echo "<h3>CMD: $cmd<br>RET: $retval<br>LAST: $last_line</h3>";
-		//}
+		}*/
 		/*$cmd2="ssh root@mdws2.mdwestserve.com ssh root@10.0.0.2 chown -R root:root /data/service/templates&;
 		ssh root@mdws2.mdwestserve.com ssh root@10.0.0.2 chmod -R 777 /data/service/templates&;";*/
 		/*$last_line2 = system($cmd2,$retval2);
