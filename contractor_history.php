@@ -33,6 +33,7 @@ function row_color2($str,$bg1,$bg2){
 }
 
 function justZip($zip){
+	$zip=trim($zip);
 	if (strpos($zip,'-') !== false){
 		$zip=explode('-',$zip);
 		$zip=$zip[0];
