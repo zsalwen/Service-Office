@@ -265,7 +265,7 @@ while ($d2=mysql_fetch_array($r2,MYSQL_ASSOC)){$i++;
 	$list .= "<tr><td>".id2name($d2[serverID])."</td><td>".$data["name$def"]."</td><td>[".strtoupper(stripslashes($d2[description]))."] - ".id2name($d2[entryID])." ".justDate($d2[entryDate])."</td></tr>";
 }
 if ($list != ''){
-	echo "<table width='100%' border='1' style='border-collapse:collapse;'><tr><td colspan='3' align='center'><b style='color:red;'>PENALTIES</b></td></tr><tr><td>Server</td><td>Defendant</td><td>Description</td></tr>$list<tr><td colspan='3' align='right' style='font-weight:bold;'>TOTAL PENALTIES: $i</td></tr></table>";
+	echo "<table border='1' style='border-collapse:collapse;'><tr><td colspan='3' align='center'><b style='color:red;'>PENALTIES</b></td></tr><tr><td>Server</td><td>Defendant</td><td>Description</td></tr>$list<tr><td colspan='3' align='right' style='font-weight:bold;'>TOTAL PENALTIES: $i</td></tr></table>";
 }
 ?>
 
