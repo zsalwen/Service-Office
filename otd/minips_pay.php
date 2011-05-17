@@ -270,8 +270,8 @@ if ($list != ''){
 ?>
 
 </fieldset>    
-</td><td rowspan='3' valign='top'>
 <? if ($data[attorneys_id] == 1){ ?>
+</td><td rowspan='3' valign='top'>
 <fieldset>
 <legend>Invoice Header</legend>
 <div style='text-align:left;'><?=strtoupper($data[name1])?><br><?=strtoupper($data[address1])?><br><?=strtoupper($data[city1])?>, <?=strtoupper($data[state1])?> <?=strtoupper($data[zip1])?></div>
