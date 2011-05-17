@@ -209,7 +209,7 @@ echo "<center><div>[GAS: $d1[gasPrice] | CLIENT: $d1[client_rate]| CONTRACTOR: $
 <table><tr><td width='50%'>
 <fieldset>
 	<legend>Process Service Account Details</legend>
-<table>
+<table width="100%">
 	<tr>
     	<td></td>
         <td style="font-size:12px;"><?=id2name($data[server_id])?></td>
@@ -270,8 +270,8 @@ if ($list != ''){
 ?>
 
 </fieldset>    
-<? if ($data[attorneys_id] == 1){ ?>
 </td><td rowspan='3' valign='top'>
+<? if ($data[attorneys_id] == 1){ ?>
 <fieldset>
 <legend>Invoice Header</legend>
 <div style='text-align:left;'><?=strtoupper($data[name1])?><br><?=strtoupper($data[address1])?><br><?=strtoupper($data[city1])?>, <?=strtoupper($data[state1])?> <?=strtoupper($data[zip1])?></div>
