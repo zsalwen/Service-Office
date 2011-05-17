@@ -1,6 +1,6 @@
 <? include 'common.php';
 function zip2county($zip){
-	$zip=trim(justZip($zip));
+	$zip=justZip($zip);
 	$q= "select county from zip_code where zip_code = '$zip' LIMIT 0,1";
 	$r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
 	$d=mysql_fetch_array($r, MYSQL_ASSOC); 
@@ -63,8 +63,12 @@ if ($_GET[city]){
 		$city1=$city[0];
 		$city2=$city[1];
 		$q="SELECT * FROM ps_packets, ps_pay WHERE (city1 LIKE '%$city1%' OR city1a LIKE '%$city1%' OR city1b LIKE '%$city1%' OR city1c LIKE '%$city1%' OR city1d LIKE '%$city1%' OR city1e LIKE '%$city1%' OR city1 LIKE '%$city2%' OR city1a LIKE '%$city2%' OR city1b LIKE '%$city2%' OR city1c LIKE '%$city2%' OR city1d LIKE '%$city2%' OR city1e LIKE '%$city2%') AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD'";
+		$q2="SELECT * FROM evictionPackets, ps_pay WHERE (city1 LIKE '%$city1%' OR city1 LIKE '%$city2%') AND evictionPackets.eviction_id=ps_pay.packetID AND ps_pay.product='EV'";
+		$q3="SELECT * FROM standard_packets, ps_pay WHERE (city1 LIKE '%$city1%' OR city1a LIKE '%$city1%' OR city1b LIKE '%$city1%' OR city1c LIKE '%$city1%' OR city1d LIKE '%$city1%' OR city1e LIKE '%$city1%' OR city1 LIKE '%$city2%' OR city1a LIKE '%$city2%' OR city1b LIKE '%$city2%' OR city1c LIKE '%$city2%' OR city1d LIKE '%$city2%' OR city1e LIKE '%$city2%') AND standard_packets.packet_id=ps_pay.packetID AND ps_pay.product='S'";
 	}else{
 		$q="SELECT * FROM ps_packets, ps_pay WHERE (city1 LIKE '%$search%' OR city1a LIKE '%$search%' OR city1b LIKE '%$search%' OR city1c LIKE '%$search%' OR city1d LIKE '%$search%' OR city1e LIKE '%$search%') AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD' ORDER BY packet_id DESC";
+		$q2="SELECT * FROM evictionPackets, ps_pay WHERE city1 LIKE '%$search%' AND evictionPackets.eviction_id=ps_pay.packetID AND ps_pay.product='EV' ORDER BY eviction_id DESC";
+		$q3="SELECT * FROM standard_packets, ps_pay WHERE (city1 LIKE '%$search%' OR city1a LIKE '%$search%' OR city1b LIKE '%$search%' OR city1c LIKE '%$search%' OR city1d LIKE '%$search%' OR city1e LIKE '%$search%') AND standard_packets.packet_id=ps_pay.packetID AND ps_pay.product='S' ORDER BY packet_id DESC";
 	}
 	$i=0;
 	echo "<table align='center' border='1' style='border-collapse:collapse;'><tr><td align='center' colspan='3'>PREVIOUS SERVES IN $search, IN THE COUNTY OF $county</td></tr>";
@@ -79,10 +83,10 @@ if ($_GET[city]){
 					if (isset($serverList[$zip][$server][$rate])){
 						//continue rate list
 						$serverList[$zip][$server][$rate] = $serverList[$zip][$server][$rate]."
-						<tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td></td></tr>";
+						<tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>OTD$d[packet_id]</a></td><td></td></tr>";
 					}else{
 						//start rate list
-						$serverList[$zip][$server][$rate] = "<tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
+						$serverList[$zip][$server][$rate] = "<tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>OTD$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
 					}
 				}
 			}
@@ -98,10 +102,70 @@ if ($_GET[city]){
 						if (isset($serverList[$zip][$server][$rate])){
 							//continue rate list
 							$serverList[$zip][$server][$rate] = $serverList[$zip][$server][$rate]."
-							<tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td></td></tr>";
+							<tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>OTD$d[packet_id]</a></td><td></td></tr>";
 						}else{
 							//start rate list
-							$serverList[$zip][$server][$rate] = "<tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
+							$serverList[$zip][$server][$rate] = "<tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>OTD$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
+						}
+					}
+				}
+			}
+		}
+	}
+	$r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
+	while($d2=mysql_fetch_array($r2,MYSQL_ASSOC)){
+		if ($d2["$field"] != ''){
+			if ((strpos($d2["$field"],$search) !== false) || (strpos($search,$d2["$field"]) !== false)){
+				if($d2[server_id] != '' && $d2[contractor_rate] != ''  && $d2[contractor_rate] != '0'){
+					$server=$d2[server_id];
+					$rate=$d2[contractor_rate];
+					$zip=justZip($d2[zip1]);
+					if (isset($serverList[$zip][$server][$rate])){
+						//continue rate list
+						$serverList[$zip][$server][$rate] = $serverList[$zip][$server][$rate]."
+						<tr bgcolor='[color]'><td><a href='/ev/order.php?packet=$d2[eviction_id]' target='_blank'>EV$d2[eviction_id]</a></td><td></td></tr>";
+					}else{
+						//start rate list
+						$serverList[$zip][$server][$rate] = "<tr bgcolor='[color]'><td><a href='/ev/order.php?packet=$d2[eviction_id]' target='_blank'>EV$d2[eviction_id]</a></td><td><b>$$d2[contractor_rate]</b></td></tr>";
+					}
+				}
+			}
+		}
+	}
+	$r3=@mysql_query($q3) or die ("Query: $q3<br>".mysql_error());
+	while($d3=mysql_fetch_array($r3,MYSQL_ASSOC)){
+		if ($d3["$field"] != ''){
+			if ((strpos($d3["$field"],$search) !== false) || (strpos($search,$d3["$field"]) !== false)){
+				if($d3[server_id] != '' && $d3[contractor_rate] != ''  && $d3[contractor_rate] != '0'){
+					$server=$d3[server_id];
+					$rate=$d3[contractor_rate];
+					$zip=justZip($d3[zip1]);
+					if (isset($serverList[$zip][$server][$rate])){
+						//continue rate list
+						$serverList[$zip][$server][$rate] = $serverList[$zip][$server][$rate]."
+						<tr bgcolor='[color]'><td><a href='/s/order.php?packet=$d3[packet_id]' target='_blank'>S$d3[packet_id]</a></td><td></td></tr>";
+					}else{
+						//start rate list
+						$serverList[$zip][$server][$rate] = "<tr bgcolor='[color]'><td><a href='/s/order.php?packet=$d3[packet_id]' target='_blank'>S$d3[packet_id]</a></td><td><b>$$d3[contractor_rate]</b></td></tr>";
+					}
+				}
+			}
+		}
+		foreach(range('a','e') as $letter){$i++;
+			$var=$field.$letter;
+			if ($d3["$var"] != ''){
+				if ((strpos($d3["$var"],$search) !== false) || (strpos($search,$d3["$var"]) !== false)){
+					if($d3["server_id$letter"] != '' && $d3["contractor_rate$letter"] != '' && $d3["contractor_rate$letter"] != '0'){
+						$zip=justZip($d3["zip1$letter"]);
+						$server=$d3["server_id$letter"];
+						$rate=$d3["contractor_rate$letter"];
+						if (isset($serverList[$zip][$server][$rate])){
+							//continue rate list
+							$serverList[$zip][$server][$rate] = $serverList[$zip][$server][$rate]."
+							<tr bgcolor='[color]'><td><a href='/s/order.php?packet=$d3[packet_id]' target='_blank'>S$d3[packet_id]</a></td><td></td></tr>";
+						}else{
+							//start rate list
+							$serverList[$zip][$server][$rate] = "<tr bgcolor='[color]'><td><a href='/s/order.php?packet=$d3[packet_id]' target='_blank'>S$d3[packet_id]</a></td><td><b>$".$d3["contractor_rate$letter"]."</td></tr>";
 						}
 					}
 				}
@@ -143,11 +207,11 @@ if ($_GET[city]){
 }elseif($_GET[zip]){
 	$search=justZip($_GET[zip]);
 	$county=zip2county($_GET[zip]);
-	//make sure zip is only 5 digits
-
 	$i=0;
 	$field="zip1";
-	$q="SELECT * FROM ps_packets, ps_pay WHERE (zip1='$search' OR zip1a='$search' OR zip1b='$search' OR zip1c='$search' OR zip1d='$search' OR zip1e='$search') AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD' ORDER BY packet_id DESC";
+	$q="SELECT * FROM ps_packets, ps_pay WHERE (TRIM(zip1)='$search' OR TRIM(zip1a)='$search' OR TRIM(zip1b)='$search' OR TRIM(zip1c)='$search' OR TRIM(zip1d)='$search' OR TRIM(zip1e)='$search') AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD' ORDER BY packet_id DESC";
+	$q2="SELECT * FROM evictionPackets, ps_pay WHERE TRIM(zip1)='$search' AND evictionPackets.eviction_id=ps_pay.packetID AND ps_pay.product='EV' ORDER BY eviction_id DESC";
+	$q3="SELECT * FROM standard_packets, ps_pay WHERE (TRIM(zip1)='$search' OR TRIM(zip1a)='$search' OR TRIM(zip1b)='$search' OR TRIM(zip1c)='$search' OR TRIM(zip1d)='$search' OR TRIM(zip1e)='$search') AND standard_packets.packet_id=ps_pay.packetID AND ps_pay.product='S' ORDER BY packet_id DESC";
 	echo "<table align='center' border='1' style='border-collapse:collapse;'><tr><td align='center' colspan='3'>PREVIOUS SERVES IN<br><b>$search</b>, <b>$county</b> COUNTY</td></tr>";
 	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 	while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
@@ -172,6 +236,48 @@ if ($_GET[city]){
 						$serverList[$server][$rate] = $serverList[$server][$rate]."<tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td></td></tr>";
 					}else{
 						$serverList[$server][$rate] = "<table style='border: 1px solid black; border-collapse:collapse;' border='1'><tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
+					}
+				}
+			}
+		}
+	}
+	$r2=@mysql_query($q2) or die ("Query: $q2<br>".mysql_error());
+	while($d2=mysql_fetch_array($r2,MYSQL_ASSOC)){
+		$server=$d2[server_id];
+		$rate=trim($d2[contractor_rate]);
+		if ((strpos($d2["$field"],$search) !== false) || (strpos($search,$d2["$field"]) !== false)){
+			if($d2[server_id] != '' && $d2[contractor_rate] != ''  && $d2[contractor_rate] != '0'){$i++;
+				if (isset($serverList[$server][$rate])){
+					$serverList[$server][$rate] = $serverList[$server][$rate]."<tr bgcolor='[color]'><td><a href='/ev/order.php?packet=$d2[eviction_id]' target='_blank'>EV$d2[eviction_id]</a></td><td></td></tr>";
+				}else{
+					$serverList[$server][$rate] = "<table style='border: 1px solid black; border-collapse:collapse;' border='1'><tr bgcolor='[color]'><td><a href='/ev/order.php?packet=$d2[eviction_id]' target='_blank'>EV$d2[eviction_id]</a></td><td><b>$$d2[contractor_rate]</b></td></tr>";
+				}
+			}
+		}
+	}
+	$r3=@mysql_query($q3) or die ("Query: $q3<br>".mysql_error());
+	while($d3=mysql_fetch_array($r3,MYSQL_ASSOC)){
+		$server=$d3[server_id];
+		$rate=trim($d3[contractor_rate]);
+		if ((strpos($d3["$field"],$search) !== false) || (strpos($search,$d3["$field"]) !== false)){
+			if($d3[server_id] != '' && $d3[contractor_rate] != ''  && $d3[contractor_rate] != '0'){$i++;
+				if (isset($serverList[$server][$rate])){
+					$serverList[$server][$rate] = $serverList[$server][$rate]."<tr bgcolor='[color]'><td><a href='/s/order.php?packet=$d3[packet_id]' target='_blank'>S$d3[packet_id]</a></td><td></td></tr>";
+				}else{
+					$serverList[$server][$rate] = "<table style='border: 1px solid black; border-collapse:collapse;' border='1'><tr bgcolor='[color]'><td><a href='/s/order.php?packet=$d3[packet_id]' target='_blank'>S$d3[packet_id]</a></td><td><b>$$d3[contractor_rate]</b></td></tr>";
+				}
+			}
+		}
+		foreach(range('a','e') as $letter){
+			$var=$field.$letter;
+			$server=$d3["server_id$letter"];
+			$rate=trim($d3["contractor_rate$letter"]);
+			if ((strpos($d3["$var"],$search) !== false) || (strpos($search,$d3["$var"]) !== false)){
+				if($d3["server_id$letter"] != '' && $d3["contractor_rate$letter"] != '' && $d3["contractor_rate$letter"] != '0'){$i++;
+					if (isset($serverList[$server][$rate])){
+						$serverList[$server][$rate] = $serverList[$server][$rate]."<tr bgcolor='[color]'><td><a href='/s/order.php?packet=$d3[packet_id]' target='_blank'>S$d3[packet_id]</a></td><td></td></tr>";
+					}else{
+						$serverList[$server][$rate] = "<table style='border: 1px solid black; border-collapse:collapse;' border='1'><tr bgcolor='[color]'><td><a href='/s/order.php?packet=$d3[packet_id]' target='_blank'>S$d3[packet_id]</a></td><td><b>$".$d3["contractor_rate$letter"]."</td></tr>";
 					}
 				}
 			}
