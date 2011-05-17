@@ -76,7 +76,7 @@ if ($_GET[city]){
 	while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 		if ($d["$field"] != ''){
 			if ((strpos($d["$field"],$search) !== false) || (strpos($search,$d["$field"]) !== false)){
-				if($d[server_id] != '' && $d[contractor_rate] != ''  && $d[contractor_rate] != '0'){
+				if($d[server_id] != '' && $d[contractor_rate] != ''  && $d[contractor_rate] != '0' && $d[server_id] != '218'){
 					$server=$d[server_id];
 					$rate=$d[contractor_rate];
 					$zip=justZip($d[zip1]);
@@ -88,7 +88,7 @@ if ($_GET[city]){
 			$var=$field.$letter;
 			if ($d["$var"] != ''){
 				if ((strpos($d["$var"],$search) !== false) || (strpos($search,$d["$var"]) !== false)){
-					if($d["server_id$letter"] != '' && $d["contractor_rate$letter"] != '' && $d["contractor_rate$letter"] != '0'){
+					if($d["server_id$letter"] != '' && $d["contractor_rate$letter"] != '' && $d["contractor_rate$letter"] != '0' && $d["server_id$letter"] != '218'){
 						$zip=justZip($d["zip1$letter"]);
 						$server=$d["server_id$letter"];
 						$rate=$d["contractor_rate$letter"];
@@ -102,7 +102,7 @@ if ($_GET[city]){
 	while($d2=mysql_fetch_array($r2,MYSQL_ASSOC)){
 		if ($d2["$field"] != ''){
 			if ((strpos($d2["$field"],$search) !== false) || (strpos($search,$d2["$field"]) !== false)){
-				if($d2[server_id] != '' && $d2[contractor_rate] != ''  && $d2[contractor_rate] != '0'){
+				if($d2[server_id] != '' && $d2[contractor_rate] != ''  && $d2[contractor_rate] != '0' && $d[server_id] != '218'){
 					$server=$d2[server_id];
 					$rate=$d2[contractor_rate];
 					$zip=justZip($d2[zip1]);
@@ -115,7 +115,7 @@ if ($_GET[city]){
 	while($d3=mysql_fetch_array($r3,MYSQL_ASSOC)){
 		if ($d3["$field"] != ''){
 			if ((strpos($d3["$field"],$search) !== false) || (strpos($search,$d3["$field"]) !== false)){
-				if($d3[server_id] != '' && $d3[contractor_rate] != ''  && $d3[contractor_rate] != '0'){
+				if($d3[server_id] != '' && $d3[contractor_rate] != ''  && $d3[contractor_rate] != '0' && $d[server_id] != '218'){
 					$server=$d3[server_id];
 					$rate=$d3[contractor_rate];
 					$zip=justZip($d3[zip1]);
@@ -127,7 +127,7 @@ if ($_GET[city]){
 			$var=$field.$letter;
 			if ($d3["$var"] != ''){
 				if ((strpos($d3["$var"],$search) !== false) || (strpos($search,$d3["$var"]) !== false)){
-					if($d3["server_id$letter"] != '' && $d3["contractor_rate$letter"] != '' && $d3["contractor_rate$letter"] != '0'){
+					if($d3["server_id$letter"] != '' && $d3["contractor_rate$letter"] != '' && $d3["contractor_rate$letter"] != '0' && $d["server_id$letter"] != '218'){
 						$zip=justZip($d3["zip1$letter"]);
 						$server=$d3["server_id$letter"];
 						$rate=$d3["contractor_rate$letter"];
@@ -183,7 +183,7 @@ if ($_GET[city]){
 		$server=$d[server_id];
 		$rate=trim($d[contractor_rate]);
 		if ((strpos($d["$field"],$search) !== false) || (strpos($search,$d["$field"]) !== false)){
-			if($d[server_id] != '' && $d[contractor_rate] != ''  && $d[contractor_rate] != '0'){$i++;
+			if($d[server_id] != '' && $d[contractor_rate] != ''  && $d[contractor_rate] != '0' && $d[server_id] != '218'){$i++;
 				$serverList[$server][$rate] = $serverList[$server][$rate]."<tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>OTD$d[packet_id]</a></td><td><b>$$d[contractor_rate]</b></td></tr>";
 			}
 		}
@@ -192,7 +192,7 @@ if ($_GET[city]){
 			$server=$d["server_id$letter"];
 			$rate=trim($d["contractor_rate$letter"]);
 			if ((strpos($d["$var"],$search) !== false) || (strpos($search,$d["$var"]) !== false)){
-				if($d["server_id$letter"] != '' && $d["contractor_rate$letter"] != '' && $d["contractor_rate$letter"] != '0'){$i++;
+				if($d["server_id$letter"] != '' && $d["contractor_rate$letter"] != '' && $d["contractor_rate$letter"] != '0' && $d["server_id$letter"] != '218'){$i++;
 					$serverList[$server][$rate] = $serverList[$server][$rate]."<tr bgcolor='[color]'><td><a href='/otd/order.php?packet=$d[packet_id]' target='_blank'>OTD$d[packet_id]</a></td><td><b>$".$d["contractor_rate$letter"]."</td></tr>";
 				}
 			}
@@ -203,7 +203,7 @@ if ($_GET[city]){
 		$server=$d2[server_id];
 		$rate=trim($d2[contractor_rate]);
 		if ((strpos($d2["$field"],$search) !== false) || (strpos($search,$d2["$field"]) !== false)){
-			if($d2[server_id] != '' && $d2[contractor_rate] != ''  && $d2[contractor_rate] != '0'){$i++;
+			if($d2[server_id] != '' && $d2[contractor_rate] != ''  && $d2[contractor_rate] != '0' && $d[server_id] != '218'){$i++;
 				$serverList[$server][$rate] = $serverList[$server][$rate]."<tr bgcolor='[color]'><td><a href='/ev/order.php?packet=$d2[eviction_id]' target='_blank'>EV$d2[eviction_id]</a></td><td><b>$$d2[contractor_rate]</b></td></tr>";
 			}
 		}
@@ -213,7 +213,7 @@ if ($_GET[city]){
 		$server=$d3[server_id];
 		$rate=trim($d3[contractor_rate]);
 		if ((strpos($d3["$field"],$search) !== false) || (strpos($search,$d3["$field"]) !== false)){
-			if($d3[server_id] != '' && $d3[contractor_rate] != ''  && $d3[contractor_rate] != '0'){$i++;
+			if($d3[server_id] != '' && $d3[contractor_rate] != ''  && $d3[contractor_rate] != '0' && $d[server_id] != '218'){$i++;
 				$serverList[$server][$rate] = $serverList[$server][$rate]."<tr bgcolor='[color]'><td><a href='/s/order.php?packet=$d3[packet_id]' target='_blank'>S$d3[packet_id]</a></td><td><b>$$d3[contractor_rate]</b></td></tr>";
 			}
 		}
@@ -222,7 +222,7 @@ if ($_GET[city]){
 			$server=$d3["server_id$letter"];
 			$rate=trim($d3["contractor_rate$letter"]);
 			if ((strpos($d3["$var"],$search) !== false) || (strpos($search,$d3["$var"]) !== false)){
-				if($d3["server_id$letter"] != '' && $d3["contractor_rate$letter"] != '' && $d3["contractor_rate$letter"] != '0'){$i++;
+				if($d3["server_id$letter"] != '' && $d3["contractor_rate$letter"] != '' && $d3["contractor_rate$letter"] != '0' && $d["server_id$letter"] != '218'){$i++;
 					$serverList[$server][$rate] = $serverList[$server][$rate]."<tr bgcolor='[color]'><td><a href='/s/order.php?packet=$d3[packet_id]' target='_blank'>S$d3[packet_id]</a></td><td><b>$".$d3["contractor_rate$letter"]."</td></tr>";
 				}
 			}
