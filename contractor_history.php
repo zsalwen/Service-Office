@@ -1,11 +1,6 @@
 <? include 'common.php';
 function zip2county($zip){
-	$zip=trim($zip);
-	//make sure zip is only 5 digits
-	if (strpos($zip,'-') !== false){
-		$zip=explode('-',$zip);
-		$zip=$zip[0];
-	}
+	$zip=trim(justZip($zip));
 	$q= "select county from zip_code where zip_code = '$zip' LIMIT 0,1";
 	$r=@mysql_query($q) or die("Query: $q<br>".mysql_error());
 	$d=mysql_fetch_array($r, MYSQL_ASSOC); 
@@ -35,6 +30,14 @@ function row_color2($str,$bg1,$bg2){
 		}
 	}
 	return $return;
+}
+
+function justZip($zip){
+	if (strpos($zip,'-') !== false){
+		$zip=explode('-',$zip);
+		$zip=$zip[0];
+	}
+	return $zip;
 }
 ?>
 <style>
@@ -71,7 +74,7 @@ if ($_GET[city]){
 				if($d[server_id] != '' && $d[contractor_rate] != ''  && $d[contractor_rate] != '0'){
 					$server=$d[server_id];
 					$rate=$d[contractor_rate];
-					$zip=$d[zip1];
+					$zip=justZip($d[zip1]);
 					if (isset($serverList[$zip][$server][$rate])){
 						//continue rate list
 						$serverList[$zip][$server][$rate] = $serverList[$zip][$server][$rate]."
@@ -88,7 +91,7 @@ if ($_GET[city]){
 			if ($d["$var"] != ''){
 				if ((strpos($d["$var"],$search) !== false) || (strpos($search,$d["$var"]) !== false)){
 					if($d["server_id$letter"] != '' && $d["contractor_rate$letter"] != '' && $d["contractor_rate$letter"] != '0'){
-						$zip=$d["zip1$letter"];
+						$zip=justZip($d["zip1$letter"]);
 						$server=$d["server_id$letter"];
 						$rate=$d["contractor_rate$letter"];
 						if (isset($serverList[$zip][$server][$rate])){
@@ -137,13 +140,10 @@ if ($_GET[city]){
 	}
 	echo "</table>";
 }elseif($_GET[zip]){
-	$search=$_GET[zip];
+	$search=justZip($_GET[zip]);
 	$county=zip2county($_GET[zip]);
 	//make sure zip is only 5 digits
-	if (strpos($zip,'-') !== false){
-		$zip=explode('-',$zip);
-		$zip=$zip[0];
-	}
+
 	$i=0;
 	$field="zip1";
 	$q="SELECT * FROM ps_packets, ps_pay WHERE (zip1='$search' OR zip1a='$search' OR zip1b='$search' OR zip1c='$search' OR zip1d='$search' OR zip1e='$search') AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD' ORDER BY packet_id DESC";
