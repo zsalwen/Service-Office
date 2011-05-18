@@ -46,12 +46,12 @@ table,tr,td,fieldset{padding:0px;}
 </style>
 <script>
 function hideshow(which){
-    if (!document.getElementById)
-        return
-    if (which.style.display=="block")
-        which.style.display="none"
-    else
-        which.style.display="block"
+	if (!document.getElementById)
+		return
+	if (which.style.display=="block")
+		which.style.display="none"
+	else
+		which.style.display="block"
 }
 </script>
 <?
