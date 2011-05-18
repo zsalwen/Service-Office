@@ -168,7 +168,7 @@ if ($_GET[city]){
 					//krsort($v3);
 					echo "<td valign='top' style='padding-left:0px; padding-right:0px;' align='center'>
 					<div style='background-color:00FF00; border: 1px solid black;' onclick='hideshow($k1-$k2-$k3)'>$$k3 SERVES</div>
-					<table style='display:block; border:1px solid black; border-collapse:collapse;' border='1' align='center' id='$k1-$k2-$k3' name='$k1-$k2-$k3'>
+					<table id='$k1-$k2-$k3' style='display:block; border:1px solid black; border-collapse:collapse;' border='1' align='center'>
 					".row_color2($v3,"#FFFFFF","#CCCCCC")."
 					</table></td>";
 				}
@@ -247,7 +247,7 @@ if ($_GET[city]){
 			foreach($v1 as $k2 => $v2){
 				echo "<td valign='top' style='padding-left:0px; padding-right:0px;'>
 				<div style='background-color:00FF00; border: 1px solid black;' onclick='hideshow($k1-$k2)'>$$k2 SERVES</div>
-				<table style='display:block; border:1px solid black; border-collapse:collapse;' border='1' id='$k1-$k2' name='$k1-$k2'>
+				<table id='$k1-$k2' style='display:block; border:1px solid black; border-collapse:collapse;' border='1'>
 				".row_color2($v2,"#FFFFFF","#CCCCCC")."
 				</table></td>";
 			}
