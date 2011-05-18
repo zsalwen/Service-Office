@@ -236,8 +236,8 @@ if ($_GET[city]){
 			krsort($v1);
 			foreach($v1 as $k2 => $v2){
 				echo "<td valign='top' style='padding-left:0px; padding-right:0px;'>
-				<div style='background-color:green; border: 1px solid black;' onclick='hideshow($k1-$k2-$k3);'>$$rate SERVES</div>
-				<table style='border: 1px solid black; border-collapse:collapse; display:none;' border='1' id='$k1-$k2-$k3'>
+				<div style='background-color:green; border: 1px solid black;' onclick='hideshow($k1-$k2);'>$$rate SERVES</div>
+				<table style='border: 1px solid black; border-collapse:collapse; display:none;' border='1' id='$k1-$k2'>
 				".row_color2($v2,"#FFFFFF","#CCCCCC")."
 				</table></td>";
 			}
