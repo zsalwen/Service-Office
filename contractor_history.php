@@ -71,7 +71,7 @@ if ($_GET[city]){
 		$q3="SELECT * FROM standard_packets, ps_pay WHERE (city1 LIKE '%$search%' OR city1a LIKE '%$search%' OR city1b LIKE '%$search%' OR city1c LIKE '%$search%' OR city1d LIKE '%$search%' OR city1e LIKE '%$search%') AND standard_packets.packet_id=ps_pay.packetID AND ps_pay.product='S' ORDER BY packet_id DESC";
 	}
 	$i=0;
-	echo "<table align='center' border='1' style='border-collapse:collapse;'><tr><td align='center' colspan='3'>PREVIOUS SERVES IN $search, IN THE COUNTY OF $county</td></tr>";
+	echo "<table align='center' border='1' style='border-collapse:collapse;'><tr><td align='center' colspan='3'>PREVIOUS SERVES IN<br>$search, IN THE COUNTY OF $county<br><small>Click Rates to Expand</small></td></tr>";
 	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 	while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 		if ($d["$field"] != ''){
@@ -157,7 +157,8 @@ if ($_GET[city]){
 					//rates
 					//krsort($v3);
 					echo "<td valign='top' style='padding-left:0px; padding-right:0px;' align='center'>
-					<table style='border: 1px solid black; border-collapse:collapse;' border='1' align='center'>
+					<div style='background-color:green; border: 1px solid black;' onclick='hideshow($k1-$k2-$k3);'>$$rate SERVES</div>
+					<table style='border: 1px solid black; border-collapse:collapse; display:none;' border='1' align='center' id='$k1-$k2-$k3'>
 					".row_color2($v3,"#FFFFFF","#CCCCCC")."
 					</table></td>";
 				}
@@ -177,7 +178,7 @@ if ($_GET[city]){
 	$q="SELECT * FROM ps_packets, ps_pay WHERE (TRIM(zip1)='$search' OR TRIM(zip1a)='$search' OR TRIM(zip1b)='$search' OR TRIM(zip1c)='$search' OR TRIM(zip1d)='$search' OR TRIM(zip1e)='$search') AND ps_packets.packet_id=ps_pay.packetID AND ps_pay.product='OTD' ORDER BY packet_id DESC";
 	$q2="SELECT * FROM evictionPackets, ps_pay WHERE TRIM(zip1)='$search' AND evictionPackets.eviction_id=ps_pay.packetID AND ps_pay.product='EV' ORDER BY eviction_id DESC";
 	$q3="SELECT * FROM standard_packets, ps_pay WHERE (TRIM(zip1)='$search' OR TRIM(zip1a)='$search' OR TRIM(zip1b)='$search' OR TRIM(zip1c)='$search' OR TRIM(zip1d)='$search' OR TRIM(zip1e)='$search') AND standard_packets.packet_id=ps_pay.packetID AND ps_pay.product='S' ORDER BY packet_id DESC";
-	echo "<table align='center' border='1' style='border-collapse:collapse;'><tr><td align='center' colspan='3'>PREVIOUS SERVES IN<br><b>$search</b>, <b>$county</b> COUNTY</td></tr>";
+	echo "<table align='center' border='1' style='border-collapse:collapse;'><tr><td align='center' colspan='3'>PREVIOUS SERVES IN<br>$search, IN THE COUNTY OF $county<br><small>Click Rates to Expand</small></td></tr>";
 	$r=@mysql_query($q) or die ("Query: $q<br>".mysql_error());
 	while($d=mysql_fetch_array($r,MYSQL_ASSOC)){
 		$server=$d[server_id];
@@ -234,7 +235,11 @@ if ($_GET[city]){
 			echo "<tr bgcolor='#FFFF00'><td align='center' style='font-weight:bold;'>".id2name($k1)."</td></tr><tr bgcolor='#FF0000'><td align='center'><table><tr>";
 			krsort($v1);
 			foreach($v1 as $k2 => $v2){
-				echo "<td valign='top' style='padding-left:0px; padding-right:0px;'><table style='border: 1px solid black; border-collapse:collapse;' border='1'>".row_color2($v2,"#FFFFFF","#CCCCCC")."</table></td>";
+				echo "<td valign='top' style='padding-left:0px; padding-right:0px;'>
+				<div style='background-color:green; border: 1px solid black;' onclick='hideshow($k1-$k2-$k3);'>$$rate SERVES</div>
+				<table style='border: 1px solid black; border-collapse:collapse; display:none;' border='1' id='$k1-$k2-$k3'>
+				".row_color2($v2,"#FFFFFF","#CCCCCC")."
+				</table></td>";
 			}
 			echo "</tr></table></td></tr>";
 		}
