@@ -292,402 +292,274 @@ if ($_POST[sendToClient]){
 }
 
 if ($_POST[submit]){
-if ($_GET[packet]){
-$q=@mysql_query("SELECT * from standard_packets WHERE packet_id='$_POST[packet_id]'") or die (mysql_error());
-$d=mysql_fetch_array($q, MYSQL_ASSOC);
-$case_no=trim($_POST[case_no]);
-// un dbCleaner on all items
+	if ($_GET[packet]){
+		$q=@mysql_query("SELECT * from standard_packets WHERE packet_id='$_POST[packet_id]'") or die (mysql_error());
+		$d=mysql_fetch_array($q, MYSQL_ASSOC);
+		$case_no=trim($_POST[case_no]);
+		// un dbCleaner on all items
 
-$q = "UPDATE standard_packets SET process_status='$_POST[process_status]',
-	courtType='$_POST[courtType]',
-	courtState='$_POST[courtState]',
-	filing_status='$_POST[filing_status]',
-	service_status='$_POST[service_status]',
-	attorneys_id='$_POST[attorneys_id]',
-	fileDate='$_POST[fileDate]',
-	courierID='$_POST[courierID]',
-	addlDocs='$_POST[addlDocs]',
-	reopenDate='$_POST[reopenDate]',
-	startDate='$_POST[startDate]',
-	status='$_POST[status]',
-	affidavit_status='$_POST[affidavit_status]',
-	affidavit_status2='$_POST[affidavit_status2]',
-	photoStatus='$_POST[photoStatus]',
-	pobox='$_POST[pobox]',
-	pocity='$_POST[pocity]',
-	postate='$_POST[postate]',
-	pozip='$_POST[pozip]',
-	pobox2='$_POST[pobox2]',
-	pocity2='$_POST[pocity2]',
-	postate2='$_POST[postate2]',
-	pozip2='$_POST[pozip2]',
-	mail_status='$_POST[mail_status]',
-	affidavitType='$_POST[affidavitType]',
-	onAffidavit1='$_POST[onAffidavit1]',
-	onAffidavit2='$_POST[onAffidavit2]',
-	onAffidavit3='$_POST[onAffidavit3]',
-	onAffidavit4='$_POST[onAffidavit4]',
-	onAffidavit5='$_POST[onAffidavit5]',
-	onAffidavit6='$_POST[onAffidavit6]',
-	refile='$_POST[refile]',
-	amendedAff='$_POST[amendedAff]',
-	altPlaintiff='$_POST[altPlaintiff]',
-	pages='$_POST[pages]',
-	rush='$_POST[rush]',
-	priority='$_POST[priority]',
-	request_close='$_POST[request_close]',
-	request_closea='$_POST[request_closea]',
-	request_closeb='$_POST[request_closeb]',
-	request_closec='$_POST[request_closec]',
-	request_closed='$_POST[request_closed]',
-	request_closee='$_POST[request_closee]',
-	serveComplete='$_POST[serveComplete]',
-	serveCompletea='$_POST[serveCompletea]',
-	serveCompleteb='$_POST[serveCompleteb]',
-	serveCompletec='$_POST[serveCompletec]',
-	serveCompleted='$_POST[serveCompleted]',
-	serveCompletee='$_POST[serveCompletee]',
-	client_file='".strtoupper($_POST[client_file])."',
-	case_no='".str_replace('�',0,$case_no)."',
-	reopenNotes='".addslashes(strtoupper($_POST[reopenNotes]))."',
-	auctionNote='".strtoupper($_POST[auctionNote])."',
-	circuit_court='".strtoupper($_POST[circuit_court])."'
-	WHERE packet_id='$_POST[packet_id]'";
-	mysql_query($q) or die(mysql_error());
+		$q = "UPDATE standard_packets SET process_status='$_POST[process_status]',
+			courtType='$_POST[courtType]',
+			courtState='$_POST[courtState]',
+			filing_status='$_POST[filing_status]',
+			service_status='$_POST[service_status]',
+			attorneys_id='$_POST[attorneys_id]',
+			fileDate='$_POST[fileDate]',
+			courierID='$_POST[courierID]',
+			addlDocs='$_POST[addlDocs]',
+			reopenDate='$_POST[reopenDate]',
+			startDate='$_POST[startDate]',
+			status='$_POST[status]',
+			affidavit_status='$_POST[affidavit_status]',
+			affidavit_status2='$_POST[affidavit_status2]',
+			photoStatus='$_POST[photoStatus]',
+			pobox='$_POST[pobox]',
+			pocity='$_POST[pocity]',
+			postate='$_POST[postate]',
+			pocity='$_POST[pocity]',
+			pobox2='$_POST[pobox2]',
+			pocity2='$_POST[pocity2]',
+			postate2='$_POST[postate2]',
+			pocity2='$_POST[pocity2]',
+			mail_status='$_POST[mail_status]',
+			affidavitType='$_POST[affidavitType]',
+			onAffidavit1='$_POST[onAffidavit1]',
+			onAffidavit2='$_POST[onAffidavit2]',
+			onAffidavit3='$_POST[onAffidavit3]',
+			onAffidavit4='$_POST[onAffidavit4]',
+			onAffidavit5='$_POST[onAffidavit5]',
+			onAffidavit6='$_POST[onAffidavit6]',
+			refile='$_POST[refile]',
+			amendedAff='$_POST[amendedAff]',
+			altPlaintiff='$_POST[altPlaintiff]',
+			pages='$_POST[pages]',
+			rush='$_POST[rush]',
+			priority='$_POST[priority]',
+			request_close='$_POST[request_close]',
+			request_closea='$_POST[request_closea]',
+			request_closeb='$_POST[request_closeb]',
+			request_closec='$_POST[request_closec]',
+			request_closed='$_POST[request_closed]',
+			request_closee='$_POST[request_closee]',
+			serveComplete='$_POST[serveComplete]',
+			serveCompletea='$_POST[serveCompletea]',
+			serveCompleteb='$_POST[serveCompleteb]',
+			serveCompletec='$_POST[serveCompletec]',
+			serveCompleted='$_POST[serveCompleted]',
+			serveCompletee='$_POST[serveCompletee]',
+			client_file='".strtoupper($_POST[client_file])."',
+			case_no='".str_replace('�',0,$case_no)."',
+			reopenNotes='".addslashes(strtoupper($_POST[reopenNotes]))."',
+			auctionNote='".strtoupper($_POST[auctionNote])."',
+			circuit_court='".strtoupper($_POST[circuit_court])."'
+			WHERE packet_id='$_POST[packet_id]'";
+			mysql_query($q) or die(mysql_error());
 
-//error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($q)."] \n", 3, '/logs/debug.log'); 
+		//error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [".trim($q)."] \n", 3, '/logs/debug.log'); 
 
 
-}else{
-$case_no=trim($_POST[case_no]);
-@mysql_query("UPDATE standard_packets SET process_status='$_POST[process_status]',
-	filing_status='$_POST[filing_status]',
-	service_status='$_POST[service_status]',
-	pobox='$_POST[pobox]',
-	courtState='$_POST[courtState]',
-	attorneys_id='$_POST[attorneys_id]',
-	pocity='$_POST[pocity]',
-	postate='$_POST[postate]',
-	pozip='$_POST[pozip]',
-	pobox2='$_POST[pobox2]',
-	pocity2='$_POST[pocity2]',
-	postate2='$_POST[postate2]',
-	pozip2='$_POST[pozip2]',
-	entry_id='$id',
-	courierID='$_POST[courierID]',
-	addlDocs='$_POST[addlDocs]',
-	fileDate='$_POST[fileDate]',
-	reopenDate='$_POST[reopenDate]',
-	startDate='$_POST[startDate]',
-	affidavit_status='$_POST[affidavit_status]',
-	affidavit_status2='$_POST[affidavit_status2]',
-	photoStatus='$_POST[photoStatus]',
-	onAffidavit1='$_POST[onAffidavit1]',
-	onAffidavit2='$_POST[onAffidavit2]',
-	onAffidavit3='$_POST[onAffidavit3]',
-	onAffidavit4='$_POST[onAffidavit4]',
-	onAffidavit5='$_POST[onAffidavit5]',
-	onAffidavit6='$_POST[onAffidavit6]',
-	refile='$_POST[refile]',
-	amendedAff='$_POST[amendedAff]',
-	altPlaintiff='$_POST[altPlaintiff]',
-	rush='$_POST[rush]',
-	priority='$_POST[priority]',
-	pages='$_POST[pages]',
-	request_close='$_POST[request_close]',
-	request_closea='$_POST[request_closea]',
-	request_closeb='$_POST[request_closeb]',
-	request_closec='$_POST[request_closec]',
-	request_closed='$_POST[request_closed]',
-	request_closee='$_POST[request_closee]',
-	serveComplete='$_POST[serveComplete]',
-	serveCompletea='$_POST[serveCompletea]',
-	serveCompleteb='$_POST[serveCompleteb]',
-	serveCompletec='$_POST[serveCompletec]',
-	serveCompleted='$_POST[serveCompleted]',
-	serveCompletee='$_POST[serveCompletee]',
-	mail_status='$_POST[mail_status]',
-	affidavitType='$_POST[affidavitType]',
-	client_file='".strtoupper($_POST[client_file])."',
-	case_no='".str_replace('�',0,$case_no)."',
-	process_status='READY',
-	status='RECIEVED',
-	circuit_court='".strtoupper($_POST[circuit_court])."'
-	WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
-	timeline($_POST[packet_id],$_COOKIE[psdata][name]." Performed Data Entry");
-// here is where we will automate the address check
-?><script>window.open('supernova.php?packet=<?=$_POST[packet_id];?>&close=1',   'supernova',   'width=600, height=800'); </script><?
-}
-$r=@mysql_query("SELECT server_id, server_ida, server_idb, server_idc, server_idd, server_ide, dispatchDate, estFileDate, packet_id, client_file FROM standard_packets WHERE packet_id='$_POST[packet_id]'");
-$d=mysql_fetch_array($r,MYSQL_ASSOC);
-//if estFileDate has not been set, do not allow setting server.
-if (($d[estFileDate] == '0000-00-00' && $_POST[estFileDate] == '0000-00-00') && (($_POST[server1] != $d[server_id]) || ($_POST[server1a] != $d[server_ida]) || ($_POST[server1b] != $d[server_idb]) || ($_POST[server1c] != $d[server_idc]) || ($_POST[server1d] != $d[server_idd]) || ($_POST[server1e] != $d[server_ide]))){
-	$request=1;
-}elseif($_POST[estFileDate] != $d[estFileDate] && $_POST[estFileDate] != ''){
-	$oldFileDate=$d[estFileDate];
-	$request=2;
-}else{
-	if ($d[server_id] == ''){$unset++;}
-	foreach(range('a','e') as $letter){
-		if ($d["server_id$letter"] == ''){$unset++;}
+	}else{
+		$case_no=trim($_POST[case_no]);
+		@mysql_query("UPDATE standard_packets SET process_status='$_POST[process_status]',
+			filing_status='$_POST[filing_status]',
+			service_status='$_POST[service_status]',
+			pobox='$_POST[pobox]',
+			courtState='$_POST[courtState]',
+			attorneys_id='$_POST[attorneys_id]',
+			pocity='$_POST[pocity]',
+			postate='$_POST[postate]',
+			pocity='$_POST[pocity]',
+			pobox2='$_POST[pobox2]',
+			pocity2='$_POST[pocity2]',
+			postate2='$_POST[postate2]',
+			pocity2='$_POST[pocity2]',
+			entry_id='$id',
+			courierID='$_POST[courierID]',
+			addlDocs='$_POST[addlDocs]',
+			fileDate='$_POST[fileDate]',
+			reopenDate='$_POST[reopenDate]',
+			startDate='$_POST[startDate]',
+			affidavit_status='$_POST[affidavit_status]',
+			affidavit_status2='$_POST[affidavit_status2]',
+			photoStatus='$_POST[photoStatus]',
+			onAffidavit1='$_POST[onAffidavit1]',
+			onAffidavit2='$_POST[onAffidavit2]',
+			onAffidavit3='$_POST[onAffidavit3]',
+			onAffidavit4='$_POST[onAffidavit4]',
+			onAffidavit5='$_POST[onAffidavit5]',
+			onAffidavit6='$_POST[onAffidavit6]',
+			refile='$_POST[refile]',
+			amendedAff='$_POST[amendedAff]',
+			altPlaintiff='$_POST[altPlaintiff]',
+			rush='$_POST[rush]',
+			priority='$_POST[priority]',
+			pages='$_POST[pages]',
+			request_close='$_POST[request_close]',
+			request_closea='$_POST[request_closea]',
+			request_closeb='$_POST[request_closeb]',
+			request_closec='$_POST[request_closec]',
+			request_closed='$_POST[request_closed]',
+			request_closee='$_POST[request_closee]',
+			serveComplete='$_POST[serveComplete]',
+			serveCompletea='$_POST[serveCompletea]',
+			serveCompleteb='$_POST[serveCompleteb]',
+			serveCompletec='$_POST[serveCompletec]',
+			serveCompleted='$_POST[serveCompleted]',
+			serveCompletee='$_POST[serveCompletee]',
+			mail_status='$_POST[mail_status]',
+			affidavitType='$_POST[affidavitType]',
+			client_file='".strtoupper($_POST[client_file])."',
+			case_no='".str_replace('�',0,$case_no)."',
+			process_status='READY',
+			status='RECIEVED',
+			circuit_court='".strtoupper($_POST[circuit_court])."'
+			WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
+			timeline($_POST[packet_id],$_COOKIE[psdata][name]." Performed Data Entry");
+		// here is where we will automate the address check
+		?><script>window.open('supernova.php?packet=<?=$_POST[packet_id];?>&close=1',   'supernova',   'width=600, height=800'); </script><?
 	}
-	$timeline='';
-	$dispDate=date('F jS, Y');
-	$to = "Service Updates <mdwestserve@gmail.com>";
-	$subject = "Dispatched Service for S$d[packet_id] ($d[client_file])";
-	$headers  = "MIME-Version: 1.0 \n";
-	$headers .= "Content-type: text/html; charset=iso-8859-1 \n";
-	$headers .= "From: ".$_COOKIE[psdata][name]." <".$_COOKIE[psdata][email]."> \n";
-	$body="Service for Packet $d[packet_id] (<strong>$d[client_file]</strong>) has been dispatched by ".$_COOKIE[psdata][name].", today $dispDate.<br><b>Please understand that this email is sent as confirmation of a process service file sent from our office today.  If you do not reply to the contrary--stating files have not been received--within 24 hours, you will be held responsible for any delays not made known to our office.</b><br>".$_COOKIE[psdata][name]."<br>MDWestServe<br>service@mdwestserve.com<br>(410) 828-4568<br>".time()."<br>".md5(time());
-	if (isset($_POST[server1])){$newServe++;
-		@mysql_query("UPDATE standard_packets SET server_id='$_POST[server1]' WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
-		if ($_POST[server1] != $d[server_id]){
-			$serverID=$_POST[server1];
-			$id2name=id2name($serverID);
-			if ($id2name == ''){
-				$id2name="[BLANK]";
-			}
-			$id2company=id2company($serverID);
-			if (trim($id2company) == ''){
-				$id2company=$id2name;
-			}
-			$timeline = $_COOKIE[psdata][name]." Updated Order, Set $id2name as Server";
-			if (($_POST[process_status] == 'ASSIGNED') && ($serverID != '')){
-				//if file is currently assigned, send email to server(s) updating them about dispatch.
-				$sdCount[$serverID]++;
-				$subject2 = $subject." To [$id2company]";
-				$headers2 = $headers."Cc: Service Updates <".id2email($d[server_id])."> \n";
-				$headers3 .= $headers2;
-				mail($to,$subject2,$body,$headers2);
-			}
+	$r=@mysql_query("SELECT * FROM standard_packets WHERE packet_id='$_POST[packet_id]'");
+	$d=mysql_fetch_array($r,MYSQL_ASSOC);
+	//if estFileDate has not been set, do not allow setting server.
+	if (($d[estFileDate] == '0000-00-00' && $_POST[estFileDate] == '0000-00-00') && (($_POST[server1] != $d[server_id]) || ($_POST[server1a] != $d[server_ida]) || ($_POST[server1b] != $d[server_idb]) || ($_POST[server1c] != $d[server_idc]) || ($_POST[server1d] != $d[server_idd]) || ($_POST[server1e] != $d[server_ide]))){
+		$request=1;
+	}elseif($_POST[estFileDate] != $d[estFileDate] && $_POST[estFileDate] != ''){
+		$oldFileDate=$d[estFileDate];
+		$request=2;
+	}else{
+		if ($d[server_id] == ''){$unset++;}
+		foreach(range('a','e') as $letter){
+			if ($d["server_id$letter"] == ''){$unset++;}
 		}
-	}
-	foreach(range('a','e') as $letter){
-		if (isset($_POST["server1$letter"])){$newServe++;
-			@mysql_query("UPDATE standard_packets SET server_id$letter='".$_POST["server1$letter"]."' WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
-			if ($_POST["server1$letter"] != $d["server_id$letter"]){
-				$serverID='';
-				$serverID=$_POST["server1$letter"];
-				$id2name='';
+		$timeline='';
+		$dispDate=date('F jS, Y');
+		$to = "Service Updates <mdwestserve@gmail.com>";
+		$subject = "Dispatched Service for S$d[packet_id] ($d[client_file])";
+		$headers  = "MIME-Version: 1.0 \n";
+		$headers .= "Content-type: text/html; charset=iso-8859-1 \n";
+		$headers .= "From: ".$_COOKIE[psdata][name]." <".$_COOKIE[psdata][email]."> \n";
+		$body="Service for Packet $d[packet_id] (<strong>$d[client_file]</strong>) has been dispatched by ".$_COOKIE[psdata][name].", today $dispDate.<br><b>Please understand that this email is sent as confirmation of a process service file sent from our office today.  If you do not reply to the contrary--stating files have not been received--within 24 hours, you will be held responsible for any delays not made known to our office.</b><br>".$_COOKIE[psdata][name]."<br>MDWestServe<br>service@mdwestserve.com<br>(410) 828-4568<br>".time()."<br>".md5(time());
+		if (isset($_POST[server1])){$newServe++;
+			@mysql_query("UPDATE standard_packets SET server_id='$_POST[server1]' WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
+			if ($_POST[server1] != $d[server_id]){
+				$serverID=$_POST[server1];
 				$id2name=id2name($serverID);
 				if ($id2name == ''){
 					$id2name="[BLANK]";
 				}
-				$id2company='';
 				$id2company=id2company($serverID);
 				if (trim($id2company) == ''){
 					$id2company=$id2name;
 				}
-				if (($_POST[process_status] == 'ASSIGNED') && ($serverID != '') && ($sdCount[$serverID] < 1)){
+				$timeline = $_COOKIE[psdata][name]." Updated Order, Set $id2name as Server";
+				if (($_POST[process_status] == 'ASSIGNED') && ($serverID != '')){
 					//if file is currently assigned, send email to server(s) updating them about dispatch.
 					$sdCount[$serverID]++;
 					$subject2 = $subject." To [$id2company]";
-					$headers2 = $headers."Cc: Service Updates <".id2email($serverID)."> \n";
+					$headers2 = $headers."Cc: Service Updates <".id2email($d[server_id])."> \n";
 					$headers3 .= $headers2;
 					mail($to,$subject2,$body,$headers2);
 				}
-				if (trim($timeline) != ''){
-					$timeline .= ", Set $id2name as Server ".strtoupper($letter);
-				}else{
-					$timeline = $_COOKIE[psdata][name]." Updated Order, Set $id2name as Server ".strtoupper($letter);
+			}
+		}
+		foreach(range('a','e') as $letter){
+			if (isset($_POST["server1$letter"])){$newServe++;
+				@mysql_query("UPDATE standard_packets SET server_id$letter='".$_POST["server1$letter"]."' WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
+				if ($_POST["server1$letter"] != $d["server_id$letter"]){
+					$serverID='';
+					$serverID=$_POST["server1$letter"];
+					$id2name='';
+					$id2name=id2name($serverID);
+					if ($id2name == ''){
+						$id2name="[BLANK]";
+					}
+					$id2company='';
+					$id2company=id2company($serverID);
+					if (trim($id2company) == ''){
+						$id2company=$id2name;
+					}
+					if (($_POST[process_status] == 'ASSIGNED') && ($serverID != '') && ($sdCount[$serverID] < 1)){
+						//if file is currently assigned, send email to server(s) updating them about dispatch.
+						$sdCount[$serverID]++;
+						$subject2 = $subject." To [$id2company]";
+						$headers2 = $headers."Cc: Service Updates <".id2email($serverID)."> \n";
+						$headers3 .= $headers2;
+						mail($to,$subject2,$body,$headers2);
+					}
+					if (trim($timeline) != ''){
+						$timeline .= ", Set $id2name as Server ".strtoupper($letter);
+					}else{
+						$timeline = $_COOKIE[psdata][name]." Updated Order, Set $id2name as Server ".strtoupper($letter);
+					}
 				}
 			}
 		}
+		if ($_GET[packet] && $timeline == ''){
+			timeline($_GET[packet],$_COOKIE[psdata][name]." Updated Order");
+		}elseif (trim($timeline) != ''){
+			timeline($_POST[packet_id],$timeline);
+		}
+		//SET DISPATCHDATE
+		if ($d[dispatchDate] == '0000-00-00 00:00:00' && $newServe > 0 && $unset == 6){
+			@mysql_query("UPDATE standard_packets SET dispatchDate=NOW() WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
+		}
 	}
-	if ($_GET[packet] && $timeline == ''){
-		timeline($_GET[packet],$_COOKIE[psdata][name]." Updated Order");
-	}elseif (trim($timeline) != ''){
-		timeline($_POST[packet_id],$timeline);
+	$query='';
+	$i=0;
+	while ($i < 6){$i++;
+		if ($_POST["name$i"] || ($_POST["name$i"] != $d["name$i"])){
+			$query .= " name$i='".$_POST["name$i"]."'";
+		}
 	}
-	//SET DISPATCHDATE
-	if ($d[dispatchDate] == '0000-00-00 00:00:00' && $newServe > 0 && $unset == 6){
-		@mysql_query("UPDATE standard_packets SET dispatchDate=NOW() WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
+	if ($_POST[address] || ($_POST[address] != $d[address1])){
+		$query .= " address1='$_POST[address]', address2='$_POST[address]', address3='$_POST[address]', address4='$_POST[address]', address5='$_POST[address]', address6='$_POST[address]'";
 	}
-}
-$r=mysql_query("SELECT name1, name2, name3, name4, name5, name6 from standard_packets WHERE packet_id='$_POST[packet_id]'");
-$d=mysql_fetch_array($r, MYSQL_ASSOC) or die(mysql_error());
-if ($_POST[name1] || ($_POST[name1] != $d[name1])){
-@mysql_query("UPDATE standard_packets SET name1='$_POST[name1]',
-address1='$_POST[address]',
-city1='$_POST[city]',
-state1='$_POST[state]',
-zip1='$_POST[zip]',
-address1a='$_POST[addressa]',
-city1a='$_POST[citya]',
-state1a='$_POST[statea]',
-zip1a='$_POST[zipa]',
-address1b='$_POST[addressb]',
-city1b='$_POST[cityb]',
-state1b='$_POST[stateb]',
-zip1b='$_POST[zipb]',
-address1c='$_POST[addressc]',
-city1c='$_POST[cityc]',
-state1c='$_POST[statec]',
-zip1c='$_POST[zipc]',
-address1d='$_POST[addressd]',
-city1d='$_POST[cityd]',
-state1d='$_POST[stated]',
-zip1d='$_POST[zipd]',
-address1e='$_POST[addresse]',
-city1e='$_POST[citye]',
-state1e='$_POST[statee]',
-zip1e='$_POST[zipe]'
-WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
-}
-if ($_POST[name2] || ($_POST[name2] != $d[name2])){
-@mysql_query("UPDATE standard_packets SET name2='$_POST[name2]',
-address2='$_POST[address]',
-city2='$_POST[city]',
-state2='$_POST[state]',
-zip2='$_POST[zip]',
-address2a='$_POST[addressa]',
-city2a='$_POST[citya]',
-state2a='$_POST[statea]',
-zip2a='$_POST[zipa]',
-address2b='$_POST[addressb]',
-city2b='$_POST[cityb]',
-state2b='$_POST[stateb]',
-zip2b='$_POST[zipb]',
-address2c='$_POST[addressc]',
-city2c='$_POST[cityc]',
-state2c='$_POST[statec]',
-zip2c='$_POST[zipc]',
-address2d='$_POST[addressd]',
-city2d='$_POST[cityd]',
-state2d='$_POST[stated]',
-zip2d='$_POST[zipd]',
-address2e='$_POST[addresse]',
-city2e='$_POST[citye]',
-state2e='$_POST[statee]',
-zip2e='$_POST[zipe]'
-WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
-}
-if ($_POST[name3] || ($_POST[name3] != $d[name3])){
-@mysql_query("UPDATE standard_packets SET name3='$_POST[name3]',
-address3='$_POST[address]',
-city3='$_POST[city]',
-state3='$_POST[state]',
-zip3='$_POST[zip]',
-address3a='$_POST[addressa]',
-city3a='$_POST[citya]',
-state3a='$_POST[statea]',
-zip3a='$_POST[zipa]',
-address3b='$_POST[addressb]',
-city3b='$_POST[cityb]',
-state3b='$_POST[stateb]',
-zip3b='$_POST[zipb]',
-address3c='$_POST[addressc]',
-city3c='$_POST[cityc]',
-state3c='$_POST[statec]',
-zip3c='$_POST[zipc]',
-address3d='$_POST[addressd]',
-city3d='$_POST[cityd]',
-state3d='$_POST[stated]',
-zip3d='$_POST[zipd]',
-address3e='$_POST[addresse]',
-city3e='$_POST[citye]',
-state3e='$_POST[statee]',
-zip3e='$_POST[zipe]'
-WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
-}
-if ($_POST[name4] || ($_POST[name4] != $d[name4])){
-@mysql_query("UPDATE standard_packets SET name4='$_POST[name4]',
-address4='$_POST[address]',
-city4='$_POST[city]',
-state4='$_POST[state]',
-zip4='$_POST[zip]',
-address4a='$_POST[addressa]',
-city4a='$_POST[citya]',
-state4a='$_POST[statea]',
-zip4a='$_POST[zipa]',
-address4b='$_POST[addressb]',
-city4b='$_POST[cityb]',
-state4b='$_POST[stateb]',
-zip4b='$_POST[zipb]',
-address4c='$_POST[addressc]',
-city4c='$_POST[cityc]',
-state4c='$_POST[statec]',
-zip4c='$_POST[zipc]',
-address4d='$_POST[addressd]',
-city4d='$_POST[cityd]',
-state4d='$_POST[stated]',
-zip4d='$_POST[zipd]',
-address4e='$_POST[addresse]',
-city4e='$_POST[citye]',
-state4e='$_POST[statee]',
-zip4e='$_POST[zipe]'
-WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
-}
-if ($_POST[name5] || ($_POST[name5] != $d[name5])){
-@mysql_query("UPDATE standard_packets SET name5='$_POST[name5]',
-address5='$_POST[address]',
-city5='$_POST[city]',
-state5='$_POST[state]',
-zip5='$_POST[zip]',
-address5a='$_POST[addressa]',
-city5a='$_POST[citya]',
-state5a='$_POST[statea]',
-zip5a='$_POST[zipa]',
-address5b='$_POST[addressb]',
-city5b='$_POST[cityb]',
-state5b='$_POST[stateb]',
-zip5b='$_POST[zipb]',
-address5c='$_POST[addressc]',
-city5c='$_POST[cityc]',
-state5c='$_POST[statec]',
-zip5c='$_POST[zipc]',
-address5d='$_POST[addressd]',
-city5d='$_POST[cityd]',
-state5d='$_POST[stated]',
-zip5d='$_POST[zipd]',
-address5e='$_POST[addresse]',
-city5e='$_POST[citye]',
-state5e='$_POST[statee]',
-zip5e='$_POST[zipe]'
-WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
-}
-if ($_POST[name6] || ($_POST[name6] != $d[name6])){
-@mysql_query("UPDATE standard_packets SET name6='$_POST[name6]',
-address6='$_POST[address]',
-city6='$_POST[city]',
-state6='$_POST[state]',
-zip6='$_POST[zip]',
-address6a='$_POST[addressa]',
-city6a='$_POST[citya]',
-state6a='$_POST[statea]',
-zip6a='$_POST[zipa]',
-address6b='$_POST[addressb]',
-city6b='$_POST[cityb]',
-state6b='$_POST[stateb]',
-zip6b='$_POST[zipb]',
-address6c='$_POST[addressc]',
-city6c='$_POST[cityc]',
-state6c='$_POST[statec]',
-zip6c='$_POST[zipc]',
-address6d='$_POST[addressd]',
-city6d='$_POST[cityd]',
-state6d='$_POST[stated]',
-zip6d='$_POST[zipd]',
-address6e='$_POST[addresse]',
-city6e='$_POST[citye]',
-state6e='$_POST[statee]',
-zip6e='$_POST[zipe]'
-WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
-}
-if ($_GET[packet] && $request == 1){
-	$deadline=time()+432000;
-	$deadline=date('Y-m-d',$deadline);
-	echo "<script>prompter('$_POST[packet_id]','$deadline','$_POST[server1]','$_POST[server1a]','$_POST[server1b]','$_POST[server1c]','$_POST[server1d]','$_POST[server1e]');</script>";
-}elseif ($_GET[packet] && $request == 2){
-	echo "<script>prompter2('$_POST[packet_id]','$_POST[estFileDate]','$oldFileDate');</script>";
-}elseif ($_GET[packet]){
-	header ('Location: order.php?packet='.$_GET[packet]);
-}else{
-if ($_GET[start]){
-	header ('Location: order.php?start='.$_GET[start]);
-}else{
-?><script>window.location.href='order.php';</script><? }
-}
+	foreach(range('a','e') as $letter){
+		if ($_POST["address$letter"] || ($_POST["address$letter"] != $d["address$letter"])){
+			$query .= " address1$letter='".$_POST["address$letter"]."', address2$letter='".$_POST["address$letter"]."', address3$letter='".$_POST["address$letter"]."', address4$letter='".$_POST["address$letter"]."', address5$letter='".$_POST["address$letter"]."', address6$letter='".$_POST["address$letter"]."'";
+		}
+	}
+	if ($_POST[city] || ($_POST[city] != $d[city1])){
+		$query .= " city1='$_POST[city]', city2='$_POST[city]', city3='$_POST[city]', city4='$_POST[city]', city5='$_POST[city]', city6='$_POST[city]'";
+	}
+	foreach(range('a','e') as $letter){
+		if ($_POST["city$letter"] || ($_POST["city$letter"] != $d["city$letter"])){
+			$query .= " city1$letter='".$_POST["city$letter"]."', city2$letter='".$_POST["city$letter"]."', city3$letter='".$_POST["city$letter"]."', city4$letter='".$_POST["city$letter"]."', city5$letter='".$_POST["city$letter"]."', city6$letter='".$_POST["city$letter"]."'";
+		}
+	}
+	if ($_POST[state] || ($_POST[state] != $d[state1])){
+		$query .= " state1='$_POST[state]', state2='$_POST[state]', state3='$_POST[state]', state4='$_POST[state]', state5='$_POST[state]', state6='$_POST[state]'";
+	}
+	foreach(range('a','e') as $letter){
+		if ($_POST["state$letter"] || ($_POST["state$letter"] != $d["state$letter"])){
+			$query .= " state1$letter='".$_POST["state$letter"]."', state2$letter='".$_POST["state$letter"]."', state3$letter='".$_POST["state$letter"]."', state4$letter='".$_POST["state$letter"]."', state5$letter='".$_POST["state$letter"]."', state6$letter='".$_POST["state$letter"]."'";
+		}
+	}
+	if ($_POST[city] || ($_POST[city] != $d[city1])){
+		$query .= " city1='$_POST[city]', city2='$_POST[city]', city3='$_POST[city]', city4='$_POST[city]', city5='$_POST[city]', city6='$_POST[city]'";
+	}
+	foreach(range('a','e') as $letter){
+		if ($_POST["city$letter"] || ($_POST["city$letter"] != $d["city$letter"])){
+			$query .= " city1$letter='".$_POST["city$letter"]."', city2$letter='".$_POST["city$letter"]."', city3$letter='".$_POST["city$letter"]."', city4$letter='".$_POST["city$letter"]."', city5$letter='".$_POST["city$letter"]."', city6$letter='".$_POST["city$letter"]."'";
+		}
+	}
+	if ($query != ''){
+		@mysql_query("UPDATE standard_packets SET $query WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
+	}
+	if ($_GET[packet] && $request == 1){
+		$deadline=time()+432000;
+		$deadline=date('Y-m-d',$deadline);
+		echo "<script>prompter('$_POST[packet_id]','$deadline','$_POST[server1]','$_POST[server1a]','$_POST[server1b]','$_POST[server1c]','$_POST[server1d]','$_POST[server1e]');</script>";
+	}elseif ($_GET[packet] && $request == 2){
+		echo "<script>prompter2('$_POST[packet_id]','$_POST[estFileDate]','$oldFileDate');</script>";
+	}elseif ($_GET[packet]){
+		header ('Location: order.php?packet='.$_GET[packet]);
+	}else{
+	if ($_GET[start]){
+		header ('Location: order.php?start='.$_GET[start]);
+	}else{
+	?><script>window.location.href='order.php';</script><? }
+	}
 }
 
 
@@ -1053,7 +925,7 @@ $server="none";
 <td><input id="address" name="address" size="30" value="<?=strtoupper($d[address1]);?>" /></td>
 </tr>
 <tr>
-<td><input size="20" name="city" value="<?=strtoupper($d[city1]);?>" /><input size="2" name="state" value="<?=strtoupper($d[state1]);?>" /><input size="4" name="zip" value="<?=$d[zip1]?>" /></td>
+<td><input size="20" name="city" value="<?=strtoupper($d[city1]);?>" /><input size="2" name="state" value="<?=strtoupper($d[state1]);?>" /><input size="4" name="city" value="<?=$d[city1]?>" /></td>
 </tr>
 </table>    
 </FIELDSET>
@@ -1065,7 +937,7 @@ $server="none";
 <td><input name="addressa" size="30" value="<?=strtoupper($d[address1a]);?>" /></td>
 </tr>
 <tr>
-<td><input name="citya" size="20" value="<?=strtoupper($d[city1a]);?>" /><input size="2" name="statea" value="<?=strtoupper($d[state1a]);?>" /><input size="4" name="zipa" value="<?=$d[zip1a]?>" /></td>
+<td><input name="citya" size="20" value="<?=strtoupper($d[city1a]);?>" /><input size="2" name="statea" value="<?=strtoupper($d[state1a]);?>" /><input size="4" name="citya" value="<?=$d[city1a]?>" /></td>
 </tr>
 </table>    
 </FIELDSET>
@@ -1077,7 +949,7 @@ $server="none";
 <td><input name="addressb" size="30" value="<?=$d[address1b]?>" /></td>
 </tr>
 <tr>
-<td><input name="cityb" size="20" value="<?=$d[city1b]?>" /><input size="2" name="stateb" value="<?=$d[state1b]?>" /><input size="4" name="zipb" value="<?=$d[zip1b]?>" /></td>
+<td><input name="cityb" size="20" value="<?=$d[city1b]?>" /><input size="2" name="stateb" value="<?=$d[state1b]?>" /><input size="4" name="cityb" value="<?=$d[city1b]?>" /></td>
 </tr>
 </table>    
 </FIELDSET>
@@ -1091,7 +963,7 @@ $server="none";
 <td><input name="addressc" value="<?=$d[address1c]?>" size="30" /></td>
 </tr>
 <tr>
-<td><input name="cityc" size="20" value="<?=$d[city1c]?>" /><input size="2" name="statec" value="<?=$d[state1c]?>" /><input size="4" name="zipc" value="<?=$d[zip1c]?>" /></td>
+<td><input name="cityc" size="20" value="<?=$d[city1c]?>" /><input size="2" name="statec" value="<?=$d[state1c]?>" /><input size="4" name="cityc" value="<?=$d[city1c]?>" /></td>
 </tr>
 </table>    
 </FIELDSET>
@@ -1103,7 +975,7 @@ $server="none";
 <td><input name="addressd" size="30" value="<?=$d[address1d]?>" /></td>
 </tr>
 <tr>
-<td><input name="cityd" size="20" value="<?=$d[city1d]?>" /><input size="2" name="stated" value="<?=$d[state1d]?>" /><input size="4" name="zipd" value="<?=$d[zip1d]?>" /></td>
+<td><input name="cityd" size="20" value="<?=$d[city1d]?>" /><input size="2" name="stated" value="<?=$d[state1d]?>" /><input size="4" name="cityd" value="<?=$d[city1d]?>" /></td>
 </tr>
 </table>    
 </FIELDSET>
@@ -1115,7 +987,7 @@ $server="none";
 <td><input name="addresse" size="30" value="<?=$d[address1e]?>" /></td>
 </tr>
 <tr>
-<td><input name="citye" size="20" value="<?=$d[city1e]?>" /><input size="2" name="statee" value="<?=$d[state1e]?>" /><input size="4" name="zipe" value="<?=$d[zip1e]?>" /></td>
+<td><input name="citye" size="20" value="<?=$d[city1e]?>" /><input size="2" name="statee" value="<?=$d[state1e]?>" /><input size="4" name="citye" value="<?=$d[city1e]?>" /></td>
 </tr>
 </table>    
 </FIELDSET>
@@ -1136,8 +1008,8 @@ $server="none";
 <td><input name="postate" value="<?=$d[postate]?>" /></td>
 </tr>
 <tr>
-<td>ZIP</td>
-<td><input name="pozip" value="<?=$d[pozip]?>" /></td>
+<td>city</td>
+<td><input name="pocity" value="<?=$d[pocity]?>" /></td>
 </tr>
 </table>
 </td><td>
@@ -1155,8 +1027,8 @@ $server="none";
 <td><input name="postate2" value="<?=$d[postate2]?>" /></td>
 </tr>
 <tr>
-<td>ZIP 2</td>
-<td><input name="pozip2" value="<?=$d[pozip2]?>" /></td>
+<td>city 2</td>
+<td><input name="pocity2" value="<?=$d[pocity2]?>" /></td>
 </tr>
 </table>    
 </td></tr></table>
@@ -1480,7 +1352,7 @@ $d2=mysql_fetch_array($r2, MYSQL_ASSOC);
 <td><?=$d2[phone]?></td>
 </tr>
 <tr>
-<td><?=$d2[address]?><br><?=$d2[city]?> <?=$d2[state]?> <?=$d2[zip]?></td>
+<td><?=$d2[address]?><br><?=$d2[city]?> <?=$d2[state]?> <?=$d2[city]?></td>
 </tr>
 <tr>
 <td>
@@ -1515,7 +1387,7 @@ $d2=mysql_fetch_array($r2, MYSQL_ASSOC);
 <td><?=$d2[phone]?></td>
 </tr>
 <tr>
-<td><?=$d2[address]?><br><?=$d2[city]?> <?=$d2[state]?> <?=$d2[zip]?></td>
+<td><?=$d2[address]?><br><?=$d2[city]?> <?=$d2[state]?> <?=$d2[city]?></td>
 </tr>
 <tr>
 <td>
@@ -1551,7 +1423,7 @@ $d2=mysql_fetch_array($r2, MYSQL_ASSOC);
 <td><?=$d2[phone]?></td>
 </tr>
 <tr>
-<td><?=$d2[address]?><br><?=$d2[city]?> <?=$d2[state]?> <?=$d2[zip]?></td>
+<td><?=$d2[address]?><br><?=$d2[city]?> <?=$d2[state]?> <?=$d2[city]?></td>
 </tr>
 <tr>
 <td>
@@ -1586,7 +1458,7 @@ $d2=mysql_fetch_array($r2, MYSQL_ASSOC);
 <td><?=$d2[phone]?></td>
 </tr>
 <tr>
-<td><?=$d2[address]?><br><?=$d2[city]?> <?=$d2[state]?> <?=$d2[zip]?></td>
+<td><?=$d2[address]?><br><?=$d2[city]?> <?=$d2[state]?> <?=$d2[city]?></td>
 </tr>
 <tr>
 <td>
@@ -1621,7 +1493,7 @@ $d2=mysql_fetch_array($r2, MYSQL_ASSOC);
 <td><?=$d2[phone]?></td>
 </tr>
 <tr>
-<td><?=$d2[address]?><br><?=$d2[city]?> <?=$d2[state]?> <?=$d2[zip]?></td>
+<td><?=$d2[address]?><br><?=$d2[city]?> <?=$d2[state]?> <?=$d2[city]?></td>
 </tr>
 <tr>
 <td>
@@ -1656,7 +1528,7 @@ $d2=mysql_fetch_array($r2, MYSQL_ASSOC);
 <td><?=$d2[phone]?></td>
 </tr>
 <tr>
-<td><?=$d2[address]?><br><?=$d2[city]?> <?=$d2[state]?> <?=$d2[zip]?></td>
+<td><?=$d2[address]?><br><?=$d2[city]?> <?=$d2[state]?> <?=$d2[city]?></td>
 </tr>
 <tr>
 <td>
