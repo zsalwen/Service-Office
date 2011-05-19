@@ -363,16 +363,16 @@ if ($_POST[submit]){
 		@mysql_query("UPDATE standard_packets SET process_status='$_POST[process_status]',
 			filing_status='$_POST[filing_status]',
 			service_status='$_POST[service_status]',
-			pobox='$_POST[pobox]',
 			courtState='$_POST[courtState]',
 			attorneys_id='$_POST[attorneys_id]',
+			pobox='$_POST[pobox]',
 			pocity='$_POST[pocity]',
 			postate='$_POST[postate]',
-			pocity='$_POST[pocity]',
+			pozip='$_POST[pozip]',
 			pobox2='$_POST[pobox2]',
 			pocity2='$_POST[pocity2]',
 			postate2='$_POST[postate2]',
-			pocity2='$_POST[pocity2]',
+			pozip2='$_POST[pozip2]',
 			entry_id='$id',
 			courierID='$_POST[courierID]',
 			addlDocs='$_POST[addlDocs]',
@@ -927,7 +927,7 @@ $server="none";
 <td><input id="address" name="address" size="30" value="<?=strtoupper($d[address1]);?>" /></td>
 </tr>
 <tr>
-<td><input size="20" name="city" value="<?=strtoupper($d[city1]);?>" /><input size="2" name="state" value="<?=strtoupper($d[state1]);?>" /><input size="4" name="city" value="<?=$d[city1]?>" /></td>
+<td><input size="20" name="city" value="<?=strtoupper($d[city1]);?>" /><input size="2" name="state" value="<?=strtoupper($d[state1]);?>" /><input size="4" name="zip" value="<?=$d[zip1]?>" /></td>
 </tr>
 </table>    
 </FIELDSET>
@@ -939,7 +939,7 @@ $server="none";
 <td><input name="addressa" size="30" value="<?=strtoupper($d[address1a]);?>" /></td>
 </tr>
 <tr>
-<td><input name="citya" size="20" value="<?=strtoupper($d[city1a]);?>" /><input size="2" name="statea" value="<?=strtoupper($d[state1a]);?>" /><input size="4" name="citya" value="<?=$d[city1a]?>" /></td>
+<td><input name="citya" size="20" value="<?=strtoupper($d[city1a]);?>" /><input size="2" name="statea" value="<?=strtoupper($d[state1a]);?>" /><input size="4" name="zipa" value="<?=$d[zip1a]?>" /></td>
 </tr>
 </table>    
 </FIELDSET>
@@ -951,7 +951,7 @@ $server="none";
 <td><input name="addressb" size="30" value="<?=$d[address1b]?>" /></td>
 </tr>
 <tr>
-<td><input name="cityb" size="20" value="<?=$d[city1b]?>" /><input size="2" name="stateb" value="<?=$d[state1b]?>" /><input size="4" name="cityb" value="<?=$d[city1b]?>" /></td>
+<td><input name="cityb" size="20" value="<?=$d[city1b]?>" /><input size="2" name="stateb" value="<?=$d[state1b]?>" /><input size="4" name="zipb" value="<?=$d[zip1b]?>" /></td>
 </tr>
 </table>    
 </FIELDSET>
@@ -965,7 +965,7 @@ $server="none";
 <td><input name="addressc" value="<?=$d[address1c]?>" size="30" /></td>
 </tr>
 <tr>
-<td><input name="cityc" size="20" value="<?=$d[city1c]?>" /><input size="2" name="statec" value="<?=$d[state1c]?>" /><input size="4" name="cityc" value="<?=$d[city1c]?>" /></td>
+<td><input name="cityc" size="20" value="<?=$d[city1c]?>" /><input size="2" name="statec" value="<?=$d[state1c]?>" /><input size="4" name="zipc" value="<?=$d[zip1c]?>" /></td>
 </tr>
 </table>    
 </FIELDSET>
@@ -977,7 +977,7 @@ $server="none";
 <td><input name="addressd" size="30" value="<?=$d[address1d]?>" /></td>
 </tr>
 <tr>
-<td><input name="cityd" size="20" value="<?=$d[city1d]?>" /><input size="2" name="stated" value="<?=$d[state1d]?>" /><input size="4" name="cityd" value="<?=$d[city1d]?>" /></td>
+<td><input name="cityd" size="20" value="<?=$d[city1d]?>" /><input size="2" name="stated" value="<?=$d[state1d]?>" /><input size="4" name="zipd" value="<?=$d[zip1d]?>" /></td>
 </tr>
 </table>    
 </FIELDSET>
@@ -989,7 +989,7 @@ $server="none";
 <td><input name="addresse" size="30" value="<?=$d[address1e]?>" /></td>
 </tr>
 <tr>
-<td><input name="citye" size="20" value="<?=$d[city1e]?>" /><input size="2" name="statee" value="<?=$d[state1e]?>" /><input size="4" name="citye" value="<?=$d[city1e]?>" /></td>
+<td><input name="citye" size="20" value="<?=$d[city1e]?>" /><input size="2" name="statee" value="<?=$d[state1e]?>" /><input size="4" name="zipe" value="<?=$d[zip1e]?>" /></td>
 </tr>
 </table>    
 </FIELDSET>
@@ -1010,8 +1010,8 @@ $server="none";
 <td><input name="postate" value="<?=$d[postate]?>" /></td>
 </tr>
 <tr>
-<td>city</td>
-<td><input name="pocity" value="<?=$d[pocity]?>" /></td>
+<td>Zip</td>
+<td><input name="pozip" value="<?=$d[pozip]?>" /></td>
 </tr>
 </table>
 </td><td>
@@ -1029,8 +1029,8 @@ $server="none";
 <td><input name="postate2" value="<?=$d[postate2]?>" /></td>
 </tr>
 <tr>
-<td>city 2</td>
-<td><input name="pocity2" value="<?=$d[pocity2]?>" /></td>
+<td>Zip 2</td>
+<td><input name="pozip2" value="<?=$d[pozip2]?>" /></td>
 </tr>
 </table>    
 </td></tr></table>
