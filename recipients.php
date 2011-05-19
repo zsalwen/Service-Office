@@ -21,7 +21,6 @@ function atDropDown($addressType){
 	$list .= "<option>CLIENT</option><option>COURT</option></select>";
 	return $list;
 }
-echo "<table align='center' style='border-collapse:collapse;' border='1'><tr><td>ID</td><td>Recipient</td><td>Address Line 1</td><td>Address Line 2</td><td>Address Type</td><td colspan='2'></td></tr>";
 if ($_POST[submit] && $_POST[addressType] != ''){
 	//if new client, require that envelope image & attorney are linked before submitting query.
 	if ($_POST[addressType] == 'CLIENT'){
@@ -74,6 +73,7 @@ if ($_POST[submit4]){
 	@mysql_query("UPDATE attorneys SET envID='$_POST[envID]' WHERE attorneys_id='$_POST[att_id]'");
 	echo "<center><h2>ENTRY $_POST[envID] UPDATED</h2></center>";
 }
+echo "<table align='center' style='border-collapse:collapse;' border='1'><tr><td>ID</td><td>Recipient</td><td>Address Line 1</td><td>Address Line 2</td><td>Address Type</td><td colspan='2'></td></tr>";
 if ($_POST[edit]){
 	$q1="SELECT * FROM envelopeImage WHERE envID='$_POST[edit]'";
 	$r1=@mysql_query($q1) or die ("Query: $q1<br>".mysql_error());
