@@ -366,31 +366,10 @@ if ($notices != ''){
 </table>
 </fieldset>
 </td></tr><tr><td colspan='2'>
-<table><tr>
-
-<td>
-<fieldset>
-<legend>Accounting Notes</legend>
-<textarea name="accountingNotes" cols="40" rows="3"><?=stripslashes($data[accountingNotes])?></textarea>
-<input name="submit" type="submit" style="background-color:#00FF00; cursor:pointer; font-size:24px; position:absolute; top:0; right:0px;"  value="SAVE"/>
-</fieldset>
-</td>
-<td>
-<fieldset>
-<legend>Client Alert</legend>
-<textarea name="extended_notes" cols="40" rows="3"><?=stripslashes($data[extended_notes])?></textarea>
-</fieldset>
-</td>
-<td>
-<fieldset>
-<legend>Op. Notes</legend>
-<textarea name="processor_notes" cols="40" rows="3"><?=stripslashes($data[processor_notes])?></textarea>
-</fieldset>
-</td>
-</tr></table>
-
 </form>
-
+<fieldset><legend>Notes</legend>
+<iframe height="200px" width="750px"  frameborder="0" src="http://staff.mdwestserve.com/acctNotes.php?packet=<?=$data[packet_id]?>"></iframe>
+</fieldset>
 </td></tr>
 </table>
 
