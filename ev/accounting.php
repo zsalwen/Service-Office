@@ -140,7 +140,7 @@ document.title = "Accounting #<?=$data[eviction_id];?>";
 </script>
 <body bgcolor="#99CCFF">
 <style>
-fieldset { background-color:#FFFFFF;  border:solid 1px #000000;}
+fieldset { background-color:#FFFFFF;  border:solid 1px #000000; padding:0px;}
 .altset { background-color:#FFFFFF;  border:solid 1px #000000;}
 .altset2 { background-color:#FFFFFF;  border:solid 1px #000000;}
 legend, input, select { padding:0px; background-color:#FFFFCC; border:solid 1px #000000;}
