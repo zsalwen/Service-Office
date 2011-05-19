@@ -61,8 +61,6 @@ if ($_POST[edit]){
 	$d1=mysql_fetch_array($r1,MYSQL_ASSOC);
 	echo "<form method='post' name='form1'><input type='hidden' name='envID' value='$_POST[edit]'><tr><td>$envID</td><td><input style='background-color:#CCEEFF;' name='to1' value='".stripslashes($d1[to1])."' size='70' maxlength='250'></td><td><input style='background-color:#CCEEFF;' name='to2' value='".stripslashes($d1[to2])."' size='45' maxlength='250'></td><td><input style='background-color:#CCEEFF;' name='to3' value='".stripslashes($d1[to3])."' size='35' maxlength='250'></td><td>".atDropDown($d1[addressType]);
 	if ($d1[addressType] == 'CLIENT'){
-		echo "<br>Link to Attorney:<br>
-		<select name='att_id'>";
 		$q8 = "SELECT * FROM attorneys where attorneys_id > '0' ORDER BY display_name ASC";
 		$r8 = @mysql_query ($q8) or die(mysql_error());
 		while ($data8 = mysql_fetch_array($r8, MYSQL_ASSOC)){ 
@@ -72,7 +70,7 @@ if ($_POST[edit]){
 				$list .= "<option value='$data8[attorneys_id]'>$data8[display_name]</option>";
 			}
 		}
-		echo "</select>";
+		echo "<br>Link to Attorney:<br><select name='att_id'>$list</select>";
 	}
 	echo "</td><td colspan='2'><input type='submit' name='submit2' value='GO'></td></tr></form>";
 }elseif($clientEntry != 1){
