@@ -508,42 +508,44 @@ if ($_POST[submit]){
 	$i=0;
 	while ($i < 6){$i++;
 		if ($_POST["name$i"] || ($_POST["name$i"] != $d["name$i"])){
-			$query .= " name$i='".$_POST["name$i"]."'";
+			$query .= " name$i='".$_POST["name$i"]."',";
 		}
 	}
 	if ($_POST[address] || ($_POST[address] != $d[address1])){
-		$query .= " address1='$_POST[address]', address2='$_POST[address]', address3='$_POST[address]', address4='$_POST[address]', address5='$_POST[address]', address6='$_POST[address]'";
+		$query .= " address1='$_POST[address]', address2='$_POST[address]', address3='$_POST[address]', address4='$_POST[address]', address5='$_POST[address]', address6='$_POST[address]',";
 	}
 	foreach(range('a','e') as $letter){
 		if ($_POST["address$letter"] || ($_POST["address$letter"] != $d["address$letter"])){
-			$query .= " address1$letter='".$_POST["address$letter"]."', address2$letter='".$_POST["address$letter"]."', address3$letter='".$_POST["address$letter"]."', address4$letter='".$_POST["address$letter"]."', address5$letter='".$_POST["address$letter"]."', address6$letter='".$_POST["address$letter"]."'";
+			$query .= " address1$letter='".$_POST["address$letter"]."', address2$letter='".$_POST["address$letter"]."', address3$letter='".$_POST["address$letter"]."', address4$letter='".$_POST["address$letter"]."', address5$letter='".$_POST["address$letter"]."', address6$letter='".$_POST["address$letter"]."',";
 		}
 	}
 	if ($_POST[city] || ($_POST[city] != $d[city1])){
-		$query .= " city1='$_POST[city]', city2='$_POST[city]', city3='$_POST[city]', city4='$_POST[city]', city5='$_POST[city]', city6='$_POST[city]'";
+		$query .= " city1='$_POST[city]', city2='$_POST[city]', city3='$_POST[city]', city4='$_POST[city]', city5='$_POST[city]', city6='$_POST[city]',";
 	}
 	foreach(range('a','e') as $letter){
 		if ($_POST["city$letter"] || ($_POST["city$letter"] != $d["city$letter"])){
-			$query .= " city1$letter='".$_POST["city$letter"]."', city2$letter='".$_POST["city$letter"]."', city3$letter='".$_POST["city$letter"]."', city4$letter='".$_POST["city$letter"]."', city5$letter='".$_POST["city$letter"]."', city6$letter='".$_POST["city$letter"]."'";
+			$query .= " city1$letter='".$_POST["city$letter"]."', city2$letter='".$_POST["city$letter"]."', city3$letter='".$_POST["city$letter"]."', city4$letter='".$_POST["city$letter"]."', city5$letter='".$_POST["city$letter"]."', city6$letter='".$_POST["city$letter"]."',";
 		}
 	}
 	if ($_POST[state] || ($_POST[state] != $d[state1])){
-		$query .= " state1='$_POST[state]', state2='$_POST[state]', state3='$_POST[state]', state4='$_POST[state]', state5='$_POST[state]', state6='$_POST[state]'";
+		$query .= " state1='$_POST[state]', state2='$_POST[state]', state3='$_POST[state]', state4='$_POST[state]', state5='$_POST[state]', state6='$_POST[state]',";
 	}
 	foreach(range('a','e') as $letter){
 		if ($_POST["state$letter"] || ($_POST["state$letter"] != $d["state$letter"])){
-			$query .= " state1$letter='".$_POST["state$letter"]."', state2$letter='".$_POST["state$letter"]."', state3$letter='".$_POST["state$letter"]."', state4$letter='".$_POST["state$letter"]."', state5$letter='".$_POST["state$letter"]."', state6$letter='".$_POST["state$letter"]."'";
+			$query .= " state1$letter='".$_POST["state$letter"]."', state2$letter='".$_POST["state$letter"]."', state3$letter='".$_POST["state$letter"]."', state4$letter='".$_POST["state$letter"]."', state5$letter='".$_POST["state$letter"]."', state6$letter='".$_POST["state$letter"]."',";
 		}
 	}
 	if ($_POST[city] || ($_POST[city] != $d[city1])){
-		$query .= " city1='$_POST[city]', city2='$_POST[city]', city3='$_POST[city]', city4='$_POST[city]', city5='$_POST[city]', city6='$_POST[city]'";
+		$query .= " city1='$_POST[city]', city2='$_POST[city]', city3='$_POST[city]', city4='$_POST[city]', city5='$_POST[city]', city6='$_POST[city]',";
 	}
 	foreach(range('a','e') as $letter){
 		if ($_POST["city$letter"] || ($_POST["city$letter"] != $d["city$letter"])){
-			$query .= " city1$letter='".$_POST["city$letter"]."', city2$letter='".$_POST["city$letter"]."', city3$letter='".$_POST["city$letter"]."', city4$letter='".$_POST["city$letter"]."', city5$letter='".$_POST["city$letter"]."', city6$letter='".$_POST["city$letter"]."'";
+			$query .= " city1$letter='".$_POST["city$letter"]."', city2$letter='".$_POST["city$letter"]."', city3$letter='".$_POST["city$letter"]."', city4$letter='".$_POST["city$letter"]."', city5$letter='".$_POST["city$letter"]."', city6$letter='".$_POST["city$letter"]."',";
 		}
 	}
 	if ($query != ''){
+		//remove ending comma
+		$query=substr($query,0,-1);
 		@mysql_query("UPDATE standard_packets SET $query WHERE packet_id='$_POST[packet_id]'") or die(mysql_error());
 	}
 	if ($_GET[packet] && $request == 1){
