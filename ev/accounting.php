@@ -292,7 +292,7 @@ if ($notices != ''){
 </td></tr><tr><td colspan='2'>
 </form>
 <fieldset><legend>Notes</legend>
-<iframe height="200px" width="750px"  frameborder="0" src="http://staff.mdwestserve.com/acctNotes.php?eviction=<?=$data[eviction_id]?>"></iframe>
+<iframe height="200px" width="800px"  frameborder="0" src="http://staff.mdwestserve.com/acctNotes.php?eviction=<?=$data[eviction_id]?>"></iframe>
 </fieldset>
 </td></tr>
 </table>
