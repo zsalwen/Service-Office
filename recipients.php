@@ -39,7 +39,7 @@ if ($_POST[submit] && $_POST[addressType] != ''){
 		$newID=mysql_insert_id();
 		echo "<center><h2>ENTRY $newID CREATED</h2></center>";
 	}
-}else{
+}elseif($_POST[submit]){
 	echo "<script>alert('You must select an Address Type!')</script>";
 }
 if ($_POST[submit2] && $_POST[addressType] != ''){
@@ -60,7 +60,7 @@ if ($_POST[submit2] && $_POST[addressType] != ''){
 		@mysql_query("UPDATE envelopeImage SET to1='".addslashes($_POST[to1])."', to2='".addslashes($_POST[to2])."', to3='".addslashes($_POST[to3])."', addressType='".addslashes($_POST[addressType])."' WHERE envID='$_POST[envID]'");
 		echo "<center><h2>ENTRY UPDATED</h2></center>";
 	}
-}else{
+}elseif($_POST[submit2]){
 	echo "<script>alert('You must select an Address Type!')</script>";
 }
 if ($_POST[submit3]){
