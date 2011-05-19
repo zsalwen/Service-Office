@@ -316,11 +316,11 @@ if ($_POST[submit]){
 			pobox='$_POST[pobox]',
 			pocity='$_POST[pocity]',
 			postate='$_POST[postate]',
-			pocity='$_POST[pocity]',
+			pozip='$_POST[pozip]',
 			pobox2='$_POST[pobox2]',
 			pocity2='$_POST[pocity2]',
 			postate2='$_POST[postate2]',
-			pocity2='$_POST[pocity2]',
+			pozip2='$_POST[pozip2]',
 			mail_status='$_POST[mail_status]',
 			affidavitType='$_POST[affidavitType]',
 			onAffidavit1='$_POST[onAffidavit1]',
@@ -535,12 +535,12 @@ if ($_POST[submit]){
 			$query .= " state1$letter='".$_POST["state$letter"]."', state2$letter='".$_POST["state$letter"]."', state3$letter='".$_POST["state$letter"]."', state4$letter='".$_POST["state$letter"]."', state5$letter='".$_POST["state$letter"]."', state6$letter='".$_POST["state$letter"]."',";
 		}
 	}
-	if ($_POST[city] || ($_POST[city] != $d[city1])){
-		$query .= " city1='$_POST[city]', city2='$_POST[city]', city3='$_POST[city]', city4='$_POST[city]', city5='$_POST[city]', city6='$_POST[city]',";
+	if ($_POST[zip] || ($_POST[zip] != $d[zip1])){
+		$query .= " zip1='$_POST[zip]', zip2='$_POST[zip]', zip3='$_POST[zip]', zip4='$_POST[zip]', zip5='$_POST[zip]', zip6='$_POST[zip]',";
 	}
 	foreach(range('a','e') as $letter){
-		if ($_POST["city$letter"] || ($_POST["city$letter"] != $d["city$letter"])){
-			$query .= " city1$letter='".$_POST["city$letter"]."', city2$letter='".$_POST["city$letter"]."', city3$letter='".$_POST["city$letter"]."', city4$letter='".$_POST["city$letter"]."', city5$letter='".$_POST["city$letter"]."', city6$letter='".$_POST["city$letter"]."',";
+		if ($_POST["zip$letter"] || ($_POST["zip$letter"] != $d["zip$letter"])){
+			$query .= " zip1$letter='".$_POST["zip$letter"]."', zip2$letter='".$_POST["zip$letter"]."', zip3$letter='".$_POST["zip$letter"]."', zip4$letter='".$_POST["zip$letter"]."', zip5$letter='".$_POST["zip$letter"]."', zip6$letter='".$_POST["zip$letter"]."',";
 		}
 	}
 	if ($query != ''){
@@ -1354,7 +1354,7 @@ $d2=mysql_fetch_array($r2, MYSQL_ASSOC);
 <td><?=$d2[phone]?></td>
 </tr>
 <tr>
-<td><?=$d2[address]?><br><?=$d2[city]?> <?=$d2[state]?> <?=$d2[city]?></td>
+<td><?=$d2[address]?><br><?=$d2[city]?> <?=$d2[state]?> <?=$d2[zip]?></td>
 </tr>
 <tr>
 <td>
@@ -1389,7 +1389,7 @@ $d2=mysql_fetch_array($r2, MYSQL_ASSOC);
 <td><?=$d2[phone]?></td>
 </tr>
 <tr>
-<td><?=$d2[address]?><br><?=$d2[city]?> <?=$d2[state]?> <?=$d2[city]?></td>
+<td><?=$d2[address]?><br><?=$d2[city]?> <?=$d2[state]?> <?=$d2[zip]?></td>
 </tr>
 <tr>
 <td>
@@ -1425,7 +1425,7 @@ $d2=mysql_fetch_array($r2, MYSQL_ASSOC);
 <td><?=$d2[phone]?></td>
 </tr>
 <tr>
-<td><?=$d2[address]?><br><?=$d2[city]?> <?=$d2[state]?> <?=$d2[city]?></td>
+<td><?=$d2[address]?><br><?=$d2[city]?> <?=$d2[state]?> <?=$d2[zip]?></td>
 </tr>
 <tr>
 <td>
@@ -1460,7 +1460,7 @@ $d2=mysql_fetch_array($r2, MYSQL_ASSOC);
 <td><?=$d2[phone]?></td>
 </tr>
 <tr>
-<td><?=$d2[address]?><br><?=$d2[city]?> <?=$d2[state]?> <?=$d2[city]?></td>
+<td><?=$d2[address]?><br><?=$d2[city]?> <?=$d2[state]?> <?=$d2[zip]?></td>
 </tr>
 <tr>
 <td>
@@ -1495,7 +1495,7 @@ $d2=mysql_fetch_array($r2, MYSQL_ASSOC);
 <td><?=$d2[phone]?></td>
 </tr>
 <tr>
-<td><?=$d2[address]?><br><?=$d2[city]?> <?=$d2[state]?> <?=$d2[city]?></td>
+<td><?=$d2[address]?><br><?=$d2[city]?> <?=$d2[state]?> <?=$d2[zip]?></td>
 </tr>
 <tr>
 <td>
@@ -1530,7 +1530,7 @@ $d2=mysql_fetch_array($r2, MYSQL_ASSOC);
 <td><?=$d2[phone]?></td>
 </tr>
 <tr>
-<td><?=$d2[address]?><br><?=$d2[city]?> <?=$d2[state]?> <?=$d2[city]?></td>
+<td><?=$d2[address]?><br><?=$d2[city]?> <?=$d2[state]?> <?=$d2[zip]?></td>
 </tr>
 <tr>
 <td>
