@@ -15,25 +15,71 @@ function atDropDown($addressType){
 	$list .= "<select style='background-color:#CCEEFF;' name='addressType'>";
 	if ($addressType != ''){
 		$list .= "<option>".stripslashes(strtoupper($addressType))."</option>";
+	}else{
+		$list .= "<option></option>";
 	}
-	$list .= "<option>CLIENT</option><option>COURT</option><option>LENDER</option></select>";
+	$list .= "<option>CLIENT</option><option>COURT</option></select>";
 	return $list;
 }
 echo "<table align='center' style='border-collapse:collapse;' border='1'><tr><td>ID</td><td>Recipient</td><td>Address Line 1</td><td>Address Line 2</td><td>Address Type</td><td colspan='2'></td></tr>";
-if ($_POST[submit]){
-	@mysql_query("INSERT INTO envelopeImage (to1, to2, to3, addressType) VALUES ('".addslashes($_POST[to1])."','".addslashes($_POST[to2])."','".addslashes($_POST[to3])."', '".addslashes($_POST[addressType])."')");
-	echo "<center><h2>ENTRY CREATED</h2></center>";
+if ($_POST[submit] && $_POST[addressType] != ''){
+	//if new client, require that envelope image & attorney are linked before submitting query.
+	if ($_POST[addressType] == 'CLIENT'){
+		$clientEntry=1;
+		echo "<form method='post' style='display:inline;'><input type='hidden' name='to1' value='$_POST[to1]'><input type='hidden' name='to2' value='$_POST[to2]'><input type='hidden' name='to3' value='$_POST[to3]'><input type='hidden' name='addressType' value='$_POST[addressType]'><table align='center' border='1'><tr><td colspan='2'>PLEASE SELECT CLIENT</td></tr>
+		<tr><td><select name='att_id'>";
+		$q8 = "SELECT * FROM attorneys where attorneys_id > '0' AND envID='' ORDER BY display_name ASC";
+		$r8 = @mysql_query ($q8) or die(mysql_error());
+		while ($data8 = mysql_fetch_array($r8, MYSQL_ASSOC)){ 
+			echo "<option value='$data8[attorneys_id]'>$data8[display_name]</option>";
+		}
+		echo "</select></td><td><input type='submit' name='submit3' value='GO'></td></tr></table></form>";
+	}else{
+		@mysql_query("INSERT INTO envelopeImage (to1, to2, to3, addressType) VALUES ('".addslashes($_POST[to1])."','".addslashes($_POST[to2])."','".addslashes($_POST[to3])."', '".addslashes($_POST[addressType])."')");
+		$newID=mysql_insert_id();
+		echo "<center><h2>ENTRY $newID CREATED</h2></center>";
+	}
+}else{
+	echo "<script>alert('You must select an Address Type!')</script>";
 }
-if ($_POST[submit2]){
+if ($_POST[submit2] && $_POST[addressType] != ''){
+	$q1="SELECT * FROM envelopeImage WHERE envID='$_POST[envID]'";
+	$r1=@mysql_query($q1) or die ("Query: $q1<br>".mysql_error());
+	$d1=mysql_fetch_array($r1,MYSQL_ASSOC);
+	if ($_POST[addressType] == 'CLIENT' && $d1[addressType] != 'CLIENT'){
+		$clientEntry=1;
+		echo "<form method='post' style='display:inline;'><input type='hidden' name='to1' value='$_POST[to1]'><input type='hidden' name='to2' value='$_POST[to2]'><input type='hidden' name='to3' value='$_POST[to3]'><input type='hidden' name='addressType' value='$_POST[addressType]'><input type='hidden' name='envID' value='$_POST[envID]'><table align='center' border='1'><tr><td colspan='2'>PLEASE SELECT CLIENT</td></tr>
+		<tr><td><select name='att_id'>";
+		$q8 = "SELECT * FROM attorneys where attorneys_id > '0' AND envID='' ORDER BY display_name ASC";
+		$r8 = @mysql_query ($q8) or die(mysql_error());
+		while ($data8 = mysql_fetch_array($r8, MYSQL_ASSOC)){ 
+			echo "<option value='$data8[attorneys_id]'>$data8[display_name]</option>";
+		}
+		echo "</select></td><td><input type='submit' name='submit4' value='GO'></td></tr></table></form>";
+	}else{
+		@mysql_query("UPDATE envelopeImage SET to1='".addslashes($_POST[to1])."', to2='".addslashes($_POST[to2])."', to3='".addslashes($_POST[to3])."', addressType='".addslashes($_POST[addressType])."' WHERE envID='$_POST[envID]'");
+		echo "<center><h2>ENTRY UPDATED</h2></center>";
+	}
+}else{
+	echo "<script>alert('You must select an Address Type!')</script>";
+}
+if ($_POST[submit3]){
+	@mysql_query("INSERT INTO envelopeImage (to1, to2, to3, addressType) VALUES ('".addslashes($_POST[to1])."','".addslashes($_POST[to2])."','".addslashes($_POST[to3])."', '".addslashes($_POST[addressType])."')");
+	$newID=mysql_insert_id();
+	@mysql_query("UPDATE attorneys SET envID='$newID' WHERE attorneys_id='$_POST[att_id]'");
+	echo "<center><h2>ENTRY $newID CREATED</h2></center>";
+}
+if ($_POST[submit4]){
 	@mysql_query("UPDATE envelopeImage SET to1='".addslashes($_POST[to1])."', to2='".addslashes($_POST[to2])."', to3='".addslashes($_POST[to3])."', addressType='".addslashes($_POST[addressType])."' WHERE envID='$_POST[envID]'");
-	echo "<center><h2>ENTRY UPDATED</h2></center>";
+	@mysql_query("UPDATE attorneys SET envID='$_POST[envID]' WHERE attorneys_id='$_POST[att_id]'");
+	echo "<center><h2>ENTRY $_POST[envID] UPDATED</h2></center>";
 }
 if ($_POST[edit]){
 	$q1="SELECT * FROM envelopeImage WHERE envID='$_POST[edit]'";
 	$r1=@mysql_query($q1) or die ("Query: $q1<br>".mysql_error());
 	$d1=mysql_fetch_array($r1,MYSQL_ASSOC);
 	echo "<form method='post' name='form1'><input type='hidden' name='envID' value='$_POST[edit]'><tr><td>$envID</td><td><input style='background-color:#CCEEFF;' name='to1' value='".stripslashes($d1[to1])."' size='70' maxlength='250'></td><td><input style='background-color:#CCEEFF;' name='to2' value='".stripslashes($d1[to2])."' size='45' maxlength='250'></td><td><input style='background-color:#CCEEFF;' name='to3' value='".stripslashes($d1[to3])."' size='35' maxlength='250'></td><td>".atDropDown($d1[addressType])."</td><td colspan='2'><input type='submit' name='submit2' value='GO'></td></tr></form>";
-}else{
+}elseif($clientEntry != 1){
 	echo "<form method='post' name='form1'><tr><td></td><td><input style='background-color:#CCEEFF;' name='to1' size='70'></td><td><input style='background-color:#CCEEFF;' name='to2' size='45'></td><td><input style='background-color:#CCEEFF;' name='to3' size='35'></td><td>".atDropDown('')."</td><td colspan='2'><input type='submit' name='submit' value='GO'></td></tr></form>";
 }
 echo "<script>form1.to1.focus()</script>";
