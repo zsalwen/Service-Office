@@ -366,6 +366,7 @@ if ($notices != ''){
 </table>
 </fieldset>
 </td></tr><tr><td colspan='2'>
+<input name="submit" type="submit" style="background-color:#00FF00; cursor:pointer; font-size:24px; position:absolute; top:0; right:0px;"  value="SAVE"/>
 </form>
 <fieldset><legend>Notes</legend>
 <iframe height="200px" width="800px"  frameborder="0" src="http://staff.mdwestserve.com/acctNotes.php?packet=<?=$data[packet_id]?>"></iframe>
