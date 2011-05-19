@@ -366,6 +366,16 @@ function getServers2($letter){
 	}
 }
 ?>
+<style>
+body { padding:0px; margin:0px; margin-left:10px;}
+fieldset {font-size:12px; padding-left:5px; padding-right:0px; padding-top:0px; padding-bottom:0px; background-color:#CCCCCC}
+legend { border:solid 1px; padding-left:5px; padding-right:5px; background-color:#66CCFF; }
+ol, table { padding:0px;}
+li { border-bottom:solid 1px #CCCCCC; padding:0px; }
+a {font-size:none; text-decoration:none; font-weight:bold;}
+a:hover {font-size:underline overline; color:#6600FF;}
+a:visited {font-weight:bold; color:CC6600;}
+</style>
 <table>
 <tr><td valign="top">
 
@@ -478,16 +488,6 @@ while ($i < count($serverse)){
 	$i++;
 }
 ?></td></tr></table>
-<style>
-body { padding:0px; margin:0px; margin-left:10px;}
-fieldset {font-size:12px; padding-left:5px; padding-right:0px; padding-top:0px; padding-bottom:0px; background-color:#CCCCCC}
-legend { border:solid 1px; padding-left:5px; padding-right:5px; background-color:#66CCFF; }
-ol, table { padding:0px;}
-li { border-bottom:solid 1px #CCCCCC; padding:0px; }
-a {font-size:none; text-decoration:none; font-weight:bold;}
-a:hover {font-size:underline overline; color:#6600FF;}
-a:visited {font-weight:bold; color:CC6600;}
-</style>
 <script>document.title='<?=$_SESSION[active3]?> Active <?=$_SESSION[active]?> Servers <?=$_SESSION[active2]?> Services';</script>
 </td></tr></table>
 <meta http-equiv="refresh" content="600" />
