@@ -42,11 +42,16 @@ if ($_POST[submit] && $_POST[addressType] != ''){
 	echo "<script>alert('You must select an Address Type!')</script>";
 }
 if ($_POST[submit2]){
-	@mysql_query("UPDATE envelopeImage SET to1='".addslashes($_POST[to1])."', to2='".addslashes($_POST[to2])."', to3='".addslashes($_POST[to3])."', addressType='".addslashes($_POST[addressType])."' WHERE envID='$_POST[envID]'");
-	if ($_POST[addressType] == 'CLIENT'){
+	if ($_POST[addressType] == 'CLIENT' && $_POST[att_id]){
+		@mysql_query("UPDATE envelopeImage SET to1='".addslashes($_POST[to1])."', to2='".addslashes($_POST[to2])."', to3='".addslashes($_POST[to3])."', addressType='".addslashes($_POST[addressType])."' WHERE envID='$_POST[envID]'");
 		@mysql_query("UPDATE attorneys SET envID='$_POST[envID]' WHERE attorneys_id='$_POST[att_id]'");
+		echo "<center><h2>ENTRY UPDATED</h2></center>";
+	}elseif($_POST[addressType] != 'CLIENT'){
+		@mysql_query("UPDATE envelopeImage SET to1='".addslashes($_POST[to1])."', to2='".addslashes($_POST[to2])."', to3='".addslashes($_POST[to3])."', addressType='".addslashes($_POST[addressType])."' WHERE envID='$_POST[envID]'");
+		echo "<center><h2>ENTRY UPDATED</h2></center>";
+	}else{
+		echo "<script>alert('You must select an Attorney!')</script>";
 	}
-	echo "<center><h2>ENTRY UPDATED</h2></center>";
 }
 if ($_POST[submit3]){
 	@mysql_query("INSERT INTO envelopeImage (to1, to2, to3, addressType) VALUES ('".addslashes($_POST[to1])."','".addslashes($_POST[to2])."','".addslashes($_POST[to3])."', '".addslashes($_POST[addressType])."')");
