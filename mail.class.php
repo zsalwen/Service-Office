@@ -38,8 +38,13 @@ class postage{
 
 					 //get all the trees with 'pages' and 'count'. the biggest number
 					 //is the total number of pages, if we couldn't find the /N switch above.               
-					 //if(preg_match_all("/\/Type\s*\/Pages\s*.*\s*\/Count\s+([0-9]+)/", $contents, $capture, PREG_SET_ORDER)) {
-					 if(preg_match_all("/\/Count\s+([0-9]+)/", $contents, $capture, PREG_SET_ORDER)) {
+					 
+if(preg_match_all("/\/Type\s*\/Pages\s*.*\s*\/Count\s+([0-9]+)/", $contents, $capture, PREG_SET_ORDER)) {
+				 
+//if(preg_match_all("/\/Count\s+([0-9]+)/", $contents, $capture, PREG_SET_ORDER)) {
+
+
+
 						 foreach($capture as $c) {
 							 if($c[1] > $count)
 								 $count = ceil($c[1]/2);
