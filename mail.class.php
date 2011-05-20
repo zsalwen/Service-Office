@@ -46,7 +46,7 @@ if(preg_match_all("/\/Count\s+([0-9]+)/", $contents, $capture, PREG_SET_ORDER)) 
 
 
 						 foreach($capture as $c) {
-							 if($c[1] > $count)
+							 if(ceil($c[1]/2) > $count)
 error_log("[".date('h:iA n/j/y')."] [".$_COOKIE[psdata][name]."] [a] [Count:".$count."] [C[1] $c[1]] [Weight:".$weight."] [Weight:".$display."] \n", 3, '/logs/debug.log');
 								 $count = ceil($c[1]/2);
 						 }
