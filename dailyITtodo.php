@@ -29,7 +29,7 @@ $buffer = curl_exec ($curl);
 //if all goes well
 
 
-
+echo "<pre>";
 echo $buffer;
-
+echo "</pre>";
 ?>
