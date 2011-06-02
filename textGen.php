@@ -233,9 +233,10 @@ $instructionLink .= ".php?packet=".$d[packet_id];
 				}
 				$lossMit .= "</b> with each defendant's service documents.";
 			}
-			echo $lossMit."  Also, per new Maryland state requirements <b style='background-color:#FFFF00;'>please separate service attempts by at least 24 hours and try and make one attempt before noon and one after 6pm</b><br>";
+			echo $lossMit."  ";
 		}
 		?>
+		Also, per new Maryland state requirements <b style='background-color:#FFFF00;'>please separate service attempts by at least 24 hours and try and make one attempt before noon and one after 6pm.</b><br>
 		The documents for service can be listed on the affidavit as "a copy of the <?if ($d[addlDocs] != ''){echo $d[addlDocs];}else{ echo "Order to Docket";} ?> and all other papers filed with it in the above-captioned case".<br>
 		<b>Packet <?=$d['packet_id']?> - Service on <?=$defNames?></b><br>
 <? if (isset($_POST['server'])){echo $addList; }else{echo "<i>ADDRESS NOT YET SELECTED</i>";}?><br>
