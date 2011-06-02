@@ -13,7 +13,7 @@ curl_setopt( $curl, CURLOPT_COOKIEJAR, $cookie );
 $buffer = curl_exec ($curl);
 //if all goes well
 echo "<h1>$repo</h1>";
-//var_dump(json_decode($buffer, true));
+$buffer = json_decode($buffer, true);
 
 foreach ($buffer as $key => $value){
 echo "<li>$key :: $value</li>";
