@@ -1,5 +1,5 @@
 <?
-function processsOpen($repo){
+function processOpen($repo){
 $loginURL = "http://github.com/api/v2/json/issues/list/MDWestServe-Inc/$repo/open";
 $curl = curl_init();
 curl_setopt ($curl, CURLOPT_URL, $loginURL);
