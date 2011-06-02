@@ -1,7 +1,7 @@
 <?
 
 
-$loginURL = "http://github.com/api/v2/json/issues/search/defunkt/github-issues/open/";
+$loginURL = "http://github.com/api/v2/json/issues/list/MDWestServe-Inc/Service-Office/open";
 
 $curl = curl_init();
 // Set options
