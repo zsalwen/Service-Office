@@ -12,9 +12,14 @@ curl_setopt( $curl, CURLOPT_COOKIEJAR, $cookie );
     curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, false );
 $buffer = curl_exec ($curl);
 //if all goes well
-echo "<h1>$repo</h1><pre>";
-var_dump(json_decode($buffer, true));
-echo "</pre>";
+echo "<h1>$repo</h1>";
+//var_dump(json_decode($buffer, true));
+
+foreach ($buffer as $key => $value){
+echo "<li>$key :: $value</li>";
+}
+
+
 }
 
 processOpen('Service-Office');
