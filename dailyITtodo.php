@@ -29,7 +29,7 @@ $buffer = curl_exec ($curl);
 //if all goes well
 
 
-
+echo "<pre>";
 var_dump(json_decode($buffer, true));
-
+echo "</pre>";
 ?>
