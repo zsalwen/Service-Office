@@ -17,6 +17,9 @@ $buffer = json_decode($buffer, true);
 
 foreach ($buffer as $key => $value){
 echo "<li>$key :: $value</li>";
+foreach ($value as $key2 => $value2){
+echo "<li>$key2 :: $value2</li>";
+}
 }
 
 
